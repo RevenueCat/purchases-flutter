@@ -117,7 +117,8 @@ class PurchaseButton extends StatelessWidget {
     return RaisedButton(
       onPressed: () async {
         try {
-          PurchaserInfo purchaserInfo = await Purchases.makePurchase(product.identifier);
+          PurchaserInfo purchaserInfo =
+              await Purchases.makePurchase(product.identifier);
           var isPro = purchaserInfo.activeEntitlements.contains("pro");
           if (isPro) {
             return CatsScreen();
