@@ -18,5 +18,4 @@ void main() {
   test('setupPurchases', () async {
     Purchases.setup("api_key", "cesar", true);
   });
-
 }

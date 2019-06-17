@@ -1,3 +1,8 @@
-## 0.0.1
+## 0.1.1
 
-* TODO: Describe initial release.
+- Fixes userCancelled in Android
+- Adds docs
+
+## 0.1.0
+
+- Initial release

@@ -8,22 +8,22 @@ class PurchaserInfo {
 
   PurchaserInfo.fromJson(Map<dynamic, dynamic> map)
       : activeEntitlements = (map["activeEntitlements"] as List<dynamic>)
-      .map((item) => item as String)
-      .toList(),
+            .map((item) => item as String)
+            .toList(),
         activeSubscriptions = (map["activeSubscriptions"] as List<dynamic>)
             .map((item) => item as String)
             .toList(),
         latestExpirationDate = map["latestExpirationDate"],
         allExpirationDates =
-        (map["allExpirationDates"] as Map<dynamic, dynamic>)
-            .map((key, value) => MapEntry(key as String, value as String)),
+            (map["allExpirationDates"] as Map<dynamic, dynamic>)
+                .map((key, value) => MapEntry(key as String, value as String)),
         expirationsForActiveEntitlements =
-        (map["expirationsForActiveEntitlements"] as Map<dynamic, dynamic>)
-            .map((key, value) => MapEntry(key as String, value as String)),
+            (map["expirationsForActiveEntitlements"] as Map<dynamic, dynamic>)
+                .map((key, value) => MapEntry(key as String, value as String)),
         allPurchasedProductIdentifiers =
-        (map["allPurchasedProductIdentifiers"] as List<dynamic>)
-            .map((item) => item as String)
-            .toList();
+            (map["allPurchasedProductIdentifiers"] as List<dynamic>)
+                .map((item) => item as String)
+                .toList();
 
   @override
   String toString() {

@@ -2,7 +2,6 @@ package com.revenuecat.purchases_flutter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +17,6 @@ import com.revenuecat.purchases.interfaces.MakePurchaseListener;
 import com.revenuecat.purchases.interfaces.ReceiveEntitlementsListener;
 import com.revenuecat.purchases.interfaces.ReceivePurchaserInfoListener;
 import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
-
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -216,15 +213,14 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
         new MakePurchaseListener() {
           @Override
           public void onCompleted(@NonNull Purchase purchase, @NonNull PurchaserInfo purchaserInfo) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("productIdentifier", purchase.getSku());
-            map.put("purchaserInfo", mapPurchaserInfo(purchaserInfo));
-            result.success(map);
+            result.success(mapPurchaserInfo(purchaserInfo));
           }
 
           @Override
           public void onError(@NonNull PurchasesError error, Boolean userCancelled) {
-            reject(result, error);
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("userCancelled", userCancelled);
+            reject(result, error, map);
           }
         });
   }
@@ -314,12 +310,22 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
   }
 
   private static void reject(Result result, PurchasesError error) {
-    Map<String, String> userInfoMap = new HashMap<>();
-    userInfoMap.put("message", error.getMessage());
-    userInfoMap.put("readable_error_code", error.getCode().name());
+    reject(result, error, new HashMap<String, Object>());
+  }
+
+  private static void reject(Result result, PurchasesError error, Map<String, Object> extraPayload) {
+    Map<String, Object> userInfoMap = errorPayload(error);
+    userInfoMap.putAll(extraPayload);
+    result.error(error.getCode().ordinal() + "", error.getMessage(), userInfoMap);
+  }
+
+  private static Map<String, Object> errorPayload(PurchasesError error) {
+    Map<String, Object> userInfoMap = new HashMap<>();
+    userInfoMap.put("readableErrorCode", error.getCode().name());
     if (error.getUnderlyingErrorMessage() != null && !error.getUnderlyingErrorMessage().isEmpty()) {
       userInfoMap.put("underlyingErrorMessage", error.getUnderlyingErrorMessage());
     }
-    result.error(error.getCode().ordinal() + "", error.getMessage(), userInfoMap);
+    return userInfoMap;
   }
+
 }

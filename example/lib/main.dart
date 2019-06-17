@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:flutter/scheduler.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -118,8 +117,8 @@ class PurchaseButton extends StatelessWidget {
     return RaisedButton(
       onPressed: () async {
         try {
-          SuccessfulPurchase successfulPurchase = await Purchases.makePurchase(product.identifier);
-          var isPro = successfulPurchase.purchaserInfo.activeEntitlements.contains("pro_cat");
+          PurchaserInfo purchaserInfo = await Purchases.makePurchase(product.identifier);
+          var isPro = purchaserInfo.activeEntitlements.contains("pro");
           if (isPro) {
             return CatsScreen();
           }
@@ -137,16 +136,10 @@ class PurchaseButton extends StatelessWidget {
 class CatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Scaffold(
-      appBar: AppBar(title: Text("Cats Screen")),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: Text('Go back!'),
-        ),
-      ),
-    );
+    return Scaffold(
+        appBar: AppBar(title: Text("Cats Screen")),
+        body: Center(
+          child: Text("User is pro"),
+        ));
   }
 }

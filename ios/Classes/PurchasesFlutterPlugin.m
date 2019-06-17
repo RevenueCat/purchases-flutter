@@ -160,10 +160,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         if (error) {
             [self rejectWithResult:result error:error withExtraPayload:@{ @"userCancelled": @(userCancelled)}];
         } else {
-            result(@{
-                     @"productIdentifier":transaction.payment.productIdentifier,
-                     @"purchaserInfo": purchaserInfo.dictionary
-                     });
+            result(purchaserInfo.dictionary);
         }
     };
     
@@ -293,7 +290,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     }
     
     if (error.userInfo[RCReadableErrorCodeKey]) {
-        dict[@"readable_error_code"] = error.userInfo[RCReadableErrorCodeKey];
+        dict[@"readableErrorCode"] = error.userInfo[RCReadableErrorCodeKey];
     }
     
     return dict;
