@@ -186,7 +186,7 @@ We've added an example in this project showing a simple example using *Purchases
 ## Reporting Issues
 You can use Github Issues to report any bugs and issues with *Purchases*. Here is some advice for users that want to report an issue:
 
-1. Make sure that you are using the latest version of *Purchases*. The issue that you are about to report may be already fixed in the latest master branch version: https://github.com/revenuecat/purchases-ios/tree/master.
+1. Make sure that you are using the latest version of *Purchases*. The issue that you are about to report may be already fixed in the latest master branch version: https://github.com/revenuecat/purchases-flutter/tree/master.
 2. Providing reproducible steps for the issue will shorten the time it takes for it to be fixed - a Gist is always welcomed!
 3. Since some issues are Sandbox specific, specifying what environment you encountered the issue might help.
 ​
