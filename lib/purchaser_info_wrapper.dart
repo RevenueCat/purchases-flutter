@@ -1,14 +1,19 @@
 class PurchaserInfo {
   /// The identifiers of all the active entitlements
   final List<String> activeEntitlements;
+
   /// The latest expiration date of all purchased skus
   final String latestExpirationDate;
+
   /// Map of skus to expiration dates
   final Map<String, String> allExpirationDates;
+
   /// Map of entitlement ids to expiration dates
   final Map<String, String> expirationsForActiveEntitlements;
+
   /// Set of active subscription skus
   final List<String> activeSubscriptions;
+
   /// Set of purchased skus, active and inactive
   final List<String> allPurchasedProductIdentifiers;
 

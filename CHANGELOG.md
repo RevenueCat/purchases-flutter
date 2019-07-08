@@ -1,3 +1,12 @@
+## 0.1.3
+
+- Formats files
+
+## 0.1.2
+
+- Adds more docs to custom types
+- Fixes report issue link
+
 ## 0.1.1
 
 - Fixes userCancelled in Android
