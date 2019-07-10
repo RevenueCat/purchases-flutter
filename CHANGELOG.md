@@ -1,3 +1,7 @@
+## 0.1.4
+
+- Fixes UninitializedPropertyAccessException when trying to close the instance onDestroy of the Android Activity.
+
 ## 0.1.3
 
 - Formats files

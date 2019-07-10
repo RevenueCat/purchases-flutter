@@ -30,6 +30,7 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.view.FlutterNativeView;
+import kotlin.UninitializedPropertyAccessException;
 
 import static com.revenuecat.purchases_flutter.Mappers.mapEntitlements;
 import static com.revenuecat.purchases_flutter.Mappers.mapPurchaserInfo;
@@ -51,7 +52,11 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     registrar.addViewDestroyListener(new PluginRegistry.ViewDestroyListener() {
       @Override
       public boolean onViewDestroy(FlutterNativeView flutterNativeView) {
-        onDestroy();
+        try {
+          Purchases.getSharedInstance().close();
+        } catch (UninitializedPropertyAccessException e) {
+            // there's no instance so all good
+        }
         return false;
       }
     });
@@ -129,10 +134,6 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
       result.notImplemented();
       break;
     }
-  }
-
-  private void onDestroy() {
-    Purchases.getSharedInstance().close();
   }
 
   private void sendEvent(String eventName, @Nullable Map<String, Object> params) {

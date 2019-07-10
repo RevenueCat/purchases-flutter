@@ -61,7 +61,7 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      var isPro = _purchaserInfo.activeEntitlements.contains("pro");
+      var isPro = _purchaserInfo.activeEntitlements.contains("pro_cat");
       if (isPro) {
         return CatsScreen();
       } else {
@@ -81,10 +81,10 @@ class UpsellScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (entitlements != null) {
-      final pro = entitlements["pro"];
+      final pro = entitlements["pro_cat"];
       if (pro != null) {
-        final monthly = pro.offerings["monthly"];
-        final annual = pro.offerings["annual"];
+        final monthly = pro.offerings["monthly_cats"];
+        final annual = pro.offerings["annual_cats"];
         if (monthly != null && annual != null) {
           return Scaffold(
               appBar: AppBar(title: Text("Upsell Screen")),
@@ -119,7 +119,7 @@ class PurchaseButton extends StatelessWidget {
         try {
           PurchaserInfo purchaserInfo =
               await Purchases.makePurchase(product.identifier);
-          var isPro = purchaserInfo.activeEntitlements.contains("pro");
+          var isPro = purchaserInfo.activeEntitlements.contains("pro_cat");
           if (isPro) {
             return CatsScreen();
           }
