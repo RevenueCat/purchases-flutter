@@ -209,9 +209,19 @@ class Purchases {
 
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default
+  ///
+  /// Deprecated in favor of setAutomaticAppleSearchAdsAttributionCollection.
+  @Deprecated("use setAutomaticAppleSearchAdsAttributionCollection instead") 
   static Future<void> setAutomaticAttributionCollection(bool enabled) async {
     return await _channel.invokeMethod(
-        'setAutomaticAttributionCollection', {'enabled': enabled});
+        'setAutomaticAppleSearchAdsAttributionCollection', {'enabled': enabled});
+  }
+
+  /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
+  /// default
+  static Future<void> setAutomaticAppleSearchAdsAttributionCollection(bool enabled) async {
+    return await _channel.invokeMethod(
+        'setAutomaticAppleSearchAdsAttributionCollection', {'enabled': enabled});
   }
 }
 
@@ -220,5 +230,6 @@ enum PurchasesAttributionNetwork {
   adjust,
   appsflyer,
   branch,
-  tenjin
+  tenjin,
+  facebook
 }

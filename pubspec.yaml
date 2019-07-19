@@ -1,6 +1,6 @@
 name: purchases_flutter
 description: Client for the RevenueCat subscription and purchase tracking system, making implementing in-app subscriptions in Flutter easy - receipt validation and status tracking included!
-version: 0.1.4
+version: 0.2.0
 authors:
   - RevenueCat <support@revenuecat.com>
 homepage: https://www.revenuecat.com/

@@ -1,5 +1,7 @@
 package com.revenuecat.purchases_flutter;
 
+import android.util.Pair;
+
 import com.android.billingclient.api.SkuDetails;
 import com.revenuecat.purchases.Entitlement;
 import com.revenuecat.purchases.Offering;
@@ -9,6 +11,7 @@ import com.revenuecat.purchases.util.Iso8601Utils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 class Mappers {
@@ -91,9 +94,9 @@ class Mappers {
         return map;
     }
 
-    static Map<String, Object> mapEntitlements(Map<String, Entitlement> entitlementMap) {
+    static Pair<Map<String, Object>, List<SkuDetails>> mapEntitlements(Map<String, Entitlement> entitlementMap) {
+        List<SkuDetails> products = new ArrayList<>();
         Map<String, Object> response = new HashMap<>();
-
         for (String entId : entitlementMap.keySet()) {
             Entitlement ent = entitlementMap.get(entId);
             Map<String, Object> offeringsMap = new HashMap<>();
@@ -104,6 +107,7 @@ class Mappers {
                     if (offering != null) {
                         SkuDetails skuDetails = offering.getSkuDetails();
                         if (skuDetails != null) {
+                            products.add(skuDetails);
                             Map<String, Object> skuMap = mapSkuDetails(skuDetails);
                             offeringsMap.put(offeringId, skuMap);
                         } else {
@@ -116,6 +120,6 @@ class Mappers {
             response.put(entId, offeringsMap);
         }
 
-        return response;
+        return new Pair<>(response, products);
     }
 }

@@ -2,9 +2,9 @@
 
 @import StoreKit;
 
-#import "RCPurchaserInfo+RNPurchases.h"
-#import "RCEntitlement+RNPurchases.h"
-#import "SKProduct+RNPurchases.h"
+#import "RCPurchaserInfo+HybridAdditions.h"
+#import "RCEntitlement+HybridAdditions.h"
+#import "SKProduct+HybridAdditions.h"
 
 @interface PurchasesFlutterPlugin () <RCPurchasesDelegate>
 
@@ -72,8 +72,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self getPurchaserInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
         // NOOP
-    } else if ([@"setAutomaticAttributionCollection" isEqualToString:call.method]) {
-        [self setAutomaticAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
+    } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
+        [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -254,9 +254,9 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     }];
 }
 
-- (void)setAutomaticAttributionCollection:(BOOL)enabled
+- (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
                                    result:(FlutterResult)result{
-    [RCPurchases setAutomaticAttributionCollection:enabled];
+    RCPurchases.automaticAppleSearchAdsAttributionCollection = enabled;
     result(nil);
 }
 

@@ -1,12 +1,9 @@
 //
-//  RCPurchaserInfo+RNPurchases.m
-//  RNPurchases
-//
-//  Created by Jacob Eiting on 2/9/18.
-//  Copyright © 2018 Facebook. All rights reserved.
+//  Created by RevenueCat.
+//  Copyright © 2019 RevenueCat. All rights reserved.
 //
 
-#import "RCPurchaserInfo+RNPurchases.h"
+#import "RCPurchaserInfo+HybridAdditions.h"
 
 static NSDateFormatter *formatter;
 static dispatch_once_t onceToken;
@@ -25,7 +22,7 @@ static NSString * stringFromDate(NSDate *date)
     return [formatter stringFromDate:date];
 }
 
-@implementation RCPurchaserInfo (RNPurchases)
+@implementation RCPurchaserInfo (HybridAdditions)
 
 - (NSDictionary *)dictionary
 {

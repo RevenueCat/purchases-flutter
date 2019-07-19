@@ -2,6 +2,7 @@ package com.revenuecat.purchases_flutter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import com.revenuecat.purchases.Entitlement;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesError;
+import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.interfaces.GetSkusResponseListener;
 import com.revenuecat.purchases.interfaces.MakePurchaseListener;
 import com.revenuecat.purchases.interfaces.ReceiveEntitlementsListener;
@@ -39,6 +41,7 @@ import static com.revenuecat.purchases_flutter.Mappers.mapSkuDetails;
 /** PurchasesFlutterPlugin */
 public class PurchasesFlutterPlugin implements MethodCallHandler {
 
+  private List<SkuDetails> products = new ArrayList<>();
   private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
 
   private final Activity activity;
@@ -97,9 +100,9 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
       break;
     case "makePurchase":
       String productIdentifier = call.argument("productIdentifier");
-      ArrayList<String> oldSKUs = call.argument("oldSKUs");
+      String oldSKU = call.argument("oldSKU");
       String type1 = call.argument("type");
-      makePurchase(productIdentifier, oldSKUs, type1, result);
+      makePurchase(productIdentifier, oldSKU, type1, result);
       break;
     case "getAppUserID":
       getAppUserID(result);
@@ -172,7 +175,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     Purchases.getSharedInstance().getEntitlements(new ReceiveEntitlementsListener() {
       @Override
       public void onReceived(@NonNull Map<String, Entitlement> entitlementMap) {
-        result.success(mapEntitlements(entitlementMap));
+        result.success(mapEntitlementsAndCacheProducts(entitlementMap));
       }
 
       @Override
@@ -180,6 +183,12 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
         reject(result, error);
       }
     });
+  }
+
+  private Map<String, Object> mapEntitlementsAndCacheProducts(@NonNull Map<String, Entitlement> entitlementMap) {
+    Pair<Map<String, Object>, List<SkuDetails>> pairResponseProducts = mapEntitlements(entitlementMap);
+    products = pairResponseProducts.second;
+    return pairResponseProducts.first;
   }
 
   private void getProductInfo(ArrayList<String> productIDs, String type, final Result result) {
@@ -208,22 +217,69 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     }
   }
 
-  private void makePurchase(final String productIdentifier, ArrayList<String> oldSkus, String type,
-      final Result result) {
-    Purchases.getSharedInstance().makePurchase(this.activity, productIdentifier, type, oldSkus,
-        new MakePurchaseListener() {
+  private void makePurchase(final String productIdentifier, final String oldSku, final String type,
+                            final Result result) {
+    if (this.activity != null) {
+      if (products.isEmpty()) {
+        Purchases.getSharedInstance().getEntitlements(new ReceiveEntitlementsListener() {
           @Override
-          public void onCompleted(@NonNull Purchase purchase, @NonNull PurchaserInfo purchaserInfo) {
-            result.success(mapPurchaserInfo(purchaserInfo));
+          public void onReceived(@NonNull Map<String, Entitlement> entitlementMap) {
+            mapEntitlementsAndCacheProducts(entitlementMap);
+            makePurchase(activity, oldSku, type, productIdentifier, result);
           }
 
           @Override
-          public void onError(@NonNull PurchasesError error, Boolean userCancelled) {
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("userCancelled", userCancelled);
-            reject(result, error, map);
+          public void onError(@NonNull PurchasesError error) {
+            reject(result, error);
           }
         });
+      } else {
+        makePurchase(activity, oldSku, type, productIdentifier, result);
+      }
+    } else {
+      reject(result, new PurchasesError(
+              PurchasesErrorCode.PurchaseInvalidError,
+              "There is no current Activity"));
+    }
+  }
+
+  @Nullable
+  private SkuDetails findProduct(String productIdentifier, String type) {
+    for (SkuDetails product : products) {
+      if (product.getSku().equals(productIdentifier) && product.getType().equalsIgnoreCase(type)) {
+        return product;
+      }
+    }
+    return null;
+  }
+
+  private void makePurchase(final Activity currentActivity, final String oldSku, final String type,
+                            final String productIdentifier, final Result result) {
+    SkuDetails productToBuy = findProduct(productIdentifier, type);
+    if (productToBuy != null) {
+      MakePurchaseListener listener = new MakePurchaseListener() {
+        @Override
+        public void onCompleted(@NonNull Purchase purchase, @NonNull PurchaserInfo purchaserInfo) {
+          result.success(mapPurchaserInfo(purchaserInfo));
+        }
+
+        @Override
+        public void onError(@NonNull PurchasesError error, Boolean userCancelled) {
+          HashMap<String, Object> map = new HashMap<>();
+          map.put("userCancelled", userCancelled);
+          reject(result, error);
+        }
+      };
+      if (oldSku == null || oldSku.isEmpty()) {
+        Purchases.getSharedInstance().makePurchase(currentActivity, productToBuy, listener);
+      } else {
+        Purchases.getSharedInstance().makePurchase(currentActivity, productToBuy, oldSku, listener);
+      }
+    } else {
+      reject(result, new PurchasesError(
+              PurchasesErrorCode.ProductNotAvailableForPurchaseError,
+              "Couldn't find product."));
+    }
   }
 
   private void getAppUserID(final Result result) {

@@ -1,15 +1,12 @@
 //
-//  RCEntitlement+RNPurchases.m
-//  RNPurchases
-//
-//  Created by Jacob Eiting on 6/25/18.
-//  Copyright © 2018 Facebook. All rights reserved.
+//  Created by RevenueCat.
+//  Copyright © 2019 RevenueCat. All rights reserved.
 //
 
-#import "RCEntitlement+RNPurchases.h"
-#import "SKProduct+RNPurchases.h"
+#import "RCEntitlement+HybridAdditions.h"
+#import "SKProduct+HybridAdditions.h"
 
-@implementation RCEntitlement (RNPurchases)
+@implementation RCEntitlement (HybridAdditions)
 
 - (NSDictionary *)dictionary
 {

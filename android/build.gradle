@@ -34,5 +34,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.revenuecat.purchases:purchases:2.2.5'
+    implementation 'com.revenuecat.purchases:purchases:2.3.0'
 }
