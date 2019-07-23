@@ -35,8 +35,23 @@ class Mappers {
         }
         map.put("intro_price_string", detail.getIntroductoryPrice());
         map.put("intro_price_period", detail.getIntroductoryPricePeriod());
+        if (detail.getIntroductoryPricePeriod() != null && !detail.getIntroductoryPricePeriod().isEmpty()) {
+            PurchasesPeriod period = PurchasesPeriod.parse(detail.getIntroductoryPricePeriod());
+            if (period.years > 0) {
+                map.put("intro_price_period_unit", "YEAR");
+                map.put("intro_price_period_number_of_units", "" + period.years);
+            } else if (period.months > 0) {
+                map.put("intro_price_period_unit", "MONTH");
+                map.put("intro_price_period_number_of_units", "" + period.months);
+            } else if (period.days > 0) {
+                map.put("intro_price_period_unit", "DAY");
+                map.put("intro_price_period_number_of_units", "" + period.days);
+            }
+        } else {
+            map.put("intro_price_period_unit", "");
+            map.put("intro_price_period_number_of_units", "");
+        }
         map.put("intro_price_cycles", detail.getIntroductoryPriceCycles());
-
         map.put("currency_code", detail.getPriceCurrencyCode());
 
         return map;

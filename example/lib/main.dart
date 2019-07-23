@@ -36,7 +36,7 @@ class _MyAppState extends State<InitialScreen> {
   Future<void> initPlatformState() async {
     Purchases.setDebugLogsEnabled(true);
     Purchases.addPurchaserInfoUpdateListener(onUpdatedPurchaserInfo);
-    await Purchases.setup("VtDdmbdWBySmqJeeQUTyrNxETUVkhuaJ");
+    await Purchases.setup("api_key");
     Purchases.addAttributionData({}, PurchasesAttributionNetwork.facebook);
     PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
     Map<String, Entitlement> entitlements = await Purchases.getEntitlements();

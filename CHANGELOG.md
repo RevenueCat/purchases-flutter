@@ -1,3 +1,8 @@
+## 0.2.1
+
+- Makes some changes to the introductory pricing due to some inconsistencies introduced in 0.2.0.
+Introductory pricing is now an object part of the product.
+
 ## 0.2.0
 
 - Upgrades iOS SDK to https://github.com/RevenueCat/purchases-ios/releases/tag/2.5.0

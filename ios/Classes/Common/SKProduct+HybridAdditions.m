@@ -32,22 +32,20 @@
     
     if (@available(iOS 11.2, *)) {
         if (self.introductoryPrice) {
-            d[@"intro_price"] = @(self.introductoryPrice.price.floatValue) ?: @"";
-            if (self.introductoryPrice.price) {
-                d[@"intro_price_string"] = [formatter stringFromNumber:self.introductoryPrice.price];
-            } else {
-                d[@"intro_price_string"] = @"";
-            }
-            d[@"intro_price_period"] = [self normalizeSubscriptionPeriod:self.introductoryPrice.subscriptionPeriod] ?: @"";
-            d[@"intro_price_period_unit"] = [self normalizeSubscriptionPeriodUnit:self.introductoryPrice.subscriptionPeriod.unit] ?: @"";
-            d[@"intro_price_period_number_of_units"] = @(self.introductoryPrice.subscriptionPeriod.numberOfUnits) ?: @"";
-            d[@"intro_price_cycles"] = @(self.introductoryPrice.numberOfPeriods) ?: @"";
+            d[@"intro_price"] = [NSString stringWithFormat:@"%@", @(self.introductoryPrice.price.floatValue)];
+            d[@"intro_price_string"] = [formatter stringFromNumber:self.introductoryPrice.price];
+            d[@"intro_price_period"] = [self normalizeSubscriptionPeriod:self.introductoryPrice.subscriptionPeriod];
+            d[@"intro_price_period_unit"] = [self normalizeSubscriptionPeriodUnit:self.introductoryPrice.subscriptionPeriod.unit];
+            d[@"intro_price_period_number_of_units"] = [NSString stringWithFormat:@"%@", @(self.introductoryPrice.subscriptionPeriod.numberOfUnits)];
+            d[@"intro_price_cycles"] = [NSString stringWithFormat:@"%@", @(self.introductoryPrice.numberOfPeriods)];
             return d;
         }
     }
     d[@"intro_price"] = @"";
     d[@"intro_price_string"] = @"";
     d[@"intro_price_period"] = @"";
+    d[@"intro_price_period_unit"] = @"";
+    d[@"intro_price_period_number_of_units"] = @"";
     d[@"intro_price_cycles"] = @"";
     
     return d;
@@ -58,12 +56,16 @@
     switch (subscriptionPeriod.unit) {
         case SKProductPeriodUnitDay:
             unit = @"D";
+            break;
         case SKProductPeriodUnitWeek:
             unit = @"W";
+            break;
         case SKProductPeriodUnitMonth:
             unit = @"M";
+            break;
         case SKProductPeriodUnitYear:
             unit = @"Y";
+            break;
     }
     return [NSString stringWithFormat:@"%@%@%@", @"P", @(subscriptionPeriod.numberOfUnits), unit];
 }

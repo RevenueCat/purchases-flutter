@@ -211,17 +211,20 @@ class Purchases {
   /// default
   ///
   /// Deprecated in favor of setAutomaticAppleSearchAdsAttributionCollection.
-  @Deprecated("use setAutomaticAppleSearchAdsAttributionCollection instead") 
+  @Deprecated("use setAutomaticAppleSearchAdsAttributionCollection instead")
   static Future<void> setAutomaticAttributionCollection(bool enabled) async {
     return await _channel.invokeMethod(
-        'setAutomaticAppleSearchAdsAttributionCollection', {'enabled': enabled});
+        'setAutomaticAppleSearchAdsAttributionCollection',
+        {'enabled': enabled});
   }
 
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default
-  static Future<void> setAutomaticAppleSearchAdsAttributionCollection(bool enabled) async {
+  static Future<void> setAutomaticAppleSearchAdsAttributionCollection(
+      bool enabled) async {
     return await _channel.invokeMethod(
-        'setAutomaticAppleSearchAdsAttributionCollection', {'enabled': enabled});
+        'setAutomaticAppleSearchAdsAttributionCollection',
+        {'enabled': enabled});
   }
 }
 

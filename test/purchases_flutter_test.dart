@@ -16,6 +16,6 @@ void main() {
   });
 
   test('setupPurchases', () async {
-    Purchases.setup("api_key", "cesar", true);
+    Purchases.setup("api_key", appUserId: "cesar", observerMode: true);
   });
 }
