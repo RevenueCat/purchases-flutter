@@ -1,3 +1,7 @@
+## 0.2.2
+
+- Upgrades Android SDK to https://github.com/RevenueCat/purchases-android/releases/tag/2.3.1
+
 ## 0.2.1
 
 - Makes some changes to the introductory pricing due to some inconsistencies introduced in 0.2.0.
