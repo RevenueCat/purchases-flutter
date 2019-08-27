@@ -172,8 +172,17 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
                                                      self.products[p.productIdentifier] = p;
                                                      [productObjects addObject:p.dictionary];
                                                  }
-                                                 [RCPurchases.sharedPurchases makePurchase:self.products[productIdentifier]
-                                                                       withCompletionBlock:completionBlock];
+                                                 if (self.products[productIdentifier]) {
+                                                     [RCPurchases.sharedPurchases makePurchase:self.products[productIdentifier]
+                                                                           withCompletionBlock:completionBlock];
+                                                 } else {
+                                                     NSError *error = [NSError errorWithDomain:RCPurchasesErrorDomain
+                                                                                          code:RCProductNotAvailableForPurchaseError
+                                                                                      userInfo:@{
+                                                                                                 NSLocalizedDescriptionKey: @"Couldn't find product."
+                                                                                                 }];
+                                                     [self rejectWithResult:result error:error withExtraPayload:@{ @"userCancelled": @(false)}];
+                                                 }
                                              }];
     } else {
         [RCPurchases.sharedPurchases makePurchase:self.products[productIdentifier]
