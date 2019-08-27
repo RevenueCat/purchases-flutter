@@ -34,9 +34,8 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.view.FlutterNativeView;
 import kotlin.UninitializedPropertyAccessException;
 
-import static com.revenuecat.purchases_flutter.Mappers.mapEntitlements;
-import static com.revenuecat.purchases_flutter.Mappers.mapPurchaserInfo;
-import static com.revenuecat.purchases_flutter.Mappers.mapSkuDetails;
+import static com.revenuecat.purchases_flutter.Mappers.map;
+import static com.revenuecat.purchases_flutter.Mappers.map;
 
 /** PurchasesFlutterPlugin */
 public class PurchasesFlutterPlugin implements MethodCallHandler {
@@ -152,7 +151,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
       @Override
       public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-        sendEvent(PURCHASER_INFO_UPDATED, mapPurchaserInfo(purchaserInfo));
+        sendEvent(PURCHASER_INFO_UPDATED, Mappers.map(purchaserInfo));
       }
     });
     result.success(null);
@@ -186,7 +185,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
   }
 
   private Map<String, Object> mapEntitlementsAndCacheProducts(@NonNull Map<String, Entitlement> entitlementMap) {
-    Pair<Map<String, Object>, List<SkuDetails>> pairResponseProducts = mapEntitlements(entitlementMap);
+    Pair<Map<String, Object>, List<SkuDetails>> pairResponseProducts = Mappers.map(entitlementMap);
     products = pairResponseProducts.second;
     return pairResponseProducts.first;
   }
@@ -197,7 +196,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
       public void onReceived(@NonNull List<SkuDetails> skus) {
         ArrayList<Map> products = new ArrayList<>();
         for (SkuDetails detail : skus) {
-          products.add(mapSkuDetails(detail));
+          products.add(map(detail));
         }
 
         result.success(products);
@@ -260,7 +259,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
       MakePurchaseListener listener = new MakePurchaseListener() {
         @Override
         public void onCompleted(@NonNull Purchase purchase, @NonNull PurchaserInfo purchaserInfo) {
-          result.success(mapPurchaserInfo(purchaserInfo));
+          result.success(Mappers.map(purchaserInfo));
         }
 
         @Override
@@ -290,7 +289,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     Purchases.getSharedInstance().restorePurchases(new ReceivePurchaserInfoListener() {
       @Override
       public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-        result.success(mapPurchaserInfo(purchaserInfo));
+        result.success(Mappers.map(purchaserInfo));
       }
 
       @Override
@@ -304,7 +303,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     Purchases.getSharedInstance().reset(new ReceivePurchaserInfoListener() {
       @Override
       public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-        result.success(mapPurchaserInfo(purchaserInfo));
+        result.success(Mappers.map(purchaserInfo));
       }
 
       @Override
@@ -318,7 +317,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     Purchases.getSharedInstance().identify(appUserID, new ReceivePurchaserInfoListener() {
       @Override
       public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-        result.success(mapPurchaserInfo(purchaserInfo));
+        result.success(Mappers.map(purchaserInfo));
       }
 
       @Override
@@ -332,7 +331,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     Purchases.getSharedInstance().createAlias(newAppUserID, new ReceivePurchaserInfoListener() {
       @Override
       public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-        result.success(mapPurchaserInfo(purchaserInfo));
+        result.success(Mappers.map(purchaserInfo));
       }
 
       @Override
@@ -351,7 +350,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     Purchases.getSharedInstance().getPurchaserInfo(new ReceivePurchaserInfoListener() {
       @Override
       public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-        result.success(mapPurchaserInfo(purchaserInfo));
+        result.success(Mappers.map(purchaserInfo));
       }
 
       @Override

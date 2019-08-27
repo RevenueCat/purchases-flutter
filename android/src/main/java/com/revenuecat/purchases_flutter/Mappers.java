@@ -4,6 +4,8 @@ import android.util.Pair;
 
 import com.android.billingclient.api.SkuDetails;
 import com.revenuecat.purchases.Entitlement;
+import com.revenuecat.purchases.EntitlementInfo;
+import com.revenuecat.purchases.EntitlementInfos;
 import com.revenuecat.purchases.Offering;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.util.Iso8601Utils;
@@ -19,7 +21,7 @@ class Mappers {
     private Mappers() {
     }
 
-    static Map<String, Object> mapSkuDetails(final SkuDetails detail) {
+    static Map<String, Object> map(final SkuDetails detail) {
         Map<String, Object> map = new HashMap<>();
 
         map.put("identifier", detail.getSku());
@@ -57,18 +59,13 @@ class Mappers {
         return map;
     }
 
-    static Map<String, Object> mapPurchaserInfo(PurchaserInfo purchaserInfo) {
+    static Map<String, Object> map(PurchaserInfo purchaserInfo) {
         Map<String, Object> map = new HashMap<>();
         map.put("activeEntitlements", new ArrayList<>(purchaserInfo.getActiveEntitlements()));
         map.put("activeSubscriptions", new ArrayList<>(purchaserInfo.getActiveSubscriptions()));
         map.put("allPurchasedProductIdentifiers", new ArrayList<>(purchaserInfo.getAllPurchasedSkus()));
 
-        Date latest = purchaserInfo.getLatestExpirationDate();
-        if (latest != null) {
-            map.put("latestExpirationDate", Iso8601Utils.format(latest));
-        } else {
-            map.put("latestExpirationDate", null);
-        }
+        Mappers.putNullableDate(map, "latestExpirationDate", purchaserInfo.getLatestExpirationDate());
 
         Map<String, String> allExpirationDates = new HashMap<>();
         Map<String, Date> dates = purchaserInfo.getAllExpirationDatesByProduct();
@@ -82,34 +79,30 @@ class Mappers {
         }
         map.put("allExpirationDates", allExpirationDates);
 
-        Map<String, String> allEntitlementExpirationDates = new HashMap<>();
+        Map<String, Object> allEntitlementExpirationDates = new HashMap<>();
 
         for (String entitlementId : purchaserInfo.getActiveEntitlements()) {
             Date date = purchaserInfo.getExpirationDateForEntitlement(entitlementId);
-            if (date != null) {
-                allEntitlementExpirationDates.put(entitlementId, Iso8601Utils.format(date));
-            } else {
-                allEntitlementExpirationDates.put(entitlementId, null);
-            }
+            Mappers.putNullableDate(allEntitlementExpirationDates, entitlementId, date);
         }
         map.put("expirationsForActiveEntitlements", allEntitlementExpirationDates);
 
-        Map<String, String> purchaseDatesForActiveEntitlements = new HashMap<>();
+        Map<String, Object> purchaseDatesForActiveEntitlements = new HashMap<>();
 
         for (String entitlementId : purchaserInfo.getActiveEntitlements()) {
             Date date = purchaserInfo.getPurchaseDateForEntitlement(entitlementId);
-            if (date != null) {
-                purchaseDatesForActiveEntitlements.put(entitlementId, Iso8601Utils.format(date));
-            } else {
-                purchaseDatesForActiveEntitlements.put(entitlementId, null);
-            }
+            Mappers.putNullableDate(purchaseDatesForActiveEntitlements, entitlementId, date);
         }
         map.put("purchaseDatesForActiveEntitlements", purchaseDatesForActiveEntitlements);
+
+        map.put("entitlements", Mappers.map(purchaserInfo.getEntitlements()));
+        map.put("firstSeen", Iso8601Utils.format(purchaserInfo.getFirstSeen()));
+        map.put("originalAppUserId",purchaserInfo.getOriginalAppUserId());
 
         return map;
     }
 
-    static Pair<Map<String, Object>, List<SkuDetails>> mapEntitlements(Map<String, Entitlement> entitlementMap) {
+    static Pair<Map<String, Object>, List<SkuDetails>> map(Map<String, Entitlement> entitlementMap) {
         List<SkuDetails> products = new ArrayList<>();
         Map<String, Object> response = new HashMap<>();
         for (String entId : entitlementMap.keySet()) {
@@ -123,7 +116,7 @@ class Mappers {
                         SkuDetails skuDetails = offering.getSkuDetails();
                         if (skuDetails != null) {
                             products.add(skuDetails);
-                            Map<String, Object> skuMap = mapSkuDetails(skuDetails);
+                            Map<String, Object> skuMap = map(skuDetails);
                             offeringsMap.put(offeringId, skuMap);
                         } else {
                             offeringsMap.put(offeringId, null);
@@ -136,5 +129,46 @@ class Mappers {
         }
 
         return new Pair<>(response, products);
+    }
+
+    static Map<String, Object> map(EntitlementInfos data) {
+        Map<String, Object> entitlementInfos = new HashMap<>();
+        Map<String, Object> all = new HashMap<>();
+        for (Map.Entry<String, EntitlementInfo> entry : data.getAll().entrySet()) {
+            all.put(entry.getKey(), Mappers.map(entry.getValue()));
+        }
+        entitlementInfos.put("all", all);
+        Map<String, Object> active = new HashMap<>();
+        for (Map.Entry<String, EntitlementInfo> entry : data.getActive().entrySet()) {
+            active.put(entry.getKey(), Mappers.map(entry.getValue()));
+        }
+        entitlementInfos.put("active", active);
+
+        return entitlementInfos;
+    }
+
+    private static Map<String, Object> map(EntitlementInfo data) {
+        Map<String, Object> entitlementInfo = new HashMap<>();
+        entitlementInfo.put("identifier", data.getIdentifier());
+        entitlementInfo.put("isActive", data.isActive());
+        entitlementInfo.put("willRenew", data.getWillRenew());
+        entitlementInfo.put("periodType", data.getPeriodType().name());
+        entitlementInfo.put("latestPurchaseDate", Iso8601Utils.format(data.getLatestPurchaseDate()));
+        entitlementInfo.put("originalPurchaseDate", Iso8601Utils.format(data.getOriginalPurchaseDate()));
+        putNullableDate(entitlementInfo, "expirationDate", data.getExpirationDate());
+        entitlementInfo.put("store", data.getStore().name());
+        entitlementInfo.put("productIdentifier", data.getProductIdentifier());
+        entitlementInfo.put("isSandbox", data.isSandbox());
+        putNullableDate(entitlementInfo, "unsubscribeDetectedAt", data.getUnsubscribeDetectedAt());
+        putNullableDate(entitlementInfo, "billingIssueDetectedAt", data.getBillingIssueDetectedAt());
+        return entitlementInfo;
+    }
+
+    static void putNullableDate(Map<String, Object> map, String key, Date date) {
+        if (date != null) {
+            map.put(key, Iso8601Utils.format(date));
+        } else {
+            map.put(key, null);
+        }
     }
 }
