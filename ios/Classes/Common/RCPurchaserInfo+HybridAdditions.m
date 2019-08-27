@@ -4,6 +4,7 @@
 //
 
 #import "RCPurchaserInfo+HybridAdditions.h"
+#import "RCEntitlementInfo+HybridAdditions.h"
 
 static NSDateFormatter *formatter;
 static dispatch_once_t onceToken;
@@ -45,6 +46,20 @@ static NSString * stringFromDate(NSDate *date)
     }
 
     id latestExpiration = stringFromDate(self.latestExpirationDate) ?: [NSNull null];
+    
+    NSMutableDictionary *entitlementInfos = [NSMutableDictionary new];
+    NSMutableDictionary *all = [NSMutableDictionary new];
+    for (NSString *entId in self.entitlements.all) {
+        all[entId] = self.entitlements.all[entId].dictionary;
+    }
+    entitlementInfos[@"all"] = all;
+    
+    NSMutableDictionary *active = [NSMutableDictionary new];
+    for (NSString *entId in self.entitlements.active) {
+        active[entId] = self.entitlements.active[entId].dictionary;
+    }
+    entitlementInfos[@"active"] = active;
+    
 
     return @{
              @"activeEntitlements": self.activeEntitlements.allObjects,
@@ -53,7 +68,10 @@ static NSString * stringFromDate(NSDate *date)
              @"latestExpirationDate": latestExpiration,
              @"allExpirationDates": allExpirations,
              @"expirationsForActiveEntitlements": expirationsForActiveEntitlements,
-             @"purchaseDatesForActiveEntitlements": purchaseDatesForActiveEntitlements
+             @"purchaseDatesForActiveEntitlements": purchaseDatesForActiveEntitlements,
+             @"entitlements": entitlementInfos,
+             @"firstSeen": stringFromDate(self.firstSeen),
+             @"originalAppUserId": self.originalAppUserId,
              };
 }
 
