@@ -1,3 +1,11 @@
+## 0.3.0
+
+- Deprecates `activeEntitlements` in PurchaserInfo and adds `entitlements` object to PurchaserInfo. For more info check out https://docs.revenuecat.com/docs/purchaserinfo
+- Fixes exception when calling `makePurchase` with a bad product identifier in iOS
+- Fixes `makePurchase` missing the `userCancelled` boolean in Android
+- Fixes `makePurchase` not working in Android when calling with `oldSkus` parameter
+- Fixes trial info being lost in Android. Access `introductoryPrice` in the product information to get information around the trial period.
+
 ## 0.2.2
 
 - Upgrades Android SDK to https://github.com/RevenueCat/purchases-android/releases/tag/2.3.1
