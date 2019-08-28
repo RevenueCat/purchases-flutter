@@ -181,7 +181,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
                                                                                       userInfo:@{
                                                                                                  NSLocalizedDescriptionKey: @"Couldn't find product."
                                                                                                  }];
-                                                     [self rejectWithResult:result error:error withExtraPayload:@{ @"userCancelled": @(false)}];
+                                                     [self rejectWithResult:result error:error withExtraPayload:@{ @"userCancelled": @(NO)}];
                                                  }
                                              }];
     } else {

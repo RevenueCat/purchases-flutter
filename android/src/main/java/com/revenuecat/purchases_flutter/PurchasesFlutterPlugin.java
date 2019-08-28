@@ -266,7 +266,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
         public void onError(@NonNull PurchasesError error, Boolean userCancelled) {
           HashMap<String, Object> map = new HashMap<>();
           map.put("userCancelled", userCancelled);
-          reject(result, error);
+          reject(result, error, map);
         }
       };
       if (oldSku == null || oldSku.isEmpty()) {

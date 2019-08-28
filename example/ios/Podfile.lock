@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - Purchases (2.5.0)
-  - purchases_flutter (0.2.0):
+  - Purchases (2.6.0)
+  - purchases_flutter (0.3.0):
     - Flutter
-    - Purchases (~> 2.5.0)
+    - Purchases (~> 2.6.0)
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
@@ -21,8 +21,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 58dd7d1b27887414a370fcccb9e645c08ffd7a6a
-  Purchases: d122ff6f0b91ebf5f9a9ead440f7c1cbb36a43ee
-  purchases_flutter: de1d5b71ec5af4dcc2df7f8d13849b9d2257d25b
+  Purchases: c1d7501729e14fc61e564cc47fcd05eb99b19e81
+  purchases_flutter: 3e5225f7104ec5d19859798ec1c0a97ec73d330d
 
 PODFILE CHECKSUM: 3389836f37640698630b8f0670315d626d5f1469
 
