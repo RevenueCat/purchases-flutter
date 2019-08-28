@@ -68,7 +68,7 @@ When it comes time to make a purchase, *Purchases* has a simple method, `makePur
 ```dart
 try {
   PurchaserInfo purchaserInfo = await Purchases.makePurchase(product.identifier);
-  var isPro = purchaserInfo.activeEntitlements.contains("my_entitlement_identifier");
+  var isPro = purchaserInfo.entitlements.all["my_entitlement_identifier"].isActive;
   if (isPro) {
     // Unlock that great "pro" content
   }
@@ -89,11 +89,7 @@ try {
 // Get purchaser info
 try {
   PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
-  if (purchaserInfo.activeEntitlements.contains("my_entitlement_identifier")) {
-    // Grant user "pro" access
-  }
-  // Option 2: Check if user has active subscription (from App Store Connect or Play Store)
-  if (purchaserInfo.activeSubscriptions.contains("my_product_identifier")) {
+  if (purchaserInfo.entitlements.all["my_entitlement_identifier"].isActive) {
     // Grant user "pro" access
   }
 } on PlatformException catch (e) {
@@ -159,7 +155,7 @@ await Purchases.setup("my_api_key");
 Example output:
 ```
 [Purchases] - DEBUG: Debug logging enabled.
-[Purchases] - DEBUG: SDK Version - 2.5.0
+[Purchases] - DEBUG: SDK Version - 2.6.0
 [Purchases] - DEBUG: Initial App User ID - (null)
 [Purchases] - DEBUG: GET /v1/subscribers/<APP_USER_ID>
 [Purchases] - DEBUG: GET /v1/subscribers/<APP_USER_ID>/products
