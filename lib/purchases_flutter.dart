@@ -123,10 +123,10 @@ class Purchases {
   ///
   /// [type] Android only. Optional type of product, can be inapp or subs. Subs by default.
   static Future<PurchaserInfo> makePurchase(String productIdentifier,
-      {List<String> oldSKUs = const [], String type = "subs"}) async {
+      {String oldSKU, String type = "subs"}) async {
     return PurchaserInfo.fromJson(await _channel.invokeMethod('makePurchase', {
       'productIdentifier': productIdentifier,
-      'oldSKUs': oldSKUs,
+      'oldSKU': oldSKU,
       'type': type
     }));
   }

@@ -62,7 +62,7 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      var isPro = _purchaserInfo.activeEntitlements.contains("pro_cat");
+      var isPro = _purchaserInfo.entitlements.active.containsKey("pro_cat");
       if (isPro) {
         return CatsScreen();
       } else {
@@ -120,7 +120,7 @@ class PurchaseButton extends StatelessWidget {
         try {
           PurchaserInfo purchaserInfo =
               await Purchases.makePurchase(product.identifier);
-          var isPro = purchaserInfo.activeEntitlements.contains("pro_cat");
+          var isPro = purchaserInfo.entitlements.all["pro_cat"].isActive;
           if (isPro) {
             return CatsScreen();
           }
