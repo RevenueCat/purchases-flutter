@@ -1,3 +1,7 @@
+## 0.3.1
+
+- Fixes crash when there's a trial period and not an introductory price on Android. 
+
 ## 0.3.0
 
 - Deprecates `activeEntitlements` in PurchaserInfo and adds `entitlements` object to PurchaserInfo. For more info check out https://docs.revenuecat.com/docs/purchaserinfo

@@ -71,7 +71,7 @@ class Mappers {
             format.setCurrency(Currency.getInstance(detail.getPriceCurrencyCode()));
             map.put("intro_price_string", format.format(0));
             map.put("intro_price_period", detail.getFreeTrialPeriod());
-            PurchasesPeriod period = PurchasesPeriod.parse(detail.getIntroductoryPricePeriod());
+            PurchasesPeriod period = PurchasesPeriod.parse(detail.getFreeTrialPeriod());
             if (period.years > 0) {
                 map.put("intro_price_period_unit", "YEAR");
                 map.put("intro_price_period_number_of_units", "" + period.years);
