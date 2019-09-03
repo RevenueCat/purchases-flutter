@@ -1,6 +1,10 @@
+## 0.3.2
+
+- Fixes `expirationDate` in EntitlementInfo for iOS.
+
 ## 0.3.1
 
-- Fixes crash when there's a trial period and not an introductory price on Android. 
+- Fixes crash when there's a trial period and not an introductory price on Android.
 
 ## 0.3.0
 
@@ -17,7 +21,7 @@
 ## 0.2.1
 
 - Makes some changes to the introductory pricing due to some inconsistencies introduced in 0.2.0.
-Introductory pricing is now an object part of the product.
+  Introductory pricing is now an object part of the product.
 
 ## 0.2.0
 

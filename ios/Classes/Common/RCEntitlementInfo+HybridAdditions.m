@@ -46,7 +46,7 @@ static NSString * stringFromDate(NSDate *date)
     
     jsonDict[@"latestPurchaseDate"] = stringFromDate(self.latestPurchaseDate);
     jsonDict[@"originalPurchaseDate"] = stringFromDate(self.originalPurchaseDate);
-    jsonDict[@"expirationDate"] = stringFromDate(self.originalPurchaseDate) ?: [NSNull null];
+    jsonDict[@"expirationDate"] = stringFromDate(self.expirationDate) ?: [NSNull null];
 
     switch (self.store) {
         case RCAppStore:
