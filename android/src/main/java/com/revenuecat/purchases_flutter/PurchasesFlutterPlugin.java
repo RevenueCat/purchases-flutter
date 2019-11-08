@@ -215,7 +215,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
   private void makePurchase(final String productIdentifier, final String oldSku, final String type,
                             final Result result) {
-    final Activity activity = this.registrar.activity()
+    final Activity activity = this.registrar.activity();
     if (activity != null) {
       if (products.isEmpty()) {
         Purchases.getSharedInstance().getEntitlements(new ReceiveEntitlementsListener() {
