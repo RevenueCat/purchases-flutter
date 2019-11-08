@@ -42,13 +42,11 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
   private List<SkuDetails> products = new ArrayList<>();
   private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
 
-  private final Activity activity;
-  private final Context context;
+  private final Registrar registrar;
   private final MethodChannel channel;
 
   public PurchasesFlutterPlugin(Registrar registrar, MethodChannel channel) {
-    this.activity = registrar.activity();
-    this.context = registrar.context();
+    this.registrar = registrar;
     this.channel = channel;
     registrar.addViewDestroyListener(new PluginRegistry.ViewDestroyListener() {
       @Override
@@ -143,9 +141,9 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
   private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode, final Result result) {
     if (observerMode != null) {
-      Purchases.configure(this.context, apiKey, appUserID, observerMode);
+      Purchases.configure(this.registrar.context(), apiKey, appUserID, observerMode);
     } else {
-      Purchases.configure(this.context, apiKey, appUserID);
+      Purchases.configure(this.registrar.context(), apiKey, appUserID);
     }
     Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
       @Override
@@ -217,7 +215,8 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
   private void makePurchase(final String productIdentifier, final String oldSku, final String type,
                             final Result result) {
-    if (this.activity != null) {
+    final Activity activity = this.registrar.activity()
+    if (activity != null) {
       if (products.isEmpty()) {
         Purchases.getSharedInstance().getEntitlements(new ReceiveEntitlementsListener() {
           @Override
