@@ -1,3 +1,7 @@
+## 0.3.3
+
+- Dynamically access context and activity from registrar (https://github.com/RevenueCat/purchases-flutter/pull/11)
+
 ## 0.3.2
 
 - Fixes `expirationDate` in EntitlementInfo for iOS.
