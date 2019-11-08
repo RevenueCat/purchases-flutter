@@ -26,3 +26,4 @@ pubspec.lock
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
 *.jks
+example/ios/Flutter/flutter_export_environment.sh
