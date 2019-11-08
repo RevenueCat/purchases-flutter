@@ -35,7 +35,6 @@ import io.flutter.view.FlutterNativeView;
 import kotlin.UninitializedPropertyAccessException;
 
 import static com.revenuecat.purchases_flutter.Mappers.map;
-import static com.revenuecat.purchases_flutter.Mappers.map;
 
 /** PurchasesFlutterPlugin */
 public class PurchasesFlutterPlugin implements MethodCallHandler {
