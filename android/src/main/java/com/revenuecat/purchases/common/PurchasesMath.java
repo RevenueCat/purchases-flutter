@@ -1,4 +1,4 @@
-package com.revenuecat.purchases_flutter;
+package com.revenuecat.purchases.common;
 
 // The functionality of this class has been extracted from Java 8 Math class
 class PurchasesMath {

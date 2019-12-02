@@ -1,9 +1,13 @@
 import 'object_wrappers.dart';
 
+/// This class contains all the entitlements associated to the user.
 class EntitlementInfos {
-  // Map of all entitlements (active and inactive)
+  /// Map of all EntitlementInfo (`EntitlementInfo`) objects (active and inactive)
+  /// keyed by entitlement identifier.
   final Map<String, EntitlementInfo> all;
-  // Map of all active entitlements
+
+  /// Map of active EntitlementInfo (`EntitlementInfo`) objects keyed by
+  /// entitlement identifier.
   final Map<String, EntitlementInfo> active;
 
   EntitlementInfos.fromJson(Map<dynamic, dynamic> json)

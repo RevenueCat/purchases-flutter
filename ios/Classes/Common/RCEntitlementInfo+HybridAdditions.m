@@ -3,7 +3,7 @@
 //  Copyright © 2019 RevenueCat. All rights reserved.
 //
 
-#import "RCEntitlement+HybridAdditions.h"
+#import "RCEntitlementInfo+HybridAdditions.h"
 #import "SKProduct+HybridAdditions.h"
 
 static NSDateFormatter *formatter;

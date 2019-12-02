@@ -1,4 +1,4 @@
-package com.revenuecat.purchases_flutter;
+package com.revenuecat.purchases.common;
 
 import androidx.annotation.NonNull;
 
