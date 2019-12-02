@@ -5,8 +5,8 @@
 
 #import <Purchases/Purchases.h>
 
-@interface RCEntitlement (HybridAdditions)
+@interface RCPackage (HybridAdditions)
 
-- (NSDictionary *)dictionary;
+- (NSDictionary *)dictionary:(NSString *)offeringIdentifier;
 
 @end

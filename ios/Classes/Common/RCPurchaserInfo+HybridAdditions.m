@@ -4,13 +4,12 @@
 //
 
 #import "RCPurchaserInfo+HybridAdditions.h"
-#import "RCEntitlementInfo+HybridAdditions.h"
+#import "RCEntitlementInfos+HybridAdditions.h"
 
 static NSDateFormatter *formatter;
 static dispatch_once_t onceToken;
 
-static NSString * stringFromDate(NSDate *date)
-{
+static NSString *stringFromDate(NSDate *date) {
     dispatch_once(&onceToken, ^{
         // Here we're not using NSISO8601DateFormatter as we need to support iOS < 10
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -33,46 +32,26 @@ static NSString * stringFromDate(NSDate *date)
         allExpirations[productIdentifier] = stringFromDate(date) ?: [NSNull null];
     }
 
-    NSMutableDictionary *expirationsForActiveEntitlements = [NSMutableDictionary new];
-    for (NSString *entId in self.activeEntitlements) {
-        NSDate *date = [self expirationDateForEntitlement:entId];
-        expirationsForActiveEntitlements[entId] = stringFromDate(date) ?: [NSNull null];;
-    }
-
-    NSMutableDictionary *purchaseDatesForActiveEntitlements = [NSMutableDictionary new];
-    for (NSString *entId in self.activeEntitlements) {
-        NSDate *date = [self purchaseDateForEntitlement:entId];
-        purchaseDatesForActiveEntitlements[entId] = stringFromDate(date) ?: [NSNull null];;
+    NSMutableDictionary *allPurchases = [NSMutableDictionary new];
+    for (NSString *productIdentifier in self.allPurchasedProductIdentifiers) {
+        NSDate *date = [self purchaseDateForProductIdentifier:productIdentifier];
+        allPurchases[productIdentifier] = stringFromDate(date) ?: [NSNull null];
     }
 
     id latestExpiration = stringFromDate(self.latestExpirationDate) ?: [NSNull null];
-    
-    NSMutableDictionary *entitlementInfos = [NSMutableDictionary new];
-    NSMutableDictionary *all = [NSMutableDictionary new];
-    for (NSString *entId in self.entitlements.all) {
-        all[entId] = self.entitlements.all[entId].dictionary;
-    }
-    entitlementInfos[@"all"] = all;
-    
-    NSMutableDictionary *active = [NSMutableDictionary new];
-    for (NSString *entId in self.entitlements.active) {
-        active[entId] = self.entitlements.active[entId].dictionary;
-    }
-    entitlementInfos[@"active"] = active;
-    
 
     return @{
-             @"activeEntitlements": self.activeEntitlements.allObjects,
-             @"activeSubscriptions": self.activeSubscriptions.allObjects,
-             @"allPurchasedProductIdentifiers": self.allPurchasedProductIdentifiers.allObjects,
-             @"latestExpirationDate": latestExpiration,
-             @"allExpirationDates": allExpirations,
-             @"expirationsForActiveEntitlements": expirationsForActiveEntitlements,
-             @"purchaseDatesForActiveEntitlements": purchaseDatesForActiveEntitlements,
-             @"entitlements": entitlementInfos,
-             @"firstSeen": stringFromDate(self.firstSeen),
-             @"originalAppUserId": self.originalAppUserId,
-             };
+            @"entitlements": self.entitlements.dictionary,
+            @"activeSubscriptions": self.activeSubscriptions.allObjects,
+            @"allPurchasedProductIdentifiers": self.allPurchasedProductIdentifiers.allObjects,
+            @"latestExpirationDate": latestExpiration,
+            @"firstSeen": stringFromDate(self.firstSeen),
+            @"originalAppUserId": self.originalAppUserId,
+            @"requestDate": stringFromDate(self.requestDate),
+            @"allExpirationDates": allExpirations,
+            @"allPurchaseDates": allPurchases,
+            @"originalApplicationVersion": self.originalApplicationVersion ?: [NSNull null],
+    };
 }
 
 @end

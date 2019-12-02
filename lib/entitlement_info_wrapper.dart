@@ -1,3 +1,4 @@
+/// The EntitlementInfo object gives you access to all of the information about the status of a user entitlement.
 class EntitlementInfo {
   /// The entitlement identifier configured in the RevenueCat dashboard
   final String identifier;
@@ -114,13 +115,35 @@ class EntitlementInfo {
   }
 }
 
-enum PeriodType { intro, normal, trial }
+/// Enum of supported period types for an entitlement.
+enum PeriodType {
+  /// If the entitlement is under a introductory price period.
+  intro,
 
+  /// If the entitlement is not under an introductory or trial period.
+  normal,
+
+  /// If the entitlement is under a trial period.
+  trial
+}
+
+/// Enum of supported stores
 enum Store {
+  /// For entitlements granted via Apple App Store.
   appStore,
+
+  /// For entitlements granted via Apple Mac App Store.
   macAppStore,
+
+  /// For entitlements granted via Google Play Store.
   playStore,
+
+  /// For entitlements granted via Stripe.
   stripe,
+
+  /// For entitlements granted via a promo in RevenueCat.
   promotional,
+
+  /// For entitlements granted via an unknown store.
   unknownStore
 }

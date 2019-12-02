@@ -25,7 +25,7 @@ class Product {
         description = json['description'],
         title = json['title'],
         priceString = json['price_string'],
-        introductoryPrice = json["intro_price"].isNotEmpty
+        introductoryPrice = json["intro_price"] != null
             ? IntroductoryPrice.fromJson(json)
             : null,
         currencyCode = json['currency_code'],
@@ -61,13 +61,13 @@ class IntroductoryPrice {
   final int introPriceCycles;
 
   IntroductoryPrice.fromJson(Map<dynamic, dynamic> json)
-      : introPrice = double.parse(json['intro_price']),
+      : introPrice = json['intro_price'].toDouble(),
         introPriceString = json['intro_price_string'],
         introPricePeriod = json['intro_price_period'],
         introPricePeriodUnit = json['intro_price_period_unit'],
         introPricePeriodNumberOfUnits =
-            int.parse(json['intro_price_period_number_of_units']),
-        introPriceCycles = int.parse(json['intro_price_cycles']);
+            json['intro_price_period_number_of_units'],
+        introPriceCycles = json['intro_price_cycles'];
 
   @override
   String toString() {

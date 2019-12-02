@@ -3,14 +3,13 @@
 @import StoreKit;
 
 #import "RCPurchaserInfo+HybridAdditions.h"
-#import "RCEntitlement+HybridAdditions.h"
-#import "SKProduct+HybridAdditions.h"
+#import "RCCommonFunctionality.h"
+#import "RCErrorContainer.h"
 
 @interface PurchasesFlutterPlugin () <RCPurchasesDelegate>
 
-@property (nonatomic, retain) NSMutableDictionary *products;
-@property (nonatomic, retain) FlutterMethodChannel *channel;
-@property (nonatomic, retain) NSObject<FlutterPluginRegistrar> *registrar;
+@property(nonatomic, retain) FlutterMethodChannel *channel;
+@property(nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
 
 @end
 
@@ -18,8 +17,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 
 @implementation PurchasesFlutterPlugin
 
-- (instancetype)initWithChannel:(FlutterMethodChannel*)channel
-                      registrar:(NSObject<FlutterPluginRegistrar>*)registrar
+- (instancetype)initWithChannel:(FlutterMethodChannel *)channel
+                      registrar:(NSObject <FlutterPluginRegistrar> *)registrar
 {
     self = [super init];
     NSAssert(self, @"super init cannot be nil");
@@ -28,19 +27,21 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     return self;
 }
 
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-    FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"purchases_flutter"
-                                     binaryMessenger:[registrar messenger]];
-    PurchasesFlutterPlugin* instance = [[PurchasesFlutterPlugin alloc] initWithChannel:channel registrar:registrar];
++ (void)registerWithRegistrar:(NSObject <FlutterPluginRegistrar> *)registrar
+{
+    FlutterMethodChannel *channel = [FlutterMethodChannel
+            methodChannelWithName:@"purchases_flutter"
+                  binaryMessenger:[registrar messenger]];
+    PurchasesFlutterPlugin *instance = [[PurchasesFlutterPlugin alloc] initWithChannel:channel registrar:registrar];
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
-    NSDictionary* arguments = call.arguments;
+- (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result
+{
+    NSDictionary *arguments = call.arguments;
     if ([@"setupPurchases" isEqualToString:call.method]) {
-        NSString* apiKey = arguments[@"apiKey"];
-        NSString* appUserID = arguments[@"appUserId"];
+        NSString *apiKey = arguments[@"apiKey"];
+        NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
         [self setupPurchases:apiKey appUserID:appUserID observerMode:observerMode result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
@@ -49,13 +50,15 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         NSDictionary *data = arguments[@"data"];
         NSInteger network = [arguments[@"network"] integerValue];
         NSString *networkUserId = arguments[@"networkUserId"];
-        [self addAttributionData:data fromNetwork:(RCAttributionNetwork)network forNetworkUserId:networkUserId result:result];
-    } else if ([@"getEntitlements" isEqualToString:call.method]) {
-        [self getEntitlementsWithResult:result];
+        [self addAttributionData:data fromNetwork:(RCAttributionNetwork) network forNetworkUserId:networkUserId result:result];
+    } else if ([@"getOfferings" isEqualToString:call.method]) {
+        [self getOfferingsWithResult:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
         [self getProductInfo:arguments[@"productIdentifiers"] result:result];
-    } else if ([@"makePurchase" isEqualToString:call.method]) {
-        [self makePurchase:arguments[@"productIdentifier"] result:result];
+    } else if ([@"purchaseProduct" isEqualToString:call.method]) {
+        [self purchaseProduct:arguments[@"productIdentifier"] result:result];
+    } else if ([@"purchasePackage" isEqualToString:call.method]) {
+        [self purchasePackage:arguments[@"packageIdentifier"] offering:arguments[@"offeringIdentifier"] result:result];
     } else if ([@"getAppUserID" isEqualToString:call.method]) {
         [self getAppUserIDWithResult:result];
     } else if ([@"restoreTransactions" isEqualToString:call.method]) {
@@ -74,6 +77,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         // NOOP
     } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
         [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
+    } else if ([@"isAnonymous" isEqualToString:call.method]) {
+        [self isAnonymousWithResult:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -84,7 +89,6 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
           observerMode:(BOOL)observerMode
                 result:(FlutterResult)result
 {
-    self.products = [NSMutableDictionary new];
     [RCPurchases configureWithAPIKey:apiKey appUserID:appUserID observerMode:observerMode];
     RCPurchases.sharedPurchases.delegate = self;
     result(nil);
@@ -93,185 +97,101 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 - (void)setAllowSharingStoreAccount:(BOOL)allowSharingStoreAccount
                              result:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    RCPurchases.sharedPurchases.allowSharingAppStoreAccount = allowSharingStoreAccount;
+    [RCCommonFunctionality setAllowSharingStoreAccount:allowSharingStoreAccount];
     result(nil);
 }
 
-- (void)addAttributionData:(NSDictionary *)data 
+- (void)addAttributionData:(NSDictionary *)data
                fromNetwork:(NSInteger)network
-          forNetworkUserId:(NSString * _Nullable)networkUserId
+          forNetworkUserId:(NSString *_Nullable)networkUserId
                     result:(FlutterResult)result
 {
-    [RCPurchases addAttributionData:data fromNetwork:(RCAttributionNetwork)network forNetworkUserId:networkUserId];
+    [RCCommonFunctionality addAttributionData:data network:network networkUserId:networkUserId];
     result(nil);
 }
 
-- (void)getEntitlementsWithResult:(FlutterResult)result
+- (void)getOfferingsWithResult:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases entitlementsWithCompletionBlock:^(RCEntitlements * _Nullable entitlements, NSError * _Nullable error) {
-        if (error) {
-            [self rejectWithResult:result error:error];
-        } else {
-            NSMutableDictionary *response = [NSMutableDictionary new];
-            for (NSString *entId in entitlements) {
-                RCEntitlement *entitlement = entitlements[entId];
-                response[entId] = entitlement.dictionary;
-            }
-            
-            for (RCEntitlement *entitlement in entitlements.allValues) {
-                for (RCOffering *offering in entitlement.offerings.allValues)
-                {
-                    SKProduct *product = offering.activeProduct;
-                    if (product != nil) {
-                        self.products[product.productIdentifier] = product;
-                    }
-                }
-            }
-            result([NSDictionary dictionaryWithDictionary:response]);
-        }
-    }];
+    [RCCommonFunctionality getOfferingsWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
-
 
 - (void)getProductInfo:(NSArray *)products
                 result:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    
-    [RCPurchases.sharedPurchases productsWithIdentifiers:products
-                                         completionBlock:^(NSArray<SKProduct *> * _Nonnull products) {
-                                             NSMutableArray *productObjects = [NSMutableArray new];
-                                             for (SKProduct *p in products) {
-                                                 self.products[p.productIdentifier] = p;
-                                                 [productObjects addObject:p.dictionary];
-                                             }
-                                             result(productObjects);
-                                         }];
-}
-
-- (void)makePurchase:(NSString *)productIdentifier
-              result:(FlutterResult)result
-{
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    
-    void (^completionBlock)(SKPaymentTransaction * _Nullable, RCPurchaserInfo * _Nullable, NSError * _Nullable, BOOL) = ^(SKPaymentTransaction * _Nullable transaction, RCPurchaserInfo * _Nullable purchaserInfo, NSError * _Nullable error, BOOL userCancelled) {
-        if (error) {
-            [self rejectWithResult:result error:error withExtraPayload:@{ @"userCancelled": @(userCancelled)}];
-        } else {
-            result(purchaserInfo.dictionary);
-        }
-    };
-    
-    if (self.products[productIdentifier] == nil) {
-        [RCPurchases.sharedPurchases productsWithIdentifiers:[NSArray arrayWithObjects:productIdentifier, nil]
-                                             completionBlock:^(NSArray<SKProduct *> * _Nonnull products) {
-                                                 NSMutableArray *productObjects = [NSMutableArray new];
-                                                 for (SKProduct *p in products) {
-                                                     self.products[p.productIdentifier] = p;
-                                                     [productObjects addObject:p.dictionary];
-                                                 }
-                                                 if (self.products[productIdentifier]) {
-                                                     [RCPurchases.sharedPurchases makePurchase:self.products[productIdentifier]
-                                                                           withCompletionBlock:completionBlock];
-                                                 } else {
-                                                     NSError *error = [NSError errorWithDomain:RCPurchasesErrorDomain
-                                                                                          code:RCProductNotAvailableForPurchaseError
-                                                                                      userInfo:@{
-                                                                                                 NSLocalizedDescriptionKey: @"Couldn't find product."
-                                                                                                 }];
-                                                     [self rejectWithResult:result error:error withExtraPayload:@{ @"userCancelled": @(NO)}];
-                                                 }
-                                             }];
-    } else {
-        [RCPurchases.sharedPurchases makePurchase:self.products[productIdentifier]
-                              withCompletionBlock:completionBlock];
-    }
-}
-
-- (void)restoreTransactionsWithResult:(FlutterResult)result {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases restoreTransactionsWithCompletionBlock:^(RCPurchaserInfo * _Nullable purchaserInfo, NSError * _Nullable error) {
-        if (error) {
-            [self rejectWithResult:result error:error];
-        } else {
-            result(purchaserInfo.dictionary);
-        }
+    [RCCommonFunctionality getProductInfo:products completionBlock:^(NSArray<NSDictionary *> *productObjects) {
+        result(productObjects);
     }];
+}
+
+- (void)purchaseProduct:(NSString *)productIdentifier
+                 result:(FlutterResult)result
+{
+    [RCCommonFunctionality purchaseProduct:productIdentifier completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)purchasePackage:(NSString *)packageIdentifier
+               offering:(NSString *)offeringIdentifier
+                 result:(FlutterResult)result
+{
+    [RCCommonFunctionality purchasePackage:packageIdentifier offering:offeringIdentifier completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)restoreTransactionsWithResult:(FlutterResult)result
+{
+    [RCCommonFunctionality restoreTransactionsWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)getAppUserIDWithResult:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    result(RCPurchases.sharedPurchases.appUserID);
+    result([RCCommonFunctionality appUserID]);
 }
 
-- (void)createAlias:(NSString * _Nullable)newAppUserID
+- (void)createAlias:(NSString *_Nullable)newAppUserID
              result:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases createAlias:newAppUserID completionBlock:^(RCPurchaserInfo * _Nullable purchaserInfo, NSError * _Nullable error) {
-        if (error) {
-            [self rejectWithResult:result error:error];
-        } else {
-            result(purchaserInfo.dictionary);
-        }
-    }];
+    [RCCommonFunctionality createAlias:newAppUserID completionBlock:[self getResponseCompletionBlock:result]];
 }
 
-- (void)identify:(NSString * _Nullable)appUserID
+- (void)identify:(NSString *_Nullable)appUserID
           result:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases identify:appUserID completionBlock:^(RCPurchaserInfo * _Nullable purchaserInfo, NSError * _Nullable error) {
-        if (error) {
-            [self rejectWithResult:result error:error];
-        } else {
-            result(purchaserInfo.dictionary);
-        }
-    }];
+    [RCCommonFunctionality identify:appUserID completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)resetWithResult:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases resetWithCompletionBlock:^(RCPurchaserInfo * _Nullable purchaserInfo, NSError * _Nullable error) {
-        if (error) {
-            [self rejectWithResult:result error:error];
-        } else {
-            result(purchaserInfo.dictionary);
-        }
-    }];
+    [RCCommonFunctionality resetWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)setDebugLogsEnabled:(BOOL)enabled
-                     result:(FlutterResult)result{
-    RCPurchases.debugLogsEnabled = enabled;
+                     result:(FlutterResult)result
+{
+    [RCCommonFunctionality setDebugLogsEnabled:enabled];
     result(nil);
 }
 
 - (void)getPurchaserInfoWithResult:(FlutterResult)result
 {
-    NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases purchaserInfoWithCompletionBlock:^(RCPurchaserInfo * _Nullable purchaserInfo, NSError * _Nullable error) {
-        if (error) {
-            [self rejectWithResult:result error:error];
-        } else {
-            result(purchaserInfo.dictionary);
-        }
-    }];
+    [RCCommonFunctionality getPurchaserInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
-                                   result:(FlutterResult)result{
-    RCPurchases.automaticAppleSearchAdsAttributionCollection = enabled;
+                                                 result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAutomaticAppleSearchAdsAttributionCollection:enabled];
     result(nil);
+}
+
+- (void)isAnonymousWithResult:(FlutterResult)result
+{
+    result(@([RCCommonFunctionality isAnonymous]));
 }
 
 #pragma mark -
 #pragma mark Delegate Methods
-- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo {
+
+- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo
+{
     [self.channel invokeMethod:RNPurchasesPurchaserInfoUpdatedEvent
                      arguments:purchaserInfo.dictionary];
 }
@@ -279,30 +199,22 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 #pragma mark -
 #pragma mark Helper Methods
 
-- (void)rejectWithResult:(FlutterResult)result error:(NSError *)error {
-    [self rejectWithResult:result error:error withExtraPayload:@{}];
+- (void)rejectWithResult:(FlutterResult)result error:(RCErrorContainer *)errorContainer
+{
+    result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", (long) errorContainer.code]
+                               message:errorContainer.message
+                               details:errorContainer.info]);
 }
 
-- (void)rejectWithResult:(FlutterResult)result error:(NSError *)error withExtraPayload:(NSDictionary *)extraPayload {
-    NSDictionary* payloadForError = [self payloadForError:error withExtraPayload:extraPayload];
-    
-    result([FlutterError errorWithCode:[NSString stringWithFormat: @"%ld", (long)error.code]
-                               message:error.localizedDescription
-                               details:payloadForError]);
-}
-
-- (NSDictionary *)payloadForError:(NSError *)error withExtraPayload:(NSDictionary *)extraPayload {
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:extraPayload];
-    
-    if (error.userInfo[NSUnderlyingErrorKey]) {
-        dict[@"underlyingErrorMessage"] = ((NSError *)error.userInfo[NSUnderlyingErrorKey]).localizedDescription;
-    }
-    
-    if (error.userInfo[RCReadableErrorCodeKey]) {
-        dict[@"readableErrorCode"] = error.userInfo[RCReadableErrorCodeKey];
-    }
-    
-    return dict;
+- (void (^)(NSDictionary *, RCErrorContainer *))getResponseCompletionBlock:(FlutterResult)result
+{
+    return ^(NSDictionary *_Nullable purchaserInfoDictionary, RCErrorContainer *_Nullable error) {
+        if (error) {
+            [self rejectWithResult:result error:error];
+        } else {
+            result(purchaserInfoDictionary);
+        }
+    };
 }
 
 @end

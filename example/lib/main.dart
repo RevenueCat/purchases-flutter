@@ -18,7 +18,7 @@ class InitialScreen extends StatefulWidget {
 
 class _MyAppState extends State<InitialScreen> {
   PurchaserInfo _purchaserInfo;
-  Map<String, Entitlement> _entitlements;
+  Offerings _offerings;
 
   @override
   void initState() {
@@ -32,8 +32,7 @@ class _MyAppState extends State<InitialScreen> {
     await Purchases.setup("api_key");
     Purchases.addAttributionData({}, PurchasesAttributionNetwork.facebook);
     PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
-    Map<String, Entitlement> entitlements = await Purchases.getEntitlements();
-
+    Offerings offerings = await Purchases.getOfferings();
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
@@ -41,7 +40,7 @@ class _MyAppState extends State<InitialScreen> {
 
     setState(() {
       _purchaserInfo = purchaserInfo;
-      _entitlements = entitlements;
+      _offerings = offerings;
     });
   }
 
@@ -60,7 +59,7 @@ class _MyAppState extends State<InitialScreen> {
         return CatsScreen();
       } else {
         return UpsellScreen(
-          entitlements: _entitlements,
+          offerings: _offerings,
         );
       }
     }
@@ -68,26 +67,26 @@ class _MyAppState extends State<InitialScreen> {
 }
 
 class UpsellScreen extends StatelessWidget {
-  Map<String, Entitlement> entitlements;
+  final Offerings offerings;
 
-  UpsellScreen({Key key, @required this.entitlements}) : super(key: key);
+  UpsellScreen({Key key, @required this.offerings}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (entitlements != null) {
-      final pro = entitlements["pro_cat"];
-      if (pro != null) {
-        final monthly = pro.offerings["monthly_cats"];
-        final annual = pro.offerings["annual_cats"];
-        if (monthly != null && annual != null) {
+    if (offerings != null) {
+      final offering = offerings.current;
+      if (offering != null) {
+        final monthly = offering.monthly;
+        final lifetime = offering.lifetime;
+        if (monthly != null && lifetime != null) {
           return Scaffold(
               appBar: AppBar(title: Text("Upsell Screen")),
               body: Center(
                   child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  PurchaseButton(product: monthly),
-                  PurchaseButton(product: annual)
+                  PurchaseButton(package: monthly),
+                  PurchaseButton(package: lifetime)
                 ],
               )));
         }
@@ -102,9 +101,9 @@ class UpsellScreen extends StatelessWidget {
 }
 
 class PurchaseButton extends StatelessWidget {
-  final Product product;
+  final Package package;
 
-  PurchaseButton({Key key, @required this.product}) : super(key: key);
+  PurchaseButton({Key key, @required this.package}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,18 +111,22 @@ class PurchaseButton extends StatelessWidget {
       onPressed: () async {
         try {
           PurchaserInfo purchaserInfo =
-              await Purchases.makePurchase(product.identifier);
+              await Purchases.purchasePackage(package);
           var isPro = purchaserInfo.entitlements.all["pro_cat"].isActive;
           if (isPro) {
             return CatsScreen();
           }
         } on PlatformException catch (e) {
-          if ((e.details as Map)["userCancelled"]) {
+          var errorCode = PurchasesErrorHelper.getErrorCode(e);
+          if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
             print("User cancelled");
+          } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
+            print("User not allowed to purchase");
           }
         }
+        return InitialScreen();
       },
-      child: Text("Buy - (${product.priceString})"),
+      child: Text("Buy - (${package.product.priceString})"),
     );
   }
 }
