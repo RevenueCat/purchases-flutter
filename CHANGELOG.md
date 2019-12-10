@@ -1,3 +1,7 @@
+## 1.0.1
+
+- Android updated to 3.0.3
+
 ## 1.0.0
 
 - Added `PurchasesErrorHelper.getErrorCode(PlatformException)` and enum of `PurchasesErrorCode` to make handling errors easier. (#3) 
