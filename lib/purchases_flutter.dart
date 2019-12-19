@@ -274,6 +274,32 @@ class Purchases {
   static Future<bool> get isAnonymous async {
     return await _channel.invokeMethod('isAnonymous') as bool;
   }
+
+  /// iOS only. Computes whether or not a user is eligible for the introductory
+  /// pricing period of a given product. You should use this method to determine
+  /// whether or not you show the user the normal product price or the
+  /// introductory price. This also applies to trials (trials are considered a
+  /// type of introductory pricing).
+  ///
+  /// @note Subscription groups are automatically collected for determining
+  /// eligibility. If RevenueCat can't definitively compute the eligibility,
+  /// most likely because of missing group information, it will return
+  /// `introEligibilityStatusUnknown`. The best course of action on unknown
+  /// status is to display the non-intro pricing, to not create a misleading
+  /// situation. To avoid this, make sure you are testing with the latest
+  /// version of iOS so that the subscription group can be collected by the SDK.
+  /// Android always returns introEligibilityStatusUnknown.
+  ///
+  /// [productIdentifiers] Array of product identifiers
+  static Future<Map<String, IntroEligibility>>
+      checkTrialOrIntroductoryPriceEligibility(
+          List<String> productIdentifiers) async {
+    Map<dynamic, dynamic> eligibilityMap = await _channel.invokeMethod(
+        'checkTrialOrIntroductoryPriceEligibility',
+        {'productIdentifiers': productIdentifiers});
+    return eligibilityMap.map((key, value) =>
+        MapEntry(key as String, IntroEligibility.fromJson(value)));
+  }
 }
 
 /// This class holds the information used when upgrading from another sku.
@@ -326,4 +352,28 @@ enum PurchasesAttributionNetwork {
   branch,
   tenjin,
   facebook
+}
+
+enum IntroEligibilityStatus {
+  /// RevenueCat doesn't have enough information to determine eligibility.
+  introEligibilityStatusUnknown,
+
+  /// The user is not eligible for a free trial or intro pricing for this product.
+  introEligibilityStatusIneligible,
+
+  /// The user is eligible for a free trial or intro pricing for this product.
+  introEligibilityStatusEligible
+}
+
+/// Holds the introductory price status
+class IntroEligibility {
+  /// The introductory price eligibility status
+  IntroEligibilityStatus status;
+
+  /// Description of the status
+  String description;
+
+  IntroEligibility.fromJson(Map<dynamic, dynamic> map)
+      : status = IntroEligibilityStatus.values[map["status"]],
+        description = map["description"];
 }
