@@ -2,7 +2,7 @@
 
 - Fixes issue with older versions of Kotlin (#15)
 - Updates README.md
-- 
+- Adds checkTrialOrIntroductoryPriceEligibility
 
 ## 1.0.1
 
