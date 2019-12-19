@@ -125,7 +125,7 @@ private fun SkuDetails.mapIntroPrice(): Map<String, Any?> {
 }
 
 private fun String?.mapPeriod(): Map<String, Any?> {
-    return if (this.isNullOrBlank()) {
+    return if (this == null || this.isBlank()) {
         mapOf(
             "intro_price_period_unit" to null,
             "intro_price_period_number_of_units" to null

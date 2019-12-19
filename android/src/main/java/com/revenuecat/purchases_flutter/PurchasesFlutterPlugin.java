@@ -135,6 +135,10 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
             case "isAnonymous":
                 isAnonymous(result);
                 break;
+            case "checkTrialOrIntroductoryPriceEligibility":
+                productIdentifiers = call.argument("productIdentifiers");
+                checkTrialOrIntroductoryPriceEligibility(productIdentifiers, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -252,6 +256,10 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
     private void isAnonymous(final Result result) {
         result.success(CommonKt.isAnonymous());
+    }
+
+    private void checkTrialOrIntroductoryPriceEligibility(ArrayList<String> productIDs, final Result result) {
+        result.success(CommonKt.checkTrialOrIntroductoryPriceEligibility(productIDs));
     }
 
     @NotNull

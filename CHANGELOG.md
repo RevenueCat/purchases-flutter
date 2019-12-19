@@ -1,3 +1,9 @@
+## 1.0.2
+
+- Fixes issue with older versions of Kotlin (#15)
+- Updates README.md
+- 
+
 ## 1.0.1
 
 - Android updated to 3.0.3

@@ -79,6 +79,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"isAnonymous" isEqualToString:call.method]) {
         [self isAnonymousWithResult:result];
+    } else if ([@"checkTrialOrIntroductoryPriceEligibility" isEqualToString:call.method]) {
+        [self checkTrialOrIntroductoryPriceEligibility:arguments[@"productIdentifiers"] result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -185,6 +187,14 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 - (void)isAnonymousWithResult:(FlutterResult)result
 {
     result(@([RCCommonFunctionality isAnonymous]));
+}
+
+- (void)checkTrialOrIntroductoryPriceEligibility:(NSArray *)products
+                                          result:(FlutterResult)result
+{
+    [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products completionBlock:^(NSDictionary<NSString *,RCIntroEligibility *> * _Nonnull responseDictionary) {
+        result([NSDictionary dictionaryWithDictionary:responseDictionary]);
+    }];
 }
 
 #pragma mark -

@@ -87,7 +87,7 @@ fun purchaseProduct(
                 it.sku == productIdentifier && it.type.equals(type, ignoreCase = true)
             }
             if (productToBuy != null) {
-                if (oldSku.isNullOrBlank()) {
+                if (oldSku == null || oldSku.isBlank()) {
                     Purchases.sharedInstance.purchaseProductWith(
                         activity,
                         productToBuy,
@@ -154,7 +154,7 @@ fun purchasePackage(
                         it.identifier.equals(packageIdentifier, ignoreCase = true)
                     }
                 if (packageToBuy != null) {
-                    if (oldSku.isNullOrBlank()) {
+                    if (oldSku == null || oldSku.isBlank()) {
                         Purchases.sharedInstance.purchasePackageWith(
                             activity,
                             packageToBuy,
@@ -254,6 +254,16 @@ fun setFinishTransactions(
     enabled: Boolean
 ) {
     Purchases.sharedInstance.finishTransactions = enabled
+}
+
+// Returns Unknown for all since it's not available in Android
+fun checkTrialOrIntroductoryPriceEligibility(
+    productIdentifiers: List<String>
+): Map<String, Map<String, Any>> {
+    // INTRO_ELIGIBILITY_STATUS_UNKNOWN = 0
+    return productIdentifiers.map {
+        it to mapOf("status" to 0, "description" to "Status indeterminate.")
+    }.toMap()
 }
 
 private fun getMakePurchaseErrorFunction(onResult: OnResult): (PurchasesError, Boolean) -> Unit {
