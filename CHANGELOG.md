@@ -1,3 +1,7 @@
+## 1.0.3
+
+- Fixes crash when there's no offerings #17
+
 ## 1.0.2
 
 - Fixes issue with older versions of Kotlin (#15)

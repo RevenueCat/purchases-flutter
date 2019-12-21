@@ -192,7 +192,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 - (void)checkTrialOrIntroductoryPriceEligibility:(NSArray *)products
                                           result:(FlutterResult)result
 {
-    [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products completionBlock:^(NSDictionary<NSString *,RCIntroEligibility *> * _Nonnull responseDictionary) {
+    [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products completionBlock:^(NSDictionary<NSString *,NSDictionary *> * _Nonnull responseDictionary) {
         result([NSDictionary dictionaryWithDictionary:responseDictionary]);
     }];
 }
