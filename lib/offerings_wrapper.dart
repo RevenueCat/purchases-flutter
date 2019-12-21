@@ -10,7 +10,8 @@ class Offerings {
   final Map<String, Offering> all;
 
   Offerings.fromJson(Map<dynamic, dynamic> map)
-      : current = map['current'] != null ? Offering.fromJson(map['current']) : null,
+      : current =
+            map['current'] != null ? Offering.fromJson(map['current']) : null,
         all = (map['all'] as Map<dynamic, dynamic>).map(
             (key, value) => MapEntry(key as String, Offering.fromJson(value)));
 
