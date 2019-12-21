@@ -189,7 +189,7 @@
 }
 
 + (void)checkTrialOrIntroductoryPriceEligibility:(nonnull NSArray<NSString *> *)productIdentifiers
-                                 completionBlock:(RCReceiveIntroEligibilityBlock)completion
+                                 completionBlock:(void (^)(NSDictionary<NSString *, NSDictionary *> *))completion
 {
     NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
     
