@@ -2,7 +2,7 @@
 1. Run `./scripts/download-purchases-common.sh 1.0.6` (change version to latest)
 1. Run `flutter format`
 1. Update versions in VERSIONS.md.
-1. Update version in pubspec.yaml, purchases_flutter.podspec.
+1. Update version in pubspec.yaml, purchases_flutter.podspec and android/build.gradle.
 1. Add an entry to CHANGELOG.md
 1. `flutter pub pub publish --dry-run`
 1. `git commit -am "Preparing for version x.y.z"`

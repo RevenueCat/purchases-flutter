@@ -1,3 +1,7 @@
+## 1.0.4
+
+- Fixes `getOffering` always returns null #19
+
 ## 1.0.3
 
 - Fixes crash when there's no offerings #17

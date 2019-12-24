@@ -17,7 +17,7 @@ class Offerings {
 
   /// Retrieves an specific offering by its identifier.
   Offering getOffering(String identifier) {
-    return all['identifier'];
+    return all[identifier];
   }
 
   @override
