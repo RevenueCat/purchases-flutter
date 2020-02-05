@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://www.revenuecat.com/assets/images/build.svg" alt="RevenueCat"/>
+  <img src="https://d2jzmbury1aqmc.cloudfront.net/assets/images/build.svg" alt="RevenueCat"/>
 </p>
 <h3 align="center">😻 In-app Subscriptions Made Easy 😻</h1>
 
