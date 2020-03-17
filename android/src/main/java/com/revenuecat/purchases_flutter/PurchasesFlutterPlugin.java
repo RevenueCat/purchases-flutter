@@ -79,6 +79,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 int network = call.argument("network") != null ? (int) call.argument("network") : -1;
                 String networkUserId = call.argument("networkUserId");
                 addAttributionData(data, network, networkUserId);
+                result.success(null);
                 break;
             case "getOfferings":
                 getOfferings(result);
