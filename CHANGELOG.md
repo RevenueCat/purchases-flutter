@@ -1,3 +1,8 @@
+## 1.0.5
+
+- Updates README.md 
+- Specifies compatible platforms
+
 ## 1.0.4
 
 - Fixes `getOffering` always returns null #19
