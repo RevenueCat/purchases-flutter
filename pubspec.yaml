@@ -1,6 +1,6 @@
 name: purchases_flutter
-description: Client for the RevenueCat subscription and purchase tracking system, making implementing in-app subscriptions in Flutter easy - receipt validation and status tracking included!
-version: 1.0.4
+description: A Flutter plugin that makes implementing in-app subscriptions for iOS and Android simple – receipt validation and status tracking included!
+version: 1.0.5
 homepage: https://www.revenuecat.com/
 repository: https://github.com/RevenueCat/purchases-flutter
 issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
@@ -8,6 +8,7 @@ documentation: https://docs.revenuecat.com/
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
+  flutter: ">=1.12.0 <2.0.0"
 
 dependencies:
   flutter:
@@ -27,8 +28,12 @@ flutter:
   # be modified. They are used by the tooling to maintain consistency when
   # adding or updating assets for this project.
   plugin:
-    androidPackage: com.revenuecat.purchases_flutter
-    pluginClass: PurchasesFlutterPlugin
+    platforms:
+      android:
+        package: com.revenuecat.purchases_flutter
+        pluginClass: PurchasesFlutterPlugin
+      ios:
+        pluginClass: PurchasesFlutterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
