@@ -13,6 +13,8 @@ typedef void (^RCHybridResponseBlock)(NSDictionary * _Nullable, RCErrorContainer
 
 @interface RCCommonFunctionality : NSObject
 
++ (void)configure;
+
 + (void)setAllowSharingStoreAccount:(BOOL)allowSharingStoreAccount;
 
 + (void)addAttributionData:(NSDictionary *)data network:(NSInteger)network networkUserId:(NSString *)networkUserId;
@@ -39,15 +41,29 @@ typedef void (^RCHybridResponseBlock)(NSDictionary * _Nullable, RCErrorContainer
 
 + (BOOL)isAnonymous;
 
-+ (void)purchaseProduct:(NSString *)productIdentifier completionBlock:(RCHybridResponseBlock)completion;
++ (void)purchaseProduct:(NSString *)productIdentifier signedDiscountTimestamp:(nullable NSString *)discountTimestamp completionBlock:(RCHybridResponseBlock)completion;
 
-+ (void)purchasePackage:(NSString *)packageIdentifier offering:(NSString *)offeringIdentifier completionBlock:(RCHybridResponseBlock)completion;
++ (void)purchasePackage:(NSString *)packageIdentifier offering:(NSString *)offeringIdentifier signedDiscountTimestamp:(nullable NSString *)discountTimestamp completionBlock:(RCHybridResponseBlock)completion;
 
 + (void)makeDeferredPurchase:(RCDeferredPromotionalPurchaseBlock)deferredPurchase completionBlock:(RCHybridResponseBlock)completion;
 
 + (void)setFinishTransactions:(BOOL)finishTransactions;
 
-+ (void)checkTrialOrIntroductoryPriceEligibility:(nonnull NSArray<NSString *> *)productIdentifiers completionBlock:(void (^)(NSDictionary<NSString *, NSDictionary *> *))completion;
++ (void)checkTrialOrIntroductoryPriceEligibility:(nonnull NSArray<NSString *> *)productIdentifiers completionBlock:(RCReceiveIntroEligibilityBlock)completion;
+
++ (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier discount:(nullable NSString *)discountIdentifier completionBlock:(RCHybridResponseBlock)completion;
+
++ (void)invalidatePurchaserInfoCache;
+
++ (void)setAttributes:(NSDictionary<NSString *, NSString *> *)attributes;
+
++ (void)setEmail:(nullable NSString *)email;
+
++ (void)setPhoneNumber:(nullable NSString *)phoneNumber;
+
++ (void)setDisplayName:(nullable NSString *)displayName;
+
++ (void)setPushToken:(nullable NSString *)pushToken;
 
 @end
 
