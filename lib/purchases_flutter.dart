@@ -321,7 +321,7 @@ class Purchases {
   ///
   /// [attributes] Map of attributes by key. Set the value as an empty string to delete an attribute.
   static Future<void> setAttributes(Map<String, String> attributes) async {
-    await _channel.invokeMethod('setAttributes', {'data': attributes});
+    await _channel.invokeMethod('setAttributes', {'attributes': attributes});
   }
 
   /// Subscriber attribute associated with the email address for the user
