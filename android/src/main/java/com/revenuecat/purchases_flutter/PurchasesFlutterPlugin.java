@@ -78,8 +78,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 Map<String, String> data = call.argument("data");
                 int network = call.argument("network") != null ? (int) call.argument("network") : -1;
                 String networkUserId = call.argument("networkUserId");
-                addAttributionData(data, network, networkUserId);
-                result.success(null);
+                addAttributionData(data, network, networkUserId, result);
                 break;
             case "getOfferings":
                 getOfferings(result);
@@ -170,8 +169,10 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
         result.success(null);
     }
 
-    private void addAttributionData(Map<String, String> data, int network, @Nullable String networkUserId) {
+    private void addAttributionData(Map<String, String> data, int network,
+                                    @Nullable String networkUserId, Result result) {
         CommonKt.addAttributionData(data, network, networkUserId);
+        result.success(null);
     }
 
     private void getOfferings(final Result result) {
