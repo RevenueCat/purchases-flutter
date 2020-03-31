@@ -301,27 +301,43 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 + (void)setAttributes:(NSDictionary<NSString *, NSString *> *)attributes {
     NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases setAttributes:attributes];
+    NSMutableDictionary *nonNilAttributes = [[NSMutableDictionary alloc] init];
+    for (NSString * key in attributes.allKeys) {
+        id object = attributes[key];
+        NSString *nonNilAttribute = ([object isEqual:NSNull.null])
+                                     ? @""
+                                     : object;
+        nonNilAttributes[key] = nonNilAttribute;
+    }
+    [RCPurchases.sharedPurchases setAttributes:nonNilAttributes];
 }
 
 + (void)setEmail:(nullable NSString *)email {
     NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases setEmail:email];
+    NSString *nonNSNullAttribute = [self nonNSNullAttribute:email];
+    [RCPurchases.sharedPurchases setEmail:nonNSNullAttribute];
 }
 
 + (void)setPhoneNumber:(nullable NSString *)phoneNumber {
     NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases setPhoneNumber:phoneNumber];
+    NSString *nonNSNullAttribute = [self nonNSNullAttribute:phoneNumber];
+    [RCPurchases.sharedPurchases setPhoneNumber:nonNSNullAttribute];
 }
 
 + (void)setDisplayName:(nullable NSString *)displayName {
     NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases setDisplayName:displayName];
+    NSString *nonNSNullAttribute = [self nonNSNullAttribute:displayName];
+    [RCPurchases.sharedPurchases setDisplayName:nonNSNullAttribute];
 }
 
 + (void)setPushToken:(nullable NSString *)pushToken {
     NSAssert(RCPurchases.sharedPurchases, @"You must call setup first.");
-    [RCPurchases.sharedPurchases _setPushTokenString:pushToken];
+    NSString *nonNSNullAttribute = [self nonNSNullAttribute:pushToken];
+    [RCPurchases.sharedPurchases _setPushTokenString:nonNSNullAttribute];
+}
+
++ (NSString * _Nullable)nonNSNullAttribute:(NSString * _Nullable)attribute {
+    return ([attribute isEqual:NSNull.null]) ? @"" : attribute;
 }
 
 #pragma errors
