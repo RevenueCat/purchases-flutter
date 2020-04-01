@@ -1,9 +1,9 @@
 PODS:
   - Flutter (1.0.0)
-  - Purchases (3.2.1)
+  - Purchases (3.2.2)
   - purchases_flutter (1.1.0):
     - Flutter
-    - Purchases (~> 3.2.1)
+    - Purchases (~> 3.2.2)
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
