@@ -1,4 +1,4 @@
-## 1.0.6
+## 1.1.0
 
 - Adds Subscriber Attributes, which allow developers to store additional, structured information
 for a user in RevenueCat. More info: https://docs.revenuecat.com/docs/user-attributes.

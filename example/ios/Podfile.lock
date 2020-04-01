@@ -1,7 +1,7 @@
 PODS:
   - Flutter (1.0.0)
   - Purchases (3.2.1)
-  - purchases_flutter (1.0.6):
+  - purchases_flutter (1.1.0):
     - Flutter
     - Purchases (~> 3.2.1)
 
