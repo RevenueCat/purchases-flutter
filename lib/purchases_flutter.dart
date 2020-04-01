@@ -300,6 +300,57 @@ class Purchases {
     return eligibilityMap.map((key, value) =>
         MapEntry(key as String, IntroEligibility.fromJson(value)));
   }
+
+  /// Invalidates the cache for purchaser information.
+  /// This is useful for cases where purchaser information might have been updated outside of the app, like if a
+  /// promotional subscription is granted through the RevenueCat dashboard.
+  static Future<void> invalidatePurchaserInfoCache() async {
+    return await _channel.invokeMethod('invalidatePurchaserInfoCache');
+  }
+
+  ///================================================================================
+  /// Subscriber Attributes
+  ///================================================================================
+
+  /// Subscriber attributes are useful for storing additional, structured information on a user.
+  /// Since attributes are writable using a public key they should not be used for
+  /// managing secure or sensitive information such as subscription status, coins, etc.
+  ///
+  /// Key names starting with "$" are reserved names used by RevenueCat. For a full list of key
+  /// restrictions refer to our guide: https://docs.revenuecat.com/docs/subscriber-attributes
+  ///
+  /// [attributes] Map of attributes by key. Set the value as an empty string to delete an attribute.
+  static Future<void> setAttributes(Map<String, String> attributes) async {
+    await _channel.invokeMethod('setAttributes', {'attributes': attributes});
+  }
+
+  /// Subscriber attribute associated with the email address for the user
+  ///
+  /// [email] Empty String or null will delete the subscriber attribute.
+  static Future<void> setEmail(String email) async {
+    await _channel.invokeMethod('setEmail', {'email': email});
+  }
+
+  /// Subscriber attribute associated with the phone number for the user
+  ///
+  /// [phoneNumber] Empty String or null will delete the subscriber attribute.
+  static Future<void> setPhoneNumber(String phoneNumber) async {
+    await _channel.invokeMethod('setPhoneNumber', {'phoneNumber': phoneNumber});
+  }
+
+  /// Subscriber attribute associated with the display name for the user
+  ///
+  /// [displayName] Empty String or null will delete the subscriber attribute.
+  static Future<void> setDisplayName(String displayName) async {
+    await _channel.invokeMethod('setDisplayName', {'displayName': displayName});
+  }
+
+  /// Subscriber attribute associated with the push token for the user
+  ///
+  /// [pushToken] Null will delete the subscriber attribute.
+  static Future<void> setPushToken(String pushToken) async {
+    await _channel.invokeMethod('setPushToken', {'pushToken': pushToken});
+  }
 }
 
 /// This class holds the information used when upgrading from another sku.

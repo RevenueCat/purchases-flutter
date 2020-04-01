@@ -78,8 +78,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 Map<String, String> data = call.argument("data");
                 int network = call.argument("network") != null ? (int) call.argument("network") : -1;
                 String networkUserId = call.argument("networkUserId");
-                addAttributionData(data, network, networkUserId);
-                result.success(null);
+                addAttributionData(data, network, networkUserId, result);
                 break;
             case "getOfferings":
                 getOfferings(result);
@@ -140,6 +139,29 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 productIdentifiers = call.argument("productIdentifiers");
                 checkTrialOrIntroductoryPriceEligibility(productIdentifiers, result);
                 break;
+            case "invalidatePurchaserInfoCache":
+                invalidatePurchaserInfoCache(result);
+                break;
+            case "setAttributes":
+                Map<String, String> attributes = call.argument("attributes");
+                setAttributes(attributes, result);
+                break;
+            case "setEmail":
+                String email = call.argument("email");
+                setEmail(email, result);
+                break;
+            case "setPhoneNumber":
+                String phoneNumber = call.argument("phoneNumber");
+                setPhoneNumber(phoneNumber, result);
+                break;
+            case "setDisplayName":
+                String displayName = call.argument("displayName");
+                setDisplayName(displayName, result);
+                break;
+            case "setPushToken":
+                String pushToken = call.argument("pushToken");
+                setPushToken(pushToken, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -170,8 +192,10 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
         result.success(null);
     }
 
-    private void addAttributionData(Map<String, String> data, int network, @Nullable String networkUserId) {
+    private void addAttributionData(Map<String, String> data, int network,
+                                    @Nullable String networkUserId, Result result) {
         CommonKt.addAttributionData(data, network, networkUserId);
+        result.success(null);
     }
 
     private void getOfferings(final Result result) {
@@ -261,6 +285,40 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
     private void checkTrialOrIntroductoryPriceEligibility(ArrayList<String> productIDs, final Result result) {
         result.success(CommonKt.checkTrialOrIntroductoryPriceEligibility(productIDs));
+    }
+
+    private void invalidatePurchaserInfoCache(Result result) {
+        CommonKt.invalidatePurchaserInfoCache();
+        result.success(null);
+    }
+
+    //================================================================================
+    // Subscriber Attributes
+    //================================================================================
+
+    private void setAttributes(Map<String, String> map, final Result result) {
+        CommonKt.setAttributes(map);
+        result.success(null);
+    }
+
+    private void setEmail(String email, final Result result) {
+        CommonKt.setEmail(email);
+        result.success(null);
+    }
+
+    private void setPhoneNumber(String phoneNumber, final Result result) {
+        CommonKt.setPhoneNumber(phoneNumber);
+        result.success(null);
+    }
+
+    private void setDisplayName(String displayName, final Result result) {
+        CommonKt.setDisplayName(displayName);
+        result.success(null);
+    }
+
+    private void setPushToken(String pushToken, final Result result) {
+        CommonKt.setPushToken(pushToken);
+        result.success(null);
     }
 
     @NotNull

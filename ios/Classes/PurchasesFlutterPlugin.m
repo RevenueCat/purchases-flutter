@@ -81,6 +81,23 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self isAnonymousWithResult:result];
     } else if ([@"checkTrialOrIntroductoryPriceEligibility" isEqualToString:call.method]) {
         [self checkTrialOrIntroductoryPriceEligibility:arguments[@"productIdentifiers"] result:result];
+    } else if ([@"invalidatePurchaserInfoCache" isEqualToString:call.method]) {
+        [self invalidatePurchaserInfoCacheWithResult:result];
+    } else if ([@"setAttributes" isEqualToString:call.method]) {
+        NSDictionary *attributes = arguments[@"attributes"];
+        [self setAttributes:attributes result:result];
+    } else if ([@"setEmail" isEqualToString:call.method]) {
+        NSString *email = arguments[@"email"];
+        [self setEmail:email result:result];
+    } else if ([@"setPhoneNumber" isEqualToString:call.method]) {
+        NSString *phoneNumber = arguments[@"phoneNumber"];
+        [self setPhoneNumber:phoneNumber result:result];
+    } else if ([@"setDisplayName" isEqualToString:call.method]) {
+        NSString *displayName = arguments[@"displayName"];
+        [self setDisplayName:displayName result:result];
+    } else if ([@"setPushToken" isEqualToString:call.method]) {
+        NSString *pushToken = arguments[@"pushToken"];
+        [self setPushToken:pushToken result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -128,14 +145,19 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 - (void)purchaseProduct:(NSString *)productIdentifier
                  result:(FlutterResult)result
 {
-    [RCCommonFunctionality purchaseProduct:productIdentifier completionBlock:[self getResponseCompletionBlock:result]];
+    [RCCommonFunctionality purchaseProduct:productIdentifier
+                   signedDiscountTimestamp:nil
+                           completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)purchasePackage:(NSString *)packageIdentifier
                offering:(NSString *)offeringIdentifier
                  result:(FlutterResult)result
 {
-    [RCCommonFunctionality purchasePackage:packageIdentifier offering:offeringIdentifier completionBlock:[self getResponseCompletionBlock:result]];
+    [RCCommonFunctionality purchasePackage:packageIdentifier
+                                  offering:offeringIdentifier
+                   signedDiscountTimestamp:nil
+                           completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)restoreTransactionsWithResult:(FlutterResult)result
@@ -195,6 +217,44 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products completionBlock:^(NSDictionary<NSString *,NSDictionary *> * _Nonnull responseDictionary) {
         result([NSDictionary dictionaryWithDictionary:responseDictionary]);
     }];
+}
+
+- (void)invalidatePurchaserInfoCacheWithResult:(FlutterResult)result
+{
+    [RCCommonFunctionality invalidatePurchaserInfoCache];
+    result(nil);
+}
+
+#pragma mark Subscriber Attributes
+
+- (void)setAttributes:(NSDictionary *)attributes result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAttributes:attributes];
+    result(nil);
+}
+
+- (void)setEmail:(NSString *)email result:(FlutterResult)result
+{
+    [RCCommonFunctionality setEmail:email];
+    result(nil);
+}
+
+- (void)setPhoneNumber:(NSString *)phoneNumber result:(FlutterResult)result
+{
+    [RCCommonFunctionality setPhoneNumber:phoneNumber];
+    result(nil);
+}
+
+- (void)setDisplayName:(NSString *)displayName result:(FlutterResult)result
+{
+    [RCCommonFunctionality setDisplayName:displayName];
+    result(nil);
+}
+
+- (void)setPushToken:(NSString *)pushToken result:(FlutterResult)result
+{
+    [RCCommonFunctionality setPushToken:pushToken];
+    result(nil);
 }
 
 #pragma mark -
