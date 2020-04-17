@@ -28,7 +28,7 @@ class _MyAppState extends State<InitialScreen> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    Purchases.setDebugLogsEnabled(true);
+    await Purchases.setDebugLogsEnabled(true);
     await Purchases.setup("api_key");
     Purchases.addAttributionData({}, PurchasesAttributionNetwork.facebook);
     PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
