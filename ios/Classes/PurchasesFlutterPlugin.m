@@ -46,7 +46,9 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self setupPurchases:apiKey appUserID:appUserID observerMode:observerMode result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
-    } else if ([@"addAttributionData" isEqualToString:call.method]) {
+    } else if ([@"setFinishTransactions" isEqualToString:call.method]) {
+              [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
+          }else if ([@"addAttributionData" isEqualToString:call.method]) {
         NSDictionary *data = arguments[@"data"];
         NSInteger network = [arguments[@"network"] integerValue];
         NSString *networkUserId = arguments[@"networkUserId"];
@@ -117,6 +119,13 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
                              result:(FlutterResult)result
 {
     [RCCommonFunctionality setAllowSharingStoreAccount:allowSharingStoreAccount];
+    result(nil);
+}
+
+- (void)setFinishTransactions:(BOOL)finishTransactions
+                             result:(FlutterResult)result
+{
+    [RCCommonFunctionality setFinishTransactions:finishTransactions];
     result(nil);
 }
 
