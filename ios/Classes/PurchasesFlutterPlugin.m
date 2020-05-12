@@ -3,6 +3,7 @@
 @import StoreKit;
 
 #import "RCPurchaserInfo+HybridAdditions.h"
+#import "RCPurchases+HybridAdditions.h"
 #import "RCCommonFunctionality.h"
 #import "RCErrorContainer.h"
 
@@ -108,7 +109,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
           observerMode:(BOOL)observerMode
                 result:(FlutterResult)result
 {
-    [RCPurchases configureWithAPIKey:apiKey appUserID:appUserID observerMode:observerMode];
+    [RCPurchases configureWithAPIKey:apiKey appUserID:appUserID observerMode:observerMode userDefaults:nil platformFlavor:@"flutter"];
     RCPurchases.sharedPurchases.delegate = self;
     result(nil);
 }
