@@ -109,7 +109,12 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
           observerMode:(BOOL)observerMode
                 result:(FlutterResult)result
 {
-    [RCPurchases configureWithAPIKey:apiKey appUserID:appUserID observerMode:observerMode userDefaults:nil platformFlavor:@"flutter"];
+    [RCPurchases configureWithAPIKey:apiKey
+                           appUserID:appUserID
+                        observerMode:observerMode
+                        userDefaults:nil
+                      platformFlavor:self.platformFlavor
+               platformFlavorVersion:self.platformFlavorVersion];
     RCPurchases.sharedPurchases.delegate = self;
     result(nil);
 }
@@ -286,6 +291,14 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
             result(purchaserInfoDictionary);
         }
     };
+}
+
+- (NSString *)platformFlavor { 
+    return @"flutter";
+}
+
+- (NSString *)platformFlavorVersion { 
+    return @"1.2.0";
 }
 
 @end
