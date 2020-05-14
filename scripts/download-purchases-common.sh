@@ -22,6 +22,11 @@ if [[ -d ios/Classes/Common ]]; then
     rm -rf ios/Classes/Common
 fi
 
+if [[ -d ios/Classes/PurchasesHybridCommon ]]; then
+    echo "Old iOS classes found. Removing them and installing version $VERSION"
+    rm -rf ios/Classes/PurchasesHybridCommon
+fi
+
 if [[ -d android/src/main/java/com/revenuecat/purchases/common ]]; then
     echo "Old Android classes found. Removing them and installing version $VERSION"
     rm -rf android/src/main/java/com/revenuecat/purchases/common
@@ -32,12 +37,12 @@ curl -sSL ${URL} > tempCommon.zip
 mkdir -p tempCommon
 unzip -o tempCommon.zip -d tempCommon
 ls tempCommon
-mv tempCommon/purchases-hybrid-common-$VERSION/ios/ ios/Classes/Common
+mv tempCommon/purchases-hybrid-common-$VERSION/ios/PurchasesHybridCommon ios/Classes/PurchasesHybridCommon
 mv tempCommon/purchases-hybrid-common-$VERSION/android/common/src/main/java/com/revenuecat/purchases/common/ android/src/main/java/com/revenuecat/purchases/common
 rm -r tempCommon
 rm tempCommon.zip
 
-if ! [[ -d ios/Classes/Common ]]; then
+if ! [[ -d ios/Classes/PurchasesHybridCommon ]]; then
     echo "Common iOS files not found. Please reinstall purchases-flutter"; exit 1;
 fi;
 
