@@ -15,7 +15,8 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Purchases', '~> 3.3.1'
+  s.dependency 'PurchasesHybridCommon', '~> 1.0.14'
+  s.dependency 'Purchases', '~> 3.3.0'
 
   s.ios.deployment_target = '9.0'
 end

@@ -2,10 +2,7 @@
 
 @import StoreKit;
 
-#import "RCPurchaserInfo+HybridAdditions.h"
-#import "RCPurchases+HybridAdditions.h"
-#import "RCCommonFunctionality.h"
-#import "RCErrorContainer.h"
+#import <PurchasesHybridCommon/PurchasesHybridCommon.h>
 
 @interface PurchasesFlutterPlugin () <RCPurchasesDelegate>
 
