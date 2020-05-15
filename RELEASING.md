@@ -1,5 +1,4 @@
 1. Update to the latest SDK versions in purchases_flutter.podspec and build.gradle.
-1. Run `./scripts/download-purchases-common.sh 1.0.14` (change version to latest)
 1. Run `flutter format`
 1. Update versions in VERSIONS.md.
 1. Update version in pubspec.yaml, purchases_flutter.podspec and android/build.gradle.
