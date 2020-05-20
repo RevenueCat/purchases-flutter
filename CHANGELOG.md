@@ -1,3 +1,8 @@
+## 1.1.1
+
+- Update README.md to remove macOS support (#52)
+- Await setDebugLogsEnabled before next steps in the sample app (#38)
+
 ## 1.1.0
 
 - Adds Subscriber Attributes, which allow developers to store additional, structured information
