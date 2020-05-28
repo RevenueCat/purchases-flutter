@@ -1,29 +1,33 @@
 PODS:
   - Flutter (1.0.0)
-  - Purchases (3.2.2)
+  - Purchases (3.3.1)
   - purchases_flutter (1.1.0):
     - Flutter
-    - Purchases (~> 3.2.2)
+    - PurchasesHybridCommon (= 1.1.0)
+  - PurchasesHybridCommon (1.1.0):
+    - Purchases (= 3.3.1)
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
+  - Flutter (from `Flutter`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
 
 SPEC REPOS:
   trunk:
     - Purchases
+    - PurchasesHybridCommon
 
 EXTERNAL SOURCES:
   Flutter:
-    :path: ".symlinks/flutter/ios"
+    :path: Flutter
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  Purchases: 17c95d62be02c876c56f6fe6b34fda2016a09063
-  purchases_flutter: ba6f93f4e355fe67f4074fa2bf668cc4ab056dfd
+  Purchases: 15bb10a16e825ea724aeab107d98036fa168a670
+  purchases_flutter: b4022e43e3f5b79b76df2ec58af408cfe67de3c9
+  PurchasesHybridCommon: fa5f4634ba245b5db6027cadcb7ad7c869ccb55f
 
-PODFILE CHECKSUM: 3389836f37640698630b8f0670315d626d5f1469
+PODFILE CHECKSUM: 8685ee79ad9489b94b9f1ac3974f4638bb57b02e
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
