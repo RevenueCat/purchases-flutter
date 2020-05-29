@@ -295,7 +295,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"1.2.0";
+    return @"1.2.0-SNAPSHOT";
 }
 
 @end

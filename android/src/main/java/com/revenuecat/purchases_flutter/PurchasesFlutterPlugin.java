@@ -3,6 +3,7 @@ package com.revenuecat.purchases_flutter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.revenuecat.purchases.PlatformInfo;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.common.CommonKt;
@@ -36,6 +37,8 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
     private final Registrar registrar;
     private final MethodChannel channel;
+    private static final String PLATFORM_NAME = "flutter";
+    private static final String PLUGIN_VERSION = "1.2.0-SNAPSHOT";
 
     public PurchasesFlutterPlugin(Registrar registrar, MethodChannel channel) {
         this.registrar = registrar;
@@ -173,11 +176,9 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
     }
 
     private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode, final Result result) {
-        if (observerMode != null) {
-            Purchases.configure(this.registrar.context(), apiKey, appUserID, observerMode);
-        } else {
-            Purchases.configure(this.registrar.context(), apiKey, appUserID);
-        }
+        PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
+        CommonKt.configure(this.registrar.context(), apiKey, appUserID, observerMode, platformInfo);
+
         Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
             @Override
             public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
