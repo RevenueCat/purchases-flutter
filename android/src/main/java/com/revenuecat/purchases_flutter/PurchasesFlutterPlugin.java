@@ -130,6 +130,10 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
                 setDebugLogsEnabled(enabled, result);
                 break;
+            case "setProxyURLString":
+                String proxyURLString = call.argument("proxyURLString");
+                setProxyURLString(proxyURLString, result);
+                break;
             case "getPurchaserInfo":
                 getPurchaserInfo(result);
                 break;
@@ -277,6 +281,11 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
     private void setDebugLogsEnabled(boolean enabled, final Result result) {
         CommonKt.setDebugLogsEnabled(enabled);
+        result.success(null);
+    }
+
+    private void setProxyURLString(String proxyURLString, final Result result) {
+        CommonKt.setProxyURLString(proxyURLString);
         result.success(null);
     }
 
