@@ -18,8 +18,11 @@ enum PurchasesErrorCode {
   invalidAppUserIdError,
   operationAlreadyInProgressError,
   unknownBackendError,
+  invalidAppleSubscriptionKeyError,
+  ineligibleError,
   insufficientPermissionsError,
-  paymentPendingError
+  paymentPendingError,
+  invalidSubscriberAttributesError
 }
 
 class PurchasesErrorHelper {
