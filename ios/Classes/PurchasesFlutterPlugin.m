@@ -123,7 +123,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 }
 
 - (void)setFinishTransactions:(BOOL)finishTransactions
-                             result:(FlutterResult)result
+                       result:(FlutterResult)result
 {
     [RCCommonFunctionality setFinishTransactions:finishTransactions];
     result(nil);
