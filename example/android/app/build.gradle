@@ -58,11 +58,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
 
+// Call passing parameter -PcommonPath="$HOME/Development/repos/purchases-hybrid-common/android"
 task enableLocalBuild {
     group = 'Tools'
     description = 'Enable composite build'
     doLast {
-        new File(".composite-enable").createNewFile()
+        new File(".composite-enable").text = commonPath
     }
 }
 

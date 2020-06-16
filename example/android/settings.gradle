@@ -16,6 +16,7 @@ plugins.each { name, path ->
 
 // Run enableLocalBuild task to enable building purchases-hybrid-common from your local copy
 if (file(".composite-enable").exists()) {
-    includeBuild ('../../../../purchases-hybrid-common/android')
+    String path = new File(".composite-enable").text
+    includeBuild (path)
 }
 
