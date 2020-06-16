@@ -29,3 +29,4 @@ pubspec.lock
 example/ios/Flutter/flutter_export_environment.sh
 example/.flutter-plugins-dependencies
 example/ios/Flutter/Flutter.podspec
+example/android/.composite-enable

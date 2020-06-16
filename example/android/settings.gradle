@@ -13,3 +13,10 @@ plugins.each { name, path ->
     include ":$name"
     project(":$name").projectDir = pluginDirectory
 }
+
+// Run enableLocalBuild task to enable building purchases-hybrid-common from your local copy
+if (file(".composite-enable").exists()) {
+    String path = new File(".composite-enable").text
+    includeBuild (path)
+}
+
