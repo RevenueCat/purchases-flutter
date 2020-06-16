@@ -73,6 +73,10 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 Boolean observerMode = call.argument("observerMode");
                 setupPurchases(apiKey, appUserId, observerMode, result);
                 break;
+            case "setFinishTransactions":
+                Boolean finishTransactions = call.argument("finishTransactions");
+                setFinishTransactions(finishTransactions, result);
+                break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
                 setAllowSharingAppStoreAccount(allowSharing, result);
@@ -185,6 +189,11 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 sendEvent(PURCHASER_INFO_UPDATED, MappersKt.map(purchaserInfo));
             }
         });
+        result.success(null);
+    }
+
+    private void setFinishTransactions(boolean finishTransactions, Result result) {
+        CommonKt.setFinishTransactions(finishTransactions);
         result.success(null);
     }
 
