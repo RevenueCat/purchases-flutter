@@ -28,6 +28,10 @@ class PurchaserInfo {
   /// Date when this info was requested
   final String requestDate;
 
+  /// Returns the purchase date for the version of the application when the user bought the app.
+  /// Use this for grandfathering users when migrating to subscriptions.
+  final String originalPurchaseDate;
+
   /// Returns the version number for the version of the application when the
   /// user bought the app. Use this for grandfathering users when migrating
   /// to subscriptions.
@@ -56,7 +60,8 @@ class PurchaserInfo {
         requestDate = map["requestDate"],
         allPurchaseDates = (map["allPurchaseDates"] as Map<dynamic, dynamic>)
             .map((key, value) => MapEntry(key as String, value as String)),
-        originalApplicationVersion = map["originalApplicationVersion"];
+        originalApplicationVersion = map["originalApplicationVersion"],
+        originalPurchaseDate = map["originalPurchaseDate"];
 
   @override
   String toString() {
@@ -70,6 +75,7 @@ class PurchaserInfo {
         'firstSeen: $firstSeen, '
         'originalAppUserId: $originalAppUserId, '
         'requestDate: $requestDate, '
-        'originalApplicationVersion: $originalApplicationVersion}';
+        'originalApplicationVersion: $originalApplicationVersion, '
+        'originalPurchaseDate: $originalPurchaseDate}';
   }
 }
