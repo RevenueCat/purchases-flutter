@@ -48,7 +48,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
     } else if ([@"setFinishTransactions" isEqualToString:call.method]) {
               [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
-          }else if ([@"addAttributionData" isEqualToString:call.method]) {
+    } else if ([@"addAttributionData" isEqualToString:call.method]) {
         NSDictionary *data = arguments[@"data"];
         NSInteger network = [arguments[@"network"] integerValue];
         NSString *networkUserId = arguments[@"networkUserId"];
