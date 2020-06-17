@@ -260,7 +260,7 @@ class Purchases {
     return await _channel
         .invokeMethod('setProxyURLString', {'proxyURLString': url});
   }
-  
+
   /// Gets current purchaser info, which will normally be cached.
   static Future<PurchaserInfo> getPurchaserInfo() async {
     Map<dynamic, dynamic> result =
