@@ -41,6 +41,12 @@ class PurchaserInfo {
   /// in Android
   final String originalApplicationVersion;
 
+  /// URL to manage the active subscription of the user. If this user has an active iOS
+  /// subscription, this will point to the App Store, if the user has an active Play Store subscription
+  /// it will point there. If there are no active subscriptions it will be null.
+  /// If there are multiple for different platforms, it will point to the device store.
+  final String managementURL;
+
   PurchaserInfo.fromJson(Map<dynamic, dynamic> map)
       : entitlements = EntitlementInfos.fromJson(
             map["entitlements"] as Map<dynamic, dynamic>),
@@ -61,7 +67,8 @@ class PurchaserInfo {
         allPurchaseDates = (map["allPurchaseDates"] as Map<dynamic, dynamic>)
             .map((key, value) => MapEntry(key as String, value as String)),
         originalApplicationVersion = map["originalApplicationVersion"],
-        originalPurchaseDate = map["originalPurchaseDate"];
+        originalPurchaseDate = map["originalPurchaseDate"],
+        managementURL = map["managementURL"];
 
   @override
   String toString() {
@@ -76,6 +83,7 @@ class PurchaserInfo {
         'originalAppUserId: $originalAppUserId, '
         'requestDate: $requestDate, '
         'originalApplicationVersion: $originalApplicationVersion, '
-        'originalPurchaseDate: $originalPurchaseDate}';
+        'originalPurchaseDate: $originalPurchaseDate, '
+        'managementURL: $managementURL}';
   }
 }
