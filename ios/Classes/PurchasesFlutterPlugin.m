@@ -41,7 +41,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
-        [self setupPurchases:apiKey appUserID:appUserID observerMode:observerMode result:result];
+        NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
+        [self setupPurchases:apiKey appUserID:appUserID observerMode:observerMode userDefaultsSuiteName:userDefaultsSuiteName result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
     } else if ([@"setFinishTransactions" isEqualToString:call.method]) {
@@ -108,12 +109,19 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 - (void)setupPurchases:(NSString *)apiKey
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
+ userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
                 result:(FlutterResult)result
 {
+    if ([appUserID isKindOfClass:NSNull.class]) {
+        appUserID = nil;
+    }
+    if ([userDefaultsSuiteName isKindOfClass:NSNull.class]) {
+        userDefaultsSuiteName = nil;
+    }
     [RCPurchases configureWithAPIKey:apiKey
                            appUserID:appUserID
                         observerMode:observerMode
-                        userDefaults:nil
+               userDefaultsSuiteName:userDefaultsSuiteName
                       platformFlavor:self.platformFlavor
                platformFlavorVersion:self.platformFlavorVersion];
     RCPurchases.sharedPurchases.delegate = self;

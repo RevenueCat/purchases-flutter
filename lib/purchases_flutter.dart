@@ -33,16 +33,13 @@ class Purchases {
   /// IAP implementation and want to use only RevenueCat's backend.
   /// Default is FALSE.
   static Future<void> setup(String apiKey,
-      {String appUserId, bool observerMode = false}) async {
-    if (appUserId == null) {
-      return await _channel.invokeMethod('setupPurchases', {'apiKey': apiKey});
-    } else {
-      return await _channel.invokeMethod('setupPurchases', {
-        'apiKey': apiKey,
-        'appUserId': appUserId,
-        'observerMode': observerMode
-      });
-    }
+      {String appUserId, bool observerMode = false, String userDefaultsSuiteName}) async {
+    return await _channel.invokeMethod('setupPurchases', {
+      'apiKey': apiKey,
+      'appUserId': appUserId,
+      'observerMode': observerMode, 
+      'userDefaultsSuiteName': userDefaultsSuiteName
+    });
   }
 
   // Default to TRUE, set this to FALSE if you are consuming and acknowledging transactions outside of the Purchases SDK.

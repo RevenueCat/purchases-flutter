@@ -71,6 +71,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                 String apiKey = call.argument("apiKey");
                 String appUserId = call.argument("appUserId");
                 Boolean observerMode = call.argument("observerMode");
+                String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
                 setupPurchases(apiKey, appUserId, observerMode, result);
                 break;
             case "setFinishTransactions":
