@@ -11,10 +11,9 @@
         android:label="purchases_flutter_example"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleTop"
+            android:name="io.flutter.embedding.android.FlutterActivity"
             android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
             <!-- This keeps the window background of the activity showing
@@ -29,5 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".EmbeddingV1Activity"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <meta-data android:name="flutterEmbedding" android:value="2"/>
     </application>
 </manifest>
