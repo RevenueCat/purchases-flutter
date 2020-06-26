@@ -23,7 +23,7 @@ void main() {
   });
 
   test('setupPurchases', () async {
-    Purchases.setup('api_key', appUserId: 'cesar', observerMode: true);
+    await Purchases.setup('api_key', appUserId: 'cesar', observerMode: true);
     expect(
       log,
       <Matcher>[
