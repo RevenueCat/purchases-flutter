@@ -1,5 +1,8 @@
 package com.revenuecat.purchases_flutter;
 
+import android.app.Activity;
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -19,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.embedding.engine.plugins.activity.ActivityAware;
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
+import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -31,18 +38,27 @@ import kotlin.UninitializedPropertyAccessException;
 /**
  * PurchasesFlutterPlugin
  */
-public class PurchasesFlutterPlugin implements MethodCallHandler {
+public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
 
-    private final Registrar registrar;
-    private final MethodChannel channel;
+    // Only set registrar for v1 embedder.
+    private PluginRegistry.Registrar registrar;
+    // Only set activity for v2 embedder. Always access activity from getActivity() method.
+    private Context applicationContext;
+    private MethodChannel channel;
+    private Activity activity;
+
     private static final String PLATFORM_NAME = "flutter";
     private static final String PLUGIN_VERSION = "1.2.0-SNAPSHOT";
 
-    public PurchasesFlutterPlugin(Registrar registrar, MethodChannel channel) {
-        this.registrar = registrar;
-        this.channel = channel;
+    /**
+     * Plugin registration.
+     */
+    public static void registerWith(Registrar registrar) {
+        PurchasesFlutterPlugin instance = new PurchasesFlutterPlugin();
+        instance.onAttachedToEngine(registrar.messenger(), registrar.context());
+        instance.registrar = registrar;
         registrar.addViewDestroyListener(new PluginRegistry.ViewDestroyListener() {
             @Override
             public boolean onViewDestroy(FlutterNativeView flutterNativeView) {
@@ -56,12 +72,51 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
         });
     }
 
-    /**
-     * Plugin registration.
-     */
-    public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "purchases_flutter");
-        channel.setMethodCallHandler(new PurchasesFlutterPlugin(registrar, channel));
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        onAttachedToEngine(binding.getBinaryMessenger(), binding.getApplicationContext());
+    }
+
+    private void onAttachedToEngine(BinaryMessenger messenger, Context applicationContext) {
+        this.channel = new MethodChannel(messenger, "purchases_flutter");
+        this.applicationContext = applicationContext;
+        this.channel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        try {
+            Purchases.getSharedInstance().close();
+        } catch (UninitializedPropertyAccessException e) {
+            // there's no instance so all good
+        }
+        channel.setMethodCallHandler(null);
+        this.channel = null;
+        this.applicationContext = null;
+    }
+
+    @Override
+    public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
+        this.activity = binding.getActivity();
+    }
+
+    @Override
+    public void onReattachedToActivityForConfigChanges(@NonNull ActivityPluginBinding binding) {
+        onAttachedToActivity(binding);
+    }
+
+    @Override
+    public void onDetachedFromActivity() {
+        this.activity = null;
+    }
+
+    @Override
+    public void onDetachedFromActivityForConfigChanges() {
+        onDetachedFromActivity();
+    }
+
+    public Activity getActivity() {
+        return registrar != null ? registrar.activity() : activity;
     }
 
     @Override
@@ -186,7 +241,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
 
     private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode, final Result result) {
         PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
-        CommonKt.configure(this.registrar.context(), apiKey, appUserID, observerMode, platformInfo);
+        CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode, platformInfo);
 
         Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
             @Override
@@ -235,7 +290,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                                  @Nullable final Integer prorationMode, final String type,
                                  final Result result) {
         CommonKt.purchaseProduct(
-                this.registrar.activity(),
+                getActivity(),
                 productIdentifier,
                 oldSKU,
                 prorationMode,
@@ -250,7 +305,7 @@ public class PurchasesFlutterPlugin implements MethodCallHandler {
                                  @Nullable final Integer prorationMode,
                                  final Result result) {
         CommonKt.purchasePackage(
-                this.registrar.activity(),
+                getActivity(),
                 packageIdentifier,
                 offeringIdentifier,
                 oldSKU,

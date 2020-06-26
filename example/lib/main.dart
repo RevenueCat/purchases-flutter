@@ -30,7 +30,7 @@ class _MyAppState extends State<InitialScreen> {
   Future<void> initPlatformState() async {
     await Purchases.setDebugLogsEnabled(true);
     await Purchases.setup("api_key");
-    Purchases.addAttributionData({}, PurchasesAttributionNetwork.facebook);
+    await Purchases.addAttributionData({}, PurchasesAttributionNetwork.facebook);
     PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
     Offerings offerings = await Purchases.getOfferings();
     // If the widget was removed from the tree while the asynchronous platform

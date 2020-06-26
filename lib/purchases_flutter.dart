@@ -13,7 +13,7 @@ class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
       Set();
 
-  static final _channel = new MethodChannel('purchases_flutter')
+  static final _channel = MethodChannel('purchases_flutter')
     ..setMethodCallHandler((MethodCall call) async {
       switch (call.method) {
         case "Purchases-PurchaserInfoUpdated":
@@ -143,7 +143,7 @@ class Purchases {
       purchaseType = PurchaseType.inapp;
     }
     return purchaseProduct(productIdentifier,
-        upgradeInfo: new UpgradeInfo(oldSKU), type: purchaseType);
+        upgradeInfo: UpgradeInfo(oldSKU), type: purchaseType);
   }
 
   /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
