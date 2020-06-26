@@ -42,6 +42,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
 
+    // Only set registrar for v1 embedder.
+    private PluginRegistry.Registrar registrar;
+    // Only set activity for v2 embedder. Always access activity from getActivity() method.
     private Context applicationContext;
     private MethodChannel channel;
     private Activity activity;
@@ -49,16 +52,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private static final String PLATFORM_NAME = "flutter";
     private static final String PLUGIN_VERSION = "1.2.0-SNAPSHOT";
 
-    public PurchasesFlutterPlugin(Context applicationContext, MethodChannel channel) {
-        this.applicationContext = applicationContext;
-        this.channel = channel;
-    }
-
     /**
      * Plugin registration.
      */
     public static void registerWith(Registrar registrar) {
-        setupMethodChannel(registrar.messenger(), registrar.context());
+        PurchasesFlutterPlugin instance = new PurchasesFlutterPlugin();
+        instance.onAttachedToEngine(registrar.messenger(), registrar.context());
+        instance.registrar = registrar;
         registrar.addViewDestroyListener(new PluginRegistry.ViewDestroyListener() {
             @Override
             public boolean onViewDestroy(FlutterNativeView flutterNativeView) {
@@ -74,7 +74,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        setupMethodChannel(binding.getBinaryMessenger(), binding.getApplicationContext());
+        onAttachedToEngine(binding.getBinaryMessenger(), binding.getApplicationContext());
     }
 
     @Override
@@ -89,10 +89,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         this.applicationContext = null;
     }
 
-    private static void setupMethodChannel(BinaryMessenger messenger, Context applicationContext) {
-        final MethodChannel channel = new MethodChannel(messenger, "purchases_flutter");
-        PurchasesFlutterPlugin purchasesFlutterPlugin = new PurchasesFlutterPlugin(applicationContext, channel);
-        channel.setMethodCallHandler(purchasesFlutterPlugin);
+    private void onAttachedToEngine(BinaryMessenger messenger, Context applicationContext) {
+        this.channel = new MethodChannel(messenger, "purchases_flutter");
+        this.applicationContext = applicationContext;
+        this.channel.setMethodCallHandler(this);
     }
 
     @Override
@@ -113,6 +113,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Override
     public void onDetachedFromActivityForConfigChanges() {
         onDetachedFromActivity();
+    }
+
+    public Activity getActivity() {
+        return registrar != null ? registrar.activity() : activity;
     }
 
     @Override
@@ -285,7 +289,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                                  @Nullable final Integer prorationMode, final String type,
                                  final Result result) {
         CommonKt.purchaseProduct(
-                this.activity,
+                getActivity(),
                 productIdentifier,
                 oldSKU,
                 prorationMode,
@@ -300,7 +304,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                                  @Nullable final Integer prorationMode,
                                  final Result result) {
         CommonKt.purchasePackage(
-                this.activity,
+                getActivity(),
                 packageIdentifier,
                 offeringIdentifier,
                 oldSKU,
