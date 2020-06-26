@@ -20,6 +20,10 @@ dev_dependencies:
   purchases_flutter:
     path: ../
 
+  e2e: ^0.2.1
+  flutter_driver:
+    sdk: flutter
+
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
