@@ -77,6 +77,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         onAttachedToEngine(binding.getBinaryMessenger(), binding.getApplicationContext());
     }
 
+    private void onAttachedToEngine(BinaryMessenger messenger, Context applicationContext) {
+        this.channel = new MethodChannel(messenger, "purchases_flutter");
+        this.applicationContext = applicationContext;
+        this.channel.setMethodCallHandler(this);
+    }
+
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
         try {
@@ -87,12 +93,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         channel.setMethodCallHandler(null);
         this.channel = null;
         this.applicationContext = null;
-    }
-
-    private void onAttachedToEngine(BinaryMessenger messenger, Context applicationContext) {
-        this.channel = new MethodChannel(messenger, "purchases_flutter");
-        this.applicationContext = applicationContext;
-        this.channel.setMethodCallHandler(this);
     }
 
     @Override
