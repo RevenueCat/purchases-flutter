@@ -13,7 +13,7 @@
 | --- | --- |
 ✅ | Server-side receipt validation
 ➡️ | [Webhooks](https://docs.revenuecat.com/docs/webhooks) - enhanced server-to-server communication with events for purchases, renewals, cancellations, and more  
-🎯 | Subscription status tracking - know whether a user is subscribed whether they're on iOS, Android or web  
+🎯 | Subscription status tracking - know whether a user is subscribed whether they're on iOS or Android
 📊 | Analytics - automatic calculation of metrics like conversion, mrr, and churn  
 📝 | [Online documentation](https://docs.revenuecat.com/docs/flutter) up to date  
 🔀 | [Integrations](https://www.revenuecat.com/integrations) - over a dozen integrations to easily send purchase data where you need it  
