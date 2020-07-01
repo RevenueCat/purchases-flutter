@@ -1,3 +1,16 @@
+## 1.2.0
+
+- Bumped iOS to 3.4.0 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases)
+- Bumped Android to 3.2.0 [Changelog here](https://github.com/RevenueCat/purchases-android/releases)
+- Upgrade Flutter Android APIs (https://github.com/RevenueCat/purchases-flutter/pull/74)
+- Adds userDefaultsSuiteName as an option when setting up the SDK (https://github.com/RevenueCat/purchases-flutter/pull/70)
+- Added managementURL to PurchaserInfo (https://github.com/RevenueCat/purchases-flutter/pull/67)
+- Added originalPurchaseDate to PurchaserInfo (https://github.com/RevenueCat/purchases-flutter/pull/66)
+- Added `setProxyURL` (https://github.com/RevenueCat/purchases-flutter/pull/63)
+- Exposes `setFinishTransactions` (https://github.com/RevenueCat/purchases-flutter/pull/45)
+- Adds missing error codes (https://github.com/RevenueCat/purchases-flutter/pull/64)
+- Adds new headers for platformFlavor and platformFlavorVersion (https://github.com/RevenueCat/purchases-flutter/pull/57, https://github.com/RevenueCat/purchases-flutter/pull/46)
+
 ## 1.1.1
 
 - Update README.md to remove macOS support (#52)
