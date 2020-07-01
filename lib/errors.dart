@@ -37,11 +37,17 @@ class PurchasesErrorHelper {
   ///    PurchaserInfo purchaserInfo = await Purchases.purchasePackage(package);
   /// } on PlatformException catch (e) {
   ///     var errorCode = PurchasesErrorHelper.getErrorCode(e);
-  ///     if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
-  ///        print("User cancelled");
-  ///     } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
-  ///        print("User not allowed to purchase");
-  ///     }
+  ///     switch(errorCode) {
+  ///     case PurchasesErrorCode.purchaseCancelledError:
+  ///       print("User cancelled");
+  ///       break;
+  ///     case PurchasesErrorCode.purchaseNotAllowedError:
+  ///       print("User not allowed to purchase");
+  ///       break;
+  ///     default:
+  ///       // Do other stuff
+  ///       break;
+  ///   }
   /// }
   /// ```
   static PurchasesErrorCode getErrorCode(PlatformException e) {
