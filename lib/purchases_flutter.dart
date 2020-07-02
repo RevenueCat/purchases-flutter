@@ -126,8 +126,9 @@ class Purchases {
   ///
   /// [productIdentifiers] Array of product identifiers
   ///
-  /// [type] Optional type of products to fetch, can be PurchaseType.INAPP
-  /// or PurchaseType.SUBS. Subs by default
+  /// [type] If the products are Android INAPPs, this needs to be
+  /// PurchaseType.INAPP otherwise the products won't be found.
+  /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<List<Product>> getProducts(List<String> productIdentifiers,
       {PurchaseType type = PurchaseType.subs}) async {
     List<dynamic> result = await _channel.invokeMethod('getProductInfo',
@@ -158,8 +159,9 @@ class Purchases {
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
-  /// [type] Android only. Optional type of product, can be PurchaseType.INAPP
-  /// or PurchaseType.SUBS. Subs by default.
+  /// [type] If the product is an Android INAPP, this needs to be
+  /// PurchaseType.INAPP otherwise the product won't be found.
+  /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<PurchaserInfo> purchaseProduct(String productIdentifier,
       {UpgradeInfo upgradeInfo, PurchaseType type = PurchaseType.subs}) async {
     var response = await _channel.invokeMethod('purchaseProduct', {
