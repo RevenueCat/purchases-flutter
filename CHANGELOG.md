@@ -1,3 +1,8 @@
+## 1.2.1
+
+- Fix a NullPointerException in the Android plugin (https://github.com/RevenueCat/purchases-flutter/pull/83)
+- Made some clarifications on the docs for the type parameter in getProducts and purchaseProduct (https://github.com/RevenueCat/purchases-flutter/pull/81)
+
 ## 1.2.0
 
 - Bumped iOS to 3.4.0 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases)
