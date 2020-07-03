@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import com.revenuecat.purchases.PlatformInfo;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
+import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.common.CommonKt;
 import com.revenuecat.purchases.common.ErrorContainer;
 import com.revenuecat.purchases.common.MappersKt;
@@ -39,15 +40,16 @@ import kotlin.UninitializedPropertyAccessException;
  * PurchasesFlutterPlugin
  */
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
+    private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
     private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
 
     // Only set registrar for v1 embedder.
     private PluginRegistry.Registrar registrar;
     // Only set activity for v2 embedder. Always access activity from getActivity() method.
-    private Context applicationContext;
-    private MethodChannel channel;
-    private Activity activity;
+    @Nullable private Context applicationContext;
+    @Nullable private MethodChannel channel;
+    @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
     private static final String PLUGIN_VERSION = "1.2.0";
@@ -90,7 +92,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         } catch (UninitializedPropertyAccessException e) {
             // there's no instance so all good
         }
-        channel.setMethodCallHandler(null);
+        if (channel != null) {
+            channel.setMethodCallHandler(null);
+        }
         this.channel = null;
         this.applicationContext = null;
     }
@@ -120,12 +124,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     @Override
-    public void onMethodCall(MethodCall call, Result result) {
+    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
         switch (call.method) {
             case "setupPurchases":
                 String apiKey = call.argument("apiKey");
                 String appUserId = call.argument("appUserId");
                 Boolean observerMode = call.argument("observerMode");
+                //noinspection unused
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
                 setupPurchases(apiKey, appUserId, observerMode, result);
                 break;
@@ -235,31 +240,53 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    private void sendEvent(String eventName, @Nullable Map<String, Object> params) {
-        channel.invokeMethod(eventName, params);
+    private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode, final Result result) {
+        if (this.applicationContext != null) {
+            PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
+            CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode, platformInfo);
+            setupUpdatedPurchaserInfoListener();
+            result.success(null);
+        } else {
+            result.error(
+                    String.valueOf(PurchasesErrorCode.UnknownError.ordinal()),
+                    "Purchases can't be setup. There is no Application context",
+                    null);
+        }
     }
 
-    private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode, final Result result) {
-        PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
-        CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode, platformInfo);
-
+    private void setupUpdatedPurchaserInfoListener() {
         Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
             @Override
             public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-                sendEvent(PURCHASER_INFO_UPDATED, MappersKt.map(purchaserInfo));
+                if (channel != null) {
+                    channel.invokeMethod(PURCHASER_INFO_UPDATED, MappersKt.map(purchaserInfo));
+                }
             }
         });
-        result.success(null);
     }
 
-    private void setFinishTransactions(boolean finishTransactions, Result result) {
-        CommonKt.setFinishTransactions(finishTransactions);
-        result.success(null);
+    private void setFinishTransactions(@Nullable Boolean finishTransactions, Result result) {
+        if (finishTransactions != null) {
+            CommonKt.setFinishTransactions(finishTransactions);
+            result.success(null);
+        } else {
+            result.error(
+                    INVALID_ARGS_ERROR_CODE,
+                    "Missing finishTransactions argument",
+                    null);
+        }
     }
 
-    private void setAllowSharingAppStoreAccount(boolean allowSharingAppStoreAccount, Result result) {
-        CommonKt.setAllowSharingAppStoreAccount(allowSharingAppStoreAccount);
-        result.success(null);
+    private void setAllowSharingAppStoreAccount(@Nullable Boolean allowSharingAppStoreAccount, Result result) {
+        if (allowSharingAppStoreAccount != null) {
+            CommonKt.setAllowSharingAppStoreAccount(allowSharingAppStoreAccount);
+            result.success(null);
+        } else {
+            result.error(
+                    INVALID_ARGS_ERROR_CODE,
+                    "Missing allowSharing argument",
+                    null);
+        }
     }
 
     private void addAttributionData(Map<String, String> data, int network,
