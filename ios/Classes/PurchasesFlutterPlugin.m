@@ -101,6 +101,41 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"setPushToken" isEqualToString:call.method]) {
         NSString *pushToken = arguments[@"pushToken"];
         [self setPushToken:pushToken result:result];
+    } else if ([@"setAdjustID" isEqualToString:call.method]) {
+        NSString *adjustID = arguments[@"AdjustID"];
+        [self setAdjustID:adjustID result:result];
+    } else if ([@"setAppsflyerID" isEqualToString:call.method]) {
+        NSString *appsflyerID = arguments[@"AppsflyerID"];
+        [self setAppsflyerID:appsflyerID result:result];
+    } else if ([@"setFBAnonymousID" isEqualToString:call.method]) {
+        NSString *fBAnonymousID = arguments[@"FBAnonymousID"];
+        [self setFBAnonymousID:fBAnonymousID result:result];
+    } else if ([@"setMparticleID" isEqualToString:call.method]) {
+        NSString *mparticleID = arguments[@"MparticleID"];
+        [self setMparticleID:mparticleID result:result];
+    } else if ([@"setOnesignalID" isEqualToString:call.method]) {
+        NSString *onesignalID = arguments[@"OnesignalID"];
+        [self setOnesignalID:onesignalID result:result];
+    } else if ([@"setMediaSource" isEqualToString:call.method]) {
+        NSString *mediaSource = arguments[@"MediaSource"];
+        [self setMediaSource:mediaSource result:result];
+    } else if ([@"setCampaign" isEqualToString:call.method]) {
+        NSString *campaign = arguments[@"Campaign"];
+        [self setCampaign:campaign result:result];
+    } else if ([@"setAdGroup" isEqualToString:call.method]) {
+        NSString *adGroup = arguments[@"AdGroup"];
+        [self setAdGroup:adGroup result:result];
+    } else if ([@"setAd" isEqualToString:call.method]) {
+        NSString *ad = arguments[@"Ad"];
+        [self setAd:ad result:result];
+    } else if ([@"setKeyword" isEqualToString:call.method]) {
+        NSString *keyword = arguments[@"Keyword"];
+        [self setKeyword:keyword result:result];
+    } else if ([@"setCreative" isEqualToString:call.method]) {
+        NSString *creative = arguments[@"Creative"];
+        [self setCreative:creative result:result];
+    } else if ([@"collectDeviceIdentifiers" isEqualToString:call.method]) {
+        [self collectDeviceIdentifiersWithResult:result];
     } else {
         result(FlutterMethodNotImplemented);
     }

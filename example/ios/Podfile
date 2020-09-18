@@ -1,6 +1,10 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '9.0'
 
+pod 'PurchasesHybridCommon', path: '~/revenuecat/purchases-hybrid-common'
+pod 'PurchasesCoreSwift', path: '~/revenuecat/purchases-ios'
+pod 'Purchases', path: '~/revenuecat/purchases-ios'
+
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
