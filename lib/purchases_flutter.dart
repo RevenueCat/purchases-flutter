@@ -378,6 +378,101 @@ class Purchases {
   static Future<void> setPushToken(String pushToken) async {
     await _channel.invokeMethod('setPushToken', {'pushToken': pushToken});
   }
+
+  /// Subscriber attribute associated with the Adjust Id for the user
+  /// Required for the RevenueCat Adjust integration
+  ///
+  /// [adjustID] Null will delete the subscriber attribute.
+  static Future<void> setAdjustID(String adjustID) async {
+    await _channel.invokeMethod('setAdjustID', {'adjustID': adjustID});
+  }
+
+  /// Subscriber attribute associated with the Appsflyer Id for the user
+  /// Required for the RevenueCat Appsflyer integration
+  ///
+  /// [appsflyerID] Null will delete the subscriber attribute.
+  static Future<void> setAppsflyerID(String appsflyerID) async {
+    await _channel.invokeMethod('setAppsflyerID', {'appsflyerID': appsflyerID});
+  }
+
+  /// Subscriber attribute associated with the Facebook SDK Anonymous Id for the user
+  /// Recommended for the RevenueCat Facebook integration
+  ///
+  /// [fbAnonymousID] Null will delete the subscriber attribute.
+  static Future<void> setFBAnonymousID(String fbAnonymousID) async {
+    await _channel
+        .invokeMethod('setFBAnonymousID', {'fBAnonymousID': fbAnonymousID});
+  }
+
+  /// Subscriber attribute associated with the mParticle Id for the user
+  /// Recommended for the RevenueCat mParticle integration
+  ///
+  /// [mparticleID] Null will delete the subscriber attribute.
+  static Future<void> setMparticleID(String mparticleID) async {
+    await _channel.invokeMethod('setMparticleID', {'mparticleID': mparticleID});
+  }
+
+  /// Subscriber attribute associated with the OneSignal Player Id for the user
+  /// Required for the RevenueCat OneSignal integration
+  ///
+  /// [onesignalID] Null will delete the subscriber attribute.
+  static Future<void> setOnesignalID(String onesignalID) async {
+    await _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
+  }
+  
+  ///
+  /// Subscriber attribute associated with the install media source for the user
+  ///
+  /// [mediaSource] Null will delete the subscriber attribute..
+  static Future<void> setMediaSource(String mediaSource) async {
+    await _channel.invokeMethod('setMediaSource', {'mediaSource': mediaSource});
+  }
+  
+  ///
+  /// Subscriber attribute associated with the install campaign for the user
+  ///
+  /// [campaign] Null will delete the subscriber attribute..
+  static Future<void> setCampaign(String campaign) async {
+    await _channel.invokeMethod('setCampaign', {'campaign': campaign});
+  }
+  
+  ///
+  /// Subscriber attribute associated with the install ad group for the user
+  ///
+  /// [adGroup] Null will delete the subscriber attribute..
+  static Future<void> setAdGroup(String adGroup) async {
+    await _channel.invokeMethod('setAdGroup', {'adGroup': adGroup});
+  }
+  
+  ///
+  /// Subscriber attribute associated with the install ad for the user
+  ///
+  /// [ad] Null will delete the subscriber attribute..
+  static Future<void> setAd(String ad) async {
+    await _channel.invokeMethod('setAd', {'ad': ad});
+  }
+  
+  ///
+  /// Subscriber attribute associated with the install keyword for the user
+  ///
+  /// [keyword] Null will delete the subscriber attribute..
+  static Future<void> setKeyword(String keyword) async {
+    await _channel.invokeMethod('setKeyword', {'keyword': keyword});
+  }
+  
+  ///
+  /// Subscriber attribute associated with the install ad creative for the user
+  ///
+  /// [creative] Null will delete the subscriber attribute..
+  static Future<void> setCreative(String creative) async {
+    await _channel.invokeMethod('setCreative', {'creative': creative});
+  
+  ///
+  /// Automatically collect subscriber attributes associated with the device identifiers
+  /// $idfa, $idfv, $ip
+  static Future<void> collectDeviceIdentifiers() async {
+    await _channel.invokeMethod('collectDeviceIdentifiers');
+  }
 }
 
 /// This class holds the information used when upgrading from another sku.
