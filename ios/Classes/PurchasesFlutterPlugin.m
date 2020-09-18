@@ -286,6 +286,78 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     result(nil);
 }
 
+- (void)setAdjustID:(nullable NSString *)adjustID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAdjustID:adjustID];
+    result(nil);
+}
+
+- (void)setAppsflyerID:(nullable NSString *)appsflyerID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAppsflyerID:appsflyerID];
+    result(nil);
+}
+
+- (void)setFBAnonymousID:(nullable NSString *)fbAnonymousID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setFBAnonymousID:fbAnonymousID];
+    result(nil);
+}
+
+- (void)setMparticleID:(nullable NSString *)mparticleID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setMparticleID:mparticleID];
+    result(nil);
+}
+
+- (void)setOnesignalID:(nullable NSString *)onesignalID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setOnesignalID:onesignalID];
+    result(nil);
+}
+
+- (void)setMediaSource:(nullable NSString *)mediaSource result:(FlutterResult)result
+{
+    [RCCommonFunctionality setMediaSource:mediaSource];
+    result(nil);
+}
+
+- (void)setCampaign:(nullable NSString *)campaign result:(FlutterResult)result
+{
+    [RCCommonFunctionality setCampaign:campaign];
+    result(nil);
+}
+
+- (void)setAdGroup:(nullable NSString *)adGroup result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAdGroup:adGroup];
+    result(nil);
+}
+
+- (void)setAd:(nullable NSString *)ad result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAd:ad];
+    result(nil);
+}
+
+- (void)setKeyword:(nullable NSString *)keyword result:(FlutterResult)result
+{
+    [RCCommonFunctionality setKeyword:keyword];
+    result(nil);
+}
+
+- (void)setCreative:(nullable NSString *)creative result:(FlutterResult)result
+{
+    [RCCommonFunctionality setCreative:creative];
+    result(nil);
+}
+
+- (void)collectDeviceIdentifiersWithResult:(FlutterResult)result
+{
+    [RCCommonFunctionality collectDeviceIdentifiers];
+    result(nil);
+}
+
 #pragma mark -
 #pragma mark Delegate Methods
 
