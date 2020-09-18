@@ -234,6 +234,53 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String pushToken = call.argument("pushToken");
                 setPushToken(pushToken, result);
                 break;
+            case "setAdjustID":
+                String adjustID = call.argument("adjustID");
+                setAdjustID(adjustID, result)
+                break;
+            case "setAppsflyerID":
+                String appsflyerID = call.argument("appsflyerID");
+                setAppsflyerID(appsflyerID, result)
+                break;
+            case "setFBAnonymousID":
+                String fbAnonymousID = call.argument("fbAnonymousID");
+                setFBAnonymousID(fbAnonymousID, result)
+                break;
+            case "setMparticleID":
+                String mparticleID = call.argument("mparticleID");
+                setMparticleID(mparticleID, result)
+                break;
+            case "setOnesignalID":
+                String onesignalID = call.argument("onesignalID");
+                setOnesignalID(onesignalID, result)
+                break;
+            case "setMediaSource":
+                String mediaSource = call.argument("mediaSource");
+                setMediaSource(mediaSource, result)
+                break;
+            case "setCampaign":
+                String campaign = call.argument("campaign");
+                setCampaign(campaign, result)
+                break;
+            case "setAdGroup":
+                String adGroup = call.argument("adGroup");
+                setAdGroup(adGroup, result)
+                break;
+            case "setAd":
+                String ad = call.argument("ad");
+                setAd(ad, result)
+                break;
+            case "setKeyword":
+                String keyword = call.argument("keyword");
+                setKeyword(keyword, result)
+                break;
+            case "setCreative":
+                String creative = call.argument("creative");
+                setCreative(creative, result)
+                break;
+            case "collectDeviceIdentifiers":
+                collectDeviceIdentifiers(result)
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -420,6 +467,66 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setPushToken(String pushToken, final Result result) {
         CommonKt.setPushToken(pushToken);
+        result.success(null);
+    }
+    
+    private void setAdjustID(String adjustID, final Result result) { 
+        CommonKt.setAdjustID(adjustID);
+        result.success(null);
+    }
+    
+    private void setAppsflyerID(String appsflyerID, final Result result) { 
+        CommonKt.setAppsflyerID(appsflyerID);
+        result.success(null);
+    }
+    
+    private void setFBAnonymousID(String fbAnonymousID, final Result result) { 
+        CommonKt.setFBAnonymousID(fbAnonymousID);
+        result.success(null);
+    }
+    
+    private void setMparticleID(String mparticleID, final Result result) { 
+        CommonKt.setMparticleID(mparticleID);
+        result.success(null);
+    }
+    
+    private void setOnesignalID(String onesignalID, final Result result) { 
+        CommonKt.setOnesignalID(onesignalID);
+        result.success(null);
+    }
+    
+    private void setMediaSource(String mediaSource, final Result result) { 
+        CommonKt.setMediaSource(mediaSource);
+        result.success(null);
+    }
+    
+    private void setCampaign(String campaign, final Result result) { 
+        CommonKt.setCampaign(campaign);
+        result.success(null);
+    }
+    
+    private void setAdGroup(String adGroup, final Result result) { 
+        CommonKt.setAdGroup(adGroup);
+        result.success(null);
+    }
+    
+    private void setAd(String ad, final Result result) { 
+        CommonKt.setAd(ad);
+        result.success(null);
+    }
+    
+    private void setKeyword(String keyword, final Result result) { 
+        CommonKt.setKeyword(keyword);
+        result.success(null);
+    }
+    
+    private void setCreative(String creative, final Result result) { 
+        CommonKt.setCreative(creative);
+        result.success(null);
+    }
+    
+    private void collectDeviceIdentifiers(final Result result) { 
+        CommonKt.collectDeviceIdentifiers();
         result.success(null);
     }
 

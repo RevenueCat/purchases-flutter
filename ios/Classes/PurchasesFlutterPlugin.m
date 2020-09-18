@@ -102,37 +102,37 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         NSString *pushToken = arguments[@"pushToken"];
         [self setPushToken:pushToken result:result];
     } else if ([@"setAdjustID" isEqualToString:call.method]) {
-        NSString *adjustID = arguments[@"AdjustID"];
+        NSString *adjustID = arguments[@"adjustID"];
         [self setAdjustID:adjustID result:result];
     } else if ([@"setAppsflyerID" isEqualToString:call.method]) {
-        NSString *appsflyerID = arguments[@"AppsflyerID"];
+        NSString *appsflyerID = arguments[@"appsflyerID"];
         [self setAppsflyerID:appsflyerID result:result];
     } else if ([@"setFBAnonymousID" isEqualToString:call.method]) {
-        NSString *fBAnonymousID = arguments[@"FBAnonymousID"];
-        [self setFBAnonymousID:fBAnonymousID result:result];
+        NSString *fbAnonymousID = arguments[@"fbAnonymousID"];
+        [self setFBAnonymousID:fbAnonymousID result:result];
     } else if ([@"setMparticleID" isEqualToString:call.method]) {
-        NSString *mparticleID = arguments[@"MparticleID"];
+        NSString *mparticleID = arguments[@"mparticleID"];
         [self setMparticleID:mparticleID result:result];
     } else if ([@"setOnesignalID" isEqualToString:call.method]) {
-        NSString *onesignalID = arguments[@"OnesignalID"];
+        NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
     } else if ([@"setMediaSource" isEqualToString:call.method]) {
-        NSString *mediaSource = arguments[@"MediaSource"];
+        NSString *mediaSource = arguments[@"mediaSource"];
         [self setMediaSource:mediaSource result:result];
     } else if ([@"setCampaign" isEqualToString:call.method]) {
-        NSString *campaign = arguments[@"Campaign"];
+        NSString *campaign = arguments[@"campaign"];
         [self setCampaign:campaign result:result];
     } else if ([@"setAdGroup" isEqualToString:call.method]) {
-        NSString *adGroup = arguments[@"AdGroup"];
+        NSString *adGroup = arguments[@"adGroup"];
         [self setAdGroup:adGroup result:result];
     } else if ([@"setAd" isEqualToString:call.method]) {
-        NSString *ad = arguments[@"Ad"];
+        NSString *ad = arguments[@"ad"];
         [self setAd:ad result:result];
     } else if ([@"setKeyword" isEqualToString:call.method]) {
-        NSString *keyword = arguments[@"Keyword"];
+        NSString *keyword = arguments[@"keyword"];
         [self setKeyword:keyword result:result];
     } else if ([@"setCreative" isEqualToString:call.method]) {
-        NSString *creative = arguments[@"Creative"];
+        NSString *creative = arguments[@"creative"];
         [self setCreative:creative result:result];
     } else if ([@"collectDeviceIdentifiers" isEqualToString:call.method]) {
         [self collectDeviceIdentifiersWithResult:result];
