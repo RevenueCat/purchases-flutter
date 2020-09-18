@@ -86,6 +86,7 @@ class Purchases {
     _purchaserInfoUpdateListeners.remove(listenerToRemove);
   }
 
+  /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information
   ///
   /// [data] Attribution data from any of the [PurchasesAttributionNetwork].
@@ -93,6 +94,7 @@ class Purchases {
   /// [network] Which network, see [PurchasesAttributionNetwork].
   ///
   /// [networkUserId] An optional unique id for identifying the user.
+  @Deprecated("Use the set<NetworkId> functions instead.")
   static Future<void> addAttributionData(
       Map<String, Object> data, PurchasesAttributionNetwork network,
       {String networkUserId}) async {
