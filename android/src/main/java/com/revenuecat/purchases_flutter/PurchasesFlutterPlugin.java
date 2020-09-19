@@ -52,7 +52,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "1.2.1";
+    private static final String PLUGIN_VERSION = "1.3.0";
 
     /**
      * Plugin registration.
@@ -469,62 +469,62 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         CommonKt.setPushToken(pushToken);
         result.success(null);
     }
-    
+
     private void setAdjustID(String adjustID, final Result result) { 
         CommonKt.setAdjustID(adjustID);
         result.success(null);
     }
-    
+
     private void setAppsflyerID(String appsflyerID, final Result result) { 
         CommonKt.setAppsflyerID(appsflyerID);
         result.success(null);
     }
-    
+
     private void setFBAnonymousID(String fbAnonymousID, final Result result) { 
         CommonKt.setFBAnonymousID(fbAnonymousID);
         result.success(null);
     }
-    
+
     private void setMparticleID(String mparticleID, final Result result) { 
         CommonKt.setMparticleID(mparticleID);
         result.success(null);
     }
-    
+
     private void setOnesignalID(String onesignalID, final Result result) { 
         CommonKt.setOnesignalID(onesignalID);
         result.success(null);
     }
-    
+
     private void setMediaSource(String mediaSource, final Result result) { 
         CommonKt.setMediaSource(mediaSource);
         result.success(null);
     }
-    
+
     private void setCampaign(String campaign, final Result result) { 
         CommonKt.setCampaign(campaign);
         result.success(null);
     }
-    
+
     private void setAdGroup(String adGroup, final Result result) { 
         CommonKt.setAdGroup(adGroup);
         result.success(null);
     }
-    
+
     private void setAd(String ad, final Result result) { 
         CommonKt.setAd(ad);
         result.success(null);
     }
-    
+
     private void setKeyword(String keyword, final Result result) { 
         CommonKt.setKeyword(keyword);
         result.success(null);
     }
-    
+
     private void setCreative(String creative, final Result result) { 
         CommonKt.setCreative(creative);
         result.success(null);
     }
-    
+
     private void collectDeviceIdentifiers(final Result result) { 
         CommonKt.collectDeviceIdentifiers();
         result.success(null);
