@@ -6,16 +6,17 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.revenuecat.purchases.PlatformInfo;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.common.CommonKt;
 import com.revenuecat.purchases.common.ErrorContainer;
-import com.revenuecat.purchases.common.MappersKt;
 import com.revenuecat.purchases.common.OnResult;
 import com.revenuecat.purchases.common.OnResultList;
+import com.revenuecat.purchases.common.SubscriberAttributesKt;
+import com.revenuecat.purchases.common.mappers.PurchaserInfoMapperKt;
 import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
+import com.revenuecat.purchases.common.PlatformInfo;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -306,7 +307,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Override
             public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
                 if (channel != null) {
-                    channel.invokeMethod(PURCHASER_INFO_UPDATED, MappersKt.map(purchaserInfo));
+                    channel.invokeMethod(PURCHASER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
                 }
             }
         });
@@ -338,7 +339,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void addAttributionData(Map<String, String> data, int network,
                                     @Nullable String networkUserId, Result result) {
-        CommonKt.addAttributionData(data, network, networkUserId);
+        SubscriberAttributesKt.addAttributionData(data, network, networkUserId);
         result.success(null);
     }
 
@@ -446,87 +447,87 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     //================================================================================
 
     private void setAttributes(Map<String, String> map, final Result result) {
-        CommonKt.setAttributes(map);
+        SubscriberAttributesKt.setAttributes(map);
         result.success(null);
     }
 
     private void setEmail(String email, final Result result) {
-        CommonKt.setEmail(email);
+        SubscriberAttributesKt.setEmail(email);
         result.success(null);
     }
 
     private void setPhoneNumber(String phoneNumber, final Result result) {
-        CommonKt.setPhoneNumber(phoneNumber);
+        SubscriberAttributesKt.setPhoneNumber(phoneNumber);
         result.success(null);
     }
 
     private void setDisplayName(String displayName, final Result result) {
-        CommonKt.setDisplayName(displayName);
+        SubscriberAttributesKt.setDisplayName(displayName);
         result.success(null);
     }
 
     private void setPushToken(String pushToken, final Result result) {
-        CommonKt.setPushToken(pushToken);
+        SubscriberAttributesKt.setPushToken(pushToken);
         result.success(null);
     }
 
     private void setAdjustID(String adjustID, final Result result) { 
-        CommonKt.setAdjustID(adjustID);
+        SubscriberAttributesKt.setAdjustID(adjustID);
         result.success(null);
     }
 
     private void setAppsflyerID(String appsflyerID, final Result result) { 
-        CommonKt.setAppsflyerID(appsflyerID);
+        SubscriberAttributesKt.setAppsflyerID(appsflyerID);
         result.success(null);
     }
 
     private void setFBAnonymousID(String fbAnonymousID, final Result result) { 
-        CommonKt.setFBAnonymousID(fbAnonymousID);
+        SubscriberAttributesKt.setFBAnonymousID(fbAnonymousID);
         result.success(null);
     }
 
     private void setMparticleID(String mparticleID, final Result result) { 
-        CommonKt.setMparticleID(mparticleID);
+        SubscriberAttributesKt.setMparticleID(mparticleID);
         result.success(null);
     }
 
     private void setOnesignalID(String onesignalID, final Result result) { 
-        CommonKt.setOnesignalID(onesignalID);
+        SubscriberAttributesKt.setOnesignalID(onesignalID);
         result.success(null);
     }
 
     private void setMediaSource(String mediaSource, final Result result) { 
-        CommonKt.setMediaSource(mediaSource);
+        SubscriberAttributesKt.setMediaSource(mediaSource);
         result.success(null);
     }
 
     private void setCampaign(String campaign, final Result result) { 
-        CommonKt.setCampaign(campaign);
+        SubscriberAttributesKt.setCampaign(campaign);
         result.success(null);
     }
 
     private void setAdGroup(String adGroup, final Result result) { 
-        CommonKt.setAdGroup(adGroup);
+        SubscriberAttributesKt.setAdGroup(adGroup);
         result.success(null);
     }
 
     private void setAd(String ad, final Result result) { 
-        CommonKt.setAd(ad);
+        SubscriberAttributesKt.setAd(ad);
         result.success(null);
     }
 
     private void setKeyword(String keyword, final Result result) { 
-        CommonKt.setKeyword(keyword);
+        SubscriberAttributesKt.setKeyword(keyword);
         result.success(null);
     }
 
     private void setCreative(String creative, final Result result) { 
-        CommonKt.setCreative(creative);
+        SubscriberAttributesKt.setCreative(creative);
         result.success(null);
     }
 
     private void collectDeviceIdentifiers(final Result result) { 
-        CommonKt.collectDeviceIdentifiers();
+        SubscriberAttributesKt.collectDeviceIdentifiers();
         result.success(null);
     }
 
