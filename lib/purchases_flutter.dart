@@ -403,7 +403,7 @@ class Purchases {
   /// [fbAnonymousID] Null will delete the subscriber attribute.
   static Future<void> setFBAnonymousID(String fbAnonymousID) async {
     await _channel
-        .invokeMethod('setFBAnonymousID', {'fBAnonymousID': fbAnonymousID});
+        .invokeMethod('setFBAnonymousID', {'fbAnonymousID': fbAnonymousID});
   }
 
   /// Subscriber attribute associated with the mParticle Id for the user
