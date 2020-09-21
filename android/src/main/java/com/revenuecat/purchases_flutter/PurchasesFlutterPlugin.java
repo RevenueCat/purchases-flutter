@@ -236,50 +236,50 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "setAdjustID":
                 String adjustID = call.argument("adjustID");
-                setAdjustID(adjustID, result)
+                setAdjustID(adjustID, result);
                 break;
             case "setAppsflyerID":
                 String appsflyerID = call.argument("appsflyerID");
-                setAppsflyerID(appsflyerID, result)
+                setAppsflyerID(appsflyerID, result);
                 break;
             case "setFBAnonymousID":
                 String fbAnonymousID = call.argument("fbAnonymousID");
-                setFBAnonymousID(fbAnonymousID, result)
+                setFBAnonymousID(fbAnonymousID, result);
                 break;
             case "setMparticleID":
                 String mparticleID = call.argument("mparticleID");
-                setMparticleID(mparticleID, result)
+                setMparticleID(mparticleID, result);
                 break;
             case "setOnesignalID":
                 String onesignalID = call.argument("onesignalID");
-                setOnesignalID(onesignalID, result)
+                setOnesignalID(onesignalID, result);
                 break;
             case "setMediaSource":
                 String mediaSource = call.argument("mediaSource");
-                setMediaSource(mediaSource, result)
+                setMediaSource(mediaSource, result);
                 break;
             case "setCampaign":
                 String campaign = call.argument("campaign");
-                setCampaign(campaign, result)
+                setCampaign(campaign, result);
                 break;
             case "setAdGroup":
                 String adGroup = call.argument("adGroup");
-                setAdGroup(adGroup, result)
+                setAdGroup(adGroup, result);
                 break;
             case "setAd":
                 String ad = call.argument("ad");
-                setAd(ad, result)
+                setAd(ad, result);
                 break;
             case "setKeyword":
                 String keyword = call.argument("keyword");
-                setKeyword(keyword, result)
+                setKeyword(keyword, result);
                 break;
             case "setCreative":
                 String creative = call.argument("creative");
-                setCreative(creative, result)
+                setCreative(creative, result);
                 break;
             case "collectDeviceIdentifiers":
-                collectDeviceIdentifiers(result)
+                collectDeviceIdentifiers(result);
                 break;
             default:
                 result.notImplemented();
