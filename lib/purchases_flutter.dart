@@ -468,7 +468,8 @@ class Purchases {
   /// [creative] Null will delete the subscriber attribute..
   static Future<void> setCreative(String creative) async {
     await _channel.invokeMethod('setCreative', {'creative': creative});
-  
+  }
+
   ///
   /// Automatically collect subscriber attributes associated with the device identifiers
   /// $idfa, $idfv, $ip
