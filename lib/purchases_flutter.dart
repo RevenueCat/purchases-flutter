@@ -376,7 +376,7 @@ class Purchases {
 
   /// Subscriber attribute associated with the push token for the user
   ///
-  /// [pushToken] Null will delete the subscriber attribute.
+  /// [pushToken] Empty String or null will delete the subscriber attribute.
   static Future<void> setPushToken(String pushToken) async {
     await _channel.invokeMethod('setPushToken', {'pushToken': pushToken});
   }
@@ -384,7 +384,7 @@ class Purchases {
   /// Subscriber attribute associated with the Adjust Id for the user
   /// Required for the RevenueCat Adjust integration
   ///
-  /// [adjustID] Null will delete the subscriber attribute.
+  /// [adjustID] Empty String or null will delete the subscriber attribute.
   static Future<void> setAdjustID(String adjustID) async {
     await _channel.invokeMethod('setAdjustID', {'adjustID': adjustID});
   }
@@ -392,7 +392,7 @@ class Purchases {
   /// Subscriber attribute associated with the Appsflyer Id for the user
   /// Required for the RevenueCat Appsflyer integration
   ///
-  /// [appsflyerID] Null will delete the subscriber attribute.
+  /// [appsflyerID] Empty String or null will delete the subscriber attribute.
   static Future<void> setAppsflyerID(String appsflyerID) async {
     await _channel.invokeMethod('setAppsflyerID', {'appsflyerID': appsflyerID});
   }
@@ -400,7 +400,7 @@ class Purchases {
   /// Subscriber attribute associated with the Facebook SDK Anonymous Id for the user
   /// Recommended for the RevenueCat Facebook integration
   ///
-  /// [fbAnonymousID] Null will delete the subscriber attribute.
+  /// [fbAnonymousID] Empty String or null will delete the subscriber attribute.
   static Future<void> setFBAnonymousID(String fbAnonymousID) async {
     await _channel
         .invokeMethod('setFBAnonymousID', {'fbAnonymousID': fbAnonymousID});
@@ -409,7 +409,7 @@ class Purchases {
   /// Subscriber attribute associated with the mParticle Id for the user
   /// Recommended for the RevenueCat mParticle integration
   ///
-  /// [mparticleID] Null will delete the subscriber attribute.
+  /// [mparticleID] Empty String or null will delete the subscriber attribute.
   static Future<void> setMparticleID(String mparticleID) async {
     await _channel.invokeMethod('setMparticleID', {'mparticleID': mparticleID});
   }
@@ -417,55 +417,55 @@ class Purchases {
   /// Subscriber attribute associated with the OneSignal Player Id for the user
   /// Required for the RevenueCat OneSignal integration
   ///
-  /// [onesignalID] Null will delete the subscriber attribute.
+  /// [onesignalID] Empty String or null will delete the subscriber attribute.
   static Future<void> setOnesignalID(String onesignalID) async {
     await _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
   }
-  
+
   ///
   /// Subscriber attribute associated with the install media source for the user
   ///
-  /// [mediaSource] Null will delete the subscriber attribute..
+  /// [mediaSource] Empty String or null will delete the subscriber attribute.
   static Future<void> setMediaSource(String mediaSource) async {
     await _channel.invokeMethod('setMediaSource', {'mediaSource': mediaSource});
   }
-  
+
   ///
   /// Subscriber attribute associated with the install campaign for the user
   ///
-  /// [campaign] Null will delete the subscriber attribute..
+  /// [campaign] Empty String or null will delete the subscriber attribute.
   static Future<void> setCampaign(String campaign) async {
     await _channel.invokeMethod('setCampaign', {'campaign': campaign});
   }
-  
+
   ///
   /// Subscriber attribute associated with the install ad group for the user
   ///
-  /// [adGroup] Null will delete the subscriber attribute..
+  /// [adGroup] Empty String or null will delete the subscriber attribute.
   static Future<void> setAdGroup(String adGroup) async {
     await _channel.invokeMethod('setAdGroup', {'adGroup': adGroup});
   }
-  
+
   ///
   /// Subscriber attribute associated with the install ad for the user
   ///
-  /// [ad] Null will delete the subscriber attribute..
+  /// [ad] Empty String or null will delete the subscriber attribute.
   static Future<void> setAd(String ad) async {
     await _channel.invokeMethod('setAd', {'ad': ad});
   }
-  
+
   ///
   /// Subscriber attribute associated with the install keyword for the user
   ///
-  /// [keyword] Null will delete the subscriber attribute..
+  /// [keyword] Empty String or null will delete the subscriber attribute.
   static Future<void> setKeyword(String keyword) async {
     await _channel.invokeMethod('setKeyword', {'keyword': keyword});
   }
-  
+
   ///
   /// Subscriber attribute associated with the install ad creative for the user
   ///
-  /// [creative] Null will delete the subscriber attribute..
+  /// [creative] Empty String or null will delete the subscriber attribute.
   static Future<void> setCreative(String creative) async {
     await _channel.invokeMethod('setCreative', {'creative': creative});
   }
