@@ -1,4 +1,5 @@
 import 'package:purchases_flutter/entitlement_infos_wrapper.dart';
+import 'package:purchases_flutter/transaction.dart';
 
 class PurchaserInfo {
   /// Entitlements attached to this purchaser info
@@ -18,6 +19,9 @@ class PurchaserInfo {
 
   /// Set of purchased skus, active and inactive
   final List<String> allPurchasedProductIdentifiers;
+
+  /// Set of purchased skus, active and inactive
+  final List<Transaction> nonSubscriptionTransactions;
 
   /// The date this user was first seen in RevenueCat.
   final String firstSeen;
@@ -84,6 +88,8 @@ class PurchaserInfo {
         'requestDate: $requestDate, '
         'originalApplicationVersion: $originalApplicationVersion, '
         'originalPurchaseDate: $originalPurchaseDate, '
-        'managementURL: $managementURL}';
+        'managementURL: $managementURL, '
+        'nonSubscriptionTransactions: $nonSubscriptionTransactions'
+        '}';
   }
 }
