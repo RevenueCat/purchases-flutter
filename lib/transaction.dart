@@ -1,6 +1,6 @@
 class Transaction {
   /// RevenueCat Id associated to the transaction.
-  final String revenuecatId;
+  final String revenueCatId;
 
   /// Product Id associated with the transaction.
   final String productId;
@@ -9,14 +9,14 @@ class Transaction {
   final String purchaseDate;
 
   Transaction.fromJson(Map<dynamic, dynamic> map)
-      : revenuecatId = map["revenuecatId"],
+      : revenueCatId = map["revenueCatId"],
         productId = map["productId"],
         purchaseDate = map["purchaseDate"];
 
   @override
   String toString() {
     return 'Transaction{'
-        'revenuecatId: $revenuecatId, '
+        'revenueCatId: $revenueCatId, '
         'productId: $productId, '
         'purchaseDate: $purchaseDate'
         '}';

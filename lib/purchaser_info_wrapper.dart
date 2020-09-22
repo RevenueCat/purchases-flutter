@@ -72,7 +72,11 @@ class PurchaserInfo {
             .map((key, value) => MapEntry(key as String, value as String)),
         originalApplicationVersion = map["originalApplicationVersion"],
         originalPurchaseDate = map["originalPurchaseDate"],
-        managementURL = map["managementURL"];
+        managementURL = map["managementURL"],
+        nonSubscriptionTransactions =
+            (map["nonSubscriptionTransactions"] as List<dynamic>)
+                .map((item) => Transaction.fromJson(item))
+                .toList();
 
   @override
   String toString() {
