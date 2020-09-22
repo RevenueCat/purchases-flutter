@@ -5,7 +5,7 @@
     - Added support for OneSignal via `setOnesignalId`
     - Added `setMediaSource`, `setCampaign`, `setAdGroup`, `setAd`, `setKeyword`, `setCreative`, and `collectDeviceIdentifiers`
          https://github.com/RevenueCat/purchases-android/pull/184
-- Bumped `purchases-hybrid-common` to 1.4.1 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases)
+- Bumped `purchases-hybrid-common` to 1.4.2 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases)
 - Bumped `purchases-ios` to 3.7.1 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases)
 - Bumped `purchases-android` to 3.5.0 [Changelog here](https://github.com/RevenueCat/purchases-android/releases)
 
