@@ -32,17 +32,19 @@ class Purchases {
   /// [observerMode] An optional boolean. Set this to TRUE if you have your own
   /// IAP implementation and want to use only RevenueCat's backend.
   /// Default is FALSE.
-  /// 
-  /// [userDefaultsSuiteName] iOS-only, will be ignored for Android. 
+  ///
+  /// [userDefaultsSuiteName] iOS-only, will be ignored for Android.
   /// Set this if you would like the RevenueCat SDK to store its preferences in a different
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
   static Future<void> setup(String apiKey,
-      {String appUserId, bool observerMode = false, String userDefaultsSuiteName}) async {
+      {String appUserId,
+      bool observerMode = false,
+      String userDefaultsSuiteName}) async {
     return await _channel.invokeMethod('setupPurchases', {
       'apiKey': apiKey,
       'appUserId': appUserId,
-      'observerMode': observerMode, 
+      'observerMode': observerMode,
       'userDefaultsSuiteName': userDefaultsSuiteName
     });
   }
@@ -472,7 +474,8 @@ class Purchases {
 
   ///
   /// Automatically collect subscriber attributes associated with the device identifiers
-  /// $idfa, $idfv, $ip
+  /// $idfa, $idfv, $ip on iOS
+  /// $gpsAdId, $androidId, $ip on Android
   static Future<void> collectDeviceIdentifiers() async {
     await _channel.invokeMethod('collectDeviceIdentifiers');
   }
