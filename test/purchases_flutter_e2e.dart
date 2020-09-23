@@ -12,5 +12,4 @@ void main() {
     final Future<void> future = Purchases.setup('apiKey', appUserId: 'cesar');
     expect(future, completes);
   });
-
 }

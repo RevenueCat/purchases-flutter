@@ -34,9 +34,9 @@ SPEC CHECKSUMS:
   e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   Purchases: 81efbd7dc9164247a0885ad12ddf6b043a58c1db
-  purchases_flutter: 896464400b779291abbe2a2bb650d7dad42741fa
+  purchases_flutter: 8ca9b10162b2609fca1ea822a03617711f693be8
   PurchasesCoreSwift: eca892b2a0eff34d55d70e7c3349c1eb4c7659f5
-  PurchasesHybridCommon: e8d33a7dea50c157bd505aa7f8a4cc42520c1f8c
+  PurchasesHybridCommon: 871e4ac3d32b0e4c7759ff0acc302bce07528747
 
 PODFILE CHECKSUM: b1f7a399522c118a74b177b13c01eca692aa7e6d
 
