@@ -20,7 +20,8 @@ class PurchaserInfo {
   /// Set of purchased skus, active and inactive
   final List<String> allPurchasedProductIdentifiers;
 
-  /// Set of purchased skus, active and inactive
+  /// Returns all the non-subscription purchases a user has made.
+  /// The purchases are ordered by purchase date in ascending order.
   final List<Transaction> nonSubscriptionTransactions;
 
   /// The date this user was first seen in RevenueCat.
