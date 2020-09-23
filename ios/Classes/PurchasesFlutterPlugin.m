@@ -101,6 +101,41 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"setPushToken" isEqualToString:call.method]) {
         NSString *pushToken = arguments[@"pushToken"];
         [self setPushToken:pushToken result:result];
+    } else if ([@"setAdjustID" isEqualToString:call.method]) {
+        NSString *adjustID = arguments[@"adjustID"];
+        [self setAdjustID:adjustID result:result];
+    } else if ([@"setAppsflyerID" isEqualToString:call.method]) {
+        NSString *appsflyerID = arguments[@"appsflyerID"];
+        [self setAppsflyerID:appsflyerID result:result];
+    } else if ([@"setFBAnonymousID" isEqualToString:call.method]) {
+        NSString *fbAnonymousID = arguments[@"fbAnonymousID"];
+        [self setFBAnonymousID:fbAnonymousID result:result];
+    } else if ([@"setMparticleID" isEqualToString:call.method]) {
+        NSString *mparticleID = arguments[@"mparticleID"];
+        [self setMparticleID:mparticleID result:result];
+    } else if ([@"setOnesignalID" isEqualToString:call.method]) {
+        NSString *onesignalID = arguments[@"onesignalID"];
+        [self setOnesignalID:onesignalID result:result];
+    } else if ([@"setMediaSource" isEqualToString:call.method]) {
+        NSString *mediaSource = arguments[@"mediaSource"];
+        [self setMediaSource:mediaSource result:result];
+    } else if ([@"setCampaign" isEqualToString:call.method]) {
+        NSString *campaign = arguments[@"campaign"];
+        [self setCampaign:campaign result:result];
+    } else if ([@"setAdGroup" isEqualToString:call.method]) {
+        NSString *adGroup = arguments[@"adGroup"];
+        [self setAdGroup:adGroup result:result];
+    } else if ([@"setAd" isEqualToString:call.method]) {
+        NSString *ad = arguments[@"ad"];
+        [self setAd:ad result:result];
+    } else if ([@"setKeyword" isEqualToString:call.method]) {
+        NSString *keyword = arguments[@"keyword"];
+        [self setKeyword:keyword result:result];
+    } else if ([@"setCreative" isEqualToString:call.method]) {
+        NSString *creative = arguments[@"creative"];
+        [self setCreative:creative result:result];
+    } else if ([@"collectDeviceIdentifiers" isEqualToString:call.method]) {
+        [self collectDeviceIdentifiersWithResult:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -286,6 +321,78 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     result(nil);
 }
 
+- (void)setAdjustID:(nullable NSString *)adjustID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAdjustID:adjustID];
+    result(nil);
+}
+
+- (void)setAppsflyerID:(nullable NSString *)appsflyerID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAppsflyerID:appsflyerID];
+    result(nil);
+}
+
+- (void)setFBAnonymousID:(nullable NSString *)fbAnonymousID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setFBAnonymousID:fbAnonymousID];
+    result(nil);
+}
+
+- (void)setMparticleID:(nullable NSString *)mparticleID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setMparticleID:mparticleID];
+    result(nil);
+}
+
+- (void)setOnesignalID:(nullable NSString *)onesignalID result:(FlutterResult)result
+{
+    [RCCommonFunctionality setOnesignalID:onesignalID];
+    result(nil);
+}
+
+- (void)setMediaSource:(nullable NSString *)mediaSource result:(FlutterResult)result
+{
+    [RCCommonFunctionality setMediaSource:mediaSource];
+    result(nil);
+}
+
+- (void)setCampaign:(nullable NSString *)campaign result:(FlutterResult)result
+{
+    [RCCommonFunctionality setCampaign:campaign];
+    result(nil);
+}
+
+- (void)setAdGroup:(nullable NSString *)adGroup result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAdGroup:adGroup];
+    result(nil);
+}
+
+- (void)setAd:(nullable NSString *)ad result:(FlutterResult)result
+{
+    [RCCommonFunctionality setAd:ad];
+    result(nil);
+}
+
+- (void)setKeyword:(nullable NSString *)keyword result:(FlutterResult)result
+{
+    [RCCommonFunctionality setKeyword:keyword];
+    result(nil);
+}
+
+- (void)setCreative:(nullable NSString *)creative result:(FlutterResult)result
+{
+    [RCCommonFunctionality setCreative:creative];
+    result(nil);
+}
+
+- (void)collectDeviceIdentifiersWithResult:(FlutterResult)result
+{
+    [RCCommonFunctionality collectDeviceIdentifiers];
+    result(nil);
+}
+
 #pragma mark -
 #pragma mark Delegate Methods
 
@@ -321,7 +428,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"1.2.1";
+    return @"1.3.0";
 }
 
 @end

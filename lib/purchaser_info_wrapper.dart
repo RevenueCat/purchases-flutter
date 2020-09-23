@@ -1,4 +1,5 @@
 import 'package:purchases_flutter/entitlement_infos_wrapper.dart';
+import 'package:purchases_flutter/transaction.dart';
 
 class PurchaserInfo {
   /// Entitlements attached to this purchaser info
@@ -18,6 +19,10 @@ class PurchaserInfo {
 
   /// Set of purchased skus, active and inactive
   final List<String> allPurchasedProductIdentifiers;
+
+  /// Returns all the non-subscription purchases a user has made.
+  /// The purchases are ordered by purchase date in ascending order.
+  final List<Transaction> nonSubscriptionTransactions;
 
   /// The date this user was first seen in RevenueCat.
   final String firstSeen;
@@ -68,7 +73,11 @@ class PurchaserInfo {
             .map((key, value) => MapEntry(key as String, value as String)),
         originalApplicationVersion = map["originalApplicationVersion"],
         originalPurchaseDate = map["originalPurchaseDate"],
-        managementURL = map["managementURL"];
+        managementURL = map["managementURL"],
+        nonSubscriptionTransactions =
+            (map["nonSubscriptionTransactions"] as List<dynamic>)
+                .map((item) => Transaction.fromJson(item))
+                .toList();
 
   @override
   String toString() {
@@ -84,6 +93,8 @@ class PurchaserInfo {
         'requestDate: $requestDate, '
         'originalApplicationVersion: $originalApplicationVersion, '
         'originalPurchaseDate: $originalPurchaseDate, '
-        'managementURL: $managementURL}';
+        'managementURL: $managementURL, '
+        'nonSubscriptionTransactions: $nonSubscriptionTransactions'
+        '}';
   }
 }

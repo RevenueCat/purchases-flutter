@@ -6,16 +6,17 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.revenuecat.purchases.PlatformInfo;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.common.CommonKt;
 import com.revenuecat.purchases.common.ErrorContainer;
-import com.revenuecat.purchases.common.MappersKt;
 import com.revenuecat.purchases.common.OnResult;
 import com.revenuecat.purchases.common.OnResultList;
+import com.revenuecat.purchases.common.SubscriberAttributesKt;
+import com.revenuecat.purchases.common.mappers.PurchaserInfoMapperKt;
 import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
+import com.revenuecat.purchases.common.PlatformInfo;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -52,7 +53,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "1.2.1";
+    private static final String PLUGIN_VERSION = "1.3.0";
 
     /**
      * Plugin registration.
@@ -234,6 +235,53 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String pushToken = call.argument("pushToken");
                 setPushToken(pushToken, result);
                 break;
+            case "setAdjustID":
+                String adjustID = call.argument("adjustID");
+                setAdjustID(adjustID, result);
+                break;
+            case "setAppsflyerID":
+                String appsflyerID = call.argument("appsflyerID");
+                setAppsflyerID(appsflyerID, result);
+                break;
+            case "setFBAnonymousID":
+                String fbAnonymousID = call.argument("fbAnonymousID");
+                setFBAnonymousID(fbAnonymousID, result);
+                break;
+            case "setMparticleID":
+                String mparticleID = call.argument("mparticleID");
+                setMparticleID(mparticleID, result);
+                break;
+            case "setOnesignalID":
+                String onesignalID = call.argument("onesignalID");
+                setOnesignalID(onesignalID, result);
+                break;
+            case "setMediaSource":
+                String mediaSource = call.argument("mediaSource");
+                setMediaSource(mediaSource, result);
+                break;
+            case "setCampaign":
+                String campaign = call.argument("campaign");
+                setCampaign(campaign, result);
+                break;
+            case "setAdGroup":
+                String adGroup = call.argument("adGroup");
+                setAdGroup(adGroup, result);
+                break;
+            case "setAd":
+                String ad = call.argument("ad");
+                setAd(ad, result);
+                break;
+            case "setKeyword":
+                String keyword = call.argument("keyword");
+                setKeyword(keyword, result);
+                break;
+            case "setCreative":
+                String creative = call.argument("creative");
+                setCreative(creative, result);
+                break;
+            case "collectDeviceIdentifiers":
+                collectDeviceIdentifiers(result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -259,7 +307,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Override
             public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
                 if (channel != null) {
-                    channel.invokeMethod(PURCHASER_INFO_UPDATED, MappersKt.map(purchaserInfo));
+                    channel.invokeMethod(PURCHASER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
                 }
             }
         });
@@ -291,7 +339,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void addAttributionData(Map<String, String> data, int network,
                                     @Nullable String networkUserId, Result result) {
-        CommonKt.addAttributionData(data, network, networkUserId);
+        SubscriberAttributesKt.addAttributionData(data, network, networkUserId);
         result.success(null);
     }
 
@@ -399,27 +447,87 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     //================================================================================
 
     private void setAttributes(Map<String, String> map, final Result result) {
-        CommonKt.setAttributes(map);
+        SubscriberAttributesKt.setAttributes(map);
         result.success(null);
     }
 
     private void setEmail(String email, final Result result) {
-        CommonKt.setEmail(email);
+        SubscriberAttributesKt.setEmail(email);
         result.success(null);
     }
 
     private void setPhoneNumber(String phoneNumber, final Result result) {
-        CommonKt.setPhoneNumber(phoneNumber);
+        SubscriberAttributesKt.setPhoneNumber(phoneNumber);
         result.success(null);
     }
 
     private void setDisplayName(String displayName, final Result result) {
-        CommonKt.setDisplayName(displayName);
+        SubscriberAttributesKt.setDisplayName(displayName);
         result.success(null);
     }
 
     private void setPushToken(String pushToken, final Result result) {
-        CommonKt.setPushToken(pushToken);
+        SubscriberAttributesKt.setPushToken(pushToken);
+        result.success(null);
+    }
+
+    private void setAdjustID(String adjustID, final Result result) { 
+        SubscriberAttributesKt.setAdjustID(adjustID);
+        result.success(null);
+    }
+
+    private void setAppsflyerID(String appsflyerID, final Result result) { 
+        SubscriberAttributesKt.setAppsflyerID(appsflyerID);
+        result.success(null);
+    }
+
+    private void setFBAnonymousID(String fbAnonymousID, final Result result) { 
+        SubscriberAttributesKt.setFBAnonymousID(fbAnonymousID);
+        result.success(null);
+    }
+
+    private void setMparticleID(String mparticleID, final Result result) { 
+        SubscriberAttributesKt.setMparticleID(mparticleID);
+        result.success(null);
+    }
+
+    private void setOnesignalID(String onesignalID, final Result result) { 
+        SubscriberAttributesKt.setOnesignalID(onesignalID);
+        result.success(null);
+    }
+
+    private void setMediaSource(String mediaSource, final Result result) { 
+        SubscriberAttributesKt.setMediaSource(mediaSource);
+        result.success(null);
+    }
+
+    private void setCampaign(String campaign, final Result result) { 
+        SubscriberAttributesKt.setCampaign(campaign);
+        result.success(null);
+    }
+
+    private void setAdGroup(String adGroup, final Result result) { 
+        SubscriberAttributesKt.setAdGroup(adGroup);
+        result.success(null);
+    }
+
+    private void setAd(String ad, final Result result) { 
+        SubscriberAttributesKt.setAd(ad);
+        result.success(null);
+    }
+
+    private void setKeyword(String keyword, final Result result) { 
+        SubscriberAttributesKt.setKeyword(keyword);
+        result.success(null);
+    }
+
+    private void setCreative(String creative, final Result result) { 
+        SubscriberAttributesKt.setCreative(creative);
+        result.success(null);
+    }
+
+    private void collectDeviceIdentifiers(final Result result) { 
+        SubscriberAttributesKt.collectDeviceIdentifiers();
         result.success(null);
     }
 

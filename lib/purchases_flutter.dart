@@ -32,17 +32,19 @@ class Purchases {
   /// [observerMode] An optional boolean. Set this to TRUE if you have your own
   /// IAP implementation and want to use only RevenueCat's backend.
   /// Default is FALSE.
-  /// 
-  /// [userDefaultsSuiteName] iOS-only, will be ignored for Android. 
+  ///
+  /// [userDefaultsSuiteName] iOS-only, will be ignored for Android.
   /// Set this if you would like the RevenueCat SDK to store its preferences in a different
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
   static Future<void> setup(String apiKey,
-      {String appUserId, bool observerMode = false, String userDefaultsSuiteName}) async {
+      {String appUserId,
+      bool observerMode = false,
+      String userDefaultsSuiteName}) async {
     return await _channel.invokeMethod('setupPurchases', {
       'apiKey': apiKey,
       'appUserId': appUserId,
-      'observerMode': observerMode, 
+      'observerMode': observerMode,
       'userDefaultsSuiteName': userDefaultsSuiteName
     });
   }
@@ -86,6 +88,7 @@ class Purchases {
     _purchaserInfoUpdateListeners.remove(listenerToRemove);
   }
 
+  /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information
   ///
   /// [data] Attribution data from any of the [PurchasesAttributionNetwork].
@@ -93,6 +96,7 @@ class Purchases {
   /// [network] Which network, see [PurchasesAttributionNetwork].
   ///
   /// [networkUserId] An optional unique id for identifying the user.
+  @Deprecated("Use the set<NetworkId> functions instead.")
   static Future<void> addAttributionData(
       Map<String, Object> data, PurchasesAttributionNetwork network,
       {String networkUserId}) async {
@@ -374,9 +378,106 @@ class Purchases {
 
   /// Subscriber attribute associated with the push token for the user
   ///
-  /// [pushToken] Null will delete the subscriber attribute.
+  /// [pushToken] Empty String or null will delete the subscriber attribute.
   static Future<void> setPushToken(String pushToken) async {
     await _channel.invokeMethod('setPushToken', {'pushToken': pushToken});
+  }
+
+  /// Subscriber attribute associated with the Adjust Id for the user
+  /// Required for the RevenueCat Adjust integration
+  ///
+  /// [adjustID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setAdjustID(String adjustID) async {
+    await _channel.invokeMethod('setAdjustID', {'adjustID': adjustID});
+  }
+
+  /// Subscriber attribute associated with the Appsflyer Id for the user
+  /// Required for the RevenueCat Appsflyer integration
+  ///
+  /// [appsflyerID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setAppsflyerID(String appsflyerID) async {
+    await _channel.invokeMethod('setAppsflyerID', {'appsflyerID': appsflyerID});
+  }
+
+  /// Subscriber attribute associated with the Facebook SDK Anonymous Id for the user
+  /// Recommended for the RevenueCat Facebook integration
+  ///
+  /// [fbAnonymousID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setFBAnonymousID(String fbAnonymousID) async {
+    await _channel
+        .invokeMethod('setFBAnonymousID', {'fbAnonymousID': fbAnonymousID});
+  }
+
+  /// Subscriber attribute associated with the mParticle Id for the user
+  /// Recommended for the RevenueCat mParticle integration
+  ///
+  /// [mparticleID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setMparticleID(String mparticleID) async {
+    await _channel.invokeMethod('setMparticleID', {'mparticleID': mparticleID});
+  }
+
+  /// Subscriber attribute associated with the OneSignal Player Id for the user
+  /// Required for the RevenueCat OneSignal integration
+  ///
+  /// [onesignalID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setOnesignalID(String onesignalID) async {
+    await _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
+  }
+
+  ///
+  /// Subscriber attribute associated with the install media source for the user
+  ///
+  /// [mediaSource] Empty String or null will delete the subscriber attribute.
+  static Future<void> setMediaSource(String mediaSource) async {
+    await _channel.invokeMethod('setMediaSource', {'mediaSource': mediaSource});
+  }
+
+  ///
+  /// Subscriber attribute associated with the install campaign for the user
+  ///
+  /// [campaign] Empty String or null will delete the subscriber attribute.
+  static Future<void> setCampaign(String campaign) async {
+    await _channel.invokeMethod('setCampaign', {'campaign': campaign});
+  }
+
+  ///
+  /// Subscriber attribute associated with the install ad group for the user
+  ///
+  /// [adGroup] Empty String or null will delete the subscriber attribute.
+  static Future<void> setAdGroup(String adGroup) async {
+    await _channel.invokeMethod('setAdGroup', {'adGroup': adGroup});
+  }
+
+  ///
+  /// Subscriber attribute associated with the install ad for the user
+  ///
+  /// [ad] Empty String or null will delete the subscriber attribute.
+  static Future<void> setAd(String ad) async {
+    await _channel.invokeMethod('setAd', {'ad': ad});
+  }
+
+  ///
+  /// Subscriber attribute associated with the install keyword for the user
+  ///
+  /// [keyword] Empty String or null will delete the subscriber attribute.
+  static Future<void> setKeyword(String keyword) async {
+    await _channel.invokeMethod('setKeyword', {'keyword': keyword});
+  }
+
+  ///
+  /// Subscriber attribute associated with the install ad creative for the user
+  ///
+  /// [creative] Empty String or null will delete the subscriber attribute.
+  static Future<void> setCreative(String creative) async {
+    await _channel.invokeMethod('setCreative', {'creative': creative});
+  }
+
+  ///
+  /// Automatically collect subscriber attributes associated with the device identifiers
+  /// $idfa, $idfv, $ip on iOS
+  /// $gpsAdId, $androidId, $ip on Android
+  static Future<void> collectDeviceIdentifiers() async {
+    await _channel.invokeMethod('collectDeviceIdentifiers');
   }
 }
 
