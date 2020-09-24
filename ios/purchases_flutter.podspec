@@ -16,6 +16,10 @@ Pod::Spec.new do |s|
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'PurchasesHybridCommon', '1.4.2'
+  s.pod_target_xcconfig   = { 'DEFINES_MODULE' => 'YES' }
   s.ios.deployment_target = '9.0'
+  s.static_framework      = true
+  s.swift_version         = '5.0'
+
 end
 
