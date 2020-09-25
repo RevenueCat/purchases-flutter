@@ -4,19 +4,21 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'purchases_flutter'
-  s.version          = '0.0.1'
-  s.summary          = 'A new flutter plugin project.'
+  s.version          = '1.3.0'
+  s.summary          = 'Cross-platform subscriptions framework for Flutter.'
   s.description      = <<-DESC
-A new flutter plugin project.
+  Client for the RevenueCat subscription and purchase tracking system, making implementing in-app subscriptions in Flutter easy - receipt validation and status tracking included!
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'http://revenuecat.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'RevenueCat' => 'support@revenuecat.com' }
   s.source           = { :path => '.' }
   s.source_files     = 'Classes/**/*'
+  s.public_header_files = 'Classes/**/*.h'
   s.dependency 'FlutterMacOS'
+  s.dependency 'PurchasesHybridCommon', '1.4.2'
 
-  s.platform = :osx, '10.11'
+  s.platform = :osx, '10.12'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
 end
