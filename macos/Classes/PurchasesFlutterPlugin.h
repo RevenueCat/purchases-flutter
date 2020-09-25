@@ -1,5 +1,5 @@
 #import <FlutterMacOS/FlutterMacOS.h>
-#import <Purchases/RCPurchases.h>
+@import Purchases;
 
 @interface PurchasesFlutterPlugin : NSObject<FlutterPlugin>
 @end
