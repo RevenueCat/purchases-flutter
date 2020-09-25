@@ -34,10 +34,10 @@ SPEC CHECKSUMS:
   e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   Purchases: f4b90cb0493bc32b4c9a1037cf0953df7dd89834
-  purchases_flutter: e26478b0ce35a8f7677196e8466288686bbaa307
+  purchases_flutter: 624b944ef6c8052f23ec727b13205d60bdb2bd45
   PurchasesCoreSwift: 8b5b6ae27eba12fcd123165e486f8ac128e35d45
   PurchasesHybridCommon: f2cc9ca0a6bb74be2b30438719800faca9a3a86e
 
 PODFILE CHECKSUM: b1f7a399522c118a74b177b13c01eca692aa7e6d
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0.rc.1
