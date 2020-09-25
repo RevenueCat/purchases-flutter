@@ -1,3 +1,15 @@
+## 1.3.1
+
+- Build config updates to fix build issues on iOS:
+  - Added DEFINES_MODULE build setting for cocoapods projects
+  - added swift version
+  - made framework compile statically
+  - replaced #import with @import
+         https://github.com/RevenueCat/purchases-flutter/pull/100
+  - bumped iOS version to 3.7.2
+  - bumped `purchases-hybrid-common` version to 1.4.3
+
+
 ## 1.3.0
 
 - Attribution V2:
