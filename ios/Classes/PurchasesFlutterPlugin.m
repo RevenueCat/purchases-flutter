@@ -57,9 +57,14 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
         [self getProductInfo:arguments[@"productIdentifiers"] result:result];
     } else if ([@"purchaseProduct" isEqualToString:call.method]) {
-        [self purchaseProduct:arguments[@"productIdentifier"] result:result];
+        [self purchaseProduct:arguments[@"productIdentifier"]
+      signedDiscountTimestamp:arguments[@"signedDiscountTimestamp"]
+                       result:result];
     } else if ([@"purchasePackage" isEqualToString:call.method]) {
-        [self purchasePackage:arguments[@"packageIdentifier"] offering:arguments[@"offeringIdentifier"] result:result];
+        [self purchasePackage:arguments[@"packageIdentifier"]
+                     offering:arguments[@"offeringIdentifier"]
+      signedDiscountTimestamp:arguments[@"signedDiscountTimestamp"]
+                       result:result];
     } else if ([@"getAppUserID" isEqualToString:call.method]) {
         [self getAppUserIDWithResult:result];
     } else if ([@"restoreTransactions" isEqualToString:call.method]) {
@@ -136,6 +141,12 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self setCreative:creative result:result];
     } else if ([@"collectDeviceIdentifiers" isEqualToString:call.method]) {
         [self collectDeviceIdentifiersWithResult:result];
+    } else if ([@"getPaymentDiscount" isEqualToString:call.method]) {
+        NSString *productIdentifier = arguments[@"productIdentifier"];
+        NSString *discountIdentifier = arguments[@"discountIdentifier"];
+        [self paymentDiscountForProductIdentifier:productIdentifier
+                               discountIdentifier:discountIdentifier
+                                           result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -160,6 +171,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
                       platformFlavor:self.platformFlavor
                platformFlavorVersion:self.platformFlavorVersion];
     RCPurchases.sharedPurchases.delegate = self;
+    [RCCommonFunctionality configure];
     result(nil);
 }
 
@@ -200,20 +212,22 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 }
 
 - (void)purchaseProduct:(NSString *)productIdentifier
+signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result
 {
     [RCCommonFunctionality purchaseProduct:productIdentifier
-                   signedDiscountTimestamp:nil
+                   signedDiscountTimestamp:discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)purchasePackage:(NSString *)packageIdentifier
                offering:(NSString *)offeringIdentifier
+signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result
 {
     [RCCommonFunctionality purchasePackage:packageIdentifier
                                   offering:offeringIdentifier
-                   signedDiscountTimestamp:nil
+                   signedDiscountTimestamp:discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
@@ -392,6 +406,22 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     [RCCommonFunctionality collectDeviceIdentifiers];
     result(nil);
 }
+
+- (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier
+                         discountIdentifier:(nullable NSString *)discountIdentifier
+                                     result:(FlutterResult)result
+{
+    [RCCommonFunctionality paymentDiscountForProductIdentifier:productIdentifier
+                                                      discount:discountIdentifier
+                                               completionBlock:^(NSDictionary *_Nullable responseDictionary, RCErrorContainer *_Nullable error) {
+        if (error) {
+            [self rejectWithResult:result error:error];
+        } else {
+            result(responseDictionary);
+        }
+    }];
+}
+
 
 #pragma mark -
 #pragma mark Delegate Methods
