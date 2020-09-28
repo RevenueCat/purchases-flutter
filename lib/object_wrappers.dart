@@ -6,3 +6,5 @@ export 'package_wrapper.dart';
 export 'offering_wrapper.dart';
 export 'offerings_wrapper.dart';
 export 'errors.dart';
+export 'payment_discount.dart';
+export 'discount.dart';

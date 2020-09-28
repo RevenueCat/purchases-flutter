@@ -1,3 +1,5 @@
+import 'discount.dart';
+
 class Product {
   /// Product Id.
   final String identifier;
@@ -20,6 +22,9 @@ class Product {
   /// Introductory price for product. Can be null.
   final IntroductoryPrice introductoryPrice;
 
+  /// Collection of discount offers for a product. Null for Android.
+  final List<Discount> discounts;
+
   Product.fromJson(Map<dynamic, dynamic> json)
       : identifier = json['identifier'],
         description = json['description'],
@@ -29,7 +34,12 @@ class Product {
             ? IntroductoryPrice.fromJson(json)
             : null,
         currencyCode = json['currency_code'],
-        price = json['price'];
+        price = json['price'],
+        discounts = json["discounts"] != null
+            ? (json["discounts"] as List<dynamic>)
+                .map((item) => Discount.fromJson(item))
+                .toList()
+            : null;
 
   @override
   String toString() {

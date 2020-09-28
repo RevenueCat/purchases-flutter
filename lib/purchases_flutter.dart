@@ -202,6 +202,49 @@ class Purchases {
     return PurchaserInfo.fromJson(response["purchaserInfo"]);
   }
 
+  /// iOS only. Purchase a product applying a given discount.
+  ///
+  /// Returns a [PurchaserInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if `PurchasesErrorHelper.getErrorCode(e)` is
+  /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [product] The product to purchase.
+  ///
+  /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
+  /// using [getPaymentDiscount].
+  static Future<PurchaserInfo> purchaseDiscountedProduct(Product product,
+      PaymentDiscount discount) async {
+    var response = await _channel.invokeMethod('purchaseProduct', {
+      'productIdentifier': product.identifier,
+      'signedDiscountTimestamp': discount.timestamp.toString()
+    });
+    return PurchaserInfo.fromJson(response["purchaserInfo"]);
+  }
+
+  /// iOS only. Purchase a package applying a given discount.
+  ///
+  /// Returns a [PurchaserInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if `PurchasesErrorHelper.getErrorCode(e)` is
+  /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [packageToPurchase] The Package you wish to purchase
+  ///
+  /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
+  /// using [getPaymentDiscount].
+  static Future<PurchaserInfo> purchaseDiscountedPackage(Package packageToPurchase,
+      PaymentDiscount discount) async {
+    var response = await _channel.invokeMethod('purchasePackage', {
+      'packageIdentifier': packageToPurchase.identifier,
+      'offeringIdentifier': packageToPurchase.offeringIdentifier,
+      'signedDiscountTimestamp': discount.timestamp.toString()
+    });
+    return PurchaserInfo.fromJson(response["purchaserInfo"]);
+  }
+
   /// Restores a user's previous purchases and links their appUserIDs to any
   /// user's also using those purchases.
   ///
@@ -424,7 +467,6 @@ class Purchases {
     await _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
   }
 
-  ///
   /// Subscriber attribute associated with the install media source for the user
   ///
   /// [mediaSource] Empty String or null will delete the subscriber attribute.
@@ -432,7 +474,6 @@ class Purchases {
     await _channel.invokeMethod('setMediaSource', {'mediaSource': mediaSource});
   }
 
-  ///
   /// Subscriber attribute associated with the install campaign for the user
   ///
   /// [campaign] Empty String or null will delete the subscriber attribute.
@@ -440,7 +481,6 @@ class Purchases {
     await _channel.invokeMethod('setCampaign', {'campaign': campaign});
   }
 
-  ///
   /// Subscriber attribute associated with the install ad group for the user
   ///
   /// [adGroup] Empty String or null will delete the subscriber attribute.
@@ -456,7 +496,6 @@ class Purchases {
     await _channel.invokeMethod('setAd', {'ad': ad});
   }
 
-  ///
   /// Subscriber attribute associated with the install keyword for the user
   ///
   /// [keyword] Empty String or null will delete the subscriber attribute.
@@ -464,7 +503,6 @@ class Purchases {
     await _channel.invokeMethod('setKeyword', {'keyword': keyword});
   }
 
-  ///
   /// Subscriber attribute associated with the install ad creative for the user
   ///
   /// [creative] Empty String or null will delete the subscriber attribute.
@@ -472,13 +510,33 @@ class Purchases {
     await _channel.invokeMethod('setCreative', {'creative': creative});
   }
 
-  ///
   /// Automatically collect subscriber attributes associated with the device identifiers
   /// $idfa, $idfv, $ip on iOS
   /// $gpsAdId, $androidId, $ip on Android
   static Future<void> collectDeviceIdentifiers() async {
     await _channel.invokeMethod('collectDeviceIdentifiers');
   }
+
+  /// iOS only. Use this function to retrieve the `PurchasesPaymentDiscount`
+  /// for a given `PurchasesPackage`.
+  ///
+  /// Returns a [PaymentDiscount] object. Pass this object
+  /// to [purchaseDiscountedProduct] or [purchaseDiscountedPackage] to complete
+  /// the purchase. A null PaymentDiscount means
+  ///
+  /// [product] The `Product` the user intends to purchase.
+  ///
+  /// [discount] The `Discount` to apply to the product.
+  static Future<PaymentDiscount> getPaymentDiscount(Product product,
+      Discount discount) async {
+    Map<dynamic, dynamic> result = await _channel
+        .invokeMethod('getPaymentDiscount', {
+          'productIdentifier': product.identifier,
+          'discountIdentifier': discount.identifier
+        });
+    return PaymentDiscount.fromJson(result);
+  }
+
 }
 
 /// This class holds the information used when upgrading from another sku.
