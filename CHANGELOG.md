@@ -1,3 +1,11 @@
+## 1.4.0
+
+- Bumped common files to 1.4.4 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases)
+- Added MacOS support
+    - https://github.com/RevenueCat/purchases-flutter/pull/103
+- Added subscription offers support
+    - https://github.com/RevenueCat/purchases-flutter/pull/104
+
 ## 1.3.1
 
 - Build config updates to fix build issues on iOS:
