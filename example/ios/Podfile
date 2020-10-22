@@ -28,6 +28,7 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 flutter_ios_podfile_setup
 
 target 'Runner' do
+  pod 'PurchasesHybridCommon', branch: 'fix/integration_errors', git: 'https://github.com/revenuecat/purchases-hybrid-common'
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 

@@ -2,25 +2,25 @@ PODS:
   - e2e (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - Purchases (3.7.2):
-    - PurchasesCoreSwift (= 3.7.2)
+  - Purchases (3.7.4):
+    - PurchasesCoreSwift (= 3.7.4)
   - purchases_flutter (1.4.0):
     - Flutter
-    - PurchasesHybridCommon (= 1.4.4)
-  - PurchasesCoreSwift (3.7.2)
+    - PurchasesHybridCommon
+  - PurchasesCoreSwift (3.7.4)
   - PurchasesHybridCommon (1.4.4):
-    - Purchases (= 3.7.2)
+    - Purchases
 
 DEPENDENCIES:
   - e2e (from `.symlinks/plugins/e2e/ios`)
   - Flutter (from `Flutter`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
+  - PurchasesHybridCommon (from `https://github.com/revenuecat/purchases-hybrid-common`, branch `fix/integration_errors`)
 
 SPEC REPOS:
   trunk:
     - Purchases
     - PurchasesCoreSwift
-    - PurchasesHybridCommon
 
 EXTERNAL SOURCES:
   e2e:
@@ -29,15 +29,23 @@ EXTERNAL SOURCES:
     :path: Flutter
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
+  PurchasesHybridCommon:
+    :branch: fix/integration_errors
+    :git: https://github.com/revenuecat/purchases-hybrid-common
+
+CHECKOUT OPTIONS:
+  PurchasesHybridCommon:
+    :commit: 681b090c429caa9db593bdb6a3572329117dc58f
+    :git: https://github.com/revenuecat/purchases-hybrid-common
 
 SPEC CHECKSUMS:
   e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  Purchases: f4b90cb0493bc32b4c9a1037cf0953df7dd89834
-  purchases_flutter: 38a515e7bbf2e00b22ee8a5cf593e8c2561f2969
-  PurchasesCoreSwift: 8b5b6ae27eba12fcd123165e486f8ac128e35d45
-  PurchasesHybridCommon: 9aa4f8f416d9796b60f763455d56c64949dc2db8
+  Purchases: c2803c9de55053206b10c90bed7a76e2a2dff860
+  purchases_flutter: a0d0a5802e8394b6d022e1b520679540f175545b
+  PurchasesCoreSwift: 5ff93c6a8c9c4645233e69a36d4e4007b4caccf4
+  PurchasesHybridCommon: 0a09cb49dc391440cdc844bf772748a2c199560d
 
-PODFILE CHECKSUM: b1f7a399522c118a74b177b13c01eca692aa7e6d
+PODFILE CHECKSUM: b07ea562486e3ef90cd587e0f791f591adb72b21
 
-COCOAPODS: 1.10.0.rc.1
+COCOAPODS: 1.9.3
