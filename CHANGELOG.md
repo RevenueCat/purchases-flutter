@@ -1,3 +1,8 @@
+## 1.4.1
+
+- Bumped common files to 1.4.5 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases)
+    https://github.com/RevenueCat/purchases-flutter/pull/121
+
 ## 1.4.0
 
 - Bumped common files to 1.4.4 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases)
