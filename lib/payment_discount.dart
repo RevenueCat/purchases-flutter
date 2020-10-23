@@ -1,6 +1,5 @@
 /// The signed discount applied to a payment
 class PaymentDiscount {
-
   /// Identifier agreed upon with the App Store for a discount of your choosing.
   final String identifier;
 
@@ -38,5 +37,4 @@ class PaymentDiscount {
         'signature: $signature, '
         'timestamp: $timestamp}';
   }
-
 }
