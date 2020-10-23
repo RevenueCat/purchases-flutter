@@ -22,14 +22,8 @@ class Discount {
   final int periodNumberOfUnits;
 
   // ignore: public_member_api_docs
-  Discount(
-      this.identifier,
-      this.price,
-      this.priceString,
-      this.cycles,
-      this.period,
-      this.periodUnit,
-      this.periodNumberOfUnits);
+  Discount(this.identifier, this.price, this.priceString, this.cycles,
+      this.period, this.periodUnit, this.periodNumberOfUnits);
 
   // ignore: public_member_api_docs
   Discount.fromJson(Map<dynamic, dynamic> json)
@@ -52,5 +46,4 @@ class Discount {
         'periodUnit: $periodUnit, '
         'periodNumberOfUnits: $periodNumberOfUnits}';
   }
-
 }

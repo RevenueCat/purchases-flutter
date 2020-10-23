@@ -214,8 +214,8 @@ class Purchases {
   ///
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
-  static Future<PurchaserInfo> purchaseDiscountedProduct(Product product,
-      PaymentDiscount discount) async {
+  static Future<PurchaserInfo> purchaseDiscountedProduct(
+      Product product, PaymentDiscount discount) async {
     var response = await _channel.invokeMethod('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
@@ -235,8 +235,8 @@ class Purchases {
   ///
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
-  static Future<PurchaserInfo> purchaseDiscountedPackage(Package packageToPurchase,
-      PaymentDiscount discount) async {
+  static Future<PurchaserInfo> purchaseDiscountedPackage(
+      Package packageToPurchase, PaymentDiscount discount) async {
     var response = await _channel.invokeMethod('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
@@ -527,16 +527,15 @@ class Purchases {
   /// [product] The `Product` the user intends to purchase.
   ///
   /// [discount] The `Discount` to apply to the product.
-  static Future<PaymentDiscount> getPaymentDiscount(Product product,
-      Discount discount) async {
-    Map<dynamic, dynamic> result = await _channel
-        .invokeMethod('getPaymentDiscount', {
-          'productIdentifier': product.identifier,
-          'discountIdentifier': discount.identifier
-        });
+  static Future<PaymentDiscount> getPaymentDiscount(
+      Product product, Discount discount) async {
+    Map<dynamic, dynamic> result =
+        await _channel.invokeMethod('getPaymentDiscount', {
+      'productIdentifier': product.identifier,
+      'discountIdentifier': discount.identifier
+    });
     return PaymentDiscount.fromJson(result);
   }
-
 }
 
 /// This class holds the information used when upgrading from another sku.
