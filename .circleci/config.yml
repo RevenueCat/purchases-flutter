@@ -1,0 +1,243 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@0.2.1
+  react-native: react-native-community/react-native@4.4.2
+
+commands:
+
+  run-flutter-integration-tests:
+    description: "Run Flutter integration tests"
+    steps:
+      - run:
+          name: Run tests
+          command: |
+            cd example
+            flutter drive --dart-define=API_KEY=$API_KEY --target=integration_test/app_test.dart \
+            --driver=test_driver/integration_test.dart
+
+  install-and-build-flutter:
+    description: "Install and build Flutter"
+    steps:
+      - run:
+          name: Install Flutter Dependencies
+          command: |
+            cd example
+            flutter pub get
+      - run:
+          name: Build
+          command: |
+            cd example
+            flutter packages pub run build_runner build
+
+  simulator-dependencies:
+    description: "Install iOS simulator dependencies"
+    steps:
+      - run:
+          name: "Install applesimutils"
+          command: |
+            HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
+            HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils
+
+  gradle-dependencies:
+    description: "Get Gradle dependencies"
+    steps:
+      - run:
+          working_directory: ./android
+          name: Chmod permissions
+          command: sudo chmod +x ./gradlew
+      - restore_cache:
+          name: Restore Gradle cache
+          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+      - run:
+          working_directory: ./android
+          name: Download Gradle dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          name: Save Gradle cache
+          paths:
+            - ~/.gradle
+          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+
+  android-sdk-dependencies:
+    description: "Install and set android SDK"
+    steps:
+      - run:
+          name: set ANDROID_SDK_ROOT
+          command: |
+            echo 'export ANDROID_SDK_ROOT=$HOME/android-tools'  >> $BASH_ENV
+      - restore_cache:
+          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
+
+      - run:
+          name: install android tools
+          command: |
+            sh scripts/install-android-tools.sh
+            echo 'export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH'  >> $BASH_ENV
+            echo 'export PATH=$ANDROID_SDK_ROOT/tools:$PATH'  >> $BASH_ENV
+            echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH'  >> $BASH_ENV
+            echo 'export PATH=$ANDROID_SDK_ROOT/emulator:$PATH'  >> $BASH_ENV
+            source $BASH_ENV
+            sdkmanager --list
+      - save_cache:
+          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
+          paths:
+            - /Users/distiller/android-tools
+
+  create-launch-android-emulator:
+    description: "create and launch android emulators"
+    steps:
+      - run:
+          name: create AVD
+          command: echo "no" | avdmanager --verbose create avd --force --name "Pixel_3a_API_29" --package "system-images;android-29;google_apis_playstore;x86_64"
+
+      - run:
+          name: start AVD
+          command: emulator @Pixel_3a_API_29 -no-window -no-audio
+          background: true
+
+      - run:
+          name: wait for emulator
+          command: adb wait-for-device shell 'while [[ -z $(getprop dev.bootcomplete) ]]; do sleep 1; done;'
+
+  setup-flutter:
+    description: "setup Flutter"
+    steps:
+      - run:
+          name: Setup environment variables
+          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
+      - restore_cache:
+          key: flutter_cache_1
+      - run:
+          name: Download flutter SDK
+          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.22.2-stable.zip; fi
+      - run:
+          name: Unzip flutter SDK
+          command: unzip flutter_sdk.zip
+      - save_cache:
+          key: flutter_cache_1
+          paths:
+            - flutter_sdk.zip
+
+  run-flutter-test:
+    description: "Run Flutter tests"
+    steps:
+      - run:
+          name: Install Flutter Dependencies
+          command: |
+            cd example
+            flutter pub get
+      - run:
+          name: Build
+          command: |
+            cd example
+            flutter packages pub run build_runner build
+      - run:
+          name: Run tests
+          command: |
+            cd example
+            flutter drive --target=test_driver/app.dart --dart-define=API_KEY=$API_KEY
+jobs:
+  checkout_code:
+    description: "Checkout code"
+    docker:
+      - image: cirrusci/flutter:stable
+    steps:
+      - checkout
+      - persist_to_workspace:
+          paths: .
+          root: .
+
+  lint:
+    description: "Run static analysis for Flutter"
+    docker:
+      - image: cirrusci/flutter:stable
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Dependencies
+          command: flutter pub get
+      - run:
+          name: Build
+          command: flutter packages pub run build_runner build
+      - run:
+          name: Analyze code
+          command: flutter analyze lib
+
+  test:
+    description: "Run tests for Flutter"
+    docker:
+      - image: cirrusci/flutter:stable
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Dependencies
+          command: flutter pub get
+      - run:
+          name: Build
+          command: flutter packages pub run build_runner build
+      - run:
+          name: Run tests
+          command: flutter test
+
+  android-integration-test:
+    description: "Run integration tests for Flutter"
+    macos:
+      xcode: 11.3.1
+    steps:
+      - attach_workspace:
+          at: .
+      - setup-flutter
+      - android-sdk-dependencies
+      - create-launch-android-emulator
+      - install-and-build-flutter
+      - run-flutter-integration-tests
+
+  ios-integration-test:
+    description: "Run integration tests for Flutter"
+    macos:
+      xcode: 11.3.1
+    steps:
+      - attach_workspace:
+          at: .
+      - setup-flutter
+      - restore_cache:
+          name: Restore cocoapods specs and pods
+          key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
+      - simulator-dependencies
+      - run:
+          name: Open simulator
+          command: xcrun simctl boot "iPhone 11"
+      - install-and-build-flutter
+      - run-flutter-integration-tests
+      - save_cache:
+          name: Save cocoapods specs and pods cache
+          key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ./example/ios/Pods
+            - ~/.cocoapods
+
+workflows:
+  test:
+    jobs:
+      - checkout_code
+      - lint:
+          requires:
+            - checkout_code
+      - test:
+          requires:
+            - checkout_code
+  android-integration-test:
+    jobs:
+      - checkout_code
+      - android-integration-test:
+          requires:
+            - checkout_code
+  ios-integration-test:
+    jobs:
+      - checkout_code
+      - ios-integration-test:
+          requires:
+            - checkout_code

@@ -1,6 +1,4 @@
 PODS:
-  - e2e (0.0.1):
-    - Flutter
   - Flutter (1.0.0)
   - Purchases (3.7.2):
     - PurchasesCoreSwift (= 3.7.2)
@@ -12,7 +10,6 @@ PODS:
     - Purchases (= 3.7.2)
 
 DEPENDENCIES:
-  - e2e (from `.symlinks/plugins/e2e/ios`)
   - Flutter (from `Flutter`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
 
@@ -23,15 +20,12 @@ SPEC REPOS:
     - PurchasesHybridCommon
 
 EXTERNAL SOURCES:
-  e2e:
-    :path: ".symlinks/plugins/e2e/ios"
   Flutter:
     :path: Flutter
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
 
 SPEC CHECKSUMS:
-  e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   Purchases: f4b90cb0493bc32b4c9a1037cf0953df7dd89834
   purchases_flutter: 38a515e7bbf2e00b22ee8a5cf593e8c2561f2969
