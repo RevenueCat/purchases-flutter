@@ -110,7 +110,11 @@ commands:
           key: flutter_cache_1
       - run:
           name: Download flutter SDK
-          command: if ! test -f "flutter_sdk.zip"; then curl -o flutter_sdk.zip https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.22.2-stable.zip; fi
+          command: |
+            if ! test -f "flutter_sdk.zip"; then 
+            curl -o flutter_sdk.zip 
+            https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.22.2-stable.zip; 
+            fi
       - run:
           name: Unzip flutter SDK
           command: unzip flutter_sdk.zip
