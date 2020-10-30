@@ -12,7 +12,7 @@ void main() {
       await Purchases.setup(apiKey, appUserId: "test-user");
     });
 
-  test("Configures successfully", () async {
+  test("Configures without crashing", () async {
     expect(Purchases.appUserID != null, true);
   });
 
