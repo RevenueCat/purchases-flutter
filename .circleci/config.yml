@@ -140,7 +140,7 @@ commands:
   run-flutter-test:
     description: "Run Flutter tests"
     steps:
-      - build-flutter-project
+      - build-flutter-project:
           working_directory: example
       - run:
           name: Run tests
