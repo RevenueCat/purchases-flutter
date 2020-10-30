@@ -6,6 +6,20 @@ orbs:
 
 commands:
 
+  build-flutter-project:
+    description: "Install dependencies and build"
+    parameters:
+      working_directory:
+        default: .
+        type: string
+    steps:  
+      - run:
+          name: Install Dependencies
+          command: flutter pub get
+      - run:
+          name: Build
+          command: flutter packages pub run build_runner build
+          
   run-flutter-integration-tests:
     description: "Run Flutter integration tests"
     steps:
@@ -126,21 +140,12 @@ commands:
   run-flutter-test:
     description: "Run Flutter tests"
     steps:
-      - run:
-          name: Install Flutter Dependencies
-          command: |
-            cd example
-            flutter pub get
-      - run:
-          name: Build
-          command: |
-            cd example
-            flutter packages pub run build_runner build
+      - build-flutter-project
+          working_directory: example
       - run:
           name: Run tests
-          command: |
-            cd example
-            flutter drive --target=test_driver/app.dart --dart-define=API_KEY=$API_KEY
+          working_directory: example
+          command: flutter drive --target=test_driver/app.dart --dart-define=API_KEY=$API_KEY
 jobs:
   checkout_code:
     description: "Checkout code"
@@ -159,12 +164,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Install Dependencies
-          command: flutter pub get
-      - run:
-          name: Build
-          command: flutter packages pub run build_runner build
+      - build-flutter-project
       - run:
           name: Analyze code
           command: flutter analyze lib
@@ -176,12 +176,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Install Dependencies
-          command: flutter pub get
-      - run:
-          name: Build
-          command: flutter packages pub run build_runner build
+      - build-flutter-project
       - run:
           name: Run tests
           command: flutter test
