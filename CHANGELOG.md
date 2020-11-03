@@ -1,3 +1,8 @@
+## 1.4.2
+
+- Moved from valid architectures to excluded architectures in the Podfile, following Flutter's example.
+    https://github.com/RevenueCat/purchases-flutter/pull/127
+
 ## 1.4.1
 
 - Bumped common files to 1.4.5 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases)
