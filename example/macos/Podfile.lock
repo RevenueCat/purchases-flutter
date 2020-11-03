@@ -2,7 +2,7 @@ PODS:
   - FlutterMacOS (1.0.0)
   - Purchases (3.7.5):
     - PurchasesCoreSwift (= 3.7.5)
-  - purchases_flutter (1.4.1):
+  - purchases_flutter (1.4.2):
     - FlutterMacOS
     - PurchasesHybridCommon (= 1.4.5)
   - PurchasesCoreSwift (3.7.5)
@@ -28,10 +28,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FlutterMacOS: 15bea8a44d2fa024068daa0140371c020b4b6ff9
   Purchases: 7ebce9418bc16732c3c3bb4b6ff7e7e397de024e
-  purchases_flutter: 6d9318b20237d871d7c7ffec62118d0f68a3377f
+  purchases_flutter: f630c6f87c4e05cc4496058216e3c8019b6ef8d0
   PurchasesCoreSwift: 50636e307c1ab76c7a7894a87d042665f2fe0be9
   PurchasesHybridCommon: b1dd1c5125ccf99b9e62b5974d0e5145895e8b87
 
 PODFILE CHECKSUM: 77099ba0c243b0cab165ba0601a9995e35fa19fb
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.0
