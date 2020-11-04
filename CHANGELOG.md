@@ -1,6 +1,7 @@
 ## 1.4.3
 
-- Explicitly added `Purchases` framework to podspec so it gets correctly linked in the plugin pod. Fixed mapping of xcconfig files in Runner example. 
+- Explicitly added `Purchases` framework to podspec's linker flags so it gets correctly linked in the plugin pod.
+Fixed mapping of xcconfig files in Runner example. 
     https://github.com/RevenueCat/purchases-flutter/pull/128
 
 ## 1.4.2
