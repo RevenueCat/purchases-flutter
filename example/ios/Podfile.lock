@@ -34,7 +34,7 @@ SPEC CHECKSUMS:
   e2e: 967b9b1fc533b7636a3b7a719f840c27f301fe1f
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   Purchases: 7ebce9418bc16732c3c3bb4b6ff7e7e397de024e
-  purchases_flutter: 6c11772b7eb451eb9c07541bf2335ea435ea1fe6
+  purchases_flutter: dba3d321c6de0ce5980fe2de119bc7c379597cbc
   PurchasesCoreSwift: 50636e307c1ab76c7a7894a87d042665f2fe0be9
   PurchasesHybridCommon: b1dd1c5125ccf99b9e62b5974d0e5145895e8b87
 
