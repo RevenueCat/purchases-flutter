@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'purchases_flutter'
-  s.version          = '1.4.2'
+  s.version          = '1.4.3'
   s.summary          = 'Cross-platform subscriptions framework for Flutter.'
   s.description      = <<-DESC
   Client for the RevenueCat subscription and purchase tracking system, making implementing in-app subscriptions in Flutter easy - receipt validation and status tracking included!
@@ -20,7 +20,11 @@ Pod::Spec.new do |s|
   s.swift_version         = '5.0'
 
   # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.pod_target_xcconfig = { 
+    'DEFINES_MODULE' => 'YES',
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386',
+    'OTHER_LDFLAGS' => '-framework Purchases'
+   }
 
 end
 
