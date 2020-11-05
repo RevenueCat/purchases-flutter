@@ -194,13 +194,13 @@ workflows:
       - test
   integration-test:
     jobs:
-      - android-integration-test
+      - android-integration-test:
           filters:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
             branches:
               only: integration_te*
-      - ios-integration-test
+      - ios-integration-test:
           filters:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
