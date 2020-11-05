@@ -109,13 +109,11 @@ commands:
     description: "setup Flutter"
     steps:
       - run:
-          name: Setup environment variables
-          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
-      - restore_cache:
-          key: flutter_cache_1
-      - run:
           name: Download flutter SDK
           command: git clone -b stable https://github.com/flutter/flutter.git flutter
+      - run:
+          name: Setup environment variables
+          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
 
   run-flutter-test:
     description: "Run Flutter tests"
