@@ -199,10 +199,10 @@ workflows:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
             branches:
-              only: integration_te*
+              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
       - ios-integration-test:
           filters:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
             branches:
-              only: integration_te*
+              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
