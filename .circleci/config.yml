@@ -128,23 +128,12 @@ commands:
           working_directory: example
           command: flutter drive --target=test_driver/app.dart --dart-define=API_KEY=$API_KEY
 jobs:
-  checkout_code:
-    description: "Checkout code"
-    docker:
-      - image: cirrusci/flutter:stable
-    steps:
-      - checkout
-      - persist_to_workspace:
-          paths: .
-          root: .
-
   lint:
     description: "Run static analysis for Flutter"
     docker:
       - image: cirrusci/flutter:stable
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - build-flutter-project
       - run:
           name: Analyze code
@@ -155,8 +144,7 @@ jobs:
     docker:
       - image: cirrusci/flutter:stable
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - build-flutter-project
       - run:
           name: Run tests
@@ -167,8 +155,7 @@ jobs:
     macos:
       xcode: 11.3.1
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - setup-flutter
       - android-sdk-dependencies
       - create-launch-android-emulator
@@ -181,8 +168,7 @@ jobs:
     macos:
       xcode: 11.3.1
     steps:
-      - attach_workspace:
-          at: .
+      - checkout
       - setup-flutter
       - restore_cache:
           name: Restore cocoapods specs and pods
@@ -212,22 +198,9 @@ jobs:
 workflows:
   test:
     jobs:
-      - checkout_code
       - lint:
-          requires:
-            - checkout_code
       - test:
-          requires:
-            - checkout_code
-  android-integration-test:
+  integration-test:
     jobs:
-      - checkout_code
-      - android-integration-test:
-          requires:
-            - checkout_code
-  ios-integration-test:
-    jobs:
-      - checkout_code
-      - ios-integration-test:
-          requires:
-            - checkout_code
+      - android-integration-test
+      - ios-integration-test
