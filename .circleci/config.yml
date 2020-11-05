@@ -114,6 +114,9 @@ commands:
       - run:
           name: Setup environment variables
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
+      - run:
+          name: Flutter doctor
+          command: flutter doctor
 
   run-flutter-test:
     description: "Run Flutter tests"
