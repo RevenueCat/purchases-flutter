@@ -13,12 +13,14 @@ commands:
         type: string
     steps:  
       - run:
-          name: Install Dependencies
+          name: Install Flutter Dependencies
+          working_directory: working_directory
           command: flutter pub get
       - run:
           name: Build
+          working_directory: working_directory
           command: flutter packages pub run build_runner build
-          
+
   run-flutter-integration-tests:
     description: "Run Flutter integration tests"
     steps:
@@ -28,20 +30,6 @@ commands:
             cd example
             flutter drive --dart-define=API_KEY=$API_KEY --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
-
-  install-and-build-flutter:
-    description: "Install and build Flutter"
-    steps:
-      - run:
-          name: Install Flutter Dependencies
-          command: |
-            cd example
-            flutter pub get
-      - run:
-          name: Build
-          command: |
-            cd example
-            flutter packages pub run build_runner build
 
   simulator-dependencies:
     description: "Install iOS simulator dependencies"
@@ -190,7 +178,8 @@ jobs:
       - setup-flutter
       - android-sdk-dependencies
       - create-launch-android-emulator
-      - install-and-build-flutter
+      - build-flutter-project:
+          working_directory: example
       - run-flutter-integration-tests
 
   ios-integration-test:
@@ -208,7 +197,8 @@ jobs:
       - run:
           name: Open simulator
           command: xcrun simctl boot "iPhone 11"
-      - install-and-build-flutter
+      - build-flutter-project:
+          working_directory: example
       - run-flutter-integration-tests
       - save_cache:
           name: Save cocoapods specs and pods cache
