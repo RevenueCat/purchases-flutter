@@ -191,6 +191,14 @@ jobs:
       - run:
           name: Open simulator
           command: xcrun simctl boot "iPhone 11"
+      - run:
+          name: Flutter pub get
+          working_directory: example
+          command: flutter pub get
+      - run:
+          name: Flutter pub get
+          working_directory: .
+          command: flutter pub get
       - build-flutter-project:
           working_directory: example
       - run-flutter-integration-tests
