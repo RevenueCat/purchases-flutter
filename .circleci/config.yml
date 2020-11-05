@@ -5,6 +5,11 @@ orbs:
 
 commands:
 
+  prepare-tests:
+    description: "prepares tests to run"
+    steps:
+      - run: sed -i .bck s/api_key/$API_KEY/ example/integration_test/app_test.dart
+
   build-flutter-project:
     description: "Install dependencies and build"
     parameters:
@@ -30,7 +35,7 @@ commands:
           name: Run tests
           command: |
             cd example
-            flutter drive --dart-define=API_KEY=$API_KEY --target=integration_test/app_test.dart \
+            flutter drive --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
 
   simulator-dependencies:
@@ -152,6 +157,7 @@ jobs:
       - setup-flutter
       - android-sdk-dependencies
       - create-launch-android-emulator
+      - prepare-tests
       - build-flutter-project:
           project: example
       - run-flutter-integration-tests
@@ -170,6 +176,7 @@ jobs:
       - run:
           name: Open simulator
           command: xcrun simctl boot "iPhone 11"
+      - prepare-tests
       - build-flutter-project:
           project: example
       - run-flutter-integration-tests

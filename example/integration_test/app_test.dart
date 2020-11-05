@@ -7,9 +7,7 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
     setUpAll(() async {
-      print("setupAll");
-      const apiKey = String.fromEnvironment("API_KEY", defaultValue: null);
-      await Purchases.setup(apiKey, appUserId: "test-user");
+      await Purchases.setup("api_key", appUserId: "test-user");
     });
 
   test("Configures without crashing", () async {
