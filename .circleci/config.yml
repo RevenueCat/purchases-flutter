@@ -172,10 +172,10 @@ jobs:
       - restore_cache:
           name: Restore cocoapods specs and pods
           key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
-      - simulator-dependencies
-      - run:
-          name: Open simulator
-          command: xcrun simctl boot "iPhone 11"
+#      - simulator-dependencies
+#      - run:
+#          name: Open simulator
+#          command: xcrun simctl boot "iPhone 11"
       - prepare-tests
       - build-flutter-project:
           project: example
