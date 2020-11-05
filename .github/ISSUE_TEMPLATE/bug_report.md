@@ -23,11 +23,8 @@ If you have a clearly defined bug (with a [Minimal, Complete, and Reproducible e
 A clear and concise description of what the bug is. The more detail you can provide the faster our team will be able to triage and resolve the issue.
 
 1. Environment
-    1. Platform:
-    2. SDK version:
-    3. OS version:
-    4. XCode/Android Studio version:
-    5. How widespread is the issue. Percentage of devices affected.
+    1. Output of `flutter doctor`
+    2. How widespread is the issue. Percentage of devices affected.
 2. [Debug logs](https://docs.revenuecat.com/docs/debugging) that reproduce the issue
 3. Steps to reproduce, with a description of expected vs. actual behavior
 4. **Other information** (e.g. stacktraces, related issues, suggestions how to fix, links for us to have context, eg. stackoverflow, etc.)
