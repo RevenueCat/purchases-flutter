@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   android: circleci/android@0.2.1
-  react-native: react-native-community/react-native@4.4.2
 
 commands:
 
