@@ -90,7 +90,10 @@ commands:
     steps:
       - run:
           name: create AVD
-          command: echo "no" | avdmanager --verbose create avd --force --name "Pixel_3a_API_29" --package "system-images;android-29;google_apis_playstore;x86_64"
+          command: |
+            echo "no" | avdmanager --verbose create avd --force \
+            --name "Pixel_3a_API_29" \
+            --package "system-images;android-29;google_apis_playstore;x86_64"
 
       - run:
           name: start AVD
@@ -99,7 +102,8 @@ commands:
 
       - run:
           name: wait for emulator
-          command: adb wait-for-device shell 'while [[ -z $(getprop dev.bootcomplete) ]]; do sleep 1; done;'
+          command: |
+            adb wait-for-device shell 'while [[ -z $(getprop dev.bootcomplete) ]]; do sleep 1; done;'
 
   setup-flutter:
     description: "setup Flutter"
@@ -111,18 +115,7 @@ commands:
           key: flutter_cache_1
       - run:
           name: Download flutter SDK
-          command: |
-            if ! test -f "flutter_sdk.zip"; then 
-            curl -o flutter_sdk.zip 
-            https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_1.22.2-stable.zip; 
-            fi
-      - run:
-          name: Unzip flutter SDK
-          command: unzip flutter_sdk.zip
-      - save_cache:
-          key: flutter_cache_1
-          paths:
-            - flutter_sdk.zip
+          command: git clone -b stable https://github.com/flutter/flutter.git flutter
 
   run-flutter-test:
     description: "Run Flutter tests"
