@@ -193,8 +193,8 @@ jobs:
 workflows:
   test:
     jobs:
-      - lint:
-      - test:
+      - lint
+      - test
   integration-test:
     jobs:
       - android-integration-test
