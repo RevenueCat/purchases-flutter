@@ -83,7 +83,7 @@ commands:
       - save_cache:
           key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
           paths:
-            - /Users/distiller/android-tools
+            - ~/android-tools
 
   create-launch-android-emulator:
     description: "create and launch android emulators"
