@@ -14,11 +14,11 @@ commands:
     steps:  
       - run:
           name: Install Flutter Dependencies
-          working_directory: working_directory
+          working_directory: <<parameters.working_directory>>
           command: flutter pub get
       - run:
           name: Build
-          working_directory: working_directory
+          working_directory: <<parameters.working_directory>>
           command: flutter packages pub run build_runner build
 
   run-flutter-integration-tests:
