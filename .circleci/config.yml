@@ -198,11 +198,13 @@ workflows:
           filters:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
-            branches:
-              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
+#            Uncomment before merging
+#            branches:
+#              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
       - ios-integration-test:
           filters:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
-            branches:
-              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
+#            Uncomment before merging
+#            branches:
+#              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
