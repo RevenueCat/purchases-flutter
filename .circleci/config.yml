@@ -123,6 +123,8 @@ jobs:
               sudo rm -rf /opt/google-cloud-sdk
               install
             fi
+            # Install gsutil
+            gcloud components update
           name: 'Install latest gcloud CLI version, if not available'
       - run:
           command: gcloud version
