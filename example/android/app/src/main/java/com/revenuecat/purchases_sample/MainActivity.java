@@ -1,4 +1,4 @@
-package com.revenuecat.purchases_flutter_example;
+package com.revenuecat.purchases_sample;
 
 import io.flutter.embedding.android.FlutterActivity;
 

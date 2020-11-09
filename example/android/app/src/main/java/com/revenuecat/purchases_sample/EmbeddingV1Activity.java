@@ -1,4 +1,4 @@
-package com.revenuecat.purchases_flutter_example;
+package com.revenuecat.purchases_sample;
 
 import android.os.Bundle;
 import com.revenuecat.purchases_flutter.PurchasesFlutterPlugin;
