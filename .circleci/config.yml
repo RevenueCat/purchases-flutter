@@ -125,11 +125,11 @@ jobs:
             fi
           name: 'Install latest gcloud CLI version, if not available'
       - run:
-          command: gcloud version
           name: gcloud CLI version
+          command: gcloud version
       - run:
-          command: Update gcloud components to install gsutil
-          name: gcloud components update
+          name: Update gcloud components to install gsutil
+          command: gcloud components update
       - run:
           name: Change api key
           command: sed -i s/api_key/$API_KEY/ example/integration_test/app_test.dart
