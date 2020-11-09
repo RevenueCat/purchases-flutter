@@ -38,15 +38,6 @@ commands:
             flutter drive --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
 
-  simulator-dependencies:
-    description: "Install iOS simulator dependencies"
-    steps:
-      - run:
-          name: "Install applesimutils"
-          command: |
-            HOMEBREW_NO_AUTO_UPDATE=1 brew tap wix/brew
-            HOMEBREW_NO_AUTO_UPDATE=1 brew install applesimutils
-
   gradle-dependencies:
     description: "Get Gradle dependencies"
     steps:
@@ -66,51 +57,6 @@ commands:
           paths:
             - ~/.gradle
           key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
-
-  android-sdk-dependencies:
-    description: "Install and set android SDK"
-    steps:
-      - run:
-          name: set ANDROID_SDK_ROOT
-          command: |
-            echo 'export ANDROID_SDK_ROOT=$HOME/android-tools'  >> $BASH_ENV
-      - restore_cache:
-          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
-
-      - run:
-          name: install android tools
-          command: |
-            sh scripts/install-android-tools.sh
-            echo 'export PATH=$ANDROID_SDK_ROOT/tools/bin:$PATH'  >> $BASH_ENV
-            echo 'export PATH=$ANDROID_SDK_ROOT/tools:$PATH'  >> $BASH_ENV
-            echo 'export PATH=$ANDROID_SDK_ROOT/platform-tools:$PATH'  >> $BASH_ENV
-            echo 'export PATH=$ANDROID_SDK_ROOT/emulator:$PATH'  >> $BASH_ENV
-            source $BASH_ENV
-            sdkmanager --list # Lists all installed and available packages for debug purposes
-      - save_cache:
-          key: android=tools-v1-{{ checksum "scripts/install-android-tools.sh" }}-{{ arch }}
-          paths:
-            - ~/android-tools
-
-  create-launch-android-emulator:
-    description: "create and launch android emulators"
-    steps:
-      - run:
-          name: create AVD
-          command: |
-            echo "no" | avdmanager --verbose create avd --force \
-            --name "Pixel_3a_API_29" \
-            --package "system-images;android-29;google_apis_playstore;x86_64"
-
-      - run:
-          name: start AVD
-          command: emulator @Pixel_3a_API_29 -no-window -no-audio
-          background: true
-
-      - run:
-          name: wait for emulator
-          command: |
-            adb wait-for-device shell 'while [[ -z $(getprop dev.bootcomplete) ]]; do sleep 1; done;'
 
   setup-flutter:
     description: "setup Flutter"
@@ -150,17 +96,72 @@ jobs:
 
   android-integration-test:
     description: "Run integration tests for Flutter"
-    macos:
-      xcode: 11.3.1
+    docker:
+      - image: cirrusci/flutter:stable
     steps:
       - checkout
-      - setup-flutter
-      - android-sdk-dependencies
-      - create-launch-android-emulator
-      - prepare-tests
-      - build-flutter-project:
-          project: example
-      - run-flutter-integration-tests
+      - run:
+          command: |
+            install () {
+              # Set sudo to work whether logged in as root user or non-root user
+              if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
+              cd ~/
+              curl -Ss --retry 5 https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-283.0.0-linux-x86_64.tar.gz | tar xz
+              echo 'source ~/google-cloud-sdk/path.bash.inc' >> $BASH_ENV
+            }
+
+            if grep 'docker\|lxc' /proc/1/cgroup > /dev/null 2>&1; then
+              if [[ $(command -v gcloud) == "" ]]; then
+                install
+              else
+                echo "gcloud CLI is already installed."
+              fi
+            else
+              echo "----------------------------------------------------------------------------------------------------"
+              echo "this is a machine executor job, replacing default installation of gcloud CLI"
+              echo "----------------------------------------------------------------------------------------------------"
+              sudo rm -rf /opt/google-cloud-sdk
+              install
+            fi
+          name: 'Install latest gcloud CLI version, if not available'
+      - run:
+          command: gcloud version
+          name: gcloud CLI version
+      - run:
+          name: Change api key
+          command: sed -i s/api_key/$API_KEY/ example/integration_test/app_test.dart
+      - run:
+          working_directory: example/android
+          command: |
+            # flutter build generates files in android/ for building the app
+            flutter build apk
+            ./gradlew app:assembleAndroidTest
+            ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
+      - run:
+          name: Store Google Service Account
+          command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+      - run:
+          name: Authorize gcloud and set config defaults
+          command: |
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - run:
+          name: Test with Firebase Test Lab
+          command: >
+            gcloud firebase test android run --type instrumentation \
+              --app example/build/app/outputs/apk/debug/app-debug.apk \
+              --test example/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+              --timeout 2m \
+              --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
+      - run:
+          name: Copy test results data
+          command: |
+            mkdir -p ~/gsutil/
+            sudo gsutil -m cp -r -U `sudo gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
+      - store_artifacts:
+          path: ~/gsutil/
+      - store_test_results:
+          path: ~/gsutil/
 
   ios-integration-test:
     description: "Run integration tests for Flutter"
@@ -175,7 +176,6 @@ jobs:
       - restore_cache:
           name: Restore cocoapods specs and pods
           key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
-#      - simulator-dependencies
       - prepare-tests
       - build-flutter-project:
           project: example
