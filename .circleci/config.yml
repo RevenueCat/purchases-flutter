@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   android: circleci/android@0.2.1
+  gcp-cli: circleci/gcp-cli@2.1.0
 
 commands:
 
@@ -94,42 +95,12 @@ jobs:
           name: Run tests
           command: flutter test
 
-  android-integration-test:
-    description: "Run integration tests for Flutter"
+  android-integration-test-build:
+    description: "Build Android Flutter integration tests"
     docker:
       - image: cirrusci/flutter:stable
     steps:
       - checkout
-      - run:
-          command: |
-            install () {
-              # Set sudo to work whether logged in as root user or non-root user
-              if [[ $EUID == 0 ]]; then export SUDO=""; else export SUDO="sudo"; fi
-              cd ~/
-              curl -Ss --retry 5 https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-283.0.0-linux-x86_64.tar.gz | tar xz
-              echo 'source ~/google-cloud-sdk/path.bash.inc' >> $BASH_ENV
-            }
-
-            if grep 'docker\|lxc' /proc/1/cgroup > /dev/null 2>&1; then
-              if [[ $(command -v gcloud) == "" ]]; then
-                install
-              else
-                echo "gcloud CLI is already installed."
-              fi
-            else
-              echo "----------------------------------------------------------------------------------------------------"
-              echo "this is a machine executor job, replacing default installation of gcloud CLI"
-              echo "----------------------------------------------------------------------------------------------------"
-              sudo rm -rf /opt/google-cloud-sdk
-              install
-            fi
-          name: 'Install latest gcloud CLI version, if not available'
-      - run:
-          name: gcloud CLI version
-          command: gcloud version
-      - run:
-          name: Update gcloud components to install gsutil
-          command: gcloud components update
       - run:
           name: Change api key
           command: sed -i s/api_key/$API_KEY/ example/integration_test/app_test.dart
@@ -140,14 +111,20 @@ jobs:
             flutter build apk
             ./gradlew app:assembleAndroidTest
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
-      - run:
-          name: Store Google Service Account
-          command: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
-      - run:
-          name: Authorize gcloud and set config defaults
-          command: |
-            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - example/build/app/outputs/apk/debug/app-debug.apk
+            - example/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+
+  run-firebase-tests:
+    description: "Run integration tests for Flutter"
+    docker:
+      - image: gcp-cli/default
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Test with Firebase Test Lab
           command: >
@@ -195,19 +172,27 @@ workflows:
     jobs:
       - lint
       - test
-  integration-test:
+  android-integration-test:
     jobs:
-      - android-integration-test:
+      - android-integration-test-build:
           filters:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
 #            Uncomment before merging
 #            branches:
 #              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
+      - gcp-cli/install_and_initialize_cli:
+          requires:
+            - android-integration-test-build
+      - run-firebase-tests:
+          requires:
+            - gcp-cli/install_and_initialize_cli
+  ios-integration-test:
+    jobs:
       - ios-integration-test:
           filters:
             tags:
               only: /^(\d+\.)(\d+\.)(\d+)$/
-#            Uncomment before merging
-#            branches:
-#              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
+      #            Uncomment before merging
+      #            branches:
+      #              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
