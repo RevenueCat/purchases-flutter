@@ -119,12 +119,11 @@ jobs:
 
   run-firebase-tests:
     description: "Run integration tests for Flutter"
-    executor: gcp-cli/default
+    executor: gcp-cli/google
     steps:
       - checkout
       - attach_workspace:
           at: .
-      - gcp-cli/install
       - gcp-cli/initialize:
           gcloud-service-key: GCLOUD_SERVICE_KEY
           google-compute-zone: GOOGLE_COMPUTE_ZONE
@@ -140,7 +139,6 @@ jobs:
       - run:
           name: Copy test results data
           command: |
-            sudo pip install -U crcmod
             mkdir -p ~/gsutil/
             sudo gsutil -m cp -r -U `sudo gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
       - store_artifacts:
