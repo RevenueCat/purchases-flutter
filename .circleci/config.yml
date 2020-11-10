@@ -124,6 +124,11 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
+      - gcp-cli/install
+      - gcp-cli/initialize:
+          gcloud-service-key: GCLOUD_SERVICE_KEY
+          google-compute-zone: GOOGLE_COMPUTE_ZONE
+          google-project-id: GOOGLE_PROJECT_ID
       - run:
           name: Test with Firebase Test Lab
           command: >
@@ -180,12 +185,9 @@ workflows:
 #            Uncomment before merging
 #            branches:
 #              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
-      - gcp-cli/install_and_initialize_cli:
-          requires:
-            - android-integration-test-build
       - run-firebase-tests:
           requires:
-            - gcp-cli/install_and_initialize_cli
+            - android-integration-test-build
   ios-integration-test:
     jobs:
       - ios-integration-test:
