@@ -140,7 +140,7 @@ jobs:
           name: Copy test results data
           command: |
             mkdir -p ~/gsutil/
-            sudo gsutil -m cp -r -U `sudo gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
+            gsutil -m cp -r -U `sudo gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
       - store_artifacts:
           path: ~/gsutil/
       - store_test_results:
