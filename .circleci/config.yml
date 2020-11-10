@@ -119,8 +119,7 @@ jobs:
 
   run-firebase-tests:
     description: "Run integration tests for Flutter"
-    docker:
-      - image: gcp-cli/default
+    executor: gcp-cli/default
     steps:
       - checkout
       - attach_workspace:
