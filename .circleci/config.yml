@@ -9,7 +9,7 @@ commands:
   replace-api-key:
     description: "replace API_KEY"
     steps:
-      - run: sed -i .bck s/api_key/$API_KEY/ example/integration_test/app_test.dart
+      - run: sed -i.bck s/api_key/$API_KEY/ example/integration_test/app_test.dart
 
   build-flutter-project:
     description: "Install dependencies and build"
