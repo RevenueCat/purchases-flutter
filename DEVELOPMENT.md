@@ -1,7 +1,7 @@
-- Edit the `defaultValue` in `example/lib/main.dart` for the apiKey with the sample app to test:
+- Replace the `api_key` in `example/lib/main.dart` with the api key with the sample app to test:
 
 ```
-    const apiKey = String.fromEnvironment("API_KEY", defaultValue: null);
+    sed -i .bck s/api_key/$API_KEY/ example/integration_test/app_test.dart
 ```
 
 - Open xcode project inside example/ios and changes made to the plugin should be automatically reflected.

@@ -6,8 +6,8 @@ orbs:
 
 commands:
 
-  prepare-tests:
-    description: "prepares tests to run"
+  replace-api-key:
+    description: "replace API_KEY"
     steps:
       - run: sed -i .bck s/api_key/$API_KEY/ example/integration_test/app_test.dart
 
@@ -28,16 +28,6 @@ commands:
           command: |
             cd <<parameters.project>>
             flutter packages pub run build_runner build
-
-  run-flutter-integration-tests:
-    description: "Run Flutter integration tests"
-    steps:
-      - run:
-          name: Run tests
-          command: |
-            cd example
-            flutter drive --target=integration_test/app_test.dart \
-            --driver=test_driver/integration_test.dart
 
   gradle-dependencies:
     description: "Get Gradle dependencies"
@@ -101,9 +91,7 @@ jobs:
       - image: cirrusci/flutter:stable
     steps:
       - checkout
-      - run:
-          name: Change api key
-          command: sed -i s/api_key/$API_KEY/ example/integration_test/app_test.dart
+      - replace-api-key
       - run:
           working_directory: example/android
           command: |
@@ -152,17 +140,33 @@ jobs:
       xcode: 11.3.1
     steps:
       - checkout
+      - run: 
+          name: "List all simulators for debugging purposes"
+          command: "xcrun instruments -s"
       - run:
-          name: Open simulator
-          command: xcrun instruments -w "iPhone 11 Pro (13.3) [" || true
+          name: Start simulator
+          command: |
+            UDID=$(
+              xcrun instruments -s |
+              awk \
+                -F ' *[][]' \
+                -v 'device=iPhone 8 (13.3)' \
+                '$1 == device { print $2 }'
+            )
+            xcrun instruments -w "${UDID:?No Simulator with this name found} [" || true
       - setup-flutter
       - restore_cache:
           name: Restore cocoapods specs and pods
           key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
-      - prepare-tests
+      - replace-api-key
       - build-flutter-project:
           project: example
-      - run-flutter-integration-tests
+      - run:
+          name: Run Flutter integration tests
+          command: |
+            cd example
+            flutter drive --target=integration_test/app_test.dart \
+            --driver=test_driver/integration_test.dart
       - save_cache:
           name: Save cocoapods specs and pods cache
           key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
