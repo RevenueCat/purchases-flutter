@@ -140,20 +140,9 @@ jobs:
       xcode: 11.3.1
     steps:
       - checkout
-      - run: 
-          name: "List all simulators for debugging purposes"
-          command: "xcrun instruments -s"
       - run:
-          name: Start simulator
-          command: |
-            UDID=$(
-              xcrun instruments -s |
-              awk \
-                -F ' *[][]' \
-                -v 'device=iPhone 8 (13.3)' \
-                '$1 == device { print $2 }'
-            )
-            xcrun instruments -w "${UDID:?No Simulator with this name found} [" || true
+          name: Open simulator
+          command: xcrun instruments -w "iPhone 11 Pro (13.3) [" || true
       - setup-flutter
       - restore_cache:
           name: Restore cocoapods specs and pods
