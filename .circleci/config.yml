@@ -1,0 +1,186 @@
+release-tags-and-branches: &release-tags-and-branches
+  filters:
+    tags:
+      ignore: /^.*-SNAPSHOT/
+    branches:
+      only: /^release\/.*/
+
+version: 2.1
+
+orbs:
+  android: circleci/android@0.2.1
+  gcp-cli: circleci/gcp-cli@2.1.0
+
+commands:
+
+  replace-api-key:
+    description: "replace API_KEY"
+    steps:
+      - run: sed -i.bck s/api_key/$API_KEY/ example/integration_test/app_test.dart
+
+  build-flutter-project:
+    description: "Install dependencies and build"
+    parameters:
+      project:
+        default: .
+        type: string
+    steps:  
+      - run:
+          name: Install Flutter Dependencies
+          command: |
+            cd <<parameters.project>>
+            flutter pub get
+      - run:
+          name: Build
+          command: |
+            cd <<parameters.project>>
+            flutter packages pub run build_runner build
+
+  gradle-dependencies:
+    description: "Get Gradle dependencies"
+    steps:
+      - run:
+          working_directory: ./android
+          name: Chmod permissions
+          command: sudo chmod +x ./gradlew
+      - restore_cache:
+          name: Restore Gradle cache
+          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+      - run:
+          working_directory: ./android
+          name: Download Gradle dependencies
+          command: ./gradlew dependencies
+      - save_cache:
+          name: Save Gradle cache
+          paths:
+            - ~/.gradle
+          key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
+
+  setup-flutter:
+    description: "setup Flutter"
+    steps:
+      - run:
+          name: Download flutter SDK
+          command: git clone -b stable https://github.com/flutter/flutter.git flutter
+      - run:
+          name: Setup environment variables
+          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
+      - run:
+          name: Flutter doctor
+          command: flutter doctor
+
+jobs:
+  lint:
+    description: "Run static analysis for Flutter"
+    docker:
+      - image: cirrusci/flutter:stable
+    steps:
+      - checkout
+      - build-flutter-project
+      - run:
+          name: Analyze code
+          command: flutter analyze lib
+
+  test:
+    description: "Run tests for Flutter"
+    docker:
+      - image: cirrusci/flutter:stable
+    steps:
+      - checkout
+      - build-flutter-project
+      - run:
+          name: Run tests
+          command: flutter test
+
+  android-integration-test-build:
+    description: "Build Android Flutter integration tests"
+    docker:
+      - image: cirrusci/flutter:stable
+    steps:
+      - checkout
+      - replace-api-key
+      - run:
+          working_directory: example/android
+          command: |
+            # flutter build generates files in android/ for building the app
+            flutter build apk
+            ./gradlew app:assembleAndroidTest
+            ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
+      - persist_to_workspace:
+          root: .
+          paths:
+            - example/build/app/outputs/apk/debug/app-debug.apk
+            - example/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+
+  run-firebase-tests:
+    description: "Run integration tests for Flutter"
+    executor: gcp-cli/google
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - gcp-cli/initialize:
+          gcloud-service-key: GCLOUD_SERVICE_KEY
+          google-compute-zone: GOOGLE_COMPUTE_ZONE
+          google-project-id: GOOGLE_PROJECT_ID
+      - run:
+          name: Test with Firebase Test Lab
+          command: >
+            gcloud firebase test android run --type instrumentation \
+              --app example/build/app/outputs/apk/debug/app-debug.apk \
+              --test example/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+              --timeout 2m \
+              --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
+      - run:
+          name: Copy test results data
+          command: |
+            mkdir -p ~/gsutil/
+            gsutil -m cp -r -U `gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
+      - store_artifacts:
+          path: ~/gsutil/
+      - store_test_results:
+          path: ~/gsutil/
+
+  ios-integration-test:
+    description: "Run integration tests for Flutter"
+    macos:
+      xcode: 12.2.0
+    steps:
+      - checkout
+      - run:
+          name: Open simulator
+          command: xcrun instruments -w "iPhone 11 Pro (14.2) [" || true
+      - setup-flutter
+      - restore_cache:
+          name: Restore cocoapods specs and pods
+          key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
+      - replace-api-key
+      - build-flutter-project:
+          project: example
+      - run:
+          name: Run Flutter integration tests
+          command: |
+            cd example
+            flutter drive --target=integration_test/app_test.dart \
+            --driver=test_driver/integration_test.dart
+      - save_cache:
+          name: Save cocoapods specs and pods cache
+          key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
+          paths:
+            - ./example/ios/Pods
+            - ~/.cocoapods
+
+workflows:
+  test:
+    jobs:
+      - lint
+      - test
+  android-integration-test:
+    jobs:
+      - android-integration-test-build: *release-tags-and-branches
+      - run-firebase-tests:
+          requires:
+            - android-integration-test-build
+  ios-integration-test:
+    jobs:
+      - ios-integration-test: *release-tags-and-branches

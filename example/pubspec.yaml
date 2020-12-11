@@ -21,9 +21,11 @@ dev_dependencies:
     path: ../
 
   pedantic: ^1.8.0
-  e2e: ^0.2.1
   flutter_driver:
     sdk: flutter
+  test: any
+  build_runner: ^1.0.0
+  integration_test: ^0.9.2+2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

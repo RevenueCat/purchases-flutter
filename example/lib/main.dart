@@ -18,7 +18,6 @@ class InitialScreen extends StatefulWidget {
 
 class _MyAppState extends State<InitialScreen> {
   PurchaserInfo _purchaserInfo;
-  Offerings _offerings;
 
   @override
   void initState() {
@@ -31,7 +30,7 @@ class _MyAppState extends State<InitialScreen> {
     await Purchases.setDebugLogsEnabled(true);
     await Purchases.setup("api_key");
     PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
-    Offerings offerings = await Purchases.getOfferings();
+
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
@@ -39,7 +38,6 @@ class _MyAppState extends State<InitialScreen> {
 
     setState(() {
       _purchaserInfo = purchaserInfo;
-      _offerings = offerings;
     });
   }
 
@@ -57,23 +55,45 @@ class _MyAppState extends State<InitialScreen> {
       if (isPro) {
         return CatsScreen();
       } else {
-        return UpsellScreen(
-          offerings: _offerings,
-        );
+        return UpsellScreen();
       }
     }
   }
 }
 
-class UpsellScreen extends StatelessWidget {
-  final Offerings offerings;
+class UpsellScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _UpsellScreenState();
+}
 
-  UpsellScreen({Key key, @required this.offerings}) : super(key: key);
+class _UpsellScreenState extends State<UpsellScreen> {
+  Offerings _offerings;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    Offerings offerings;
+    try {
+      offerings = await Purchases.getOfferings();
+    } on PlatformException catch (e) {
+      print(e);
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _offerings = offerings;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (offerings != null) {
-      final offering = offerings.current;
+    if (_offerings != null) {
+      final offering = _offerings.current;
       if (offering != null) {
         final monthly = offering.monthly;
         final lifetime = offering.lifetime;

@@ -32,7 +32,8 @@ void main() {
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
             'appUserId': 'cesar',
-            'observerMode': true
+            'observerMode': true,
+            'userDefaultsSuiteName': null
           },
         )
       ],
