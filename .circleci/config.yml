@@ -1,3 +1,10 @@
+release-tags-and-branches: &release-tags-and-branches
+  filters:
+    tags:
+      ignore: /^.*-SNAPSHOT/
+    branches:
+      only: /^release\/.*/
+
 version: 2.1
 
 orbs:
@@ -170,22 +177,10 @@ workflows:
       - test
   android-integration-test:
     jobs:
-      - android-integration-test-build:
-          filters:
-            tags:
-              only: /^(\d+\.)(\d+\.)(\d+)$/
-#            Uncomment before merging
-#            branches:
-#              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
+      - android-integration-test-build: *release-tags-and-branches
       - run-firebase-tests:
           requires:
             - android-integration-test-build
   ios-integration-test:
     jobs:
-      - ios-integration-test:
-          filters:
-            tags:
-              only: /^(\d+\.)(\d+\.)(\d+)$/
-      #            Uncomment before merging
-      #            branches:
-      #              only: /^release\/(\d+\.)(\d+\.)(\d+)$/
+      - ios-integration-test: *release-tags-and-branches
