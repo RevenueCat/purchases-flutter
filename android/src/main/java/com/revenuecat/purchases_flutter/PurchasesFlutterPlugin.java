@@ -215,6 +215,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "invalidatePurchaserInfoCache":
                 invalidatePurchaserInfoCache(result);
                 break;
+            case "presentCodeRedemptionSheet":
+                // NOOP
+                break;
             case "setAttributes":
                 Map<String, String> attributes = call.argument("attributes");
                 setAttributes(attributes, result);
