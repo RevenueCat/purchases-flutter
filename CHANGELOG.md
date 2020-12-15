@@ -1,3 +1,14 @@
+## 2.0.0
+
+- iOS: 
+    - added new method, `syncPurchases`, that enables syncing the purchases in the local receipt with the backend without risking a password prompt. 
+    - added a new method, `presentCodeRedemptionSheet`, for offer codes redemption.
+- Android: 
+    - TODO
+- Bumped purchases-hybrid-common to 2.0.0 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/2.0.0)
+- Bumped purchases-ios to 3.9.1 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases/3.9.1)
+- Bumped purchases-android to 4.0.0 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/4.0.0)
+
 ## 1.4.3
 
 - Explicitly added `Purchases` framework to podspec's linker flags so it gets correctly linked in the plugin pod.
