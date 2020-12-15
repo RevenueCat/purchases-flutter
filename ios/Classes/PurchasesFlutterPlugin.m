@@ -194,8 +194,11 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
           forNetworkUserId:(NSString *_Nullable)networkUserId
                     result:(FlutterResult)result
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality addAttributionData:data network:network networkUserId:networkUserId];
     result(nil);
+#pragma GCC diagnostic pop
 }
 
 - (void)getOfferingsWithResult:(FlutterResult)result
