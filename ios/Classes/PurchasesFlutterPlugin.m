@@ -82,7 +82,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"getPurchaserInfo" isEqualToString:call.method]) {
         [self getPurchaserInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
-        // NOOP
+        [self syncPurchasesWithResult:result];
     } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
         [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"isAnonymous" isEqualToString:call.method]) {
@@ -234,6 +234,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)restoreTransactionsWithResult:(FlutterResult)result
 {
     [RCCommonFunctionality restoreTransactionsWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)syncPurchasesWithResult:(FlutterResult)result
+{
+    [RCCommonFunctionality syncPurchasesWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)getAppUserIDWithResult:(FlutterResult)result
