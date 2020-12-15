@@ -382,6 +382,13 @@ class Purchases {
     return await _channel.invokeMethod('invalidatePurchaserInfoCache');
   }
 
+  /// iOS only. Presents a code redemption sheet, useful for redeeming offer codes
+  /// Refer to https://docs.revenuecat.com/docs/ios-subscription-offers#offer-codes for more information on how 
+  /// to configure and use offer codes
+  static Future<void> presentCodeRedemptionSheet() async {
+    return await _channel.invokeMethod('presentCodeRedemptionSheet');
+  }
+
   ///================================================================================
   /// Subscriber Attributes
   ///================================================================================

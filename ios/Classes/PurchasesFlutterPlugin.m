@@ -34,7 +34,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-- (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result
+- (void)handleMethodCall:(FlutterMethodCall *)call
+                  result:(FlutterResult)result
 {
     NSDictionary *arguments = call.arguments;
     if ([@"setupPurchases" isEqualToString:call.method]) {
@@ -91,6 +92,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self checkTrialOrIntroductoryPriceEligibility:arguments[@"productIdentifiers"] result:result];
     } else if ([@"invalidatePurchaserInfoCache" isEqualToString:call.method]) {
         [self invalidatePurchaserInfoCacheWithResult:result];
+    } else if ([@"presentCodeRedemptionSheet" isEqualToString:call.method]) {
+        [self presentCodeRedemptionSheetWithResult:result];
     } else if ([@"setAttributes" isEqualToString:call.method]) {
         NSDictionary *attributes = arguments[@"attributes"];
         [self setAttributes:attributes result:result];
@@ -308,6 +311,16 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)invalidatePurchaserInfoCacheWithResult:(FlutterResult)result
 {
     [RCCommonFunctionality invalidatePurchaserInfoCache];
+    result(nil);
+}
+
+- (void)presentCodeRedemptionSheetWithResult:(FlutterResult)result
+{
+    if (@available(iOS 14.0, *)) {
+        [RCCommonFunctionality presentCodeRedemptionSheet];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to present codeRedemptionSheet, but it's only available on iOS 14.0 or greater.");
+    }
     result(nil);
 }
 
