@@ -107,10 +107,6 @@ class Purchases {
     });
   }
 
-  /// Deprecated in favor of getOfferings.
-  @Deprecated("use getOfferings instead")
-  static void getEntitlements() async {}
-
   /// Fetch the configured offerings for this users. Offerings allows you to
   /// configure your in-app products via RevenueCat and greatly simplifies
   /// management. See [the guide](https://docs.revenuecat.com/offerings) for
@@ -138,17 +134,6 @@ class Purchases {
     List<dynamic> result = await _channel.invokeMethod('getProductInfo',
         {'productIdentifiers': productIdentifiers, 'type': describeEnum(type)});
     return result.map((item) => Product.fromJson(item)).toList();
-  }
-
-  @Deprecated("use purchaseProduct/purchasePackage instead")
-  static Future<PurchaserInfo> makePurchase(String productIdentifier,
-      {String oldSKU, String type = "subs"}) async {
-    var purchaseType = PurchaseType.subs;
-    if (type == "inapp") {
-      purchaseType = PurchaseType.inapp;
-    }
-    return purchaseProduct(productIdentifier,
-        upgradeInfo: UpgradeInfo(oldSKU), type: purchaseType);
   }
 
   /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
