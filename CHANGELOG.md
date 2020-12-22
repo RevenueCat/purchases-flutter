@@ -8,7 +8,7 @@
     - added a new method, `presentCodeRedemptionSheet`, for offer codes redemption.
 - Bumped purchases-hybrid-common to 1.5.0 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/1.5.0)
 - Bumped purchases-ios to 3.9.2 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases/3.9.1)
-- Bumped purchases-android to 4.0.0 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/4.0.0)
+- Bumped purchases-android to 4.0.1 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/4.0.1)
 
 ## 1.4.3
 
