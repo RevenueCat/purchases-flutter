@@ -53,7 +53,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "1.4.3";
+    private static final String PLUGIN_VERSION = "2.0.0";
 
     /**
      * Plugin registration.
@@ -214,6 +214,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "invalidatePurchaserInfoCache":
                 invalidatePurchaserInfoCache(result);
+                break;
+            case "presentCodeRedemptionSheet":
+                // NOOP
                 break;
             case "setAttributes":
                 Map<String, String> attributes = call.argument("attributes");

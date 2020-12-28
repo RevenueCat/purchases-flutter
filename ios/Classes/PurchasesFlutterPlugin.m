@@ -34,7 +34,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-- (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result
+- (void)handleMethodCall:(FlutterMethodCall *)call
+                  result:(FlutterResult)result
 {
     NSDictionary *arguments = call.arguments;
     if ([@"setupPurchases" isEqualToString:call.method]) {
@@ -82,7 +83,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"getPurchaserInfo" isEqualToString:call.method]) {
         [self getPurchaserInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
-        // NOOP
+        [self syncPurchasesWithResult:result];
     } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
         [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"isAnonymous" isEqualToString:call.method]) {
@@ -91,6 +92,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self checkTrialOrIntroductoryPriceEligibility:arguments[@"productIdentifiers"] result:result];
     } else if ([@"invalidatePurchaserInfoCache" isEqualToString:call.method]) {
         [self invalidatePurchaserInfoCacheWithResult:result];
+    } else if ([@"presentCodeRedemptionSheet" isEqualToString:call.method]) {
+        [self presentCodeRedemptionSheetWithResult:result];
     } else if ([@"setAttributes" isEqualToString:call.method]) {
         NSDictionary *attributes = arguments[@"attributes"];
         [self setAttributes:attributes result:result];
@@ -194,8 +197,11 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
           forNetworkUserId:(NSString *_Nullable)networkUserId
                     result:(FlutterResult)result
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality addAttributionData:data network:network networkUserId:networkUserId];
     result(nil);
+#pragma GCC diagnostic pop
 }
 
 - (void)getOfferingsWithResult:(FlutterResult)result
@@ -234,6 +240,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)restoreTransactionsWithResult:(FlutterResult)result
 {
     [RCCommonFunctionality restoreTransactionsWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)syncPurchasesWithResult:(FlutterResult)result
+{
+    [RCCommonFunctionality syncPurchasesWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)getAppUserIDWithResult:(FlutterResult)result
@@ -300,6 +311,16 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)invalidatePurchaserInfoCacheWithResult:(FlutterResult)result
 {
     [RCCommonFunctionality invalidatePurchaserInfoCache];
+    result(nil);
+}
+
+- (void)presentCodeRedemptionSheetWithResult:(FlutterResult)result
+{
+    if (@available(iOS 14.0, *)) {
+        [RCCommonFunctionality presentCodeRedemptionSheet];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to present codeRedemptionSheet, but it's only available on iOS 14.0 or greater.");
+    }
     result(nil);
 }
 
@@ -458,7 +479,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"1.4.3";
+    return @"2.0.0";
 }
 
 @end
