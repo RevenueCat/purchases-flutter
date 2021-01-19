@@ -1,10 +1,10 @@
 name: purchases_flutter
-description: A Flutter plugin that makes implementing in-app subscriptions for iOS and Android simple – receipt validation and status tracking included!
+description: A Flutter plugin that makes it simple to build in-app purchases and subscriptions – receipt validation and status tracking included.
 version: 2.0.0
 homepage: https://www.revenuecat.com/
 repository: https://github.com/RevenueCat/purchases-flutter
 issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
-documentation: https://docs.revenuecat.com/
+documentation: https://docs.revenuecat.com/docs
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
