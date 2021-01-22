@@ -1,3 +1,8 @@
+## 2.0.1
+
+- Updated pubspec.yaml
+    https://github.com/RevenueCat/purchases-flutter/pull/143
+
 ## 2.0.0
 
 - removes deprecated `getEntitlements`, replaced by `getOfferings`
