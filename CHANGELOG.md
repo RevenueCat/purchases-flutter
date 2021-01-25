@@ -1,3 +1,8 @@
+## 2.0.2
+
+- Updated pubspec.yaml
+    https://github.com/RevenueCat/purchases-flutter/pull/147
+
 ## 2.0.1
 
 - Updated pubspec.yaml
