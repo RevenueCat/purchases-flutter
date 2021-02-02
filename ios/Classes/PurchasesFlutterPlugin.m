@@ -316,11 +316,15 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)presentCodeRedemptionSheetWithResult:(FlutterResult)result
 {
+#if TARGET_OS_IOS
     if (@available(iOS 14.0, *)) {
         [RCCommonFunctionality presentCodeRedemptionSheet];
     } else {
         NSLog(@"[Purchases] Warning: tried to present codeRedemptionSheet, but it's only available on iOS 14.0 or greater.");
     }
+#else
+    NSLog(@"[Purchases] Warning: tried to present codeRedemptionSheet, but it's only available on iOS 14.0 or greater.");
+#endif
     result(nil);
 }
 
@@ -479,7 +483,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"2.0.2";
+    return @"2.0.3";
 }
 
 @end
