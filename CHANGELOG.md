@@ -1,3 +1,8 @@
+## 2.0.3
+
+- Fixed build issue on macOS targets
+    https://github.com/RevenueCat/purchases-flutter/pull/151
+
 ## 2.0.2
 
 - Updated pubspec.yaml
