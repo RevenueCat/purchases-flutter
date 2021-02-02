@@ -322,6 +322,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     } else {
         NSLog(@"[Purchases] Warning: tried to present codeRedemptionSheet, but it's only available on iOS 14.0 or greater.");
     }
+#else
+    NSLog(@"[Purchases] Warning: tried to present codeRedemptionSheet, but it's only available on iOS 14.0 or greater.");
 #endif
     result(nil);
 }
