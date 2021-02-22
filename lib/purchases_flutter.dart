@@ -41,9 +41,9 @@ class Purchases {
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
   static Future<void> setup(String apiKey,
-      {String appUserId,
+      {String? appUserId,
       bool observerMode = false,
-      String userDefaultsSuiteName}) async {
+      String? userDefaultsSuiteName}) async {
     return await _channel.invokeMethod('setupPurchases', {
       'apiKey': apiKey,
       'appUserId': appUserId,
@@ -102,7 +102,7 @@ class Purchases {
   @Deprecated("Use the set<NetworkId> functions instead.")
   static Future<void> addAttributionData(
       Map<String, Object> data, PurchasesAttributionNetwork network,
-      {String networkUserId}) async {
+      {String? networkUserId}) async {
     await _channel.invokeMethod('addAttributionData', {
       'data': data,
       'network': network.index,
@@ -120,7 +120,7 @@ class Purchases {
   ///
   /// Time is money.
   static Future<Offerings> getOfferings() async {
-    return Offerings.fromJson(await _channel.invokeMethod('getOfferings'));
+    return Offerings.fromJson(await (_channel.invokeMethod('getOfferings') as FutureOr<Map<dynamic, dynamic>>));
   }
 
   /// Fetch the product info. Returns a list of products or throws an error if
@@ -134,8 +134,8 @@ class Purchases {
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<List<Product>> getProducts(List<String> productIdentifiers,
       {PurchaseType type = PurchaseType.subs}) async {
-    List<dynamic> result = await _channel.invokeMethod('getProductInfo',
-        {'productIdentifiers': productIdentifiers, 'type': describeEnum(type)});
+    List<dynamic> result = await (_channel.invokeMethod('getProductInfo',
+        {'productIdentifiers': productIdentifiers, 'type': describeEnum(type)}) as FutureOr<List<dynamic>>);
     return result.map((item) => Product.fromJson(item)).toList();
   }
 
@@ -155,12 +155,12 @@ class Purchases {
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<PurchaserInfo> purchaseProduct(String productIdentifier,
-      {UpgradeInfo upgradeInfo, PurchaseType type = PurchaseType.subs}) async {
+      {UpgradeInfo? upgradeInfo, PurchaseType type = PurchaseType.subs}) async {
     var response = await _channel.invokeMethod('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo != null ? upgradeInfo.oldSKU : null,
       'prorationMode': upgradeInfo != null && upgradeInfo.prorationMode != null
-          ? upgradeInfo.prorationMode.index
+          ? upgradeInfo.prorationMode!.index
           : null,
       'type': describeEnum(type)
     });
@@ -178,13 +178,13 @@ class Purchases {
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   static Future<PurchaserInfo> purchasePackage(Package packageToPurchase,
-      {UpgradeInfo upgradeInfo}) async {
+      {UpgradeInfo? upgradeInfo}) async {
     var response = await _channel.invokeMethod('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo != null ? upgradeInfo.oldSKU : null,
       'prorationMode': upgradeInfo != null && upgradeInfo.prorationMode != null
-          ? upgradeInfo.prorationMode.index
+          ? upgradeInfo.prorationMode!.index
           : null
     });
     return PurchaserInfo.fromJson(response["purchaserInfo"]);
@@ -240,7 +240,7 @@ class Purchases {
   /// was a problem restoring transactions.
   static Future<PurchaserInfo> restoreTransactions() async {
     Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('restoreTransactions');
+        await (_channel.invokeMethod('restoreTransactions') as FutureOr<Map<dynamic, dynamic>>);
     return PurchaserInfo.fromJson(result);
   }
 
@@ -257,8 +257,8 @@ class Purchases {
   /// [newAppUserID] The new appUserID that should be linked to the currently
   /// identified appUserID.
   static Future<PurchaserInfo> createAlias(String newAppUserID) async {
-    Map<dynamic, dynamic> result = await _channel
-        .invokeMethod('createAlias', {'newAppUserID': newAppUserID});
+    Map<dynamic, dynamic> result = await (_channel
+        .invokeMethod('createAlias', {'newAppUserID': newAppUserID}) as FutureOr<Map<dynamic, dynamic>>);
     return PurchaserInfo.fromJson(result);
   }
 
@@ -272,7 +272,7 @@ class Purchases {
   /// [newAppUserID] The appUserID that should be linked to the currently user
   static Future<PurchaserInfo> identify(String appUserID) async {
     Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('identify', {'appUserID': appUserID});
+        await (_channel.invokeMethod('identify', {'appUserID': appUserID}) as FutureOr<Map<dynamic, dynamic>>);
     return PurchaserInfo.fromJson(result);
   }
 
@@ -282,7 +282,7 @@ class Purchases {
   /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
   static Future<PurchaserInfo> reset() async {
-    Map<dynamic, dynamic> result = await _channel.invokeMethod('reset');
+    Map<dynamic, dynamic> result = await (_channel.invokeMethod('reset') as FutureOr<Map<dynamic, dynamic>>);
     return PurchaserInfo.fromJson(result);
   }
 
@@ -303,7 +303,7 @@ class Purchases {
   /// Gets current purchaser info, which will normally be cached.
   static Future<PurchaserInfo> getPurchaserInfo() async {
     Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('getPurchaserInfo');
+        await (_channel.invokeMethod('getPurchaserInfo') as FutureOr<Map<dynamic, dynamic>>);
     return PurchaserInfo.fromJson(result);
   }
 
@@ -351,9 +351,9 @@ class Purchases {
   static Future<Map<String, IntroEligibility>>
       checkTrialOrIntroductoryPriceEligibility(
           List<String> productIdentifiers) async {
-    Map<dynamic, dynamic> eligibilityMap = await _channel.invokeMethod(
+    Map<dynamic, dynamic> eligibilityMap = await (_channel.invokeMethod(
         'checkTrialOrIntroductoryPriceEligibility',
-        {'productIdentifiers': productIdentifiers});
+        {'productIdentifiers': productIdentifiers}) as FutureOr<Map<dynamic, dynamic>>);
     return eligibilityMap.map((key, value) =>
         MapEntry(key as String, IntroEligibility.fromJson(value)));
   }
@@ -525,10 +525,10 @@ class Purchases {
   static Future<PaymentDiscount> getPaymentDiscount(
       Product product, Discount discount) async {
     Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('getPaymentDiscount', {
+        await (_channel.invokeMethod('getPaymentDiscount', {
       'productIdentifier': product.identifier,
       'discountIdentifier': discount.identifier
-    });
+    }) as FutureOr<Map<dynamic, dynamic>>);
     return PaymentDiscount.fromJson(result);
   }
 }
@@ -540,7 +540,7 @@ class UpgradeInfo {
   String oldSKU;
 
   /// The [ProrationMode] to use when upgrading the given oldSKU.
-  ProrationMode prorationMode;
+  ProrationMode? prorationMode;
 
   /// Constructs an UpgradeInfo
   UpgradeInfo(this.oldSKU, {this.prorationMode});
