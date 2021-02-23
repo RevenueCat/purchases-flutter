@@ -9,6 +9,7 @@ class Offerings {
   /// Map of all Offerings [Offering] objects keyed by their identifier.
   final Map<String, Offering> all;
 
+  /// Constructs an Offerings object from a JSON object.
   Offerings.fromJson(Map<dynamic, dynamic> map)
       : current =
             map['current'] != null ? Offering.fromJson(map['current']) : null,

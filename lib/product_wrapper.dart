@@ -1,5 +1,6 @@
 import 'discount.dart';
 
+/// Contains all the product details associated with a Store product id
 class Product {
   /// Product Id.
   final String identifier;
@@ -25,6 +26,7 @@ class Product {
   /// Collection of discount offers for a product. Null for Android.
   final List<Discount> discounts;
 
+  /// Constructs a Product from a JSON object.
   Product.fromJson(Map<dynamic, dynamic> json)
       : identifier = json['identifier'],
         description = json['description'],
@@ -47,6 +49,7 @@ class Product {
   }
 }
 
+/// Contains all the introductory information associated with a [Product]
 class IntroductoryPrice {
   /// Introductory price of a subscription in the local currency.
   final double introPrice;
@@ -70,6 +73,7 @@ class IntroductoryPrice {
   /// user will be given the introductory price, such as 3.
   final int introPriceCycles;
 
+  /// Constructs an IntroductoryPrice from a JSON object.
   IntroductoryPrice.fromJson(Map<dynamic, dynamic> json)
       : introPrice = json['intro_price'].toDouble(),
         introPriceString = json['intro_price_string'],

@@ -16,6 +16,7 @@ class Package {
   /// Offering this package belongs to.
   final String offeringIdentifier;
 
+  /// Constructs a Package from a JSON object.
   Package.fromJson(Map<dynamic, dynamic> json)
       : identifier = json['identifier'],
         packageType = _PackageTypeHelper.getFromString(json['packageType']),

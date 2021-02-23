@@ -46,6 +46,7 @@ class EntitlementInfo {
   /// Check the `isActive` property.
   final String billingIssueDetectedAt;
 
+  /// Construct an EntitlementInfo
   EntitlementInfo(
       this.identifier,
       this.isActive,
@@ -60,6 +61,7 @@ class EntitlementInfo {
       this.unsubscribeDetectedAt,
       this.billingIssueDetectedAt);
 
+  /// Constructs an EntitlementInfo from a JSON object
   factory EntitlementInfo.fromJson(Map<dynamic, dynamic> json) {
     var periodType;
     switch (json["periodType"] as String) {

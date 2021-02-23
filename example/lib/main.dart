@@ -11,6 +11,7 @@ void main() {
   ));
 }
 
+// ignore: public_member_api_docs
 class InitialScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _MyAppState();
@@ -61,6 +62,7 @@ class _MyAppState extends State<InitialScreen> {
   }
 }
 
+// ignore: public_member_api_docs
 class UpsellScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _UpsellScreenState();
@@ -104,8 +106,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  PurchaseButton(package: monthly),
-                  PurchaseButton(package: lifetime)
+                  _PurchaseButton(package: monthly),
+                  _PurchaseButton(package: lifetime)
                 ],
               )));
         }
@@ -119,14 +121,15 @@ class _UpsellScreenState extends State<UpsellScreen> {
   }
 }
 
-class PurchaseButton extends StatelessWidget {
+class _PurchaseButton extends StatelessWidget {
   final Package package;
 
-  PurchaseButton({Key key, @required this.package}) : super(key: key);
+  // ignore: public_member_api_docs
+  _PurchaseButton({Key key, @required this.package}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: () async {
         try {
           PurchaserInfo purchaserInfo =
@@ -150,6 +153,7 @@ class PurchaseButton extends StatelessWidget {
   }
 }
 
+// ignore: public_member_api_docs
 class CatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
