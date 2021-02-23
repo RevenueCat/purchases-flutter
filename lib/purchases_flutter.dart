@@ -7,8 +7,11 @@ import 'object_wrappers.dart';
 
 export 'object_wrappers.dart';
 
+/// Used to handle async updates from [Purchases].
+/// Should be implemented to receive updates when the [PurchaserInfo] changes.
 typedef void PurchaserInfoUpdateListener(PurchaserInfo purchaserInfo);
 
+/// Entry point for Purchases.
 class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
       Set();
@@ -531,18 +534,21 @@ class Purchases {
 }
 
 /// This class holds the information used when upgrading from another sku.
-///
-/// [oldSKU] The oldSKU to upgrade from.
-/// [prorationMode] The [ProrationMode] to use when upgrading the given oldSKU.
+/// To be used with purchaseProduct and purchasePackage.
 class UpgradeInfo {
+  /// The oldSKU to upgrade from.
   String oldSKU;
+
+  /// The [ProrationMode] to use when upgrading the given oldSKU.
   ProrationMode prorationMode;
 
+  /// Constructs an UpgradeInfo
   UpgradeInfo(this.oldSKU, {this.prorationMode});
 }
 
 /// Replace SKU's ProrationMode.
 enum ProrationMode {
+  /// The Upgrade or Downgrade policy is unknown.
   unknownSubscriptionUpgradeDowngradePolicy,
 
   /// Replacement takes effect immediately, and the remaining time will be
@@ -574,14 +580,27 @@ enum PurchaseType {
 
 /// Supported Attribution networks.
 enum PurchasesAttributionNetwork {
+  /// [https://searchads.apple.com/]
   appleSearchAds,
+
+  /// [https://www.adjust.com/]
   adjust,
+
+  /// [https://www.appsflyer.com/]
   appsflyer,
+
+  /// [http://branch.io/]
   branch,
+
+  /// [http://tenjin.io/]
   tenjin,
+
+  /// [https://developers.facebook.com/]
   facebook
 }
 
+/// Possible IntroEligibility status.
+/// Use [checkTrialOrIntroductoryPriceEligibility] to determine the eligibility
 enum IntroEligibilityStatus {
   /// RevenueCat doesn't have enough information to determine eligibility.
   introEligibilityStatusUnknown,
@@ -601,6 +620,7 @@ class IntroEligibility {
   /// Description of the status
   String description;
 
+  /// Constructs an Transaction from a JSON object
   IntroEligibility.fromJson(Map<dynamic, dynamic> map)
       : status = IntroEligibilityStatus.values[map["status"]],
         description = map["description"];

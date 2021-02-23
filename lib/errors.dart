@@ -1,27 +1,74 @@
 import 'package:flutter/services.dart';
 
+/// Different error codes returned by the Purchases functions.
 enum PurchasesErrorCode {
+  /// Unknown error
   unknownError,
+
+  /// Purchase was cancelled.
   purchaseCancelledError,
+
+  /// There was a problem with the store.
   storeProblemError,
+
+  /// The device or user is not allowed to make the purchase.
   purchaseNotAllowedError,
+
+  /// One or more of the arguments provided are invalid.
   purchaseInvalidError,
+
+  /// The product is not available for purchase.
   productNotAvailableForPurchaseError,
+
+  /// This product is already active for the user.
   productAlreadyPurchasedError,
+
+  /// There is already another active subscriber using the same receipt.
   receiptAlreadyInUseError,
+
+  /// The receipt is not valid.
   invalidReceiptError,
+
+  /// The receipt is missing.
   missingReceiptFileError,
+
+  /// Error performing request.
   networkError,
+
+  /// There was a credentials issue. Check the message for more info.
   invalidCredentialsError,
+
+  /// Received malformed response from the backend.
   unexpectedBackendResponseError,
+
+  /// There is already another active subscriber using the same receipt.
   receiptInUseByOtherSubscriberError,
+
+  /// The app user id is not valid.
   invalidAppUserIdError,
+
+  /// The operation is already in progress.
   operationAlreadyInProgressError,
+
+  /// There was an unknown backend error.
   unknownBackendError,
+
+  /// Apple Subscription Key is invalid or not present. In order to provide
+  /// subscription offers, you must first generate a subscription key. Please
+  /// see https://docs.revenuecat.com/docs/ios-subscription-offers
+  /// for more info.
   invalidAppleSubscriptionKeyError,
+
+  /// The User is ineligible for that action.
   ineligibleError,
+
+  /// App does not have sufficient permissions to make purchases.
   insufficientPermissionsError,
+
+  /// The payment is pending.
   paymentPendingError,
+
+  /// One or more of the attributes sent could not be saved.
   invalidSubscriberAttributesError
 }
 

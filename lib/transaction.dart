@@ -1,3 +1,4 @@
+/// Represents a purchase transaction
 class Transaction {
   /// RevenueCat Id associated to the transaction.
   final String revenueCatId;
@@ -8,6 +9,7 @@ class Transaction {
   /// Purchase date of the transaction in ISO 8601 format.
   final String purchaseDate;
 
+  /// Constructs an Transaction from a JSON object
   Transaction.fromJson(Map<dynamic, dynamic> map)
       : revenueCatId = map["revenueCatId"],
         productId = map["productId"],

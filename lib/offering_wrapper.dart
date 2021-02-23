@@ -33,6 +33,7 @@ class Offering {
   /// Weekly package type configured in the RevenueCat dashboard, if available.
   final Package weekly;
 
+  /// Constructs an Offering from a JSON object.
   Offering.fromJson(Map<dynamic, dynamic> map)
       : identifier = map["identifier"],
         serverDescription = map['serverDescription'],

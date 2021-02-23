@@ -10,6 +10,7 @@ class EntitlementInfos {
   /// entitlement identifier.
   final Map<String, EntitlementInfo> active;
 
+  /// Constructs an EntitlementInfos from a JSON object
   EntitlementInfos.fromJson(Map<dynamic, dynamic> json)
       : all = (json["all"] as Map<dynamic, dynamic>).map(
             (key, value) => MapEntry(key, EntitlementInfo.fromJson(value))),

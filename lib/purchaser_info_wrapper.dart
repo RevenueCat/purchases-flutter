@@ -1,6 +1,7 @@
 import 'package:purchases_flutter/entitlement_infos_wrapper.dart';
 import 'package:purchases_flutter/transaction.dart';
 
+/// Class containing all information regarding the purchaser
 class PurchaserInfo {
   /// Entitlements attached to this purchaser info
   final EntitlementInfos entitlements;
@@ -52,6 +53,7 @@ class PurchaserInfo {
   /// If there are multiple for different platforms, it will point to the device store.
   final String managementURL;
 
+  /// Constructs a PurchaserInfo from a JSON object.
   PurchaserInfo.fromJson(Map<dynamic, dynamic> map)
       : entitlements = EntitlementInfos.fromJson(
             map["entitlements"] as Map<dynamic, dynamic>),
