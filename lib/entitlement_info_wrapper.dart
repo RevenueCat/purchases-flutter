@@ -35,12 +35,13 @@ class EntitlementInfo {
   /// False if this entitlement is unlocked via a production purchase
   final bool isSandbox;
 
-  /// The date an unsubscribe was detected. Can be `null`.
+  /// The date an unsubscribe was detected. Can be `null` if it's still
+  /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the `isActive` property.
   final String? unsubscribeDetectedAt;
 
-  /// The date a billing issue was detected. Can be `nil` if there is no
+  /// The date a billing issue was detected. Can be `null` if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the `isActive` property.
@@ -74,6 +75,9 @@ class EntitlementInfo {
       case "TRIAL":
         periodType = PeriodType.trial;
         break;
+      default:
+        periodType = PeriodType.unknown;
+        break;
     }
     late var store;
     switch (json["store"] as String?) {
@@ -92,7 +96,7 @@ class EntitlementInfo {
       case "PROMOTIONAL":
         store = Store.promotional;
         break;
-      case "UNKNOWN_STORE":
+      default:
         store = Store.unknownStore;
         break;
     }
@@ -126,7 +130,11 @@ enum PeriodType {
   normal,
 
   /// If the entitlement is under a trial period.
-  trial
+  trial,
+
+  /// If the period type couldn't be determined.
+  unknown
+
 }
 
 /// Enum of supported stores
