@@ -157,12 +157,11 @@ class Purchases {
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<PurchaserInfo> purchaseProduct(String productIdentifier,
       {UpgradeInfo? upgradeInfo, PurchaseType type = PurchaseType.subs}) async {
+    final prorationMode = upgradeInfo?.prorationMode;
     final response = await _channel.invokeMethod('purchaseProduct', {
       'productIdentifier': productIdentifier,
-      'oldSKU': upgradeInfo != null ? upgradeInfo.oldSKU : null,
-      'prorationMode': upgradeInfo != null && upgradeInfo.prorationMode != null
-          ? upgradeInfo.prorationMode!.index
-          : null,
+      'oldSKU': upgradeInfo?.oldSKU,
+      'prorationMode': prorationMode != null ? prorationMode.index : null,
       'type': describeEnum(type)
     });
     return PurchaserInfo.fromJson(response["purchaserInfo"]);
@@ -180,13 +179,12 @@ class Purchases {
   /// containing the oldSKU and the optional prorationMode.
   static Future<PurchaserInfo> purchasePackage(Package packageToPurchase,
       {UpgradeInfo? upgradeInfo}) async {
+    final prorationMode = upgradeInfo?.prorationMode;
     final response = await _channel.invokeMethod('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'oldSKU': upgradeInfo != null ? upgradeInfo.oldSKU : null,
-      'prorationMode': upgradeInfo != null && upgradeInfo.prorationMode != null
-          ? upgradeInfo.prorationMode!.index
-          : null
+      'oldSKU': upgradeInfo?.oldSKU,
+      'prorationMode': prorationMode != null ? prorationMode.index : null
     });
     return PurchaserInfo.fromJson(response["purchaserInfo"]);
   }
