@@ -8,12 +8,12 @@ documentation: https://docs.revenuecat.com/docs
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=1.12.13+hotfix.6 <2.0.0"
+  flutter: ">=1.12.13+hotfix.6"
 
 dependencies:
   flutter:
     sdk: flutter
-  collection: ^1.15.0-nullsafety.4
+  collection: ^1.15.0
 
 dev_dependencies:
   pedantic: ^1.8.0

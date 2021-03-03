@@ -58,8 +58,8 @@ class Offering {
   /// Retrieves a specific package by identifier, use this to access custom
   /// package types configured in the RevenueCat dashboard.
   Package? getPackage(String identifier) {
-    return availablePackages.firstWhereOrNull(
-        (package) => package.identifier == identifier);
+    return availablePackages
+        .firstWhereOrNull((package) => package.identifier == identifier);
   }
 
   @override

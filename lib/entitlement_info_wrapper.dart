@@ -134,7 +134,6 @@ enum PeriodType {
 
   /// If the period type couldn't be determined.
   unknown
-
 }
 
 /// Enum of supported stores

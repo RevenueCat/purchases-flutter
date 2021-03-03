@@ -19,9 +19,9 @@ void main() {
       "unsubscribeDetectedAt": null,
       "unsubscribeDetectedAtMillis": null,
       "billingIssueDetectedAt": null,
-      "billingIssueDetectedAtMillis": null};
-    final entitlementInfo =
-        EntitlementInfo.fromJson(entitlementInfoJson);
+      "billingIssueDetectedAtMillis": null
+    };
+    final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
     expect(entitlementInfo.periodType, PeriodType.unknown);
   });
@@ -43,9 +43,9 @@ void main() {
       "unsubscribeDetectedAt": null,
       "unsubscribeDetectedAtMillis": null,
       "billingIssueDetectedAt": null,
-      "billingIssueDetectedAtMillis": null};
-    final entitlementInfo =
-        EntitlementInfo.fromJson(entitlementInfoJson);
+      "billingIssueDetectedAtMillis": null
+    };
+    final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
     expect(entitlementInfo.store, Store.unknownStore);
   });
