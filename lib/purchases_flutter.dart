@@ -41,9 +41,9 @@ class Purchases {
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
   static Future<void> setup(String apiKey,
-      {String appUserId,
+      {String? appUserId,
       bool observerMode = false,
-      String userDefaultsSuiteName}) async {
+      String? userDefaultsSuiteName}) async {
     return await _channel.invokeMethod('setupPurchases', {
       'apiKey': apiKey,
       'appUserId': appUserId,
@@ -102,7 +102,7 @@ class Purchases {
   @Deprecated("Use the set<NetworkId> functions instead.")
   static Future<void> addAttributionData(
       Map<String, Object> data, PurchasesAttributionNetwork network,
-      {String networkUserId}) async {
+      {String? networkUserId}) async {
     await _channel.invokeMethod('addAttributionData', {
       'data': data,
       'network': network.index,
@@ -120,7 +120,8 @@ class Purchases {
   ///
   /// Time is money.
   static Future<Offerings> getOfferings() async {
-    return Offerings.fromJson(await _channel.invokeMethod('getOfferings'));
+    var result = await _channel.invokeMethod('getOfferings');
+    return Offerings.fromJson(result);
   }
 
   /// Fetch the product info. Returns a list of products or throws an error if
@@ -134,7 +135,7 @@ class Purchases {
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<List<Product>> getProducts(List<String> productIdentifiers,
       {PurchaseType type = PurchaseType.subs}) async {
-    List<dynamic> result = await _channel.invokeMethod('getProductInfo',
+    final result = await _channel.invokeMethod('getProductInfo',
         {'productIdentifiers': productIdentifiers, 'type': describeEnum(type)});
     return result.map((item) => Product.fromJson(item)).toList();
   }
@@ -155,13 +156,12 @@ class Purchases {
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<PurchaserInfo> purchaseProduct(String productIdentifier,
-      {UpgradeInfo upgradeInfo, PurchaseType type = PurchaseType.subs}) async {
-    var response = await _channel.invokeMethod('purchaseProduct', {
+      {UpgradeInfo? upgradeInfo, PurchaseType type = PurchaseType.subs}) async {
+    final prorationMode = upgradeInfo?.prorationMode;
+    final response = await _channel.invokeMethod('purchaseProduct', {
       'productIdentifier': productIdentifier,
-      'oldSKU': upgradeInfo != null ? upgradeInfo.oldSKU : null,
-      'prorationMode': upgradeInfo != null && upgradeInfo.prorationMode != null
-          ? upgradeInfo.prorationMode.index
-          : null,
+      'oldSKU': upgradeInfo?.oldSKU,
+      'prorationMode': prorationMode != null ? prorationMode.index : null,
       'type': describeEnum(type)
     });
     return PurchaserInfo.fromJson(response["purchaserInfo"]);
@@ -178,14 +178,13 @@ class Purchases {
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   static Future<PurchaserInfo> purchasePackage(Package packageToPurchase,
-      {UpgradeInfo upgradeInfo}) async {
-    var response = await _channel.invokeMethod('purchasePackage', {
+      {UpgradeInfo? upgradeInfo}) async {
+    final prorationMode = upgradeInfo?.prorationMode;
+    final response = await _channel.invokeMethod('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'oldSKU': upgradeInfo != null ? upgradeInfo.oldSKU : null,
-      'prorationMode': upgradeInfo != null && upgradeInfo.prorationMode != null
-          ? upgradeInfo.prorationMode.index
-          : null
+      'oldSKU': upgradeInfo?.oldSKU,
+      'prorationMode': prorationMode != null ? prorationMode.index : null
     });
     return PurchaserInfo.fromJson(response["purchaserInfo"]);
   }
@@ -204,7 +203,7 @@ class Purchases {
   /// using [getPaymentDiscount].
   static Future<PurchaserInfo> purchaseDiscountedProduct(
       Product product, PaymentDiscount discount) async {
-    var response = await _channel.invokeMethod('purchaseProduct', {
+    final response = await _channel.invokeMethod('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
@@ -225,7 +224,7 @@ class Purchases {
   /// using [getPaymentDiscount].
   static Future<PurchaserInfo> purchaseDiscountedPackage(
       Package packageToPurchase, PaymentDiscount discount) async {
-    var response = await _channel.invokeMethod('purchasePackage', {
+    final response = await _channel.invokeMethod('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
@@ -239,8 +238,7 @@ class Purchases {
   /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
   static Future<PurchaserInfo> restoreTransactions() async {
-    Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('restoreTransactions');
+    final result = await _channel.invokeMethod('restoreTransactions');
     return PurchaserInfo.fromJson(result);
   }
 
@@ -257,7 +255,7 @@ class Purchases {
   /// [newAppUserID] The new appUserID that should be linked to the currently
   /// identified appUserID.
   static Future<PurchaserInfo> createAlias(String newAppUserID) async {
-    Map<dynamic, dynamic> result = await _channel
+    final result = await _channel
         .invokeMethod('createAlias', {'newAppUserID': newAppUserID});
     return PurchaserInfo.fromJson(result);
   }
@@ -271,7 +269,7 @@ class Purchases {
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
   static Future<PurchaserInfo> identify(String appUserID) async {
-    Map<dynamic, dynamic> result =
+    final result =
         await _channel.invokeMethod('identify', {'appUserID': appUserID});
     return PurchaserInfo.fromJson(result);
   }
@@ -282,7 +280,7 @@ class Purchases {
   /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
   static Future<PurchaserInfo> reset() async {
-    Map<dynamic, dynamic> result = await _channel.invokeMethod('reset');
+    final result = await _channel.invokeMethod('reset');
     return PurchaserInfo.fromJson(result);
   }
 
@@ -302,8 +300,7 @@ class Purchases {
 
   /// Gets current purchaser info, which will normally be cached.
   static Future<PurchaserInfo> getPurchaserInfo() async {
-    Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('getPurchaserInfo');
+    final result = await _channel.invokeMethod('getPurchaserInfo');
     return PurchaserInfo.fromJson(result);
   }
 
@@ -351,7 +348,7 @@ class Purchases {
   static Future<Map<String, IntroEligibility>>
       checkTrialOrIntroductoryPriceEligibility(
           List<String> productIdentifiers) async {
-    Map<dynamic, dynamic> eligibilityMap = await _channel.invokeMethod(
+    final eligibilityMap = await _channel.invokeMethod(
         'checkTrialOrIntroductoryPriceEligibility',
         {'productIdentifiers': productIdentifiers});
     return eligibilityMap.map((key, value) =>
@@ -524,8 +521,7 @@ class Purchases {
   /// [discount] The `Discount` to apply to the product.
   static Future<PaymentDiscount> getPaymentDiscount(
       Product product, Discount discount) async {
-    Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('getPaymentDiscount', {
+    final result = await _channel.invokeMethod('getPaymentDiscount', {
       'productIdentifier': product.identifier,
       'discountIdentifier': discount.identifier
     });
@@ -540,7 +536,7 @@ class UpgradeInfo {
   String oldSKU;
 
   /// The [ProrationMode] to use when upgrading the given oldSKU.
-  ProrationMode prorationMode;
+  ProrationMode? prorationMode;
 
   /// Constructs an UpgradeInfo
   UpgradeInfo(this.oldSKU, {this.prorationMode});

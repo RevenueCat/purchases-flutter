@@ -23,7 +23,7 @@ class EntitlementInfo {
 
   /// The expiration date for the entitlement, can be `null` for lifetime access.
   /// If the `periodType` is `trial`, this is the trial expiration date.
-  final String expirationDate;
+  final String? expirationDate;
 
   /// The store where this entitlement was unlocked from
   /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
@@ -35,16 +35,17 @@ class EntitlementInfo {
   /// False if this entitlement is unlocked via a production purchase
   final bool isSandbox;
 
-  /// The date an unsubscribe was detected. Can be `null`.
+  /// The date an unsubscribe was detected. Can be `null` if it's still
+  /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the `isActive` property.
-  final String unsubscribeDetectedAt;
+  final String? unsubscribeDetectedAt;
 
-  /// The date a billing issue was detected. Can be `nil` if there is no
+  /// The date a billing issue was detected. Can be `null` if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the `isActive` property.
-  final String billingIssueDetectedAt;
+  final String? billingIssueDetectedAt;
 
   /// Construct an EntitlementInfo
   EntitlementInfo(
@@ -63,8 +64,8 @@ class EntitlementInfo {
 
   /// Constructs an EntitlementInfo from a JSON object
   factory EntitlementInfo.fromJson(Map<dynamic, dynamic> json) {
-    var periodType;
-    switch (json["periodType"] as String) {
+    late var periodType;
+    switch (json["periodType"] as String?) {
       case "INTRO":
         periodType = PeriodType.intro;
         break;
@@ -74,9 +75,12 @@ class EntitlementInfo {
       case "TRIAL":
         periodType = PeriodType.trial;
         break;
+      default:
+        periodType = PeriodType.unknown;
+        break;
     }
-    var store;
-    switch (json["store"] as String) {
+    late var store;
+    switch (json["store"] as String?) {
       case "APP_STORE":
         store = Store.appStore;
         break;
@@ -92,7 +96,7 @@ class EntitlementInfo {
       case "PROMOTIONAL":
         store = Store.promotional;
         break;
-      case "UNKNOWN_STORE":
+      default:
         store = Store.unknownStore;
         break;
     }
@@ -103,12 +107,12 @@ class EntitlementInfo {
         periodType,
         json["latestPurchaseDate"] as String,
         json["originalPurchaseDate"] as String,
-        json["expirationDate"] as String,
+        json["expirationDate"] as String?,
         store,
         json["productIdentifier"] as String,
         json["isSandbox"] as bool,
-        json["unsubscribeDetectedAt"] as String,
-        json["billingIssueDetectedAt"] as String);
+        json["unsubscribeDetectedAt"] as String?,
+        json["billingIssueDetectedAt"] as String?);
   }
 
   @override
@@ -126,7 +130,11 @@ enum PeriodType {
   normal,
 
   /// If the entitlement is under a trial period.
-  trial
+  trial,
+
+  /// If the period type couldn't be determined.
+  unknown
+
 }
 
 /// Enum of supported stores

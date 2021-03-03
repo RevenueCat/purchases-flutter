@@ -21,10 +21,10 @@ class Product {
   final String currencyCode;
 
   /// Introductory price for product. Can be null.
-  final IntroductoryPrice introductoryPrice;
+  final IntroductoryPrice? introductoryPrice;
 
   /// Collection of discount offers for a product. Null for Android.
-  final List<Discount> discounts;
+  final List<Discount>? discounts;
 
   /// Constructs a Product from a JSON object.
   Product.fromJson(Map<dynamic, dynamic> json)

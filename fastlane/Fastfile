@@ -24,7 +24,7 @@ lane :bump_and_update_changelog do |options|
   sh "fastlane android bump version:#{new_version_number} current_version:#{previous_version}"
   attach_changelog_to_master
 
-  increment_version_in_pubspec(new_version_number)
+  increment_version_in_pubspec(previous_version, new_version_number)
 end
 
 platform :ios do
@@ -76,7 +76,8 @@ def current_version
 end
 
 def increment_version_in_pubspec(current_version, new_version)
-  replace_in(current_version, new_version, pubspec_location)
+  pubspec_location = "../pubspec.yaml"
+  replace_in("version: #{current_version}", "version: #{new_version}", pubspec_location)
 end
 
 def replace_in(previous_text, new_text, path)
