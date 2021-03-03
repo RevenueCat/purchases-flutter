@@ -50,7 +50,7 @@ platform :android do
 end
 
 def attach_changelog_to_master
-  current_changelog = File.open("../CHANGELOG.latest.md", 'r')
+  current_changelog = File.open("../CHANGELOG-LATEST.md", 'r')
   master_changelog = File.open("../CHANGELOG.md", 'r')
 
   current_changelog_data = current_changelog.read
