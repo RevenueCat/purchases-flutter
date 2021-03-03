@@ -1,0 +1,86 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+require 'yaml'
+
+desc "Increment build number and update changelog"
+lane :bump_and_update_changelog do |options|
+  new_version_number = options[:version]
+  previous_version = current_version()
+
+  sh "fastlane ios bump version:#{new_version_number}"
+  sh "fastlane android bump version:#{new_version_number} current_version:#{previous_version}"
+  attach_changelog_to_master
+
+  increment_version_in_pubspec(new_version_number)
+end
+
+platform :ios do
+  desc "Increment build number"
+  lane :bump do |options|
+    new_version_number = options[:version]
+    fail ArgumentError, "missing version" unless new_version_number
+    version_bump_podspec(path: "ios/purchases_flutter.podspec", version_number: new_version_number)
+  end
+end
+
+platform :android do
+  desc "Increment build number"
+  lane :bump do |options|
+    new_version = options[:version]
+    previous_version = options[:current_version]
+
+    fail ArgumentError, "missing version" unless new_version
+    gradle_file_path = "../android/build.gradle"
+
+    replace_in(previous_version, new_version, gradle_file_path)
+  end
+end
+
+def attach_changelog_to_master
+  current_changelog = File.open("../CHANGELOG.latest.md", 'r')
+  master_changelog = File.open("../CHANGELOG.md", 'r')
+
+  current_changelog_data = current_changelog.read
+  master_changelog_data = master_changelog.read
+
+  current_changelog.close
+  master_changelog.close
+
+  File.open("../CHANGELOG.md", 'w') { |master_changelog_write_mode|
+    whole_file_data = "#{current_changelog_data}\n#{master_changelog_data}"
+    puts "going to save. Contents - #{whole_file_data}"
+
+    master_changelog_write_mode.write(whole_file_data)
+  }
+end
+
+def current_version
+  pubspec_location = "../pubspec.yaml"
+  pubspec = YAML.load_file(pubspec_location)
+
+  current_version = pubspec["version"]
+  return current_version
+end
+
+def increment_version_in_pubspec(current_version, new_version)
+  replace_in(current_version, new_version, pubspec_location)
+end
+
+def replace_in(previous_text, new_text, path)
+  sed_regex = 's|' + previous_text + '|' + new_text + '|'
+  backup_extension = '.bck'
+  sh("sed", '-i', backup_extension, sed_regex, path)
+end
