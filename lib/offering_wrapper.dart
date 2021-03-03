@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:purchases_flutter/object_wrappers.dart';
 
 /// An offering is a collection of Packages (`Package`) available for the user
@@ -13,25 +14,25 @@ class Offering {
   final List<Package> availablePackages;
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
-  final Package lifetime;
+  final Package? lifetime;
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
-  final Package annual;
+  final Package? annual;
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
-  final Package sixMonth;
+  final Package? sixMonth;
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
-  final Package threeMonth;
+  final Package? threeMonth;
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
-  final Package twoMonth;
+  final Package? twoMonth;
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
-  final Package monthly;
+  final Package? monthly;
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
-  final Package weekly;
+  final Package? weekly;
 
   /// Constructs an Offering from a JSON object.
   Offering.fromJson(Map<dynamic, dynamic> map)
@@ -56,10 +57,9 @@ class Offering {
 
   /// Retrieves a specific package by identifier, use this to access custom
   /// package types configured in the RevenueCat dashboard.
-  Package getPackage(String identifier) {
-    return availablePackages.firstWhere(
-        (package) => package.identifier == identifier,
-        orElse: () => null);
+  Package? getPackage(String identifier) {
+    return availablePackages.firstWhereOrNull(
+        (package) => package.identifier == identifier);
   }
 
   @override
