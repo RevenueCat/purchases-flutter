@@ -1,4 +1,4 @@
-1. Start a branch `release/x.x.x`
+1. Start a branch `bump/x.x.x`
 1. Update to the latest SDK versions in purchases_flutter.podspec and build.gradle.
 1. Run `flutter format .`
 1. Update versions in VERSIONS.md.
