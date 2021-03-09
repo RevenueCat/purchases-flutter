@@ -135,9 +135,11 @@ class Purchases {
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
   static Future<List<Product>> getProducts(List<String> productIdentifiers,
       {PurchaseType type = PurchaseType.subs}) async {
-    final result = await _channel.invokeMethod('getProductInfo',
-        {'productIdentifiers': productIdentifiers, 'type': describeEnum(type)});
-    return result.map((item) => Product.fromJson(item)).toList();
+    final List<dynamic> result = await _channel.invokeMethod('getProductInfo', {
+      'productIdentifiers': productIdentifiers,
+      'type': describeEnum(type)
+    });
+    return result.map<Product>((item) => Product.fromJson(item)).toList();
   }
 
   /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
