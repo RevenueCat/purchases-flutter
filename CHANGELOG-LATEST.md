@@ -1,6 +1,5 @@
-## 3.0.0
+## 3.0.1
 
-- Adds null safety support and increases minimum Dart SDK version to 2.12.0
-    https://github.com/RevenueCat/purchases-flutter/pull/155
-- Removes all analyzer warnings.
-    https://github.com/RevenueCat/purchases-flutter/pull/154
+- Fixes exception when calling `getProducts` and `checkTrialOrIntroductoryPriceEligibility`
+    https://github.com/RevenueCat/purchases-flutter/issues/163
+    https://github.com/RevenueCat/purchases-flutter/pull/164
