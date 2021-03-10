@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
+import com.revenuecat.purchases.Store;
 import com.revenuecat.purchases.common.CommonKt;
 import com.revenuecat.purchases.common.ErrorContainer;
 import com.revenuecat.purchases.common.OnResult;
@@ -131,9 +132,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String apiKey = call.argument("apiKey");
                 String appUserId = call.argument("appUserId");
                 Boolean observerMode = call.argument("observerMode");
+                Boolean useAmazon = call.argument("useAmazon");
                 //noinspection unused
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
-                setupPurchases(apiKey, appUserId, observerMode, result);
+                setupPurchases(apiKey, appUserId, observerMode, useAmazon, result);
                 break;
             case "setFinishTransactions":
                 Boolean finishTransactions = call.argument("finishTransactions");
@@ -291,10 +293,16 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode, final Result result) {
+    private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
+                                @Nullable Boolean useAmazon, final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
-            CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode, platformInfo);
+            Store store = Store.PLAY_STORE;
+            if (useAmazon) {
+                store = Store.AMAZON;
+            }
+            CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode,
+                    platformInfo, store);
             setupUpdatedPurchaserInfoListener();
             result.success(null);
         } else {

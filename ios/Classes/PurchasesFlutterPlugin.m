@@ -158,6 +158,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 - (void)setupPurchases:(NSString *)apiKey
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
+             useAmazon:(BOOL)useAmazon
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
                 result:(FlutterResult)result
 {
