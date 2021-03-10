@@ -34,8 +34,7 @@ platform :ios do
     fail ArgumentError, "missing version" unless new_version_number
     version_bump_podspec(path: "ios/purchases_flutter.podspec", version_number: new_version_number)
     version_bump_podspec(path: "macos/purchases_flutter.podspec", version_number: new_version_number)
-    replace_in("#{current_version}", "#{new_version}", "../ios/Classes/PurchasesFlutterPlugin.m")
-    replace_in("#{current_version}", "#{new_version}", "../macos/Classes/PurchasesFlutterPlugin.m")
+    replace_in("#{current_version}", "#{new_version_number}", "../ios/Classes/PurchasesFlutterPlugin.m")
   end
 end
 
