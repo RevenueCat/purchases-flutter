@@ -1,3 +1,8 @@
+## 3.0.2
+
+- Fixes versions number in plugin files
+    https://github.com/RevenueCat/purchases-flutter/pull/166
+
 ## 3.0.1
 
 - Fixes exception when calling `getProducts` and `checkTrialOrIntroductoryPriceEligibility`

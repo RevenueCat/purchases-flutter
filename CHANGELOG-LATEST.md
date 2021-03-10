@@ -1,5 +1,4 @@
-## 3.0.1
+## 3.0.2
 
-- Fixes exception when calling `getProducts` and `checkTrialOrIntroductoryPriceEligibility`
-    https://github.com/RevenueCat/purchases-flutter/issues/163
-    https://github.com/RevenueCat/purchases-flutter/pull/164
+- Fixes versions number in plugin files
+    https://github.com/RevenueCat/purchases-flutter/pull/166
