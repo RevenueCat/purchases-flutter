@@ -53,7 +53,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "2.0.3";
+    private static final String PLUGIN_VERSION = "3.0.2";
 
     /**
      * Plugin registration.
