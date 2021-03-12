@@ -218,6 +218,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "presentCodeRedemptionSheet":
                 // NOOP
                 break;
+            case "setSimulatesAskToBuyInSandbox":
+                // NOOP
+                break;
             case "setAttributes":
                 Map<String, String> attributes = call.argument("attributes");
                 setAttributes(attributes, result);
