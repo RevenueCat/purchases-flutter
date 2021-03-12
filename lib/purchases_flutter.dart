@@ -292,6 +292,14 @@ class Purchases {
   ///
   /// Set this property to your proxy URL before configuring Purchases *only* if you've received a proxy key value from your RevenueCat contact.
   ///
+  static Future<void> setSimulatesAskToBuyInSandbox(bool enabled) async {
+    return await _channel
+        .invokeMethod('setSimulatesAskToBuyInSandbox', {'enabled': enabled});
+  }
+
+  ///
+  /// Set this property to your proxy URL before configuring Purchases *only* if you've received a proxy key value from your RevenueCat contact.
+  ///
   static Future<void> setProxyURL(String url) async {
     return await _channel
         .invokeMethod('setProxyURLString', {'proxyURLString': url});
