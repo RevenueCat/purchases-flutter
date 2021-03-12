@@ -290,7 +290,8 @@ class Purchases {
   }
 
   ///
-  /// Set this property to your proxy URL before configuring Purchases *only* if you've received a proxy key value from your RevenueCat contact.
+  /// Set this property to true *only* when testing the ask-to-buy / SCA purchases flow. More information:
+  /// http://errors.rev.cat/ask-to-buy
   ///
   static Future<void> setSimulatesAskToBuyInSandbox(bool enabled) async {
     return await _channel
