@@ -290,8 +290,8 @@ class Purchases {
   }
 
   ///
-  /// Set this property to true *only* when testing the ask-to-buy / SCA purchases flow. More information:
-  /// http://errors.rev.cat/ask-to-buy
+  /// iOS only. Set this property to true *only* when testing the ask-to-buy / SCA purchases flow. 
+  /// More information: http://errors.rev.cat/ask-to-buy
   ///
   static Future<void> setSimulatesAskToBuyInSandbox(bool enabled) async {
     return await _channel
