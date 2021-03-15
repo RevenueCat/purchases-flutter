@@ -78,6 +78,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self createAlias:arguments[@"newAppUserID"] result:result];
     } else if ([@"setDebugLogsEnabled" isEqualToString:call.method]) {
         [self setDebugLogsEnabled:[arguments[@"enabled"] boolValue] result:result];
+    } else if ([@"setSimulatesAskToBuyInSandbox" isEqualToString:call.method]) {
+        [self setSimulatesAskToBuyInSandbox:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setProxyURLString" isEqualToString:call.method]) {
         [self setProxyURLString:arguments[@"proxyURLString"] result:result];
     } else if ([@"getPurchaserInfo" isEqualToString:call.method]) {
@@ -283,6 +285,13 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
+- (void)setSimulatesAskToBuyInSandbox:(BOOL)enabled
+                               result:(FlutterResult)result
+{
+    [RCCommonFunctionality setSimulatesAskToBuyInSandbox:enabled];
+    result(nil);
+}
+
 - (void)getPurchaserInfoWithResult:(FlutterResult)result
 {
     [RCCommonFunctionality getPurchaserInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
@@ -483,7 +492,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"3.0.2";
+    return @"3.1.0";
 }
 
 @end

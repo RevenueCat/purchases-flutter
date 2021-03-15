@@ -53,7 +53,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "3.0.2";
+    private static final String PLUGIN_VERSION = "3.1.0";
 
     /**
      * Plugin registration.
@@ -216,6 +216,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 invalidatePurchaserInfoCache(result);
                 break;
             case "presentCodeRedemptionSheet":
+                // NOOP
+                break;
+            case "setSimulatesAskToBuyInSandbox":
                 // NOOP
                 break;
             case "setAttributes":
