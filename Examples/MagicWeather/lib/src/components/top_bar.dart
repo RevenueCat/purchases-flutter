@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:magic_weather_flutter/src/model/constant.dart';
+import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'dart:io';
 
 class TopBar extends StatelessWidget {
@@ -21,12 +21,12 @@ class TopBar extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!Platform.isIOS) {
       return Scaffold(
-        backgroundColor: kColorPrimary,
+        backgroundColor: kColorBar,
         appBar: AppBar(
           iconTheme: IconThemeData(
             color: kColorText,
           ),
-          backgroundColor: kColorNavigationBar,
+          backgroundColor: kColorBar,
           title: Text(
             text,
             style: style,
@@ -36,9 +36,9 @@ class TopBar extends StatelessWidget {
       );
     } else {
       return CupertinoPageScaffold(
-        backgroundColor: kColorPrimary,
+        backgroundColor: kColorBar,
         navigationBar: CupertinoNavigationBar(
-          backgroundColor: kColorNavigationBar,
+          backgroundColor: kColorBar,
           heroTag: uniqueHeroTag,
           border: null,
           transitionBetweenRoutes: false,

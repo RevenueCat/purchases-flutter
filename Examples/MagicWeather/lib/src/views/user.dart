@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:magic_weather_flutter/src/model/constant.dart';
+import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'package:magic_weather_flutter/src/components/top_bar.dart';
 import 'package:magic_weather_flutter/src/model/singletons_data.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -61,7 +61,7 @@ class _UserScreenState extends State<UserScreen> {
         style: kTitleTextStyle,
         uniqueHeroTag: 'user',
         child: Scaffold(
-          backgroundColor: kColorPrimary,
+          backgroundColor: kColorBackground,
           body: ModalProgressHUD(
             inAsyncCall: _isLoading,
             child: SingleChildScrollView(
@@ -108,7 +108,7 @@ class _UserScreenState extends State<UserScreen> {
                       style: kDescriptionTextStyle.copyWith(
                           color: (appData.entitlementIsActive == true)
                               ? kColorSuccess
-                              : kColorAlert),
+                              : kColorError),
                     ),
                   ),
                   Visibility(
@@ -134,7 +134,7 @@ class _UserScreenState extends State<UserScreen> {
                           onSubmitted: (value) {
                             if (value != '') _manageUser('login', value);
                           },
-                          decoration: myDecoration),
+                          decoration: userInputDecoration),
                     ),
                   ),
                   Padding(
@@ -155,7 +155,7 @@ class _UserScreenState extends State<UserScreen> {
                                 style: kDescriptionTextStyle.copyWith(
                                     fontSize: kFontSizeMedium,
                                     fontWeight: FontWeight.bold,
-                                    color: kColorAlert),
+                                    color: kColorError),
                               ),
                             ),
                           ),

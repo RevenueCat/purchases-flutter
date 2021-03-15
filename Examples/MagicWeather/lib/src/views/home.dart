@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:magic_weather_flutter/src/model/constant.dart';
+import 'package:magic_weather_flutter/src/constant.dart';
 import 'package:magic_weather_flutter/src/views/weather.dart';
 import 'package:magic_weather_flutter/src/views/user.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:magic_weather_flutter/src/model/singletons_data.dart';
+import 'package:magic_weather_flutter/src/model/styles.dart';
 
 final GlobalKey<NavigatorState> firstTabNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> secondTabNavKey = GlobalKey<NavigatorState>();
@@ -52,10 +53,10 @@ class AppContainerState extends State<AppContainer> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTabScaffold(
-      backgroundColor: kColorPrimary,
+      backgroundColor: kColorBar,
       tabBar: CupertinoTabBar(
-        backgroundColor: kColorBottomNavigationBar,
-        activeColor: kColorBottomBarIconSelected,
+        backgroundColor: kColorBar,
+        activeColor: kColorAccent,
         items: [
           BottomNavigationBarItem(
             icon: Icon(

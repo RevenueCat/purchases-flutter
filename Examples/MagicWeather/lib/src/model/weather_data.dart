@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'package:magic_weather_flutter/src/model/styles.dart';
+
 enum TemperatureUnit { f, c }
 enum Environment {
   mercury,
@@ -30,7 +32,7 @@ class WeatherData {
 
   static WeatherData testCold = WeatherData(
       emoji: "🥶",
-      weatherColor: Color.fromRGBO(3, 75, 132, 1),
+      weatherColor: kWeatherReallyCold,
       temperature: "14",
       unit: TemperatureUnit.f,
       environment: Environment.earth);
@@ -42,26 +44,26 @@ class WeatherData {
 
     String temperature = randomTemperature.toString();
     String emoji = "🥶";
-    Color weatherColor = Color.fromRGBO(3, 75, 132, 1);
+    Color weatherColor = kWeatherReallyCold;
 
     if (randomTemperature < 0) {
       emoji = "🥶";
-      weatherColor = Color.fromRGBO(3, 75, 132, 1);
+      weatherColor = kWeatherReallyCold;
     } else if (randomTemperature < 32) {
       emoji = "❄️";
-      weatherColor = Color.fromRGBO(0, 39, 96, 1);
+      weatherColor = kWeatherCold;
     } else if (randomTemperature < 60) {
       emoji = "☁️";
-      weatherColor = Color.fromRGBO(51, 0, 58, 1);
+      weatherColor = kWeatherCloudy;
     } else if (randomTemperature < 90) {
       emoji = "🌤";
-      weatherColor = Color.fromRGBO(212, 70, 62, 1);
+      weatherColor = kWeatherSunny;
     } else if (randomTemperature < 129) {
       emoji = "🥵";
-      weatherColor = Color.fromRGBO(181, 0, 58, 1);
+      weatherColor = kWeatherHot;
     } else {
       emoji = "☄️";
-      weatherColor = Color.fromRGBO(204, 0, 58, 1);
+      weatherColor = kWeatherReallyHot;
     }
 
     return WeatherData(

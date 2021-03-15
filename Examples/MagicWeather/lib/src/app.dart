@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'package:magic_weather_flutter/src/views/home.dart';
-import 'package:magic_weather_flutter/src/model/constant.dart';
 
 class MagicWeatherFlutter extends StatelessWidget {
   @override
@@ -14,7 +14,7 @@ class MagicWeatherFlutter extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       theme: CupertinoThemeData(
-        barBackgroundColor: kColorNavigationBar,
+        barBackgroundColor: kColorBar,
         primaryColor: kColorText,
         textTheme: CupertinoTextThemeData(
           primaryColor: kColorText,

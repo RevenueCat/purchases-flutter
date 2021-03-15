@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:magic_weather_flutter/src/model/constant.dart';
-import 'package:magic_weather_flutter/src/model/singletons_data.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:magic_weather_flutter/src/constant.dart';
+import 'package:magic_weather_flutter/src/model/singletons_data.dart';
+import 'package:magic_weather_flutter/src/model/styles.dart';
 
 class Paywall extends StatefulWidget {
   final Offering offering;
@@ -23,7 +24,7 @@ class _PaywallState extends State<Paywall> {
               height: 70.0,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: kColorPremiumBackground,
+                  color: kColorBar,
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(25.0))),
               child: Center(
@@ -46,7 +47,7 @@ class _PaywallState extends State<Paywall> {
               itemBuilder: (BuildContext context, int index) {
                 var myProductList = widget.offering.availablePackages;
                 return Card(
-                  color: kColorPremiumBackground,
+                  color: Colors.black,
                   child: ListTile(
                       onTap: () async {
                         try {
