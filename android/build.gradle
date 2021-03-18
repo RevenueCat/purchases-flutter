@@ -3,7 +3,7 @@ version '3.4.0'
 
 buildscript {
     ext.kotlin_version = '1.3.72'
-    ext.common_version = 'AMAZON.RC1'
+    ext.common_version = '2.0.0-amazon.alpha.2'
     repositories {
         google()
         jcenter()

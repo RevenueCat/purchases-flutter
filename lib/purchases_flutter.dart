@@ -43,12 +43,14 @@ class Purchases {
   static Future<void> setup(String apiKey,
       {String? appUserId,
       bool observerMode = false,
-      String? userDefaultsSuiteName}) async {
+      String? userDefaultsSuiteName,
+      bool useAmazon = false}) async {
     return await _channel.invokeMethod('setupPurchases', {
       'apiKey': apiKey,
       'appUserId': appUserId,
       'observerMode': observerMode,
-      'userDefaultsSuiteName': userDefaultsSuiteName
+      'userDefaultsSuiteName': userDefaultsSuiteName,
+      'useAmazon': useAmazon
     });
   }
 
