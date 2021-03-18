@@ -311,7 +311,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
             Store store = Store.PLAY_STORE;
-            if (useAmazon) {
+            if (useAmazon != null && useAmazon) {
                 store = Store.AMAZON;
             }
             CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode,
