@@ -259,6 +259,25 @@ class Purchases {
     return PurchaserInfo.fromJson(result);
   }
 
+  /// This function will logIn the current user with an appUserID.
+  /// Typically this would be used after logging in a user to identify them without
+  /// calling configure
+  ///
+  /// Returns a [LogInResult] object, or throws a [PlatformException] if there
+  /// was a problem restoring transactions. LogInResult holds a PurchaserInfo object 
+  /// and a bool that can be used to know if a user has just been created for the first time.
+  ///
+  /// [newAppUserID] The appUserID that should be linked to the currently user
+  static Future<LogInResult> logIn(String appUserID) async {
+    Map<dynamic, dynamic> result =
+        await _channel.invokeMethod('login', {'appUserID': appUserID});
+    PurchaserInfo purchaserInfo = PurchaserInfo.fromJson(result["purchaserInfo"]);
+    bool created = result["created"];
+
+    return LogInResult(purchaserInfo: purchaserInfo, created: created);
+  }
+
+
   /// This function will identify the current user with an appUserID.
   /// Typically this would be used after a logout to identify a new user without
   /// calling configure
@@ -270,6 +289,17 @@ class Purchases {
   static Future<PurchaserInfo> identify(String appUserID) async {
     Map<dynamic, dynamic> result =
         await _channel.invokeMethod('identify', {'appUserID': appUserID});
+    return PurchaserInfo.fromJson(result);
+  }
+
+  /// Logs out the  Purchases client, clearing the saved appUserID. This will
+  /// generate a random user id and save it in the cache.
+  ///
+  /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
+  /// was a problem restoring transactions or if the method is called while the
+  /// current user is anonymous.
+  static Future<PurchaserInfo> logOut() async {
+    Map<dynamic, dynamic> result = await _channel.invokeMethod('logOut');
     return PurchaserInfo.fromJson(result);
   }
 
@@ -667,4 +697,9 @@ class IntroEligibility {
   IntroEligibility.fromJson(Map<dynamic, dynamic> map)
       : status = IntroEligibilityStatus.values[map["status"]],
         description = map["description"];
+}
+
+class LogInResult { 
+  bool created;
+  PurchaserInfo purchaserInfo;
 }
