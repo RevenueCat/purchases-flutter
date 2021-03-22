@@ -61,12 +61,14 @@ class Purchases {
         'setFinishTransactions', {'finishTransactions': finishTransactions});
   }
 
+  /// Deprecated. Configure behavior through the RevenueCat dashboard instead.
   /// Set this to true if you are passing in an appUserID but it is anonymous.
   ///
   /// This is true by default if you didn't pass an appUserID.
   /// If a user tries to purchase a product that is active on the current app
   /// store account, we will treat it as a restore and alias the new ID with the
   /// previous id.
+  @Deprecated("Configure behavior through the RevenueCat dashboard instead.")
   static Future<void> setAllowSharingStoreAccount(bool allowSharing) async {
     await _channel.invokeMethod(
         'setAllowSharingStoreAccount', {'allowSharing': allowSharing});
@@ -278,6 +280,7 @@ class Purchases {
   }
 
 
+  /// Deprecated in favor of logIn.
   /// This function will identify the current user with an appUserID.
   /// Typically this would be used after a logout to identify a new user without
   /// calling configure
@@ -286,6 +289,7 @@ class Purchases {
   /// was a problem restoring transactions.
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
+  @Deprecated("Use logIn instead.")
   static Future<PurchaserInfo> identify(String appUserID) async {
     Map<dynamic, dynamic> result =
         await _channel.invokeMethod('identify', {'appUserID': appUserID});
@@ -303,11 +307,13 @@ class Purchases {
     return PurchaserInfo.fromJson(result);
   }
 
+  /// Deprecated in favor of logOut.
   /// Resets the Purchases client clearing the saved appUserID. This will
   /// generate a random user id and save it in the cache.
   ///
   /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
+  @Deprecated("Use logOut instead.")
   static Future<PurchaserInfo> reset() async {
     Map<dynamic, dynamic> result = await _channel.invokeMethod('reset');
     return PurchaserInfo.fromJson(result);
