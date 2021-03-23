@@ -266,19 +266,19 @@ class Purchases {
   /// calling configure
   ///
   /// Returns a [LogInResult] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions. LogInResult holds a PurchaserInfo object 
+  /// was a problem restoring transactions. LogInResult holds a PurchaserInfo object
   /// and a bool that can be used to know if a user has just been created for the first time.
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
   static Future<LogInResult> logIn(String appUserID) async {
     Map<dynamic, dynamic> result =
-        await _channel.invokeMethod('login', {'appUserID': appUserID});
-    PurchaserInfo purchaserInfo = PurchaserInfo.fromJson(result["purchaserInfo"]);
+        await _channel.invokeMethod('logIn', {'appUserID': appUserID});
+    PurchaserInfo purchaserInfo =
+        PurchaserInfo.fromJson(result["purchaserInfo"]);
     bool created = result["created"];
 
     return LogInResult(purchaserInfo: purchaserInfo, created: created);
   }
-
 
   /// Deprecated in favor of logIn.
   /// This function will identify the current user with an appUserID.
@@ -705,7 +705,15 @@ class IntroEligibility {
         description = map["description"];
 }
 
-class LogInResult { 
-  bool created;
-  PurchaserInfo purchaserInfo;
+/// Class used to hold the result of the logIn method
+class LogInResult {
+  /// true if the logged in user has been created in the
+  /// RevenueCat backend for the first time
+  final bool created;
+
+  /// the purchaserInfo associated to the logged in user
+  final PurchaserInfo purchaserInfo;
+
+  /// Constructs a LogInResult with its properties
+  LogInResult({required this.created, required this.purchaserInfo});
 }
