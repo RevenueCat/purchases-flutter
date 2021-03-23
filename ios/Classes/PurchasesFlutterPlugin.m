@@ -70,8 +70,12 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self getAppUserIDWithResult:result];
     } else if ([@"restoreTransactions" isEqualToString:call.method]) {
         [self restoreTransactionsWithResult:result];
+    } else if ([@"logOut" isEqualToString:call.method]) {
+        [self logOutWithResult:result];
     } else if ([@"reset" isEqualToString:call.method]) {
         [self resetWithResult:result];
+    } else if ([@"logIn" isEqualToString:call.method]) {
+        [self logInAppUserID:arguments[@"appUserID"] result:result];
     } else if ([@"identify" isEqualToString:call.method]) {
         [self identify:arguments[@"appUserID"] result:result];
     } else if ([@"createAlias" isEqualToString:call.method]) {
@@ -263,7 +267,13 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     [RCCommonFunctionality createAlias:newAppUserID completionBlock:[self getResponseCompletionBlock:result]];
 }
 
-- (void)identify:(NSString *_Nullable)appUserID
+- (void)logInAppUserID:(NSString * _Nullable)appUserID
+                result:(FlutterResult)result
+{
+    [RCCommonFunctionality logIn:appUserID completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)identify:(NSString * _Nullable)appUserID
           result:(FlutterResult)result
 {
     [RCCommonFunctionality identify:appUserID completionBlock:[self getResponseCompletionBlock:result]];
@@ -272,6 +282,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)resetWithResult:(FlutterResult)result
 {
     [RCCommonFunctionality resetWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)logOutWithResult:(FlutterResult)result
+{
+    [RCCommonFunctionality logOutWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)setDebugLogsEnabled:(BOOL)enabled
