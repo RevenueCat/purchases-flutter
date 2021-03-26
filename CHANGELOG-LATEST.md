@@ -1,6 +1,8 @@
 ## 3.1.1
 
-- iOS: 
+- Fixed an issue in the example app with null-safety enabled.
+    https://github.com/RevenueCat/purchases-flutter/pull/177
+- iOS:
     - Added a new property `simulateAsksToBuyInSandbox`, that allows developers to test deferred purchases easily.
 - Bumped purchases-hybrid-common to 1.6.2 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/1.6.2)
 - Bumped purchases-ios to 3.10.7 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases/3.10.7)
