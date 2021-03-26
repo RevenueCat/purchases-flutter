@@ -73,7 +73,7 @@ jobs:
   lint:
     description: "Run static analysis for Flutter"
     docker:
-      - image: cirrusci/flutter:beta
+      - image: cirrusci/flutter
     steps:
       - checkout
       - build-flutter-project
@@ -84,7 +84,7 @@ jobs:
   test:
     description: "Run tests for Flutter"
     docker:
-      - image: cirrusci/flutter:beta
+      - image: cirrusci/flutter
     steps:
       - checkout
       - build-flutter-project
@@ -95,7 +95,7 @@ jobs:
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
     docker:
-      - image: cirrusci/flutter:beta
+      - image: cirrusci/flutter
     steps:
       - checkout
       - replace-api-key
