@@ -144,6 +144,8 @@ class _PurchaseButton extends StatelessWidget {
             print("User cancelled");
           } else if (errorCode == PurchasesErrorCode.purchaseNotAllowedError) {
             print("User not allowed to purchase");
+          } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
+            print("Payment is pending");
           }
         }
         return InitialScreen();

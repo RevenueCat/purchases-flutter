@@ -33,6 +33,8 @@ platform :ios do
     new_version_number = options[:version]
     fail ArgumentError, "missing version" unless new_version_number
     version_bump_podspec(path: "ios/purchases_flutter.podspec", version_number: new_version_number)
+    version_bump_podspec(path: "macos/purchases_flutter.podspec", version_number: new_version_number)
+    replace_in("#{current_version}", "#{new_version_number}", "../ios/Classes/PurchasesFlutterPlugin.m")
   end
 end
 
@@ -44,8 +46,10 @@ platform :android do
 
     fail ArgumentError, "missing version" unless new_version
     gradle_file_path = "../android/build.gradle"
+    plugin_file_path = "../android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java"
 
     replace_in(previous_version, new_version, gradle_file_path)
+    replace_in("#{current_version}", "#{new_version}", plugin_file_path)
   end
 end
 

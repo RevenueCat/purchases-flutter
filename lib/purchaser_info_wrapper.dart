@@ -63,7 +63,7 @@ class PurchaserInfo {
         latestExpirationDate = map["latestExpirationDate"],
         allExpirationDates =
             (map["allExpirationDates"] as Map<dynamic, dynamic>)
-                .map((key, value) => MapEntry(key as String, value as String)),
+                .map((key, value) => MapEntry(key as String, value as String?)),
         allPurchasedProductIdentifiers =
             (map["allPurchasedProductIdentifiers"] as List<dynamic>)
                 .map((item) => item as String)
