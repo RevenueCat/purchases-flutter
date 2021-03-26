@@ -1,6 +1,6 @@
 ## 3.1.1
 
-- Fixed an issue in the example app with null-safety enabled.
+- Fixed an issue that would cause an error saying `type 'Null' is not a subtype of type 'String' in type cast` in `allExpirationDates` when null-safety is enabled.
     https://github.com/RevenueCat/purchases-flutter/pull/177
 - iOS:
     - Added a new property `simulateAsksToBuyInSandbox`, that allows developers to test deferred purchases easily.
