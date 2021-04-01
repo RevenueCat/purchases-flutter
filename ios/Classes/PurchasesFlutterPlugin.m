@@ -461,11 +461,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void (^)(NSDictionary *, RCErrorContainer *))getResponseCompletionBlock:(FlutterResult)result {
-    return ^(NSDictionary * _Nullable purchaserInfoDictionary, RCErrorContainer * _Nullable error) {
+    return ^(NSDictionary * _Nullable resultDictionary, RCErrorContainer * _Nullable error) {
         if (error) {
             [self rejectWithResult:result error:error];
         } else {
-            result(purchaserInfoDictionary);
+            result(resultDictionary);
         }
     };
 }
