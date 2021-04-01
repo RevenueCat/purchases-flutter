@@ -194,7 +194,10 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 
 - (void)setAllowSharingStoreAccount:(BOOL)allowSharingStoreAccount
                              result:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality setAllowSharingStoreAccount:allowSharingStoreAccount];
+#pragma GCC diagnostic pop
     result(nil);
 }
 
@@ -268,11 +271,17 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)identify:(NSString * _Nullable)appUserID
           result:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality identify:appUserID completionBlock:[self getResponseCompletionBlock:result]];
+#pragma GCC diagnostic pop
 }
 
 - (void)resetWithResult:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality resetWithCompletionBlock:[self getResponseCompletionBlock:result]];
+#pragma GCC diagnostic pop
 }
 
 - (void)logOutWithResult:(FlutterResult)result {
