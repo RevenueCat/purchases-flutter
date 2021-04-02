@@ -417,6 +417,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         CommonKt.identify(appUserID, getOnResult(result));
     }
 
+    private void logOut(final Result result) {
+        CommonKt.logOut(getOnResult(result));
+    }
+
+    private void logIn(String appUserID, final Result result) {
+        CommonKt.logIn(appUserID, getOnResult(result));
+    }
+
     private void createAlias(String newAppUserID, final Result result) {
         CommonKt.createAlias(newAppUserID, getOnResult(result));
     }
