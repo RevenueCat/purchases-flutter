@@ -189,6 +189,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String newAppUserID = call.argument("newAppUserID");
                 createAlias(newAppUserID, result);
                 break;
+            case "logIn":
+                String appUserID = call.argument("appUserID");
+                logIn(appUserID, result);
+                break;
+            case "logOut":
+                logOut(result);
+                break;
             case "setDebugLogsEnabled":
                 boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
                 setDebugLogsEnabled(enabled, result);
