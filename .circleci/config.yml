@@ -16,7 +16,7 @@ commands:
   replace-api-key:
     description: "replace API_KEY"
     steps:
-      - run: sed -i.bck s/api_key/$API_KEY/ example/integration_test/app_test.dart
+      - run: sed -i.bck s/api_key/$API_KEY/ revenuecat_examples/purchase_tester/integration_test/app_test.dart
 
   flutter-get-dependencies:
     description: "Install dependencies"
@@ -87,7 +87,9 @@ jobs:
       - checkout
       - build-flutter-project
       - flutter-get-dependencies:
-          project: Examples/MagicWeather
+          project: revenuecat_examples/MagicWeather
+      - flutter-get-dependencies:
+          project: revenuecat_examples/purchase_tester
       - run:
           name: Analyze code
           command: flutter analyze lib
@@ -111,7 +113,7 @@ jobs:
       - checkout
       - replace-api-key
       - run:
-          working_directory: example/android
+          working_directory: revenuecat_examples/purchase_tester/android
           command: |
             # flutter build generates files in android/ for building the app
             flutter build apk
@@ -120,8 +122,8 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - example/build/app/outputs/apk/debug/app-debug.apk
-            - example/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+            - revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk
+            - revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
   run-firebase-tests:
     description: "Run integration tests for Flutter"
@@ -138,8 +140,8 @@ jobs:
           name: Test with Firebase Test Lab
           command: >
             gcloud firebase test android run --type instrumentation \
-              --app example/build/app/outputs/apk/debug/app-debug.apk \
-              --test example/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+              --app revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk \
+              --test revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
               --timeout 2m \
               --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
       - run:
@@ -164,21 +166,21 @@ jobs:
       - setup-flutter
       - restore_cache:
           name: Restore cocoapods specs and pods
-          key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
+          key: v1-cocoapods-{{ checksum "./revenuecat_examples/purchase_tester/ios/Podfile.lock" }}-{{ arch }}
       - replace-api-key
       - build-flutter-project:
-          project: example
+          project: revenuecat_examples/purchase_tester
       - run:
           name: Run Flutter integration tests
           command: |
-            cd example
+            cd revenuecat_examples/purchase_tester
             flutter drive --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
       - save_cache:
           name: Save cocoapods specs and pods cache
-          key: v1-cocoapods-{{ checksum "./example/ios/Podfile.lock" }}-{{ arch }}
+          key: v1-cocoapods-{{ checksum "./revenuecat_examples/purchase_tester/ios/Podfile.lock" }}-{{ arch }}
           paths:
-            - ./example/ios/Pods
+            - ./revenuecat_examples/purchase_tester/ios/Pods
             - ~/.cocoapods
 
 workflows:

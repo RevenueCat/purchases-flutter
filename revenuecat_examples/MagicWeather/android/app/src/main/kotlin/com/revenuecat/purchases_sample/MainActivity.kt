@@ -1,4 +1,4 @@
-package m4trixdevlimited.com.flutter_magic_weather_app
+package com.revenuecat.purchases_sample
 
 import io.flutter.embedding.android.FlutterActivity
 

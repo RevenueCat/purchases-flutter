@@ -1,3 +1,7 @@
+## 3.2.0
+- Added new Magic Weather sample app, available in `revenuecat_examples/MagicWeather`
+    https://github.com/RevenueCat/purchases-flutter/pull/170
+
 ## 3.1.1
 
 - Fixed an issue that would cause an error saying `type 'Null' is not a subtype of type 'String' in type cast` in `allExpirationDates` when null-safety is enabled.
