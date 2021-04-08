@@ -1,9 +1,10 @@
 # Examples
+Our examples are located at `revenuecat_examples/`.
 
 ### MagicWeather
 
-This project showcases how best to use RevenueCat for subscriptions. 
+This project is the best showcase for how to use `purchases-flutter` for a subscriptions app.
 
-### Legacy Example
+### Purchase Tester
 
-Contains another example app that showcases how to use RevenueCat, and is also used for integration tests. 
+Contains another example app that showcases how to use `purchases_flutter`, and is also used for integration tests. 
