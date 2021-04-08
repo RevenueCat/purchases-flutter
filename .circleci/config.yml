@@ -88,6 +88,8 @@ jobs:
       - build-flutter-project
       - flutter-get-dependencies:
           project: revenuecat_examples/MagicWeather
+      - flutter-get-dependencies:
+          project: revenuecat_examples/purchase_tester
       - run:
           name: Analyze code
           command: flutter analyze lib
