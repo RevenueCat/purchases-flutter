@@ -94,11 +94,12 @@ class AppContainerState extends State<AppContainer> {
             navigatorKey: firstTabNavKey,
             builder: (BuildContext context) => WeatherScreen(),
           );
-        } else
+        } else {
           return CupertinoTabView(
             navigatorKey: secondTabNavKey,
             builder: (BuildContext context) => UserScreen(),
           );
+        }
       },
     );
   }

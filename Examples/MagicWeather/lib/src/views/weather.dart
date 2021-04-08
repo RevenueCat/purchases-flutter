@@ -42,7 +42,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
       try {
         offerings = await Purchases.getOfferings();
       } on PlatformException catch (e) {
-        showDialog(
+        await showDialog(
             context: context,
             builder: (BuildContext context) => ShowDialogToDismiss(
                 title: "Error", content: e.message, buttonText: 'OK'));
@@ -56,7 +56,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         // offerings are empty, show a message to your user
       } else {
         // current offering is available, show paywall
-        showModalBottomSheet(
+        await showModalBottomSheet(
           useRootNavigator: true,
           isDismissible: true,
           isScrollControlled: true,

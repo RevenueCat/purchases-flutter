@@ -43,7 +43,7 @@ class _UserScreenState extends State<UserScreen> {
 
       appData.appUserID = await Purchases.appUserID;
     } on PlatformException catch (e) {
-      showDialog(
+      await showDialog(
           context: context,
           builder: (BuildContext context) => ShowDialogToDismiss(
               title: "Error", content: e.message, buttonText: 'OK'));

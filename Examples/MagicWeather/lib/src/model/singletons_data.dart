@@ -1,7 +1,7 @@
 import 'weather_data.dart';
 
 class AppData {
-  static final AppData _appData = new AppData._internal();
+  static final AppData _appData = AppData._internal();
 
   bool entitlementIsActive = false;
   String appUserID = '';

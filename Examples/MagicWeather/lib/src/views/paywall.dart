@@ -42,7 +42,7 @@ class _PaywallState extends State<Paywall> {
                 width: double.infinity,
               ),
             ),
-            new ListView.builder(
+            ListView.builder(
               itemCount: widget.offering.availablePackages.length,
               itemBuilder: (BuildContext context, int index) {
                 var myProductList = widget.offering.availablePackages;
