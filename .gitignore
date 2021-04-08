@@ -26,10 +26,10 @@ pubspec.lock
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
 *.jks
-example/ios/Flutter/flutter_export_environment.sh
-example/.flutter-plugins-dependencies
-example/ios/Flutter/Flutter.podspec
-example/ios/Flutter/.last_build_id
-example/android/.composite-enable
+revenuecat_examples/purchase_tester/ios/Flutter/flutter_export_environment.sh
+revenuecat_examples/purchase_tester/.flutter-plugins-dependencies
+revenuecat_examples/purchase_tester/ios/Flutter/Flutter.podspec
+revenuecat_examples/purchase_tester/ios/Flutter/.last_build_id
+revenuecat_examples/purchase_tester/android/.composite-enable
 fastlane/report.xml
 *.bck
