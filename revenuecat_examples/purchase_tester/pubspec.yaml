@@ -18,7 +18,7 @@ dev_dependencies:
     sdk: flutter
 
   purchases_flutter:
-    path: ../
+    path: ../../
 
   pedantic: ^1.8.0
   flutter_driver:
