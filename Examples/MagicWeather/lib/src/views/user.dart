@@ -146,7 +146,7 @@ class _UserScreenState extends State<UserScreen> {
                               !appData.appUserID.contains("RCAnonymousID:"),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: FlatButton(
+                            child: TextButton(
                               onPressed: () {
                                 _manageUser('logout', null);
                               },
@@ -162,7 +162,7 @@ class _UserScreenState extends State<UserScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: FlatButton(
+                          child: TextButton(
                             onPressed: () {
                               _manageUser('restore', null);
                             },

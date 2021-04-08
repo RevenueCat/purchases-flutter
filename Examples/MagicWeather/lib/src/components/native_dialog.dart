@@ -13,15 +13,15 @@ class ShowDialogToDismiss extends StatelessWidget {
   Widget build(BuildContext context) {
     if (!Platform.isIOS) {
       return AlertDialog(
-        title: new Text(
+        title: Text(
           title,
         ),
-        content: new Text(
+        content: Text(
           this.content,
         ),
         actions: <Widget>[
-          new FlatButton(
-            child: new Text(
+          TextButton(
+            child: Text(
               buttonText,
             ),
             onPressed: () {
@@ -35,13 +35,13 @@ class ShowDialogToDismiss extends StatelessWidget {
           title: Text(
             title,
           ),
-          content: new Text(
+          content: Text(
             this.content,
           ),
           actions: <Widget>[
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: new Text(
+              child: Text(
                 buttonText[0].toUpperCase() +
                     buttonText.substring(1).toLowerCase(),
               ),

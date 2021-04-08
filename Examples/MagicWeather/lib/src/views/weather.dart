@@ -126,7 +126,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 30.0),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () => perfomMagic(),
                     child: Text(
                       "✨ Change the Weather",
