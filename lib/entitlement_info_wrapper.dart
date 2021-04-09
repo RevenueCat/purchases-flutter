@@ -119,6 +119,25 @@ class EntitlementInfo {
   String toString() {
     return 'EntitlementInfo{identifier: $identifier, isActive: $isActive, willRenew: $willRenew, periodType: $periodType, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, expirationDate: $expirationDate, store: $store, productIdentifier: $productIdentifier, isSandbox: $isSandbox, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt}';
   }
+
+  @override
+  bool operator ==(other) {
+    if (!(other is EntitlementInfo)) {
+      return false;
+    }
+    return (this.identifier == other.identifier &&
+        this.isActive == other.isActive &&
+        this.willRenew == other.willRenew &&
+        this.periodType == other.periodType &&
+        this.latestPurchaseDate == other.latestPurchaseDate &&
+        this.originalPurchaseDate == other.originalPurchaseDate &&
+        this.expirationDate == other.expirationDate &&
+        this.store == other.store &&
+        this.productIdentifier == other.productIdentifier &&
+        this.isSandbox == other.isSandbox &&
+        this.unsubscribeDetectedAt == other.unsubscribeDetectedAt &&
+        this.billingIssueDetectedAt == other.billingIssueDetectedAt);
+  }
 }
 
 /// Enum of supported period types for an entitlement.

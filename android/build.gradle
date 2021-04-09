@@ -9,7 +9,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.2'
+        classpath 'com.android.tools.build:gradle:4.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -38,5 +38,21 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.revenuecat.purchases:purchases-hybrid-common:1.6.2"
+    // TODO: replace git dependencies with Maven when a release is available
+    // implementation "com.revenuecat.purchases:purchases-hybrid-common:1.6.2"
+    implementation('com.revenuecat.purchases:purchases-hybrid-common') {
+        version {
+            branch = 'develop'
+        }
+    }
+    implementation('com.revenuecat.purchases:purchases') {
+        version {
+            branch = 'feature/identityv3_public_facing_changes'
+        }
+    }
+    implementation('com.revenuecat.purchases:common') {
+        version {
+            branch = 'feature/identityv3_public_facing_changes'
+        }
+    }
 }

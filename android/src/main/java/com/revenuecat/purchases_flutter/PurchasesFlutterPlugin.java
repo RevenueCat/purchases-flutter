@@ -9,12 +9,12 @@ import androidx.annotation.Nullable;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
-import com.revenuecat.purchases.common.CommonKt;
-import com.revenuecat.purchases.common.ErrorContainer;
-import com.revenuecat.purchases.common.OnResult;
-import com.revenuecat.purchases.common.OnResultList;
-import com.revenuecat.purchases.common.SubscriberAttributesKt;
-import com.revenuecat.purchases.common.mappers.PurchaserInfoMapperKt;
+import com.revenuecat.purchases.hybridcommon.CommonKt;
+import com.revenuecat.purchases.hybridcommon.ErrorContainer;
+import com.revenuecat.purchases.hybridcommon.OnResult;
+import com.revenuecat.purchases.hybridcommon.OnResultList;
+import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
+import com.revenuecat.purchases.hybridcommon.mappers.PurchaserInfoMapperKt;
 import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
 import com.revenuecat.purchases.common.PlatformInfo;
 
@@ -187,6 +187,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "createAlias":
                 String newAppUserID = call.argument("newAppUserID");
                 createAlias(newAppUserID, result);
+                break;
+            case "logIn":
+                String appUserIDToLogIn = call.argument("appUserID");
+                logIn(appUserIDToLogIn, result);
+                break;
+            case "logOut":
+                logOut(result);
                 break;
             case "setDebugLogsEnabled":
                 boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
@@ -410,6 +417,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void identify(String appUserID, final Result result) {
         CommonKt.identify(appUserID, getOnResult(result));
+    }
+
+    private void logOut(final Result result) {
+        CommonKt.logOut(getOnResult(result));
+    }
+
+    private void logIn(String appUserID, final Result result) {
+        CommonKt.logIn(appUserID, getOnResult(result));
     }
 
     private void createAlias(String newAppUserID, final Result result) {
