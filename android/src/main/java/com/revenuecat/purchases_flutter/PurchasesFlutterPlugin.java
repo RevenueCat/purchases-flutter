@@ -190,8 +190,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 createAlias(newAppUserID, result);
                 break;
             case "logIn":
-                String appUserID = call.argument("appUserID");
-                logIn(appUserID, result);
+                String appUserIDToLogIn = call.argument("appUserID");
+                logIn(appUserIDToLogIn, result);
                 break;
             case "logOut":
                 logOut(result);
