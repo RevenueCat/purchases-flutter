@@ -32,11 +32,6 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-
-  pod 'Purchases', :git => 'https://github.com/RevenueCat/purchases-ios.git', :branch => 'feature/identityV3_public_facing_changes'
-  pod 'PurchasesCoreSwift', :git => 'https://github.com/RevenueCat/purchases-ios.git', :branch => 'feature/identityV3_public_facing_changes'
-  pod 'PurchasesHybridCommon', :git => 'https://github.com/RevenueCat/purchases-hybrid-common.git', :branch => 'develop'
-
 end
 
 post_install do |installer|

@@ -14,21 +14,38 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - Purchases (from `https://github.com/RevenueCat/purchases-ios.git`, branch `feature/identityV3_public_facing_changes`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
-
-SPEC REPOS:
-  trunk:
-    - Purchases
-    - PurchasesCoreSwift
-    - PurchasesHybridCommon
+  - PurchasesCoreSwift (from `https://github.com/RevenueCat/purchases-ios.git`, branch `feature/identityV3_public_facing_changes`)
+  - PurchasesHybridCommon (from `https://github.com/RevenueCat/purchases-hybrid-common.git`, branch `develop`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
+  Purchases:
+    :branch: feature/identityV3_public_facing_changes
+    :git: https://github.com/RevenueCat/purchases-ios.git
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
+  PurchasesCoreSwift:
+    :branch: feature/identityV3_public_facing_changes
+    :git: https://github.com/RevenueCat/purchases-ios.git
+  PurchasesHybridCommon:
+    :branch: develop
+    :git: https://github.com/RevenueCat/purchases-hybrid-common.git
+
+CHECKOUT OPTIONS:
+  Purchases:
+    :commit: 15d2ff61b4c9e101a22b642662a09f7ee2b90fd7
+    :git: https://github.com/RevenueCat/purchases-ios.git
+  PurchasesCoreSwift:
+    :commit: 15d2ff61b4c9e101a22b642662a09f7ee2b90fd7
+    :git: https://github.com/RevenueCat/purchases-ios.git
+  PurchasesHybridCommon:
+    :commit: 0e615d277fa3a976e15c1cac89e3c5a4ab5679ce
+    :git: https://github.com/RevenueCat/purchases-hybrid-common.git
 
 SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
@@ -38,6 +55,6 @@ SPEC CHECKSUMS:
   PurchasesCoreSwift: ee857e4c21e6254b09d7e303a756fcf2b9164408
   PurchasesHybridCommon: e3b25475328b58169e811135a3476ed0e5a4243a
 
-PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
+PODFILE CHECKSUM: c7b8a4c822746182308e805b46435bc994f8ca9e
 
 COCOAPODS: 1.10.1
