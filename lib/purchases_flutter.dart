@@ -518,6 +518,11 @@ class Purchases {
     await _channel.invokeMethod('collectDeviceIdentifiers');
   }
 
+  /// TODO write these comments
+  static Future<bool> canMakePayments(String feature) async {
+    return await _channel.invokeMethod('canMakePayments');
+  }
+
   /// iOS only. Use this function to retrieve the `PurchasesPaymentDiscount`
   /// for a given `PurchasesPackage`.
   ///

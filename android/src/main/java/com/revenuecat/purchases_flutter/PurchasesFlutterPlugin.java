@@ -288,6 +288,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "collectDeviceIdentifiers":
                 collectDeviceIdentifiers(result);
                 break;
+            case "canMakePayments":
+                String feature = call.argument("feature");
+                canMakePayments(feature, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -535,6 +539,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private void collectDeviceIdentifiers(final Result result) { 
         SubscriberAttributesKt.collectDeviceIdentifiers();
         result.success(null);
+    }
+
+    private void canMakePayments(String feature, final Result result) {
+        CommonKt.canMakePayments(getActivity(), feature, getOnResult(result));
     }
 
     @NotNull

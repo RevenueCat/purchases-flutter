@@ -1,1 +1,6 @@
 rootProject.name = 'purchases_flutter'
+
+//includeBuild('/Users/madelinebeyl/git/revcat/purchases-hybrid-common/android')
+//includeBuild('/Users/madelinebeyl/git/revcat/purchases-android')
+//includeBuild('/Users/madelinebeyl/git/revcat/purchases-android/utils')
+//includeBuild('/Users/madelinebeyl/git/revcat/purchases-android/common')
