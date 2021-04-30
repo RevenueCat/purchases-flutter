@@ -1,5 +1,13 @@
 include ':app'
 
+sourceControl {
+    gitRepository("https://github.com/revenuecat/purchases-android.git") {
+        producesModule("com.revenuecat.purchases:purchases")
+        producesModule("com.revenuecat.purchases:common")
+        producesModule("com.revenuecat.purchases:utils")
+    }
+}
+
 def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
 
 def plugins = new Properties()
@@ -17,14 +25,5 @@ plugins.each { name, path ->
 // Run enableLocalBuild task to enable building purchases-hybrid-common from your local copy
 
 
-includeBuild('/Users/madelinebeyl/git/revcat/purchases-hybrid-common/android')
-//includeBuild('/Users/madelinebeyl/git/revcat/purchases-android') {
-//    dependencySubstitution {
-//        substitute module('com.revenuecat.purchases:common') with project(':')
-//        substitute module('com.revenuecat.purchases:utils') with project(':')
-//        substitute module('com.revenuecat.purchases:purchases') with project(':')
-//    }
-//}
-//includeBuild('/Users/madelinebeyl/git/revcat/purchases-android/utils')
-//includeBuild('/Users/madelinebeyl/git/revcat/purchases-android/common')
+
 
