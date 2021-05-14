@@ -541,8 +541,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void canMakePayments(String feature, final Result result) {
-        CommonKt.canMakePayments(getActivity(), feature, getOnResult(result));
+    private void canMakePayments(List<String> features, final Result result) {
+        CommonKt.canMakePayments(getActivity(), features, getOnResult(result));
     }
 
     @NotNull

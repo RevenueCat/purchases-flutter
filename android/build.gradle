@@ -39,22 +39,4 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.revenuecat.purchases:purchases-hybrid-common:1.6.2"
-
-    implementation('com.revenuecat.purchases:purchases') {
-        version {
-            branch = 'can-make-payments'
-        }
-    }
-
-    implementation('com.revenuecat.purchases:common') {
-        version {
-            branch = 'can-make-payments'
-        }
-    }
-
-    implementation('com.revenuecat.purchases:utils') {
-        version {
-            branch = 'can-make-payments'
-        }
-    }
 }
