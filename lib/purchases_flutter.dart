@@ -518,9 +518,11 @@ class Purchases {
     await _channel.invokeMethod('collectDeviceIdentifiers');
   }
 
-  /// TODO write these comments
-  static Future<bool> canMakePayments(String feature) async {
-    return await _channel.invokeMethod('canMakePayments');
+  static Future<bool> canMakePayments([List<BillingFeature> features = const []]) async {
+    return await _channel.invokeMethod('canMakePayments', {
+      'features': features.map(
+              (e) => e.toString().split('.').last.toUpperCase()).toList()
+    });
   }
 
   /// iOS only. Use this function to retrieve the `PurchasesPaymentDiscount`
@@ -587,6 +589,15 @@ enum PurchaseType {
 
   /// A type of SKU for subscriptions.
   subs
+}
+
+/// Billing Feature types
+enum BillingFeature {
+  subscriptions,
+  subscriptions_update,
+  in_app_items_on_vr,
+  subscriptions_on_vr,
+  price_change_confirmation
 }
 
 /// Supported Attribution networks.
