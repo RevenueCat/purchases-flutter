@@ -82,4 +82,22 @@ void main() {
         ['monthly_intro_pricing_one_week']);
     expect(list.length, 1);
   });
+
+  test('canMakePayments with no params calls successfully', () async {
+    response = true;
+    await Purchases.canMakePayments();
+    expect(log, <Matcher>[
+      isMethodCall('canMakePayments', arguments: {'features': []})
+    ]);
+  });
+
+  test('canMakePayments with params calls successfully', () async {
+    response = true;
+    await Purchases.canMakePayments([BillingFeature.subscriptions]);
+    expect(log, <Matcher>[
+      isMethodCall('canMakePayments', arguments: {
+        'features': ["SUBSCRIPTIONS"]
+      })
+    ]);
+  });
 }
