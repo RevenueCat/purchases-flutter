@@ -552,7 +552,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     }
 
                     @Override
-                    public void onError(@org.jetbrains.annotations.Nullable ErrorContainer errorContainer) {
+                    public void onError(@Nullable ErrorContainer errorContainer) {
                         reject(errorContainer, result);
                     }
                 });
