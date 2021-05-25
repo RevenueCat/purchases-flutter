@@ -438,7 +438,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
-- (void)canMakePayments:(NSArray *)features result:(FlutterResult)result
+- (void)canMakePayments:(NSArray <NSNumber *>*)features result:(FlutterResult)result
 {
     result(@([RCCommonFunctionality canMakePaymentsWithFeatures:features]));
 }

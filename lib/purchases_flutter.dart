@@ -518,10 +518,18 @@ class Purchases {
     await _channel.invokeMethod('collectDeviceIdentifiers');
   }
 
-  static Future<bool> canMakePayments([List<BillingFeature> features = const []]) async {
+  /// Check if billing is supported for the current user (meaning IN-APP
+  /// purchases are supported) and optionally, whether a list of specified
+  /// feature types are supported.
+  ///
+  /// Note: BillingFeatures are only relevant to Google Play users.
+  /// For other stores, BillingFeatures won't be checked.
+  /// [features] An optional  list of [BillingFeature]s to check for support.
+  /// By default, is an empty list and no feature support will be checked.
+  static Future<bool> canMakePayments(
+      [List<BillingFeature> features = const []]) async {
     return await _channel.invokeMethod('canMakePayments', {
-      'features': features.map(
-              (e) => e.toString().split('.').last.toUpperCase()).toList()
+      'features': features.map((e) => e.index).toList()
     });
   }
 
@@ -593,11 +601,25 @@ enum PurchaseType {
 
 /// Billing Feature types
 enum BillingFeature {
+  /// [https://developer.android.com/reference/com/android/
+  /// billingclient/api/BillingClient.FeatureType#SUBSCRIPTIONS]
   subscriptions,
-  subscriptions_update,
-  in_app_items_on_vr,
-  subscriptions_on_vr,
-  price_change_confirmation
+
+  /// [https://developer.android.com/reference/com/android/
+  /// billingclient/api/BillingClient.FeatureType#SUBSCRIPTIONS_UPDATE]
+  subscriptionsUpdate,
+
+  /// [https://developer.android.com/reference/com/android/
+  /// billingclient/api/BillingClient.FeatureType#IN_APP_ITEMS_ON_VR]
+  inAppItemsOnVr,
+
+  /// [https://developer.android.com/reference/com/android/
+  /// billingclient/api/BillingClient.FeatureType#SUBSCRIPTIONS_ON_VR]
+  subscriptionsOnVr,
+
+  /// [https://developer.android.com/reference/com/android/
+  /// billingclient/api/BillingClient.FeatureType#PRICE_CHANGE_CONFIRMATION]
+  priceChangeConfirmation
 }
 
 /// Supported Attribution networks.

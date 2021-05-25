@@ -290,7 +290,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 collectDeviceIdentifiers(result);
                 break;
             case "canMakePayments":
-                List<String> features = call.argument("features");
+                List<Integer> features = call.argument("features");
                 canMakePayments(features, result);
                 break;
             default:
@@ -542,7 +542,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void canMakePayments(List<String> features, final Result result) {
+    private void canMakePayments(List<Integer> features, final Result result) {
         CommonKt.canMakePayments(applicationContext,
                 features,
                 new OnResultAny<Boolean>() {
