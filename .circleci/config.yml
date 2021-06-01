@@ -190,10 +190,10 @@ workflows:
       - test
   android-integration-test:
     jobs:
-      - android-integration-test-build
+      - android-integration-test-build: *release-tags-and-branches
       - run-firebase-tests:
           requires:
             - android-integration-test-build
   ios-integration-test:
     jobs:
-      - ios-integration-test
+      - ios-integration-test: *release-tags-and-branches
