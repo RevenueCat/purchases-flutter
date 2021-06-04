@@ -147,7 +147,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"collectDeviceIdentifiers" isEqualToString:call.method]) {
         [self collectDeviceIdentifiersWithResult:result];
     } else if ([@"canMakePayments" isEqualToString:call.method]) {
-          NSArray *features = arguments[@"features"];
+          NSArray<NSNumber*> *features = arguments[@"features"];
           [self canMakePayments:features result:result];
     } else if ([@"getPaymentDiscount" isEqualToString:call.method]) {
         NSString *productIdentifier = arguments[@"productIdentifier"];
