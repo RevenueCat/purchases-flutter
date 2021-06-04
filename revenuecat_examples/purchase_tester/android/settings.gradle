@@ -20,9 +20,3 @@ if (file(".composite-enable").exists()) {
     includeBuild (path)
 }
 
-// TODO remove before merging
-includeBuild('/Users/madelinebeyl/git/revcat/purchases-hybrid-common/android')
-
-
-
-
