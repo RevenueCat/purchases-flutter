@@ -9,14 +9,15 @@ import androidx.annotation.Nullable;
 import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
-import com.revenuecat.purchases.common.CommonKt;
-import com.revenuecat.purchases.common.ErrorContainer;
-import com.revenuecat.purchases.common.OnResult;
-import com.revenuecat.purchases.common.OnResultList;
-import com.revenuecat.purchases.common.SubscriberAttributesKt;
-import com.revenuecat.purchases.common.mappers.PurchaserInfoMapperKt;
-import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
 import com.revenuecat.purchases.common.PlatformInfo;
+import com.revenuecat.purchases.hybridcommon.CommonKt;
+import com.revenuecat.purchases.hybridcommon.ErrorContainer;
+import com.revenuecat.purchases.hybridcommon.OnResult;
+import com.revenuecat.purchases.hybridcommon.OnResultAny;
+import com.revenuecat.purchases.hybridcommon.OnResultList;
+import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
+import com.revenuecat.purchases.hybridcommon.mappers.PurchaserInfoMapperKt;
+import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -288,6 +289,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "collectDeviceIdentifiers":
                 collectDeviceIdentifiers(result);
                 break;
+            case "canMakePayments":
+                List<Integer> features = call.argument("features");
+                canMakePayments(features, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -535,6 +540,22 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private void collectDeviceIdentifiers(final Result result) { 
         SubscriberAttributesKt.collectDeviceIdentifiers();
         result.success(null);
+    }
+
+    private void canMakePayments(List<Integer> features, final Result result) {
+        CommonKt.canMakePayments(applicationContext,
+                features,
+                new OnResultAny<Boolean>() {
+                    @Override
+                    public void onReceived(Boolean received) {
+                        result.success(received);
+                    }
+
+                    @Override
+                    public void onError(@Nullable ErrorContainer errorContainer) {
+                        reject(errorContainer, result);
+                    }
+                });
     }
 
     @NotNull

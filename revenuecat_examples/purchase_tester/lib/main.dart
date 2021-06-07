@@ -30,6 +30,7 @@ class _MyAppState extends State<InitialScreen> {
   Future<void> initPlatformState() async {
     await Purchases.setDebugLogsEnabled(true);
     await Purchases.setup("api_key");
+
     PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
 
     // If the widget was removed from the tree while the asynchronous platform

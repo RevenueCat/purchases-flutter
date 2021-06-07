@@ -146,6 +146,9 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self setCreative:creative result:result];
     } else if ([@"collectDeviceIdentifiers" isEqualToString:call.method]) {
         [self collectDeviceIdentifiersWithResult:result];
+    } else if ([@"canMakePayments" isEqualToString:call.method]) {
+          NSArray<NSNumber*> *features = arguments[@"features"];
+          [self canMakePaymentsWithFeatures:features result:result];
     } else if ([@"getPaymentDiscount" isEqualToString:call.method]) {
         NSString *productIdentifier = arguments[@"productIdentifier"];
         NSString *discountIdentifier = arguments[@"discountIdentifier"];
@@ -433,6 +436,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 {
     [RCCommonFunctionality setCreative:creative];
     result(nil);
+}
+
+- (void)canMakePaymentsWithFeatures:(NSArray <NSNumber *>*)features result:(FlutterResult)result
+{
+    result(@([RCCommonFunctionality canMakePaymentsWithFeatures:features]));
 }
 
 - (void)collectDeviceIdentifiersWithResult:(FlutterResult)result

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -81,5 +83,57 @@ void main() {
     var list = await Purchases.checkTrialOrIntroductoryPriceEligibility(
         ['monthly_intro_pricing_one_week']);
     expect(list.length, 1);
+  });
+
+  test('canMakePayments with no params calls successfully', () async {
+    response = Random().nextBool();
+    var receivedCanMakePayments = await Purchases.canMakePayments();
+
+    expect(receivedCanMakePayments, response);
+    expect(log, <Matcher>[
+      isMethodCall('canMakePayments', arguments: {'features': []})
+    ]);
+  });
+
+  test('canMakePayments with empty list calls successfully', () async {
+    response = Random().nextBool();
+    var receivedCanMakePayments = await Purchases.canMakePayments([]);
+
+    expect(receivedCanMakePayments, response);
+    expect(log, <Matcher>[
+      isMethodCall('canMakePayments', arguments: {'features': []})
+    ]);
+  });
+
+  test('canMakePayments with params calls successfully', () async {
+    response = Random().nextBool();
+    var receivedCanMakePayments =
+      await Purchases.canMakePayments([BillingFeature.subscriptions]);
+
+    expect(receivedCanMakePayments, response);
+    expect(log, <Matcher>[
+      isMethodCall('canMakePayments', arguments: {
+        'features': [0]
+      })
+    ]);
+  });
+
+  test('canMakePayments params mapped to ordinals successfully', () async {
+    response = Random().nextBool();
+    var receivedCanMakePayments =
+    await Purchases.canMakePayments(
+        [BillingFeature.subscriptions,
+          BillingFeature.priceChangeConfirmation,
+          BillingFeature.subscriptionsOnVr,
+          BillingFeature.subscriptionsUpdate,
+          BillingFeature.inAppItemsOnVr
+    ]);
+
+    expect(receivedCanMakePayments, response);
+    expect(log, <Matcher>[
+      isMethodCall('canMakePayments', arguments: {
+        'features': [0, 4, 3, 1, 2]
+      })
+    ]);
   });
 }
