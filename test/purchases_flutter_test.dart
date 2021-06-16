@@ -108,7 +108,7 @@ void main() {
   test('canMakePayments with params calls successfully', () async {
     response = Random().nextBool();
     var receivedCanMakePayments =
-      await Purchases.canMakePayments([BillingFeature.subscriptions]);
+        await Purchases.canMakePayments([BillingFeature.subscriptions]);
 
     expect(receivedCanMakePayments, response);
     expect(log, <Matcher>[
@@ -120,13 +120,12 @@ void main() {
 
   test('canMakePayments params mapped to ordinals successfully', () async {
     response = Random().nextBool();
-    var receivedCanMakePayments =
-    await Purchases.canMakePayments(
-        [BillingFeature.subscriptions,
-          BillingFeature.priceChangeConfirmation,
-          BillingFeature.subscriptionsOnVr,
-          BillingFeature.subscriptionsUpdate,
-          BillingFeature.inAppItemsOnVr
+    var receivedCanMakePayments = await Purchases.canMakePayments([
+      BillingFeature.subscriptions,
+      BillingFeature.priceChangeConfirmation,
+      BillingFeature.subscriptionsOnVr,
+      BillingFeature.subscriptionsUpdate,
+      BillingFeature.inAppItemsOnVr
     ]);
 
     expect(receivedCanMakePayments, response);

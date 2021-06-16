@@ -528,9 +528,8 @@ class Purchases {
   /// By default, is an empty list and no feature support will be checked.
   static Future<bool> canMakePayments(
       [List<BillingFeature> features = const []]) async {
-    return await _channel.invokeMethod('canMakePayments', {
-      'features': features.map((e) => e.index).toList()
-    });
+    return await _channel.invokeMethod(
+        'canMakePayments', {'features': features.map((e) => e.index).toList()});
   }
 
   /// iOS only. Use this function to retrieve the `PurchasesPaymentDiscount`
