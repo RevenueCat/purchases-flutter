@@ -1,5 +1,5 @@
 PODS:
-  - FlutterMacOS (2.2.2)
+  - FlutterMacOS (1.0.0)
   - Purchases (3.11.1):
     - PurchasesCoreSwift (= 3.11.1)
   - purchases_flutter (3.3.0):
@@ -10,26 +10,28 @@ PODS:
     - Purchases (= 3.11.1)
 
 DEPENDENCIES:
+  - FlutterMacOS (from `Flutter/ephemeral`)
   - purchases_flutter (from `Flutter/ephemeral/.symlinks/plugins/purchases_flutter/macos`)
 
 SPEC REPOS:
   trunk:
-    - FlutterMacOS
     - Purchases
     - PurchasesCoreSwift
     - PurchasesHybridCommon
 
 EXTERNAL SOURCES:
+  FlutterMacOS:
+    :path: Flutter/ephemeral
   purchases_flutter:
     :path: Flutter/ephemeral/.symlinks/plugins/purchases_flutter/macos
 
 SPEC CHECKSUMS:
-  FlutterMacOS: d225dfc3bb9c0e8f83364ba05e7029358dc93fed
+  FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
   Purchases: 6351f9ff6bd514e5ec5aa0f989ea181effa94bf5
   purchases_flutter: 88f9c10bd637b4057c95bbd9a7475c6c27d18216
   PurchasesCoreSwift: ee857e4c21e6254b09d7e303a756fcf2b9164408
   PurchasesHybridCommon: e3b25475328b58169e811135a3476ed0e5a4243a
 
-PODFILE CHECKSUM: 77099ba0c243b0cab165ba0601a9995e35fa19fb
+PODFILE CHECKSUM: 6eac6b3292e5142cfc23bdeb71848a40ec51c14c
 
 COCOAPODS: 1.10.1
