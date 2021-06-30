@@ -1,3 +1,6 @@
+## 3.3.1
+- Update MacOS dependency on PurchasesHybridCommon to 1.7.1 (https://github.com/RevenueCat/purchases-flutter/pull/209)
+
 ## 3.3.0
 - Bump gradle to 4.0.1 (https://github.com/RevenueCat/purchases-flutter/pull/195)
 - Add `canMakePayments` method (https://github.com/RevenueCat/purchases-flutter/pull/193)
