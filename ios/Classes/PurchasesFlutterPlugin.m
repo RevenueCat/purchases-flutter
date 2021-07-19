@@ -4,20 +4,22 @@
 
 #import <PurchasesHybridCommon/PurchasesHybridCommon.h>
 
+
 @interface PurchasesFlutterPlugin () <RCPurchasesDelegate>
 
-@property(nonatomic, retain) FlutterMethodChannel *channel;
-@property(nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
+@property (nonatomic, retain) FlutterMethodChannel *channel;
+@property (nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
 
 @end
 
+
 NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
+
 
 @implementation PurchasesFlutterPlugin
 
 - (instancetype)initWithChannel:(FlutterMethodChannel *)channel
-                      registrar:(NSObject <FlutterPluginRegistrar> *)registrar
-{
+                      registrar:(NSObject <FlutterPluginRegistrar> *)registrar {
     self = [super init];
     NSAssert(self, @"super init cannot be nil");
     self.channel = channel;
@@ -25,34 +27,38 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     return self;
 }
 
-+ (void)registerWithRegistrar:(NSObject <FlutterPluginRegistrar> *)registrar
-{
-    FlutterMethodChannel *channel = [FlutterMethodChannel
-            methodChannelWithName:@"purchases_flutter"
-                  binaryMessenger:[registrar messenger]];
++ (void)registerWithRegistrar:(NSObject <FlutterPluginRegistrar> *)registrar {
+    FlutterMethodChannel *channel = [FlutterMethodChannel methodChannelWithName:@"purchases_flutter"
+                                                                binaryMessenger:[registrar messenger]];
     PurchasesFlutterPlugin *instance = [[PurchasesFlutterPlugin alloc] initWithChannel:channel registrar:registrar];
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call
-                  result:(FlutterResult)result
-{
+                  result:(FlutterResult)result {
     NSDictionary *arguments = call.arguments;
     if ([@"setupPurchases" isEqualToString:call.method]) {
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
-        [self setupPurchases:apiKey appUserID:appUserID observerMode:observerMode userDefaultsSuiteName:userDefaultsSuiteName result:result];
+        [self setupPurchases:apiKey
+                   appUserID:appUserID
+                observerMode:observerMode
+       userDefaultsSuiteName:userDefaultsSuiteName
+                      result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
     } else if ([@"setFinishTransactions" isEqualToString:call.method]) {
-              [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
+        [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
     } else if ([@"addAttributionData" isEqualToString:call.method]) {
         NSDictionary *data = arguments[@"data"];
         NSInteger network = [arguments[@"network"] integerValue];
         NSString *networkUserId = arguments[@"networkUserId"];
-        [self addAttributionData:data fromNetwork:(RCAttributionNetwork) network forNetworkUserId:networkUserId result:result];
+        [self addAttributionData:data
+                     fromNetwork:(RCAttributionNetwork) network
+                forNetworkUserId:networkUserId
+                          result:result];
     } else if ([@"getOfferings" isEqualToString:call.method]) {
         [self getOfferingsWithResult:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
@@ -70,8 +76,12 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self getAppUserIDWithResult:result];
     } else if ([@"restoreTransactions" isEqualToString:call.method]) {
         [self restoreTransactionsWithResult:result];
+    } else if ([@"logOut" isEqualToString:call.method]) {
+        [self logOutWithResult:result];
     } else if ([@"reset" isEqualToString:call.method]) {
         [self resetWithResult:result];
+    } else if ([@"logIn" isEqualToString:call.method]) {
+        [self logInAppUserID:arguments[@"appUserID"] result:result];
     } else if ([@"identify" isEqualToString:call.method]) {
         [self identify:arguments[@"appUserID"] result:result];
     } else if ([@"createAlias" isEqualToString:call.method]) {
@@ -164,8 +174,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
-                result:(FlutterResult)result
-{
+                result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
     }
@@ -184,24 +193,24 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 }
 
 - (void)setAllowSharingStoreAccount:(BOOL)allowSharingStoreAccount
-                             result:(FlutterResult)result
-{
+                             result:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality setAllowSharingStoreAccount:allowSharingStoreAccount];
+#pragma GCC diagnostic pop
     result(nil);
 }
 
 - (void)setFinishTransactions:(BOOL)finishTransactions
-                       result:(FlutterResult)result
-{
+                       result:(FlutterResult)result {
     [RCCommonFunctionality setFinishTransactions:finishTransactions];
     result(nil);
 }
 
 - (void)addAttributionData:(NSDictionary *)data
                fromNetwork:(NSInteger)network
-          forNetworkUserId:(NSString *_Nullable)networkUserId
-                    result:(FlutterResult)result
-{
+          forNetworkUserId:(NSString * _Nullable)networkUserId
+                    result:(FlutterResult)result {
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality addAttributionData:data network:network networkUserId:networkUserId];
@@ -209,14 +218,12 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 #pragma GCC diagnostic pop
 }
 
-- (void)getOfferingsWithResult:(FlutterResult)result
-{
+- (void)getOfferingsWithResult:(FlutterResult)result {
     [RCCommonFunctionality getOfferingsWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)getProductInfo:(NSArray *)products
-                result:(FlutterResult)result
-{
+                result:(FlutterResult)result {
     [RCCommonFunctionality getProductInfo:products completionBlock:^(NSArray<NSDictionary *> *productObjects) {
         result(productObjects);
     }];
@@ -224,8 +231,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
 
 - (void)purchaseProduct:(NSString *)productIdentifier
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
-                 result:(FlutterResult)result
-{
+                 result:(FlutterResult)result {
     [RCCommonFunctionality purchaseProduct:productIdentifier
                    signedDiscountTimestamp:discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
@@ -234,100 +240,103 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)purchasePackage:(NSString *)packageIdentifier
                offering:(NSString *)offeringIdentifier
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
-                 result:(FlutterResult)result
-{
+                 result:(FlutterResult)result {
     [RCCommonFunctionality purchasePackage:packageIdentifier
                                   offering:offeringIdentifier
                    signedDiscountTimestamp:discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
-- (void)restoreTransactionsWithResult:(FlutterResult)result
-{
+- (void)restoreTransactionsWithResult:(FlutterResult)result {
     [RCCommonFunctionality restoreTransactionsWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
-- (void)syncPurchasesWithResult:(FlutterResult)result
-{
+- (void)syncPurchasesWithResult:(FlutterResult)result {
     [RCCommonFunctionality syncPurchasesWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
-- (void)getAppUserIDWithResult:(FlutterResult)result
-{
+- (void)getAppUserIDWithResult:(FlutterResult)result {
     result([RCCommonFunctionality appUserID]);
 }
 
-- (void)createAlias:(NSString *_Nullable)newAppUserID
-             result:(FlutterResult)result
-{
+- (void)createAlias:(NSString * _Nullable)newAppUserID
+             result:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality createAlias:newAppUserID completionBlock:[self getResponseCompletionBlock:result]];
+#pragma GCC diagnostic pop
 }
 
-- (void)identify:(NSString *_Nullable)appUserID
-          result:(FlutterResult)result
-{
+- (void)logInAppUserID:(NSString * _Nullable)appUserID
+                result:(FlutterResult)result {
+    [RCCommonFunctionality logInWithAppUserID:appUserID completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)identify:(NSString * _Nullable)appUserID
+          result:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality identify:appUserID completionBlock:[self getResponseCompletionBlock:result]];
+#pragma GCC diagnostic pop
 }
 
-- (void)resetWithResult:(FlutterResult)result
-{
+- (void)resetWithResult:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality resetWithCompletionBlock:[self getResponseCompletionBlock:result]];
+#pragma GCC diagnostic pop
+}
+
+- (void)logOutWithResult:(FlutterResult)result {
+    [RCCommonFunctionality logOutWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)setDebugLogsEnabled:(BOOL)enabled
-                     result:(FlutterResult)result
-{
+                     result:(FlutterResult)result {
     [RCCommonFunctionality setDebugLogsEnabled:enabled];
     result(nil);
 }
 
 - (void)setProxyURLString:(nullable NSString *)proxyURLString
-                   result:(FlutterResult)result
-{
+                   result:(FlutterResult)result {
     [RCCommonFunctionality setProxyURLString:proxyURLString];
     result(nil);
 }
 
 - (void)setSimulatesAskToBuyInSandbox:(BOOL)enabled
-                               result:(FlutterResult)result
-{
+                               result:(FlutterResult)result {
     [RCCommonFunctionality setSimulatesAskToBuyInSandbox:enabled];
     result(nil);
 }
 
-- (void)getPurchaserInfoWithResult:(FlutterResult)result
-{
+- (void)getPurchaserInfoWithResult:(FlutterResult)result {
     [RCCommonFunctionality getPurchaserInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
-                                                 result:(FlutterResult)result
-{
+                                                 result:(FlutterResult)result {
     [RCCommonFunctionality setAutomaticAppleSearchAdsAttributionCollection:enabled];
     result(nil);
 }
 
-- (void)isAnonymousWithResult:(FlutterResult)result
-{
+- (void)isAnonymousWithResult:(FlutterResult)result {
     result(@([RCCommonFunctionality isAnonymous]));
 }
 
 - (void)checkTrialOrIntroductoryPriceEligibility:(NSArray *)products
-                                          result:(FlutterResult)result
-{
-    [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products completionBlock:^(NSDictionary<NSString *,NSDictionary *> * _Nonnull responseDictionary) {
-        result([NSDictionary dictionaryWithDictionary:responseDictionary]);
-    }];
+                                          result:(FlutterResult)result {
+    [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products
+                                                    completionBlock:^(NSDictionary<NSString *, NSDictionary *> *_Nonnull responseDictionary) {
+                                                        result([NSDictionary dictionaryWithDictionary:responseDictionary]);
+                                                    }];
 }
 
-- (void)invalidatePurchaserInfoCacheWithResult:(FlutterResult)result
-{
+- (void)invalidatePurchaserInfoCacheWithResult:(FlutterResult)result {
     [RCCommonFunctionality invalidatePurchaserInfoCache];
     result(nil);
 }
 
-- (void)presentCodeRedemptionSheetWithResult:(FlutterResult)result
-{
+- (void)presentCodeRedemptionSheetWithResult:(FlutterResult)result {
 #if TARGET_OS_IOS
     if (@available(iOS 14.0, *)) {
         [RCCommonFunctionality presentCodeRedemptionSheet];
@@ -342,134 +351,114 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 #pragma mark Subscriber Attributes
 
-- (void)setAttributes:(NSDictionary *)attributes result:(FlutterResult)result
-{
+- (void)setAttributes:(NSDictionary *)attributes result:(FlutterResult)result {
     [RCCommonFunctionality setAttributes:attributes];
     result(nil);
 }
 
-- (void)setEmail:(NSString *)email result:(FlutterResult)result
-{
+- (void)setEmail:(NSString *)email result:(FlutterResult)result {
     [RCCommonFunctionality setEmail:email];
     result(nil);
 }
 
-- (void)setPhoneNumber:(NSString *)phoneNumber result:(FlutterResult)result
-{
+- (void)setPhoneNumber:(NSString *)phoneNumber result:(FlutterResult)result {
     [RCCommonFunctionality setPhoneNumber:phoneNumber];
     result(nil);
 }
 
-- (void)setDisplayName:(NSString *)displayName result:(FlutterResult)result
-{
+- (void)setDisplayName:(NSString *)displayName result:(FlutterResult)result {
     [RCCommonFunctionality setDisplayName:displayName];
     result(nil);
 }
 
-- (void)setPushToken:(NSString *)pushToken result:(FlutterResult)result
-{
+- (void)setPushToken:(NSString *)pushToken result:(FlutterResult)result {
     [RCCommonFunctionality setPushToken:pushToken];
     result(nil);
 }
 
-- (void)setAdjustID:(nullable NSString *)adjustID result:(FlutterResult)result
-{
+- (void)setAdjustID:(nullable NSString *)adjustID result:(FlutterResult)result {
     [RCCommonFunctionality setAdjustID:adjustID];
     result(nil);
 }
 
-- (void)setAppsflyerID:(nullable NSString *)appsflyerID result:(FlutterResult)result
-{
+- (void)setAppsflyerID:(nullable NSString *)appsflyerID result:(FlutterResult)result {
     [RCCommonFunctionality setAppsflyerID:appsflyerID];
     result(nil);
 }
 
-- (void)setFBAnonymousID:(nullable NSString *)fbAnonymousID result:(FlutterResult)result
-{
+- (void)setFBAnonymousID:(nullable NSString *)fbAnonymousID result:(FlutterResult)result {
     [RCCommonFunctionality setFBAnonymousID:fbAnonymousID];
     result(nil);
 }
 
-- (void)setMparticleID:(nullable NSString *)mparticleID result:(FlutterResult)result
-{
+- (void)setMparticleID:(nullable NSString *)mparticleID result:(FlutterResult)result {
     [RCCommonFunctionality setMparticleID:mparticleID];
     result(nil);
 }
 
-- (void)setOnesignalID:(nullable NSString *)onesignalID result:(FlutterResult)result
-{
+- (void)setOnesignalID:(nullable NSString *)onesignalID result:(FlutterResult)result {
     [RCCommonFunctionality setOnesignalID:onesignalID];
     result(nil);
 }
 
-- (void)setMediaSource:(nullable NSString *)mediaSource result:(FlutterResult)result
-{
+- (void)setMediaSource:(nullable NSString *)mediaSource result:(FlutterResult)result {
     [RCCommonFunctionality setMediaSource:mediaSource];
     result(nil);
 }
 
-- (void)setCampaign:(nullable NSString *)campaign result:(FlutterResult)result
-{
+- (void)setCampaign:(nullable NSString *)campaign result:(FlutterResult)result {
     [RCCommonFunctionality setCampaign:campaign];
     result(nil);
 }
 
-- (void)setAdGroup:(nullable NSString *)adGroup result:(FlutterResult)result
-{
+- (void)setAdGroup:(nullable NSString *)adGroup result:(FlutterResult)result {
     [RCCommonFunctionality setAdGroup:adGroup];
     result(nil);
 }
 
-- (void)setAd:(nullable NSString *)ad result:(FlutterResult)result
-{
+- (void)setAd:(nullable NSString *)ad result:(FlutterResult)result {
     [RCCommonFunctionality setAd:ad];
     result(nil);
 }
 
-- (void)setKeyword:(nullable NSString *)keyword result:(FlutterResult)result
-{
+- (void)setKeyword:(nullable NSString *)keyword result:(FlutterResult)result {
     [RCCommonFunctionality setKeyword:keyword];
     result(nil);
 }
 
-- (void)setCreative:(nullable NSString *)creative result:(FlutterResult)result
-{
+- (void)setCreative:(nullable NSString *)creative result:(FlutterResult)result {
     [RCCommonFunctionality setCreative:creative];
     result(nil);
 }
 
-- (void)canMakePaymentsWithFeatures:(NSArray <NSNumber *>*)features result:(FlutterResult)result
-{
-    result(@([RCCommonFunctionality canMakePaymentsWithFeatures:features]));
-}
-
-- (void)collectDeviceIdentifiersWithResult:(FlutterResult)result
-{
+- (void)collectDeviceIdentifiersWithResult:(FlutterResult)result {
     [RCCommonFunctionality collectDeviceIdentifiers];
     result(nil);
 }
 
-- (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier
-                         discountIdentifier:(nullable NSString *)discountIdentifier
-                                     result:(FlutterResult)result
-{
-    [RCCommonFunctionality paymentDiscountForProductIdentifier:productIdentifier
-                                                      discount:discountIdentifier
-                                               completionBlock:^(NSDictionary *_Nullable responseDictionary, RCErrorContainer *_Nullable error) {
-        if (error) {
-            [self rejectWithResult:result error:error];
-        } else {
-            result(responseDictionary);
-        }
-    }];
+- (void)canMakePaymentsWithFeatures:(NSArray <NSNumber *>*)features result:(FlutterResult)result {
+    result(@([RCCommonFunctionality canMakePaymentsWithFeatures:features]));
 }
 
+- (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier
+                         discountIdentifier:(nullable NSString *)discountIdentifier
+                                     result:(FlutterResult)result {
+    [RCCommonFunctionality paymentDiscountForProductIdentifier:productIdentifier
+                                                      discount:discountIdentifier
+                                               completionBlock:^(NSDictionary * _Nullable responseDictionary,
+                                                                 RCErrorContainer * _Nullable error) {
+                                                   if (error) {
+                                                       [self rejectWithResult:result error:error];
+                                                   } else {
+                                                       result(responseDictionary);
+                                                   }
+                                               }];
+}
 
 #pragma mark -
 #pragma mark Delegate Methods
 
-- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo
-{
+- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo {
     [self.channel invokeMethod:RNPurchasesPurchaserInfoUpdatedEvent
                      arguments:purchaserInfo.dictionary];
 }
@@ -477,25 +466,23 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark -
 #pragma mark Helper Methods
 
-- (void)rejectWithResult:(FlutterResult)result error:(RCErrorContainer *)errorContainer
-{
+- (void)rejectWithResult:(FlutterResult)result error:(RCErrorContainer *)errorContainer {
     result([FlutterError errorWithCode:[NSString stringWithFormat:@"%ld", (long) errorContainer.code]
                                message:errorContainer.message
                                details:errorContainer.info]);
 }
 
-- (void (^)(NSDictionary *, RCErrorContainer *))getResponseCompletionBlock:(FlutterResult)result
-{
-    return ^(NSDictionary *_Nullable purchaserInfoDictionary, RCErrorContainer *_Nullable error) {
+- (void (^)(NSDictionary *, RCErrorContainer *))getResponseCompletionBlock:(FlutterResult)result {
+    return ^(NSDictionary * _Nullable resultDictionary, RCErrorContainer * _Nullable error) {
         if (error) {
             [self rejectWithResult:result error:error];
         } else {
-            result(purchaserInfoDictionary);
+            result(resultDictionary);
         }
     };
 }
 
-- (NSString *)platformFlavor { 
+- (NSString *)platformFlavor {
     return @"flutter";
 }
 

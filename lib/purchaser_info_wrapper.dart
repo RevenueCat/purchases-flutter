@@ -1,5 +1,6 @@
 import 'package:purchases_flutter/entitlement_infos_wrapper.dart';
 import 'package:purchases_flutter/transaction.dart';
+import 'package:collection/collection.dart';
 
 /// Class containing all information regarding the purchaser
 class PurchaserInfo {
@@ -98,5 +99,29 @@ class PurchaserInfo {
         'managementURL: $managementURL, '
         'nonSubscriptionTransactions: $nonSubscriptionTransactions'
         '}';
+  }
+
+  @override
+  bool operator ==(other) {
+    if (!(other is PurchaserInfo)) {
+      return false;
+    }
+    final mapEq = MapEquality().equals;
+    final listEq = ListEquality().equals;
+    return (this.entitlements == other.entitlements &&
+        this.latestExpirationDate == other.latestExpirationDate &&
+        mapEq(this.allExpirationDates, other.allExpirationDates) &&
+        mapEq(this.allPurchaseDates, other.allPurchaseDates) &&
+        listEq(this.activeSubscriptions, other.activeSubscriptions) &&
+        listEq(this.allPurchasedProductIdentifiers,
+            other.allPurchasedProductIdentifiers) &&
+        listEq(this.nonSubscriptionTransactions,
+            other.nonSubscriptionTransactions) &&
+        this.firstSeen == other.firstSeen &&
+        this.originalAppUserId == other.originalAppUserId &&
+        this.requestDate == other.requestDate &&
+        this.originalPurchaseDate == other.originalPurchaseDate &&
+        this.originalApplicationVersion == other.originalApplicationVersion &&
+        this.managementURL == other.managementURL);
   }
 }

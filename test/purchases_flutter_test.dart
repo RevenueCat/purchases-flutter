@@ -10,6 +10,20 @@ void main() {
   const MethodChannel channel = MethodChannel('purchases_flutter');
   final List<MethodCall> log = <MethodCall>[];
   dynamic response;
+  final randomGenerator = Random(DateTime.now().microsecondsSinceEpoch);
+  var mockPurchaserInfoResponse = {
+    "originalAppUserId": "pepe",
+    "entitlements": {"all": {}, "active": {}},
+    "activeSubscriptions": [],
+    "latestExpirationDate": "2021-04-09T14:48:00.000Z",
+    "allExpirationDates": {},
+    "allPurchasedProductIdentifiers": [],
+    "firstSeen": "2021-01-09T14:48:00.000Z",
+    "requestDate": "2021-04-09T14:48:00.000Z",
+    "allPurchaseDates": {},
+    "originalApplicationVersion": "1.2.3",
+    "nonSubscriptionTransactions": []
+  };
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {
@@ -134,5 +148,31 @@ void main() {
         'features': [0, 4, 3, 1, 2]
       })
     ]);
+  });
+
+  test('logIn calls successfully', () async {
+    try {
+      var mockCreated = randomGenerator.nextBool();
+      response = {
+        "created": mockCreated,
+        "purchaserInfo": mockPurchaserInfoResponse
+      };
+      LogInResult logInResult = await Purchases.logIn("appUserID");
+      expect(logInResult.purchaserInfo,
+          PurchaserInfo.fromJson(mockPurchaserInfoResponse));
+      expect(logInResult.created, mockCreated);
+    } on PlatformException catch (e) {
+      fail("there was an exception " + e.toString());
+    }
+  });
+
+  test('logOut calls successfully', () async {
+    try {
+      response = mockPurchaserInfoResponse;
+      PurchaserInfo purchaserInfo = await Purchases.logOut();
+      expect(purchaserInfo, PurchaserInfo.fromJson(mockPurchaserInfoResponse));
+    } on PlatformException catch (e) {
+      fail("there was an exception " + e.toString());
+    }
   });
 }

@@ -189,6 +189,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String newAppUserID = call.argument("newAppUserID");
                 createAlias(newAppUserID, result);
                 break;
+            case "logIn":
+                String appUserIDToLogIn = call.argument("appUserID");
+                logIn(appUserIDToLogIn, result);
+                break;
+            case "logOut":
+                logOut(result);
+                break;
             case "setDebugLogsEnabled":
                 boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
                 setDebugLogsEnabled(enabled, result);
@@ -415,6 +422,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void identify(String appUserID, final Result result) {
         CommonKt.identify(appUserID, getOnResult(result));
+    }
+
+    private void logOut(final Result result) {
+        CommonKt.logOut(getOnResult(result));
+    }
+
+    private void logIn(String appUserID, final Result result) {
+        CommonKt.logIn(appUserID, getOnResult(result));
     }
 
     private void createAlias(String newAppUserID, final Result result) {
