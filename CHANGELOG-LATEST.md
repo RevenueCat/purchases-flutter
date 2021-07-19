@@ -14,6 +14,6 @@ Detailed docs about the new system are available [here](https://docs.revenuecat.
 - deprecates `createAlias` in favor of `logIn`.
 - deprecates `identify` in favor of `logIn`.
 - deprecates `reset` in favor of `logOut`.
-- deprecates `setAllowSharingStoreAccount` in favor of dashboard-side configuration.,
+- deprecates `setAllowSharingStoreAccount` in favor of dashboard-side configuration.
 
     https://github.com/RevenueCat/purchases-flutter/pull/180
