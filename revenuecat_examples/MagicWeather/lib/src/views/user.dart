@@ -36,7 +36,7 @@ class _UserScreenState extends State<UserScreen> {
       if (task == "login") {
         await Purchases.logIn(newAppUserID);
       } else if (task == "logout") {
-        await Purchases.reset();
+        await Purchases.logOut();
       } else if (task == "restore") {
         await Purchases.restoreTransactions();
       }
