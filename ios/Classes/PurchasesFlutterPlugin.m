@@ -261,7 +261,10 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)createAlias:(NSString * _Nullable)newAppUserID
              result:(FlutterResult)result {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality createAlias:newAppUserID completionBlock:[self getResponseCompletionBlock:result]];
+#pragma GCC diagnostic pop
 }
 
 - (void)logInAppUserID:(NSString * _Nullable)appUserID
