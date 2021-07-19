@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'dart:math';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
