@@ -19,7 +19,7 @@ Detailed docs about the new system are available [here](https://docs.revenuecat.
 
 #### Other
 - Bumped purchases-ios to 3.12.2 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases/3.12.2)
-- Bumped purchases-android to 4.3.0 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/4.3.0)
+- Bumped purchases-android to 4.3.0 [Changelog here](https://github.com/RevenueCat/purchases-android/releases/4.3.0)
 
 ## 3.3.1
 - Update MacOS dependency on PurchasesHybridCommon to 1.7.1 (https://github.com/RevenueCat/purchases-flutter/pull/209)
