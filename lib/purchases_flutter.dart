@@ -248,6 +248,7 @@ class Purchases {
     return await _channel.invokeMethod('getAppUserID') as String;
   }
 
+  /// Deprecated in favor of logIn.
   /// This function will alias two appUserIDs together.
   ///
   /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
@@ -255,6 +256,7 @@ class Purchases {
   ///
   /// [newAppUserID] The new appUserID that should be linked to the currently
   /// identified appUserID.
+  @Deprecated("Use logIn instead.")
   static Future<PurchaserInfo> createAlias(String newAppUserID) async {
     Map<dynamic, dynamic> result = await _channel
         .invokeMethod('createAlias', {'newAppUserID': newAppUserID});
