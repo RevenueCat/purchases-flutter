@@ -175,4 +175,32 @@ void main() {
       fail("there was an exception " + e.toString());
     }
   });
+
+  test('errors are mapped correctly', () { 
+    assert(PurchasesErrorCode.unknownError.index == 0);
+    assert(PurchasesErrorCode.purchaseCancelledError.index == 1);
+    assert(PurchasesErrorCode.storeProblemError.index == 2);
+    assert(PurchasesErrorCode.purchaseNotAllowedError.index == 3);
+    assert(PurchasesErrorCode.purchaseInvalidError.index == 4);
+    assert(PurchasesErrorCode.productNotAvailableForPurchaseError.index == 5);
+    assert(PurchasesErrorCode.productAlreadyPurchasedError.index == 6);
+    assert(PurchasesErrorCode.receiptAlreadyInUseError.index == 7);
+    assert(PurchasesErrorCode.invalidReceiptError.index == 8);
+    assert(PurchasesErrorCode.missingReceiptFileError.index == 9);
+    assert(PurchasesErrorCode.networkError.index == 10);
+    assert(PurchasesErrorCode.invalidCredentialsError.index == 11);
+    assert(PurchasesErrorCode.unexpectedBackendResponseError.index == 12);
+    assert(PurchasesErrorCode.receiptInUseByOtherSubscriberError.index == 13);
+    assert(PurchasesErrorCode.invalidAppUserIdError.index == 14);
+    assert(PurchasesErrorCode.operationAlreadyInProgressError.index == 15);
+    assert(PurchasesErrorCode.unknownBackendError.index == 16);
+    assert(PurchasesErrorCode.invalidAppleSubscriptionKeyError.index == 17);
+    assert(PurchasesErrorCode.ineligibleError.index == 18);
+    assert(PurchasesErrorCode.insufficientPermissionsError.index == 19);
+    assert(PurchasesErrorCode.paymentPendingError.index == 20);
+    assert(PurchasesErrorCode.invalidSubscriberAttributesError.index == 21);
+    assert(PurchasesErrorCode.logOutWithAnonymousUserError.index == 22);
+    assert(PurchasesErrorCode.configurationError.index == 23);
+    assert(PurchasesErrorCode.unsupportedError.index == 24);
+  })
 }
