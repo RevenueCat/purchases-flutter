@@ -41,9 +41,6 @@ enum PurchasesErrorCode {
   /// Received malformed response from the backend.
   unexpectedBackendResponseError,
 
-  /// There is already another active subscriber using the same receipt.
-  receiptInUseByOtherSubscriberError,
-
   /// The app user id is not valid.
   invalidAppUserIdError,
 
@@ -70,6 +67,15 @@ enum PurchasesErrorCode {
 
   /// One or more of the attributes sent could not be saved.
   invalidSubscriberAttributesError
+
+  /// Called logOut but the current user is anonymous.
+  logOutWithAnonymousUserError,
+
+  /// There is an issue with your configuration. Check the underlying error for more details.
+  configurationError
+
+  ///  There was a problem with the operation. Looks like we doesn't support that yet. Check the underlying error for more details.
+  UnsupportedError
 }
 
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
