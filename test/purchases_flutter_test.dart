@@ -230,5 +230,6 @@ void main() {
     expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '22')), PurchasesErrorCode.logOutWithAnonymousUserError);
     expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '23')), PurchasesErrorCode.configurationError);
     expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '24')), PurchasesErrorCode.unsupportedError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '25')), PurchasesErrorCode.unknownError);
   });
 }
