@@ -69,7 +69,17 @@ enum PurchasesErrorCode {
   paymentPendingError,
 
   /// One or more of the attributes sent could not be saved.
-  invalidSubscriberAttributesError
+  invalidSubscriberAttributesError,
+
+  /// Called logOut but the current user is anonymous.
+  logOutWithAnonymousUserError,
+
+  /// There is an issue with your configuration. Check the underlying error for more details.
+  configurationError,
+
+  /// There was a problem with the operation. Looks like we doesn't support that yet.
+  /// Check the underlying error for more details.
+  unsupportedError,
 }
 
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
