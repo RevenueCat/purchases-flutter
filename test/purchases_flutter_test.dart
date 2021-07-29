@@ -205,31 +205,57 @@ void main() {
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '0')), PurchasesErrorCode.unknownError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '1')), PurchasesErrorCode.purchaseCancelledError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '2')), PurchasesErrorCode.storeProblemError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '3')), PurchasesErrorCode.purchaseNotAllowedError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '4')), PurchasesErrorCode.purchaseInvalidError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '5')), PurchasesErrorCode.productNotAvailableForPurchaseError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '6')), PurchasesErrorCode.productAlreadyPurchasedError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '7')), PurchasesErrorCode.receiptAlreadyInUseError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '8')), PurchasesErrorCode.invalidReceiptError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '9')), PurchasesErrorCode.missingReceiptFileError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '10')), PurchasesErrorCode.networkError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '11')), PurchasesErrorCode.invalidCredentialsError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '12')), PurchasesErrorCode.unexpectedBackendResponseError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '13')), PurchasesErrorCode.receiptInUseByOtherSubscriberError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '14')), PurchasesErrorCode.invalidAppUserIdError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '15')), PurchasesErrorCode.operationAlreadyInProgressError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '16')), PurchasesErrorCode.unknownBackendError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '17')), PurchasesErrorCode.invalidAppleSubscriptionKeyError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '18')), PurchasesErrorCode.ineligibleError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '19')), PurchasesErrorCode.insufficientPermissionsError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '20')), PurchasesErrorCode.paymentPendingError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '21')), PurchasesErrorCode.invalidSubscriberAttributesError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '22')), PurchasesErrorCode.logOutWithAnonymousUserError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '23')), PurchasesErrorCode.configurationError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '24')), PurchasesErrorCode.unsupportedError);
-    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '25')), PurchasesErrorCode.unknownError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '0')),
+        PurchasesErrorCode.unknownError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '1')),
+        PurchasesErrorCode.purchaseCancelledError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '2')),
+        PurchasesErrorCode.storeProblemError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '3')),
+        PurchasesErrorCode.purchaseNotAllowedError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '4')),
+        PurchasesErrorCode.purchaseInvalidError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '5')),
+        PurchasesErrorCode.productNotAvailableForPurchaseError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '6')),
+        PurchasesErrorCode.productAlreadyPurchasedError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '7')),
+        PurchasesErrorCode.receiptAlreadyInUseError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '8')),
+        PurchasesErrorCode.invalidReceiptError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '9')),
+        PurchasesErrorCode.missingReceiptFileError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '10')),
+        PurchasesErrorCode.networkError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '11')),
+        PurchasesErrorCode.invalidCredentialsError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '12')),
+        PurchasesErrorCode.unexpectedBackendResponseError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '13')),
+        PurchasesErrorCode.receiptInUseByOtherSubscriberError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '14')),
+        PurchasesErrorCode.invalidAppUserIdError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '15')),
+        PurchasesErrorCode.operationAlreadyInProgressError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '16')),
+        PurchasesErrorCode.unknownBackendError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '17')),
+        PurchasesErrorCode.invalidAppleSubscriptionKeyError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '18')),
+        PurchasesErrorCode.ineligibleError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '19')),
+        PurchasesErrorCode.insufficientPermissionsError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '20')),
+        PurchasesErrorCode.paymentPendingError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '21')),
+        PurchasesErrorCode.invalidSubscriberAttributesError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '22')),
+        PurchasesErrorCode.logOutWithAnonymousUserError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '23')),
+        PurchasesErrorCode.configurationError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '24')),
+        PurchasesErrorCode.unsupportedError);
+    expect(PurchasesErrorHelper.getErrorCode(PlatformException(code: '25')),
+        PurchasesErrorCode.unknownError);
   });
 }
