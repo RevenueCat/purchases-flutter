@@ -314,7 +314,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             result.success(null);
         } else {
             result.error(
-                    String.valueOf(PurchasesErrorCode.UnknownError.ordinal()),
+                    String.valueOf(PurchasesErrorCode.UnknownError.getCode()),
                     "Purchases can't be setup. There is no Application context",
                     null);
         }
