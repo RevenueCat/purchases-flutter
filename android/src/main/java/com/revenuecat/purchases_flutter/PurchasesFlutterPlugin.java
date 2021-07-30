@@ -55,7 +55,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "3.4.0";
+    private static final String PLUGIN_VERSION = "3.4.1";
 
     /**
      * Plugin registration.
@@ -322,7 +322,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             result.success(null);
         } else {
             result.error(
-                    String.valueOf(PurchasesErrorCode.UnknownError.ordinal()),
+                    String.valueOf(PurchasesErrorCode.UnknownError.getCode()),
                     "Purchases can't be setup. There is no Application context",
                     null);
         }
