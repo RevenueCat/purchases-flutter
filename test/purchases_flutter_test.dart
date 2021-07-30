@@ -49,7 +49,8 @@ void main() {
             'apiKey': 'api_key',
             'appUserId': 'cesar',
             'observerMode': true,
-            'userDefaultsSuiteName': null
+            'userDefaultsSuiteName': null,
+            'useAmazon': false
           },
         )
       ],
@@ -174,5 +175,24 @@ void main() {
     } on PlatformException catch (e) {
       fail("there was an exception " + e.toString());
     }
+  });
+
+  test('setupPurchases with amazon', () async {
+    await Purchases.setup('api_key', appUserId: 'cesar', observerMode: true, useAmazon: true);
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
   });
 }
