@@ -47,6 +47,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
 
     // Only set registrar for v1 embedder.
+    @SuppressWarnings("deprecation")
     private PluginRegistry.Registrar registrar;
     // Only set activity for v2 embedder. Always access activity from getActivity() method.
     @Nullable private Context applicationContext;
@@ -59,6 +60,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     /**
      * Plugin registration.
      */
+    @SuppressWarnings("deprecation")
     public static void registerWith(Registrar registrar) {
         PurchasesFlutterPlugin instance = new PurchasesFlutterPlugin();
         instance.onAttachedToEngine(registrar.messenger(), registrar.context());
@@ -343,6 +345,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
+    @SuppressWarnings("deprecation")
     private void setAllowSharingAppStoreAccount(@Nullable Boolean allowSharingAppStoreAccount, Result result) {
         if (allowSharingAppStoreAccount != null) {
             CommonKt.setAllowSharingAppStoreAccount(allowSharingAppStoreAccount);
@@ -416,10 +419,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         CommonKt.restoreTransactions(getOnResult(result));
     }
 
+    @SuppressWarnings("deprecation")
     private void reset(final Result result) {
         CommonKt.reset(getOnResult(result));
     }
 
+    @SuppressWarnings("deprecation")
     private void identify(String appUserID, final Result result) {
         CommonKt.identify(appUserID, getOnResult(result));
     }
@@ -432,6 +437,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         CommonKt.logIn(appUserID, getOnResult(result));
     }
 
+    @SuppressWarnings("deprecation")
     private void createAlias(String newAppUserID, final Result result) {
         CommonKt.createAlias(newAppUserID, getOnResult(result));
     }
