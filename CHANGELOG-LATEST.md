@@ -1,5 +1,6 @@
-## 3.4.1
+## 3.4.2
 
-- Fixed a bug where the wrong error code would be returned when mapping to JSON in Android. 
-- Bumped `purchases-hybrid-common` to 1.8.1. [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/1.8.1)
-    https://github.com/RevenueCat/purchases-flutter/pull/225
+- Fixed deprecation warnings for types used for compatibility with Flutter apps using Flutter < 1.12.
+    https://github.com/RevenueCat/purchases-flutter/pull/232
+- Bumped `purchases-hybrid-common` to 1.8.2. [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/1.8.2)
+    https://github.com/RevenueCat/purchases-flutter/pull/233
