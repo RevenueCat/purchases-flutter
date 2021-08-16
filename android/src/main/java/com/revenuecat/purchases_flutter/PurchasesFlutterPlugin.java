@@ -33,9 +33,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
-import io.flutter.view.FlutterNativeView;
 import kotlin.UninitializedPropertyAccessException;
 
 /**
@@ -48,7 +45,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     // Only set registrar for v1 embedder.
     @SuppressWarnings("deprecation")
-    private PluginRegistry.Registrar registrar;
+    private io.flutter.plugin.common.PluginRegistry.Registrar registrar;
     // Only set activity for v2 embedder. Always access activity from getActivity() method.
     @Nullable private Context applicationContext;
     @Nullable private MethodChannel channel;
@@ -61,13 +58,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
      * Plugin registration.
      */
     @SuppressWarnings("deprecation")
-    public static void registerWith(Registrar registrar) {
+    public static void registerWith(io.flutter.plugin.common.PluginRegistry.Registrar registrar) {
         PurchasesFlutterPlugin instance = new PurchasesFlutterPlugin();
         instance.onAttachedToEngine(registrar.messenger(), registrar.context());
         instance.registrar = registrar;
-        registrar.addViewDestroyListener(new PluginRegistry.ViewDestroyListener() {
+        registrar.addViewDestroyListener(new io.flutter.plugin.common.PluginRegistry.ViewDestroyListener() {
             @Override
-            public boolean onViewDestroy(FlutterNativeView flutterNativeView) {
+            public boolean onViewDestroy(io.flutter.view.FlutterNativeView flutterNativeView) {
                 try {
                     Purchases.getSharedInstance().close();
                 } catch (UninitializedPropertyAccessException e) {
