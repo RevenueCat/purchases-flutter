@@ -1,3 +1,9 @@
+## 3.4.4
+
+- Bumped purchases-android to 4.3.1 [Changelog here](https://github.com/RevenueCat/purchases-android/releases/4.3.1),
+which fixes canMakePayments not returning (see related issue: https://github.com/RevenueCat/purchases-unity/issues/61)
+- Bumped purchases-hybrid-common to 1.9.1 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/tag/1.9.1)
+
 ## 3.4.3
 
 - Fixed more deprecation warnings for types used for compatibility with Flutter apps using Flutter < 1.12.
