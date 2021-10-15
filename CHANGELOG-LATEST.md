@@ -1,5 +1,6 @@
 ## 3.4.6
 
+- Bump`purchases-hybrid-common` to 1.9.2 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/tag/1.9.2)
 - Bump `purchases-android` to `4.3.3`
   [4.3.3 Changelog here](https://github.com/RevenueCat/purchases-android/releases/tag/4.3.3)
   [4.3.2 Changelog here](https://github.com/RevenueCat/purchases-android/releases/tag/4.3.2)
