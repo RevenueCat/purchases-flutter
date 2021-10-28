@@ -589,6 +589,12 @@ class Purchases {
     });
     return PaymentDiscount.fromJson(result);
   }
+
+  /// Android only. Call close when you are done with this instance of Purchases to disconnect
+  /// from the billing services and clean up resources
+  static Future<void> close() async {
+    await _channel.invokeMethod('close');
+  }
 }
 
 /// This class holds the information used when upgrading from another sku.

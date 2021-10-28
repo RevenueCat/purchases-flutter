@@ -88,11 +88,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        try {
-            Purchases.getSharedInstance().close();
-        } catch (UninitializedPropertyAccessException e) {
-            // there's no instance so all good
-        }
         if (channel != null) {
             channel.setMethodCallHandler(null);
         }
@@ -298,6 +293,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "canMakePayments":
                 List<Integer> features = call.argument("features");
                 canMakePayments(features, result);
+                break;
+            case "close":
+                close(result);
                 break;
             default:
                 result.notImplemented();
@@ -574,6 +572,15 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         reject(errorContainer, result);
                     }
                 });
+    }
+
+    private void close(final Result result) {
+        try {
+            Purchases.getSharedInstance().close();
+        } catch (UninitializedPropertyAccessException e) {
+            // there's no instance so all good
+        }
+        result.success(null);
     }
 
     @NotNull
