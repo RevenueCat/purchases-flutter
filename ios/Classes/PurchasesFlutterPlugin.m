@@ -165,6 +165,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self paymentDiscountForProductIdentifier:productIdentifier
                                discountIdentifier:discountIdentifier
                                            result:result];
+    } else if ([@"close" isEqualToString:call.method]) {
+        [self closeWithResult:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -453,6 +455,10 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                        result(responseDictionary);
                                                    }
                                                }];
+}
+
+- (void)closeWithResult:(FlutterResult)result {
+    result(nil);
 }
 
 #pragma mark -
