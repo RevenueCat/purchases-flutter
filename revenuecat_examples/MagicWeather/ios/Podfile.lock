@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - Purchases (3.12.8):
     - PurchasesCoreSwift (= 3.12.8)
-  - purchases_flutter (3.4.7):
+  - purchases_flutter (3.5.0):
     - Flutter
     - PurchasesHybridCommon (= 1.9.3)
   - PurchasesCoreSwift (3.12.8)
