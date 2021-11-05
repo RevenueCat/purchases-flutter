@@ -2,8 +2,10 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
-    - lib/**/*.freezed.dart
-    - lib/**/*.g.dart
+    - lib/models/*.freezed.dart
+    - lib/models/*.g.dart
+    - lib/models/**/*.freezed.dart
+    - lib/models/**/*.g.dart
 
 linter:
   rules:
@@ -38,3 +40,4 @@ linter:
     unnecessary_string_escapes: true
     unnecessary_string_interpolations: true
     unnecessary_this: true
+    invalid_annotation_target: false

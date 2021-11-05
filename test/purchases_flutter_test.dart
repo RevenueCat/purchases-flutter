@@ -179,7 +179,10 @@ void main() {
     try {
       response = mockPurchaserInfoResponse;
       final purchaserInfo = await Purchases.logOut();
-      expect(purchaserInfo, PurchaserInfo.fromJson(mockPurchaserInfoResponse));
+      expect(
+        purchaserInfo,
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+      );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }

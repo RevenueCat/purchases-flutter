@@ -1,4 +1,4 @@
-import 'package:purchases_flutter/entitlement_info_wrapper.dart';
+import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:test/test.dart';
 
 void main() {
