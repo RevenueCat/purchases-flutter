@@ -27,7 +27,7 @@ void main() {
   });
 
   test('unknown store if missing from json', () {
-    final entitlementInfoJson = <String, dynamic>{
+    final entitlementInfoJson = {
       'identifier': 'almost_pro',
       'isActive': true,
       'willRenew': true,
