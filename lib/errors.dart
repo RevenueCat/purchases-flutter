@@ -107,7 +107,7 @@ class PurchasesErrorHelper {
   /// }
   /// ```
   static PurchasesErrorCode getErrorCode(PlatformException e) {
-    var errorCode = int.parse(e.code);
+    final errorCode = int.parse(e.code);
     if (errorCode >= PurchasesErrorCode.values.length) {
       return PurchasesErrorCode.unknownError;
     }

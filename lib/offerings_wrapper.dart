@@ -1,4 +1,4 @@
-import 'package:purchases_flutter/object_wrappers.dart';
+import 'object_wrappers.dart';
 
 /// This class contains all the offerings configured in RevenueCat dashboard.
 /// For more info see https://docs.revenuecat.com/docs/entitlements
@@ -10,19 +10,19 @@ class Offerings {
   final Map<String, Offering> all;
 
   /// Constructs an Offerings object from a JSON object.
-  Offerings.fromJson(Map<dynamic, dynamic> map)
+  Offerings.fromJson(Map<String, dynamic> map)
       : current =
             map['current'] != null ? Offering.fromJson(map['current']) : null,
-        all = (map['all'] as Map<dynamic, dynamic>).map(
-            (key, value) => MapEntry(key as String, Offering.fromJson(value)));
+        all = (map['all'] as Map<String, dynamic>).map(
+          (key, value) => MapEntry(
+            key,
+            Offering.fromJson(value),
+          ),
+        );
 
   /// Retrieves an specific offering by its identifier.
-  Offering? getOffering(String identifier) {
-    return all[identifier];
-  }
+  Offering? getOffering(String identifier) => all[identifier];
 
   @override
-  String toString() {
-    return 'Offerings{current: $current, all: $all}';
-  }
+  String toString() => 'Offerings{current: $current, all: $all}';
 }

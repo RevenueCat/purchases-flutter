@@ -10,17 +10,15 @@ class Transaction {
   final String purchaseDate;
 
   /// Constructs an Transaction from a JSON object
-  Transaction.fromJson(Map<dynamic, dynamic> map)
-      : revenueCatId = map["revenueCatId"],
-        productId = map["productId"],
-        purchaseDate = map["purchaseDate"];
+  Transaction.fromJson(Map<String, dynamic> map)
+      : revenueCatId = map['revenueCatId'],
+        productId = map['productId'],
+        purchaseDate = map['purchaseDate'];
 
   @override
-  String toString() {
-    return 'Transaction{'
-        'revenueCatId: $revenueCatId, '
-        'productId: $productId, '
-        'purchaseDate: $purchaseDate'
-        '}';
-  }
+  String toString() => 'Transaction{'
+      'revenueCatId: $revenueCatId, '
+      'productId: $productId, '
+      'purchaseDate: $purchaseDate'
+      '}';
 }

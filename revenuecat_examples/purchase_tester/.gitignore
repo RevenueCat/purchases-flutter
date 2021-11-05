@@ -17,6 +17,7 @@
 
 # Visual Studio Code related
 .vscode/
+.fvm/
 
 # Flutter/Dart/Pub related
 **/doc/api/

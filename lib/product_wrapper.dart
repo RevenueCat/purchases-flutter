@@ -27,26 +27,25 @@ class Product {
   final List<Discount>? discounts;
 
   /// Constructs a Product from a JSON object.
-  Product.fromJson(Map<dynamic, dynamic> json)
+  Product.fromJson(Map<String, dynamic> json)
       : identifier = json['identifier'],
         description = json['description'],
         title = json['title'],
         priceString = json['price_string'],
-        introductoryPrice = json["intro_price"] != null
+        introductoryPrice = json['intro_price'] != null
             ? IntroductoryPrice.fromJson(json)
             : null,
         currencyCode = json['currency_code'],
         price = json['price'],
-        discounts = json["discounts"] != null
-            ? (json["discounts"] as List<dynamic>)
+        discounts = json['discounts'] != null
+            ? (json['discounts'] as List<dynamic>)
                 .map((item) => Discount.fromJson(item))
                 .toList()
             : null;
 
   @override
-  String toString() {
-    return 'Product{identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice}';
-  }
+  String toString() =>
+      'Product{identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice}';
 }
 
 /// Contains all the introductory information associated with a [Product]
@@ -74,7 +73,7 @@ class IntroductoryPrice {
   final int introPriceCycles;
 
   /// Constructs an IntroductoryPrice from a JSON object.
-  IntroductoryPrice.fromJson(Map<dynamic, dynamic> json)
+  IntroductoryPrice.fromJson(Map<String, dynamic> json)
       : introPrice = json['intro_price'].toDouble(),
         introPriceString = json['intro_price_string'],
         introPricePeriod = json['intro_price_period'],
@@ -84,7 +83,6 @@ class IntroductoryPrice {
         introPriceCycles = json['intro_price_cycles'];
 
   @override
-  String toString() {
-    return 'IntroductoryPrice{introPrice: $introPrice, introPriceString: $introPriceString, introPricePeriod: $introPricePeriod, introPricePeriodUnit: $introPricePeriodUnit, introPricePeriodNumberOfUnits: $introPricePeriodNumberOfUnits, introPriceCycles: $introPriceCycles}';
-  }
+  String toString() =>
+      'IntroductoryPrice{introPrice: $introPrice, introPriceString: $introPriceString, introPricePeriod: $introPricePeriod, introPricePeriodUnit: $introPricePeriodUnit, introPricePeriodNumberOfUnits: $introPricePeriodNumberOfUnits, introPriceCycles: $introPriceCycles}';
 }

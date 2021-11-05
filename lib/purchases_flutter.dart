@@ -9,19 +9,22 @@ export 'object_wrappers.dart';
 
 /// Used to handle async updates from [Purchases].
 /// Should be implemented to receive updates when the [PurchaserInfo] changes.
-typedef void PurchaserInfoUpdateListener(PurchaserInfo purchaserInfo);
+typedef PurchaserInfoUpdateListener = void Function(
+  PurchaserInfo purchaserInfo,
+);
 
 /// Entry point for Purchases.
 class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
-      Set();
+      {};
 
-  static final _channel = MethodChannel('purchases_flutter')
+  static final _channel = const MethodChannel('purchases_flutter')
     ..setMethodCallHandler((MethodCall call) async {
       switch (call.method) {
-        case "Purchases-PurchaserInfoUpdated":
-          _purchaserInfoUpdateListeners.forEach(
-              (listener) => listener(PurchaserInfo.fromJson(call.arguments)));
+        case 'Purchases-PurchaserInfoUpdated':
+          for (final listener in _purchaserInfoUpdateListeners) {
+            listener(PurchaserInfo.fromJson(call.arguments));
+          }
           break;
       }
     });
@@ -40,26 +43,33 @@ class Purchases {
   /// Set this if you would like the RevenueCat SDK to store its preferences in a different
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
-  static Future<void> setup(String apiKey,
-      {String? appUserId,
-      bool observerMode = false,
-      String? userDefaultsSuiteName}) async {
-    return await _channel.invokeMethod('setupPurchases', {
-      'apiKey': apiKey,
-      'appUserId': appUserId,
-      'observerMode': observerMode,
-      'userDefaultsSuiteName': userDefaultsSuiteName
-    });
-  }
+  static Future<void> setup(
+    String apiKey, {
+    String? appUserId,
+    bool observerMode = false,
+    String? userDefaultsSuiteName,
+  }) async =>
+      await _channel.invokeMethod(
+        'setupPurchases',
+        {
+          'apiKey': apiKey,
+          'appUserId': appUserId,
+          'observerMode': observerMode,
+          'userDefaultsSuiteName': userDefaultsSuiteName,
+        },
+      );
 
   // Default to TRUE, set this to FALSE if you are consuming and acknowledging transactions outside of the Purchases SDK.
   ///
   /// [finishTransactions] The value to be passed to finishTransactions.
   ///
-  static Future<void> setFinishTransactions(bool finishTransactions) async {
-    await _channel.invokeMethod(
-        'setFinishTransactions', {'finishTransactions': finishTransactions});
-  }
+  static Future<void> setFinishTransactions(bool finishTransactions) =>
+      _channel.invokeMethod(
+        'setFinishTransactions',
+        {
+          'finishTransactions': finishTransactions,
+        },
+      );
 
   /// Deprecated. Configure behavior through the RevenueCat dashboard instead.
   /// Set this to true if you are passing in an appUserID but it is anonymous.
@@ -68,10 +78,14 @@ class Purchases {
   /// If a user tries to purchase a product that is active on the current app
   /// store account, we will treat it as a restore and alias the new ID with the
   /// previous id.
-  @Deprecated("Configure behavior through the RevenueCat dashboard instead.")
+  @Deprecated('Configure behavior through the RevenueCat dashboard instead.')
   static Future<void> setAllowSharingStoreAccount(bool allowSharing) async {
     await _channel.invokeMethod(
-        'setAllowSharingStoreAccount', {'allowSharing': allowSharing});
+      'setAllowSharingStoreAccount',
+      {
+        'allowSharing': allowSharing,
+      },
+    );
   }
 
   /// Sets a function to be called on updated purchaser info.
@@ -81,17 +95,17 @@ class Purchases {
   ///
   /// [purchaserInfoUpdateListener] PurchaserInfo update listener.
   static void addPurchaserInfoUpdateListener(
-      PurchaserInfoUpdateListener purchaserInfoUpdateListener) async {
-    _purchaserInfoUpdateListeners.add(purchaserInfoUpdateListener);
-  }
+    PurchaserInfoUpdateListener purchaserInfoUpdateListener,
+  ) =>
+      _purchaserInfoUpdateListeners.add(purchaserInfoUpdateListener);
 
   /// Removes a given PurchaserInfoUpdateListener
   ///
   /// [listenerToRemove] PurchaserInfoListener reference of the listener to remove.
   static void removePurchaserInfoUpdateListener(
-      PurchaserInfoUpdateListener listenerToRemove) async {
-    _purchaserInfoUpdateListeners.remove(listenerToRemove);
-  }
+    PurchaserInfoUpdateListener listenerToRemove,
+  ) =>
+      _purchaserInfoUpdateListeners.remove(listenerToRemove);
 
   /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information
@@ -101,10 +115,12 @@ class Purchases {
   /// [network] Which network, see [PurchasesAttributionNetwork].
   ///
   /// [networkUserId] An optional unique id for identifying the user.
-  @Deprecated("Use the set<NetworkId> functions instead.")
+  @Deprecated('Use the set<NetworkId> functions instead.')
   static Future<void> addAttributionData(
-      Map<String, Object> data, PurchasesAttributionNetwork network,
-      {String? networkUserId}) async {
+    Map<String, Object> data,
+    PurchasesAttributionNetwork network, {
+    String? networkUserId,
+  }) async {
     await _channel.invokeMethod('addAttributionData', {
       'data': data,
       'network': network.index,
@@ -121,9 +137,9 @@ class Purchases {
   /// they are needed, your prices are loaded for your purchase flow.
   ///
   /// Time is money.
-  static Future<Offerings> getOfferings() async {
-    return Offerings.fromJson(await _channel.invokeMethod('getOfferings'));
-  }
+  static Future<Offerings> getOfferings() async => Offerings.fromJson(
+        await _channel.invokeMethod('getOfferings'),
+      );
 
   /// Fetch the product info. Returns a list of products or throws an error if
   /// the products are not properly configured in RevenueCat or if there is
@@ -134,10 +150,14 @@ class Purchases {
   /// [type] If the products are Android INAPPs, this needs to be
   /// PurchaseType.INAPP otherwise the products won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  static Future<List<Product>> getProducts(List<String> productIdentifiers,
-      {PurchaseType type = PurchaseType.subs}) async {
-    final List<dynamic> result = await _channel.invokeMethod('getProductInfo',
-        {'productIdentifiers': productIdentifiers, 'type': describeEnum(type)});
+  static Future<List<Product>> getProducts(
+    List<String> productIdentifiers, {
+    PurchaseType type = PurchaseType.subs,
+  }) async {
+    final List<dynamic> result = await _channel.invokeMethod('getProductInfo', {
+      'productIdentifiers': productIdentifiers,
+      'type': describeEnum(type),
+    });
     return result.map<Product>((item) => Product.fromJson(item)).toList();
   }
 
@@ -156,16 +176,19 @@ class Purchases {
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  static Future<PurchaserInfo> purchaseProduct(String productIdentifier,
-      {UpgradeInfo? upgradeInfo, PurchaseType type = PurchaseType.subs}) async {
+  static Future<PurchaserInfo> purchaseProduct(
+    String productIdentifier, {
+    UpgradeInfo? upgradeInfo,
+    PurchaseType type = PurchaseType.subs,
+  }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final response = await _channel.invokeMethod('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode != null ? prorationMode.index : null,
+      'prorationMode': prorationMode?.index,
       'type': describeEnum(type)
     });
-    return PurchaserInfo.fromJson(response["purchaserInfo"]);
+    return PurchaserInfo.fromJson(response['purchaserInfo']);
   }
 
   /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
@@ -178,16 +201,18 @@ class Purchases {
   ///
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
-  static Future<PurchaserInfo> purchasePackage(Package packageToPurchase,
-      {UpgradeInfo? upgradeInfo}) async {
+  static Future<PurchaserInfo> purchasePackage(
+    Package packageToPurchase, {
+    UpgradeInfo? upgradeInfo,
+  }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final response = await _channel.invokeMethod('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode != null ? prorationMode.index : null
+      'prorationMode': prorationMode?.index
     });
-    return PurchaserInfo.fromJson(response["purchaserInfo"]);
+    return PurchaserInfo.fromJson(response['purchaserInfo']);
   }
 
   /// iOS only. Purchase a product applying a given discount.
@@ -203,12 +228,14 @@ class Purchases {
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
   static Future<PurchaserInfo> purchaseDiscountedProduct(
-      Product product, PaymentDiscount discount) async {
+    Product product,
+    PaymentDiscount discount,
+  ) async {
     final response = await _channel.invokeMethod('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return PurchaserInfo.fromJson(response["purchaserInfo"]);
+    return PurchaserInfo.fromJson(response['purchaserInfo']);
   }
 
   /// iOS only. Purchase a package applying a given discount.
@@ -224,13 +251,15 @@ class Purchases {
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
   static Future<PurchaserInfo> purchaseDiscountedPackage(
-      Package packageToPurchase, PaymentDiscount discount) async {
+    Package packageToPurchase,
+    PaymentDiscount discount,
+  ) async {
     final response = await _channel.invokeMethod('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return PurchaserInfo.fromJson(response["purchaserInfo"]);
+    return PurchaserInfo.fromJson(response['purchaserInfo']);
   }
 
   /// Restores a user's previous purchases and links their appUserIDs to any
@@ -244,9 +273,8 @@ class Purchases {
   }
 
   /// Gets the current appUserID.
-  static Future<String> get appUserID async {
-    return await _channel.invokeMethod('getAppUserID') as String;
-  }
+  static Future<String> get appUserID async =>
+      await _channel.invokeMethod('getAppUserID') as String;
 
   /// Deprecated in favor of logIn.
   /// This function will alias two appUserIDs together.
@@ -256,9 +284,9 @@ class Purchases {
   ///
   /// [newAppUserID] The new appUserID that should be linked to the currently
   /// identified appUserID.
-  @Deprecated("Use logIn instead.")
+  @Deprecated('Use logIn instead.')
   static Future<PurchaserInfo> createAlias(String newAppUserID) async {
-    Map<dynamic, dynamic> result = await _channel
+    final Map<String, dynamic> result = await _channel
         .invokeMethod('createAlias', {'newAppUserID': newAppUserID});
     return PurchaserInfo.fromJson(result);
   }
@@ -273,11 +301,10 @@ class Purchases {
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
   static Future<LogInResult> logIn(String appUserID) async {
-    Map<dynamic, dynamic> result =
+    final Map<String, dynamic> result =
         await _channel.invokeMethod('logIn', {'appUserID': appUserID});
-    PurchaserInfo purchaserInfo =
-        PurchaserInfo.fromJson(result["purchaserInfo"]);
-    bool created = result["created"];
+    final purchaserInfo = PurchaserInfo.fromJson(result['purchaserInfo']);
+    final bool created = result['created'];
 
     return LogInResult(purchaserInfo: purchaserInfo, created: created);
   }
@@ -291,9 +318,9 @@ class Purchases {
   /// was a problem restoring transactions.
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
-  @Deprecated("Use logIn instead.")
+  @Deprecated('Use logIn instead.')
   static Future<PurchaserInfo> identify(String appUserID) async {
-    Map<dynamic, dynamic> result =
+    final Map<String, dynamic> result =
         await _channel.invokeMethod('identify', {'appUserID': appUserID});
     return PurchaserInfo.fromJson(result);
   }
@@ -305,7 +332,7 @@ class Purchases {
   /// was a problem restoring transactions or if the method is called while the
   /// current user is anonymous.
   static Future<PurchaserInfo> logOut() async {
-    Map<dynamic, dynamic> result = await _channel.invokeMethod('logOut');
+    final Map<String, dynamic> result = await _channel.invokeMethod('logOut');
     return PurchaserInfo.fromJson(result);
   }
 
@@ -315,38 +342,33 @@ class Purchases {
   ///
   /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
-  @Deprecated("Use logOut instead.")
+  @Deprecated('Use logOut instead.')
   static Future<PurchaserInfo> reset() async {
-    Map<dynamic, dynamic> result = await _channel.invokeMethod('reset');
+    final Map<String, dynamic> result = await _channel.invokeMethod('reset');
     return PurchaserInfo.fromJson(result);
   }
 
   /// Enables/Disables debugs logs
-  static Future<void> setDebugLogsEnabled(bool enabled) async {
-    return await _channel
-        .invokeMethod('setDebugLogsEnabled', {'enabled': enabled});
-  }
+  static Future<void> setDebugLogsEnabled(bool enabled) async =>
+      await _channel.invokeMethod('setDebugLogsEnabled', {'enabled': enabled});
 
   ///
   /// iOS only. Set this property to true *only* when testing the ask-to-buy / SCA purchases flow.
   /// More information: http://errors.rev.cat/ask-to-buy
   ///
-  static Future<void> setSimulatesAskToBuyInSandbox(bool enabled) async {
-    return await _channel
-        .invokeMethod('setSimulatesAskToBuyInSandbox', {'enabled': enabled});
-  }
+  static Future<void> setSimulatesAskToBuyInSandbox(bool enabled) async =>
+      await _channel
+          .invokeMethod('setSimulatesAskToBuyInSandbox', {'enabled': enabled});
 
   ///
   /// Set this property to your proxy URL before configuring Purchases *only* if you've received a proxy key value from your RevenueCat contact.
   ///
-  static Future<void> setProxyURL(String url) async {
-    return await _channel
-        .invokeMethod('setProxyURLString', {'proxyURLString': url});
-  }
+  static Future<void> setProxyURL(String url) async =>
+      await _channel.invokeMethod('setProxyURLString', {'proxyURLString': url});
 
   /// Gets current purchaser info, which will normally be cached.
   static Future<PurchaserInfo> getPurchaserInfo() async {
-    Map<dynamic, dynamic> result =
+    final Map<String, dynamic> result =
         await _channel.invokeMethod('getPurchaserInfo');
     return PurchaserInfo.fromJson(result);
   }
@@ -358,23 +380,22 @@ class Purchases {
   ///
   ///  This method should be called anytime a sync is needed, like after a
   ///  successful purchase.
-  static Future<void> syncPurchases() async {
-    return await _channel.invokeMethod("syncPurchases");
-  }
+  static Future<void> syncPurchases() async =>
+      await _channel.invokeMethod('syncPurchases');
 
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default
   static Future<void> setAutomaticAppleSearchAdsAttributionCollection(
-      bool enabled) async {
-    return await _channel.invokeMethod(
-        'setAutomaticAppleSearchAdsAttributionCollection',
-        {'enabled': enabled});
-  }
+    bool enabled,
+  ) async =>
+      await _channel
+          .invokeMethod('setAutomaticAppleSearchAdsAttributionCollection', {
+        'enabled': enabled,
+      });
 
   /// If the `appUserID` has been generated by RevenueCat
-  static Future<bool> get isAnonymous async {
-    return await _channel.invokeMethod('isAnonymous') as bool;
-  }
+  static Future<bool> get isAnonymous async =>
+      await _channel.invokeMethod('isAnonymous') as bool;
 
   /// iOS only. Computes whether or not a user is eligible for the introductory
   /// pricing period of a given product. You should use this method to determine
@@ -394,12 +415,18 @@ class Purchases {
   /// [productIdentifiers] Array of product identifiers
   static Future<Map<String, IntroEligibility>>
       checkTrialOrIntroductoryPriceEligibility(
-          List<String> productIdentifiers) async {
-    Map<dynamic, dynamic> eligibilityMap = await _channel.invokeMethod(
-        'checkTrialOrIntroductoryPriceEligibility',
-        {'productIdentifiers': productIdentifiers});
-    return eligibilityMap.map((key, value) =>
-        MapEntry(key as String, IntroEligibility.fromJson(value)));
+    List<String> productIdentifiers,
+  ) async {
+    final Map<String, dynamic> eligibilityMap = await _channel
+        .invokeMethod('checkTrialOrIntroductoryPriceEligibility', {
+      'productIdentifiers': productIdentifiers,
+    });
+    return eligibilityMap.map(
+      (key, value) => MapEntry(
+        key,
+        IntroEligibility.fromJson(value),
+      ),
+    );
   }
 
   /// Invalidates the cache for purchaser information.
@@ -410,16 +437,14 @@ class Purchases {
   ///
   /// This is useful for cases where purchaser information might have been updated outside of the app, like if a
   /// promotional subscription is granted through the RevenueCat dashboard.
-  static Future<void> invalidatePurchaserInfoCache() async {
-    return await _channel.invokeMethod('invalidatePurchaserInfoCache');
-  }
+  static Future<void> invalidatePurchaserInfoCache() async =>
+      await _channel.invokeMethod('invalidatePurchaserInfoCache');
 
   /// iOS only. Presents a code redemption sheet, useful for redeeming offer codes
   /// Refer to https://docs.revenuecat.com/docs/ios-subscription-offers#offer-codes for more information on how
   /// to configure and use offer codes
-  static Future<void> presentCodeRedemptionSheet() async {
-    return await _channel.invokeMethod('presentCodeRedemptionSheet');
-  }
+  static Future<void> presentCodeRedemptionSheet() async =>
+      await _channel.invokeMethod('presentCodeRedemptionSheet');
 
   ///================================================================================
   /// Subscriber Attributes
@@ -564,11 +589,13 @@ class Purchases {
   /// For other stores, BillingFeatures won't be checked.
   /// [features] An optional  list of [BillingFeature]s to check for support.
   /// By default, is an empty list and no feature support will be checked.
-  static Future<bool> canMakePayments(
-      [List<BillingFeature> features = const []]) async {
-    return await _channel.invokeMethod(
-        'canMakePayments', {'features': features.map((e) => e.index).toList()});
-  }
+  static Future<bool> canMakePayments([
+    List<BillingFeature> features = const [],
+  ]) async =>
+      await _channel.invokeMethod(
+        'canMakePayments',
+        {'features': features.map((e) => e.index).toList()},
+      );
 
   /// iOS only. Use this function to retrieve the `PurchasesPaymentDiscount`
   /// for a given `PurchasesPackage`.
@@ -581,8 +608,10 @@ class Purchases {
   ///
   /// [discount] The `Discount` to apply to the product.
   static Future<PaymentDiscount> getPaymentDiscount(
-      Product product, Discount discount) async {
-    Map<dynamic, dynamic> result =
+    Product product,
+    Discount discount,
+  ) async {
+    final Map<String, dynamic> result =
         await _channel.invokeMethod('getPaymentDiscount', {
       'productIdentifier': product.identifier,
       'discountIdentifier': discount.identifier
@@ -708,9 +737,9 @@ class IntroEligibility {
   String description;
 
   /// Constructs an Transaction from a JSON object
-  IntroEligibility.fromJson(Map<dynamic, dynamic> map)
-      : status = IntroEligibilityStatus.values[map["status"]],
-        description = map["description"];
+  IntroEligibility.fromJson(Map<String, dynamic> map)
+      : status = IntroEligibilityStatus.values[map['status']],
+        description = map['description'];
 }
 
 /// Class used to hold the result of the logIn method

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:magic_weather_flutter/src/constant.dart';
+import 'package:flutter/services.dart';
+import 'package:magic_weather_flutter/src/components/native_dialog.dart';
 import 'package:magic_weather_flutter/src/components/top_bar.dart';
+import 'package:magic_weather_flutter/src/constant.dart';
 import 'package:magic_weather_flutter/src/model/singletons_data.dart';
 import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'package:magic_weather_flutter/src/model/weather_data.dart';
-import 'package:purchases_flutter/object_wrappers.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:flutter/services.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:magic_weather_flutter/src/views/paywall.dart';
-import 'package:magic_weather_flutter/src/components/native_dialog.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class WeatherScreen extends StatefulWidget {
   @override

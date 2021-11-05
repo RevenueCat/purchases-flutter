@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:purchases_flutter/object_wrappers.dart';
+
+import 'object_wrappers.dart';
 
 /// An offering is a collection of Packages (`Package`) available for the user
 /// to purchase. For more info see https://docs.revenuecat.com/docs/entitlements
@@ -35,35 +36,32 @@ class Offering {
   final Package? weekly;
 
   /// Constructs an Offering from a JSON object.
-  Offering.fromJson(Map<dynamic, dynamic> map)
-      : identifier = map["identifier"],
+  Offering.fromJson(Map<String, dynamic> map)
+      : identifier = map['identifier'],
         serverDescription = map['serverDescription'],
         availablePackages = (map['availablePackages'] as List<dynamic>)
             .map((item) => Package.fromJson(item))
             .toList(),
         lifetime =
             map['lifetime'] != null ? Package.fromJson(map['lifetime']) : null,
-        annual = map['annual'] != null ? Package.fromJson(map["annual"]) : null,
+        annual = map['annual'] != null ? Package.fromJson(map['annual']) : null,
         sixMonth =
-            map['sixMonth'] != null ? Package.fromJson(map["sixMonth"]) : null,
+            map['sixMonth'] != null ? Package.fromJson(map['sixMonth']) : null,
         threeMonth = map['threeMonth'] != null
-            ? Package.fromJson(map["threeMonth"])
+            ? Package.fromJson(map['threeMonth'])
             : null,
         twoMonth =
-            map['twoMonth'] != null ? Package.fromJson(map["twoMonth"]) : null,
+            map['twoMonth'] != null ? Package.fromJson(map['twoMonth']) : null,
         monthly =
-            map['monthly'] != null ? Package.fromJson(map["monthly"]) : null,
-        weekly = map['weekly'] != null ? Package.fromJson(map["weekly"]) : null;
+            map['monthly'] != null ? Package.fromJson(map['monthly']) : null,
+        weekly = map['weekly'] != null ? Package.fromJson(map['weekly']) : null;
 
   /// Retrieves a specific package by identifier, use this to access custom
   /// package types configured in the RevenueCat dashboard.
-  Package? getPackage(String identifier) {
-    return availablePackages
-        .firstWhereOrNull((package) => package.identifier == identifier);
-  }
+  Package? getPackage(String identifier) => availablePackages
+      .firstWhereOrNull((package) => package.identifier == identifier);
 
   @override
-  String toString() {
-    return 'Offering{identifier: $identifier, serverDescription: $serverDescription, availablePackages: $availablePackages, lifetime: $lifetime, annual: $annual, sixMonth: $sixMonth, threeMonth: $threeMonth, twoMonth: $twoMonth, monthly: $monthly, weekly: $weekly}';
-  }
+  String toString() =>
+      'Offering{identifier: $identifier, serverDescription: $serverDescription, availablePackages: $availablePackages, lifetime: $lifetime, annual: $annual, sixMonth: $sixMonth, threeMonth: $threeMonth, twoMonth: $twoMonth, monthly: $monthly, weekly: $weekly}';
 }

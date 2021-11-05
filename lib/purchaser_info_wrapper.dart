@@ -1,6 +1,7 @@
-import 'package:purchases_flutter/entitlement_infos_wrapper.dart';
-import 'package:purchases_flutter/transaction.dart';
 import 'package:collection/collection.dart';
+
+import 'entitlement_infos_wrapper.dart';
+import 'transaction.dart';
 
 /// Class containing all information regarding the purchaser
 class PurchaserInfo {
@@ -55,73 +56,79 @@ class PurchaserInfo {
   final String? managementURL;
 
   /// Constructs a PurchaserInfo from a JSON object.
-  PurchaserInfo.fromJson(Map<dynamic, dynamic> map)
+  PurchaserInfo.fromJson(Map<String, dynamic> map)
       : entitlements = EntitlementInfos.fromJson(
-            map["entitlements"] as Map<dynamic, dynamic>),
-        activeSubscriptions = (map["activeSubscriptions"] as List<dynamic>)
+          map['entitlements'] as Map<String, dynamic>,
+        ),
+        activeSubscriptions = (map['activeSubscriptions'] as List<dynamic>)
             .map((item) => item as String)
             .toList(),
-        latestExpirationDate = map["latestExpirationDate"],
-        allExpirationDates =
-            (map["allExpirationDates"] as Map<dynamic, dynamic>)
-                .map((key, value) => MapEntry(key as String, value as String?)),
+        latestExpirationDate = map['latestExpirationDate'],
+        allExpirationDates = (map['allExpirationDates'] as Map<String, dynamic>)
+            .map((key, value) => MapEntry(key, value)),
         allPurchasedProductIdentifiers =
-            (map["allPurchasedProductIdentifiers"] as List<dynamic>)
+            (map['allPurchasedProductIdentifiers'] as List<dynamic>)
                 .map((item) => item as String)
                 .toList(),
-        firstSeen = map["firstSeen"],
-        originalAppUserId = map["originalAppUserId"],
-        requestDate = map["requestDate"],
-        allPurchaseDates = (map["allPurchaseDates"] as Map<dynamic, dynamic>)
-            .map((key, value) => MapEntry(key as String, value as String)),
-        originalApplicationVersion = map["originalApplicationVersion"],
-        originalPurchaseDate = map["originalPurchaseDate"],
-        managementURL = map["managementURL"],
+        firstSeen = map['firstSeen'],
+        originalAppUserId = map['originalAppUserId'],
+        requestDate = map['requestDate'],
+        allPurchaseDates = (map['allPurchaseDates'] as Map<String, dynamic>)
+            .map((key, value) => MapEntry(key, value)),
+        originalApplicationVersion = map['originalApplicationVersion'],
+        originalPurchaseDate = map['originalPurchaseDate'],
+        managementURL = map['managementURL'],
         nonSubscriptionTransactions =
-            (map["nonSubscriptionTransactions"] as List<dynamic>)
+            (map['nonSubscriptionTransactions'] as List<dynamic>)
                 .map((item) => Transaction.fromJson(item))
                 .toList();
 
   @override
-  String toString() {
-    return 'PurchaserInfo{'
-        'entitlements: $entitlements, '
-        'latestExpirationDate: $latestExpirationDate, '
-        'allExpirationDates: $allExpirationDates, '
-        'allPurchaseDates: $allPurchaseDates, '
-        'activeSubscriptions: $activeSubscriptions, '
-        'allPurchasedProductIdentifiers: $allPurchasedProductIdentifiers, '
-        'firstSeen: $firstSeen, '
-        'originalAppUserId: $originalAppUserId, '
-        'requestDate: $requestDate, '
-        'originalApplicationVersion: $originalApplicationVersion, '
-        'originalPurchaseDate: $originalPurchaseDate, '
-        'managementURL: $managementURL, '
-        'nonSubscriptionTransactions: $nonSubscriptionTransactions'
-        '}';
-  }
+  String toString() => 'PurchaserInfo{'
+      'entitlements: $entitlements, '
+      'latestExpirationDate: $latestExpirationDate, '
+      'allExpirationDates: $allExpirationDates, '
+      'allPurchaseDates: $allPurchaseDates, '
+      'activeSubscriptions: $activeSubscriptions, '
+      'allPurchasedProductIdentifiers: $allPurchasedProductIdentifiers, '
+      'firstSeen: $firstSeen, '
+      'originalAppUserId: $originalAppUserId, '
+      'requestDate: $requestDate, '
+      'originalApplicationVersion: $originalApplicationVersion, '
+      'originalPurchaseDate: $originalPurchaseDate, '
+      'managementURL: $managementURL, '
+      'nonSubscriptionTransactions: $nonSubscriptionTransactions'
+      '}';
 
   @override
   bool operator ==(other) {
-    if (!(other is PurchaserInfo)) {
+    if (other is! PurchaserInfo) {
       return false;
     }
-    final mapEq = MapEquality().equals;
-    final listEq = ListEquality().equals;
-    return (this.entitlements == other.entitlements &&
-        this.latestExpirationDate == other.latestExpirationDate &&
-        mapEq(this.allExpirationDates, other.allExpirationDates) &&
-        mapEq(this.allPurchaseDates, other.allPurchaseDates) &&
-        listEq(this.activeSubscriptions, other.activeSubscriptions) &&
-        listEq(this.allPurchasedProductIdentifiers,
-            other.allPurchasedProductIdentifiers) &&
-        listEq(this.nonSubscriptionTransactions,
-            other.nonSubscriptionTransactions) &&
-        this.firstSeen == other.firstSeen &&
-        this.originalAppUserId == other.originalAppUserId &&
-        this.requestDate == other.requestDate &&
-        this.originalPurchaseDate == other.originalPurchaseDate &&
-        this.originalApplicationVersion == other.originalApplicationVersion &&
-        this.managementURL == other.managementURL);
+    final mapEq = const MapEquality().equals;
+    final listEq = const ListEquality().equals;
+    return entitlements == other.entitlements &&
+        latestExpirationDate == other.latestExpirationDate &&
+        mapEq(allExpirationDates, other.allExpirationDates) &&
+        mapEq(allPurchaseDates, other.allPurchaseDates) &&
+        listEq(activeSubscriptions, other.activeSubscriptions) &&
+        listEq(
+          allPurchasedProductIdentifiers,
+          other.allPurchasedProductIdentifiers,
+        ) &&
+        listEq(
+          nonSubscriptionTransactions,
+          other.nonSubscriptionTransactions,
+        ) &&
+        firstSeen == other.firstSeen &&
+        originalAppUserId == other.originalAppUserId &&
+        requestDate == other.requestDate &&
+        originalPurchaseDate == other.originalPurchaseDate &&
+        originalApplicationVersion == other.originalApplicationVersion &&
+        managementURL == other.managementURL;
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
 }

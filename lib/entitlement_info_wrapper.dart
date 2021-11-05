@@ -48,52 +48,53 @@ class EntitlementInfo {
   final String? billingIssueDetectedAt;
 
   /// Construct an EntitlementInfo
-  EntitlementInfo(
-      this.identifier,
-      this.isActive,
-      this.willRenew,
-      this.periodType,
-      this.latestPurchaseDate,
-      this.originalPurchaseDate,
-      this.expirationDate,
-      this.store,
-      this.productIdentifier,
-      this.isSandbox,
-      this.unsubscribeDetectedAt,
-      this.billingIssueDetectedAt);
+  const EntitlementInfo(
+    this.identifier,
+    this.isActive,
+    this.willRenew,
+    this.periodType,
+    this.latestPurchaseDate,
+    this.originalPurchaseDate,
+    this.expirationDate,
+    this.store,
+    this.productIdentifier,
+    this.isSandbox,
+    this.unsubscribeDetectedAt,
+    this.billingIssueDetectedAt,
+  );
 
   /// Constructs an EntitlementInfo from a JSON object
-  factory EntitlementInfo.fromJson(Map<dynamic, dynamic> json) {
-    late var periodType;
-    switch (json["periodType"] as String?) {
-      case "INTRO":
+  factory EntitlementInfo.fromJson(Map<String, dynamic> json) {
+    late PeriodType periodType;
+    switch (json['periodType'] as String?) {
+      case 'INTRO':
         periodType = PeriodType.intro;
         break;
-      case "NORMAL":
+      case 'NORMAL':
         periodType = PeriodType.normal;
         break;
-      case "TRIAL":
+      case 'TRIAL':
         periodType = PeriodType.trial;
         break;
       default:
         periodType = PeriodType.unknown;
         break;
     }
-    late var store;
-    switch (json["store"] as String?) {
-      case "APP_STORE":
+    late Store store;
+    switch (json['store'] as String?) {
+      case 'APP_STORE':
         store = Store.appStore;
         break;
-      case "MAC_APP_STORE":
+      case 'MAC_APP_STORE':
         store = Store.macAppStore;
         break;
-      case "PLAY_STORE":
+      case 'PLAY_STORE':
         store = Store.playStore;
         break;
-      case "STRIPE":
+      case 'STRIPE':
         store = Store.stripe;
         break;
-      case "PROMOTIONAL":
+      case 'PROMOTIONAL':
         store = Store.promotional;
         break;
       default:
@@ -101,42 +102,42 @@ class EntitlementInfo {
         break;
     }
     return EntitlementInfo(
-        json["identifier"] as String,
-        json["isActive"] as bool,
-        json["willRenew"] as bool,
-        periodType,
-        json["latestPurchaseDate"] as String,
-        json["originalPurchaseDate"] as String,
-        json["expirationDate"] as String?,
-        store,
-        json["productIdentifier"] as String,
-        json["isSandbox"] as bool,
-        json["unsubscribeDetectedAt"] as String?,
-        json["billingIssueDetectedAt"] as String?);
+      json['identifier'] as String,
+      json['isActive'] as bool,
+      json['willRenew'] as bool,
+      periodType,
+      json['latestPurchaseDate'] as String,
+      json['originalPurchaseDate'] as String,
+      json['expirationDate'] as String?,
+      store,
+      json['productIdentifier'] as String,
+      json['isSandbox'] as bool,
+      json['unsubscribeDetectedAt'] as String?,
+      json['billingIssueDetectedAt'] as String?,
+    );
   }
 
   @override
-  String toString() {
-    return 'EntitlementInfo{identifier: $identifier, isActive: $isActive, willRenew: $willRenew, periodType: $periodType, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, expirationDate: $expirationDate, store: $store, productIdentifier: $productIdentifier, isSandbox: $isSandbox, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt}';
-  }
+  String toString() =>
+      'EntitlementInfo{identifier: $identifier, isActive: $isActive, willRenew: $willRenew, periodType: $periodType, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, expirationDate: $expirationDate, store: $store, productIdentifier: $productIdentifier, isSandbox: $isSandbox, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt}';
 
   @override
   bool operator ==(other) {
-    if (!(other is EntitlementInfo)) {
+    if (other is! EntitlementInfo) {
       return false;
     }
-    return (this.identifier == other.identifier &&
-        this.isActive == other.isActive &&
-        this.willRenew == other.willRenew &&
-        this.periodType == other.periodType &&
-        this.latestPurchaseDate == other.latestPurchaseDate &&
-        this.originalPurchaseDate == other.originalPurchaseDate &&
-        this.expirationDate == other.expirationDate &&
-        this.store == other.store &&
-        this.productIdentifier == other.productIdentifier &&
-        this.isSandbox == other.isSandbox &&
-        this.unsubscribeDetectedAt == other.unsubscribeDetectedAt &&
-        this.billingIssueDetectedAt == other.billingIssueDetectedAt);
+    return identifier == other.identifier &&
+        isActive == other.isActive &&
+        willRenew == other.willRenew &&
+        periodType == other.periodType &&
+        latestPurchaseDate == other.latestPurchaseDate &&
+        originalPurchaseDate == other.originalPurchaseDate &&
+        expirationDate == other.expirationDate &&
+        store == other.store &&
+        productIdentifier == other.productIdentifier &&
+        isSandbox == other.isSandbox &&
+        unsubscribeDetectedAt == other.unsubscribeDetectedAt &&
+        billingIssueDetectedAt == other.billingIssueDetectedAt;
   }
 }
 

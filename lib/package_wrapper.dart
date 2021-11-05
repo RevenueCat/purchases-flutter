@@ -1,4 +1,4 @@
-import 'package:purchases_flutter/object_wrappers.dart';
+import 'object_wrappers.dart';
 
 /// Contains information about the product available for the user to purchase.
 /// For more info see https://docs.revenuecat.com/docs/entitlements
@@ -17,16 +17,15 @@ class Package {
   final String offeringIdentifier;
 
   /// Constructs a Package from a JSON object.
-  Package.fromJson(Map<dynamic, dynamic> json)
+  Package.fromJson(Map<String, dynamic> json)
       : identifier = json['identifier'],
         packageType = _PackageTypeHelper.getFromString(json['packageType']),
         product = Product.fromJson(json['product']),
         offeringIdentifier = json['offeringIdentifier'];
 
   @override
-  String toString() {
-    return 'Package{identifier: $identifier, packageType: $packageType, product: $product, offeringIdentifier: $offeringIdentifier}';
-  }
+  String toString() =>
+      'Package{identifier: $identifier, packageType: $packageType, product: $product, offeringIdentifier: $offeringIdentifier}';
 }
 
 /// Enumeration of all possible Package types.
@@ -62,23 +61,23 @@ enum PackageType {
 class _PackageTypeHelper {
   static PackageType getFromString(String name) {
     switch (name) {
-      case "UNKNOWN":
+      case 'UNKNOWN':
         return PackageType.unknown;
-      case "CUSTOM":
+      case 'CUSTOM':
         return PackageType.custom;
-      case "LIFETIME":
+      case 'LIFETIME':
         return PackageType.lifetime;
-      case "ANNUAL":
+      case 'ANNUAL':
         return PackageType.annual;
-      case "SIX_MONTH":
+      case 'SIX_MONTH':
         return PackageType.sixMonth;
-      case "THREE_MONTH":
+      case 'THREE_MONTH':
         return PackageType.threeMonth;
-      case "TWO_MONTH":
+      case 'TWO_MONTH':
         return PackageType.twoMonth;
-      case "MONTHLY":
+      case 'MONTHLY':
         return PackageType.monthly;
-      case "WEEKLY":
+      case 'WEEKLY':
         return PackageType.weekly;
       default:
         return PackageType.unknown;

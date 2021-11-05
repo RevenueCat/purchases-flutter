@@ -17,11 +17,16 @@ class PaymentDiscount {
   final int timestamp;
 
   // ignore: public_member_api_docs
-  PaymentDiscount(this.identifier, this.keyIdentifier, this.nonce,
-      this.signature, this.timestamp);
+  PaymentDiscount(
+    this.identifier,
+    this.keyIdentifier,
+    this.nonce,
+    this.signature,
+    this.timestamp,
+  );
 
   // ignore: public_member_api_docs
-  PaymentDiscount.fromJson(Map<dynamic, dynamic> json)
+  PaymentDiscount.fromJson(Map<String, dynamic> json)
       : identifier = json['identifier'],
         keyIdentifier = json['keyIdentifier'],
         nonce = json['nonce'],
@@ -29,12 +34,10 @@ class PaymentDiscount {
         timestamp = json['timestamp'];
 
   @override
-  String toString() {
-    return 'PaymentDiscount{'
-        'identifier: $identifier, '
-        'keyIdentifier: $keyIdentifier, '
-        'nonce: $nonce, '
-        'signature: $signature, '
-        'timestamp: $timestamp}';
-  }
+  String toString() => 'PaymentDiscount{'
+      'identifier: $identifier, '
+      'keyIdentifier: $keyIdentifier, '
+      'nonce: $nonce, '
+      'signature: $signature, '
+      'timestamp: $timestamp}';
 }
