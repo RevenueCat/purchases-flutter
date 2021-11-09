@@ -506,6 +506,15 @@ class Purchases {
     await _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
   }
 
+  /// Subscriber attribute associated with the Airship Channel Id for the user
+  /// Required for the RevenueCat Airship integration
+  ///
+  /// [airshipChannelID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setAirshipChannelID(String airshipChannelID) async {
+    await _channel.invokeMethod(
+        'setAirshipChannelID', {'airshipChannelID': airshipChannelID});
+  }
+
   /// Subscriber attribute associated with the install media source for the user
   ///
   /// [mediaSource] Empty String or null will delete the subscriber attribute.
