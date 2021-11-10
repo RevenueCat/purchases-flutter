@@ -263,6 +263,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String onesignalID = call.argument("onesignalID");
                 setOnesignalID(onesignalID, result);
                 break;
+            case "setAirshipChannelID":
+                String airshipChannelID = call.argument("airshipChannelID");
+                setAirshipChannelID(airshipChannelID, result);
+                break;
             case "setMediaSource":
                 String mediaSource = call.argument("mediaSource");
                 setMediaSource(mediaSource, result);
@@ -523,7 +527,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void setMediaSource(String mediaSource, final Result result) { 
+    private void setAirshipChannelID(String airshipChannelID, final Result result) {
+        SubscriberAttributesKt.setAirshipChannelID(airshipChannelID);
+        result.success(null);
+    }
+
+    private void setMediaSource(String mediaSource, final Result result) {
         SubscriberAttributesKt.setMediaSource(mediaSource);
         result.success(null);
     }
