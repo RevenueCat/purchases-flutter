@@ -136,6 +136,9 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"setOnesignalID" isEqualToString:call.method]) {
         NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
+    } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
+        NSString *airshipChannelID = arguments[@"airshipChannelID"];
+        [self setAirshipChannelID:airshipChannelID result:result];
     } else if ([@"setMediaSource" isEqualToString:call.method]) {
         NSString *mediaSource = arguments[@"mediaSource"];
         [self setMediaSource:mediaSource result:result];
@@ -400,6 +403,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)setOnesignalID:(nullable NSString *)onesignalID result:(FlutterResult)result {
     [RCCommonFunctionality setOnesignalID:onesignalID];
+    result(nil);
+}
+
+- (void)setAirshipChannelID:(nullable NSString *)airshipChannelID result:(FlutterResult)result {
+    [RCCommonFunctionality setAirshipChannelID:airshipChannelID];
     result(nil);
 }
 
