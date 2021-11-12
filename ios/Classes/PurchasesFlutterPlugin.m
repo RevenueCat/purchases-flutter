@@ -136,6 +136,9 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"setOnesignalID" isEqualToString:call.method]) {
         NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
+    } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
+        NSString *airshipChannelID = arguments[@"airshipChannelID"];
+        [self setAirshipChannelID:airshipChannelID result:result];
     } else if ([@"setMediaSource" isEqualToString:call.method]) {
         NSString *mediaSource = arguments[@"mediaSource"];
         [self setMediaSource:mediaSource result:result];
@@ -403,6 +406,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
+- (void)setAirshipChannelID:(nullable NSString *)airshipChannelID result:(FlutterResult)result {
+    [RCCommonFunctionality setAirshipChannelID:airshipChannelID];
+    result(nil);
+}
+
 - (void)setMediaSource:(nullable NSString *)mediaSource result:(FlutterResult)result {
     [RCCommonFunctionality setMediaSource:mediaSource];
     result(nil);
@@ -493,7 +501,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"3.5.0";
+    return @"3.6.0";
 }
 
 @end

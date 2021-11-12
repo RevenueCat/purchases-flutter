@@ -52,7 +52,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "3.5.0";
+    private static final String PLUGIN_VERSION = "3.6.0";
 
     /**
      * Plugin registration.
@@ -262,6 +262,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setOnesignalID":
                 String onesignalID = call.argument("onesignalID");
                 setOnesignalID(onesignalID, result);
+                break;
+            case "setAirshipChannelID":
+                String airshipChannelID = call.argument("airshipChannelID");
+                setAirshipChannelID(airshipChannelID, result);
                 break;
             case "setMediaSource":
                 String mediaSource = call.argument("mediaSource");
@@ -523,7 +527,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void setMediaSource(String mediaSource, final Result result) { 
+    private void setAirshipChannelID(String airshipChannelID, final Result result) {
+        SubscriberAttributesKt.setAirshipChannelID(airshipChannelID);
+        result.success(null);
+    }
+
+    private void setMediaSource(String mediaSource, final Result result) {
         SubscriberAttributesKt.setMediaSource(mediaSource);
         result.success(null);
     }
