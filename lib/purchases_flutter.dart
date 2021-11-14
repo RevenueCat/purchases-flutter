@@ -19,11 +19,12 @@ class Purchases {
       {};
 
   static final _channel = const MethodChannel('purchases_flutter')
-    ..setMethodCallHandler((MethodCall call) async {
+    ..setMethodCallHandler((call) async {
       switch (call.method) {
         case 'Purchases-PurchaserInfoUpdated':
           for (final listener in _purchaserInfoUpdateListeners) {
-            listener(PurchaserInfo.fromJson(call.arguments));
+            final args = Map<String, dynamic>.from(call.arguments);
+            listener(PurchaserInfo.fromJson(args));
           }
           break;
       }
@@ -135,9 +136,12 @@ class Purchases {
   /// they are needed, your prices are loaded for your purchase flow.
   ///
   /// Time is money.
-  static Future<Offerings> getOfferings() async => Offerings.fromJson(
-        await _channel.invokeMethod('getOfferings'),
-      );
+  static Future<Offerings> getOfferings() async {
+    final res = await _channel.invokeMethod('getOfferings');
+    return Offerings.fromJson(
+      Map<String, dynamic>.from(res),
+    );
+  }
 
   /// Fetch the product info. Returns a list of products or throws an error if
   /// the products are not properly configured in RevenueCat or if there is
@@ -368,7 +372,7 @@ class Purchases {
   ///
   /// Set this property to your proxy URL before configuring Purchases *only* if you've received a proxy key value from your RevenueCat contact.
   ///
-  static Future<void> setProxyURL(String url) async =>
+  static Future<void> setProxyURL(String url) =>
       _channel.invokeMethod('setProxyURLString', {'proxyURLString': url});
 
   /// Gets current purchaser info, which will normally be cached.
@@ -384,8 +388,7 @@ class Purchases {
   ///
   ///  This method should be called anytime a sync is needed, like after a
   ///  successful purchase.
-  static Future<void> syncPurchases() async =>
-      _channel.invokeMethod('syncPurchases');
+  static Future<void> syncPurchases() => _channel.invokeMethod('syncPurchases');
 
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default

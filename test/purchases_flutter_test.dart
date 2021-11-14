@@ -26,8 +26,8 @@ void main() {
   };
 
   setUp(() {
-    channel.setMockMethodCallHandler((MethodCall methodCall) async {
-      log.add(methodCall);
+    channel.setMockMethodCallHandler((call) async {
+      log.add(call);
       return response;
     });
   });

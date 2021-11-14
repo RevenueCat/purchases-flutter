@@ -144,9 +144,10 @@ class __$OfferingsCopyWithImpl<$Res> extends _$OfferingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Offerings implements _Offerings {
+class _$_Offerings extends _Offerings {
   const _$_Offerings(@JsonKey(name: 'all') this.all,
-      {@JsonKey(name: 'current', nullable: true) this.current});
+      {@JsonKey(name: 'current', nullable: true) this.current})
+      : super._();
 
   factory _$_Offerings.fromJson(Map<String, dynamic> json) =>
       _$$_OfferingsFromJson(json);
@@ -194,10 +195,11 @@ class _$_Offerings implements _Offerings {
   }
 }
 
-abstract class _Offerings implements Offerings {
+abstract class _Offerings extends Offerings {
   const factory _Offerings(@JsonKey(name: 'all') Map<String, Offering> all,
           {@JsonKey(name: 'current', nullable: true) Offering? current}) =
       _$_Offerings;
+  const _Offerings._() : super._();
 
   factory _Offerings.fromJson(Map<String, dynamic> json) =
       _$_Offerings.fromJson;

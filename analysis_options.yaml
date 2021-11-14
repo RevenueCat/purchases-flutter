@@ -1,6 +1,8 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
+  errors:
+    invalid_annotation_target: ignore
   exclude:
     - lib/models/*.freezed.dart
     - lib/models/*.g.dart
@@ -17,6 +19,7 @@ linter:
     avoid_void_async: true
     cascade_invocations: true
     directives_ordering: true
+    invalid_annotation_target: false
     omit_local_variable_types: true
     prefer_const_constructors: true
     prefer_const_constructors_in_immutables: true
@@ -40,4 +43,3 @@ linter:
     unnecessary_string_escapes: true
     unnecessary_string_interpolations: true
     unnecessary_this: true
-    invalid_annotation_target: false
