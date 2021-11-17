@@ -34,7 +34,7 @@ class _$ProductTearOff {
           String priceString,
       @JsonKey(name: 'currency_code')
           String currencyCode,
-      {@JsonKey(name: 'introPrice', nullable: true)
+      {@JsonKey(name: 'intro_price', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<Discount>? discounts}) {
@@ -85,7 +85,7 @@ mixin _$Product {
   String get currencyCode => throw _privateConstructorUsedError;
 
   /// Introductory price for product. Can be null.
-  @JsonKey(name: 'introPrice', nullable: true)
+  @JsonKey(name: 'intro_price', nullable: true)
   IntroductoryPrice? get introductoryPrice =>
       throw _privateConstructorUsedError;
 
@@ -115,7 +115,7 @@ abstract class $ProductCopyWith<$Res> {
           String priceString,
       @JsonKey(name: 'currency_code')
           String currencyCode,
-      @JsonKey(name: 'introPrice', nullable: true)
+      @JsonKey(name: 'intro_price', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<Discount>? discounts});
@@ -208,7 +208,7 @@ abstract class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
           String priceString,
       @JsonKey(name: 'currency_code')
           String currencyCode,
-      @JsonKey(name: 'introPrice', nullable: true)
+      @JsonKey(name: 'intro_price', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<Discount>? discounts});
@@ -284,7 +284,7 @@ class _$_Product implements _Product {
       @JsonKey(name: 'price') this.price,
       @JsonKey(name: 'price_string') this.priceString,
       @JsonKey(name: 'currency_code') this.currencyCode,
-      {@JsonKey(name: 'introPrice', nullable: true) this.introductoryPrice,
+      {@JsonKey(name: 'intro_price', nullable: true) this.introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true) this.discounts});
 
   factory _$_Product.fromJson(Map<String, dynamic> json) =>
@@ -323,7 +323,7 @@ class _$_Product implements _Product {
   @override
 
   /// Introductory price for product. Can be null.
-  @JsonKey(name: 'introPrice', nullable: true)
+  @JsonKey(name: 'intro_price', nullable: true)
   final IntroductoryPrice? introductoryPrice;
   @override
 
@@ -401,7 +401,7 @@ abstract class _Product implements Product {
           String priceString,
       @JsonKey(name: 'currency_code')
           String currencyCode,
-      {@JsonKey(name: 'introPrice', nullable: true)
+      {@JsonKey(name: 'intro_price', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<Discount>? discounts}) = _$_Product;
@@ -441,7 +441,7 @@ abstract class _Product implements Product {
   @override
 
   /// Introductory price for product. Can be null.
-  @JsonKey(name: 'introPrice', nullable: true)
+  @JsonKey(name: 'intro_price', nullable: true)
   IntroductoryPrice? get introductoryPrice =>
       throw _privateConstructorUsedError;
   @override

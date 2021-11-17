@@ -21,15 +21,17 @@ Offering _$OfferingFromJson(Map<String, dynamic> json) {
 class _$OfferingTearOff {
   const _$OfferingTearOff();
 
-  _Offering call(String identifier, String serverDescription,
-      List<Package> availablePackages,
-      {Package? lifetime,
-      Package? annual,
-      Package? sixMonth,
-      Package? threeMonth,
-      Package? twoMonth,
-      Package? monthly,
-      Package? weekly}) {
+  _Offering call(
+      @JsonKey(name: 'identifier') String identifier,
+      @JsonKey(name: 'serverDescription') String serverDescription,
+      @JsonKey(name: 'availablePackages') List<Package> availablePackages,
+      {@JsonKey(name: 'lifetime') Package? lifetime,
+      @JsonKey(name: 'annual') Package? annual,
+      @JsonKey(name: 'sixMonth') Package? sixMonth,
+      @JsonKey(name: 'threeMonth') Package? threeMonth,
+      @JsonKey(name: 'twoMonth') Package? twoMonth,
+      @JsonKey(name: 'monthly') Package? monthly,
+      @JsonKey(name: 'weekly') Package? weekly}) {
     return _Offering(
       identifier,
       serverDescription,
@@ -55,33 +57,43 @@ const $Offering = _$OfferingTearOff();
 /// @nodoc
 mixin _$Offering {
   /// Unique identifier defined in RevenueCat dashboard.
+  @JsonKey(name: 'identifier')
   String get identifier => throw _privateConstructorUsedError;
 
   /// Offering description defined in RevenueCat dashboard.
+  @JsonKey(name: 'serverDescription')
   String get serverDescription => throw _privateConstructorUsedError;
 
   /// Array of `Package` objects available for purchase.
+  @JsonKey(name: 'availablePackages')
   List<Package> get availablePackages => throw _privateConstructorUsedError;
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'lifetime')
   Package? get lifetime => throw _privateConstructorUsedError;
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'annual')
   Package? get annual => throw _privateConstructorUsedError;
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'sixMonth')
   Package? get sixMonth => throw _privateConstructorUsedError;
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'threeMonth')
   Package? get threeMonth => throw _privateConstructorUsedError;
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'twoMonth')
   Package? get twoMonth => throw _privateConstructorUsedError;
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'monthly')
   Package? get monthly => throw _privateConstructorUsedError;
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'weekly')
   Package? get weekly => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -95,16 +107,16 @@ abstract class $OfferingCopyWith<$Res> {
   factory $OfferingCopyWith(Offering value, $Res Function(Offering) then) =
       _$OfferingCopyWithImpl<$Res>;
   $Res call(
-      {String identifier,
-      String serverDescription,
-      List<Package> availablePackages,
-      Package? lifetime,
-      Package? annual,
-      Package? sixMonth,
-      Package? threeMonth,
-      Package? twoMonth,
-      Package? monthly,
-      Package? weekly});
+      {@JsonKey(name: 'identifier') String identifier,
+      @JsonKey(name: 'serverDescription') String serverDescription,
+      @JsonKey(name: 'availablePackages') List<Package> availablePackages,
+      @JsonKey(name: 'lifetime') Package? lifetime,
+      @JsonKey(name: 'annual') Package? annual,
+      @JsonKey(name: 'sixMonth') Package? sixMonth,
+      @JsonKey(name: 'threeMonth') Package? threeMonth,
+      @JsonKey(name: 'twoMonth') Package? twoMonth,
+      @JsonKey(name: 'monthly') Package? monthly,
+      @JsonKey(name: 'weekly') Package? weekly});
 
   $PackageCopyWith<$Res>? get lifetime;
   $PackageCopyWith<$Res>? get annual;
@@ -264,16 +276,16 @@ abstract class _$OfferingCopyWith<$Res> implements $OfferingCopyWith<$Res> {
       __$OfferingCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String identifier,
-      String serverDescription,
-      List<Package> availablePackages,
-      Package? lifetime,
-      Package? annual,
-      Package? sixMonth,
-      Package? threeMonth,
-      Package? twoMonth,
-      Package? monthly,
-      Package? weekly});
+      {@JsonKey(name: 'identifier') String identifier,
+      @JsonKey(name: 'serverDescription') String serverDescription,
+      @JsonKey(name: 'availablePackages') List<Package> availablePackages,
+      @JsonKey(name: 'lifetime') Package? lifetime,
+      @JsonKey(name: 'annual') Package? annual,
+      @JsonKey(name: 'sixMonth') Package? sixMonth,
+      @JsonKey(name: 'threeMonth') Package? threeMonth,
+      @JsonKey(name: 'twoMonth') Package? twoMonth,
+      @JsonKey(name: 'monthly') Package? monthly,
+      @JsonKey(name: 'weekly') Package? weekly});
 
   @override
   $PackageCopyWith<$Res>? get lifetime;
@@ -362,14 +374,16 @@ class __$OfferingCopyWithImpl<$Res> extends _$OfferingCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Offering extends _Offering {
   const _$_Offering(
-      this.identifier, this.serverDescription, this.availablePackages,
-      {this.lifetime,
-      this.annual,
-      this.sixMonth,
-      this.threeMonth,
-      this.twoMonth,
-      this.monthly,
-      this.weekly})
+      @JsonKey(name: 'identifier') this.identifier,
+      @JsonKey(name: 'serverDescription') this.serverDescription,
+      @JsonKey(name: 'availablePackages') this.availablePackages,
+      {@JsonKey(name: 'lifetime') this.lifetime,
+      @JsonKey(name: 'annual') this.annual,
+      @JsonKey(name: 'sixMonth') this.sixMonth,
+      @JsonKey(name: 'threeMonth') this.threeMonth,
+      @JsonKey(name: 'twoMonth') this.twoMonth,
+      @JsonKey(name: 'monthly') this.monthly,
+      @JsonKey(name: 'weekly') this.weekly})
       : super._();
 
   factory _$_Offering.fromJson(Map<String, dynamic> json) =>
@@ -378,42 +392,52 @@ class _$_Offering extends _Offering {
   @override
 
   /// Unique identifier defined in RevenueCat dashboard.
+  @JsonKey(name: 'identifier')
   final String identifier;
   @override
 
   /// Offering description defined in RevenueCat dashboard.
+  @JsonKey(name: 'serverDescription')
   final String serverDescription;
   @override
 
   /// Array of `Package` objects available for purchase.
+  @JsonKey(name: 'availablePackages')
   final List<Package> availablePackages;
   @override
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'lifetime')
   final Package? lifetime;
   @override
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'annual')
   final Package? annual;
   @override
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'sixMonth')
   final Package? sixMonth;
   @override
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'threeMonth')
   final Package? threeMonth;
   @override
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'twoMonth')
   final Package? twoMonth;
   @override
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'monthly')
   final Package? monthly;
   @override
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'weekly')
   final Package? weekly;
 
   @override
@@ -481,15 +505,17 @@ class _$_Offering extends _Offering {
 }
 
 abstract class _Offering extends Offering {
-  const factory _Offering(String identifier, String serverDescription,
-      List<Package> availablePackages,
-      {Package? lifetime,
-      Package? annual,
-      Package? sixMonth,
-      Package? threeMonth,
-      Package? twoMonth,
-      Package? monthly,
-      Package? weekly}) = _$_Offering;
+  const factory _Offering(
+      @JsonKey(name: 'identifier') String identifier,
+      @JsonKey(name: 'serverDescription') String serverDescription,
+      @JsonKey(name: 'availablePackages') List<Package> availablePackages,
+      {@JsonKey(name: 'lifetime') Package? lifetime,
+      @JsonKey(name: 'annual') Package? annual,
+      @JsonKey(name: 'sixMonth') Package? sixMonth,
+      @JsonKey(name: 'threeMonth') Package? threeMonth,
+      @JsonKey(name: 'twoMonth') Package? twoMonth,
+      @JsonKey(name: 'monthly') Package? monthly,
+      @JsonKey(name: 'weekly') Package? weekly}) = _$_Offering;
   const _Offering._() : super._();
 
   factory _Offering.fromJson(Map<String, dynamic> json) = _$_Offering.fromJson;
@@ -497,42 +523,52 @@ abstract class _Offering extends Offering {
   @override
 
   /// Unique identifier defined in RevenueCat dashboard.
+  @JsonKey(name: 'identifier')
   String get identifier => throw _privateConstructorUsedError;
   @override
 
   /// Offering description defined in RevenueCat dashboard.
+  @JsonKey(name: 'serverDescription')
   String get serverDescription => throw _privateConstructorUsedError;
   @override
 
   /// Array of `Package` objects available for purchase.
+  @JsonKey(name: 'availablePackages')
   List<Package> get availablePackages => throw _privateConstructorUsedError;
   @override
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'lifetime')
   Package? get lifetime => throw _privateConstructorUsedError;
   @override
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'annual')
   Package? get annual => throw _privateConstructorUsedError;
   @override
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'sixMonth')
   Package? get sixMonth => throw _privateConstructorUsedError;
   @override
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'threeMonth')
   Package? get threeMonth => throw _privateConstructorUsedError;
   @override
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'twoMonth')
   Package? get twoMonth => throw _privateConstructorUsedError;
   @override
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'monthly')
   Package? get monthly => throw _privateConstructorUsedError;
   @override
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
+  @JsonKey(name: 'weekly')
   Package? get weekly => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

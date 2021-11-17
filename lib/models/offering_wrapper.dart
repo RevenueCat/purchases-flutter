@@ -13,34 +13,34 @@ class Offering with _$Offering {
   const Offering._(); // Added constructor
   const factory Offering(
     /// Unique identifier defined in RevenueCat dashboard.
-    final String identifier,
+    @JsonKey(name: 'identifier') String identifier,
 
     /// Offering description defined in RevenueCat dashboard.
-    final String serverDescription,
+    @JsonKey(name: 'serverDescription') String serverDescription,
 
     /// Array of `Package` objects available for purchase.
-    final List<Package> availablePackages, {
+    @JsonKey(name: 'availablePackages') List<Package> availablePackages, {
 
     /// Lifetime package type configured in the RevenueCat dashboard, if available.
-    final Package? lifetime,
+    @JsonKey(name: 'lifetime') Package? lifetime,
 
     /// Annual package type configured in the RevenueCat dashboard, if available.
-    final Package? annual,
+    @JsonKey(name: 'annual') Package? annual,
 
     /// Six month package type configured in the RevenueCat dashboard, if available.
-    final Package? sixMonth,
+    @JsonKey(name: 'sixMonth') Package? sixMonth,
 
     /// Three month package type configured in the RevenueCat dashboard, if available.
-    final Package? threeMonth,
+    @JsonKey(name: 'threeMonth') Package? threeMonth,
 
     /// Two month package type configured in the RevenueCat dashboard, if available.
-    final Package? twoMonth,
+    @JsonKey(name: 'twoMonth') Package? twoMonth,
 
     /// Monthly package type configured in the RevenueCat dashboard, if available.
-    final Package? monthly,
+    @JsonKey(name: 'monthly') Package? monthly,
 
     /// Weekly package type configured in the RevenueCat dashboard, if available.
-    final Package? weekly,
+    @JsonKey(name: 'weekly') Package? weekly,
   }) = _Offering;
 
   /// Retrieves a specific package by identifier, use this to access custom

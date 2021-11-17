@@ -30,7 +30,7 @@ class Product with _$Product {
     @JsonKey(name: 'currency_code') String currencyCode, {
 
     /// Introductory price for product. Can be null.
-    @JsonKey(name: 'introPrice', nullable: true)
+    @JsonKey(name: 'intro_price', nullable: true)
         IntroductoryPrice? introductoryPrice,
 
     /// Collection of discount offers for a product. Null for Android.
