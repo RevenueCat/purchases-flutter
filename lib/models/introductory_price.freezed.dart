@@ -22,25 +22,25 @@ class _$IntroductoryPriceTearOff {
   const _$IntroductoryPriceTearOff();
 
   _IntroductoryPrice call(
-      @JsonKey(name: 'intro_price')
-          double introPrice,
-      @JsonKey(name: 'intro_price_string')
-          String introPriceString,
-      @JsonKey(name: 'intro_price_period')
-          String introPricePeriod,
-      @JsonKey(name: 'intro_price_period_unit')
-          String introPricePeriodUnit,
-      @JsonKey(name: 'intro_price_period_number_of_units')
-          int introPricePeriodNumberOfUnits,
-      @JsonKey(name: 'intro_price_cycles')
-          int introPriceCycles) {
+      @JsonKey(name: 'price')
+          double price,
+      @JsonKey(name: 'priceString')
+          String priceString,
+      @JsonKey(name: 'period')
+          String period,
+      @JsonKey(name: 'cycles')
+          int cycles,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          PeriodUnit periodUnit,
+      @JsonKey(name: 'periodNumberOfUnits')
+          int periodNumberOfUnits) {
     return _IntroductoryPrice(
-      introPrice,
-      introPriceString,
-      introPricePeriod,
-      introPricePeriodUnit,
-      introPricePeriodNumberOfUnits,
-      introPriceCycles,
+      price,
+      priceString,
+      period,
+      cycles,
+      periodUnit,
+      periodNumberOfUnits,
     );
   }
 
@@ -55,32 +55,32 @@ const $IntroductoryPrice = _$IntroductoryPriceTearOff();
 /// @nodoc
 mixin _$IntroductoryPrice {
   /// Introductory price of a subscription in the local currency.
-  @JsonKey(name: 'intro_price')
-  double get introPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price')
+  double get price => throw _privateConstructorUsedError;
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
-  @JsonKey(name: 'intro_price_string')
-  String get introPriceString => throw _privateConstructorUsedError;
+  @JsonKey(name: 'priceString')
+  String get priceString => throw _privateConstructorUsedError;
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
-  @JsonKey(name: 'intro_price_period')
-  String get introPricePeriod => throw _privateConstructorUsedError;
-
-  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-  /// MONTH or YEAR.
-  @JsonKey(name: 'intro_price_period_unit')
-  String get introPricePeriodUnit => throw _privateConstructorUsedError;
-
-  /// Number of units for the billing period of the introductory price.
-  @JsonKey(name: 'intro_price_period_number_of_units')
-  int get introPricePeriodNumberOfUnits => throw _privateConstructorUsedError;
+  @JsonKey(name: 'period')
+  String get period => throw _privateConstructorUsedError;
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
-  @JsonKey(name: 'intro_price_cycles')
-  int get introPriceCycles => throw _privateConstructorUsedError;
+  @JsonKey(name: 'cycles')
+  int get cycles => throw _privateConstructorUsedError;
+
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
+  @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+  PeriodUnit get periodUnit => throw _privateConstructorUsedError;
+
+  /// Number of units for the billing period of the introductory price.
+  @JsonKey(name: 'periodNumberOfUnits')
+  int get periodNumberOfUnits => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -94,18 +94,18 @@ abstract class $IntroductoryPriceCopyWith<$Res> {
           IntroductoryPrice value, $Res Function(IntroductoryPrice) then) =
       _$IntroductoryPriceCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'intro_price')
-          double introPrice,
-      @JsonKey(name: 'intro_price_string')
-          String introPriceString,
-      @JsonKey(name: 'intro_price_period')
-          String introPricePeriod,
-      @JsonKey(name: 'intro_price_period_unit')
-          String introPricePeriodUnit,
-      @JsonKey(name: 'intro_price_period_number_of_units')
-          int introPricePeriodNumberOfUnits,
-      @JsonKey(name: 'intro_price_cycles')
-          int introPriceCycles});
+      {@JsonKey(name: 'price')
+          double price,
+      @JsonKey(name: 'priceString')
+          String priceString,
+      @JsonKey(name: 'period')
+          String period,
+      @JsonKey(name: 'cycles')
+          int cycles,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          PeriodUnit periodUnit,
+      @JsonKey(name: 'periodNumberOfUnits')
+          int periodNumberOfUnits});
 }
 
 /// @nodoc
@@ -119,37 +119,37 @@ class _$IntroductoryPriceCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? introPrice = freezed,
-    Object? introPriceString = freezed,
-    Object? introPricePeriod = freezed,
-    Object? introPricePeriodUnit = freezed,
-    Object? introPricePeriodNumberOfUnits = freezed,
-    Object? introPriceCycles = freezed,
+    Object? price = freezed,
+    Object? priceString = freezed,
+    Object? period = freezed,
+    Object? cycles = freezed,
+    Object? periodUnit = freezed,
+    Object? periodNumberOfUnits = freezed,
   }) {
     return _then(_value.copyWith(
-      introPrice: introPrice == freezed
-          ? _value.introPrice
-          : introPrice // ignore: cast_nullable_to_non_nullable
+      price: price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
               as double,
-      introPriceString: introPriceString == freezed
-          ? _value.introPriceString
-          : introPriceString // ignore: cast_nullable_to_non_nullable
+      priceString: priceString == freezed
+          ? _value.priceString
+          : priceString // ignore: cast_nullable_to_non_nullable
               as String,
-      introPricePeriod: introPricePeriod == freezed
-          ? _value.introPricePeriod
-          : introPricePeriod // ignore: cast_nullable_to_non_nullable
+      period: period == freezed
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
               as String,
-      introPricePeriodUnit: introPricePeriodUnit == freezed
-          ? _value.introPricePeriodUnit
-          : introPricePeriodUnit // ignore: cast_nullable_to_non_nullable
-              as String,
-      introPricePeriodNumberOfUnits: introPricePeriodNumberOfUnits == freezed
-          ? _value.introPricePeriodNumberOfUnits
-          : introPricePeriodNumberOfUnits // ignore: cast_nullable_to_non_nullable
+      cycles: cycles == freezed
+          ? _value.cycles
+          : cycles // ignore: cast_nullable_to_non_nullable
               as int,
-      introPriceCycles: introPriceCycles == freezed
-          ? _value.introPriceCycles
-          : introPriceCycles // ignore: cast_nullable_to_non_nullable
+      periodUnit: periodUnit == freezed
+          ? _value.periodUnit
+          : periodUnit // ignore: cast_nullable_to_non_nullable
+              as PeriodUnit,
+      periodNumberOfUnits: periodNumberOfUnits == freezed
+          ? _value.periodNumberOfUnits
+          : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -163,18 +163,18 @@ abstract class _$IntroductoryPriceCopyWith<$Res>
       __$IntroductoryPriceCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'intro_price')
-          double introPrice,
-      @JsonKey(name: 'intro_price_string')
-          String introPriceString,
-      @JsonKey(name: 'intro_price_period')
-          String introPricePeriod,
-      @JsonKey(name: 'intro_price_period_unit')
-          String introPricePeriodUnit,
-      @JsonKey(name: 'intro_price_period_number_of_units')
-          int introPricePeriodNumberOfUnits,
-      @JsonKey(name: 'intro_price_cycles')
-          int introPriceCycles});
+      {@JsonKey(name: 'price')
+          double price,
+      @JsonKey(name: 'priceString')
+          String priceString,
+      @JsonKey(name: 'period')
+          String period,
+      @JsonKey(name: 'cycles')
+          int cycles,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          PeriodUnit periodUnit,
+      @JsonKey(name: 'periodNumberOfUnits')
+          int periodNumberOfUnits});
 }
 
 /// @nodoc
@@ -190,37 +190,37 @@ class __$IntroductoryPriceCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? introPrice = freezed,
-    Object? introPriceString = freezed,
-    Object? introPricePeriod = freezed,
-    Object? introPricePeriodUnit = freezed,
-    Object? introPricePeriodNumberOfUnits = freezed,
-    Object? introPriceCycles = freezed,
+    Object? price = freezed,
+    Object? priceString = freezed,
+    Object? period = freezed,
+    Object? cycles = freezed,
+    Object? periodUnit = freezed,
+    Object? periodNumberOfUnits = freezed,
   }) {
     return _then(_IntroductoryPrice(
-      introPrice == freezed
-          ? _value.introPrice
-          : introPrice // ignore: cast_nullable_to_non_nullable
+      price == freezed
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
               as double,
-      introPriceString == freezed
-          ? _value.introPriceString
-          : introPriceString // ignore: cast_nullable_to_non_nullable
+      priceString == freezed
+          ? _value.priceString
+          : priceString // ignore: cast_nullable_to_non_nullable
               as String,
-      introPricePeriod == freezed
-          ? _value.introPricePeriod
-          : introPricePeriod // ignore: cast_nullable_to_non_nullable
+      period == freezed
+          ? _value.period
+          : period // ignore: cast_nullable_to_non_nullable
               as String,
-      introPricePeriodUnit == freezed
-          ? _value.introPricePeriodUnit
-          : introPricePeriodUnit // ignore: cast_nullable_to_non_nullable
-              as String,
-      introPricePeriodNumberOfUnits == freezed
-          ? _value.introPricePeriodNumberOfUnits
-          : introPricePeriodNumberOfUnits // ignore: cast_nullable_to_non_nullable
+      cycles == freezed
+          ? _value.cycles
+          : cycles // ignore: cast_nullable_to_non_nullable
               as int,
-      introPriceCycles == freezed
-          ? _value.introPriceCycles
-          : introPriceCycles // ignore: cast_nullable_to_non_nullable
+      periodUnit == freezed
+          ? _value.periodUnit
+          : periodUnit // ignore: cast_nullable_to_non_nullable
+              as PeriodUnit,
+      periodNumberOfUnits == freezed
+          ? _value.periodNumberOfUnits
+          : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
@@ -230,18 +230,18 @@ class __$IntroductoryPriceCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_IntroductoryPrice implements _IntroductoryPrice {
   const _$_IntroductoryPrice(
-      @JsonKey(name: 'intro_price')
-          this.introPrice,
-      @JsonKey(name: 'intro_price_string')
-          this.introPriceString,
-      @JsonKey(name: 'intro_price_period')
-          this.introPricePeriod,
-      @JsonKey(name: 'intro_price_period_unit')
-          this.introPricePeriodUnit,
-      @JsonKey(name: 'intro_price_period_number_of_units')
-          this.introPricePeriodNumberOfUnits,
-      @JsonKey(name: 'intro_price_cycles')
-          this.introPriceCycles);
+      @JsonKey(name: 'price')
+          this.price,
+      @JsonKey(name: 'priceString')
+          this.priceString,
+      @JsonKey(name: 'period')
+          this.period,
+      @JsonKey(name: 'cycles')
+          this.cycles,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          this.periodUnit,
+      @JsonKey(name: 'periodNumberOfUnits')
+          this.periodNumberOfUnits);
 
   factory _$_IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
       _$$_IntroductoryPriceFromJson(json);
@@ -249,78 +249,73 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
   @override
 
   /// Introductory price of a subscription in the local currency.
-  @JsonKey(name: 'intro_price')
-  final double introPrice;
+  @JsonKey(name: 'price')
+  final double price;
   @override
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
-  @JsonKey(name: 'intro_price_string')
-  final String introPriceString;
+  @JsonKey(name: 'priceString')
+  final String priceString;
   @override
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
-  @JsonKey(name: 'intro_price_period')
-  final String introPricePeriod;
-  @override
-
-  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-  /// MONTH or YEAR.
-  @JsonKey(name: 'intro_price_period_unit')
-  final String introPricePeriodUnit;
-  @override
-
-  /// Number of units for the billing period of the introductory price.
-  @JsonKey(name: 'intro_price_period_number_of_units')
-  final int introPricePeriodNumberOfUnits;
+  @JsonKey(name: 'period')
+  final String period;
   @override
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
-  @JsonKey(name: 'intro_price_cycles')
-  final int introPriceCycles;
+  @JsonKey(name: 'cycles')
+  final int cycles;
+  @override
+
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
+  @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+  final PeriodUnit periodUnit;
+  @override
+
+  /// Number of units for the billing period of the introductory price.
+  @JsonKey(name: 'periodNumberOfUnits')
+  final int periodNumberOfUnits;
 
   @override
   String toString() {
-    return 'IntroductoryPrice(introPrice: $introPrice, introPriceString: $introPriceString, introPricePeriod: $introPricePeriod, introPricePeriodUnit: $introPricePeriodUnit, introPricePeriodNumberOfUnits: $introPricePeriodNumberOfUnits, introPriceCycles: $introPriceCycles)';
+    return 'IntroductoryPrice(price: $price, priceString: $priceString, period: $period, cycles: $cycles, periodUnit: $periodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _IntroductoryPrice &&
-            (identical(other.introPrice, introPrice) ||
+            (identical(other.price, price) ||
+                const DeepCollectionEquality().equals(other.price, price)) &&
+            (identical(other.priceString, priceString) ||
                 const DeepCollectionEquality()
-                    .equals(other.introPrice, introPrice)) &&
-            (identical(other.introPriceString, introPriceString) ||
+                    .equals(other.priceString, priceString)) &&
+            (identical(other.period, period) ||
+                const DeepCollectionEquality().equals(other.period, period)) &&
+            (identical(other.cycles, cycles) ||
+                const DeepCollectionEquality().equals(other.cycles, cycles)) &&
+            (identical(other.periodUnit, periodUnit) ||
                 const DeepCollectionEquality()
-                    .equals(other.introPriceString, introPriceString)) &&
-            (identical(other.introPricePeriod, introPricePeriod) ||
+                    .equals(other.periodUnit, periodUnit)) &&
+            (identical(other.periodNumberOfUnits, periodNumberOfUnits) ||
                 const DeepCollectionEquality()
-                    .equals(other.introPricePeriod, introPricePeriod)) &&
-            (identical(other.introPricePeriodUnit, introPricePeriodUnit) ||
-                const DeepCollectionEquality().equals(
-                    other.introPricePeriodUnit, introPricePeriodUnit)) &&
-            (identical(other.introPricePeriodNumberOfUnits,
-                    introPricePeriodNumberOfUnits) ||
-                const DeepCollectionEquality().equals(
-                    other.introPricePeriodNumberOfUnits,
-                    introPricePeriodNumberOfUnits)) &&
-            (identical(other.introPriceCycles, introPriceCycles) ||
-                const DeepCollectionEquality()
-                    .equals(other.introPriceCycles, introPriceCycles)));
+                    .equals(other.periodNumberOfUnits, periodNumberOfUnits)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(introPrice) ^
-      const DeepCollectionEquality().hash(introPriceString) ^
-      const DeepCollectionEquality().hash(introPricePeriod) ^
-      const DeepCollectionEquality().hash(introPricePeriodUnit) ^
-      const DeepCollectionEquality().hash(introPricePeriodNumberOfUnits) ^
-      const DeepCollectionEquality().hash(introPriceCycles);
+      const DeepCollectionEquality().hash(price) ^
+      const DeepCollectionEquality().hash(priceString) ^
+      const DeepCollectionEquality().hash(period) ^
+      const DeepCollectionEquality().hash(cycles) ^
+      const DeepCollectionEquality().hash(periodUnit) ^
+      const DeepCollectionEquality().hash(periodNumberOfUnits);
 
   @JsonKey(ignore: true)
   @override
@@ -335,18 +330,18 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
 
 abstract class _IntroductoryPrice implements IntroductoryPrice {
   const factory _IntroductoryPrice(
-      @JsonKey(name: 'intro_price')
-          double introPrice,
-      @JsonKey(name: 'intro_price_string')
-          String introPriceString,
-      @JsonKey(name: 'intro_price_period')
-          String introPricePeriod,
-      @JsonKey(name: 'intro_price_period_unit')
-          String introPricePeriodUnit,
-      @JsonKey(name: 'intro_price_period_number_of_units')
-          int introPricePeriodNumberOfUnits,
-      @JsonKey(name: 'intro_price_cycles')
-          int introPriceCycles) = _$_IntroductoryPrice;
+      @JsonKey(name: 'price')
+          double price,
+      @JsonKey(name: 'priceString')
+          String priceString,
+      @JsonKey(name: 'period')
+          String period,
+      @JsonKey(name: 'cycles')
+          int cycles,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          PeriodUnit periodUnit,
+      @JsonKey(name: 'periodNumberOfUnits')
+          int periodNumberOfUnits) = _$_IntroductoryPrice;
 
   factory _IntroductoryPrice.fromJson(Map<String, dynamic> json) =
       _$_IntroductoryPrice.fromJson;
@@ -354,37 +349,37 @@ abstract class _IntroductoryPrice implements IntroductoryPrice {
   @override
 
   /// Introductory price of a subscription in the local currency.
-  @JsonKey(name: 'intro_price')
-  double get introPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'price')
+  double get price => throw _privateConstructorUsedError;
   @override
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
-  @JsonKey(name: 'intro_price_string')
-  String get introPriceString => throw _privateConstructorUsedError;
+  @JsonKey(name: 'priceString')
+  String get priceString => throw _privateConstructorUsedError;
   @override
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
-  @JsonKey(name: 'intro_price_period')
-  String get introPricePeriod => throw _privateConstructorUsedError;
-  @override
-
-  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-  /// MONTH or YEAR.
-  @JsonKey(name: 'intro_price_period_unit')
-  String get introPricePeriodUnit => throw _privateConstructorUsedError;
-  @override
-
-  /// Number of units for the billing period of the introductory price.
-  @JsonKey(name: 'intro_price_period_number_of_units')
-  int get introPricePeriodNumberOfUnits => throw _privateConstructorUsedError;
+  @JsonKey(name: 'period')
+  String get period => throw _privateConstructorUsedError;
   @override
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
-  @JsonKey(name: 'intro_price_cycles')
-  int get introPriceCycles => throw _privateConstructorUsedError;
+  @JsonKey(name: 'cycles')
+  int get cycles => throw _privateConstructorUsedError;
+  @override
+
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
+  @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+  PeriodUnit get periodUnit => throw _privateConstructorUsedError;
+  @override
+
+  /// Number of units for the billing period of the introductory price.
+  @JsonKey(name: 'periodNumberOfUnits')
+  int get periodNumberOfUnits => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$IntroductoryPriceCopyWith<_IntroductoryPrice> get copyWith =>

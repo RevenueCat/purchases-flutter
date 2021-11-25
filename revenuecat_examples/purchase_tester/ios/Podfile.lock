@@ -32,7 +32,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
+  integration_test: 7db6d89f336f671dcbc7563ee27a5b08f6f8aee1
   Purchases: 4e410d75f18b544aba8aa41ddc4bffbf8e787246
   purchases_flutter: da4ece9cf1a00a31bc3afa54e76d80000c20a168
   PurchasesCoreSwift: 93fa64c1a70e7f493f54aba64e01ff42d1ed9109
