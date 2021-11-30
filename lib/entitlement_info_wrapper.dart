@@ -112,8 +112,8 @@ class EntitlementInfo {
       case "PURCHASED":
         ownershipType = OwnershipType.purchased;
         break;
-      case "FAMILY_SHARING":
-        ownershipType = OwnershipType.familySharing;
+      case "FAMILY_SHARED":
+        ownershipType = OwnershipType.familyShared;
         break;
       default:
         ownershipType = OwnershipType.unknown;
@@ -198,13 +198,12 @@ enum Store {
 
 /// Enum of ownership types
 enum OwnershipType {
-  /// For ownership when a user made the purchase themselves
+  /// The purchase was made directly by this user.
   purchased,
 
-  /// For ownership when a user has been shared the purchase via family sharing
-  familySharing,
+  /// The purchase has been shared to this user by a family member.
+  familyShared,
 
-  /// For when the ownership type is unknown. Maybe there is no purchase.
-  /// Maybe it came from a store which doesn't publish this information
+  /// The purchase has no or an unknown ownership type.
   unknown
 }
