@@ -47,6 +47,12 @@ class EntitlementInfo {
   /// Check the `isActive` property.
   final String? billingIssueDetectedAt;
 
+  /// Use this property to determine whether a purchase was made by the current
+  /// user or shared to them by a family member. This can be useful for
+  /// onboarding users who have had an entitlement shared with them, but might
+  /// not be entirely aware of the benefits they now have.
+  final OwnershipType ownershipType;
+
   /// Construct an EntitlementInfo
   EntitlementInfo(
       this.identifier,
@@ -60,7 +66,8 @@ class EntitlementInfo {
       this.productIdentifier,
       this.isSandbox,
       this.unsubscribeDetectedAt,
-      this.billingIssueDetectedAt);
+      this.billingIssueDetectedAt,
+      this.ownershipType);
 
   /// Constructs an EntitlementInfo from a JSON object
   factory EntitlementInfo.fromJson(Map<dynamic, dynamic> json) {
@@ -100,6 +107,17 @@ class EntitlementInfo {
         store = Store.unknownStore;
         break;
     }
+    late var ownershipType;
+    switch (json["ownershipType"]) {
+      case "PURCHASED":
+        ownershipType = OwnershipType.purchased;
+        break;
+      case "FAMILY_SHARED":
+        ownershipType = OwnershipType.familyShared;
+        break;
+      default:
+        ownershipType = OwnershipType.unknown;
+    }
     return EntitlementInfo(
         json["identifier"] as String,
         json["isActive"] as bool,
@@ -112,12 +130,13 @@ class EntitlementInfo {
         json["productIdentifier"] as String,
         json["isSandbox"] as bool,
         json["unsubscribeDetectedAt"] as String?,
-        json["billingIssueDetectedAt"] as String?);
+        json["billingIssueDetectedAt"] as String?,
+        ownershipType);
   }
 
   @override
   String toString() {
-    return 'EntitlementInfo{identifier: $identifier, isActive: $isActive, willRenew: $willRenew, periodType: $periodType, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, expirationDate: $expirationDate, store: $store, productIdentifier: $productIdentifier, isSandbox: $isSandbox, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt}';
+    return 'EntitlementInfo{identifier: $identifier, isActive: $isActive, willRenew: $willRenew, periodType: $periodType, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, expirationDate: $expirationDate, store: $store, productIdentifier: $productIdentifier, isSandbox: $isSandbox, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt, ownershipType: $ownershipType}';
   }
 
   @override
@@ -136,7 +155,8 @@ class EntitlementInfo {
         this.productIdentifier == other.productIdentifier &&
         this.isSandbox == other.isSandbox &&
         this.unsubscribeDetectedAt == other.unsubscribeDetectedAt &&
-        this.billingIssueDetectedAt == other.billingIssueDetectedAt);
+        this.billingIssueDetectedAt == other.billingIssueDetectedAt &&
+        this.ownershipType == other.ownershipType);
   }
 }
 
@@ -174,4 +194,16 @@ enum Store {
 
   /// For entitlements granted via an unknown store.
   unknownStore
+}
+
+/// Enum of ownership types
+enum OwnershipType {
+  /// The purchase was made directly by this user.
+  purchased,
+
+  /// The purchase has been shared to this user by a family member.
+  familyShared,
+
+  /// The purchase has no or an unknown ownership type.
+  unknown
 }
