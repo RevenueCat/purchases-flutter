@@ -10,7 +10,7 @@ assignees: ""
 - [ ] I have read the [Contribution Guidelines](https://github.com/RevenueCat/react-native-purchases/blob/main/CONTRIBUTING.md)
 - [ ] I have searched the [Community](https://community.revenuecat.com)
 - [ ] I have read [docs.revenuecat.com](https://docs.revenuecat.com/)
-- [ ] I have searched for [existing Github issues](https://github.com/RevenueCat/react-native-purchases/issues)
+- [ ] I have searched for [existing Github issues](https://github.com/RevenueCat/purchases-flutter/issues)
 
 **Describe the bug**
 A clear and concise description of what the bug is. The more detail you can provide the faster our team will be able to triage and resolve the issue. **Do not remove any of the steps from the template below. If a step is not applicable to your issue, please leave that step empty.**
