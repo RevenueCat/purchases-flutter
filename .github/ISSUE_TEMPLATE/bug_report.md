@@ -7,7 +7,7 @@ assignees: ""
 ---
 
 - [ ] I have updated Purchases SDK to the latest version
-- [ ] I have read the [Contribution Guidelines](https://github.com/RevenueCat/react-native-purchases/blob/main/CONTRIBUTING.md)
+- [ ] I have read the [Contribution Guidelines](https://github.com/RevenueCat/purchases-flutter/blob/main/CONTRIBUTING.md)
 - [ ] I have searched the [Community](https://community.revenuecat.com)
 - [ ] I have read [docs.revenuecat.com](https://docs.revenuecat.com/)
 - [ ] I have searched for [existing Github issues](https://github.com/RevenueCat/purchases-flutter/issues)
