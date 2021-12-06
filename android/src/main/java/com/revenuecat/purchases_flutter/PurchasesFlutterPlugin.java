@@ -52,7 +52,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "3.7.0";
+    private static final String PLUGIN_VERSION = "3.8.0";
 
     /**
      * Plugin registration.
@@ -209,6 +209,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "isAnonymous":
                 isAnonymous(result);
+                break;
+            case "isConfigured":
+                isConfigured(result);
                 break;
             case "checkTrialOrIntroductoryPriceEligibility":
                 productIdentifiers = call.argument("productIdentifiers");
@@ -462,6 +465,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void isAnonymous(final Result result) {
         result.success(CommonKt.isAnonymous());
+    }
+
+    private void isConfigured(final Result result) {
+        result.success(Purchases.isConfigured());
     }
 
     private void checkTrialOrIntroductoryPriceEligibility(ArrayList<String> productIDs, final Result result) {

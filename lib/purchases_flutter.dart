@@ -376,6 +376,11 @@ class Purchases {
     return await _channel.invokeMethod('isAnonymous') as bool;
   }
 
+  /// Returns `true` if RevenueCat has already been intialized through `setup()`.
+  static Future<bool> get isConfigured async {
+    return await _channel.invokeMethod('isConfigured') as bool;
+  }
+
   /// iOS only. Computes whether or not a user is eligible for the introductory
   /// pricing period of a given product. You should use this method to determine
   /// whether or not you show the user the normal product price or the
