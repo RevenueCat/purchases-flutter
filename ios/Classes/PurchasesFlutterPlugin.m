@@ -507,7 +507,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"3.7.0";
+    return @"3.8.0";
 }
 
 @end
