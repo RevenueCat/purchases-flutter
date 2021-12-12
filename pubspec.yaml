@@ -1,5 +1,7 @@
 name: purchases_flutter
-description: A Flutter plugin that makes it simple to add and manage in-app purchases (IAP) and subscriptions. Supports Android, iOS, macOS, iPadOS, and watchOS.
+description: A Flutter plugin that makes it simple to add and manage in-app
+  purchases (IAP) and subscriptions. Supports Android, iOS, macOS, iPadOS, and
+  watchOS.
 version: 3.8.0
 homepage: https://www.revenuecat.com/
 repository: https://github.com/RevenueCat/purchases-flutter
@@ -7,32 +9,28 @@ issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
 documentation: https://docs.revenuecat.com/docs
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.12.13+hotfix.6"
 
 dependencies:
   flutter:
     sdk: flutter
-  collection: ^1.15.0
+  freezed_annotation: ^0.15.0
+  json_annotation: ^4.3.0
 
 dev_dependencies:
-  pedantic: ^1.8.0
-  flutter_test:
-    sdk: flutter
+  build_runner: ^2.1.4
   flutter_driver:
     sdk: flutter
-  build_runner: ^1.0.0
+  flutter_lints: ^1.0.4
+  flutter_test:
+    sdk: flutter
+  freezed: ^0.14.1+2
+  json_serializable: ^6.0.0
+  pedantic: ^1.11.1
   test: ^1.15.7
 
-# For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
-  # This section identifies this Flutter project as a plugin project.
-  # The androidPackage and pluginClass identifiers should not ordinarily
-  # be modified. They are used by the tooling to maintain consistency when
-  # adding or updating assets for this project.
   plugin:
     platforms:
       android:
@@ -42,34 +40,3 @@ flutter:
         pluginClass: PurchasesFlutterPlugin
       macos:
         pluginClass: PurchasesFlutterPlugin
-
-  # To add assets to your plugin package, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
-  #
-  # For details regarding assets in packages, see
-  # https://flutter.dev/assets-and-images/#from-packages
-  #
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware.
-
-  # To add custom fonts to your plugin package, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts in packages, see
-  # https://flutter.dev/custom-fonts/#from-packages

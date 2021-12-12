@@ -1,9 +1,45 @@
-include: package:pedantic/analysis_options.1.8.0.yaml
+include: package:flutter_lints/flutter.yaml
+
 analyzer:
+  errors:
+    invalid_annotation_target: ignore
   exclude:
-    # Ignore generated files
-    - '**/*.g.dart'
-    - 'lib/src/generated/*.dart'
+    - lib/models/*.freezed.dart
+    - lib/models/*.g.dart
+    - lib/models/**/*.freezed.dart
+    - lib/models/**/*.g.dart
+
 linter:
   rules:
-    - public_member_api_docs
+    avoid_redundant_argument_values: true
+    avoid_relative_lib_imports: true
+    avoid_types_as_parameter_names: true
+    avoid_unnecessary_containers: true
+    avoid_unused_constructor_parameters: true
+    avoid_void_async: true
+    cascade_invocations: true
+    directives_ordering: true
+    invalid_annotation_target: false
+    omit_local_variable_types: true
+    prefer_const_constructors: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    prefer_expression_function_bodies: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_is_not_empty: true
+    prefer_is_not_operator: true
+    prefer_iterable_whereType: true
+    prefer_relative_imports: true
+    prefer_single_quotes: true
+    prefer_spread_collections: true
+    require_trailing_commas: true
+    unnecessary_brace_in_string_interps: true
+    unnecessary_lambdas: true
+    unnecessary_null_aware_assignments: true
+    unnecessary_null_checks: true
+    unnecessary_parenthesis: true
+    unnecessary_statements: true
+    unnecessary_string_escapes: true
+    unnecessary_string_interpolations: true
+    unnecessary_this: true
