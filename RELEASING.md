@@ -1,5 +1,5 @@
 1. Start a branch `release/x.x.x`
-1. Update to the latest SDK versions in ios/purchases_flutter.podspec, mac/purchases_flutter.podspec and build.gradle.
+1. Update to the latest SDK versions in ios/purchases_flutter.podspec, macos/purchases_flutter.podspec and android/build.gradle.
 1. Run `flutter format .`
 1. Update versions in VERSIONS.md.
 1. Update CHANGELOG-LATEST.md with the changes for the current version (to be used by Fastlane for the github release notes)

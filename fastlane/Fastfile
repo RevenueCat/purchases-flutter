@@ -15,6 +15,11 @@
 
 require 'yaml'
 
+before_all do
+  setup_circle_ci
+  update_fastlane  
+end
+
 desc "Increment build number and update changelog"
 lane :bump_and_update_changelog do |options|
   new_version_number = options[:version]

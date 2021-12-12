@@ -36,7 +36,9 @@ class _$EntitlementInfoTearOff {
           String productIdentifier,
       @JsonKey(name: 'isSandbox')
           bool isSandbox,
-      {@JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
+      {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+          OwnershipType ownershipType = OwnershipType.unknown,
+      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
           Store store = Store.unknownStore,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
           PeriodType periodType = PeriodType.unknown,
@@ -54,6 +56,7 @@ class _$EntitlementInfoTearOff {
       originalPurchaseDate,
       productIdentifier,
       isSandbox,
+      ownershipType: ownershipType,
       store: store,
       periodType: periodType,
       expirationDate: expirationDate,
@@ -101,6 +104,13 @@ mixin _$EntitlementInfo {
   /// False if this entitlement is unlocked via a production purchase
   @JsonKey(name: 'isSandbox')
   bool get isSandbox => throw _privateConstructorUsedError;
+
+  /// Use this property to determine whether a purchase was made by the current
+  /// user or shared to them by a family member. This can be useful for
+  /// onboarding users who have had an entitlement shared with them, but might
+  /// not be entirely aware of the benefits they now have.
+  @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+  OwnershipType get ownershipType => throw _privateConstructorUsedError;
 
   /// The store where this entitlement was unlocked from
   /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
@@ -157,6 +167,8 @@ abstract class $EntitlementInfoCopyWith<$Res> {
           String productIdentifier,
       @JsonKey(name: 'isSandbox')
           bool isSandbox,
+      @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+          OwnershipType ownershipType,
       @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
           Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
@@ -187,6 +199,7 @@ class _$EntitlementInfoCopyWithImpl<$Res>
     Object? originalPurchaseDate = freezed,
     Object? productIdentifier = freezed,
     Object? isSandbox = freezed,
+    Object? ownershipType = freezed,
     Object? store = freezed,
     Object? periodType = freezed,
     Object? expirationDate = freezed,
@@ -222,6 +235,10 @@ class _$EntitlementInfoCopyWithImpl<$Res>
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
               as bool,
+      ownershipType: ownershipType == freezed
+          ? _value.ownershipType
+          : ownershipType // ignore: cast_nullable_to_non_nullable
+              as OwnershipType,
       store: store == freezed
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
@@ -268,6 +285,8 @@ abstract class _$EntitlementInfoCopyWith<$Res>
           String productIdentifier,
       @JsonKey(name: 'isSandbox')
           bool isSandbox,
+      @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+          OwnershipType ownershipType,
       @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
           Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
@@ -300,6 +319,7 @@ class __$EntitlementInfoCopyWithImpl<$Res>
     Object? originalPurchaseDate = freezed,
     Object? productIdentifier = freezed,
     Object? isSandbox = freezed,
+    Object? ownershipType = freezed,
     Object? store = freezed,
     Object? periodType = freezed,
     Object? expirationDate = freezed,
@@ -335,6 +355,10 @@ class __$EntitlementInfoCopyWithImpl<$Res>
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
               as bool,
+      ownershipType: ownershipType == freezed
+          ? _value.ownershipType
+          : ownershipType // ignore: cast_nullable_to_non_nullable
+              as OwnershipType,
       store: store == freezed
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
@@ -377,7 +401,9 @@ class _$_EntitlementInfo implements _EntitlementInfo {
           this.productIdentifier,
       @JsonKey(name: 'isSandbox')
           this.isSandbox,
-      {@JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
+      {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+          this.ownershipType = OwnershipType.unknown,
+      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
           this.store = Store.unknownStore,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
           this.periodType = PeriodType.unknown,
@@ -430,6 +456,14 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   final bool isSandbox;
   @override
 
+  /// Use this property to determine whether a purchase was made by the current
+  /// user or shared to them by a family member. This can be useful for
+  /// onboarding users who have had an entitlement shared with them, but might
+  /// not be entirely aware of the benefits they now have.
+  @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+  final OwnershipType ownershipType;
+  @override
+
   /// The store where this entitlement was unlocked from
   /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
@@ -465,7 +499,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
 
   @override
   String toString() {
-    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, isSandbox: $isSandbox, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt)';
+    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, isSandbox: $isSandbox, ownershipType: $ownershipType, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt)';
   }
 
   @override
@@ -493,6 +527,9 @@ class _$_EntitlementInfo implements _EntitlementInfo {
             (identical(other.isSandbox, isSandbox) ||
                 const DeepCollectionEquality()
                     .equals(other.isSandbox, isSandbox)) &&
+            (identical(other.ownershipType, ownershipType) ||
+                const DeepCollectionEquality()
+                    .equals(other.ownershipType, ownershipType)) &&
             (identical(other.store, store) ||
                 const DeepCollectionEquality().equals(other.store, store)) &&
             (identical(other.periodType, periodType) ||
@@ -519,6 +556,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
       const DeepCollectionEquality().hash(originalPurchaseDate) ^
       const DeepCollectionEquality().hash(productIdentifier) ^
       const DeepCollectionEquality().hash(isSandbox) ^
+      const DeepCollectionEquality().hash(ownershipType) ^
       const DeepCollectionEquality().hash(store) ^
       const DeepCollectionEquality().hash(periodType) ^
       const DeepCollectionEquality().hash(expirationDate) ^
@@ -552,7 +590,9 @@ abstract class _EntitlementInfo implements EntitlementInfo {
           String productIdentifier,
       @JsonKey(name: 'isSandbox')
           bool isSandbox,
-      {@JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
+      {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+          OwnershipType ownershipType,
+      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
           Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
           PeriodType periodType,
@@ -603,6 +643,14 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// False if this entitlement is unlocked via a production purchase
   @JsonKey(name: 'isSandbox')
   bool get isSandbox => throw _privateConstructorUsedError;
+  @override
+
+  /// Use this property to determine whether a purchase was made by the current
+  /// user or shared to them by a family member. This can be useful for
+  /// onboarding users who have had an entitlement shared with them, but might
+  /// not be entirely aware of the benefits they now have.
+  @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
+  OwnershipType get ownershipType => throw _privateConstructorUsedError;
   @override
 
   /// The store where this entitlement was unlocked from

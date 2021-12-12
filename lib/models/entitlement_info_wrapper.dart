@@ -47,33 +47,65 @@ enum Store {
   unknownStore
 }
 
+/// Enum of ownership types
+enum OwnershipType {
+  /// The purchase was made directly by this user.
+  @JsonValue('PURCHASED')
+  purchased,
+
+  /// The purchase has been shared to this user by a family member.
+  @JsonValue('FAMILY_SHARED')
+  familyShared,
+
+  /// The purchase has no or an unknown ownership type.
+  unknown
+}
+
 @freezed
 
 /// The EntitlementInfo object gives you access to all of the information about the status of a user entitlement.
 class EntitlementInfo with _$EntitlementInfo {
   const factory EntitlementInfo(
     /// The entitlement identifier configured in the RevenueCat dashboard
-    @JsonKey(name: 'identifier') String identifier,
+    @JsonKey(name: 'identifier')
+        String identifier,
 
     /// True if the user has access to this entitlement
-    @JsonKey(name: 'isActive') bool isActive,
+    @JsonKey(name: 'isActive')
+        bool isActive,
 
     /// True if the underlying subscription is set to renew at the end of
     /// the billing period (expirationDate). Will always be True if entitlement
     /// is for lifetime access.
-    @JsonKey(name: 'willRenew') bool willRenew,
+    @JsonKey(name: 'willRenew')
+        bool willRenew,
 
     /// The latest purchase or renewal date for the entitlement.
-    @JsonKey(name: 'latestPurchaseDate') String latestPurchaseDate,
+    @JsonKey(name: 'latestPurchaseDate')
+        String latestPurchaseDate,
 
     /// The first date this entitlement was purchased
-    @JsonKey(name: 'originalPurchaseDate') String originalPurchaseDate,
+    @JsonKey(name: 'originalPurchaseDate')
+        String originalPurchaseDate,
 
     /// The product identifier that unlocked this entitlement
-    @JsonKey(name: 'productIdentifier') String productIdentifier,
+    @JsonKey(name: 'productIdentifier')
+        String productIdentifier,
 
     /// False if this entitlement is unlocked via a production purchase
-    @JsonKey(name: 'isSandbox') bool isSandbox, {
+    @JsonKey(name: 'isSandbox')
+        bool isSandbox, {
+
+    /// Use this property to determine whether a purchase was made by the current
+    /// user or shared to them by a family member. This can be useful for
+    /// onboarding users who have had an entitlement shared with them, but might
+    /// not be entirely aware of the benefits they now have.
+    @Default(OwnershipType.unknown)
+    @JsonKey(
+      name: 'ownershipType',
+      unknownEnumValue: OwnershipType.unknown,
+    )
+        OwnershipType ownershipType,
 
     /// The store where this entitlement was unlocked from
     /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
@@ -89,7 +121,8 @@ class EntitlementInfo with _$EntitlementInfo {
 
     /// The expiration date for the entitlement, can be `null` for lifetime access.
     /// If the `periodType` is `trial`, this is the trial expiration date.
-    @JsonKey(name: 'expirationDate', nullable: true) String? expirationDate,
+    @JsonKey(name: 'expirationDate', nullable: true)
+        String? expirationDate,
 
     /// The date an unsubscribe was detected. Can be `null` if it's still
     /// subscribed or product is not a subscription.

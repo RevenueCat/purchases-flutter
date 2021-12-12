@@ -14,6 +14,10 @@ _$_EntitlementInfo _$$_EntitlementInfoFromJson(Map json) => _$_EntitlementInfo(
       json['originalPurchaseDate'] as String,
       json['productIdentifier'] as String,
       json['isSandbox'] as bool,
+      ownershipType: $enumDecodeNullable(
+              _$OwnershipTypeEnumMap, json['ownershipType'],
+              unknownValue: OwnershipType.unknown) ??
+          OwnershipType.unknown,
       store: $enumDecodeNullable(_$StoreEnumMap, json['store'],
               unknownValue: Store.unknownStore) ??
           Store.unknownStore,
@@ -34,12 +38,19 @@ Map<String, dynamic> _$$_EntitlementInfoToJson(_$_EntitlementInfo instance) =>
       'originalPurchaseDate': instance.originalPurchaseDate,
       'productIdentifier': instance.productIdentifier,
       'isSandbox': instance.isSandbox,
+      'ownershipType': _$OwnershipTypeEnumMap[instance.ownershipType],
       'store': _$StoreEnumMap[instance.store],
       'periodType': _$PeriodTypeEnumMap[instance.periodType],
       'expirationDate': instance.expirationDate,
       'unsubscribeDetectedAt': instance.unsubscribeDetectedAt,
       'billingIssueDetectedAt': instance.billingIssueDetectedAt,
     };
+
+const _$OwnershipTypeEnumMap = {
+  OwnershipType.purchased: 'PURCHASED',
+  OwnershipType.familyShared: 'FAMILY_SHARED',
+  OwnershipType.unknown: 'unknown',
+};
 
 const _$StoreEnumMap = {
   Store.appStore: 'APP_STORE',
