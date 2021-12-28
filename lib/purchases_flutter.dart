@@ -404,9 +404,8 @@ class Purchases {
       await _channel.invokeMethod('isAnonymous') as bool;
 
   /// Returns `true` if RevenueCat has already been intialized through `setup()`.
-  static Future<bool> get isConfigured async {
-    return await _channel.invokeMethod('isConfigured') as bool;
-  }
+  static Future<bool> get isConfigured async =>
+    await _channel.invokeMethod('isConfigured') as bool;
 
   /// iOS only. Computes whether or not a user is eligible for the introductory
   /// pricing period of a given product. You should use this method to determine
@@ -539,7 +538,7 @@ class Purchases {
   /// [airshipChannelID] Empty String or null will delete the subscriber attribute.
   static Future<void> setAirshipChannelID(String airshipChannelID) async {
     await _channel.invokeMethod(
-        'setAirshipChannelID', {'airshipChannelID': airshipChannelID});
+        'setAirshipChannelID', {'airshipChannelID': airshipChannelID},);
   }
 
   /// Subscriber attribute associated with the install media source for the user

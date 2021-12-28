@@ -43,7 +43,7 @@ commands:
           name: Build
           command: |
             cd <<parameters.project>>
-            flutter packages pub run build_runner build
+            flutter packages pub run build_runner build --delete-conflicting-outputs
 
   gradle-dependencies:
     description: "Get Gradle dependencies"
