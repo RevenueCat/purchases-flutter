@@ -1,3 +1,10 @@
+## 3.9.0
+
+- Updated Android to compile with SDK 30
+    https://github.com/RevenueCat/purchases-flutter/pull/285
+- Removed all references to JCenter (More on the [JCenter Shutdown](https://blog.gradle.org/jcenter-shutdown))
+    https://github.com/RevenueCat/purchases-flutter/pull/285
+
 ## 3.8.0
 
 - Added `isConfigured`, which returns `true` if the SDK has already been configured through `setup`.
