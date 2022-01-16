@@ -7,7 +7,7 @@ class ShowDialogToDismiss extends StatelessWidget {
   final String title;
   final String buttonText;
 
-  ShowDialogToDismiss({this.title, this.buttonText, this.content});
+  const ShowDialogToDismiss({Key key, this.title, this.buttonText, this.content}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ShowDialogToDismiss extends StatelessWidget {
           title,
         ),
         content: Text(
-          this.content,
+          content,
         ),
         actions: <Widget>[
           TextButton(
@@ -36,7 +36,7 @@ class ShowDialogToDismiss extends StatelessWidget {
             title,
           ),
           content: Text(
-            this.content,
+            content,
           ),
           actions: <Widget>[
             CupertinoDialogAction(

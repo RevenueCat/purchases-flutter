@@ -7,7 +7,7 @@ import 'package:magic_weather_flutter/src/model/styles.dart';
 class Paywall extends StatefulWidget {
   final Offering offering;
 
-  Paywall({Key key, @required this.offering}) : super(key: key);
+  const Paywall({Key key, @required this.offering}) : super(key: key);
 
   @override
   _PaywallState createState() => _PaywallState();
@@ -23,18 +23,18 @@ class _PaywallState extends State<Paywall> {
             Container(
               height: 70.0,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: kColorBar,
                   borderRadius:
                       BorderRadius.vertical(top: Radius.circular(25.0))),
-              child: Center(
+              child: const Center(
                   child:
                       Text('✨ Magic Weather Premium', style: kTitleTextStyle)),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                   top: 32, bottom: 16, left: 16.0, right: 16.0),
-              child: Container(
+              child: SizedBox(
                 child: Text(
                   'MAGIC WEATHER PREMIUM',
                   style: kDescriptionTextStyle,
@@ -77,12 +77,12 @@ class _PaywallState extends State<Paywall> {
                 );
               },
               shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
+              physics: const ClampingScrollPhysics(),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
+            const Padding(
+              padding: EdgeInsets.only(
                   top: 32, bottom: 16, left: 16.0, right: 16.0),
-              child: Container(
+              child: SizedBox(
                 child: Text(
                   footerText,
                   style: kDescriptionTextStyle,

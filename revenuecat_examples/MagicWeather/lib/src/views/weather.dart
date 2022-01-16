@@ -11,6 +11,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({Key key}) : super(key: key);
+
   @override
   _WeatherScreenState createState() => _WeatherScreenState();
 }
@@ -60,7 +62,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           isDismissible: true,
           isScrollControlled: true,
           backgroundColor: kColorBackground,
-          shape: RoundedRectangleBorder(
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
           ),
           context: context,
@@ -107,11 +109,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.near_me),
+                              const Icon(Icons.near_me),
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                    "${appData.currentData.environment.toString().split('.')[1].toUpperCase()}",
+                                    appData.currentData.environment.toString().split('.')[1].toUpperCase(),
                                     style: kDescriptionTextStyle.copyWith(
                                         fontSize: kFontSizeMedium,
                                         fontWeight: FontWeight.bold)),

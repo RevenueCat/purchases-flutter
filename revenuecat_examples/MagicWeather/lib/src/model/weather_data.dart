@@ -38,8 +38,8 @@ class WeatherData {
       environment: Environment.earth);
 
   static generateData() {
-    final int min = -20;
-    final int max = 120;
+    const int min = -20;
+    const int max = 120;
     final int randomTemperature = min + (Random().nextInt(max - min));
 
     String temperature = randomTemperature.toString();

@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 void main() => runApp(
-      MaterialApp(
+      const MaterialApp(
         title: 'RevenueCat Sample',
         home: InitialScreen(),
       ),
@@ -13,6 +13,8 @@ void main() => runApp(
 
 // ignore: public_member_api_docs
 class InitialScreen extends StatefulWidget {
+  const InitialScreen({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
@@ -55,9 +57,9 @@ class _MyAppState extends State<InitialScreen> {
     } else {
       final isPro = _purchaserInfo.entitlements.active.containsKey('pro_cat');
       if (isPro) {
-        return CatsScreen();
+        return const CatsScreen();
       } else {
-        return UpsellScreen();
+        return const UpsellScreen();
       }
     }
   }
@@ -65,6 +67,8 @@ class _MyAppState extends State<InitialScreen> {
 
 // ignore: public_member_api_docs
 class UpsellScreen extends StatefulWidget {
+  const UpsellScreen({Key key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _UpsellScreenState();
 }
@@ -138,7 +142,7 @@ class _PurchaseButton extends StatelessWidget {
             final purchaserInfo = await Purchases.purchasePackage(package);
             final isPro = purchaserInfo.entitlements.all['pro_cat'].isActive;
             if (isPro) {
-              return CatsScreen();
+              return const CatsScreen();
             }
           } on PlatformException catch (e) {
             final errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -151,7 +155,7 @@ class _PurchaseButton extends StatelessWidget {
               print('Payment is pending');
             }
           }
-          return InitialScreen();
+          return const InitialScreen();
         },
         child: Text('Buy - (${package.product.priceString})'),
       );
@@ -159,6 +163,8 @@ class _PurchaseButton extends StatelessWidget {
 
 // ignore: public_member_api_docs
 class CatsScreen extends StatelessWidget {
+  const CatsScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Cats Screen')),
