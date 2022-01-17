@@ -1,8 +1,6 @@
-## 3.9.0
+## 3.9.1
 
-- Updated Android to compile with SDK 30
-    https://github.com/RevenueCat/purchases-flutter/pull/285
-- Removed all references to JCenter (More on the [JCenter Shutdown](https://blog.gradle.org/jcenter-shutdown))
-    https://github.com/RevenueCat/purchases-flutter/pull/285
-- Updated JSON serialization using Freezed
-    https://github.com/RevenueCat/purchases-flutter/pull/270
+- Fixed a crash in `getOfferings` on Android for products that don't have intro pricing
+    https://github.com/RevenueCat/purchases-flutter/pull/294
+- Update Freezed dependency to 1.1.0, updated freezed-annotation and other dependencies
+    https://github.com/RevenueCat/purchases-flutter/pull/297
