@@ -7,7 +7,9 @@ class ShowDialogToDismiss extends StatelessWidget {
   final String title;
   final String buttonText;
 
-  const ShowDialogToDismiss({Key key, this.title, this.buttonText, this.content}) : super(key: key);
+  const ShowDialogToDismiss(
+      {Key key, this.title, this.buttonText, this.content})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

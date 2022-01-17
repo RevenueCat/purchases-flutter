@@ -113,7 +113,10 @@ class _WeatherScreenState extends State<WeatherScreen> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 8.0),
                                 child: Text(
-                                    appData.currentData.environment.toString().split('.')[1].toUpperCase(),
+                                    appData.currentData.environment
+                                        .toString()
+                                        .split('.')[1]
+                                        .toUpperCase(),
                                     style: kDescriptionTextStyle.copyWith(
                                         fontSize: kFontSizeMedium,
                                         fontWeight: FontWeight.bold)),
