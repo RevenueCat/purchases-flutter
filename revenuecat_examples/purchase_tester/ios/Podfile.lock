@@ -2,14 +2,14 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - Purchases (3.13.1):
-    - PurchasesCoreSwift (= 3.13.1)
-  - purchases_flutter (3.8.0):
+  - Purchases (3.13.2):
+    - PurchasesCoreSwift (= 3.13.2)
+  - purchases_flutter (3.9.1):
     - Flutter
-    - PurchasesHybridCommon (= 1.11.1)
-  - PurchasesCoreSwift (3.13.1)
-  - PurchasesHybridCommon (1.11.1):
-    - Purchases (= 3.13.1)
+    - PurchasesHybridCommon (= 1.11.2)
+  - PurchasesCoreSwift (3.13.2)
+  - PurchasesHybridCommon (1.11.2):
+    - Purchases (= 3.13.2)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -32,11 +32,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  integration_test: 7db6d89f336f671dcbc7563ee27a5b08f6f8aee1
-  Purchases: 2693d6444609de044ab25fcda9561bef038f24da
-  purchases_flutter: 214d452aaf860496aeee822487eafcdd962fab33
-  PurchasesCoreSwift: ca55f9ef671f89abed133775dd9e53f55007828d
-  PurchasesHybridCommon: a0313de4f31fbaf137518b2686ccdca4c91dd2b4
+  integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
+  Purchases: 03200de9288724e77de435000d1828601e6b8e00
+  purchases_flutter: 513e990912ff636879bc414dc01071bf21c01eca
+  PurchasesCoreSwift: 2ea4b33e5cece5c8a0751594ef7c6cbfcbd747a9
+  PurchasesHybridCommon: 56ef42d85c3e930d49aff4ac5fa027373d2e1bb8
 
 PODFILE CHECKSUM: 1fdb55652a099787cebcdf2ff01f755f75ce17b9
 
