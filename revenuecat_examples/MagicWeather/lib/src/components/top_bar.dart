@@ -10,12 +10,13 @@ class TopBar extends StatelessWidget {
   final String uniqueHeroTag;
   final Widget child;
 
-  TopBar({
+  const TopBar({
+    Key key,
     this.text,
     this.style,
     this.uniqueHeroTag,
     this.child,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class TopBar extends StatelessWidget {
       return Scaffold(
         backgroundColor: kColorBar,
         appBar: AppBar(
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: kColorText,
           ),
           backgroundColor: kColorBar,

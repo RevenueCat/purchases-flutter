@@ -11,6 +11,8 @@ final GlobalKey<NavigatorState> firstTabNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> secondTabNavKey = GlobalKey<NavigatorState>();
 
 class AppContainer extends StatefulWidget {
+  const AppContainer({Key key}) : super(key: key);
+
   @override
   AppContainerState createState() => AppContainerState();
 }
@@ -57,7 +59,7 @@ class AppContainerState extends State<AppContainer> {
       tabBar: CupertinoTabBar(
         backgroundColor: kColorBar,
         activeColor: kColorAccent,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.wb_sunny,
@@ -92,12 +94,12 @@ class AppContainerState extends State<AppContainer> {
         if (index == 0) {
           return CupertinoTabView(
             navigatorKey: firstTabNavKey,
-            builder: (BuildContext context) => WeatherScreen(),
+            builder: (BuildContext context) => const WeatherScreen(),
           );
         } else {
           return CupertinoTabView(
             navigatorKey: secondTabNavKey,
-            builder: (BuildContext context) => UserScreen(),
+            builder: (BuildContext context) => const UserScreen(),
           );
         }
       },

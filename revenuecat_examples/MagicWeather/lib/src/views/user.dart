@@ -8,6 +8,8 @@ import 'package:magic_weather_flutter/src/components/native_dialog.dart';
 import 'package:flutter/services.dart';
 
 class UserScreen extends StatefulWidget {
+  const UserScreen({Key key}) : super(key: key);
+
   @override
   _UserScreenState createState() => _UserScreenState();
 }
@@ -69,10 +71,10 @@ class _UserScreenState extends State<UserScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  const SizedBox(
                     width: double.infinity,
                     child: Padding(
-                      padding: const EdgeInsets.only(
+                      padding: EdgeInsets.only(
                           top: 32.0, right: 8.0, left: 8.0, bottom: 8.0),
                       child: Text(
                         'Current User Identifier',
@@ -89,8 +91,8 @@ class _UserScreenState extends State<UserScreen> {
                       style: kDescriptionTextStyle,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
+                  const Padding(
+                    padding: EdgeInsets.only(
                         top: 24.0, bottom: 8.0, left: 8.0, right: 8.0),
                     child: Text(
                       'Subscription Status',
@@ -113,8 +115,8 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                   Visibility(
                     visible: appData.appUserID.contains("RCAnonymousID:"),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
+                    child: const Padding(
+                      padding: EdgeInsets.only(
                           top: 24.0, bottom: 8.0, left: 8.0, right: 8.0),
                       child: Text(
                         'Login',

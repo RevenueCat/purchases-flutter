@@ -4,9 +4,11 @@ import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'package:magic_weather_flutter/src/views/home.dart';
 
 class MagicWeatherFlutter extends StatelessWidget {
+  const MagicWeatherFlutter({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
+    return const CupertinoApp(
       localizationsDelegates: [
         DefaultMaterialLocalizations.delegate,
         DefaultCupertinoLocalizations.delegate,
