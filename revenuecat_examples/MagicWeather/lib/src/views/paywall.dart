@@ -32,8 +32,8 @@ class _PaywallState extends State<Paywall> {
                       Text('✨ Magic Weather Premium', style: kTitleTextStyle)),
             ),
             const Padding(
-              padding: EdgeInsets.only(
-                  top: 32, bottom: 16, left: 16.0, right: 16.0),
+              padding:
+                  EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
               child: SizedBox(
                 child: Text(
                   'MAGIC WEATHER PREMIUM',
@@ -80,8 +80,8 @@ class _PaywallState extends State<Paywall> {
               physics: const ClampingScrollPhysics(),
             ),
             const Padding(
-              padding: EdgeInsets.only(
-                  top: 32, bottom: 16, left: 16.0, right: 16.0),
+              padding:
+                  EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
               child: SizedBox(
                 child: Text(
                   footerText,
