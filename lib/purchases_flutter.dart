@@ -268,8 +268,9 @@ class Purchases {
     Package packageToPurchase,
     PaymentDiscount discount,
   ) async {
-    final purchaserInfoJson = await _invokeMethodReturningPurchaserInfoJsonFromMap(
-        'purchasePackage', {
+    final purchaserInfoJson =
+        await _invokeMethodReturningPurchaserInfoJsonFromMap(
+            'purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
@@ -637,10 +638,8 @@ class Purchases {
   static Future<void> close() => _channel.invokeMethod('close');
 
   static Future<Map<String, dynamic>>
-      _invokeMethodReturningPurchaserInfoJsonFromMap(
-    String method,
-    Map<String, Object?> arguments,
-  ) async {
+      _invokeMethodReturningPurchaserInfoJsonFromMap(String method,
+          [dynamic arguments]) async {
     final response = await _invokeMethodReturningMap(
       method,
       arguments,
@@ -650,10 +649,8 @@ class Purchases {
     return purchaserInfoJson;
   }
 
-  static Future<Map<String, dynamic>> _invokeMethodReturningMap(
-    String method,
-    Map<String, Object?> arguments,
-  ) async {
+  static Future<Map<String, dynamic>> _invokeMethodReturningMap(String method,
+      [dynamic arguments]) async {
     final result = await _channel.invokeMethod<Map<dynamic, dynamic>>(
       method,
       arguments,
