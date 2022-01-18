@@ -343,7 +343,48 @@ void main() {
         mockProduct,
         'main',
       );
-      final purchasePackageResult = await Purchases.purchasePackage(mockPackage);
+      final purchasePackageResult =
+          await Purchases.purchasePackage(mockPackage);
+      expect(
+        purchasePackageResult,
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test('purchaseDiscountedPackage calls successfully', () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'purchaserInfo': mockPurchaserInfoResponse
+      };
+      const mockProduct = Product(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+      );
+      const mockPackage = Package(
+        '\$rc_lifetime',
+        PackageType.lifetime,
+        mockProduct,
+        'main',
+      );
+      const mockPaymentDiscount = PaymentDiscount(
+        'aIdentifier',
+        'aKeyIdentifier',
+        'aNonce',
+        'aSignature',
+        123456,
+      );
+      final purchasePackageResult = await Purchases.purchaseDiscountedPackage(
+        mockPackage,
+        mockPaymentDiscount,
+      );
       expect(
         purchasePackageResult,
         PurchaserInfo.fromJson(mockPurchaserInfoResponse),
@@ -367,7 +408,42 @@ void main() {
         '\$199.99',
         'USD',
       );
-      final purchasePackageResult = await Purchases.purchaseProduct(mockProduct.identifier);
+      final purchasePackageResult =
+          await Purchases.purchaseProduct(mockProduct.identifier);
+      expect(
+        purchasePackageResult,
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test('purchaseDiscountedProduct calls successfully', () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'purchaserInfo': mockPurchaserInfoResponse
+      };
+      const mockProduct = Product(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+      );
+      const mockPaymentDiscount = PaymentDiscount(
+        'aIdentifier',
+        'aKeyIdentifier',
+        'aNonce',
+        'aSignature',
+        123456,
+      );
+      final purchasePackageResult = await Purchases.purchaseDiscountedProduct(
+        mockProduct,
+        mockPaymentDiscount,
+      );
       expect(
         purchasePackageResult,
         PurchaserInfo.fromJson(mockPurchaserInfoResponse),
