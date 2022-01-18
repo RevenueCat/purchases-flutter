@@ -185,7 +185,7 @@ jobs:
             - ~/.cocoapods
 
   freezed:
-    description: "Check if Freezed needs to run"
+    description: "Check if Freezed files need to be added to repo"
     docker:
       - image: cirrusci/flutter
     steps:
