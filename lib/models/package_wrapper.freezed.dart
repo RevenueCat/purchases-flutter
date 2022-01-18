@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'package_wrapper.dart';
@@ -38,7 +39,7 @@ class _$PackageTearOff {
     );
   }
 
-  Package fromJson(Map<String, Object> json) {
+  Package fromJson(Map<String, Object?> json) {
     return Package.fromJson(json);
   }
 }
@@ -232,28 +233,24 @@ class _$_Package implements _Package {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Package &&
-            (identical(other.identifier, identifier) ||
-                const DeepCollectionEquality()
-                    .equals(other.identifier, identifier)) &&
-            (identical(other.packageType, packageType) ||
-                const DeepCollectionEquality()
-                    .equals(other.packageType, packageType)) &&
-            (identical(other.product, product) ||
-                const DeepCollectionEquality()
-                    .equals(other.product, product)) &&
-            (identical(other.offeringIdentifier, offeringIdentifier) ||
-                const DeepCollectionEquality()
-                    .equals(other.offeringIdentifier, offeringIdentifier)));
+        (other.runtimeType == runtimeType &&
+            other is _Package &&
+            const DeepCollectionEquality()
+                .equals(other.identifier, identifier) &&
+            const DeepCollectionEquality()
+                .equals(other.packageType, packageType) &&
+            const DeepCollectionEquality().equals(other.product, product) &&
+            const DeepCollectionEquality()
+                .equals(other.offeringIdentifier, offeringIdentifier));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(identifier) ^
-      const DeepCollectionEquality().hash(packageType) ^
-      const DeepCollectionEquality().hash(product) ^
-      const DeepCollectionEquality().hash(offeringIdentifier);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(identifier),
+      const DeepCollectionEquality().hash(packageType),
+      const DeepCollectionEquality().hash(product),
+      const DeepCollectionEquality().hash(offeringIdentifier));
 
   @JsonKey(ignore: true)
   @override
@@ -284,22 +281,22 @@ abstract class _Package implements Package {
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// Package type for the product. Will be one of [PackageType].
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-  PackageType get packageType => throw _privateConstructorUsedError;
+  PackageType get packageType;
   @override
 
   /// Product assigned to this package.
   @JsonKey(name: 'product')
-  Product get product => throw _privateConstructorUsedError;
+  Product get product;
   @override
 
   /// Offering this package belongs to.
   @JsonKey(name: 'offeringIdentifier')
-  String get offeringIdentifier => throw _privateConstructorUsedError;
+  String get offeringIdentifier;
   @override
   @JsonKey(ignore: true)
   _$PackageCopyWith<_Package> get copyWith =>

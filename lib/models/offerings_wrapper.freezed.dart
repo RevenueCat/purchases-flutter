@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'offerings_wrapper.dart';
@@ -29,7 +30,7 @@ class _$OfferingsTearOff {
     );
   }
 
-  Offerings fromJson(Map<String, Object> json) {
+  Offerings fromJson(Map<String, Object?> json) {
     return Offerings.fromJson(json);
   }
 }
@@ -171,18 +172,17 @@ class _$_Offerings extends _Offerings {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Offerings &&
-            (identical(other.all, all) ||
-                const DeepCollectionEquality().equals(other.all, all)) &&
-            (identical(other.current, current) ||
-                const DeepCollectionEquality().equals(other.current, current)));
+        (other.runtimeType == runtimeType &&
+            other is _Offerings &&
+            const DeepCollectionEquality().equals(other.all, all) &&
+            const DeepCollectionEquality().equals(other.current, current));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(all) ^
-      const DeepCollectionEquality().hash(current);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(all),
+      const DeepCollectionEquality().hash(current));
 
   @JsonKey(ignore: true)
   @override
@@ -208,12 +208,12 @@ abstract class _Offerings extends Offerings {
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
   @JsonKey(name: 'all')
-  Map<String, Offering> get all => throw _privateConstructorUsedError;
+  Map<String, Offering> get all;
   @override
 
   /// Current offering configured in the RevenueCat dashboard.
   @JsonKey(name: 'current', nullable: true)
-  Offering? get current => throw _privateConstructorUsedError;
+  Offering? get current;
   @override
   @JsonKey(ignore: true)
   _$OfferingsCopyWith<_Offerings> get copyWith =>
