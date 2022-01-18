@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'transaction.dart';
@@ -32,7 +33,7 @@ class _$TransactionTearOff {
     );
   }
 
-  Transaction fromJson(Map<String, Object> json) {
+  Transaction fromJson(Map<String, Object?> json) {
     return Transaction.fromJson(json);
   }
 }
@@ -183,24 +184,21 @@ class _$_Transaction implements _Transaction {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Transaction &&
-            (identical(other.revenueCatId, revenueCatId) ||
-                const DeepCollectionEquality()
-                    .equals(other.revenueCatId, revenueCatId)) &&
-            (identical(other.productId, productId) ||
-                const DeepCollectionEquality()
-                    .equals(other.productId, productId)) &&
-            (identical(other.purchaseDate, purchaseDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseDate, purchaseDate)));
+        (other.runtimeType == runtimeType &&
+            other is _Transaction &&
+            const DeepCollectionEquality()
+                .equals(other.revenueCatId, revenueCatId) &&
+            const DeepCollectionEquality().equals(other.productId, productId) &&
+            const DeepCollectionEquality()
+                .equals(other.purchaseDate, purchaseDate));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(revenueCatId) ^
-      const DeepCollectionEquality().hash(productId) ^
-      const DeepCollectionEquality().hash(purchaseDate);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(revenueCatId),
+      const DeepCollectionEquality().hash(productId),
+      const DeepCollectionEquality().hash(purchaseDate));
 
   @JsonKey(ignore: true)
   @override
@@ -226,17 +224,17 @@ abstract class _Transaction implements Transaction {
 
   /// RevenueCat Id associated to the transaction.
   @JsonKey(name: 'revenueCatId')
-  String get revenueCatId => throw _privateConstructorUsedError;
+  String get revenueCatId;
   @override
 
   /// Product Id associated with the transaction.
   @JsonKey(name: 'productId')
-  String get productId => throw _privateConstructorUsedError;
+  String get productId;
   @override
 
   /// Purchase date of the transaction in ISO 8601 format.
   @JsonKey(name: 'purchaseDate')
-  String get purchaseDate => throw _privateConstructorUsedError;
+  String get purchaseDate;
   @override
   @JsonKey(ignore: true)
   _$TransactionCopyWith<_Transaction> get copyWith =>

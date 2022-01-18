@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'offering_wrapper.dart';
@@ -46,7 +47,7 @@ class _$OfferingTearOff {
     );
   }
 
-  Offering fromJson(Map<String, Object> json) {
+  Offering fromJson(Map<String, Object?> json) {
     return Offering.fromJson(json);
   }
 }
@@ -448,50 +449,37 @@ class _$_Offering extends _Offering {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Offering &&
-            (identical(other.identifier, identifier) ||
-                const DeepCollectionEquality()
-                    .equals(other.identifier, identifier)) &&
-            (identical(other.serverDescription, serverDescription) ||
-                const DeepCollectionEquality()
-                    .equals(other.serverDescription, serverDescription)) &&
-            (identical(other.availablePackages, availablePackages) ||
-                const DeepCollectionEquality()
-                    .equals(other.availablePackages, availablePackages)) &&
-            (identical(other.lifetime, lifetime) ||
-                const DeepCollectionEquality()
-                    .equals(other.lifetime, lifetime)) &&
-            (identical(other.annual, annual) ||
-                const DeepCollectionEquality().equals(other.annual, annual)) &&
-            (identical(other.sixMonth, sixMonth) ||
-                const DeepCollectionEquality()
-                    .equals(other.sixMonth, sixMonth)) &&
-            (identical(other.threeMonth, threeMonth) ||
-                const DeepCollectionEquality()
-                    .equals(other.threeMonth, threeMonth)) &&
-            (identical(other.twoMonth, twoMonth) ||
-                const DeepCollectionEquality()
-                    .equals(other.twoMonth, twoMonth)) &&
-            (identical(other.monthly, monthly) ||
-                const DeepCollectionEquality()
-                    .equals(other.monthly, monthly)) &&
-            (identical(other.weekly, weekly) ||
-                const DeepCollectionEquality().equals(other.weekly, weekly)));
+        (other.runtimeType == runtimeType &&
+            other is _Offering &&
+            const DeepCollectionEquality()
+                .equals(other.identifier, identifier) &&
+            const DeepCollectionEquality()
+                .equals(other.serverDescription, serverDescription) &&
+            const DeepCollectionEquality()
+                .equals(other.availablePackages, availablePackages) &&
+            const DeepCollectionEquality().equals(other.lifetime, lifetime) &&
+            const DeepCollectionEquality().equals(other.annual, annual) &&
+            const DeepCollectionEquality().equals(other.sixMonth, sixMonth) &&
+            const DeepCollectionEquality()
+                .equals(other.threeMonth, threeMonth) &&
+            const DeepCollectionEquality().equals(other.twoMonth, twoMonth) &&
+            const DeepCollectionEquality().equals(other.monthly, monthly) &&
+            const DeepCollectionEquality().equals(other.weekly, weekly));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(identifier) ^
-      const DeepCollectionEquality().hash(serverDescription) ^
-      const DeepCollectionEquality().hash(availablePackages) ^
-      const DeepCollectionEquality().hash(lifetime) ^
-      const DeepCollectionEquality().hash(annual) ^
-      const DeepCollectionEquality().hash(sixMonth) ^
-      const DeepCollectionEquality().hash(threeMonth) ^
-      const DeepCollectionEquality().hash(twoMonth) ^
-      const DeepCollectionEquality().hash(monthly) ^
-      const DeepCollectionEquality().hash(weekly);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(identifier),
+      const DeepCollectionEquality().hash(serverDescription),
+      const DeepCollectionEquality().hash(availablePackages),
+      const DeepCollectionEquality().hash(lifetime),
+      const DeepCollectionEquality().hash(annual),
+      const DeepCollectionEquality().hash(sixMonth),
+      const DeepCollectionEquality().hash(threeMonth),
+      const DeepCollectionEquality().hash(twoMonth),
+      const DeepCollectionEquality().hash(monthly),
+      const DeepCollectionEquality().hash(weekly));
 
   @JsonKey(ignore: true)
   @override
@@ -524,52 +512,52 @@ abstract class _Offering extends Offering {
 
   /// Unique identifier defined in RevenueCat dashboard.
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// Offering description defined in RevenueCat dashboard.
   @JsonKey(name: 'serverDescription')
-  String get serverDescription => throw _privateConstructorUsedError;
+  String get serverDescription;
   @override
 
   /// Array of `Package` objects available for purchase.
   @JsonKey(name: 'availablePackages')
-  List<Package> get availablePackages => throw _privateConstructorUsedError;
+  List<Package> get availablePackages;
   @override
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'lifetime')
-  Package? get lifetime => throw _privateConstructorUsedError;
+  Package? get lifetime;
   @override
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'annual')
-  Package? get annual => throw _privateConstructorUsedError;
+  Package? get annual;
   @override
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'sixMonth')
-  Package? get sixMonth => throw _privateConstructorUsedError;
+  Package? get sixMonth;
   @override
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'threeMonth')
-  Package? get threeMonth => throw _privateConstructorUsedError;
+  Package? get threeMonth;
   @override
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'twoMonth')
-  Package? get twoMonth => throw _privateConstructorUsedError;
+  Package? get twoMonth;
   @override
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'monthly')
-  Package? get monthly => throw _privateConstructorUsedError;
+  Package? get monthly;
   @override
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'weekly')
-  Package? get weekly => throw _privateConstructorUsedError;
+  Package? get weekly;
   @override
   @JsonKey(ignore: true)
   _$OfferingCopyWith<_Offering> get copyWith =>

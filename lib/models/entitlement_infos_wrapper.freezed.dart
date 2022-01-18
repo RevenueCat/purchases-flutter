@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'entitlement_infos_wrapper.dart';
@@ -29,7 +30,7 @@ class _$EntitlementInfosTearOff {
     );
   }
 
-  EntitlementInfos fromJson(Map<String, Object> json) {
+  EntitlementInfos fromJson(Map<String, Object?> json) {
     return EntitlementInfos.fromJson(json);
   }
 }
@@ -156,18 +157,17 @@ class _$_EntitlementInfos implements _EntitlementInfos {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _EntitlementInfos &&
-            (identical(other.all, all) ||
-                const DeepCollectionEquality().equals(other.all, all)) &&
-            (identical(other.active, active) ||
-                const DeepCollectionEquality().equals(other.active, active)));
+        (other.runtimeType == runtimeType &&
+            other is _EntitlementInfos &&
+            const DeepCollectionEquality().equals(other.all, all) &&
+            const DeepCollectionEquality().equals(other.active, active));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(all) ^
-      const DeepCollectionEquality().hash(active);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(all),
+      const DeepCollectionEquality().hash(active));
 
   @JsonKey(ignore: true)
   @override
@@ -191,12 +191,12 @@ abstract class _EntitlementInfos implements EntitlementInfos {
 
   /// Map of all EntitlementInfo (`EntitlementInfo`) objects (active and inactive)
   /// keyed by entitlement identifier.
-  Map<String, EntitlementInfo> get all => throw _privateConstructorUsedError;
+  Map<String, EntitlementInfo> get all;
   @override
 
   /// Map of active EntitlementInfo (`EntitlementInfo`) objects keyed by
   /// entitlement identifier.
-  Map<String, EntitlementInfo> get active => throw _privateConstructorUsedError;
+  Map<String, EntitlementInfo> get active;
   @override
   @JsonKey(ignore: true)
   _$EntitlementInfosCopyWith<_EntitlementInfos> get copyWith =>

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'purchaser_info_wrapper.dart';
@@ -65,7 +66,7 @@ class _$PurchaserInfoTearOff {
     );
   }
 
-  PurchaserInfo fromJson(Map<String, Object> json) {
+  PurchaserInfo fromJson(Map<String, Object?> json) {
     return PurchaserInfo.fromJson(json);
   }
 }
@@ -515,66 +516,53 @@ class _$_PurchaserInfo implements _PurchaserInfo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PurchaserInfo &&
-            (identical(other.entitlements, entitlements) ||
-                const DeepCollectionEquality()
-                    .equals(other.entitlements, entitlements)) &&
-            (identical(other.allPurchaseDates, allPurchaseDates) ||
-                const DeepCollectionEquality()
-                    .equals(other.allPurchaseDates, allPurchaseDates)) &&
-            (identical(other.activeSubscriptions, activeSubscriptions) ||
-                const DeepCollectionEquality()
-                    .equals(other.activeSubscriptions, activeSubscriptions)) &&
-            (identical(other.allPurchasedProductIdentifiers, allPurchasedProductIdentifiers) ||
-                const DeepCollectionEquality().equals(
-                    other.allPurchasedProductIdentifiers,
-                    allPurchasedProductIdentifiers)) &&
-            (identical(other.nonSubscriptionTransactions, nonSubscriptionTransactions) ||
-                const DeepCollectionEquality().equals(
-                    other.nonSubscriptionTransactions,
-                    nonSubscriptionTransactions)) &&
-            (identical(other.firstSeen, firstSeen) ||
-                const DeepCollectionEquality()
-                    .equals(other.firstSeen, firstSeen)) &&
-            (identical(other.originalAppUserId, originalAppUserId) ||
-                const DeepCollectionEquality()
-                    .equals(other.originalAppUserId, originalAppUserId)) &&
-            (identical(other.allExpirationDates, allExpirationDates) ||
-                const DeepCollectionEquality()
-                    .equals(other.allExpirationDates, allExpirationDates)) &&
-            (identical(other.requestDate, requestDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.requestDate, requestDate)) &&
-            (identical(other.latestExpirationDate, latestExpirationDate) ||
-                const DeepCollectionEquality().equals(
-                    other.latestExpirationDate, latestExpirationDate)) &&
-            (identical(other.originalPurchaseDate, originalPurchaseDate) ||
-                const DeepCollectionEquality().equals(
-                    other.originalPurchaseDate, originalPurchaseDate)) &&
-            (identical(other.originalApplicationVersion, originalApplicationVersion) ||
-                const DeepCollectionEquality().equals(
-                    other.originalApplicationVersion,
-                    originalApplicationVersion)) &&
-            (identical(other.managementURL, managementURL) ||
-                const DeepCollectionEquality().equals(other.managementURL, managementURL)));
+        (other.runtimeType == runtimeType &&
+            other is _PurchaserInfo &&
+            const DeepCollectionEquality()
+                .equals(other.entitlements, entitlements) &&
+            const DeepCollectionEquality()
+                .equals(other.allPurchaseDates, allPurchaseDates) &&
+            const DeepCollectionEquality()
+                .equals(other.activeSubscriptions, activeSubscriptions) &&
+            const DeepCollectionEquality().equals(
+                other.allPurchasedProductIdentifiers,
+                allPurchasedProductIdentifiers) &&
+            const DeepCollectionEquality().equals(
+                other.nonSubscriptionTransactions,
+                nonSubscriptionTransactions) &&
+            const DeepCollectionEquality().equals(other.firstSeen, firstSeen) &&
+            const DeepCollectionEquality()
+                .equals(other.originalAppUserId, originalAppUserId) &&
+            const DeepCollectionEquality()
+                .equals(other.allExpirationDates, allExpirationDates) &&
+            const DeepCollectionEquality()
+                .equals(other.requestDate, requestDate) &&
+            const DeepCollectionEquality()
+                .equals(other.latestExpirationDate, latestExpirationDate) &&
+            const DeepCollectionEquality()
+                .equals(other.originalPurchaseDate, originalPurchaseDate) &&
+            const DeepCollectionEquality().equals(
+                other.originalApplicationVersion, originalApplicationVersion) &&
+            const DeepCollectionEquality()
+                .equals(other.managementURL, managementURL));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(entitlements) ^
-      const DeepCollectionEquality().hash(allPurchaseDates) ^
-      const DeepCollectionEquality().hash(activeSubscriptions) ^
-      const DeepCollectionEquality().hash(allPurchasedProductIdentifiers) ^
-      const DeepCollectionEquality().hash(nonSubscriptionTransactions) ^
-      const DeepCollectionEquality().hash(firstSeen) ^
-      const DeepCollectionEquality().hash(originalAppUserId) ^
-      const DeepCollectionEquality().hash(allExpirationDates) ^
-      const DeepCollectionEquality().hash(requestDate) ^
-      const DeepCollectionEquality().hash(latestExpirationDate) ^
-      const DeepCollectionEquality().hash(originalPurchaseDate) ^
-      const DeepCollectionEquality().hash(originalApplicationVersion) ^
-      const DeepCollectionEquality().hash(managementURL);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(entitlements),
+      const DeepCollectionEquality().hash(allPurchaseDates),
+      const DeepCollectionEquality().hash(activeSubscriptions),
+      const DeepCollectionEquality().hash(allPurchasedProductIdentifiers),
+      const DeepCollectionEquality().hash(nonSubscriptionTransactions),
+      const DeepCollectionEquality().hash(firstSeen),
+      const DeepCollectionEquality().hash(originalAppUserId),
+      const DeepCollectionEquality().hash(allExpirationDates),
+      const DeepCollectionEquality().hash(requestDate),
+      const DeepCollectionEquality().hash(latestExpirationDate),
+      const DeepCollectionEquality().hash(originalPurchaseDate),
+      const DeepCollectionEquality().hash(originalApplicationVersion),
+      const DeepCollectionEquality().hash(managementURL));
 
   @JsonKey(ignore: true)
   @override
@@ -623,63 +611,59 @@ abstract class _PurchaserInfo implements PurchaserInfo {
 
   /// Entitlements attached to this purchaser info
   @JsonKey(name: 'entitlements')
-  EntitlementInfos get entitlements => throw _privateConstructorUsedError;
+  EntitlementInfos get entitlements;
   @override
 
   /// Map of skus to purchase dates
   @JsonKey(name: 'allPurchaseDates')
-  Map<String, String> get allPurchaseDates =>
-      throw _privateConstructorUsedError;
+  Map<String, String> get allPurchaseDates;
   @override
 
   /// Set of active subscription skus
   @JsonKey(name: 'activeSubscriptions')
-  List<String> get activeSubscriptions => throw _privateConstructorUsedError;
+  List<String> get activeSubscriptions;
   @override
 
   /// Set of purchased skus, active and inactive
   @JsonKey(name: 'allPurchasedProductIdentifiers')
-  List<String> get allPurchasedProductIdentifiers =>
-      throw _privateConstructorUsedError;
+  List<String> get allPurchasedProductIdentifiers;
   @override
 
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
   @JsonKey(name: 'nonSubscriptionTransactions')
-  List<Transaction> get nonSubscriptionTransactions =>
-      throw _privateConstructorUsedError;
+  List<Transaction> get nonSubscriptionTransactions;
   @override
 
   /// The date this user was first seen in RevenueCat.
   @JsonKey(name: 'firstSeen')
-  String get firstSeen => throw _privateConstructorUsedError;
+  String get firstSeen;
   @override
 
   /// The original App User Id recorded for this user.
   @JsonKey(name: 'originalAppUserId')
-  String get originalAppUserId => throw _privateConstructorUsedError;
+  String get originalAppUserId;
   @override
 
   /// Map of skus to expiration dates
   @JsonKey(name: 'allExpirationDates')
-  Map<String, String?> get allExpirationDates =>
-      throw _privateConstructorUsedError;
+  Map<String, String?> get allExpirationDates;
   @override
 
   /// Date when this info was requested
   @JsonKey(name: 'requestDate')
-  String get requestDate => throw _privateConstructorUsedError;
+  String get requestDate;
   @override
 
   /// The latest expiration date of all purchased skus
   @JsonKey(name: 'latestExpirationDate', nullable: true)
-  String? get latestExpirationDate => throw _privateConstructorUsedError;
+  String? get latestExpirationDate;
   @override
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
   @JsonKey(name: 'originalPurchaseDate', nullable: true)
-  String? get originalPurchaseDate => throw _privateConstructorUsedError;
+  String? get originalPurchaseDate;
   @override
 
   /// Returns the version number for the version of the application when the
@@ -690,7 +674,7 @@ abstract class _PurchaserInfo implements PurchaserInfo {
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
   @JsonKey(name: 'originalApplicationVersion', nullable: true)
-  String? get originalApplicationVersion => throw _privateConstructorUsedError;
+  String? get originalApplicationVersion;
   @override
 
   /// URL to manage the active subscription of the user. If this user has an active iOS
@@ -698,7 +682,7 @@ abstract class _PurchaserInfo implements PurchaserInfo {
   /// it will point there. If there are no active subscriptions it will be null.
   /// If there are multiple for different platforms, it will point to the device store.
   @JsonKey(name: 'managementURL')
-  String? get managementURL => throw _privateConstructorUsedError;
+  String? get managementURL;
   @override
   @JsonKey(ignore: true)
   _$PurchaserInfoCopyWith<_PurchaserInfo> get copyWith =>
