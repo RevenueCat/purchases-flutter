@@ -190,15 +190,14 @@ class Purchases {
     PurchaseType type = PurchaseType.subs,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final purchaserInfoJson =
-        await _invokeMethodReturningPurchaserInfoJsonFromMap(
-            'purchaseProduct', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
       'type': describeEnum(type)
     });
-    return PurchaserInfo.fromJson(purchaserInfoJson);
+    return purchaserInfo;
   }
 
   /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
@@ -216,15 +215,14 @@ class Purchases {
     UpgradeInfo? upgradeInfo,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final purchaserInfoJson =
-        await _invokeMethodReturningPurchaserInfoJsonFromMap(
-            'purchasePackage', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index
     });
-    return PurchaserInfo.fromJson(purchaserInfoJson);
+    return purchaserInfo;
   }
 
   /// iOS only. Purchase a product applying a given discount.
@@ -243,13 +241,12 @@ class Purchases {
     Product product,
     PaymentDiscount discount,
   ) async {
-    final purchaserInfoJson =
-        await _invokeMethodReturningPurchaserInfoJsonFromMap(
-            'purchaseProduct', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return PurchaserInfo.fromJson(purchaserInfoJson);
+    return purchaserInfo;
   }
 
   /// iOS only. Purchase a package applying a given discount.
@@ -268,14 +265,13 @@ class Purchases {
     Package packageToPurchase,
     PaymentDiscount discount,
   ) async {
-    final purchaserInfoJson =
-        await _invokeMethodReturningPurchaserInfoJsonFromMap(
-            'purchasePackage', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return PurchaserInfo.fromJson(purchaserInfoJson);
+    return purchaserInfo;
   }
 
   /// Restores a user's previous purchases and links their appUserIDs to any
@@ -637,20 +633,23 @@ class Purchases {
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
 
-  static Future<Map<String, dynamic>>
-      _invokeMethodReturningPurchaserInfoJsonFromMap(String method,
-          // ignore: require_trailing_commas
-          [dynamic arguments]) async {
-    final response = await _invokeMethodReturningMap(
+  static Future<PurchaserInfo> _invokeReturningPurchaserInfo(String method,
+      // ignore: require_trailing_commas
+      [dynamic arguments]) async {
+    final response = await _invokeReturningMap(
       method,
       arguments,
     );
-    final purchaserInfoJson =
-        Map<String, dynamic>.from(response['purchaserInfo']);
-    return purchaserInfoJson;
+    final purchaserInfoJson = _getPurchaserInfoJsonFromMap(response);
+    return PurchaserInfo.fromJson(purchaserInfoJson);
   }
 
-  static Future<Map<String, dynamic>> _invokeMethodReturningMap(String method,
+  static Map<String, dynamic> _getPurchaserInfoJsonFromMap(
+    Map<String, dynamic> response,
+  ) =>
+      Map<String, dynamic>.from(response['purchaserInfo']);
+
+  static Future<Map<String, dynamic>> _invokeReturningMap(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
     final result = await _channel.invokeMethod<Map<dynamic, dynamic>>(
