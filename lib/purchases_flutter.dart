@@ -639,6 +639,7 @@ class Purchases {
 
   static Future<Map<String, dynamic>>
       _invokeMethodReturningPurchaserInfoJsonFromMap(String method,
+          // ignore: require_trailing_commas
           [dynamic arguments]) async {
     final response = await _invokeMethodReturningMap(
       method,
@@ -650,6 +651,7 @@ class Purchases {
   }
 
   static Future<Map<String, dynamic>> _invokeMethodReturningMap(String method,
+      // ignore: require_trailing_commas
       [dynamic arguments]) async {
     final result = await _channel.invokeMethod<Map<dynamic, dynamic>>(
       method,
