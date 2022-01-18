@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'introductory_price.dart';
@@ -44,7 +45,7 @@ class _$IntroductoryPriceTearOff {
     );
   }
 
-  IntroductoryPrice fromJson(Map<String, Object> json) {
+  IntroductoryPrice fromJson(Map<String, Object?> json) {
     return IntroductoryPrice.fromJson(json);
   }
 }
@@ -289,33 +290,28 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _IntroductoryPrice &&
-            (identical(other.price, price) ||
-                const DeepCollectionEquality().equals(other.price, price)) &&
-            (identical(other.priceString, priceString) ||
-                const DeepCollectionEquality()
-                    .equals(other.priceString, priceString)) &&
-            (identical(other.period, period) ||
-                const DeepCollectionEquality().equals(other.period, period)) &&
-            (identical(other.cycles, cycles) ||
-                const DeepCollectionEquality().equals(other.cycles, cycles)) &&
-            (identical(other.periodUnit, periodUnit) ||
-                const DeepCollectionEquality()
-                    .equals(other.periodUnit, periodUnit)) &&
-            (identical(other.periodNumberOfUnits, periodNumberOfUnits) ||
-                const DeepCollectionEquality()
-                    .equals(other.periodNumberOfUnits, periodNumberOfUnits)));
+        (other.runtimeType == runtimeType &&
+            other is _IntroductoryPrice &&
+            const DeepCollectionEquality().equals(other.price, price) &&
+            const DeepCollectionEquality()
+                .equals(other.priceString, priceString) &&
+            const DeepCollectionEquality().equals(other.period, period) &&
+            const DeepCollectionEquality().equals(other.cycles, cycles) &&
+            const DeepCollectionEquality()
+                .equals(other.periodUnit, periodUnit) &&
+            const DeepCollectionEquality()
+                .equals(other.periodNumberOfUnits, periodNumberOfUnits));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(price) ^
-      const DeepCollectionEquality().hash(priceString) ^
-      const DeepCollectionEquality().hash(period) ^
-      const DeepCollectionEquality().hash(cycles) ^
-      const DeepCollectionEquality().hash(periodUnit) ^
-      const DeepCollectionEquality().hash(periodNumberOfUnits);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(price),
+      const DeepCollectionEquality().hash(priceString),
+      const DeepCollectionEquality().hash(period),
+      const DeepCollectionEquality().hash(cycles),
+      const DeepCollectionEquality().hash(periodUnit),
+      const DeepCollectionEquality().hash(periodNumberOfUnits));
 
   @JsonKey(ignore: true)
   @override
@@ -350,36 +346,36 @@ abstract class _IntroductoryPrice implements IntroductoryPrice {
 
   /// Introductory price of a subscription in the local currency.
   @JsonKey(name: 'price')
-  double get price => throw _privateConstructorUsedError;
+  double get price;
   @override
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
   @JsonKey(name: 'priceString')
-  String get priceString => throw _privateConstructorUsedError;
+  String get priceString;
   @override
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
   @JsonKey(name: 'period')
-  String get period => throw _privateConstructorUsedError;
+  String get period;
   @override
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
   @JsonKey(name: 'cycles')
-  int get cycles => throw _privateConstructorUsedError;
+  int get cycles;
   @override
 
   /// Unit for the billing period of the introductory price, can be DAY, WEEK,
   /// MONTH or YEAR.
   @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-  PeriodUnit get periodUnit => throw _privateConstructorUsedError;
+  PeriodUnit get periodUnit;
   @override
 
   /// Number of units for the billing period of the introductory price.
   @JsonKey(name: 'periodNumberOfUnits')
-  int get periodNumberOfUnits => throw _privateConstructorUsedError;
+  int get periodNumberOfUnits;
   @override
   @JsonKey(ignore: true)
   _$IntroductoryPriceCopyWith<_IntroductoryPrice> get copyWith =>

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'entitlement_info_wrapper.dart';
@@ -65,7 +66,7 @@ class _$EntitlementInfoTearOff {
     );
   }
 
-  EntitlementInfo fromJson(Map<String, Object> json) {
+  EntitlementInfo fromJson(Map<String, Object?> json) {
     return EntitlementInfo.fromJson(json);
   }
 }
@@ -505,63 +506,48 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _EntitlementInfo &&
-            (identical(other.identifier, identifier) ||
-                const DeepCollectionEquality()
-                    .equals(other.identifier, identifier)) &&
-            (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)) &&
-            (identical(other.willRenew, willRenew) ||
-                const DeepCollectionEquality()
-                    .equals(other.willRenew, willRenew)) &&
-            (identical(other.latestPurchaseDate, latestPurchaseDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.latestPurchaseDate, latestPurchaseDate)) &&
-            (identical(other.originalPurchaseDate, originalPurchaseDate) ||
-                const DeepCollectionEquality().equals(
-                    other.originalPurchaseDate, originalPurchaseDate)) &&
-            (identical(other.productIdentifier, productIdentifier) ||
-                const DeepCollectionEquality()
-                    .equals(other.productIdentifier, productIdentifier)) &&
-            (identical(other.isSandbox, isSandbox) ||
-                const DeepCollectionEquality()
-                    .equals(other.isSandbox, isSandbox)) &&
-            (identical(other.ownershipType, ownershipType) ||
-                const DeepCollectionEquality()
-                    .equals(other.ownershipType, ownershipType)) &&
-            (identical(other.store, store) ||
-                const DeepCollectionEquality().equals(other.store, store)) &&
-            (identical(other.periodType, periodType) ||
-                const DeepCollectionEquality()
-                    .equals(other.periodType, periodType)) &&
-            (identical(other.expirationDate, expirationDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.expirationDate, expirationDate)) &&
-            (identical(other.unsubscribeDetectedAt, unsubscribeDetectedAt) ||
-                const DeepCollectionEquality().equals(
-                    other.unsubscribeDetectedAt, unsubscribeDetectedAt)) &&
-            (identical(other.billingIssueDetectedAt, billingIssueDetectedAt) ||
-                const DeepCollectionEquality().equals(
-                    other.billingIssueDetectedAt, billingIssueDetectedAt)));
+        (other.runtimeType == runtimeType &&
+            other is _EntitlementInfo &&
+            const DeepCollectionEquality()
+                .equals(other.identifier, identifier) &&
+            const DeepCollectionEquality().equals(other.isActive, isActive) &&
+            const DeepCollectionEquality().equals(other.willRenew, willRenew) &&
+            const DeepCollectionEquality()
+                .equals(other.latestPurchaseDate, latestPurchaseDate) &&
+            const DeepCollectionEquality()
+                .equals(other.originalPurchaseDate, originalPurchaseDate) &&
+            const DeepCollectionEquality()
+                .equals(other.productIdentifier, productIdentifier) &&
+            const DeepCollectionEquality().equals(other.isSandbox, isSandbox) &&
+            const DeepCollectionEquality()
+                .equals(other.ownershipType, ownershipType) &&
+            const DeepCollectionEquality().equals(other.store, store) &&
+            const DeepCollectionEquality()
+                .equals(other.periodType, periodType) &&
+            const DeepCollectionEquality()
+                .equals(other.expirationDate, expirationDate) &&
+            const DeepCollectionEquality()
+                .equals(other.unsubscribeDetectedAt, unsubscribeDetectedAt) &&
+            const DeepCollectionEquality()
+                .equals(other.billingIssueDetectedAt, billingIssueDetectedAt));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(identifier) ^
-      const DeepCollectionEquality().hash(isActive) ^
-      const DeepCollectionEquality().hash(willRenew) ^
-      const DeepCollectionEquality().hash(latestPurchaseDate) ^
-      const DeepCollectionEquality().hash(originalPurchaseDate) ^
-      const DeepCollectionEquality().hash(productIdentifier) ^
-      const DeepCollectionEquality().hash(isSandbox) ^
-      const DeepCollectionEquality().hash(ownershipType) ^
-      const DeepCollectionEquality().hash(store) ^
-      const DeepCollectionEquality().hash(periodType) ^
-      const DeepCollectionEquality().hash(expirationDate) ^
-      const DeepCollectionEquality().hash(unsubscribeDetectedAt) ^
-      const DeepCollectionEquality().hash(billingIssueDetectedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(identifier),
+      const DeepCollectionEquality().hash(isActive),
+      const DeepCollectionEquality().hash(willRenew),
+      const DeepCollectionEquality().hash(latestPurchaseDate),
+      const DeepCollectionEquality().hash(originalPurchaseDate),
+      const DeepCollectionEquality().hash(productIdentifier),
+      const DeepCollectionEquality().hash(isSandbox),
+      const DeepCollectionEquality().hash(ownershipType),
+      const DeepCollectionEquality().hash(store),
+      const DeepCollectionEquality().hash(periodType),
+      const DeepCollectionEquality().hash(expirationDate),
+      const DeepCollectionEquality().hash(unsubscribeDetectedAt),
+      const DeepCollectionEquality().hash(billingIssueDetectedAt));
 
   @JsonKey(ignore: true)
   @override
@@ -610,39 +596,39 @@ abstract class _EntitlementInfo implements EntitlementInfo {
 
   /// The entitlement identifier configured in the RevenueCat dashboard
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// True if the user has access to this entitlement
   @JsonKey(name: 'isActive')
-  bool get isActive => throw _privateConstructorUsedError;
+  bool get isActive;
   @override
 
   /// True if the underlying subscription is set to renew at the end of
   /// the billing period (expirationDate). Will always be True if entitlement
   /// is for lifetime access.
   @JsonKey(name: 'willRenew')
-  bool get willRenew => throw _privateConstructorUsedError;
+  bool get willRenew;
   @override
 
   /// The latest purchase or renewal date for the entitlement.
   @JsonKey(name: 'latestPurchaseDate')
-  String get latestPurchaseDate => throw _privateConstructorUsedError;
+  String get latestPurchaseDate;
   @override
 
   /// The first date this entitlement was purchased
   @JsonKey(name: 'originalPurchaseDate')
-  String get originalPurchaseDate => throw _privateConstructorUsedError;
+  String get originalPurchaseDate;
   @override
 
   /// The product identifier that unlocked this entitlement
   @JsonKey(name: 'productIdentifier')
-  String get productIdentifier => throw _privateConstructorUsedError;
+  String get productIdentifier;
   @override
 
   /// False if this entitlement is unlocked via a production purchase
   @JsonKey(name: 'isSandbox')
-  bool get isSandbox => throw _privateConstructorUsedError;
+  bool get isSandbox;
   @override
 
   /// Use this property to determine whether a purchase was made by the current
@@ -650,25 +636,25 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// onboarding users who have had an entitlement shared with them, but might
   /// not be entirely aware of the benefits they now have.
   @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-  OwnershipType get ownershipType => throw _privateConstructorUsedError;
+  OwnershipType get ownershipType;
   @override
 
   /// The store where this entitlement was unlocked from
   /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-  Store get store => throw _privateConstructorUsedError;
+  Store get store;
   @override
 
   /// The last period type this entitlement was in
   /// Either: normal, intro, trial
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-  PeriodType get periodType => throw _privateConstructorUsedError;
+  PeriodType get periodType;
   @override
 
   /// The expiration date for the entitlement, can be `null` for lifetime access.
   /// If the `periodType` is `trial`, this is the trial expiration date.
   @JsonKey(name: 'expirationDate', nullable: true)
-  String? get expirationDate => throw _privateConstructorUsedError;
+  String? get expirationDate;
   @override
 
   /// The date an unsubscribe was detected. Can be `null` if it's still
@@ -676,7 +662,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the `isActive` property.
   @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
-  String? get unsubscribeDetectedAt => throw _privateConstructorUsedError;
+  String? get unsubscribeDetectedAt;
   @override
 
   /// The date a billing issue was detected. Can be `null` if there is no
@@ -684,7 +670,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the `isActive` property.
   @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
-  String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
+  String? get billingIssueDetectedAt;
   @override
   @JsonKey(ignore: true)
   _$EntitlementInfoCopyWith<_EntitlementInfo> get copyWith =>

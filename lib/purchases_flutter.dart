@@ -190,13 +190,14 @@ class Purchases {
     PurchaseType type = PurchaseType.subs,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final response = await _channel.invokeMethod('purchaseProduct', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
       'type': describeEnum(type)
     });
-    return PurchaserInfo.fromJson(response['purchaserInfo']);
+    return purchaserInfo;
   }
 
   /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
@@ -214,13 +215,14 @@ class Purchases {
     UpgradeInfo? upgradeInfo,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final response = await _channel.invokeMethod('purchasePackage', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index
     });
-    return PurchaserInfo.fromJson(response['purchaserInfo']);
+    return purchaserInfo;
   }
 
   /// iOS only. Purchase a product applying a given discount.
@@ -239,11 +241,12 @@ class Purchases {
     Product product,
     PaymentDiscount discount,
   ) async {
-    final response = await _channel.invokeMethod('purchaseProduct', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return PurchaserInfo.fromJson(response['purchaserInfo']);
+    return purchaserInfo;
   }
 
   /// iOS only. Purchase a package applying a given discount.
@@ -262,12 +265,13 @@ class Purchases {
     Package packageToPurchase,
     PaymentDiscount discount,
   ) async {
-    final response = await _channel.invokeMethod('purchasePackage', {
+    final purchaserInfo =
+        await _invokeReturningPurchaserInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return PurchaserInfo.fromJson(response['purchaserInfo']);
+    return purchaserInfo;
   }
 
   /// Restores a user's previous purchases and links their appUserIDs to any
@@ -628,6 +632,33 @@ class Purchases {
   /// Android only. Call close when you are done with this instance of Purchases to disconnect
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
+
+  static Future<PurchaserInfo> _invokeReturningPurchaserInfo(String method,
+      // ignore: require_trailing_commas
+      [dynamic arguments]) async {
+    final response = await _invokeReturningMap(
+      method,
+      arguments,
+    );
+    final purchaserInfoJson = _getPurchaserInfoJsonFromMap(response);
+    return PurchaserInfo.fromJson(purchaserInfoJson);
+  }
+
+  static Map<String, dynamic> _getPurchaserInfoJsonFromMap(
+    Map<String, dynamic> response,
+  ) =>
+      Map<String, dynamic>.from(response['purchaserInfo']);
+
+  static Future<Map<String, dynamic>> _invokeReturningMap(String method,
+      // ignore: require_trailing_commas
+      [dynamic arguments]) async {
+    final result = await _channel.invokeMethod<Map<dynamic, dynamic>>(
+      method,
+      arguments,
+    );
+    final response = Map<String, dynamic>.from(result!);
+    return response;
+  }
 }
 
 /// This class holds the information used when upgrading from another sku.
