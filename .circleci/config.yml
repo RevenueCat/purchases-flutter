@@ -10,6 +10,7 @@ version: 2.1
 orbs:
   android: circleci/android@0.2.1
   gcp-cli: circleci/gcp-cli@2.1.0
+  swissknife: roopakv/swissknife@0.65.0
 
 commands:
 
@@ -183,11 +184,22 @@ jobs:
             - ./revenuecat_examples/purchase_tester/ios/Pods
             - ~/.cocoapods
 
+  freezed:
+    description: "Check if Freezed files need to be added to repo"
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - build-flutter-project
+      - swissknife/fail_if_dirty:
+          print-modified-files: true
+
 workflows:
   test:
     jobs:
       - lint
       - test
+      - freezed
   android-integration-test:
     jobs:
       - android-integration-test-build: *release-tags-and-branches
