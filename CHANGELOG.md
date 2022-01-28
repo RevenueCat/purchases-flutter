@@ -1,3 +1,7 @@
+## 3.9.3
+
+- Fix missing IntroductoryPrice export (https://github.com/RevenueCat/purchases-flutter/pull/310)
+
 ## 3.9.2
 
 - Fix `purchasePackage`, `purchaseProduct`, `purchaseDiscountedPackage` and `purchaseDiscountedProduct` crashes due to a wrong type.
