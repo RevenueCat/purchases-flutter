@@ -1,7 +1,3 @@
-## 3.9.2
+## 3.9.3
 
-- Fix `purchasePackage`, `purchaseProduct`, `purchaseDiscountedPackage` and `purchaseDiscountedProduct` crashes due to a wrong type.
-- Added missing freezed files.
-    https://github.com/RevenueCat/purchases-flutter/pull/301
-- CI fail if missing freezed files
-    https://github.com/RevenueCat/purchases-flutter/pull/302
+- Fix missing IntroductoryPrice export (https://github.com/RevenueCat/purchases-flutter/pull/310)
