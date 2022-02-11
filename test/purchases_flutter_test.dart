@@ -25,6 +25,15 @@ void main() {
     'nonSubscriptionTransactions': []
   };
 
+  final mockIntroductoryPriceJson = {
+    'price': 0.0,
+    'priceString': '\$0.00',
+    'period': 'P2W',
+    'cycles': 1,
+    'periodUnit': 'DAY',
+    'periodNumberOfUnits': 14,
+  };
+
   setUp(() {
     channel.setMockMethodCallHandler((call) async {
       log.add(call);
@@ -451,5 +460,13 @@ void main() {
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
+  });
+
+  test('IntroductoryPrice has both PeriodUnit enum and periodUnit string', () async {
+    final mockIntroductoryPrice = IntroductoryPrice.fromJson(
+        mockIntroductoryPriceJson
+    );
+    expect(mockIntroductoryPrice.periodUnit, PeriodUnit.day);
+    expect(mockIntroductoryPrice.introPricePeriodUnit, 'DAY');
   });
 }
