@@ -75,11 +75,6 @@ mixin _$IntroductoryPrice {
   @JsonKey(name: 'cycles')
   int get cycles => throw _privateConstructorUsedError;
 
-  /// TODO add back when fully removing introPricePeriodUnit
-// /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-// /// MONTH or YEAR.
-// @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-// PeriodUnit periodUnit = getPeriodUnit(introPricePeriodUnit),
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
   @Deprecated('Use periodUnit property of type PeriodUnit instead.')
@@ -283,11 +278,6 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
   final int cycles;
   @override
 
-  /// TODO add back when fully removing introPricePeriodUnit
-// /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-// /// MONTH or YEAR.
-// @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-// PeriodUnit periodUnit = getPeriodUnit(introPricePeriodUnit),
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
   @Deprecated('Use periodUnit property of type PeriodUnit instead.')
@@ -386,11 +376,6 @@ abstract class _IntroductoryPrice extends IntroductoryPrice {
   int get cycles;
   @override
 
-  /// TODO add back when fully removing introPricePeriodUnit
-// /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-// /// MONTH or YEAR.
-// @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-// PeriodUnit periodUnit = getPeriodUnit(introPricePeriodUnit),
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
   @Deprecated('Use periodUnit property of type PeriodUnit instead.')

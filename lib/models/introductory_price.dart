@@ -3,15 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'introductory_price.freezed.dart';
 part 'introductory_price.g.dart';
 
-// TODO add back JsonValues fully removing introPricePeriodUnit
 enum PeriodUnit {
-  // @JsonValue('DAY')
   day,
-  // @JsonValue('WEEK')
   week,
-  // @JsonValue('MONTH')
   month,
-  // @JsonValue('YEAR')
   year,
   unknown
 }
@@ -20,7 +15,6 @@ enum PeriodUnit {
 
 /// Contains all the introductory information associated with a [Product]
 class IntroductoryPrice with _$IntroductoryPrice {
-  // TODO remove this ctor when fully removing introPricePeriodUnit string
   const IntroductoryPrice._();
 
   const factory IntroductoryPrice(
@@ -39,12 +33,6 @@ class IntroductoryPrice with _$IntroductoryPrice {
     /// user will be given the introductory price, such as 3.
     @JsonKey(name: 'cycles') int cycles,
 
-   /// TODO add back when fully removing introPricePeriodUnit
-    // /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-    // /// MONTH or YEAR.
-    // @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-    // PeriodUnit periodUnit = getPeriodUnit(introPricePeriodUnit),
-
     /// String representation of unit for the billing period of the introductory
     /// price, can be DAY, WEEK, MONTH or YEAR.
     @Deprecated('Use periodUnit property of type PeriodUnit instead.')
@@ -54,7 +42,6 @@ class IntroductoryPrice with _$IntroductoryPrice {
     @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits,
   ) = _IntroductoryPrice;
 
-  /// TODO remove this method when fully removing introPricePeriodUnit string
   /// Maps introPricePeriodUnit string to PeriodUnit enum type
   PeriodUnit get periodUnit {
     switch (introPricePeriodUnit) {
