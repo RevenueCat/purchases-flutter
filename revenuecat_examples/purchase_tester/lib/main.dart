@@ -104,6 +104,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
       if (offering != null) {
         final monthly = offering.monthly;
         final lifetime = offering.lifetime;
+
+        if (monthly.product.introductoryPrice != null) {
+          apiTestIntroductoryPrice(monthly.product.introductoryPrice);
+        }
+
+
         if (monthly != null && lifetime != null) {
           return Scaffold(
             appBar: AppBar(title: const Text('Upsell Screen')),
@@ -126,6 +132,15 @@ class _UpsellScreenState extends State<UpsellScreen> {
         child: Text('Loading...'),
       ),
     );
+  }
+
+  void apiTestIntroductoryPrice(IntroductoryPrice introPrice) {
+    final String introPricePeriodUnit = introPrice.introPricePeriodUnit;
+    final PeriodUnit introPeriodUnit = introPrice.periodUnit;
+    final double price = introPrice.price;
+    final String priceString = introPrice.priceString;
+    final int cycles = introPrice.cycles;
+    final int periodNumberOfUnits = introPrice.periodNumberOfUnits;
   }
 }
 
