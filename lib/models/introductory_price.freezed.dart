@@ -31,7 +31,7 @@ class _$IntroductoryPriceTearOff {
           String period,
       @JsonKey(name: 'cycles')
           int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
       @JsonKey(name: 'periodUnit')
           String introPricePeriodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
@@ -73,15 +73,16 @@ mixin _$IntroductoryPrice {
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
   @JsonKey(name: 'cycles')
-  int get cycles =>
-      throw _privateConstructorUsedError; // TODO add back when fully removing introPricePeriodUnit
+  int get cycles => throw _privateConstructorUsedError;
+
+  /// TODO add back when fully removing introPricePeriodUnit
 // /// Unit for the billing period of the introductory price, can be DAY, WEEK,
 // /// MONTH or YEAR.
 // @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
 // PeriodUnit periodUnit = getPeriodUnit(introPricePeriodUnit),
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
-  @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+  @Deprecated('Use periodUnit property of type PeriodUnit instead.')
   @JsonKey(name: 'periodUnit')
   String get introPricePeriodUnit => throw _privateConstructorUsedError;
 
@@ -109,7 +110,7 @@ abstract class $IntroductoryPriceCopyWith<$Res> {
           String period,
       @JsonKey(name: 'cycles')
           int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
       @JsonKey(name: 'periodUnit')
           String introPricePeriodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
@@ -179,7 +180,7 @@ abstract class _$IntroductoryPriceCopyWith<$Res>
           String period,
       @JsonKey(name: 'cycles')
           int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
       @JsonKey(name: 'periodUnit')
           String introPricePeriodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
@@ -247,7 +248,7 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
           this.period,
       @JsonKey(name: 'cycles')
           this.cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
       @JsonKey(name: 'periodUnit')
           this.introPricePeriodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
@@ -280,14 +281,16 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
   /// user will be given the introductory price, such as 3.
   @JsonKey(name: 'cycles')
   final int cycles;
-  @override // TODO add back when fully removing introPricePeriodUnit
+  @override
+
+  /// TODO add back when fully removing introPricePeriodUnit
 // /// Unit for the billing period of the introductory price, can be DAY, WEEK,
 // /// MONTH or YEAR.
 // @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
 // PeriodUnit periodUnit = getPeriodUnit(introPricePeriodUnit),
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
-  @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+  @Deprecated('Use periodUnit property of type PeriodUnit instead.')
   @JsonKey(name: 'periodUnit')
   final String introPricePeriodUnit;
   @override
@@ -348,7 +351,7 @@ abstract class _IntroductoryPrice extends IntroductoryPrice {
           String period,
       @JsonKey(name: 'cycles')
           int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
       @JsonKey(name: 'periodUnit')
           String introPricePeriodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
@@ -381,14 +384,16 @@ abstract class _IntroductoryPrice extends IntroductoryPrice {
   /// user will be given the introductory price, such as 3.
   @JsonKey(name: 'cycles')
   int get cycles;
-  @override // TODO add back when fully removing introPricePeriodUnit
+  @override
+
+  /// TODO add back when fully removing introPricePeriodUnit
 // /// Unit for the billing period of the introductory price, can be DAY, WEEK,
 // /// MONTH or YEAR.
 // @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
 // PeriodUnit periodUnit = getPeriodUnit(introPricePeriodUnit),
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
-  @Deprecated('Use periodUnit property of type PeriodUnit enum instead.')
+  @Deprecated('Use periodUnit property of type PeriodUnit instead.')
   @JsonKey(name: 'periodUnit')
   String get introPricePeriodUnit;
   @override
