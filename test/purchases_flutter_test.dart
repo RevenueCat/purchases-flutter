@@ -472,23 +472,23 @@ void main() {
 
   test('IntroductoryPrice PeriodUnit maps correctly', () async {
     /// test day
-    const introPricePeriodUnitDay = IntroductoryPrice(0.0, "\$0.00", 'P2W', 1, 'DAY', 14);
+    const introPricePeriodUnitDay = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'DAY', 14);
     expect(introPricePeriodUnitDay.periodUnit, PeriodUnit.day);
 
     /// test week
-    const introPricePeriodUnitWeek = IntroductoryPrice(0.0, "\$0.00", 'P2W', 1, 'WEEK', 14);
+    const introPricePeriodUnitWeek = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'WEEK', 14);
     expect(introPricePeriodUnitWeek.periodUnit, PeriodUnit.week);
 
     /// test month
-    const introPricePeriodUnitMonth = IntroductoryPrice(0.0, "\$0.00", 'P2W', 1, 'MONTH', 14);
+    const introPricePeriodUnitMonth = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'MONTH', 14);
     expect(introPricePeriodUnitMonth.periodUnit, PeriodUnit.month);
 
     /// test year
-    const introPricePeriodUnitYear = IntroductoryPrice(0.0, "\$0.00", 'P2W', 1, 'YEAR', 14);
+    const introPricePeriodUnitYear = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'YEAR', 14);
     expect(introPricePeriodUnitYear.periodUnit, PeriodUnit.year);
 
     /// test unknown
-    const introPricePeriodUnitUnknown = IntroductoryPrice(0.0, "\$0.00", 'P2W', 1, 'sadf', 14);
+    const introPricePeriodUnitUnknown = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'sadf', 14);
     expect(introPricePeriodUnitUnknown.periodUnit, PeriodUnit.unknown);
 });
 

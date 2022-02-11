@@ -134,6 +134,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
     );
   }
 
+  // ignore: deprecated
+  // ignore: unused_local_variable
   void apiTestIntroductoryPrice(IntroductoryPrice introPrice) {
     final String introPricePeriodUnit = introPrice.introPricePeriodUnit;
     final PeriodUnit introPeriodUnit = introPrice.periodUnit;
