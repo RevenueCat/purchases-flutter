@@ -42,7 +42,8 @@ class IntroductoryPrice with _$IntroductoryPrice {
     @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits,
   ) = _IntroductoryPrice;
 
-  /// Maps introPricePeriodUnit string to PeriodUnit enum type
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
   PeriodUnit get periodUnit {
     // ignore: deprecated_member_use_from_same_package
     switch (introPricePeriodUnit) {
