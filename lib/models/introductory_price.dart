@@ -44,6 +44,7 @@ class IntroductoryPrice with _$IntroductoryPrice {
 
   /// Maps introPricePeriodUnit string to PeriodUnit enum type
   PeriodUnit get periodUnit {
+    // ignore: deprecated_member_use_from_same_package
     switch (introPricePeriodUnit) {
       case 'DAY': { return PeriodUnit.day; }
       case 'WEEK': { return PeriodUnit.week; }

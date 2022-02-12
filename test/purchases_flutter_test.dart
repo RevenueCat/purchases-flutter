@@ -464,9 +464,10 @@ void main() {
 
   test('IntroductoryPrice has both PeriodUnit enum and periodUnit string', () async {
     final mockIntroductoryPrice = IntroductoryPrice.fromJson(
-        mockIntroductoryPriceJson
+        mockIntroductoryPriceJson,
     );
     expect(mockIntroductoryPrice.periodUnit, PeriodUnit.day);
+    // ignore: deprecated_member_use_from_same_package
     expect(mockIntroductoryPrice.introPricePeriodUnit, 'DAY');
   });
 
@@ -491,6 +492,4 @@ void main() {
     const introPricePeriodUnitUnknown = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'sadf', 14);
     expect(introPricePeriodUnitUnknown.periodUnit, PeriodUnit.unknown);
 });
-
-
 }

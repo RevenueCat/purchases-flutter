@@ -109,7 +109,6 @@ class _UpsellScreenState extends State<UpsellScreen> {
           apiTestIntroductoryPrice(monthly.product.introductoryPrice);
         }
 
-
         if (monthly != null && lifetime != null) {
           return Scaffold(
             appBar: AppBar(title: const Text('Upsell Screen')),
@@ -134,15 +133,19 @@ class _UpsellScreenState extends State<UpsellScreen> {
     );
   }
 
-  // ignore: deprecated
-  // ignore: unused_local_variable
   void apiTestIntroductoryPrice(IntroductoryPrice introPrice) {
+    // ignore: deprecated_member_use
     final String introPricePeriodUnit = introPrice.introPricePeriodUnit;
     final PeriodUnit introPeriodUnit = introPrice.periodUnit;
     final double price = introPrice.price;
     final String priceString = introPrice.priceString;
     final int cycles = introPrice.cycles;
     final int periodNumberOfUnits = introPrice.periodNumberOfUnits;
+    print(
+        'introPricePeriodUnit: $introPricePeriodUnit, introPeriodUnit: '
+            '$introPeriodUnit, price: $price.toString(), priceString: '
+            '$priceString, cycles: $cycles.toString(), periodNumberOfUnits: '
+            '$periodNumberOfUnits');
   }
 }
 
