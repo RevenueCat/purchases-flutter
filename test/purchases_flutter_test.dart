@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+// ignore_for_file: deprecated_member_use_from_same_package
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -467,7 +468,6 @@ void main() {
         mockIntroductoryPriceJson,
     );
     expect(mockIntroductoryPrice.periodUnit, PeriodUnit.day);
-    // ignore: deprecated_member_use_from_same_package
     expect(mockIntroductoryPrice.introPricePeriodUnit, 'DAY');
   });
 
@@ -479,7 +479,7 @@ void main() {
     expect(mockIntroPrice.priceString, mockIntroPrice.introPriceString);
     expect(mockIntroPrice.period, mockIntroPrice.introPricePeriod);
     expect(mockIntroPrice.periodNumberOfUnits,
-        mockIntroPrice.introPricePeriodNumberOfUnits);
+        mockIntroPrice.introPricePeriodNumberOfUnits,);
     expect(mockIntroPrice.cycles, mockIntroPrice.introPriceCycles);
   });
 
