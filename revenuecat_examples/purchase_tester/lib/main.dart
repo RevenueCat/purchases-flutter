@@ -155,17 +155,14 @@ class _UpsellScreenState extends State<UpsellScreen> {
     // ignore: deprecated_member_use
     final int introPriceCycles = introPrice.introPriceCycles;
 
-
-    print(
-        'introPricePeriodUnit: $introPricePeriodUnit, periodUnit: '
-            '$periodUnit, price: $price.toString(), priceString: '
-            '$priceString, cycles: $cycles.toString(), periodNumberOfUnits: '
-            '$periodNumberOfUnits, introPrice: $introPrice.toString(), '
-            'introPriceString: $introPriceString, introPricePeriod: '
-            '$introPricePeriod, introPricePeriodNumberOfUnits: '
-            '$introPricePeriodNumberOfUnits, introPriceCycles: '
-            '$introPriceCycles, introPricePrice: $introPricePrice.toString()');
-
+    print('introPricePeriodUnit: $introPricePeriodUnit, periodUnit: '
+        '$periodUnit, price: $price.toString(), priceString: '
+        '$priceString, cycles: $cycles.toString(), periodNumberOfUnits: '
+        '$periodNumberOfUnits, introPrice: $introPrice.toString(), '
+        'introPriceString: $introPriceString, introPricePeriod: '
+        '$introPricePeriod, introPricePeriodNumberOfUnits: '
+        '$introPricePeriodNumberOfUnits, introPriceCycles: '
+        '$introPriceCycles, introPricePrice: $introPricePrice.toString()');
   }
 }
 
