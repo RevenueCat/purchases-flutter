@@ -12,8 +12,7 @@ _$_IntroductoryPrice _$$_IntroductoryPriceFromJson(Map json) =>
       json['priceString'] as String,
       json['period'] as String,
       json['cycles'] as int,
-      $enumDecode(_$PeriodUnitEnumMap, json['periodUnit'],
-          unknownValue: PeriodUnit.unknown),
+      json['periodUnit'] as String,
       json['periodNumberOfUnits'] as int,
     );
 
@@ -24,14 +23,6 @@ Map<String, dynamic> _$$_IntroductoryPriceToJson(
       'priceString': instance.priceString,
       'period': instance.period,
       'cycles': instance.cycles,
-      'periodUnit': _$PeriodUnitEnumMap[instance.periodUnit],
+      'periodUnit': instance.introPricePeriodUnit,
       'periodNumberOfUnits': instance.periodNumberOfUnits,
     };
-
-const _$PeriodUnitEnumMap = {
-  PeriodUnit.day: 'DAY',
-  PeriodUnit.week: 'WEEK',
-  PeriodUnit.month: 'MONTH',
-  PeriodUnit.year: 'YEAR',
-  PeriodUnit.unknown: 'unknown',
-};

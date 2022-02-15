@@ -104,6 +104,11 @@ class _UpsellScreenState extends State<UpsellScreen> {
       if (offering != null) {
         final monthly = offering.monthly;
         final lifetime = offering.lifetime;
+
+        if (monthly.product.introductoryPrice != null) {
+          apiTestIntroductoryPrice(monthly.product.introductoryPrice);
+        }
+
         if (monthly != null && lifetime != null) {
           return Scaffold(
             appBar: AppBar(title: const Text('Upsell Screen')),
@@ -126,6 +131,41 @@ class _UpsellScreenState extends State<UpsellScreen> {
         child: Text('Loading...'),
       ),
     );
+  }
+
+  void apiTestIntroductoryPrice(IntroductoryPrice introPrice) {
+    final PeriodUnit periodUnit = introPrice.periodUnit;
+    final double price = introPrice.price;
+    final String priceString = introPrice.priceString;
+    final int cycles = introPrice.cycles;
+    final int periodNumberOfUnits = introPrice.periodNumberOfUnits;
+
+    /// deprecated properties
+    // ignore: deprecated_member_use
+    final String introPricePeriodUnit = introPrice.introPricePeriodUnit;
+    // ignore: deprecated_member_use
+    final double introPricePrice = introPrice.introPrice;
+    // ignore: deprecated_member_use
+    final String introPriceString = introPrice.introPriceString;
+    // ignore: deprecated_member_use
+    final String introPricePeriod = introPrice.introPricePeriod;
+    final int introPricePeriodNumberOfUnits =
+        // ignore: deprecated_member_use
+        introPrice.introPricePeriodNumberOfUnits;
+    // ignore: deprecated_member_use
+    final int introPriceCycles = introPrice.introPriceCycles;
+
+
+    print(
+        'introPricePeriodUnit: $introPricePeriodUnit, periodUnit: '
+            '$periodUnit, price: $price.toString(), priceString: '
+            '$priceString, cycles: $cycles.toString(), periodNumberOfUnits: '
+            '$periodNumberOfUnits, introPrice: $introPrice.toString(), '
+            'introPriceString: $introPriceString, introPricePeriod: '
+            '$introPricePeriod, introPricePeriodNumberOfUnits: '
+            '$introPricePeriodNumberOfUnits, introPriceCycles: '
+            '$introPriceCycles, introPricePrice: $introPricePrice.toString()');
+
   }
 }
 

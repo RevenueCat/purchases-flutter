@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+// ignore_for_file: deprecated_member_use_from_same_package
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -23,6 +24,15 @@ void main() {
     'allPurchaseDates': {},
     'originalApplicationVersion': '1.2.3',
     'nonSubscriptionTransactions': []
+  };
+
+  final mockIntroductoryPriceJson = {
+    'price': 0.0,
+    'priceString': '\$0.00',
+    'period': 'P2W',
+    'cycles': 1,
+    'periodUnit': 'DAY',
+    'periodNumberOfUnits': 14,
   };
 
   setUp(() {
@@ -452,4 +462,46 @@ void main() {
       fail('there was an exception ' + e.toString());
     }
   });
+
+  test('IntroductoryPrice has both PeriodUnit enum and periodUnit string', () async {
+    final mockIntroductoryPrice = IntroductoryPrice.fromJson(
+        mockIntroductoryPriceJson,
+    );
+    expect(mockIntroductoryPrice.periodUnit, PeriodUnit.day);
+    expect(mockIntroductoryPrice.introPricePeriodUnit, 'DAY');
+  });
+
+  test('IntroductoryPrice deprecated properties contain same values', () async {
+    final mockIntroPrice = IntroductoryPrice.fromJson(
+      mockIntroductoryPriceJson,
+    );
+    expect(mockIntroPrice.price, mockIntroPrice.introPrice);
+    expect(mockIntroPrice.priceString, mockIntroPrice.introPriceString);
+    expect(mockIntroPrice.period, mockIntroPrice.introPricePeriod);
+    expect(mockIntroPrice.periodNumberOfUnits,
+        mockIntroPrice.introPricePeriodNumberOfUnits,);
+    expect(mockIntroPrice.cycles, mockIntroPrice.introPriceCycles);
+  });
+
+  test('IntroductoryPrice PeriodUnit maps correctly', () async {
+    /// test day
+    const introPricePeriodUnitDay = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'DAY', 14);
+    expect(introPricePeriodUnitDay.periodUnit, PeriodUnit.day);
+
+    /// test week
+    const introPricePeriodUnitWeek = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'WEEK', 14);
+    expect(introPricePeriodUnitWeek.periodUnit, PeriodUnit.week);
+
+    /// test month
+    const introPricePeriodUnitMonth = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'MONTH', 14);
+    expect(introPricePeriodUnitMonth.periodUnit, PeriodUnit.month);
+
+    /// test year
+    const introPricePeriodUnitYear = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'YEAR', 14);
+    expect(introPricePeriodUnitYear.periodUnit, PeriodUnit.year);
+
+    /// test unknown
+    const introPricePeriodUnitUnknown = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'sadf', 14);
+    expect(introPricePeriodUnitUnknown.periodUnit, PeriodUnit.unknown);
+});
 }
