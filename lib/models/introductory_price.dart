@@ -61,7 +61,7 @@ class IntroductoryPrice with _$IntroductoryPrice {
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
-  /// @Deprecated('Use priceString instead.')
+  @Deprecated('Use priceString instead.')
   String get introPriceString => priceString;
 
   /// Billing period of the introductory price, specified in
