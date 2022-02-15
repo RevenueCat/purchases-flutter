@@ -134,18 +134,38 @@ class _UpsellScreenState extends State<UpsellScreen> {
   }
 
   void apiTestIntroductoryPrice(IntroductoryPrice introPrice) {
-    // ignore: deprecated_member_use
-    final String introPricePeriodUnit = introPrice.introPricePeriodUnit;
-    final PeriodUnit introPeriodUnit = introPrice.periodUnit;
+    final PeriodUnit periodUnit = introPrice.periodUnit;
     final double price = introPrice.price;
     final String priceString = introPrice.priceString;
     final int cycles = introPrice.cycles;
     final int periodNumberOfUnits = introPrice.periodNumberOfUnits;
+
+    /// deprecated properties
+    // ignore: deprecated_member_use
+    final String introPricePeriodUnit = introPrice.introPricePeriodUnit;
+    // ignore: deprecated_member_use
+    final double introPricePrice = introPrice.introPrice;
+    // ignore: deprecated_member_use
+    final String introPriceString = introPrice.introPriceString;
+    // ignore: deprecated_member_use
+    final String introPricePeriod = introPrice.introPricePeriod;
+    // ignore: deprecated_member_use
+    final int introPricePeriodNumberOfUnits =
+        introPrice.introPricePeriodNumberOfUnits;
+    // ignore: deprecated_member_use
+    final int introPriceCycles = introPrice.introPriceCycles;
+
+
     print(
-        'introPricePeriodUnit: $introPricePeriodUnit, introPeriodUnit: '
-            '$introPeriodUnit, price: $price.toString(), priceString: '
+        'introPricePeriodUnit: $introPricePeriodUnit, periodUnit: '
+            '$periodUnit, price: $price.toString(), priceString: '
             '$priceString, cycles: $cycles.toString(), periodNumberOfUnits: '
-            '$periodNumberOfUnits');
+            '$periodNumberOfUnits, introPrice: $introPrice.toString(), '
+            'introPriceString: $introPriceString, introPricePeriod: '
+            '$introPricePeriod, introPricePeriodNumberOfUnits: '
+            '$introPricePeriodNumberOfUnits, introPriceCycles: '
+            '$introPriceCycles');
+
   }
 }
 

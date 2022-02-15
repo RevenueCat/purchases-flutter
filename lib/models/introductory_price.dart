@@ -55,6 +55,29 @@ class IntroductoryPrice with _$IntroductoryPrice {
     }
   }
 
+  /// Introductory price of a subscription in the local currency.
+  @Deprecated('Use price instead.')
+  double get introPrice => price;
+
+  /// Formatted introductory price of a subscription, including
+  /// its currency sign, such as €3.99.
+  /// @Deprecated('Use priceString instead.')
+  String get introPriceString => priceString;
+
+  /// Billing period of the introductory price, specified in
+  /// ISO 8601 format.
+  @Deprecated('Use period instead.')
+  String get introPricePeriod => period;
+
+  /// Number of units for the billing period of the introductory price.
+  @Deprecated('Use periodNumberOfUnits instead.')
+  int get introPricePeriodNumberOfUnits => periodNumberOfUnits;
+
+  /// Number of subscription billing periods for which the
+  /// user will be given the introductory price, such as 3.
+  @Deprecated('Use cycles instead.')
+  int get introPriceCycles => cycles;
+
   factory IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
       _$IntroductoryPriceFromJson(json);
 }

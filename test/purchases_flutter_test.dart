@@ -471,6 +471,18 @@ void main() {
     expect(mockIntroductoryPrice.introPricePeriodUnit, 'DAY');
   });
 
+  test('IntroductoryPrice deprecated properties contain same values', () async {
+    final mockIntroPrice = IntroductoryPrice.fromJson(
+      mockIntroductoryPriceJson,
+    );
+    expect(mockIntroPrice.price, mockIntroPrice.introPrice);
+    expect(mockIntroPrice.priceString, mockIntroPrice.introPriceString);
+    expect(mockIntroPrice.period, mockIntroPrice.introPricePeriod);
+    expect(mockIntroPrice.periodNumberOfUnits,
+        mockIntroPrice.introPricePeriodNumberOfUnits);
+    expect(mockIntroPrice.cycles, mockIntroPrice.introPriceCycles);
+  });
+
   test('IntroductoryPrice PeriodUnit maps correctly', () async {
     /// test day
     const introPricePeriodUnitDay = IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'DAY', 14);
