@@ -163,7 +163,7 @@ jobs:
       - checkout
       - run:
           name: Open simulator
-          command: xcrun instruments -w "iPhone 11 Pro (14.2) [" || true
+          command: xcrun instruments -w "iPhone 11 Pro (14.3) [" || true
       - setup-flutter
       - restore_cache:
           name: Restore cocoapods specs and pods
