@@ -1,3 +1,7 @@
+## 3.9.4
+
+- Add back IntroductoryPrice fields that were accidentally removed without a major release (https://github.com/RevenueCat/purchases-flutter/pull/319)
+
 ## 3.9.3
 
 - Fix missing IntroductoryPrice export (https://github.com/RevenueCat/purchases-flutter/pull/310)

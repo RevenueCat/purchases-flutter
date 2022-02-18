@@ -3,13 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'introductory_price.freezed.dart';
 part 'introductory_price.g.dart';
 
-enum PeriodUnit {
-  day,
-  week,
-  month,
-  year,
-  unknown
-}
+enum PeriodUnit { day, week, month, year, unknown }
 
 @freezed
 
@@ -36,7 +30,8 @@ class IntroductoryPrice with _$IntroductoryPrice {
     /// String representation of unit for the billing period of the introductory
     /// price, can be DAY, WEEK, MONTH or YEAR.
     @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-    @JsonKey(name: 'periodUnit') String introPricePeriodUnit,
+    @JsonKey(name: 'periodUnit')
+        String introPricePeriodUnit,
 
     /// Number of units for the billing period of the introductory price.
     @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits,
@@ -47,11 +42,26 @@ class IntroductoryPrice with _$IntroductoryPrice {
   PeriodUnit get periodUnit {
     // ignore: deprecated_member_use_from_same_package
     switch (introPricePeriodUnit) {
-      case 'DAY': { return PeriodUnit.day; }
-      case 'WEEK': { return PeriodUnit.week; }
-      case 'MONTH': { return PeriodUnit.month; }
-      case 'YEAR': { return PeriodUnit.year; }
-      default: { return PeriodUnit.unknown; }
+      case 'DAY':
+        {
+          return PeriodUnit.day;
+        }
+      case 'WEEK':
+        {
+          return PeriodUnit.week;
+        }
+      case 'MONTH':
+        {
+          return PeriodUnit.month;
+        }
+      case 'YEAR':
+        {
+          return PeriodUnit.year;
+        }
+      default:
+        {
+          return PeriodUnit.unknown;
+        }
     }
   }
 

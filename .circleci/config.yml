@@ -158,12 +158,12 @@ jobs:
   ios-integration-test:
     description: "Run integration tests for Flutter"
     macos:
-      xcode: 12.2.0
+      xcode: 12.3.0
     steps:
       - checkout
       - run:
           name: Open simulator
-          command: xcrun instruments -w "iPhone 11 Pro (14.2) [" || true
+          command: xcrun instruments -w "iPhone 11 Pro (14.3) [" || true
       - setup-flutter
       - restore_cache:
           name: Restore cocoapods specs and pods
