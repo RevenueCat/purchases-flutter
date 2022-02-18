@@ -1,6 +1,12 @@
 ## 3.9.4
 
 - Add back IntroductoryPrice fields that were accidentally removed without a major release (https://github.com/RevenueCat/purchases-flutter/pull/319)
+- Fields added back:
+  `IntroductoryPrice.introPricePeriodUnit `
+  `IntroductoryPrice.introPrice`
+  `IntroductoryPrice.introPriceString`
+  `IntroductoryPrice.introPriceCycles`
+  `IntroductoryPrice.introPricePeriodNumberOfUnits`
 
 ## 3.9.3
 
@@ -29,6 +35,12 @@
     https://github.com/RevenueCat/purchases-flutter/pull/285
 - Updated JSON serialization using Freezed
     https://github.com/RevenueCat/purchases-flutter/pull/270
+- Breaking changes:
+  `IntroductoryPrice.introPricePeriodUnit` -> `IntroductoryPrice.periodUnit` (+ changed from string to PeriodUnit enum type)
+  `IntroductoryPrice.introPrice` -> `IntroductoryPrice.price`
+  `IntroductoryPrice.introPriceString` -> `IntroductoryPrice.priceString`
+  `IntroductoryPrice.introPriceCycles` -> `IntroductoryPrice.cycles`
+  `IntroductoryPrice.introPricePeriodNumberOfUnits` -> `IntroductoryPrice.periodNumberOfUnits` 
 
 ## 3.8.0
 
