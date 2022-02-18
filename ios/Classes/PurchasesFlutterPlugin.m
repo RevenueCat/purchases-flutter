@@ -13,7 +13,7 @@
 @end
 
 
-NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
+NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
 
 
 @implementation PurchasesFlutterPlugin
@@ -79,13 +79,13 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     } else if ([@"logOut" isEqualToString:call.method]) {
         [self logOutWithResult:result];
     } else if ([@"reset" isEqualToString:call.method]) {
-        [self resetWithResult:result];
+//        [self resetWithResult:result];
     } else if ([@"logIn" isEqualToString:call.method]) {
         [self logInAppUserID:arguments[@"appUserID"] result:result];
     } else if ([@"identify" isEqualToString:call.method]) {
-        [self identify:arguments[@"appUserID"] result:result];
+//        [self identify:arguments[@"appUserID"] result:result];
     } else if ([@"createAlias" isEqualToString:call.method]) {
-        [self createAlias:arguments[@"newAppUserID"] result:result];
+//        [self createAlias:arguments[@"newAppUserID"] result:result];
     } else if ([@"setDebugLogsEnabled" isEqualToString:call.method]) {
         [self setDebugLogsEnabled:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setSimulatesAskToBuyInSandbox" isEqualToString:call.method]) {
@@ -104,8 +104,8 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self isConfiguredWithResult:result];
     } else if ([@"checkTrialOrIntroductoryPriceEligibility" isEqualToString:call.method]) {
         [self checkTrialOrIntroductoryPriceEligibility:arguments[@"productIdentifiers"] result:result];
-    } else if ([@"invalidatePurchaserInfoCache" isEqualToString:call.method]) {
-        [self invalidatePurchaserInfoCacheWithResult:result];
+    } else if ([@"invalidateCustomerInfoCache" isEqualToString:call.method]) {
+        [self invalidateCustomerInfoCacheWithResult:result];
     } else if ([@"presentCodeRedemptionSheet" isEqualToString:call.method]) {
         [self presentCodeRedemptionSheetWithResult:result];
     } else if ([@"setAttributes" isEqualToString:call.method]) {
@@ -188,12 +188,14 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
     if ([userDefaultsSuiteName isKindOfClass:NSNull.class]) {
         userDefaultsSuiteName = nil;
     }
+    
     [RCPurchases configureWithAPIKey:apiKey
                            appUserID:appUserID
                         observerMode:observerMode
                userDefaultsSuiteName:userDefaultsSuiteName
                       platformFlavor:self.platformFlavor
-               platformFlavorVersion:self.platformFlavorVersion];
+               platformFlavorVersion:self.platformFlavorVersion
+                   dangerousSettings:nil];
     RCPurchases.sharedPurchases.delegate = self;
     [RCCommonFunctionality configure];
     result(nil);
@@ -266,32 +268,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result([RCCommonFunctionality appUserID]);
 }
 
-- (void)createAlias:(NSString * _Nullable)newAppUserID
-             result:(FlutterResult)result {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [RCCommonFunctionality createAlias:newAppUserID completionBlock:[self getResponseCompletionBlock:result]];
-#pragma GCC diagnostic pop
-}
-
 - (void)logInAppUserID:(NSString * _Nullable)appUserID
                 result:(FlutterResult)result {
     [RCCommonFunctionality logInWithAppUserID:appUserID completionBlock:[self getResponseCompletionBlock:result]];
-}
-
-- (void)identify:(NSString * _Nullable)appUserID
-          result:(FlutterResult)result {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [RCCommonFunctionality identify:appUserID completionBlock:[self getResponseCompletionBlock:result]];
-#pragma GCC diagnostic pop
-}
-
-- (void)resetWithResult:(FlutterResult)result {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [RCCommonFunctionality resetWithCompletionBlock:[self getResponseCompletionBlock:result]];
-#pragma GCC diagnostic pop
 }
 
 - (void)logOutWithResult:(FlutterResult)result {
@@ -336,14 +315,15 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)checkTrialOrIntroductoryPriceEligibility:(NSArray *)products
                                           result:(FlutterResult)result {
-    [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products
-                                                    completionBlock:^(NSDictionary<NSString *, NSDictionary *> *_Nonnull responseDictionary) {
-                                                        result([NSDictionary dictionaryWithDictionary:responseDictionary]);
-                                                    }];
+    // JOSH: look at this
+//    [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products
+//                                                    completionBlock:^(NSDictionary<NSString *, NSDictionary *> *_Nonnull responseDictionary) {
+//                                                        result([NSDictionary dictionaryWithDictionary:responseDictionary]);
+//                                                    }];
 }
 
-- (void)invalidatePurchaserInfoCacheWithResult:(FlutterResult)result {
-    [RCCommonFunctionality invalidatePurchaserInfoCache];
+- (void)invalidateCustomerInfoCacheWithResult:(FlutterResult)result {
+    [RCCommonFunctionality invalidateCustomerInfoCache];
     result(nil);
 }
 
@@ -478,9 +458,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark -
 #pragma mark Delegate Methods
 
-- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo {
-    [self.channel invokeMethod:RNPurchasesPurchaserInfoUpdatedEvent
-                     arguments:purchaserInfo.dictionary];
+- (void)purchases:(RCPurchases *)purchases receivedUpdatedCustomerInfo:(RCCustomerInfo *)customerInfo {
+    [self.channel invokeMethod:RNPurchasesCustomerInfoUpdatedEvent
+                     arguments:customerInfo.dictionary];
 }
 
 #pragma mark -
