@@ -8,6 +8,9 @@
 
 *purchases_flutter* is a client for the [RevenueCat](https://www.revenuecat.com/) subscription and purchase tracking system. It is an open source framework that provides a wrapper around `StoreKit`, `Google Play Billing` and the RevenueCat backend to make implementing in-app subscriptions in `Flutter` easy - receipt validation and status tracking included!
 
+## Amazon Support
+This version of the SDK doesn't have support for Amazon Store. If you would like to use our SDK with Amazon Store, use the version tagged [amazon-latest](https://github.com/RevenueCat/purchases-flutter/releases/tag/amazon-latest) and follow the docs at https://docs.revenuecat.com/v3.4/docs/flutter#amazon-appstore to get set up.
+
 ## Features
 |   | RevenueCat |
 | --- | --- |
