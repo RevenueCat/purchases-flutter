@@ -35,7 +35,7 @@
     https://github.com/RevenueCat/purchases-flutter/pull/285
 - Updated JSON serialization using Freezed
     https://github.com/RevenueCat/purchases-flutter/pull/270
-- Breaking changes:
+- Breaking changes (these were unintended and fixed in 3.9.4):
   `IntroductoryPrice.introPricePeriodUnit` -> `IntroductoryPrice.periodUnit` (+ changed from string to PeriodUnit enum type)
   `IntroductoryPrice.introPrice` -> `IntroductoryPrice.price`
   `IntroductoryPrice.introPriceString` -> `IntroductoryPrice.priceString`
