@@ -1,11 +1,15 @@
-Adds initial Amazon store support. In order to use please point to this tag in your `pubspec.yaml` like this:
+⚠️ ⚠️ ⚠️
+This version doesn't support Amazon Store in [observer mode](https://docs.revenuecat.com/docs/observer-mode).
+⚠️ ⚠️ ⚠️
+
+Adds initial Amazon Store support. In order to use please point to this tag in your `pubspec.yaml` like this:
 
 ```
 dependencies:
   purchases_flutter:
     git:
       url: git://github.com/revenuecat/purchases-flutter.git
-      ref: amazon.alpha.2
+      ref: amazon.alpha.3
 ```
 
 Then configure the package using your **RevenueCat API key specific for Amazon** and passing `useAmazon: true`:
