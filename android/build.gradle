@@ -35,6 +35,11 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+    buildTypes {
+        release {
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
