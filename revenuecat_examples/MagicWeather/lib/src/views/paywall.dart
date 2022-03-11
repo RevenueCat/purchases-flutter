@@ -51,7 +51,7 @@ class _PaywallState extends State<Paywall> {
                   child: ListTile(
                       onTap: () async {
                         try {
-                          CustomerInfo purchaserInfo =
+                          PurchaserInfo purchaserInfo =
                               await Purchases.purchasePackage(
                                   myProductList[index]);
                           appData.entitlementIsActive = purchaserInfo

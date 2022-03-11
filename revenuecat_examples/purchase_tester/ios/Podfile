@@ -31,8 +31,8 @@ target 'Runner' do
   use_frameworks!
   use_modular_headers!
   
-#   pod 'RevenueCat', path: '~/git/revcat/purchases-ios'
-  pod 'PurchasesHybridCommon', path: '~/git/revcat/purchases-hybrid-common'
+  pod 'RevenueCat', path: '~/Developer/purchases-ios'
+  pod 'PurchasesHybridCommon', path: '~/Developer/purchases-hybrid-common'
   
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end

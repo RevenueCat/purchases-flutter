@@ -167,7 +167,7 @@ void main() {
       final logInResult = await Purchases.logIn('appUserID');
       expect(
         logInResult.purchaserInfo,
-        CustomerInfo.fromJson(mockPurchaserInfoResponse),
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
       );
       expect(logInResult.created, mockCreated);
     } on PlatformException catch (e) {
@@ -181,7 +181,7 @@ void main() {
       final purchaserInfo = await Purchases.logOut();
       expect(
         purchaserInfo,
-        CustomerInfo.fromJson(mockPurchaserInfoResponse),
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -347,7 +347,7 @@ void main() {
           await Purchases.purchasePackage(mockPackage);
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockPurchaserInfoResponse),
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -387,7 +387,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockPurchaserInfoResponse),
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -412,7 +412,7 @@ void main() {
           await Purchases.purchaseProduct(mockProduct.identifier);
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockPurchaserInfoResponse),
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -446,7 +446,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockPurchaserInfoResponse),
+        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());

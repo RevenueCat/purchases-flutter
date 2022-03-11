@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'customer_info_wrapper.dart';
+part of 'purchaser_info_wrapper.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,15 +14,15 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-CustomerInfo _$CustomerInfoFromJson(Map<String, dynamic> json) {
-  return _CustomerInfo.fromJson(json);
+PurchaserInfo _$PurchaserInfoFromJson(Map<String, dynamic> json) {
+  return _PurchaserInfo.fromJson(json);
 }
 
 /// @nodoc
-class _$CustomerInfoTearOff {
-  const _$CustomerInfoTearOff();
+class _$PurchaserInfoTearOff {
+  const _$PurchaserInfoTearOff();
 
-  _CustomerInfo call(
+  _PurchaserInfo call(
       @JsonKey(name: 'entitlements')
           EntitlementInfos entitlements,
       @JsonKey(name: 'allPurchaseDates')
@@ -49,7 +49,7 @@ class _$CustomerInfoTearOff {
           String? originalApplicationVersion,
       @JsonKey(name: 'managementURL')
           String? managementURL}) {
-    return _CustomerInfo(
+    return _PurchaserInfo(
       entitlements,
       allPurchaseDates,
       activeSubscriptions,
@@ -66,17 +66,17 @@ class _$CustomerInfoTearOff {
     );
   }
 
-  CustomerInfo fromJson(Map<String, Object?> json) {
-    return CustomerInfo.fromJson(json);
+  PurchaserInfo fromJson(Map<String, Object?> json) {
+    return PurchaserInfo.fromJson(json);
   }
 }
 
 /// @nodoc
-const $CustomerInfo = _$CustomerInfoTearOff();
+const $PurchaserInfo = _$PurchaserInfoTearOff();
 
 /// @nodoc
-mixin _$CustomerInfo {
-  /// Entitlements attached to this customer info
+mixin _$PurchaserInfo {
+  /// Entitlements attached to this purchaser info
   @JsonKey(name: 'entitlements')
   EntitlementInfos get entitlements => throw _privateConstructorUsedError;
 
@@ -145,15 +145,15 @@ mixin _$CustomerInfo {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CustomerInfoCopyWith<CustomerInfo> get copyWith =>
+  $PurchaserInfoCopyWith<PurchaserInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CustomerInfoCopyWith<$Res> {
-  factory $CustomerInfoCopyWith(
-          CustomerInfo value, $Res Function(CustomerInfo) then) =
-      _$CustomerInfoCopyWithImpl<$Res>;
+abstract class $PurchaserInfoCopyWith<$Res> {
+  factory $PurchaserInfoCopyWith(
+          PurchaserInfo value, $Res Function(PurchaserInfo) then) =
+      _$PurchaserInfoCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: 'entitlements')
           EntitlementInfos entitlements,
@@ -186,12 +186,13 @@ abstract class $CustomerInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CustomerInfoCopyWithImpl<$Res> implements $CustomerInfoCopyWith<$Res> {
-  _$CustomerInfoCopyWithImpl(this._value, this._then);
+class _$PurchaserInfoCopyWithImpl<$Res>
+    implements $PurchaserInfoCopyWith<$Res> {
+  _$PurchaserInfoCopyWithImpl(this._value, this._then);
 
-  final CustomerInfo _value;
+  final PurchaserInfo _value;
   // ignore: unused_field
-  final $Res Function(CustomerInfo) _then;
+  final $Res Function(PurchaserInfo) _then;
 
   @override
   $Res call({
@@ -274,11 +275,11 @@ class _$CustomerInfoCopyWithImpl<$Res> implements $CustomerInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$CustomerInfoCopyWith<$Res>
-    implements $CustomerInfoCopyWith<$Res> {
-  factory _$CustomerInfoCopyWith(
-          _CustomerInfo value, $Res Function(_CustomerInfo) then) =
-      __$CustomerInfoCopyWithImpl<$Res>;
+abstract class _$PurchaserInfoCopyWith<$Res>
+    implements $PurchaserInfoCopyWith<$Res> {
+  factory _$PurchaserInfoCopyWith(
+          _PurchaserInfo value, $Res Function(_PurchaserInfo) then) =
+      __$PurchaserInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'entitlements')
@@ -313,14 +314,15 @@ abstract class _$CustomerInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$CustomerInfoCopyWithImpl<$Res> extends _$CustomerInfoCopyWithImpl<$Res>
-    implements _$CustomerInfoCopyWith<$Res> {
-  __$CustomerInfoCopyWithImpl(
-      _CustomerInfo _value, $Res Function(_CustomerInfo) _then)
-      : super(_value, (v) => _then(v as _CustomerInfo));
+class __$PurchaserInfoCopyWithImpl<$Res>
+    extends _$PurchaserInfoCopyWithImpl<$Res>
+    implements _$PurchaserInfoCopyWith<$Res> {
+  __$PurchaserInfoCopyWithImpl(
+      _PurchaserInfo _value, $Res Function(_PurchaserInfo) _then)
+      : super(_value, (v) => _then(v as _PurchaserInfo));
 
   @override
-  _CustomerInfo get _value => super._value as _CustomerInfo;
+  _PurchaserInfo get _value => super._value as _PurchaserInfo;
 
   @override
   $Res call({
@@ -338,7 +340,7 @@ class __$CustomerInfoCopyWithImpl<$Res> extends _$CustomerInfoCopyWithImpl<$Res>
     Object? originalApplicationVersion = freezed,
     Object? managementURL = freezed,
   }) {
-    return _then(_CustomerInfo(
+    return _then(_PurchaserInfo(
       entitlements == freezed
           ? _value.entitlements
           : entitlements // ignore: cast_nullable_to_non_nullable
@@ -397,8 +399,8 @@ class __$CustomerInfoCopyWithImpl<$Res> extends _$CustomerInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CustomerInfo implements _CustomerInfo {
-  const _$_CustomerInfo(
+class _$_PurchaserInfo implements _PurchaserInfo {
+  const _$_PurchaserInfo(
       @JsonKey(name: 'entitlements')
           this.entitlements,
       @JsonKey(name: 'allPurchaseDates')
@@ -426,12 +428,12 @@ class _$_CustomerInfo implements _CustomerInfo {
       @JsonKey(name: 'managementURL')
           this.managementURL});
 
-  factory _$_CustomerInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_CustomerInfoFromJson(json);
+  factory _$_PurchaserInfo.fromJson(Map<String, dynamic> json) =>
+      _$$_PurchaserInfoFromJson(json);
 
   @override
 
-  /// Entitlements attached to this customer info
+  /// Entitlements attached to this purchaser info
   @JsonKey(name: 'entitlements')
   final EntitlementInfos entitlements;
   @override
@@ -508,14 +510,14 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   @override
   String toString() {
-    return 'CustomerInfo(entitlements: $entitlements, allPurchaseDates: $allPurchaseDates, activeSubscriptions: $activeSubscriptions, allPurchasedProductIdentifiers: $allPurchasedProductIdentifiers, nonSubscriptionTransactions: $nonSubscriptionTransactions, firstSeen: $firstSeen, originalAppUserId: $originalAppUserId, allExpirationDates: $allExpirationDates, requestDate: $requestDate, latestExpirationDate: $latestExpirationDate, originalPurchaseDate: $originalPurchaseDate, originalApplicationVersion: $originalApplicationVersion, managementURL: $managementURL)';
+    return 'PurchaserInfo(entitlements: $entitlements, allPurchaseDates: $allPurchaseDates, activeSubscriptions: $activeSubscriptions, allPurchasedProductIdentifiers: $allPurchasedProductIdentifiers, nonSubscriptionTransactions: $nonSubscriptionTransactions, firstSeen: $firstSeen, originalAppUserId: $originalAppUserId, allExpirationDates: $allExpirationDates, requestDate: $requestDate, latestExpirationDate: $latestExpirationDate, originalPurchaseDate: $originalPurchaseDate, originalApplicationVersion: $originalApplicationVersion, managementURL: $managementURL)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _CustomerInfo &&
+            other is _PurchaserInfo &&
             const DeepCollectionEquality()
                 .equals(other.entitlements, entitlements) &&
             const DeepCollectionEquality()
@@ -564,17 +566,17 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   @JsonKey(ignore: true)
   @override
-  _$CustomerInfoCopyWith<_CustomerInfo> get copyWith =>
-      __$CustomerInfoCopyWithImpl<_CustomerInfo>(this, _$identity);
+  _$PurchaserInfoCopyWith<_PurchaserInfo> get copyWith =>
+      __$PurchaserInfoCopyWithImpl<_PurchaserInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CustomerInfoToJson(this);
+    return _$$_PurchaserInfoToJson(this);
   }
 }
 
-abstract class _CustomerInfo implements CustomerInfo {
-  const factory _CustomerInfo(
+abstract class _PurchaserInfo implements PurchaserInfo {
+  const factory _PurchaserInfo(
       @JsonKey(name: 'entitlements')
           EntitlementInfos entitlements,
       @JsonKey(name: 'allPurchaseDates')
@@ -600,14 +602,14 @@ abstract class _CustomerInfo implements CustomerInfo {
       @JsonKey(name: 'originalApplicationVersion', nullable: true)
           String? originalApplicationVersion,
       @JsonKey(name: 'managementURL')
-          String? managementURL}) = _$_CustomerInfo;
+          String? managementURL}) = _$_PurchaserInfo;
 
-  factory _CustomerInfo.fromJson(Map<String, dynamic> json) =
-      _$_CustomerInfo.fromJson;
+  factory _PurchaserInfo.fromJson(Map<String, dynamic> json) =
+      _$_PurchaserInfo.fromJson;
 
   @override
 
-  /// Entitlements attached to this customer info
+  /// Entitlements attached to this purchaser info
   @JsonKey(name: 'entitlements')
   EntitlementInfos get entitlements;
   @override
@@ -683,6 +685,6 @@ abstract class _CustomerInfo implements CustomerInfo {
   String? get managementURL;
   @override
   @JsonKey(ignore: true)
-  _$CustomerInfoCopyWith<_CustomerInfo> get copyWith =>
+  _$PurchaserInfoCopyWith<_PurchaserInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'customer_info_wrapper.dart';
+part of 'purchaser_info_wrapper.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CustomerInfo _$$_CustomerInfoFromJson(Map json) => _$_CustomerInfo(
+_$_PurchaserInfo _$$_PurchaserInfoFromJson(Map json) => _$_PurchaserInfo(
       EntitlementInfos.fromJson(
           Map<String, dynamic>.from(json['entitlements'] as Map)),
       Map<String, String>.from(json['allPurchaseDates'] as Map),
@@ -29,7 +29,7 @@ _$_CustomerInfo _$$_CustomerInfoFromJson(Map json) => _$_CustomerInfo(
       managementURL: json['managementURL'] as String?,
     );
 
-Map<String, dynamic> _$$_CustomerInfoToJson(_$_CustomerInfo instance) =>
+Map<String, dynamic> _$$_PurchaserInfoToJson(_$_PurchaserInfo instance) =>
     <String, dynamic>{
       'entitlements': instance.entitlements.toJson(),
       'allPurchaseDates': instance.allPurchaseDates,

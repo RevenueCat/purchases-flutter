@@ -20,7 +20,7 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _MyAppState extends State<InitialScreen> {
-  CustomerInfo _purchaserInfo;
+  PurchaserInfo _purchaserInfo;
 
   @override
   void initState() {
