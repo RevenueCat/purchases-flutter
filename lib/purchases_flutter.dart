@@ -288,21 +288,6 @@ class Purchases {
   static Future<String> get appUserID async =>
       await _channel.invokeMethod('getAppUserID') as String;
 
-  /// Deprecated in favor of logIn.
-  /// This function will alias two appUserIDs together.
-  ///
-  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions.
-  ///
-  /// [newAppUserID] The new appUserID that should be linked to the currently
-  /// identified appUserID.
-  @Deprecated('Use logIn instead.')
-  static Future<CustomerInfo> createAlias(String newAppUserID) async {
-    final result = await _channel
-        .invokeMethod('createAlias', {'newAppUserID': newAppUserID});
-    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
-  }
-
   /// This function will logIn the current user with an appUserID.
   /// Typically this would be used after logging in a user to identify them without
   /// calling configure
@@ -323,22 +308,6 @@ class Purchases {
     return LogInResult(purchaserInfo: purchaserInfo, created: created);
   }
 
-  /// Deprecated in favor of logIn.
-  /// This function will identify the current user with an appUserID.
-  /// Typically this would be used after a logout to identify a new user without
-  /// calling configure
-  ///
-  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions.
-  ///
-  /// [newAppUserID] The appUserID that should be linked to the currently user
-  @Deprecated('Use logIn instead.')
-  static Future<CustomerInfo> identify(String appUserID) async {
-    final result =
-        await _channel.invokeMethod('identify', {'appUserID': appUserID});
-    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
-  }
-
   /// Logs out the  Purchases client, clearing the saved appUserID. This will
   /// generate a random user id and save it in the cache.
   ///
@@ -347,18 +316,6 @@ class Purchases {
   /// current user is anonymous.
   static Future<CustomerInfo> logOut() async {
     final result = await _channel.invokeMethod('logOut');
-    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
-  }
-
-  /// Deprecated in favor of logOut.
-  /// Resets the Purchases client clearing the saved appUserID. This will
-  /// generate a random user id and save it in the cache.
-  ///
-  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions.
-  @Deprecated('Use logOut instead.')
-  static Future<CustomerInfo> reset() async {
-    final result = await _channel.invokeMethod('reset');
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
@@ -379,9 +336,9 @@ class Purchases {
   static Future<void> setProxyURL(String url) =>
       _channel.invokeMethod('setProxyURLString', {'proxyURLString': url});
 
-  /// Gets current purchaser info, which will normally be cached.
-  static Future<CustomerInfo> getPurchaserInfo() async {
-    final result = await _channel.invokeMethod('getPurchaserInfo');
+  /// Gets current customer info, which will normally be cached.
+  static Future<CustomerInfo> getCustomerInfo() async {
+    final result = await _channel.invokeMethod('getCustomerInfo');
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 

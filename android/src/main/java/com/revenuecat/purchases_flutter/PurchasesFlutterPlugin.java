@@ -169,19 +169,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getAppUserID":
                 getAppUserID(result);
                 break;
-            case "restoreTransactions":
+            case "restorePurchases":
                 restoreTransactions(result);
-                break;
-            case "reset":
-                reset(result);
-                break;
-            case "identify":
-                String appUserID = call.argument("appUserID");
-                identify(appUserID, result);
-                break;
-            case "createAlias":
-                String newAppUserID = call.argument("newAppUserID");
-                createAlias(newAppUserID, result);
                 break;
             case "logIn":
                 String appUserIDToLogIn = call.argument("appUserID");
@@ -198,7 +187,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String proxyURLString = call.argument("proxyURLString");
                 setProxyURLString(proxyURLString, result);
                 break;
-            case "getPurchaserInfo":
+            case "getCustomerInfo":
                 getPurchaserInfo(result);
                 break;
             case "syncPurchases":
@@ -217,7 +206,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 productIdentifiers = call.argument("productIdentifiers");
                 checkTrialOrIntroductoryPriceEligibility(productIdentifiers, result);
                 break;
-            case "invalidatePurchaserInfoCache":
+            case "invalidateCustomerInfoCache":
                 invalidatePurchaserInfoCache(result);
                 break;
             case "presentCodeRedemptionSheet":
@@ -421,27 +410,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         CommonKt.restoreTransactions(getOnResult(result));
     }
 
-    @SuppressWarnings("deprecation")
-    private void reset(final Result result) {
-        CommonKt.reset(getOnResult(result));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void identify(String appUserID, final Result result) {
-        CommonKt.identify(appUserID, getOnResult(result));
-    }
-
     private void logOut(final Result result) {
         CommonKt.logOut(getOnResult(result));
     }
 
     private void logIn(String appUserID, final Result result) {
         CommonKt.logIn(appUserID, getOnResult(result));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void createAlias(String newAppUserID, final Result result) {
-        CommonKt.createAlias(newAppUserID, getOnResult(result));
     }
 
     private void setDebugLogsEnabled(boolean enabled, final Result result) {

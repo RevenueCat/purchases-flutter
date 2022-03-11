@@ -29,7 +29,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
       _isLoading = true;
     });
 
-    CustomerInfo purchaserInfo = await Purchases.getPurchaserInfo();
+    CustomerInfo purchaserInfo = await Purchases.getCustomerInfo();
 
     if (purchaserInfo.entitlements.all[entitlementID] != null &&
         purchaserInfo.entitlements.all[entitlementID].isActive == true) {

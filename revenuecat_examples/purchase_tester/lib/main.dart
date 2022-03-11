@@ -33,7 +33,7 @@ class _MyAppState extends State<InitialScreen> {
     await Purchases.setDebugLogsEnabled(true);
     await Purchases.setup('api_key');
 
-    final purchaserInfo = await Purchases.getPurchaserInfo();
+    final purchaserInfo = await Purchases.getCustomerInfo();
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
