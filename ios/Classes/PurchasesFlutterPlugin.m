@@ -45,6 +45,7 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self setupPurchases:apiKey
                    appUserID:appUserID
                 observerMode:observerMode
+                   useAmazon:YES
        userDefaultsSuiteName:userDefaultsSuiteName
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
