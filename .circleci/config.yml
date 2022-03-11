@@ -110,7 +110,8 @@ jobs:
     docker:
       - image: cirrusci/flutter
     steps:
-      - checkout
+      - checkout:
+          path: ~/purchases-flutter
       - replace-api-key
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
@@ -127,6 +128,7 @@ jobs:
           paths:
             - revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk
             - revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+    working_directory: ~/purchases-flutter
 
   run-firebase-tests:
     description: "Run integration tests for Flutter"
