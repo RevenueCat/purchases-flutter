@@ -92,8 +92,8 @@ NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated"
         [self setSimulatesAskToBuyInSandbox:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setProxyURLString" isEqualToString:call.method]) {
         [self setProxyURLString:arguments[@"proxyURLString"] result:result];
-    } else if ([@"getPurchaserInfo" isEqualToString:call.method]) {
-        [self getPurchaserInfoWithResult:result];
+    } else if ([@"getCustomerInfo" isEqualToString:call.method]) {
+        [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
         [self syncPurchasesWithResult:result];
     } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
@@ -295,8 +295,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
-- (void)getPurchaserInfoWithResult:(FlutterResult)result {
-    [RCCommonFunctionality getPurchaserInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
+- (void)getCustomerInfoWithResult:(FlutterResult)result {
+    [RCCommonFunctionality getCustomerInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
@@ -439,16 +439,16 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier
                          discountIdentifier:(nullable NSString *)discountIdentifier
                                      result:(FlutterResult)result {
-    [RCCommonFunctionality paymentDiscountForProductIdentifier:productIdentifier
-                                                      discount:discountIdentifier
-                                               completionBlock:^(NSDictionary * _Nullable responseDictionary,
-                                                                 RCErrorContainer * _Nullable error) {
-                                                   if (error) {
-                                                       [self rejectWithResult:result error:error];
-                                                   } else {
-                                                       result(responseDictionary);
-                                                   }
-                                               }];
+//    [RCCommonFunctionality paymentDiscountForProductIdentifier:productIdentifier
+//                                                      discount:discountIdentifier
+//                                               completionBlock:^(NSDictionary * _Nullable responseDictionary,
+//                                                                 RCErrorContainer * _Nullable error) {
+//                                                   if (error) {
+//                                                       [self rejectWithResult:result error:error];
+//                                                   } else {
+//                                                       result(responseDictionary);
+//                                                   }
+//                                               }];
 }
 
 - (void)closeWithResult:(FlutterResult)result {
