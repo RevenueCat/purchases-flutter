@@ -7,5 +7,5 @@
 1. Commit the changes, open a PR into main, merge when ready
 1. `git tag amazon-x.x.x`
 1. `git tag amazon-latest`
-1. `git push origin main && git push --tags`
+1. `git push origin amazon-x.x.x && git push --tags`
 1. Create a new release in github, make sure to check "pre release"
