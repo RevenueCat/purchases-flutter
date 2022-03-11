@@ -6,15 +6,18 @@ PODS:
     - Flutter
     - PurchasesHybridCommon (= 3.0.0)
   - PurchasesHybridCommon (3.0.0):
-    - RevenueCat (= 4.0.0-rc.3)
-  - RevenueCat (4.0.0-rc.3)
+    - RevenueCat (= 4.0.0)
+  - RevenueCat (4.0.0)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
-  - PurchasesHybridCommon (from `~/Developer/purchases-hybrid-common`)
-  - RevenueCat (from `~/Developer/purchases-ios`)
+  - PurchasesHybridCommon (from `~/git/revcat/purchases-hybrid-common`)
+
+SPEC REPOS:
+  trunk:
+    - RevenueCat
 
 EXTERNAL SOURCES:
   Flutter:
@@ -24,17 +27,15 @@ EXTERNAL SOURCES:
   purchases_flutter:
     :path: ".symlinks/plugins/purchases_flutter/ios"
   PurchasesHybridCommon:
-    :path: "~/Developer/purchases-hybrid-common"
-  RevenueCat:
-    :path: "~/Developer/purchases-ios"
+    :path: "~/git/revcat/purchases-hybrid-common"
 
 SPEC CHECKSUMS:
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   integration_test: a1e7d09bd98eca2fc37aefd79d4f41ad37bdbbe5
   purchases_flutter: 07e03ba10bdecd701b7b81367c3e69b69c8abbcc
-  PurchasesHybridCommon: a58195575b4f672b539006f5b1c25316d8aeeb80
-  RevenueCat: 7519cc6ce996f90be6ea0c7d96ab3fd61b99088b
+  PurchasesHybridCommon: 4bbf9e03e21345d41c168b2db437468aaab65bd7
+  RevenueCat: 6d7111834346bbb387b248c0b4841099af3b9f69
 
-PODFILE CHECKSUM: b4573ab12e4f70491aac3f88ca1b9f7c8dd561c3
+PODFILE CHECKSUM: a4d6405ae6eb747e484500a7a0d6185711e5e341
 
 COCOAPODS: 1.11.2
