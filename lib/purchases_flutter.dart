@@ -9,20 +9,20 @@ export 'object_wrappers.dart';
 
 /// Used to handle async updates from [Purchases].
 /// Should be implemented to receive updates when the [CustomerInfo] changes.
-typedef PurchaserInfoUpdateListener = void Function(
-  CustomerInfo purchaserInfo,
+typedef CustomerInfoUpdateListener = void Function(
+  CustomerInfo customerInfo,
 );
 
 /// Entry point for Purchases.
 class Purchases {
-  static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
+  static final Set<CustomerInfoUpdateListener> _customerInfoUpdateListeners =
       {};
 
   static final _channel = const MethodChannel('purchases_flutter')
     ..setMethodCallHandler((call) async {
       switch (call.method) {
-        case 'Purchases-PurchaserInfoUpdated':
-          for (final listener in _purchaserInfoUpdateListeners) {
+        case 'Purchases-CustomerInfoUpdated':
+          for (final listener in _customerInfoUpdateListeners) {
             final args = Map<String, dynamic>.from(call.arguments);
             listener(CustomerInfo.fromJson(args));
           }
@@ -88,24 +88,24 @@ class Purchases {
         },
       );
 
-  /// Sets a function to be called on updated purchaser info.
+  /// Sets a function to be called on updated customer info.
   ///
-  /// The function is called right away with the latest purchaser info as soon
+  /// The function is called right away with the latest customer info as soon
   /// as it's set.
   ///
-  /// [purchaserInfoUpdateListener] PurchaserInfo update listener.
+  /// [customerInfoUpdateListener] PurchaserInfo update listener.
   static void addPurchaserInfoUpdateListener(
-    PurchaserInfoUpdateListener purchaserInfoUpdateListener,
+    CustomerInfoUpdateListener purchaserInfoUpdateListener,
   ) =>
-      _purchaserInfoUpdateListeners.add(purchaserInfoUpdateListener);
+      _customerInfoUpdateListeners.add(purchaserInfoUpdateListener);
 
-  /// Removes a given PurchaserInfoUpdateListener
+  /// Removes a given CustomerInfoUpdateListener
   ///
-  /// [listenerToRemove] PurchaserInfoListener reference of the listener to remove.
-  static void removePurchaserInfoUpdateListener(
-    PurchaserInfoUpdateListener listenerToRemove,
+  /// [listenerToRemove] CustomerInfoUpdateListener reference of the listener to remove.
+  static void removeCustomerInfoUpdateListener(
+    CustomerInfoUpdateListener listenerToRemove,
   ) =>
-      _purchaserInfoUpdateListeners.remove(listenerToRemove);
+      _customerInfoUpdateListeners.remove(listenerToRemove);
 
   /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information
@@ -190,14 +190,14 @@ class Purchases {
     PurchaseType type = PurchaseType.subs,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final purchaserInfo =
+    final customerInfo =
         await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
       'type': describeEnum(type)
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
   /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
@@ -215,14 +215,14 @@ class Purchases {
     UpgradeInfo? upgradeInfo,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final purchaserInfo =
+    final customerInfo =
         await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
   /// iOS only. Purchase a product applying a given discount.
@@ -241,12 +241,12 @@ class Purchases {
     Product product,
     PaymentDiscount discount,
   ) async {
-    final purchaserInfo =
+    final customerInfo =
         await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
   /// iOS only. Purchase a package applying a given discount.
@@ -265,13 +265,13 @@ class Purchases {
     Package packageToPurchase,
     PaymentDiscount discount,
   ) async {
-    final purchaserInfo =
+    final customerInfo =
         await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
   /// Restores a user's previous purchases and links their appUserIDs to any
@@ -293,19 +293,19 @@ class Purchases {
   /// calling configure
   ///
   /// Returns a [LogInResult] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions. LogInResult holds a PurchaserInfo object
+  /// was a problem restoring transactions. LogInResult holds a [CustomerInfo] object
   /// and a bool that can be used to know if a user has just been created for the first time.
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
   static Future<LogInResult> logIn(String appUserID) async {
     final result =
         await _channel.invokeMethod('logIn', {'appUserID': appUserID});
-    final purchaserInfo = CustomerInfo.fromJson(
-      Map<String, dynamic>.from(result['purchaserInfo']),
+    final customerInfo = CustomerInfo.fromJson(
+      Map<String, dynamic>.from(result['customerInfo']),
     );
     final bool created = result['created'];
 
-    return LogInResult(purchaserInfo: purchaserInfo, created: created);
+    return LogInResult(customerInfo: customerInfo, created: created);
   }
 
   /// Logs out the  Purchases client, clearing the saved appUserID. This will
@@ -576,14 +576,14 @@ class Purchases {
       method,
       arguments,
     );
-    final purchaserInfoJson = _getCustomerInfoJsonFromMap(response);
-    return CustomerInfo.fromJson(purchaserInfoJson);
+    final customerInfoJson = _getCustomerInfoJsonFromMap(response);
+    return CustomerInfo.fromJson(customerInfoJson);
   }
 
   static Map<String, dynamic> _getCustomerInfoJsonFromMap(
     Map<String, dynamic> response,
   ) =>
-      Map<String, dynamic>.from(response['purchaserInfo']);
+      Map<String, dynamic>.from(response['customerInfo']);
 
   static Future<Map<String, dynamic>> _invokeReturningMap(String method,
       // ignore: require_trailing_commas
@@ -719,9 +719,9 @@ class LogInResult {
   /// RevenueCat backend for the first time
   final bool created;
 
-  /// the purchaserInfo associated to the logged in user
-  final CustomerInfo purchaserInfo;
+  /// the [CustomerInfo] associated to the logged in user
+  final CustomerInfo customerInfo;
 
   /// Constructs a LogInResult with its properties
-  LogInResult({required this.created, required this.purchaserInfo});
+  LogInResult({required this.created, required this.customerInfo});
 }

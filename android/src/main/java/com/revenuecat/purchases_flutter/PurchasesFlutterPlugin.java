@@ -41,7 +41,7 @@ import kotlin.UninitializedPropertyAccessException;
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
-    private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
+    private static final String PURCHASER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
 
     // Only set registrar for v1 embedder.
     @SuppressWarnings("deprecation")
