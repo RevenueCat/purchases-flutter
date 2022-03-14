@@ -489,7 +489,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"4.0.0-amazon.alpha.3";
+    return @"4.0.0-amazon.alpha.4";
 }
 
 @end

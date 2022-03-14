@@ -1,5 +1,5 @@
 group 'com.revenuecat.purchases_flutter'
-version '4.0.0-amazon.alpha.3'
+version '4.0.0-amazon.alpha.4'
 
 buildscript {
     ext.kotlin_version = '1.3.72'
