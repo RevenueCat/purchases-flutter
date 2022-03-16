@@ -93,11 +93,11 @@ class Purchases {
   /// The function is called right away with the latest customer info as soon
   /// as it's set.
   ///
-  /// [customerInfoUpdateListener] PurchaserInfo update listener.
-  static void addPurchaserInfoUpdateListener(
-    CustomerInfoUpdateListener purchaserInfoUpdateListener,
+  /// [customerInfoUpdateListener] CustomerInfo update listener.
+  static void addCustomerInfoUpdateListener(
+    CustomerInfoUpdateListener customerInfoUpdateListener,
   ) =>
-      _customerInfoUpdateListeners.add(purchaserInfoUpdateListener);
+      _customerInfoUpdateListeners.add(customerInfoUpdateListener);
 
   /// Removes a given CustomerInfoUpdateListener
   ///
