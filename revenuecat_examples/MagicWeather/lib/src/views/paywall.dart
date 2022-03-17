@@ -64,15 +64,16 @@ class _PaywallState extends State<Paywall> {
                         Navigator.pop(context);
                       },
                       title: Text(
-                        myProductList[index].product.title,
+                        myProductList[index].storeProduct.title,
                         style: kTitleTextStyle,
                       ),
                       subtitle: Text(
-                        myProductList[index].product.description,
+                        myProductList[index].storeProduct.description,
                         style: kDescriptionTextStyle.copyWith(
                             fontSize: kFontSizeSuperSmall),
                       ),
-                      trailing: Text(myProductList[index].product.priceString,
+                      trailing: Text(
+                          myProductList[index].storeProduct.priceString,
                           style: kTitleTextStyle)),
                 );
               },

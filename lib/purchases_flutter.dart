@@ -152,7 +152,7 @@ class Purchases {
   /// [type] If the products are Android INAPPs, this needs to be
   /// PurchaseType.INAPP otherwise the products won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  static Future<List<Product>> getProducts(
+  static Future<List<StoreProduct>> getProducts(
     List<String> productIdentifiers, {
     PurchaseType type = PurchaseType.subs,
   }) async {
@@ -161,8 +161,8 @@ class Purchases {
       'type': describeEnum(type),
     });
     return result
-        .map<Product>(
-          (item) => Product.fromJson(
+        .map<StoreProduct>(
+          (item) => StoreProduct.fromJson(
             Map<String, dynamic>.from(item),
           ),
         )
@@ -233,17 +233,17 @@ class Purchases {
   /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
   /// the purchase.
   ///
-  /// [product] The product to purchase.
+  /// [storeProduct] The product to purchase.
   ///
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
   static Future<CustomerInfo> purchaseDiscountedProduct(
-    Product product,
+    StoreProduct storeProduct,
     PaymentDiscount discount,
   ) async {
     final customerInfo =
         await _invokeReturningCustomerInfo('purchaseProduct', {
-      'productIdentifier': product.identifier,
+      'productIdentifier': storeProduct.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
     return customerInfo;
@@ -707,7 +707,7 @@ class IntroEligibility {
   /// Description of the status
   String description;
 
-  /// Constructs an Transaction from a JSON object
+  /// Constructs an IntroEligibility from a JSON object
   IntroEligibility.fromJson(Map<String, dynamic> map)
       : status = IntroEligibilityStatus.values[map['status']],
         description = map['description'];

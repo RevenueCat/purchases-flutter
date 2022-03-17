@@ -329,7 +329,7 @@ void main() {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -340,7 +340,7 @@ void main() {
       const mockPackage = Package(
         '\$rc_lifetime',
         PackageType.lifetime,
-        mockProduct,
+        mockStoreProduct,
         'main',
       );
       final purchasePackageResult =
@@ -360,7 +360,7 @@ void main() {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -371,7 +371,7 @@ void main() {
       const mockPackage = Package(
         '\$rc_lifetime',
         PackageType.lifetime,
-        mockProduct,
+        mockStoreProduct,
         'main',
       );
       const mockPaymentDiscount = PaymentDiscount(
@@ -400,7 +400,7 @@ void main() {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -409,7 +409,7 @@ void main() {
         'USD',
       );
       final purchasePackageResult =
-          await Purchases.purchaseProduct(mockProduct.identifier);
+          await Purchases.purchaseProduct(mockStoreProduct.identifier);
       expect(
         purchasePackageResult,
         CustomerInfo.fromJson(mockCustomerInfoResponse),
@@ -425,7 +425,7 @@ void main() {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -441,7 +441,7 @@ void main() {
         123456,
       );
       final purchasePackageResult = await Purchases.purchaseDiscountedProduct(
-        mockProduct,
+        mockStoreProduct,
         mockPaymentDiscount,
       );
       expect(

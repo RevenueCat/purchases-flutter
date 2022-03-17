@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'product_wrapper.dart';
+part of 'store_product_wrapper.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,15 +14,15 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Product _$ProductFromJson(Map<String, dynamic> json) {
-  return _Product.fromJson(json);
+StoreProduct _$StoreProductFromJson(Map<String, dynamic> json) {
+  return _StoreProduct.fromJson(json);
 }
 
 /// @nodoc
-class _$ProductTearOff {
-  const _$ProductTearOff();
+class _$StoreProductTearOff {
+  const _$StoreProductTearOff();
 
-  _Product call(
+  _StoreProduct call(
       @JsonKey(name: 'identifier')
           String identifier,
       @JsonKey(name: 'description')
@@ -39,7 +39,7 @@ class _$ProductTearOff {
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<Discount>? discounts}) {
-    return _Product(
+    return _StoreProduct(
       identifier,
       description,
       title,
@@ -51,16 +51,16 @@ class _$ProductTearOff {
     );
   }
 
-  Product fromJson(Map<String, Object?> json) {
-    return Product.fromJson(json);
+  StoreProduct fromJson(Map<String, Object?> json) {
+    return StoreProduct.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Product = _$ProductTearOff();
+const $StoreProduct = _$StoreProductTearOff();
 
 /// @nodoc
-mixin _$Product {
+mixin _$StoreProduct {
   /// Product Id.
   @JsonKey(name: 'identifier')
   String get identifier => throw _privateConstructorUsedError;
@@ -96,13 +96,15 @@ mixin _$Product {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ProductCopyWith<Product> get copyWith => throw _privateConstructorUsedError;
+  $StoreProductCopyWith<StoreProduct> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ProductCopyWith<$Res> {
-  factory $ProductCopyWith(Product value, $Res Function(Product) then) =
-      _$ProductCopyWithImpl<$Res>;
+abstract class $StoreProductCopyWith<$Res> {
+  factory $StoreProductCopyWith(
+          StoreProduct value, $Res Function(StoreProduct) then) =
+      _$StoreProductCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: 'identifier')
           String identifier,
@@ -125,12 +127,12 @@ abstract class $ProductCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
-  _$ProductCopyWithImpl(this._value, this._then);
+class _$StoreProductCopyWithImpl<$Res> implements $StoreProductCopyWith<$Res> {
+  _$StoreProductCopyWithImpl(this._value, this._then);
 
-  final Product _value;
+  final StoreProduct _value;
   // ignore: unused_field
-  final $Res Function(Product) _then;
+  final $Res Function(StoreProduct) _then;
 
   @override
   $Res call({
@@ -192,9 +194,11 @@ class _$ProductCopyWithImpl<$Res> implements $ProductCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
-  factory _$ProductCopyWith(_Product value, $Res Function(_Product) then) =
-      __$ProductCopyWithImpl<$Res>;
+abstract class _$StoreProductCopyWith<$Res>
+    implements $StoreProductCopyWith<$Res> {
+  factory _$StoreProductCopyWith(
+          _StoreProduct value, $Res Function(_StoreProduct) then) =
+      __$StoreProductCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'identifier')
@@ -219,13 +223,14 @@ abstract class _$ProductCopyWith<$Res> implements $ProductCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
-    implements _$ProductCopyWith<$Res> {
-  __$ProductCopyWithImpl(_Product _value, $Res Function(_Product) _then)
-      : super(_value, (v) => _then(v as _Product));
+class __$StoreProductCopyWithImpl<$Res> extends _$StoreProductCopyWithImpl<$Res>
+    implements _$StoreProductCopyWith<$Res> {
+  __$StoreProductCopyWithImpl(
+      _StoreProduct _value, $Res Function(_StoreProduct) _then)
+      : super(_value, (v) => _then(v as _StoreProduct));
 
   @override
-  _Product get _value => super._value as _Product;
+  _StoreProduct get _value => super._value as _StoreProduct;
 
   @override
   $Res call({
@@ -238,7 +243,7 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
   }) {
-    return _then(_Product(
+    return _then(_StoreProduct(
       identifier == freezed
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -277,8 +282,8 @@ class __$ProductCopyWithImpl<$Res> extends _$ProductCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Product implements _Product {
-  const _$_Product(
+class _$_StoreProduct implements _StoreProduct {
+  const _$_StoreProduct(
       @JsonKey(name: 'identifier') this.identifier,
       @JsonKey(name: 'description') this.description,
       @JsonKey(name: 'title') this.title,
@@ -288,8 +293,8 @@ class _$_Product implements _Product {
       {@JsonKey(name: 'introPrice', nullable: true) this.introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true) this.discounts});
 
-  factory _$_Product.fromJson(Map<String, dynamic> json) =>
-      _$$_ProductFromJson(json);
+  factory _$_StoreProduct.fromJson(Map<String, dynamic> json) =>
+      _$$_StoreProductFromJson(json);
 
   @override
 
@@ -334,14 +339,14 @@ class _$_Product implements _Product {
 
   @override
   String toString() {
-    return 'Product(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts)';
+    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Product &&
+            other is _StoreProduct &&
             const DeepCollectionEquality()
                 .equals(other.identifier, identifier) &&
             const DeepCollectionEquality()
@@ -371,17 +376,17 @@ class _$_Product implements _Product {
 
   @JsonKey(ignore: true)
   @override
-  _$ProductCopyWith<_Product> get copyWith =>
-      __$ProductCopyWithImpl<_Product>(this, _$identity);
+  _$StoreProductCopyWith<_StoreProduct> get copyWith =>
+      __$StoreProductCopyWithImpl<_StoreProduct>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ProductToJson(this);
+    return _$$_StoreProductToJson(this);
   }
 }
 
-abstract class _Product implements Product {
-  const factory _Product(
+abstract class _StoreProduct implements StoreProduct {
+  const factory _StoreProduct(
       @JsonKey(name: 'identifier')
           String identifier,
       @JsonKey(name: 'description')
@@ -397,9 +402,10 @@ abstract class _Product implements Product {
       {@JsonKey(name: 'introPrice', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
-          List<Discount>? discounts}) = _$_Product;
+          List<Discount>? discounts}) = _$_StoreProduct;
 
-  factory _Product.fromJson(Map<String, dynamic> json) = _$_Product.fromJson;
+  factory _StoreProduct.fromJson(Map<String, dynamic> json) =
+      _$_StoreProduct.fromJson;
 
   @override
 
@@ -443,6 +449,6 @@ abstract class _Product implements Product {
   List<Discount>? get discounts;
   @override
   @JsonKey(ignore: true)
-  _$ProductCopyWith<_Product> get copyWith =>
+  _$StoreProductCopyWith<_StoreProduct> get copyWith =>
       throw _privateConstructorUsedError;
 }

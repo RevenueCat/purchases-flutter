@@ -157,7 +157,7 @@ class _PurchaseButton extends StatelessWidget {
           }
           return const InitialScreen();
         },
-        child: Text('Buy - (${package.product.priceString})'),
+        child: Text('Buy - (${package.storeProduct.priceString})'),
       );
 }
 

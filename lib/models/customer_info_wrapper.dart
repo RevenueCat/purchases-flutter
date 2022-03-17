@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'entitlement_infos_wrapper.dart';
-import 'transaction.dart';
+import 'store_transaction.dart';
 
 part 'customer_info_wrapper.freezed.dart';
 part 'customer_info_wrapper.g.dart';
@@ -27,7 +27,7 @@ class CustomerInfo with _$CustomerInfo {
     /// Returns all the non-subscription purchases a user has made.
     /// The purchases are ordered by purchase date in ascending order.
     @JsonKey(name: 'nonSubscriptionTransactions')
-        List<Transaction> nonSubscriptionTransactions,
+        List<StoreTransaction> nonSubscriptionTransactions,
 
     /// The date this user was first seen in RevenueCat.
     @JsonKey(name: 'firstSeen') String firstSeen,

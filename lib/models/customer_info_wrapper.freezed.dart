@@ -32,7 +32,7 @@ class _$CustomerInfoTearOff {
       @JsonKey(name: 'allPurchasedProductIdentifiers')
           List<String> allPurchasedProductIdentifiers,
       @JsonKey(name: 'nonSubscriptionTransactions')
-          List<Transaction> nonSubscriptionTransactions,
+          List<StoreTransaction> nonSubscriptionTransactions,
       @JsonKey(name: 'firstSeen')
           String firstSeen,
       @JsonKey(name: 'originalAppUserId')
@@ -97,7 +97,7 @@ mixin _$CustomerInfo {
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
   @JsonKey(name: 'nonSubscriptionTransactions')
-  List<Transaction> get nonSubscriptionTransactions =>
+  List<StoreTransaction> get nonSubscriptionTransactions =>
       throw _privateConstructorUsedError;
 
   /// The date this user was first seen in RevenueCat.
@@ -164,7 +164,7 @@ abstract class $CustomerInfoCopyWith<$Res> {
       @JsonKey(name: 'allPurchasedProductIdentifiers')
           List<String> allPurchasedProductIdentifiers,
       @JsonKey(name: 'nonSubscriptionTransactions')
-          List<Transaction> nonSubscriptionTransactions,
+          List<StoreTransaction> nonSubscriptionTransactions,
       @JsonKey(name: 'firstSeen')
           String firstSeen,
       @JsonKey(name: 'originalAppUserId')
@@ -229,7 +229,7 @@ class _$CustomerInfoCopyWithImpl<$Res> implements $CustomerInfoCopyWith<$Res> {
       nonSubscriptionTransactions: nonSubscriptionTransactions == freezed
           ? _value.nonSubscriptionTransactions
           : nonSubscriptionTransactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>,
+              as List<StoreTransaction>,
       firstSeen: firstSeen == freezed
           ? _value.firstSeen
           : firstSeen // ignore: cast_nullable_to_non_nullable
@@ -290,7 +290,7 @@ abstract class _$CustomerInfoCopyWith<$Res>
       @JsonKey(name: 'allPurchasedProductIdentifiers')
           List<String> allPurchasedProductIdentifiers,
       @JsonKey(name: 'nonSubscriptionTransactions')
-          List<Transaction> nonSubscriptionTransactions,
+          List<StoreTransaction> nonSubscriptionTransactions,
       @JsonKey(name: 'firstSeen')
           String firstSeen,
       @JsonKey(name: 'originalAppUserId')
@@ -358,7 +358,7 @@ class __$CustomerInfoCopyWithImpl<$Res> extends _$CustomerInfoCopyWithImpl<$Res>
       nonSubscriptionTransactions == freezed
           ? _value.nonSubscriptionTransactions
           : nonSubscriptionTransactions // ignore: cast_nullable_to_non_nullable
-              as List<Transaction>,
+              as List<StoreTransaction>,
       firstSeen == freezed
           ? _value.firstSeen
           : firstSeen // ignore: cast_nullable_to_non_nullable
@@ -454,7 +454,7 @@ class _$_CustomerInfo implements _CustomerInfo {
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
   @JsonKey(name: 'nonSubscriptionTransactions')
-  final List<Transaction> nonSubscriptionTransactions;
+  final List<StoreTransaction> nonSubscriptionTransactions;
   @override
 
   /// The date this user was first seen in RevenueCat.
@@ -584,7 +584,7 @@ abstract class _CustomerInfo implements CustomerInfo {
       @JsonKey(name: 'allPurchasedProductIdentifiers')
           List<String> allPurchasedProductIdentifiers,
       @JsonKey(name: 'nonSubscriptionTransactions')
-          List<Transaction> nonSubscriptionTransactions,
+          List<StoreTransaction> nonSubscriptionTransactions,
       @JsonKey(name: 'firstSeen')
           String firstSeen,
       @JsonKey(name: 'originalAppUserId')
@@ -630,7 +630,7 @@ abstract class _CustomerInfo implements CustomerInfo {
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
   @JsonKey(name: 'nonSubscriptionTransactions')
-  List<Transaction> get nonSubscriptionTransactions;
+  List<StoreTransaction> get nonSubscriptionTransactions;
   @override
 
   /// The date this user was first seen in RevenueCat.
