@@ -41,7 +41,7 @@ import kotlin.UninitializedPropertyAccessException;
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
-    private static final String PURCHASER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
+    private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
 
     // Only set registrar for v1 embedder.
     @SuppressWarnings("deprecation")
@@ -293,6 +293,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "close":
                 close(result);
                 break;
+                break;
+            case "showManageSubscriptions":
+                // NOOP
+                break;
+            case "beginRefundRequestForActiveEntitlement":
+                // NOOP
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -314,12 +321,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setupUpdatedPurchaserInfoListener() {
-        Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
-            @Override
-            public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-                if (channel != null) {
-                    channel.invokeMethod(PURCHASER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
-                }
+        Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(purchaserInfo -> {
+            if (channel != null) {
+                channel.invokeMethod(CUSTOMER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
             }
         });
     }

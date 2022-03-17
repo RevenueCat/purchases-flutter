@@ -164,7 +164,10 @@ NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated"
         [self paymentDiscountForProductIdentifier:productIdentifier
                                discountIdentifier:discountIdentifier
                                            result:result];
-    } else if ([@"close" isEqualToString:call.method]) {
+    } else if ([@"beginRefundRequestForActiveEntitlement" isEqualToString:call.method]) {
+        [self beginRefundRequestForActiveEntitlementWithResult:result];
+    }
+    else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else {
         result(FlutterMethodNotImplemented);
@@ -445,6 +448,18 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 //                                               }];
 }
 
+//- (void)showManageSubscriptions:(FlutterResult)result {
+//    [RCCommonFunctionality showManageSubscriptions:^(NSError * _Nullable completion) {}
+//        if (error) {
+//            [self rejectWithResult:@TRUE error:error];
+//        }
+//    }]]
+//}
+
+- (void)beginRefundRequestForActiveEntitlementWithResult:(FlutterResult)result {
+    [RCCommonFunctionality beginRefundRequestForActiveEntitlementWithCompletionBlock:
+     [self getResponseCompletionBlock:result]];
+}
 - (void)closeWithResult:(FlutterResult)result {
     result(nil);
 }

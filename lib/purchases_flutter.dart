@@ -565,6 +565,35 @@ class Purchases {
     return result;
   }
 
+  // TODO fix this documentation once i figure out implementation
+  /// iOS only. Use this function to open the manage subscriptions page.
+  ///
+  /// Parameter completion: A completion block that is called when the modal is closed.
+  /// If it was not successful, a PlatformException will be thrown.
+  /// If the manage subscriptions page can't be opened, the ``CustomerInfo/managementURL`` in
+  /// the ``CustomerInfo`` will be opened. If ``CustomerInfo/managementURL`` is not available,
+  /// the App Store's subscription management section will be opened.
+  ///
+  /// The Future will return when the modal is opened, not when it's actually closed.
+  /// This is because of an undocumented change in StoreKit's behavior between iOS 15.0 and 15.2,
+  /// where 15.0 would return when the modal was closed,
+  /// and 15.2 returns when the modal is opened.
+  static Future<bool> showManageSubscriptions() async {
+    final response = await _channel.invokeMethod(
+      'showManageSubscriptions',
+    );
+    return response == null;
+  }
+
+  // TODO
+  static Future<RefundRequestStatus> beginRefundRequestForActiveEntitlement() async {
+    final response = await _channel.invokeMethod(
+      'beginRefundRequestForActiveEntitlement',
+    );
+    final int intStatus = response['status'];
+    return RefundRequestStatusExtension.from(intStatus);
+  }
+
   /// Android only. Call close when you are done with this instance of Purchases to disconnect
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
@@ -697,6 +726,31 @@ enum IntroEligibilityStatus {
 
   /// The user is eligible for a free trial or intro pricing for this product.
   introEligibilityStatusEligible
+}
+
+/// Status codes for refund requests.
+enum RefundRequestStatus {
+  /// User canceled submission of the refund request.
+  userCancelled,
+
+  /// Apple has received the refund request.
+  success,
+
+  /// There was an error with the request. See message for more details.
+  error
+}
+
+extension RefundRequestStatusExtension on RefundRequestStatus {
+  static RefundRequestStatus from(int index) {
+    switch (index) {
+      case 0:
+        return RefundRequestStatus.userCancelled;
+      case 1:
+        return RefundRequestStatus.success;
+      default:
+        return RefundRequestStatus.error;
+    }
+  }
 }
 
 /// Holds the introductory price status
