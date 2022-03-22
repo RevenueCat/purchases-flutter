@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter_example/src/constant.dart';
 
 void main() => runApp(
       const MaterialApp(
@@ -31,8 +33,12 @@ class _MyAppState extends State<InitialScreen> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     await Purchases.setDebugLogsEnabled(true);
-    await Purchases.setup('api_key');
 
+    if (Platform.isAndroid) {
+      await Purchases.setup(googleApiKey);
+    } else {
+      await Purchases.setup(appleApiKey);
+    }
     final purchaserInfo = await Purchases.getCustomerInfo();
 
     // If the widget was removed from the tree while the asynchronous platform
