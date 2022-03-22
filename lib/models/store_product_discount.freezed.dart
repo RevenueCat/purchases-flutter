@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'discount.dart';
+part of 'store_product_discount.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,15 +14,15 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Discount _$DiscountFromJson(Map<String, dynamic> json) {
-  return _Discount.fromJson(json);
+StoreProductDiscount _$StoreProductDiscountFromJson(Map<String, dynamic> json) {
+  return _StoreProductDiscount.fromJson(json);
 }
 
 /// @nodoc
-class _$DiscountTearOff {
-  const _$DiscountTearOff();
+class _$StoreProductDiscountTearOff {
+  const _$StoreProductDiscountTearOff();
 
-  _Discount call(
+  _StoreProductDiscount call(
       @JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'price') double price,
       @JsonKey(name: 'priceString') String priceString,
@@ -30,7 +30,7 @@ class _$DiscountTearOff {
       @JsonKey(name: 'period') String period,
       @JsonKey(name: 'periodUnit') String periodUnit,
       @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits) {
-    return _Discount(
+    return _StoreProductDiscount(
       identifier,
       price,
       priceString,
@@ -41,16 +41,16 @@ class _$DiscountTearOff {
     );
   }
 
-  Discount fromJson(Map<String, Object?> json) {
-    return Discount.fromJson(json);
+  StoreProductDiscount fromJson(Map<String, Object?> json) {
+    return StoreProductDiscount.fromJson(json);
   }
 }
 
 /// @nodoc
-const $Discount = _$DiscountTearOff();
+const $StoreProductDiscount = _$StoreProductDiscountTearOff();
 
 /// @nodoc
-mixin _$Discount {
+mixin _$StoreProductDiscount {
   /// Identifier of the discount.
   @JsonKey(name: 'identifier')
   String get identifier => throw _privateConstructorUsedError;
@@ -81,14 +81,15 @@ mixin _$Discount {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $DiscountCopyWith<Discount> get copyWith =>
+  $StoreProductDiscountCopyWith<StoreProductDiscount> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DiscountCopyWith<$Res> {
-  factory $DiscountCopyWith(Discount value, $Res Function(Discount) then) =
-      _$DiscountCopyWithImpl<$Res>;
+abstract class $StoreProductDiscountCopyWith<$Res> {
+  factory $StoreProductDiscountCopyWith(StoreProductDiscount value,
+          $Res Function(StoreProductDiscount) then) =
+      _$StoreProductDiscountCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'price') double price,
@@ -100,12 +101,13 @@ abstract class $DiscountCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DiscountCopyWithImpl<$Res> implements $DiscountCopyWith<$Res> {
-  _$DiscountCopyWithImpl(this._value, this._then);
+class _$StoreProductDiscountCopyWithImpl<$Res>
+    implements $StoreProductDiscountCopyWith<$Res> {
+  _$StoreProductDiscountCopyWithImpl(this._value, this._then);
 
-  final Discount _value;
+  final StoreProductDiscount _value;
   // ignore: unused_field
-  final $Res Function(Discount) _then;
+  final $Res Function(StoreProductDiscount) _then;
 
   @override
   $Res call({
@@ -151,9 +153,11 @@ class _$DiscountCopyWithImpl<$Res> implements $DiscountCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$DiscountCopyWith<$Res> implements $DiscountCopyWith<$Res> {
-  factory _$DiscountCopyWith(_Discount value, $Res Function(_Discount) then) =
-      __$DiscountCopyWithImpl<$Res>;
+abstract class _$StoreProductDiscountCopyWith<$Res>
+    implements $StoreProductDiscountCopyWith<$Res> {
+  factory _$StoreProductDiscountCopyWith(_StoreProductDiscount value,
+          $Res Function(_StoreProductDiscount) then) =
+      __$StoreProductDiscountCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
@@ -166,13 +170,15 @@ abstract class _$DiscountCopyWith<$Res> implements $DiscountCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$DiscountCopyWithImpl<$Res> extends _$DiscountCopyWithImpl<$Res>
-    implements _$DiscountCopyWith<$Res> {
-  __$DiscountCopyWithImpl(_Discount _value, $Res Function(_Discount) _then)
-      : super(_value, (v) => _then(v as _Discount));
+class __$StoreProductDiscountCopyWithImpl<$Res>
+    extends _$StoreProductDiscountCopyWithImpl<$Res>
+    implements _$StoreProductDiscountCopyWith<$Res> {
+  __$StoreProductDiscountCopyWithImpl(
+      _StoreProductDiscount _value, $Res Function(_StoreProductDiscount) _then)
+      : super(_value, (v) => _then(v as _StoreProductDiscount));
 
   @override
-  _Discount get _value => super._value as _Discount;
+  _StoreProductDiscount get _value => super._value as _StoreProductDiscount;
 
   @override
   $Res call({
@@ -184,7 +190,7 @@ class __$DiscountCopyWithImpl<$Res> extends _$DiscountCopyWithImpl<$Res>
     Object? periodUnit = freezed,
     Object? periodNumberOfUnits = freezed,
   }) {
-    return _then(_Discount(
+    return _then(_StoreProductDiscount(
       identifier == freezed
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -219,8 +225,8 @@ class __$DiscountCopyWithImpl<$Res> extends _$DiscountCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Discount implements _Discount {
-  const _$_Discount(
+class _$_StoreProductDiscount implements _StoreProductDiscount {
+  const _$_StoreProductDiscount(
       @JsonKey(name: 'identifier') this.identifier,
       @JsonKey(name: 'price') this.price,
       @JsonKey(name: 'priceString') this.priceString,
@@ -229,8 +235,8 @@ class _$_Discount implements _Discount {
       @JsonKey(name: 'periodUnit') this.periodUnit,
       @JsonKey(name: 'periodNumberOfUnits') this.periodNumberOfUnits);
 
-  factory _$_Discount.fromJson(Map<String, dynamic> json) =>
-      _$$_DiscountFromJson(json);
+  factory _$_StoreProductDiscount.fromJson(Map<String, dynamic> json) =>
+      _$$_StoreProductDiscountFromJson(json);
 
   @override
 
@@ -270,14 +276,14 @@ class _$_Discount implements _Discount {
 
   @override
   String toString() {
-    return 'Discount(identifier: $identifier, price: $price, priceString: $priceString, cycles: $cycles, period: $period, periodUnit: $periodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
+    return 'StoreProductDiscount(identifier: $identifier, price: $price, priceString: $priceString, cycles: $cycles, period: $period, periodUnit: $periodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Discount &&
+            other is _StoreProductDiscount &&
             const DeepCollectionEquality()
                 .equals(other.identifier, identifier) &&
             const DeepCollectionEquality().equals(other.price, price) &&
@@ -304,17 +310,18 @@ class _$_Discount implements _Discount {
 
   @JsonKey(ignore: true)
   @override
-  _$DiscountCopyWith<_Discount> get copyWith =>
-      __$DiscountCopyWithImpl<_Discount>(this, _$identity);
+  _$StoreProductDiscountCopyWith<_StoreProductDiscount> get copyWith =>
+      __$StoreProductDiscountCopyWithImpl<_StoreProductDiscount>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_DiscountToJson(this);
+    return _$$_StoreProductDiscountToJson(this);
   }
 }
 
-abstract class _Discount implements Discount {
-  const factory _Discount(
+abstract class _StoreProductDiscount implements StoreProductDiscount {
+  const factory _StoreProductDiscount(
           @JsonKey(name: 'identifier') String identifier,
           @JsonKey(name: 'price') double price,
           @JsonKey(name: 'priceString') String priceString,
@@ -322,9 +329,10 @@ abstract class _Discount implements Discount {
           @JsonKey(name: 'period') String period,
           @JsonKey(name: 'periodUnit') String periodUnit,
           @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits) =
-      _$_Discount;
+      _$_StoreProductDiscount;
 
-  factory _Discount.fromJson(Map<String, dynamic> json) = _$_Discount.fromJson;
+  factory _StoreProductDiscount.fromJson(Map<String, dynamic> json) =
+      _$_StoreProductDiscount.fromJson;
 
   @override
 
@@ -363,6 +371,6 @@ abstract class _Discount implements Discount {
   int get periodNumberOfUnits;
   @override
   @JsonKey(ignore: true)
-  _$DiscountCopyWith<_Discount> get copyWith =>
+  _$StoreProductDiscountCopyWith<_StoreProductDiscount> get copyWith =>
       throw _privateConstructorUsedError;
 }

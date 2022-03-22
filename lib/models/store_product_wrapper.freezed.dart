@@ -38,7 +38,7 @@ class _$StoreProductTearOff {
       {@JsonKey(name: 'introPrice', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
-          List<Discount>? discounts}) {
+          List<StoreProductDiscount>? discounts}) {
     return _StoreProduct(
       identifier,
       description,
@@ -92,7 +92,8 @@ mixin _$StoreProduct {
 
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
-  List<Discount>? get discounts => throw _privateConstructorUsedError;
+  List<StoreProductDiscount>? get discounts =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -121,7 +122,7 @@ abstract class $StoreProductCopyWith<$Res> {
       @JsonKey(name: 'introPrice', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
-          List<Discount>? discounts});
+          List<StoreProductDiscount>? discounts});
 
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
 }
@@ -177,7 +178,7 @@ class _$StoreProductCopyWithImpl<$Res> implements $StoreProductCopyWith<$Res> {
       discounts: discounts == freezed
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
-              as List<Discount>?,
+              as List<StoreProductDiscount>?,
     ));
   }
 
@@ -216,7 +217,7 @@ abstract class _$StoreProductCopyWith<$Res>
       @JsonKey(name: 'introPrice', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
-          List<Discount>? discounts});
+          List<StoreProductDiscount>? discounts});
 
   @override
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
@@ -275,7 +276,7 @@ class __$StoreProductCopyWithImpl<$Res> extends _$StoreProductCopyWithImpl<$Res>
       discounts: discounts == freezed
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
-              as List<Discount>?,
+              as List<StoreProductDiscount>?,
     ));
   }
 }
@@ -335,7 +336,7 @@ class _$_StoreProduct implements _StoreProduct {
 
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
-  final List<Discount>? discounts;
+  final List<StoreProductDiscount>? discounts;
 
   @override
   String toString() {
@@ -402,7 +403,7 @@ abstract class _StoreProduct implements StoreProduct {
       {@JsonKey(name: 'introPrice', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
-          List<Discount>? discounts}) = _$_StoreProduct;
+          List<StoreProductDiscount>? discounts}) = _$_StoreProduct;
 
   factory _StoreProduct.fromJson(Map<String, dynamic> json) =
       _$_StoreProduct.fromJson;
@@ -446,7 +447,7 @@ abstract class _StoreProduct implements StoreProduct {
 
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
-  List<Discount>? get discounts;
+  List<StoreProductDiscount>? get discounts;
   @override
   @JsonKey(ignore: true)
   _$StoreProductCopyWith<_StoreProduct> get copyWith =>

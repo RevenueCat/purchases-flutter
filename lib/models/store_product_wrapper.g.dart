@@ -18,7 +18,8 @@ _$_StoreProduct _$$_StoreProductFromJson(Map json) => _$_StoreProduct(
           : IntroductoryPrice.fromJson(
               Map<String, dynamic>.from(json['introPrice'] as Map)),
       discounts: (json['discounts'] as List<dynamic>?)
-          ?.map((e) => Discount.fromJson(Map<String, dynamic>.from(e as Map)))
+          ?.map((e) => StoreProductDiscount.fromJson(
+              Map<String, dynamic>.from(e as Map)))
           .toList(),
     );
 

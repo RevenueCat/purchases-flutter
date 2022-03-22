@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'discount.dart';
+part of 'store_product_discount.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Discount _$$_DiscountFromJson(Map json) => _$_Discount(
+_$_StoreProductDiscount _$$_StoreProductDiscountFromJson(Map json) =>
+    _$_StoreProductDiscount(
       json['identifier'] as String,
       (json['price'] as num).toDouble(),
       json['priceString'] as String,
@@ -16,7 +17,8 @@ _$_Discount _$$_DiscountFromJson(Map json) => _$_Discount(
       json['periodNumberOfUnits'] as int,
     );
 
-Map<String, dynamic> _$$_DiscountToJson(_$_Discount instance) =>
+Map<String, dynamic> _$$_StoreProductDiscountToJson(
+        _$_StoreProductDiscount instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'price': instance.price,
