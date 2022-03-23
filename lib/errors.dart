@@ -80,6 +80,35 @@ enum PurchasesErrorCode {
   /// There was a problem with the operation. Looks like we doesn't support that yet.
   /// Check the underlying error for more details.
   unsupportedError,
+
+  /// A request for subscriber attributes returned none.
+  emptySubscriberAttributes,
+
+  /// The SKProductDiscount or Product.SubscriptionOffer wrapped
+  /// by StoreProductDiscount is missing an identifier.
+  /// This is a required property and likely an AppStore quirk that it is missing
+  productDiscountMissingIdentifierError,
+
+  /// Unable to create an alias when the alias is either nil or empty string
+  missingAppUserIDForAliasCreationError,
+
+  /// Unable to create a discount offer, the product is missing a subscriptionGroupIdentifier.
+  productDiscountMissingSubscriptionGroupIdentifierError,
+
+  /// There was a problem related to the customer info.
+  customerInfoError,
+
+  /// There was a problem related to the system info.
+  systemInfoError,
+
+  /// Error when trying to begin refund request.
+  beginRefundRequestError,
+
+  /// SKProductsRequest took too long to complete.
+  productRequestTimedOut,
+
+  /// Requests to RevenueCat are being blocked. See: https://rev.cat/dnsBlocking for more info.
+  apiEndpointBlockedError,
 }
 
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes

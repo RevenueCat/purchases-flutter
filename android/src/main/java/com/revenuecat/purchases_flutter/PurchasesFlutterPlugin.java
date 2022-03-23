@@ -293,7 +293,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "close":
                 close(result);
                 break;
-                break;
             case "showManageSubscriptions":
                 // NOOP
                 break;
