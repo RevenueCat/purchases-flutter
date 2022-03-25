@@ -299,6 +299,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "beginRefundRequestForActiveEntitlement":
                 // NOOP
                 break;
+            case "beginRefundRequestForProduct":
+                // NOOP
+                break;
+            case "beginRefundRequestForEntitlement":
+                // NOOP
+                break;
             default:
                 result.notImplemented();
                 break;

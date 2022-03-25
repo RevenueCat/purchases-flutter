@@ -188,6 +188,49 @@ void main() {
     }
   });
 
+  test('showManageSubscriptions calls successfully', () async {
+    await Purchases.showManageSubscriptions();
+
+    expect(log, <Matcher>[
+      isMethodCall('showManageSubscriptions', arguments: null)
+    ]);
+  });
+
+  test('beginRefundRequestForActiveEntitlement calls successfully', () async {
+    response = {'status': RefundRequestStatus.success.index};
+    final receivedStatus = await Purchases.beginRefundRequestForActiveEntitlement();
+    expect(receivedStatus, RefundRequestStatusExtension.from(response['status']));
+
+    expect(log, <Matcher>[
+      isMethodCall('beginRefundRequestForActiveEntitlement', arguments: null)
+    ]);
+  });
+
+  test('beginRefundRequestForProduct calls successfully', () async {
+    const productID = 'asdf';
+    response = {'status': RefundRequestStatus.success.index};
+    final receivedStatus = await Purchases.beginRefundRequestForProduct(productID);
+
+    expect(receivedStatus, RefundRequestStatusExtension.from(response['status']));
+    expect(log, <Matcher>[
+      isMethodCall('beginRefundRequestForProduct',
+          arguments: {'productIdentifier': productID},)
+    ]);
+  });
+
+  test('beginRefundRequestForEntitlement calls successfully', () async {
+    const entitlementID = 'asdf';
+    response = {'status': RefundRequestStatus.success.index};
+    final receivedStatus =
+      await Purchases.beginRefundRequestForEntitlement(entitlementID);
+
+    expect(receivedStatus, RefundRequestStatusExtension.from(response['status']));
+    expect(log, <Matcher>[
+      isMethodCall('beginRefundRequestForEntitlement',
+          arguments: {'entitlementIdentifier': entitlementID},)
+    ]);
+  });
+
   test('errors are mapped correctly', () {
     expect(PurchasesErrorCode.unknownError.index, 0);
     expect(PurchasesErrorCode.purchaseCancelledError.index, 1);

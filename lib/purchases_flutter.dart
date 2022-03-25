@@ -594,9 +594,21 @@ class Purchases {
 
   // TODO
   static Future<RefundRequestStatus> beginRefundRequestForProduct(
-      String productID) async {
+      String productID,) async {
     final response = await _channel.invokeMethod(
-      'beginRefundRequestForActiveEntitlement',
+      'beginRefundRequestForProduct',
+        {'productIdentifier': productID},
+    );
+    final int intStatus = response['status'];
+    return RefundRequestStatusExtension.from(intStatus);
+  }
+
+  // TODO
+  static Future<RefundRequestStatus> beginRefundRequestForEntitlement(
+      String entitlementID,) async {
+    final response = await _channel.invokeMethod(
+      'beginRefundRequestForEntitlement',
+      {'entitlementIdentifier': entitlementID},
     );
     final int intStatus = response['status'];
     return RefundRequestStatusExtension.from(intStatus);
