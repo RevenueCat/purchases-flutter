@@ -174,8 +174,45 @@ class CatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Cats Screen')),
-        body: const Center(
-          child: Text('User is pro'),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text('User is pro'),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    final refundStatus = await Purchases
+                        .beginRefundRequestForActiveEntitlement();
+                    print('refundStatus is $refundStatus');
+                  } on PlatformException catch (e) {
+                    final errorCode = PurchasesErrorHelper.getErrorCode(e);
+                    if (errorCode ==
+                        PurchasesErrorCode.beginRefundRequestError) {
+                      print('Error beginning refund request: ${e.message}');
+                    }
+                  }
+                  return const InitialScreen();
+                },
+                child: Text('Begin refund for active entitlement'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await Purchases.showManageSubscriptions();
+                  } on PlatformException catch (e) {
+                    final errorCode = PurchasesErrorHelper.getErrorCode(e);
+                    print('showManageSubError: $e');
+                    // if (errorCode == PurchasesErrorCode.beginRefundRequestError) {
+                    //   print('Error beginning refund request: ${e.message}');
+                    // }
+                  }
+                  return const InitialScreen();
+                },
+                child: Text('Show manage subscriptions modal'),
+              )
+            ],
+          ),
         ),
       );
 }

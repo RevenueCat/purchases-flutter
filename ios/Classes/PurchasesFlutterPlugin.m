@@ -167,6 +167,9 @@ NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated"
     } else if ([@"beginRefundRequestForActiveEntitlement" isEqualToString:call.method]) {
         [self beginRefundRequestForActiveEntitlementWithResult:result];
     }
+    else if ([@"showManageSubscriptions" isEqualToString:call.method]) {
+        [self showManageSubscriptions:result];
+    }
     else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else {
@@ -448,13 +451,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 //                                               }];
 }
 
-//- (void)showManageSubscriptions:(FlutterResult)result {
-//    [RCCommonFunctionality showManageSubscriptions:^(NSError * _Nullable completion) {}
-//        if (error) {
-//            [self rejectWithResult:@TRUE error:error];
-//        }
-//    }]]
-//}
+- (void)showManageSubscriptions:(FlutterResult)result {
+    [RCCommonFunctionality showManageSubscriptions:^(RCErrorContainer * _Nullable error) {
+        [self rejectWithResult:result error:error];
+    }];
+}
 
 - (void)beginRefundRequestForActiveEntitlementWithResult:(FlutterResult)result {
     [RCCommonFunctionality beginRefundRequestForActiveEntitlementWithCompletionBlock:
