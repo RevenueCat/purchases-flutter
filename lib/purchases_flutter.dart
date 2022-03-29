@@ -225,6 +225,17 @@ class Purchases {
     return customerInfo;
   }
 
+  static Future<PromotionalOffer> getPromotionalOffer(
+      StoreProductDiscount productDiscount,
+        StoreProduct product,
+      ) async {
+    final result = await _channel.invokeMethod('getPromotionalOffer', {
+      'productDiscount': productDiscount,
+      'product': product
+    });
+    return result['promo'];
+  }
+
   /// iOS only. Purchase a product applying a given discount.
   ///
   /// Returns a [CustomerInfo] object. Throws a
@@ -235,8 +246,8 @@ class Purchases {
   ///
   /// [storeProduct] The product to purchase.
   ///
-  /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
-  /// using [getPaymentDiscount].
+  /// [promotionalOffer] PromotionalOffer to apply to the product. Retrieve
+  /// this using [getPromotionalOffer].
   static Future<CustomerInfo> purchaseDiscountedProduct(
     StoreProduct storeProduct,
     PaymentDiscount discount,

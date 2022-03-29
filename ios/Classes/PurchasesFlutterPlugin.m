@@ -172,11 +172,13 @@ NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated"
     } else if ([@"beginRefundRequestForEntitlement" isEqualToString:call.method]) {
         NSString *entitlementID = arguments[@"entitlementIdentifier"];
         [self beginRefundRequestForEntitlement:entitlementID result:result];
-    }
-    else if ([@"showManageSubscriptions" isEqualToString:call.method]) {
+    } else if ([@"showManageSubscriptions" isEqualToString:call.method]) {
         [self showManageSubscriptions:result];
-    }
-    else if ([@"close" isEqualToString:call.method]) {
+    } else if ([@"getPromotionalOfferForProductDiscountWithProduct" isEqualToString:call.method]) {
+        RCStoreProductDiscount *productDiscount = arguments[@"productDiscount"];
+        RCStoreProduct *product = arguments[@"storeProduct"];
+        [self getPromotionalOfferForProductDiscount:productDiscount withProduct:product withResult:result];
+    } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else {
         result(FlutterMethodNotImplemented);
@@ -442,21 +444,6 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(@([RCCommonFunctionality canMakePaymentsWithFeatures:features]));
 }
 
-- (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier
-                         discountIdentifier:(nullable NSString *)discountIdentifier
-                                     result:(FlutterResult)result {
-//    [RCCommonFunctionality paymentDiscountForProductIdentifier:productIdentifier
-//                                                      discount:discountIdentifier
-//                                               completionBlock:^(NSDictionary * _Nullable responseDictionary,
-//                                                                 RCErrorContainer * _Nullable error) {
-//                                                   if (error) {
-//                                                       [self rejectWithResult:result error:error];
-//                                                   } else {
-//                                                       result(responseDictionary);
-//                                                   }
-//                                               }];
-}
-
 - (void)showManageSubscriptions:(FlutterResult)result {
     [RCCommonFunctionality showManageSubscriptions:^(RCErrorContainer * _Nullable error) {
         [self rejectWithResult:result error:error];
@@ -477,6 +464,18 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     [RCCommonFunctionality beginRefundRequestForEntitlement:entitlementIdentifier
                                             completionBlock:[self getResponseCompletionBlock:result]];
 }
+
+- (void) getPromotionalOfferForProductDiscount:(StoreProductDiscount *)discount
+                                 withProduct:(StoreProduct *)product
+                              withResult:(FlutterResult)result {
+    [RCCommonFunctionality getPromotionalOfferForProductDiscount:discount
+                                                     withProduct:product
+                                                  withCompletion:^(RCPromotionalOffer *offer, NSError *error) {
+        // Maddie TODO monday
+        result([self getResponseCompletionBlock:result]);
+    }]
+}
+
 
 - (void)closeWithResult:(FlutterResult)result {
     result(nil);
