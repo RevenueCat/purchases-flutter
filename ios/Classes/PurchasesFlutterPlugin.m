@@ -511,7 +511,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     [self.defermentBlocks addObject:makeDeferredPurchase];
     NSInteger position = [self.defermentBlocks count] - 1;
     [self.channel invokeMethod:PurchasesStartDeferredPurchaseEvent
-                     arguments:[NSNumber numberWithInteger:position]];
+                     arguments:@{@"callbackID": [NSNumber numberWithInteger:position]}];
 }
 
 #pragma mark -
