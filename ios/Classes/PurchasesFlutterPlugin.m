@@ -9,11 +9,13 @@
 
 @property (nonatomic, retain) FlutterMethodChannel *channel;
 @property (nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
+@property (nonatomic, retain) NSMutableArray<RCDeferredPromotionalPurchaseBlock> *defermentBlocks;
 
 @end
 
 
-NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
+NSString *PurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
+NSString *PurchasesStartDeferredPurchaseEvent = @"Purchases-MakeDeferredPurchase";
 
 
 @implementation PurchasesFlutterPlugin
@@ -170,6 +172,10 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self paymentDiscountForProductIdentifier:productIdentifier
                                discountIdentifier:discountIdentifier
                                            result:result];
+    } else if ([@"makeDeferredPurchase" isEqualToString:call.method]) {
+        NSNumber *callbackID = arguments[@"callbackID"];
+        [self makeDeferredPurchase:callbackID
+                            result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else {
@@ -471,6 +477,20 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                }];
 }
 
+- (void)makeDeferredPurchase:(NSNumber *)callbackID
+                      result:(FlutterResult)result {
+    RCDeferredPromotionalPurchaseBlock defermentBlock = [self.defermentBlocks objectAtIndex:[callbackID integerValue]];
+    [RCCommonFunctionality makeDeferredPurchase:defermentBlock
+                                completionBlock:^(NSDictionary * _Nullable responseDictionary,
+                                                  RCErrorContainer * _Nullable error) {
+                                                    if (error) {
+                                                        [self rejectWithResult:result error:error];
+                                                    } else {
+                                                        result(responseDictionary);
+                                                    }
+                                                }];;
+}
+
 - (void)closeWithResult:(FlutterResult)result {
     result(nil);
 }
@@ -479,8 +499,19 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark Delegate Methods
 
 - (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo {
-    [self.channel invokeMethod:RNPurchasesPurchaserInfoUpdatedEvent
+    [self.channel invokeMethod:PurchasesPurchaserInfoUpdatedEvent
                      arguments:purchaserInfo.dictionary];
+}
+
+- (void)purchases:(RCPurchases *)purchases shouldPurchasePromoProduct:(SKProduct *)product defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
+    if (!self.defermentBlocks) {
+            self.defermentBlocks = [NSMutableArray array];
+    }
+
+    [self.defermentBlocks addObject:makeDeferredPurchase];
+    NSInteger position = [self.defermentBlocks count] - 1;
+    [self.channel invokeMethod:PurchasesStartDeferredPurchaseEvent
+                     arguments:[NSNumber numberWithInteger:position]];
 }
 
 #pragma mark -

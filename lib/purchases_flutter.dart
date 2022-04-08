@@ -13,9 +13,17 @@ typedef PurchaserInfoUpdateListener = void Function(
   PurchaserInfo purchaserInfo,
 );
 
+/// TODO docs
+typedef StartPromotedProductPurchaseListener = void Function(
+    Future<MakePurchaseResult> Function()
+    );
+
 /// Entry point for Purchases.
 class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
+      {};
+
+  static final Set<StartPromotedProductPurchaseListener> _startPromotedProductPurchaseListeners =
       {};
 
   static final _channel = const MethodChannel('purchases_flutter')
@@ -27,9 +35,28 @@ class Purchases {
             listener(PurchaserInfo.fromJson(args));
           }
           break;
+        case 'Purchases-MakeDeferredPurchase':
+          print("received methodchannel call");
+          for (final listener in _startPromotedProductPurchaseListeners) {
+            final args = Map<String, dynamic>.from(call.arguments);
+            final callbackID = args['callbackID'];
+            print("received methodchannel call - in for loop for callback ID $callbackID");
+            // final result = await makeDeferredPurchase(callbackID);
+            listener(() => makeDeferredPurchase(callbackID));
+          }
+          break;
       }
     });
 
+  static Future<MakePurchaseResult> makeDeferredPurchase(int callbackID) async {
+    print("in makeDeferredPurchase");
+    return await _channel.invokeMethod(
+      'makeDeferredPurchase',
+      {
+        'callbackID': callbackID,
+      },
+    );
+  }
   /// Sets up Purchases with your API key and an app user id.
   ///
   /// [apiKey] RevenueCat API Key.
@@ -106,6 +133,21 @@ class Purchases {
     PurchaserInfoUpdateListener listenerToRemove,
   ) =>
       _purchaserInfoUpdateListeners.remove(listenerToRemove);
+
+  /// TODO docs
+  static void addShouldPurchasePromoProductListener(
+      StartPromotedProductPurchaseListener listener,
+      ) {
+    _startPromotedProductPurchaseListeners.add(listener);
+    print("adding promotedproductpurchaselistener");
+  }
+
+
+  /// TODO docs
+  static void removeShouldPurchasePromoProductListener(
+      StartPromotedProductPurchaseListener listenerToRemove,
+      ) =>
+      _startPromotedProductPurchaseListeners.remove(listenerToRemove);
 
   /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information
@@ -788,4 +830,16 @@ class LogInResult {
 
   /// Constructs a LogInResult with its properties
   LogInResult({required this.created, required this.purchaserInfo});
+}
+
+/// TODO docs
+class MakePurchaseResult {
+  /// TODO docs
+  final String productIdentifier;
+
+  /// the purchaserInfo associated to the logged in user
+  final PurchaserInfo purchaserInfo;
+
+  /// Constructs a LogInResult with its properties
+  MakePurchaseResult({required this.productIdentifier, required this.purchaserInfo});
 }
