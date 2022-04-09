@@ -14,9 +14,7 @@ typedef PurchaserInfoUpdateListener = void Function(
 );
 
 /// TODO docs
-typedef StartPromotedProductPurchaseListener = void Function(
-    Future<MakePurchaseResult> Function()
-    );
+typedef StartPromotedProductPurchaseListener = void Function(Future<MakePurchaseResult> Function());
 
 /// Entry point for Purchases.
 class Purchases {
@@ -36,12 +34,9 @@ class Purchases {
           }
           break;
         case 'Purchases-MakeDeferredPurchase':
-          print("received methodchannel call");
           for (final listener in _startPromotedProductPurchaseListeners) {
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
-            print("received methodchannel call - in for loop for callback ID $callbackID");
-            // final result = await makeDeferredPurchase(callbackID);
             listener(() => makeDeferredPurchase(callbackID));
           }
           break;
@@ -49,12 +44,19 @@ class Purchases {
     });
 
   static Future<MakePurchaseResult> makeDeferredPurchase(int callbackID) async {
-    print("in makeDeferredPurchase");
-    return await _channel.invokeMethod(
+    final result = await _channel.invokeMethod(
       'makeDeferredPurchase',
       {
         'callbackID': callbackID,
       },
+    );
+    final purchaserInfo = PurchaserInfo.fromJson(
+      Map<String, dynamic>.from(result['purchaserInfo']),
+    );
+    final productIdentifier = result['productIdentifier'];
+    return MakePurchaseResult(
+        productIdentifier: productIdentifier,
+        purchaserInfo: purchaserInfo,
     );
   }
   /// Sets up Purchases with your API key and an app user id.
@@ -139,7 +141,6 @@ class Purchases {
       StartPromotedProductPurchaseListener listener,
       ) {
     _startPromotedProductPurchaseListeners.add(listener);
-    print("adding promotedproductpurchaselistener");
   }
 
 
