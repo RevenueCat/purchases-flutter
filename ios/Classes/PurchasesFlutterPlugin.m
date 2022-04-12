@@ -9,13 +9,13 @@
 
 @property (nonatomic, retain) FlutterMethodChannel *channel;
 @property (nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
-@property (nonatomic, retain) NSMutableArray<RCDeferredPromotionalPurchaseBlock> *defermentBlocks;
+@property (nonatomic, retain) NSMutableArray<RCDeferredPromotionalPurchaseBlock> *startPurchaseBlocks;
 
 @end
 
 
 NSString *PurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
-NSString *PurchasesStartDeferredPurchaseEvent = @"Purchases-MakeDeferredPurchase";
+NSString *PurchasesReadyForPromotedProductEvent = @"Purchases-ReadyForPromotedProduct";
 
 
 @implementation PurchasesFlutterPlugin
@@ -172,9 +172,9 @@ NSString *PurchasesStartDeferredPurchaseEvent = @"Purchases-MakeDeferredPurchase
         [self paymentDiscountForProductIdentifier:productIdentifier
                                discountIdentifier:discountIdentifier
                                            result:result];
-    } else if ([@"makeDeferredPurchase" isEqualToString:call.method]) {
+    } else if ([@"startDeferredPurchase" isEqualToString:call.method]) {
         NSNumber *callbackID = arguments[@"callbackID"];
-        [self makeDeferredPurchase:callbackID
+        [self startDeferredPurchase:callbackID
                             result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
@@ -477,10 +477,10 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                }];
 }
 
-- (void)makeDeferredPurchase:(NSNumber *)callbackID
+- (void)startDeferredPurchase:(NSNumber *)callbackID
                       result:(FlutterResult)result {
-    RCDeferredPromotionalPurchaseBlock defermentBlock = [self.defermentBlocks objectAtIndex:[callbackID integerValue]];
-    [RCCommonFunctionality makeDeferredPurchase:defermentBlock
+    RCDeferredPromotionalPurchaseBlock makePurchaseBlock = [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
+    [RCCommonFunctionality makeDeferredPurchase:makePurchaseBlock
                                 completionBlock:^(NSDictionary * _Nullable responseDictionary,
                                                   RCErrorContainer * _Nullable error) {
                                                     if (error) {
@@ -503,14 +503,16 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                      arguments:purchaserInfo.dictionary];
 }
 
-- (void)purchases:(RCPurchases *)purchases shouldPurchasePromoProduct:(SKProduct *)product defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
-    if (!self.defermentBlocks) {
-            self.defermentBlocks = [NSMutableArray array];
+- (void)purchases:(RCPurchases *)purchases
+shouldPurchasePromoProduct:(nonnull SKProduct *)product
+   defermentBlock:(nonnull RCDeferredPromotionalPurchaseBlock)startPurchaseBlock {
+    if (!self.startPurchaseBlocks) {
+            self.startPurchaseBlocks = [NSMutableArray array];
     }
 
-    [self.defermentBlocks addObject:makeDeferredPurchase];
-    NSInteger position = [self.defermentBlocks count] - 1;
-    [self.channel invokeMethod:PurchasesStartDeferredPurchaseEvent
+    [self.startPurchaseBlocks addObject:startPurchaseBlock];
+    NSInteger position = [self.startPurchaseBlocks count] - 1;
+    [self.channel invokeMethod:PurchasesReadyForPromotedProductEvent
                      arguments:@{@"callbackID": [NSNumber numberWithInteger:position]}];
 }
 

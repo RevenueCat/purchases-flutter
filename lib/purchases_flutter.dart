@@ -14,14 +14,16 @@ typedef PurchaserInfoUpdateListener = void Function(
 );
 
 /// TODO docs
-typedef StartPromotedProductPurchaseListener = void Function(Future<MakePurchaseResult> Function());
+typedef ReadyForPromotedProductListener = void Function(
+    Future<StartDeferredPurchaseResult> Function(),
+);
 
 /// Entry point for Purchases.
 class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
       {};
 
-  static final Set<StartPromotedProductPurchaseListener> _startPromotedProductPurchaseListeners =
+  static final Set<ReadyForPromotedProductListener> _readyForPromotedProductListeners =
       {};
 
   static final _channel = const MethodChannel('purchases_flutter')
@@ -33,19 +35,19 @@ class Purchases {
             listener(PurchaserInfo.fromJson(args));
           }
           break;
-        case 'Purchases-MakeDeferredPurchase':
-          for (final listener in _startPromotedProductPurchaseListeners) {
+        case 'Purchases-ReadyForPromotedProduct':
+          for (final listener in _readyForPromotedProductListeners) {
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
-            listener(() => makeDeferredPurchase(callbackID));
+            listener(() => _startDeferredPurchase(callbackID));
           }
           break;
       }
     });
 
-  static Future<MakePurchaseResult> makeDeferredPurchase(int callbackID) async {
+  static Future<StartDeferredPurchaseResult> _startDeferredPurchase(int callbackID) async {
     final result = await _channel.invokeMethod(
-      'makeDeferredPurchase',
+      'startDeferredPurchase',
       {
         'callbackID': callbackID,
       },
@@ -54,7 +56,7 @@ class Purchases {
       Map<String, dynamic>.from(result['purchaserInfo']),
     );
     final productIdentifier = result['productIdentifier'];
-    return MakePurchaseResult(
+    return StartDeferredPurchaseResult(
         productIdentifier: productIdentifier,
         purchaserInfo: purchaserInfo,
     );
@@ -138,17 +140,17 @@ class Purchases {
 
   /// TODO docs
   static void addShouldPurchasePromoProductListener(
-      StartPromotedProductPurchaseListener listener,
+      ReadyForPromotedProductListener listener,
       ) {
-    _startPromotedProductPurchaseListeners.add(listener);
+    _readyForPromotedProductListeners.add(listener);
   }
 
 
   /// TODO docs
   static void removeShouldPurchasePromoProductListener(
-      StartPromotedProductPurchaseListener listenerToRemove,
+      ReadyForPromotedProductListener listenerToRemove,
       ) =>
-      _startPromotedProductPurchaseListeners.remove(listenerToRemove);
+      _readyForPromotedProductListeners.remove(listenerToRemove);
 
   /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information
@@ -833,14 +835,17 @@ class LogInResult {
   LogInResult({required this.created, required this.purchaserInfo});
 }
 
-/// TODO docs
-class MakePurchaseResult {
-  /// TODO docs
+/// Class used to hold the result of the startDeferredPurchase method
+class StartDeferredPurchaseResult {
+  /// the productIdentifier associated with the deferred purchase
   final String productIdentifier;
 
-  /// the purchaserInfo associated to the logged in user
+  /// the purchaserInfo associated with the deferred purchase
   final PurchaserInfo purchaserInfo;
 
-  /// Constructs a LogInResult with its properties
-  MakePurchaseResult({required this.productIdentifier, required this.purchaserInfo});
+  /// Constructs a StartDeferredPurchaseResult with its properties
+  StartDeferredPurchaseResult({
+        required this.productIdentifier,
+        required this.purchaserInfo,
+  });
 }
