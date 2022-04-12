@@ -35,9 +35,19 @@ class _MyAppState extends State<InitialScreen> {
 
     final purchaserInfo = await Purchases.getPurchaserInfo();
 
-    Purchases.addShouldPurchasePromoProductListener((makePurchase) async {
-      final purchaseResult = await makePurchase.call();
-      print(purchaseResult.purchaserInfo);
+    Purchases.addReadyForPromotedProductPurchaseListener(
+            (productID, startPurchase) async {
+      print('Received readyForPromotedProductPurchase event for '
+          'productID: $productID');
+
+      try {
+        final purchaseResult = await startPurchase.call();
+        print('Promoted purchase for productID '
+            '${purchaseResult.productIdentifier} successful. New '
+            'purchaserInfo: ${purchaseResult.purchaserInfo}');
+      } on PlatformException catch (e) {
+        print('Error purchasing promoted product: ${e.message}');
+      }
     });
 
     // If the widget was removed from the tree while the asynchronous platform

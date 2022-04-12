@@ -13,9 +13,26 @@ typedef PurchaserInfoUpdateListener = void Function(
   PurchaserInfo purchaserInfo,
 );
 
-/// TODO docs
-typedef ReadyForPromotedProductListener = void Function(
-    Future<StartDeferredPurchaseResult> Function(),
+/// iOS Only
+/// Listener called when a user initiates a promoted in-app purchase from the App Store.
+/// If your app is able to handle a purchase at the current time, run the startPurchase block in this method.
+/// If the app is not in a state to make a purchase: cache the startPurchase block,
+/// then call the startPurchase block when the app is ready to make the promoted purchase.
+///
+/// If the purchase should never be made, you don't need to ever call the block and
+/// ``Purchases`` will not proceed with the promoted purchase.
+///
+/// This can be tested by opening a link like:
+/// itms-services://?action=purchaseIntent&bundleId=<BUNDLE_ID>&productIdentifier=<SKPRODUCT_ID>
+///
+/// - Parameter productIdentifier: the productIdentifier associated with the promoted purchase
+/// - Parameter startPurchase: call this block when the app is ready to handle the purchase
+///
+/// ### Related Articles:
+/// - [Apple Documentation](https://rev.cat/testing-promoted-in-app-purchases)
+typedef ReadyForPromotedProductPurchaseListener = void Function(
+    String productIdentifier,
+    Future<StartDeferredPurchaseResult> Function() startPurchase,
 );
 
 /// Entry point for Purchases.
@@ -23,7 +40,7 @@ class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
       {};
 
-  static final Set<ReadyForPromotedProductListener> _readyForPromotedProductListeners =
+  static final Set<ReadyForPromotedProductPurchaseListener> _readyForPromotedProductPurchaseListeners =
       {};
 
   static final _channel = const MethodChannel('purchases_flutter')
@@ -35,11 +52,13 @@ class Purchases {
             listener(PurchaserInfo.fromJson(args));
           }
           break;
-        case 'Purchases-ReadyForPromotedProduct':
-          for (final listener in _readyForPromotedProductListeners) {
+        case 'Purchases-ReadyForPromotedProductPurchase':
+          for (final listener in _readyForPromotedProductPurchaseListeners) {
+            print('in listener loop');
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
-            listener(() => _startDeferredPurchase(callbackID));
+            final productIdentifier = args['productID'];
+            listener(productIdentifier, () => _startDeferredPurchase(callbackID));
           }
           break;
       }
@@ -139,18 +158,19 @@ class Purchases {
       _purchaserInfoUpdateListeners.remove(listenerToRemove);
 
   /// TODO docs
-  static void addShouldPurchasePromoProductListener(
-      ReadyForPromotedProductListener listener,
+  static void addReadyForPromotedProductPurchaseListener(
+      ReadyForPromotedProductPurchaseListener listener,
       ) {
-    _readyForPromotedProductListeners.add(listener);
+    print('adding listener');
+    _readyForPromotedProductPurchaseListeners.add(listener);
   }
 
 
   /// TODO docs
-  static void removeShouldPurchasePromoProductListener(
-      ReadyForPromotedProductListener listenerToRemove,
+  static void removeReadyForPromotedProductPurchaseListener(
+      ReadyForPromotedProductPurchaseListener listenerToRemove,
       ) =>
-      _readyForPromotedProductListeners.remove(listenerToRemove);
+      _readyForPromotedProductPurchaseListeners.remove(listenerToRemove);
 
   /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information

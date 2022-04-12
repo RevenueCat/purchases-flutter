@@ -15,7 +15,7 @@
 
 
 NSString *PurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
-NSString *PurchasesReadyForPromotedProductEvent = @"Purchases-ReadyForPromotedProduct";
+NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPromotedProductPurchase";
 
 
 @implementation PurchasesFlutterPlugin
@@ -503,17 +503,17 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                      arguments:purchaserInfo.dictionary];
 }
 
-- (void)purchases:(RCPurchases *)purchases
-shouldPurchasePromoProduct:(nonnull SKProduct *)product
-   defermentBlock:(nonnull RCDeferredPromotionalPurchaseBlock)startPurchaseBlock {
+-(void) purchases:(RCPurchases *)purchases shouldPurchasePromoProduct:(SKProduct *)product defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
     if (!self.startPurchaseBlocks) {
             self.startPurchaseBlocks = [NSMutableArray array];
     }
 
-    [self.startPurchaseBlocks addObject:startPurchaseBlock];
+    [self.startPurchaseBlocks addObject:makeDeferredPurchase];
     NSInteger position = [self.startPurchaseBlocks count] - 1;
-    [self.channel invokeMethod:PurchasesReadyForPromotedProductEvent
-                     arguments:@{@"callbackID": [NSNumber numberWithInteger:position]}];
+    [self.channel invokeMethod:PurchasesReadyForPromotedProductPurchaseEvent
+                     arguments:@{@"callbackID": [NSNumber numberWithInteger:position],
+                                 @"productID": product.productIdentifier
+                               }];
 }
 
 #pragma mark -
