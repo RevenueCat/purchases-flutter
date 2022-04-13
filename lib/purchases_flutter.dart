@@ -32,7 +32,7 @@ typedef PurchaserInfoUpdateListener = void Function(
 /// - [Apple Documentation](https://rev.cat/testing-promoted-in-app-purchases)
 typedef ReadyForPromotedProductPurchaseListener = void Function(
     String productIdentifier,
-    Future<StartDeferredPurchaseResult> Function() startPurchase,
+    Future<PromotedPurchaseResult> Function() startPurchase,
 );
 
 /// Entry point for Purchases.
@@ -54,11 +54,10 @@ class Purchases {
           break;
         case 'Purchases-ReadyForPromotedProductPurchase':
           for (final listener in _readyForPromotedProductPurchaseListeners) {
-            print('in listener loop');
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
             final productIdentifier = args['productID'];
-            listener(productIdentifier, () => _startDeferredPurchase(callbackID));
+            listener(productIdentifier, () => _startPromotedProductPurchase(callbackID));
           }
           break;
       }
@@ -690,10 +689,10 @@ class Purchases {
   /// iOS only. Starts the purchase flow associated with the callback at
   /// `callbackID` index in PurchasesFlutterPlugin.m's `startPurchaseBlocks`
   /// array.
-  static Future<StartDeferredPurchaseResult> _startDeferredPurchase(
+  static Future<PromotedPurchaseResult> _startPromotedProductPurchase(
       int callbackID,) async {
     final result = await _channel.invokeMethod(
-      'startDeferredPurchase',
+      'startPromotedProductPurchase',
       {
         'callbackID': callbackID,
       },
@@ -702,7 +701,7 @@ class Purchases {
       Map<String, dynamic>.from(result['purchaserInfo']),
     );
     final productIdentifier = result['productIdentifier'];
-    return StartDeferredPurchaseResult(
+    return PromotedPurchaseResult(
       productIdentifier: productIdentifier,
       purchaserInfo: purchaserInfo,
     );
@@ -865,16 +864,16 @@ class LogInResult {
   LogInResult({required this.created, required this.purchaserInfo});
 }
 
-/// Class used to hold the result of the startDeferredPurchase method
-class StartDeferredPurchaseResult {
-  /// the productIdentifier associated with the deferred purchase
+/// Class used to hold the result of the startPromotedPurchase method
+class PromotedPurchaseResult {
+  /// the productIdentifier associated with the promoted purchase
   final String productIdentifier;
 
-  /// the purchaserInfo associated with the deferred purchase
+  /// the purchaserInfo associated with the promoted purchase
   final PurchaserInfo purchaserInfo;
 
-  /// Constructs a StartDeferredPurchaseResult with its properties
-  StartDeferredPurchaseResult({
+  /// Constructs a PromotedPurchaseResult with its properties
+  PromotedPurchaseResult({
         required this.productIdentifier,
         required this.purchaserInfo,
   });
