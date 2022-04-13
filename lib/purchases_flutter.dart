@@ -64,22 +64,6 @@ class Purchases {
       }
     });
 
-  static Future<StartDeferredPurchaseResult> _startDeferredPurchase(int callbackID) async {
-    final result = await _channel.invokeMethod(
-      'startDeferredPurchase',
-      {
-        'callbackID': callbackID,
-      },
-    );
-    final purchaserInfo = PurchaserInfo.fromJson(
-      Map<String, dynamic>.from(result['purchaserInfo']),
-    );
-    final productIdentifier = result['productIdentifier'];
-    return StartDeferredPurchaseResult(
-        productIdentifier: productIdentifier,
-        purchaserInfo: purchaserInfo,
-    );
-  }
   /// Sets up Purchases with your API key and an app user id.
   ///
   /// [apiKey] RevenueCat API Key.
@@ -157,16 +141,21 @@ class Purchases {
   ) =>
       _purchaserInfoUpdateListeners.remove(listenerToRemove);
 
-  /// TODO docs
+  /// iOS only
+  /// Sets a listener to be called when a user initiates a promoted in-app
+  /// purchase from the App Store.
+  ///
+  /// [listener] ReadyForPromotedProductPurchaseListener to be added
   static void addReadyForPromotedProductPurchaseListener(
       ReadyForPromotedProductPurchaseListener listener,
       ) {
-    print('adding listener');
     _readyForPromotedProductPurchaseListeners.add(listener);
   }
 
-
-  /// TODO docs
+  /// iOS only
+  /// Removes a given ReadyForPromotedProductPurchaseListener
+  ///
+  /// [listener] ReadyForPromotedProductPurchaseListener to be removed
   static void removeReadyForPromotedProductPurchaseListener(
       ReadyForPromotedProductPurchaseListener listenerToRemove,
       ) =>
@@ -697,6 +686,27 @@ class Purchases {
   /// Android only. Call close when you are done with this instance of Purchases to disconnect
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
+
+  /// iOS only. Starts the purchase flow associated with the callback at
+  /// `callbackID` index in PurchasesFlutterPlugin.m's `startPurchaseBlocks`
+  /// array.
+  static Future<StartDeferredPurchaseResult> _startDeferredPurchase(
+      int callbackID,) async {
+    final result = await _channel.invokeMethod(
+      'startDeferredPurchase',
+      {
+        'callbackID': callbackID,
+      },
+    );
+    final purchaserInfo = PurchaserInfo.fromJson(
+      Map<String, dynamic>.from(result['purchaserInfo']),
+    );
+    final productIdentifier = result['productIdentifier'];
+    return StartDeferredPurchaseResult(
+      productIdentifier: productIdentifier,
+      purchaserInfo: purchaserInfo,
+    );
+  }
 
   static Future<PurchaserInfo> _invokeReturningPurchaserInfo(String method,
       // ignore: require_trailing_commas
