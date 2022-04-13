@@ -172,9 +172,9 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self paymentDiscountForProductIdentifier:productIdentifier
                                discountIdentifier:discountIdentifier
                                            result:result];
-    } else if ([@"startDeferredPurchase" isEqualToString:call.method]) {
+    } else if ([@"startPromotedProductPurchase" isEqualToString:call.method]) {
         NSNumber *callbackID = arguments[@"callbackID"];
-        [self startDeferredPurchase:callbackID
+        [self startPromotedProductPurchase:callbackID
                             result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
@@ -477,18 +477,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                }];
 }
 
-- (void)startDeferredPurchase:(NSNumber *)callbackID
+- (void)startPromotedProductPurchase:(NSNumber *)callbackID
                       result:(FlutterResult)result {
     RCDeferredPromotionalPurchaseBlock makePurchaseBlock = [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
     [RCCommonFunctionality makeDeferredPurchase:makePurchaseBlock
-                                completionBlock:^(NSDictionary * _Nullable responseDictionary,
-                                                  RCErrorContainer * _Nullable error) {
-                                                    if (error) {
-                                                        [self rejectWithResult:result error:error];
-                                                    } else {
-                                                        result(responseDictionary);
-                                                    }
-                                                }];;
+                                completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)closeWithResult:(FlutterResult)result {

@@ -43,8 +43,9 @@ class _MyAppState extends State<InitialScreen> {
       try {
         final purchaseResult = await startPurchase.call();
         print('Promoted purchase for productID '
-            '${purchaseResult.productIdentifier} successful. New '
-            'purchaserInfo: ${purchaseResult.purchaserInfo}');
+            '${purchaseResult.productIdentifier} completed, or product was'
+            'already purchased. purchaserInfo returned is:'
+            ' ${purchaseResult.purchaserInfo}');
       } on PlatformException catch (e) {
         print('Error purchasing promoted product: ${e.message}');
       }
