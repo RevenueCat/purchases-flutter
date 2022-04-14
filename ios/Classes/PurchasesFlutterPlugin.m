@@ -175,7 +175,7 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     } else if ([@"startPromotedProductPurchase" isEqualToString:call.method]) {
         NSNumber *callbackID = arguments[@"callbackID"];
         [self startPromotedProductPurchase:callbackID
-                            result:result];
+                                    result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else {
@@ -478,8 +478,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)startPromotedProductPurchase:(NSNumber *)callbackID
-                      result:(FlutterResult)result {
-    RCDeferredPromotionalPurchaseBlock makePurchaseBlock = [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
+                              result:(FlutterResult)result {
+    RCDeferredPromotionalPurchaseBlock makePurchaseBlock =
+        [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
     [RCCommonFunctionality makeDeferredPurchase:makePurchaseBlock
                                 completionBlock:[self getResponseCompletionBlock:result]];
 }
@@ -496,15 +497,17 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                      arguments:purchaserInfo.dictionary];
 }
 
--(void) purchases:(RCPurchases *)purchases shouldPurchasePromoProduct:(SKProduct *)product defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
+- (void)purchases:(RCPurchases *)purchases
+shouldPurchasePromoProduct:(SKProduct *)product
+   defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
     if (!self.startPurchaseBlocks) {
-            self.startPurchaseBlocks = [NSMutableArray array];
+        self.startPurchaseBlocks = [NSMutableArray array];
     }
 
     [self.startPurchaseBlocks addObject:makeDeferredPurchase];
     NSInteger position = [self.startPurchaseBlocks count] - 1;
     [self.channel invokeMethod:PurchasesReadyForPromotedProductPurchaseEvent
-                     arguments:@{@"callbackID": [NSNumber numberWithInteger:position],
+                     arguments:@{@"callbackID": @(position),
                                  @"productID": product.productIdentifier
                                }];
 }
