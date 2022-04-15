@@ -497,9 +497,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                      arguments:purchaserInfo.dictionary];
 }
 
-- (void)purchases:(RCPurchases *)purchases
+- (void)         purchases:(RCPurchases *)purchases
 shouldPurchasePromoProduct:(SKProduct *)product
-   defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
+            defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
     if (!self.startPurchaseBlocks) {
         self.startPurchaseBlocks = [NSMutableArray array];
     }
