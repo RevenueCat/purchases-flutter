@@ -13,9 +13,34 @@ typedef PurchaserInfoUpdateListener = void Function(
   PurchaserInfo purchaserInfo,
 );
 
+/// iOS Only
+/// Listener called when a user initiates a promoted in-app purchase from the App Store.
+/// If your app is able to handle a purchase at the current time, run the startPurchase block in this method.
+/// If the app is not in a state to make a purchase: cache the startPurchase block,
+/// then call the startPurchase block when the app is ready to make the promoted purchase.
+///
+/// If the purchase should never be made, you don't need to ever call the block and
+/// ``Purchases`` will not proceed with the promoted purchase.
+///
+/// This can be tested by opening a link like:
+/// itms-services://?action=purchaseIntent&bundleId=<BUNDLE_ID>&productIdentifier=<SKPRODUCT_ID>
+///
+/// - Parameter productIdentifier: the productIdentifier associated with the promoted purchase
+/// - Parameter startPurchase: call this block when the app is ready to handle the purchase
+///
+/// ### Related Articles:
+/// - [Apple Documentation](https://rev.cat/testing-promoted-in-app-purchases)
+typedef ReadyForPromotedProductPurchaseListener = void Function(
+    String productIdentifier,
+    Future<PromotedPurchaseResult> Function() startPurchase,
+);
+
 /// Entry point for Purchases.
 class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
+      {};
+
+  static final Set<ReadyForPromotedProductPurchaseListener> _readyForPromotedProductPurchaseListeners =
       {};
 
   static final _channel = const MethodChannel('purchases_flutter')
@@ -25,6 +50,14 @@ class Purchases {
           for (final listener in _purchaserInfoUpdateListeners) {
             final args = Map<String, dynamic>.from(call.arguments);
             listener(PurchaserInfo.fromJson(args));
+          }
+          break;
+        case 'Purchases-ReadyForPromotedProductPurchase':
+          for (final listener in _readyForPromotedProductPurchaseListeners) {
+            final args = Map<String, dynamic>.from(call.arguments);
+            final callbackID = args['callbackID'];
+            final productIdentifier = args['productID'];
+            listener(productIdentifier, () => _startPromotedProductPurchase(callbackID));
           }
           break;
       }
@@ -106,6 +139,26 @@ class Purchases {
     PurchaserInfoUpdateListener listenerToRemove,
   ) =>
       _purchaserInfoUpdateListeners.remove(listenerToRemove);
+
+  /// iOS only
+  /// Sets a listener to be called when a user initiates a promoted in-app
+  /// purchase from the App Store.
+  ///
+  /// [listener] ReadyForPromotedProductPurchaseListener to be added
+  static void addReadyForPromotedProductPurchaseListener(
+      ReadyForPromotedProductPurchaseListener listener,
+      ) {
+    _readyForPromotedProductPurchaseListeners.add(listener);
+  }
+
+  /// iOS only
+  /// Removes a given ReadyForPromotedProductPurchaseListener
+  ///
+  /// [listener] ReadyForPromotedProductPurchaseListener to be removed
+  static void removeReadyForPromotedProductPurchaseListener(
+      ReadyForPromotedProductPurchaseListener listenerToRemove,
+      ) =>
+      _readyForPromotedProductPurchaseListeners.remove(listenerToRemove);
 
   /// Deprecated in favor of set<NetworkId> functions.
   /// Add a dict of attribution information
@@ -633,6 +686,27 @@ class Purchases {
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
 
+  /// iOS only. Starts the purchase flow associated with the callback at
+  /// `callbackID` index in PurchasesFlutterPlugin.m's `startPurchaseBlocks`
+  /// array.
+  static Future<PromotedPurchaseResult> _startPromotedProductPurchase(
+      int callbackID,) async {
+    final result = await _channel.invokeMethod(
+      'startPromotedProductPurchase',
+      {
+        'callbackID': callbackID,
+      },
+    );
+    final purchaserInfo = PurchaserInfo.fromJson(
+      Map<String, dynamic>.from(result['purchaserInfo']),
+    );
+    final productIdentifier = result['productIdentifier'];
+    return PromotedPurchaseResult(
+      productIdentifier: productIdentifier,
+      purchaserInfo: purchaserInfo,
+    );
+  }
+
   static Future<PurchaserInfo> _invokeReturningPurchaserInfo(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
@@ -788,4 +862,19 @@ class LogInResult {
 
   /// Constructs a LogInResult with its properties
   LogInResult({required this.created, required this.purchaserInfo});
+}
+
+/// Class used to hold the result of the startPromotedPurchase method
+class PromotedPurchaseResult {
+  /// the productIdentifier associated with the promoted purchase
+  final String productIdentifier;
+
+  /// the purchaserInfo associated with the promoted purchase
+  final PurchaserInfo purchaserInfo;
+
+  /// Constructs a PromotedPurchaseResult with its properties
+  PromotedPurchaseResult({
+        required this.productIdentifier,
+        required this.purchaserInfo,
+  });
 }

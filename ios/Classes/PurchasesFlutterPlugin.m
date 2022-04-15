@@ -9,11 +9,13 @@
 
 @property (nonatomic, retain) FlutterMethodChannel *channel;
 @property (nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
+@property (nonatomic, retain) NSMutableArray<RCDeferredPromotionalPurchaseBlock> *startPurchaseBlocks;
 
 @end
 
 
-NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
+NSString *PurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
+NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPromotedProductPurchase";
 
 
 @implementation PurchasesFlutterPlugin
@@ -170,6 +172,10 @@ NSString *RNPurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdate
         [self paymentDiscountForProductIdentifier:productIdentifier
                                discountIdentifier:discountIdentifier
                                            result:result];
+    } else if ([@"startPromotedProductPurchase" isEqualToString:call.method]) {
+        NSNumber *callbackID = arguments[@"callbackID"];
+        [self startPromotedProductPurchase:callbackID
+                                    result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else {
@@ -471,6 +477,14 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                }];
 }
 
+- (void)startPromotedProductPurchase:(NSNumber *)callbackID
+                              result:(FlutterResult)result {
+    RCDeferredPromotionalPurchaseBlock makePurchaseBlock =
+        [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
+    [RCCommonFunctionality makeDeferredPurchase:makePurchaseBlock
+                                completionBlock:[self getResponseCompletionBlock:result]];
+}
+
 - (void)closeWithResult:(FlutterResult)result {
     result(nil);
 }
@@ -479,8 +493,23 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark Delegate Methods
 
 - (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo {
-    [self.channel invokeMethod:RNPurchasesPurchaserInfoUpdatedEvent
+    [self.channel invokeMethod:PurchasesPurchaserInfoUpdatedEvent
                      arguments:purchaserInfo.dictionary];
+}
+
+- (void)         purchases:(RCPurchases *)purchases
+shouldPurchasePromoProduct:(SKProduct *)product
+            defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
+    if (!self.startPurchaseBlocks) {
+        self.startPurchaseBlocks = [NSMutableArray array];
+    }
+
+    [self.startPurchaseBlocks addObject:makeDeferredPurchase];
+    NSInteger position = [self.startPurchaseBlocks count] - 1;
+    [self.channel invokeMethod:PurchasesReadyForPromotedProductPurchaseEvent
+                     arguments:@{@"callbackID": @(position),
+                                 @"productID": product.productIdentifier
+                               }];
 }
 
 #pragma mark -
