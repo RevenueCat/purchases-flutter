@@ -36,7 +36,7 @@ class _MyAppState extends State<InitialScreen> {
     final purchaserInfo = await Purchases.getPurchaserInfo();
 
     Purchases.addReadyForPromotedProductPurchaseListener(
-            (productID, startPurchase) async {
+        (productID, startPurchase) async {
       print('Received readyForPromotedProductPurchase event for '
           'productID: $productID');
 
