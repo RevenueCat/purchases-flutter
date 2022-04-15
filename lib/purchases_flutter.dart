@@ -58,7 +58,7 @@ class Purchases {
             final callbackID = args['callbackID'];
             final productIdentifier = args['productID'];
             listener(productIdentifier,
-                () => _startPromotedProductPurchase(callbackID));
+                () => _startPromotedProductPurchase(callbackID),);
           }
           break;
       }
