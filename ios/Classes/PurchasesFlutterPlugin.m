@@ -45,6 +45,7 @@ NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated"
         [self setupPurchases:apiKey
                    appUserID:appUserID
                 observerMode:observerMode
+                   useAmazon:YES
        userDefaultsSuiteName:userDefaultsSuiteName
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
@@ -188,6 +189,7 @@ NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated"
 - (void)setupPurchases:(NSString *)apiKey
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
+             useAmazon:(BOOL)useAmazon
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
@@ -196,7 +198,7 @@ NSString *RNPurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated"
     if ([userDefaultsSuiteName isKindOfClass:NSNull.class]) {
         userDefaultsSuiteName = nil;
     }
-    
+
     [RCPurchases configureWithAPIKey:apiKey
                            appUserID:appUserID
                         observerMode:observerMode
@@ -513,7 +515,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (NSString *)platformFlavorVersion { 
-    return @"3.9.3";
+    return @"4.0.0-amazon.alpha.4";
 }
 
 @end

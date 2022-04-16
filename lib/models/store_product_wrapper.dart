@@ -34,7 +34,8 @@ class StoreProduct with _$StoreProduct {
         IntroductoryPrice? introductoryPrice,
 
     /// Collection of discount offers for a product. Null for Android.
-    @JsonKey(name: 'discounts', nullable: true) List<StoreProductDiscount>? discounts,
+    @JsonKey(name: 'discounts', nullable: true)
+        List<StoreProductDiscount>? discounts,
   }) = _StoreProduct;
 
   factory StoreProduct.fromJson(Map<String, dynamic> json) =>

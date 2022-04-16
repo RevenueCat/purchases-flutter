@@ -44,12 +44,11 @@ class Purchases {
   /// Set this if you would like the RevenueCat SDK to store its preferences in a different
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
-  static Future<void> setup(
-    String apiKey, {
-    String? appUserId,
-    bool observerMode = false,
-    String? userDefaultsSuiteName,
-  }) =>
+  static Future<void> setup(String apiKey,
+          {String? appUserId,
+          bool observerMode = false,
+          String? userDefaultsSuiteName,
+          bool useAmazon = false}) =>
       _channel.invokeMethod(
         'setupPurchases',
         {
@@ -57,6 +56,7 @@ class Purchases {
           'appUserId': appUserId,
           'observerMode': observerMode,
           'userDefaultsSuiteName': userDefaultsSuiteName,
+          'useAmazon': useAmazon
         },
       );
 
@@ -190,8 +190,7 @@ class Purchases {
     PurchaseType type = PurchaseType.subs,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final customerInfo =
-        await _invokeReturningCustomerInfo('purchaseProduct', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
@@ -215,8 +214,7 @@ class Purchases {
     UpgradeInfo? upgradeInfo,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final customerInfo =
-        await _invokeReturningCustomerInfo('purchasePackage', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
@@ -226,13 +224,11 @@ class Purchases {
   }
 
   static Future<PromotionalOffer> getPromotionalOffer(
-      StoreProductDiscount productDiscount,
-        StoreProduct product,
-      ) async {
-    final result = await _channel.invokeMethod('getPromotionalOffer', {
-      'productDiscount': productDiscount,
-      'product': product
-    });
+    StoreProductDiscount productDiscount,
+    StoreProduct product,
+  ) async {
+    final result = await _channel.invokeMethod('getPromotionalOffer',
+        {'productDiscount': productDiscount, 'product': product});
     return result['promo'];
   }
 
@@ -252,8 +248,7 @@ class Purchases {
     StoreProduct storeProduct,
     PaymentDiscount discount,
   ) async {
-    final customerInfo =
-        await _invokeReturningCustomerInfo('purchaseProduct', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': storeProduct.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
@@ -276,8 +271,7 @@ class Purchases {
     Package packageToPurchase,
     PaymentDiscount discount,
   ) async {
-    final customerInfo =
-        await _invokeReturningCustomerInfo('purchasePackage', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
@@ -595,7 +589,8 @@ class Purchases {
   }
 
   // TODO
-  static Future<RefundRequestStatus> beginRefundRequestForActiveEntitlement() async {
+  static Future<RefundRequestStatus>
+      beginRefundRequestForActiveEntitlement() async {
     final response = await _channel.invokeMethod(
       'beginRefundRequestForActiveEntitlement',
     );
@@ -605,10 +600,11 @@ class Purchases {
 
   // TODO
   static Future<RefundRequestStatus> beginRefundRequestForProduct(
-      String productID,) async {
+    String productID,
+  ) async {
     final response = await _channel.invokeMethod(
       'beginRefundRequestForProduct',
-        {'productIdentifier': productID},
+      {'productIdentifier': productID},
     );
     final int intStatus = response['status'];
     return RefundRequestStatusExtension.from(intStatus);
@@ -616,7 +612,8 @@ class Purchases {
 
   // TODO
   static Future<RefundRequestStatus> beginRefundRequestForEntitlement(
-      String entitlementID,) async {
+    String entitlementID,
+  ) async {
     final response = await _channel.invokeMethod(
       'beginRefundRequestForEntitlement',
       {'entitlementIdentifier': entitlementID},

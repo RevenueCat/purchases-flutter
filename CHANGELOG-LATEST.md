@@ -1,3 +1,4 @@
-## 3.9.3
+## 4.0.0-amazon.alpha.4
 
-- Fix missing IntroductoryPrice export (https://github.com/RevenueCat/purchases-flutter/pull/310)
+- Fixes a crash when running on iOS
+  https://github.com/RevenueCat/purchases-flutter/pull/337

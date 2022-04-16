@@ -49,7 +49,8 @@ void main() {
             'apiKey': 'api_key',
             'appUserId': 'cesar',
             'observerMode': true,
-            'userDefaultsSuiteName': null
+            'userDefaultsSuiteName': null,
+            'useAmazon': false
           },
         )
       ],
@@ -191,15 +192,16 @@ void main() {
   test('showManageSubscriptions calls successfully', () async {
     await Purchases.showManageSubscriptions();
 
-    expect(log, <Matcher>[
-      isMethodCall('showManageSubscriptions', arguments: null)
-    ]);
+    expect(log,
+        <Matcher>[isMethodCall('showManageSubscriptions', arguments: null)]);
   });
 
   test('beginRefundRequestForActiveEntitlement calls successfully', () async {
     response = {'status': RefundRequestStatus.success.index};
-    final receivedStatus = await Purchases.beginRefundRequestForActiveEntitlement();
-    expect(receivedStatus, RefundRequestStatusExtension.from(response['status']));
+    final receivedStatus =
+        await Purchases.beginRefundRequestForActiveEntitlement();
+    expect(
+        receivedStatus, RefundRequestStatusExtension.from(response['status']));
 
     expect(log, <Matcher>[
       isMethodCall('beginRefundRequestForActiveEntitlement', arguments: null)
@@ -209,12 +211,16 @@ void main() {
   test('beginRefundRequestForProduct calls successfully', () async {
     const productID = 'asdf';
     response = {'status': RefundRequestStatus.success.index};
-    final receivedStatus = await Purchases.beginRefundRequestForProduct(productID);
+    final receivedStatus =
+        await Purchases.beginRefundRequestForProduct(productID);
 
-    expect(receivedStatus, RefundRequestStatusExtension.from(response['status']));
+    expect(
+        receivedStatus, RefundRequestStatusExtension.from(response['status']));
     expect(log, <Matcher>[
-      isMethodCall('beginRefundRequestForProduct',
-          arguments: {'productIdentifier': productID},)
+      isMethodCall(
+        'beginRefundRequestForProduct',
+        arguments: {'productIdentifier': productID},
+      )
     ]);
   });
 
@@ -222,12 +228,15 @@ void main() {
     const entitlementID = 'asdf';
     response = {'status': RefundRequestStatus.success.index};
     final receivedStatus =
-      await Purchases.beginRefundRequestForEntitlement(entitlementID);
+        await Purchases.beginRefundRequestForEntitlement(entitlementID);
 
-    expect(receivedStatus, RefundRequestStatusExtension.from(response['status']));
+    expect(
+        receivedStatus, RefundRequestStatusExtension.from(response['status']));
     expect(log, <Matcher>[
-      isMethodCall('beginRefundRequestForEntitlement',
-          arguments: {'entitlementIdentifier': entitlementID},)
+      isMethodCall(
+        'beginRefundRequestForEntitlement',
+        arguments: {'entitlementIdentifier': entitlementID},
+      )
     ]);
   });
 
@@ -260,7 +269,10 @@ void main() {
     expect(PurchasesErrorCode.emptySubscriberAttributes.index, 25);
     expect(PurchasesErrorCode.productDiscountMissingIdentifierError.index, 26);
     expect(PurchasesErrorCode.missingAppUserIDForAliasCreationError.index, 27);
-    expect(PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError.index, 28);
+    expect(
+        PurchasesErrorCode
+            .productDiscountMissingSubscriptionGroupIdentifierError.index,
+        28);
     expect(PurchasesErrorCode.customerInfoError.index, 29);
     expect(PurchasesErrorCode.systemInfoError.index, 30);
     expect(PurchasesErrorCode.beginRefundRequestError.index, 31);
@@ -405,7 +417,6 @@ void main() {
       PurchasesErrorCode.beginRefundRequestError,
     );
 
-
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '32')),
       PurchasesErrorCode.productRequestTimedOut,
@@ -420,7 +431,6 @@ void main() {
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '100')),
       PurchasesErrorCode.unknownError,
     );
-
   });
 
   test('purchasePackage calls successfully', () async {
@@ -551,5 +561,25 @@ void main() {
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
+  });
+
+  test('setupPurchases with amazon', () async {
+    await Purchases.setup('api_key',
+        appUserId: 'cesar', observerMode: true, useAmazon: true);
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
   });
 }

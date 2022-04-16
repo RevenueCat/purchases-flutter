@@ -44,7 +44,7 @@ class AppContainerState extends State<AppContainer> {
 
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
       (customerInfo.entitlements.all[entitlementID] != null &&
-          customerInfo.entitlements.all[entitlementID].isActive)
+              customerInfo.entitlements.all[entitlementID].isActive)
           ? appData.entitlementIsActive = true
           : appData.entitlementIsActive = false;
 
