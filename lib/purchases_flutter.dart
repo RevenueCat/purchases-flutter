@@ -31,8 +31,8 @@ typedef PurchaserInfoUpdateListener = void Function(
 /// ### Related Articles:
 /// - [Apple Documentation](https://rev.cat/testing-promoted-in-app-purchases)
 typedef ReadyForPromotedProductPurchaseListener = void Function(
-    String productIdentifier,
-    Future<PromotedPurchaseResult> Function() startPurchase,
+  String productIdentifier,
+  Future<PromotedPurchaseResult> Function() startPurchase,
 );
 
 /// Entry point for Purchases.
@@ -40,8 +40,8 @@ class Purchases {
   static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
       {};
 
-  static final Set<ReadyForPromotedProductPurchaseListener> _readyForPromotedProductPurchaseListeners =
-      {};
+  static final Set<ReadyForPromotedProductPurchaseListener>
+      _readyForPromotedProductPurchaseListeners = {};
 
   static final _channel = const MethodChannel('purchases_flutter')
     ..setMethodCallHandler((call) async {
@@ -57,7 +57,8 @@ class Purchases {
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
             final productIdentifier = args['productID'];
-            listener(productIdentifier, () => _startPromotedProductPurchase(callbackID));
+            listener(productIdentifier,
+                () => _startPromotedProductPurchase(callbackID),);
           }
           break;
       }
@@ -146,8 +147,8 @@ class Purchases {
   ///
   /// [listener] ReadyForPromotedProductPurchaseListener to be added
   static void addReadyForPromotedProductPurchaseListener(
-      ReadyForPromotedProductPurchaseListener listener,
-      ) {
+    ReadyForPromotedProductPurchaseListener listener,
+  ) {
     _readyForPromotedProductPurchaseListeners.add(listener);
   }
 
@@ -156,8 +157,8 @@ class Purchases {
   ///
   /// [listener] ReadyForPromotedProductPurchaseListener to be removed
   static void removeReadyForPromotedProductPurchaseListener(
-      ReadyForPromotedProductPurchaseListener listenerToRemove,
-      ) =>
+    ReadyForPromotedProductPurchaseListener listenerToRemove,
+  ) =>
       _readyForPromotedProductPurchaseListeners.remove(listenerToRemove);
 
   /// Deprecated in favor of set<NetworkId> functions.
@@ -690,7 +691,8 @@ class Purchases {
   /// `callbackID` index in PurchasesFlutterPlugin.m's `startPurchaseBlocks`
   /// array.
   static Future<PromotedPurchaseResult> _startPromotedProductPurchase(
-      int callbackID,) async {
+    int callbackID,
+  ) async {
     final result = await _channel.invokeMethod(
       'startPromotedProductPurchase',
       {
@@ -874,7 +876,7 @@ class PromotedPurchaseResult {
 
   /// Constructs a PromotedPurchaseResult with its properties
   PromotedPurchaseResult({
-        required this.productIdentifier,
-        required this.purchaserInfo,
+    required this.productIdentifier,
+    required this.purchaserInfo,
   });
 }
