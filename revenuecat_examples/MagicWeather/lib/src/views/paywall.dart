@@ -51,10 +51,10 @@ class _PaywallState extends State<Paywall> {
                   child: ListTile(
                       onTap: () async {
                         try {
-                          PurchaserInfo purchaserInfo =
+                          CustomerInfo customerInfo =
                               await Purchases.purchasePackage(
                                   myProductList[index]);
-                          appData.entitlementIsActive = purchaserInfo
+                          appData.entitlementIsActive = customerInfo
                               .entitlements.all[entitlementID].isActive;
                         } catch (e) {
                           print(e);

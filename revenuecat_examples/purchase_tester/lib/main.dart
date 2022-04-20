@@ -20,7 +20,7 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _MyAppState extends State<InitialScreen> {
-  PurchaserInfo _purchaserInfo;
+  CustomerInfo _customerInfo;
 
   @override
   void initState() {
@@ -33,7 +33,7 @@ class _MyAppState extends State<InitialScreen> {
     await Purchases.setDebugLogsEnabled(true);
     await Purchases.setup('api_key');
 
-    final purchaserInfo = await Purchases.getPurchaserInfo();
+    final customerInfo = await Purchases.getCustomerInfo();
 
     Purchases.addReadyForPromotedProductPurchaseListener(
         (productID, startPurchase) async {
@@ -44,8 +44,8 @@ class _MyAppState extends State<InitialScreen> {
         final purchaseResult = await startPurchase.call();
         print('Promoted purchase for productID '
             '${purchaseResult.productIdentifier} completed, or product was'
-            'already purchased. purchaserInfo returned is:'
-            ' ${purchaseResult.purchaserInfo}');
+            'already purchased. customerInfo returned is:'
+            ' ${purchaseResult.customerInfo}');
       } on PlatformException catch (e) {
         print('Error purchasing promoted product: ${e.message}');
       }
@@ -57,13 +57,13 @@ class _MyAppState extends State<InitialScreen> {
     if (!mounted) return;
 
     setState(() {
-      _purchaserInfo = purchaserInfo;
+      _customerInfo = customerInfo;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_purchaserInfo == null) {
+    if (_customerInfo == null) {
       return Scaffold(
         appBar: AppBar(title: const Text('RevenueCat Sample App')),
         body: const Center(
@@ -71,7 +71,7 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      final isPro = _purchaserInfo.entitlements.active.containsKey('pro_cat');
+      final isPro = _customerInfo.entitlements.active.containsKey('pro_cat');
       if (isPro) {
         return const CatsScreen();
       } else {
@@ -192,8 +192,8 @@ class _PurchaseButton extends StatelessWidget {
   Widget build(BuildContext context) => ElevatedButton(
         onPressed: () async {
           try {
-            final purchaserInfo = await Purchases.purchasePackage(package);
-            final isPro = purchaserInfo.entitlements.all['pro_cat'].isActive;
+            final customerInfo = await Purchases.purchasePackage(package);
+            final isPro = customerInfo.entitlements.all['pro_cat'].isActive;
             if (isPro) {
               return const CatsScreen();
             }

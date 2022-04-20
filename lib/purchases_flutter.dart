@@ -8,9 +8,9 @@ import 'object_wrappers.dart';
 export 'object_wrappers.dart';
 
 /// Used to handle async updates from [Purchases].
-/// Should be implemented to receive updates when the [PurchaserInfo] changes.
-typedef PurchaserInfoUpdateListener = void Function(
-  PurchaserInfo purchaserInfo,
+/// Should be implemented to receive updates when the [CustomerInfo] changes.
+typedef CustomerInfoUpdateListener = void Function(
+  CustomerInfo customerInfo,
 );
 
 /// iOS Only
@@ -37,7 +37,7 @@ typedef ReadyForPromotedProductPurchaseListener = void Function(
 
 /// Entry point for Purchases.
 class Purchases {
-  static final Set<PurchaserInfoUpdateListener> _purchaserInfoUpdateListeners =
+  static final Set<CustomerInfoUpdateListener> _customerInfoUpdateListeners =
       {};
 
   static final Set<ReadyForPromotedProductPurchaseListener>
@@ -46,10 +46,10 @@ class Purchases {
   static final _channel = const MethodChannel('purchases_flutter')
     ..setMethodCallHandler((call) async {
       switch (call.method) {
-        case 'Purchases-PurchaserInfoUpdated':
-          for (final listener in _purchaserInfoUpdateListeners) {
+        case 'Purchases-CustomerInfoUpdated':
+          for (final listener in _customerInfoUpdateListeners) {
             final args = Map<String, dynamic>.from(call.arguments);
-            listener(PurchaserInfo.fromJson(args));
+            listener(CustomerInfo.fromJson(args));
           }
           break;
         case 'Purchases-ReadyForPromotedProductPurchase':
@@ -122,24 +122,24 @@ class Purchases {
         },
       );
 
-  /// Sets a function to be called on updated purchaser info.
+  /// Sets a function to be called on updated customer info.
   ///
-  /// The function is called right away with the latest purchaser info as soon
+  /// The function is called right away with the latest customer info as soon
   /// as it's set.
   ///
-  /// [purchaserInfoUpdateListener] PurchaserInfo update listener.
-  static void addPurchaserInfoUpdateListener(
-    PurchaserInfoUpdateListener purchaserInfoUpdateListener,
+  /// [customerInfoUpdateListener] CustomerInfo update listener.
+  static void addCustomerInfoUpdateListener(
+    CustomerInfoUpdateListener customerInfoUpdateListener,
   ) =>
-      _purchaserInfoUpdateListeners.add(purchaserInfoUpdateListener);
+      _customerInfoUpdateListeners.add(customerInfoUpdateListener);
 
-  /// Removes a given PurchaserInfoUpdateListener
+  /// Removes a given CustomerInfoUpdateListener
   ///
-  /// [listenerToRemove] PurchaserInfoListener reference of the listener to remove.
-  static void removePurchaserInfoUpdateListener(
-    PurchaserInfoUpdateListener listenerToRemove,
+  /// [listenerToRemove] CustomerInfoUpdateListener reference of the listener to remove.
+  static void removeCustomerInfoUpdateListener(
+    CustomerInfoUpdateListener listenerToRemove,
   ) =>
-      _purchaserInfoUpdateListeners.remove(listenerToRemove);
+      _customerInfoUpdateListeners.remove(listenerToRemove);
 
   /// iOS only
   /// Sets a listener to be called when a user initiates a promoted in-app
@@ -223,7 +223,7 @@ class Purchases {
         .toList();
   }
 
-  /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
+  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if `PurchasesErrorHelper.getErrorCode(e)` is
   /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
@@ -238,23 +238,22 @@ class Purchases {
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  static Future<PurchaserInfo> purchaseProduct(
+  static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
     UpgradeInfo? upgradeInfo,
     PurchaseType type = PurchaseType.subs,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final purchaserInfo =
-        await _invokeReturningPurchaserInfo('purchaseProduct', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
       'type': describeEnum(type)
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
-  /// Makes a purchase. Returns a [PurchaserInfo] object. Throws a
+  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if `PurchasesErrorHelper.getErrorCode(e)` is
   /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
@@ -264,24 +263,23 @@ class Purchases {
   ///
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
-  static Future<PurchaserInfo> purchasePackage(
+  static Future<CustomerInfo> purchasePackage(
     Package packageToPurchase, {
     UpgradeInfo? upgradeInfo,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final purchaserInfo =
-        await _invokeReturningPurchaserInfo('purchasePackage', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
   /// iOS only. Purchase a product applying a given discount.
   ///
-  /// Returns a [PurchaserInfo] object. Throws a
+  /// Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if `PurchasesErrorHelper.getErrorCode(e)` is
   /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
@@ -291,21 +289,20 @@ class Purchases {
   ///
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
-  static Future<PurchaserInfo> purchaseDiscountedProduct(
+  static Future<CustomerInfo> purchaseDiscountedProduct(
     Product product,
     PaymentDiscount discount,
   ) async {
-    final purchaserInfo =
-        await _invokeReturningPurchaserInfo('purchaseProduct', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
   /// iOS only. Purchase a package applying a given discount.
   ///
-  /// Returns a [PurchaserInfo] object. Throws a
+  /// Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if `PurchasesErrorHelper.getErrorCode(e)` is
   /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
@@ -315,27 +312,26 @@ class Purchases {
   ///
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
-  static Future<PurchaserInfo> purchaseDiscountedPackage(
+  static Future<CustomerInfo> purchaseDiscountedPackage(
     Package packageToPurchase,
     PaymentDiscount discount,
   ) async {
-    final purchaserInfo =
-        await _invokeReturningPurchaserInfo('purchasePackage', {
+    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'signedDiscountTimestamp': discount.timestamp.toString()
     });
-    return purchaserInfo;
+    return customerInfo;
   }
 
   /// Restores a user's previous purchases and links their appUserIDs to any
   /// user's also using those purchases.
   ///
-  /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
+  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
-  static Future<PurchaserInfo> restoreTransactions() async {
+  static Future<CustomerInfo> restoreTransactions() async {
     final result = await _channel.invokeMethod('restoreTransactions');
-    return PurchaserInfo.fromJson(Map<String, dynamic>.from(result));
+    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// Gets the current appUserID.
@@ -351,10 +347,10 @@ class Purchases {
   /// [newAppUserID] The new appUserID that should be linked to the currently
   /// identified appUserID.
   @Deprecated('Use logIn instead.')
-  static Future<PurchaserInfo> createAlias(String newAppUserID) async {
+  static Future<CustomerInfo> createAlias(String newAppUserID) async {
     final result = await _channel
         .invokeMethod('createAlias', {'newAppUserID': newAppUserID});
-    return PurchaserInfo.fromJson(Map<String, dynamic>.from(result));
+    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// This function will logIn the current user with an appUserID.
@@ -362,19 +358,19 @@ class Purchases {
   /// calling configure
   ///
   /// Returns a [LogInResult] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions. LogInResult holds a PurchaserInfo object
+  /// was a problem restoring transactions. LogInResult holds a [CustomerInfo] object
   /// and a bool that can be used to know if a user has just been created for the first time.
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
   static Future<LogInResult> logIn(String appUserID) async {
     final result =
         await _channel.invokeMethod('logIn', {'appUserID': appUserID});
-    final purchaserInfo = PurchaserInfo.fromJson(
-      Map<String, dynamic>.from(result['purchaserInfo']),
+    final customerInfo = CustomerInfo.fromJson(
+      Map<String, dynamic>.from(result['customerInfo']),
     );
     final bool created = result['created'];
 
-    return LogInResult(purchaserInfo: purchaserInfo, created: created);
+    return LogInResult(customerInfo: customerInfo, created: created);
   }
 
   /// Deprecated in favor of logIn.
@@ -382,38 +378,38 @@ class Purchases {
   /// Typically this would be used after a logout to identify a new user without
   /// calling configure
   ///
-  /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
+  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
   ///
   /// [newAppUserID] The appUserID that should be linked to the currently user
   @Deprecated('Use logIn instead.')
-  static Future<PurchaserInfo> identify(String appUserID) async {
+  static Future<CustomerInfo> identify(String appUserID) async {
     final result =
         await _channel.invokeMethod('identify', {'appUserID': appUserID});
-    return PurchaserInfo.fromJson(Map<String, dynamic>.from(result));
+    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// Logs out the  Purchases client, clearing the saved appUserID. This will
   /// generate a random user id and save it in the cache.
   ///
-  /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
+  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions or if the method is called while the
   /// current user is anonymous.
-  static Future<PurchaserInfo> logOut() async {
+  static Future<CustomerInfo> logOut() async {
     final result = await _channel.invokeMethod('logOut');
-    return PurchaserInfo.fromJson(Map<String, dynamic>.from(result));
+    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// Deprecated in favor of logOut.
   /// Resets the Purchases client clearing the saved appUserID. This will
   /// generate a random user id and save it in the cache.
   ///
-  /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
+  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
   @Deprecated('Use logOut instead.')
-  static Future<PurchaserInfo> reset() async {
+  static Future<CustomerInfo> reset() async {
     final result = await _channel.invokeMethod('reset');
-    return PurchaserInfo.fromJson(Map<String, dynamic>.from(result));
+    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// Enables/Disables debugs logs
@@ -433,10 +429,10 @@ class Purchases {
   static Future<void> setProxyURL(String url) =>
       _channel.invokeMethod('setProxyURLString', {'proxyURLString': url});
 
-  /// Gets current purchaser info, which will normally be cached.
-  static Future<PurchaserInfo> getPurchaserInfo() async {
-    final result = await _channel.invokeMethod('getPurchaserInfo');
-    return PurchaserInfo.fromJson(Map<String, dynamic>.from(result));
+  /// Gets current customer info, which will normally be cached.
+  static Future<CustomerInfo> getCustomerInfo() async {
+    final result = await _channel.invokeMethod('getCustomerInfo');
+    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   ///  This method will send all the purchases to the RevenueCat backend.
@@ -499,7 +495,7 @@ class Purchases {
     );
   }
 
-  /// Invalidates the cache for purchaser information.
+  /// Invalidates the cache for customer information.
   ///
   /// Most apps will not need to use this method; invalidating the cache can leave your app in an invalid state.
   /// Refer to https://docs.revenuecat.com/docs/purchaserinfo#section-get-user-information for more information on
@@ -507,8 +503,8 @@ class Purchases {
   ///
   /// This is useful for cases where purchaser information might have been updated outside of the app, like if a
   /// promotional subscription is granted through the RevenueCat dashboard.
-  static Future<void> invalidatePurchaserInfoCache() =>
-      _channel.invokeMethod('invalidatePurchaserInfoCache');
+  static Future<void> invalidateCustomerInfoCache() =>
+      _channel.invokeMethod('invalidateCustomerInfoCache');
 
   /// iOS only. Presents a code redemption sheet, useful for redeeming offer codes
   /// Refer to https://docs.revenuecat.com/docs/ios-subscription-offers#offer-codes for more information on how
@@ -699,31 +695,31 @@ class Purchases {
         'callbackID': callbackID,
       },
     );
-    final purchaserInfo = PurchaserInfo.fromJson(
-      Map<String, dynamic>.from(result['purchaserInfo']),
+    final customerInfo = CustomerInfo.fromJson(
+      Map<String, dynamic>.from(result['customerInfo']),
     );
     final productIdentifier = result['productIdentifier'];
     return PromotedPurchaseResult(
       productIdentifier: productIdentifier,
-      purchaserInfo: purchaserInfo,
+      customerInfo: customerInfo,
     );
   }
 
-  static Future<PurchaserInfo> _invokeReturningPurchaserInfo(String method,
+  static Future<CustomerInfo> _invokeReturningCustomerInfo(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
     final response = await _invokeReturningMap(
       method,
       arguments,
     );
-    final purchaserInfoJson = _getPurchaserInfoJsonFromMap(response);
-    return PurchaserInfo.fromJson(purchaserInfoJson);
+    final customerInfoJson = _getCustomerInfoJsonFromMap(response);
+    return CustomerInfo.fromJson(customerInfoJson);
   }
 
-  static Map<String, dynamic> _getPurchaserInfoJsonFromMap(
+  static Map<String, dynamic> _getCustomerInfoJsonFromMap(
     Map<String, dynamic> response,
   ) =>
-      Map<String, dynamic>.from(response['purchaserInfo']);
+      Map<String, dynamic>.from(response['customerInfo']);
 
   static Future<Map<String, dynamic>> _invokeReturningMap(String method,
       // ignore: require_trailing_commas
@@ -847,7 +843,7 @@ class IntroEligibility {
   /// Description of the status
   String description;
 
-  /// Constructs an Transaction from a JSON object
+  /// Constructs an IntroEligibility from a JSON object
   IntroEligibility.fromJson(Map<String, dynamic> map)
       : status = IntroEligibilityStatus.values[map['status']],
         description = map['description'];
@@ -859,11 +855,11 @@ class LogInResult {
   /// RevenueCat backend for the first time
   final bool created;
 
-  /// the purchaserInfo associated to the logged in user
-  final PurchaserInfo purchaserInfo;
+  /// the [CustomerInfo] associated to the logged in user
+  final CustomerInfo customerInfo;
 
   /// Constructs a LogInResult with its properties
-  LogInResult({required this.created, required this.purchaserInfo});
+  LogInResult({required this.created, required this.customerInfo});
 }
 
 /// Class used to hold the result of the startPromotedPurchase method
@@ -871,12 +867,12 @@ class PromotedPurchaseResult {
   /// the productIdentifier associated with the promoted purchase
   final String productIdentifier;
 
-  /// the purchaserInfo associated with the promoted purchase
-  final PurchaserInfo purchaserInfo;
+  /// the customerInfo associated with the promoted purchase
+  final CustomerInfo customerInfo;
 
   /// Constructs a PromotedPurchaseResult with its properties
   PromotedPurchaseResult({
     required this.productIdentifier,
-    required this.purchaserInfo,
+    required this.customerInfo,
   });
 }

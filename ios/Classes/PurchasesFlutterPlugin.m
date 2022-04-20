@@ -14,9 +14,8 @@
 @end
 
 
-NSString *PurchasesPurchaserInfoUpdatedEvent = @"Purchases-PurchaserInfoUpdated";
+NSString *PurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
 NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPromotedProductPurchase";
-
 
 @implementation PurchasesFlutterPlugin
 
@@ -94,8 +93,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self setSimulatesAskToBuyInSandbox:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setProxyURLString" isEqualToString:call.method]) {
         [self setProxyURLString:arguments[@"proxyURLString"] result:result];
-    } else if ([@"getPurchaserInfo" isEqualToString:call.method]) {
-        [self getPurchaserInfoWithResult:result];
+    } else if ([@"getCustomerInfo" isEqualToString:call.method]) {
+        [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
         [self syncPurchasesWithResult:result];
     } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
@@ -106,8 +105,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self isConfiguredWithResult:result];
     } else if ([@"checkTrialOrIntroductoryPriceEligibility" isEqualToString:call.method]) {
         [self checkTrialOrIntroductoryPriceEligibility:arguments[@"productIdentifiers"] result:result];
-    } else if ([@"invalidatePurchaserInfoCache" isEqualToString:call.method]) {
-        [self invalidatePurchaserInfoCacheWithResult:result];
+    } else if ([@"invalidateCustomerInfoCache" isEqualToString:call.method]) {
+        [self invalidateCustomerInfoCacheWithResult:result];
     } else if ([@"presentCodeRedemptionSheet" isEqualToString:call.method]) {
         [self presentCodeRedemptionSheetWithResult:result];
     } else if ([@"setAttributes" isEqualToString:call.method]) {
@@ -322,8 +321,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
-- (void)getPurchaserInfoWithResult:(FlutterResult)result {
-    [RCCommonFunctionality getPurchaserInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
+- (void)getCustomerInfoWithResult:(FlutterResult)result {
+    [RCCommonFunctionality getCustomerInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
@@ -348,8 +347,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                     }];
 }
 
-- (void)invalidatePurchaserInfoCacheWithResult:(FlutterResult)result {
-    [RCCommonFunctionality invalidatePurchaserInfoCache];
+- (void)invalidateCustomerInfoCacheWithResult:(FlutterResult)result {
+    [RCCommonFunctionality invalidateCustomerInfoCache];
     result(nil);
 }
 
@@ -492,9 +491,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark -
 #pragma mark Delegate Methods
 
-- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedPurchaserInfo:(RCPurchaserInfo *)purchaserInfo {
-    [self.channel invokeMethod:PurchasesPurchaserInfoUpdatedEvent
-                     arguments:purchaserInfo.dictionary];
+- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedCustomerInfo:(RCCustomerInfo *)customerInfo {
+    [self.channel invokeMethod:PurchasesCustomerInfoUpdatedEvent
+                     arguments:customerInfo.dictionary];
 }
 
 - (void)         purchases:(RCPurchases *)purchases

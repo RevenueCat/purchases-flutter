@@ -41,7 +41,7 @@ import kotlin.UninitializedPropertyAccessException;
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
-    private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
+    private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
 
     // Only set registrar for v1 embedder.
     @SuppressWarnings("deprecation")
@@ -198,7 +198,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String proxyURLString = call.argument("proxyURLString");
                 setProxyURLString(proxyURLString, result);
                 break;
-            case "getPurchaserInfo":
+            case "getCustomerInfo":
                 getPurchaserInfo(result);
                 break;
             case "syncPurchases":
@@ -217,7 +217,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 productIdentifiers = call.argument("productIdentifiers");
                 checkTrialOrIntroductoryPriceEligibility(productIdentifiers, result);
                 break;
-            case "invalidatePurchaserInfoCache":
+            case "invalidateCustomerInfoCache":
                 invalidatePurchaserInfoCache(result);
                 break;
             case "presentCodeRedemptionSheet":
@@ -325,12 +325,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setupUpdatedPurchaserInfoListener() {
-        Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
-            @Override
-            public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-                if (channel != null) {
-                    channel.invokeMethod(PURCHASER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
-                }
+        Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(purchaserInfo -> {
+            if (channel != null) {
+                channel.invokeMethod(CUSTOMER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
             }
         });
     }
