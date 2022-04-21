@@ -208,7 +208,7 @@ class Purchases {
   /// [type] If the products are Android INAPPs, this needs to be
   /// PurchaseType.INAPP otherwise the products won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  static Future<List<Product>> getProducts(
+  static Future<List<StoreProduct>> getProducts(
     List<String> productIdentifiers, {
     PurchaseType type = PurchaseType.subs,
   }) async {
@@ -217,8 +217,8 @@ class Purchases {
       'type': describeEnum(type),
     });
     return result
-        .map<Product>(
-          (item) => Product.fromJson(
+        .map<StoreProduct>(
+          (item) => StoreProduct.fromJson(
             Map<String, dynamic>.from(item),
           ),
         )
@@ -287,17 +287,17 @@ class Purchases {
   /// `PurchasesErrorCode.purchaseCancelledError` to check if the user cancelled
   /// the purchase.
   ///
-  /// [product] The product to purchase.
+  /// [storeProduct] The product to purchase.
   ///
   /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
   /// using [getPaymentDiscount].
   static Future<CustomerInfo> purchaseDiscountedProduct(
-    Product product,
-    PaymentDiscount discount,
+    StoreProduct product,
+    PaymentDiscount paymentDiscount,
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
-      'signedDiscountTimestamp': discount.timestamp.toString()
+      'signedDiscountTimestamp': paymentDiscount.timestamp.toString()
     });
     return customerInfo;
   }
@@ -672,8 +672,8 @@ class Purchases {
   ///
   /// [discount] The `Discount` to apply to the product.
   static Future<PaymentDiscount> getPaymentDiscount(
-    Product product,
-    Discount discount,
+    StoreProduct product,
+    StoreProductDiscount discount,
   ) async {
     final result = await _channel.invokeMethod('getPaymentDiscount', {
       'productIdentifier': product.identifier,

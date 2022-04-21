@@ -28,7 +28,7 @@ class _$PackageTearOff {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct product,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier) {
     return _Package(
@@ -58,9 +58,9 @@ mixin _$Package {
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
   PackageType get packageType => throw _privateConstructorUsedError;
 
-  /// Product assigned to this package.
+  /// StoreProduct assigned to this package.
   @JsonKey(name: 'product')
-  Product get product => throw _privateConstructorUsedError;
+  StoreProduct get product => throw _privateConstructorUsedError;
 
   /// Offering this package belongs to.
   @JsonKey(name: 'offeringIdentifier')
@@ -81,11 +81,11 @@ abstract class $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct product,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier});
 
-  $ProductCopyWith<$Res> get product;
+  $StoreProductCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -115,7 +115,7 @@ class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
       product: product == freezed
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as Product,
+              as StoreProduct,
       offeringIdentifier: offeringIdentifier == freezed
           ? _value.offeringIdentifier
           : offeringIdentifier // ignore: cast_nullable_to_non_nullable
@@ -124,8 +124,8 @@ class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
   }
 
   @override
-  $ProductCopyWith<$Res> get product {
-    return $ProductCopyWith<$Res>(_value.product, (value) {
+  $StoreProductCopyWith<$Res> get product {
+    return $StoreProductCopyWith<$Res>(_value.product, (value) {
       return _then(_value.copyWith(product: value));
     });
   }
@@ -142,12 +142,12 @@ abstract class _$PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct product,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier});
 
   @override
-  $ProductCopyWith<$Res> get product;
+  $StoreProductCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -178,7 +178,7 @@ class __$PackageCopyWithImpl<$Res> extends _$PackageCopyWithImpl<$Res>
       product == freezed
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as Product,
+              as StoreProduct,
       offeringIdentifier == freezed
           ? _value.offeringIdentifier
           : offeringIdentifier // ignore: cast_nullable_to_non_nullable
@@ -216,9 +216,9 @@ class _$_Package implements _Package {
   final PackageType packageType;
   @override
 
-  /// Product assigned to this package.
+  /// StoreProduct assigned to this package.
   @JsonKey(name: 'product')
-  final Product product;
+  final StoreProduct product;
   @override
 
   /// Offering this package belongs to.
@@ -270,7 +270,7 @@ abstract class _Package implements Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct product,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier) = _$_Package;
 
@@ -289,9 +289,9 @@ abstract class _Package implements Package {
   PackageType get packageType;
   @override
 
-  /// Product assigned to this package.
+  /// StoreProduct assigned to this package.
   @JsonKey(name: 'product')
-  Product get product;
+  StoreProduct get product;
   @override
 
   /// Offering this package belongs to.

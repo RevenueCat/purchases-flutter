@@ -17,7 +17,8 @@ _$_CustomerInfo _$$_CustomerInfoFromJson(Map json) => _$_CustomerInfo(
           .map((e) => e as String)
           .toList(),
       (json['nonSubscriptionTransactions'] as List<dynamic>)
-          .map((e) => Transaction.fromJson(Map<String, dynamic>.from(e as Map)))
+          .map((e) =>
+              StoreTransaction.fromJson(Map<String, dynamic>.from(e as Map)))
           .toList(),
       json['firstSeen'] as String,
       json['originalAppUserId'] as String,
