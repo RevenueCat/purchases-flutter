@@ -59,7 +59,8 @@ void main() {
             'apiKey': 'api_key',
             'appUserId': 'cesar',
             'observerMode': true,
-            'userDefaultsSuiteName': null
+            'userDefaultsSuiteName': null,
+            'useAmazon': false
           },
         )
       ],
@@ -511,5 +512,44 @@ void main() {
     const introPricePeriodUnitUnknown =
         IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'sadf', 14);
     expect(introPricePeriodUnitUnknown.periodUnit, PeriodUnit.unknown);
+  });
+
+  test('setupPurchases with amazon', () async {
+    await Purchases.setup('api_key',
+        appUserId: 'cesar', observerMode: true, useAmazon: true);
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
+  });
+
+  test('setupPurchases with amazon', () async {
+    await Purchases.setup('api_key', appUserId: 'cesar', observerMode: true, useAmazon: true);
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
   });
 }
