@@ -52,14 +52,6 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
     } else if ([@"setFinishTransactions" isEqualToString:call.method]) {
         [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
-    } else if ([@"addAttributionData" isEqualToString:call.method]) {
-        NSDictionary *data = arguments[@"data"];
-        NSInteger network = [arguments[@"network"] integerValue];
-        NSString *networkUserId = arguments[@"networkUserId"];
-        [self addAttributionData:data
-                     fromNetwork:(RCAttributionNetwork) network
-                forNetworkUserId:networkUserId
-                          result:result];
     } else if ([@"getOfferings" isEqualToString:call.method]) {
         [self getOfferingsWithResult:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
@@ -79,14 +71,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self restorePurchasesWithResult:result];
     } else if ([@"logOut" isEqualToString:call.method]) {
         [self logOutWithResult:result];
-    } else if ([@"reset" isEqualToString:call.method]) {
-        [self resetWithResult:result];
     } else if ([@"logIn" isEqualToString:call.method]) {
         [self logInAppUserID:arguments[@"appUserID"] result:result];
-    } else if ([@"identify" isEqualToString:call.method]) {
-        [self identify:arguments[@"appUserID"] result:result];
-    } else if ([@"createAlias" isEqualToString:call.method]) {
-        [self createAlias:arguments[@"newAppUserID"] result:result];
     } else if ([@"setDebugLogsEnabled" isEqualToString:call.method]) {
         [self setDebugLogsEnabled:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setSimulatesAskToBuyInSandbox" isEqualToString:call.method]) {
@@ -219,17 +205,6 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     result(nil);
 }
 
-- (void)addAttributionData:(NSDictionary *)data
-               fromNetwork:(NSInteger)network
-          forNetworkUserId:(NSString * _Nullable)networkUserId
-                    result:(FlutterResult)result {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [RCCommonFunctionality addAttributionData:data network:network networkUserId:networkUserId];
-    result(nil);
-#pragma GCC diagnostic pop
-}
-
 - (void)getOfferingsWithResult:(FlutterResult)result {
     [RCCommonFunctionality getOfferingsWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
@@ -271,32 +246,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result([RCCommonFunctionality appUserID]);
 }
 
-- (void)createAlias:(NSString * _Nullable)newAppUserID
-             result:(FlutterResult)result {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [RCCommonFunctionality createAlias:newAppUserID completionBlock:[self getResponseCompletionBlock:result]];
-#pragma GCC diagnostic pop
-}
-
 - (void)logInAppUserID:(NSString * _Nullable)appUserID
                 result:(FlutterResult)result {
     [RCCommonFunctionality logInWithAppUserID:appUserID completionBlock:[self getResponseCompletionBlock:result]];
-}
-
-- (void)identify:(NSString * _Nullable)appUserID
-          result:(FlutterResult)result {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [RCCommonFunctionality identify:appUserID completionBlock:[self getResponseCompletionBlock:result]];
-#pragma GCC diagnostic pop
-}
-
-- (void)resetWithResult:(FlutterResult)result {
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-    [RCCommonFunctionality resetWithCompletionBlock:[self getResponseCompletionBlock:result]];
-#pragma GCC diagnostic pop
 }
 
 - (void)logOutWithResult:(FlutterResult)result {
