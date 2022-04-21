@@ -331,8 +331,8 @@ class Purchases {
   ///
   /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
-  static Future<CustomerInfo> restoreTransactions() async {
-    final result = await _channel.invokeMethod('restoreTransactions');
+  static Future<CustomerInfo> restorePurchases() async {
+    final result = await _channel.invokeMethod('restorePurchases');
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
