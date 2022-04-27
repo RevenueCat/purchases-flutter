@@ -57,8 +57,10 @@ class Purchases {
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
             final productIdentifier = args['productID'];
-            listener(productIdentifier,
-                () => _startPromotedProductPurchase(callbackID),);
+            listener(
+              productIdentifier,
+              () => _startPromotedProductPurchase(callbackID),
+            );
           }
           break;
       }
@@ -366,7 +368,8 @@ class Purchases {
     final result =
         await _channel.invokeMethod('logIn', {'appUserID': appUserID});
     final customerInfo = CustomerInfo.fromJson(
-      Map<String, dynamic>.from(result['customerInfo']),
+      // TODO: update dictionary key to customerInfo
+      Map<String, dynamic>.from(result['purchaserInfo']),
     );
     final bool created = result['created'];
 
@@ -696,7 +699,8 @@ class Purchases {
       },
     );
     final customerInfo = CustomerInfo.fromJson(
-      Map<String, dynamic>.from(result['customerInfo']),
+      // TODO: update dictionary key to customerInfo
+      Map<String, dynamic>.from(result['purchaserInfo']),
     );
     final productIdentifier = result['productIdentifier'];
     return PromotedPurchaseResult(
@@ -719,7 +723,8 @@ class Purchases {
   static Map<String, dynamic> _getCustomerInfoJsonFromMap(
     Map<String, dynamic> response,
   ) =>
-      Map<String, dynamic>.from(response['customerInfo']);
+      // TODO: update dictionary key to customerInfo
+      Map<String, dynamic>.from(response['purchaserInfo']);
 
   static Future<Map<String, dynamic>> _invokeReturningMap(String method,
       // ignore: require_trailing_commas

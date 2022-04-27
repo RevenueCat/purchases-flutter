@@ -172,7 +172,7 @@ void main() {
       final mockCreated = randomGenerator.nextBool();
       response = {
         'created': mockCreated,
-        'customerInfo': mockCustomerInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       final logInResult = await Purchases.logIn('appUserID');
       expect(
@@ -337,7 +337,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
@@ -368,7 +368,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
@@ -408,7 +408,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
@@ -433,7 +433,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
