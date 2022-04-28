@@ -27,7 +27,7 @@ class _$PackageTearOff {
           String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
-      @JsonKey(name: 'storeProduct')
+      @JsonKey(name: 'product')
           StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier) {
@@ -59,7 +59,7 @@ mixin _$Package {
   PackageType get packageType => throw _privateConstructorUsedError;
 
   /// StoreProduct assigned to this package.
-  @JsonKey(name: 'storeProduct')
+  @JsonKey(name: 'product')
   StoreProduct get storeProduct => throw _privateConstructorUsedError;
 
   /// Offering this package belongs to.
@@ -80,7 +80,7 @@ abstract class $PackageCopyWith<$Res> {
           String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
-      @JsonKey(name: 'storeProduct')
+      @JsonKey(name: 'product')
           StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier});
@@ -141,7 +141,7 @@ abstract class _$PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
           String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
-      @JsonKey(name: 'storeProduct')
+      @JsonKey(name: 'product')
           StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier});
@@ -195,7 +195,7 @@ class _$_Package implements _Package {
           this.identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           this.packageType,
-      @JsonKey(name: 'storeProduct')
+      @JsonKey(name: 'product')
           this.storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           this.offeringIdentifier);
@@ -217,7 +217,7 @@ class _$_Package implements _Package {
   @override
 
   /// StoreProduct assigned to this package.
-  @JsonKey(name: 'storeProduct')
+  @JsonKey(name: 'product')
   final StoreProduct storeProduct;
   @override
 
@@ -270,7 +270,7 @@ abstract class _Package implements Package {
           String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
-      @JsonKey(name: 'storeProduct')
+      @JsonKey(name: 'product')
           StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier) = _$_Package;
@@ -291,7 +291,7 @@ abstract class _Package implements Package {
   @override
 
   /// StoreProduct assigned to this package.
-  @JsonKey(name: 'storeProduct')
+  @JsonKey(name: 'product')
   StoreProduct get storeProduct;
   @override
 
