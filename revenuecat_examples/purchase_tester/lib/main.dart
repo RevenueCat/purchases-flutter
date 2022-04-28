@@ -121,8 +121,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
         final monthly = offering.monthly;
         final lifetime = offering.lifetime;
 
-        if (monthly.product.introductoryPrice != null) {
-          apiTestIntroductoryPrice(monthly.product.introductoryPrice);
+        if (monthly.storeProduct.introductoryPrice != null) {
+          apiTestIntroductoryPrice(monthly.storeProduct.introductoryPrice);
         }
 
         if (monthly != null && lifetime != null) {
@@ -210,7 +210,7 @@ class _PurchaseButton extends StatelessWidget {
           }
           return const InitialScreen();
         },
-        child: Text('Buy - (${package.product.priceString})'),
+        child: Text('Buy - (${package.storeProduct.priceString})'),
       );
 }
 
