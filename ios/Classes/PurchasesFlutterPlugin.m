@@ -46,7 +46,6 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self setupPurchases:apiKey
                    appUserID:appUserID
                 observerMode:observerMode
-                   useAmazon:NO
        userDefaultsSuiteName:userDefaultsSuiteName
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
@@ -172,7 +171,6 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
 - (void)setupPurchases:(NSString *)apiKey
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
-             useAmazon:(BOOL)useAmazon
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
