@@ -12,7 +12,7 @@ void main() {
   final log = <MethodCall>[];
   dynamic response;
   final randomGenerator = Random(DateTime.now().microsecondsSinceEpoch);
-  final mockPurchaserInfoResponse = {
+  final mockCustomerInfoResponse = {
     'originalAppUserId': 'pepe',
     'entitlements': {'all': {}, 'active': {}},
     'activeSubscriptions': [],
@@ -172,12 +172,12 @@ void main() {
       final mockCreated = randomGenerator.nextBool();
       response = {
         'created': mockCreated,
-        'purchaserInfo': mockPurchaserInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       final logInResult = await Purchases.logIn('appUserID');
       expect(
-        logInResult.purchaserInfo,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        logInResult.customerInfo,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
       expect(logInResult.created, mockCreated);
     } on PlatformException catch (e) {
@@ -187,11 +187,11 @@ void main() {
 
   test('logOut calls successfully', () async {
     try {
-      response = mockPurchaserInfoResponse;
-      final purchaserInfo = await Purchases.logOut();
+      response = mockCustomerInfoResponse;
+      final customerInfo = await Purchases.logOut();
       expect(
-        purchaserInfo,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        customerInfo,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -337,7 +337,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
@@ -357,7 +357,7 @@ void main() {
           await Purchases.purchasePackage(mockPackage);
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -368,7 +368,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
@@ -397,7 +397,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -408,7 +408,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
@@ -422,7 +422,7 @@ void main() {
           await Purchases.purchaseProduct(mockProduct.identifier);
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -433,7 +433,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'purchaserInfo': mockCustomerInfoResponse
       };
       const mockProduct = Product(
         'com.revenuecat.lifetime',
@@ -456,7 +456,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());

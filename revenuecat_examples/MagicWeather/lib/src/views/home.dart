@@ -39,12 +39,12 @@ class AppContainerState extends State<AppContainer> {
 
     appData.appUserID = await Purchases.appUserID;
 
-    Purchases.addPurchaserInfoUpdateListener((purchaserInfo) async {
+    Purchases.addCustomerInfoUpdateListener((customerInfo) async {
       appData.appUserID = await Purchases.appUserID;
 
-      PurchaserInfo purchaserInfo = await Purchases.getPurchaserInfo();
-      (purchaserInfo.entitlements.all[entitlementID] != null &&
-              purchaserInfo.entitlements.all[entitlementID].isActive)
+      CustomerInfo customerInfo = await Purchases.getCustomerInfo();
+      (customerInfo.entitlements.all[entitlementID] != null &&
+              customerInfo.entitlements.all[entitlementID].isActive)
           ? appData.entitlementIsActive = true
           : appData.entitlementIsActive = false;
 
