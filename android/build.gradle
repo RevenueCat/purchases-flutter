@@ -39,6 +39,10 @@ android {
     defaultConfig {
         minSdkVersion 16
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // purchases-hybrid-common has two variants, but this library doesn't have any
+        // Gradle doesn't know which variant of purchases-hybrid-common to use when using
+        // includeBuild and working with a local copy of purchases-hybrid-common
+        missingDimensionStrategy 'dependencyVersions', 'latestDependencies', 'unityIAP'
     }
 
     lintOptions {
