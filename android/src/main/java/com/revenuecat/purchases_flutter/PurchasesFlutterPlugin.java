@@ -169,7 +169,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getAppUserID":
                 getAppUserID(result);
                 break;
-            case "restoreTransactions":
+            case "restorePurchases":
                 restoreTransactions(result);
                 break;
             case "reset":

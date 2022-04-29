@@ -75,8 +75,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
                        result:result];
     } else if ([@"getAppUserID" isEqualToString:call.method]) {
         [self getAppUserIDWithResult:result];
-    } else if ([@"restoreTransactions" isEqualToString:call.method]) {
-        [self restoreTransactionsWithResult:result];
+    } else if ([@"restorePurchases" isEqualToString:call.method]) {
+        [self restorePurchasesWithResult:result];
     } else if ([@"logOut" isEqualToString:call.method]) {
         [self logOutWithResult:result];
     } else if ([@"reset" isEqualToString:call.method]) {
@@ -259,8 +259,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
-- (void)restoreTransactionsWithResult:(FlutterResult)result {
-    [RCCommonFunctionality restoreTransactionsWithCompletionBlock:[self getResponseCompletionBlock:result]];
+- (void)restorePurchasesWithResult:(FlutterResult)result {
+    [RCCommonFunctionality restorePurchasesWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)syncPurchasesWithResult:(FlutterResult)result {
