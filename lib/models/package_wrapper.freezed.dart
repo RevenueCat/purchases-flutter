@@ -28,13 +28,13 @@ class _$PackageTearOff {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier) {
     return _Package(
       identifier,
       packageType,
-      product,
+      storeProduct,
       offeringIdentifier,
     );
   }
@@ -58,9 +58,9 @@ mixin _$Package {
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
   PackageType get packageType => throw _privateConstructorUsedError;
 
-  /// Product assigned to this package.
+  /// StoreProduct assigned to this package.
   @JsonKey(name: 'product')
-  Product get product => throw _privateConstructorUsedError;
+  StoreProduct get storeProduct => throw _privateConstructorUsedError;
 
   /// Offering this package belongs to.
   @JsonKey(name: 'offeringIdentifier')
@@ -81,11 +81,11 @@ abstract class $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier});
 
-  $ProductCopyWith<$Res> get product;
+  $StoreProductCopyWith<$Res> get storeProduct;
 }
 
 /// @nodoc
@@ -100,7 +100,7 @@ class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
   $Res call({
     Object? identifier = freezed,
     Object? packageType = freezed,
-    Object? product = freezed,
+    Object? storeProduct = freezed,
     Object? offeringIdentifier = freezed,
   }) {
     return _then(_value.copyWith(
@@ -112,10 +112,10 @@ class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
           ? _value.packageType
           : packageType // ignore: cast_nullable_to_non_nullable
               as PackageType,
-      product: product == freezed
-          ? _value.product
-          : product // ignore: cast_nullable_to_non_nullable
-              as Product,
+      storeProduct: storeProduct == freezed
+          ? _value.storeProduct
+          : storeProduct // ignore: cast_nullable_to_non_nullable
+              as StoreProduct,
       offeringIdentifier: offeringIdentifier == freezed
           ? _value.offeringIdentifier
           : offeringIdentifier // ignore: cast_nullable_to_non_nullable
@@ -124,9 +124,9 @@ class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
   }
 
   @override
-  $ProductCopyWith<$Res> get product {
-    return $ProductCopyWith<$Res>(_value.product, (value) {
-      return _then(_value.copyWith(product: value));
+  $StoreProductCopyWith<$Res> get storeProduct {
+    return $StoreProductCopyWith<$Res>(_value.storeProduct, (value) {
+      return _then(_value.copyWith(storeProduct: value));
     });
   }
 }
@@ -142,12 +142,12 @@ abstract class _$PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier});
 
   @override
-  $ProductCopyWith<$Res> get product;
+  $StoreProductCopyWith<$Res> get storeProduct;
 }
 
 /// @nodoc
@@ -163,7 +163,7 @@ class __$PackageCopyWithImpl<$Res> extends _$PackageCopyWithImpl<$Res>
   $Res call({
     Object? identifier = freezed,
     Object? packageType = freezed,
-    Object? product = freezed,
+    Object? storeProduct = freezed,
     Object? offeringIdentifier = freezed,
   }) {
     return _then(_Package(
@@ -175,10 +175,10 @@ class __$PackageCopyWithImpl<$Res> extends _$PackageCopyWithImpl<$Res>
           ? _value.packageType
           : packageType // ignore: cast_nullable_to_non_nullable
               as PackageType,
-      product == freezed
-          ? _value.product
-          : product // ignore: cast_nullable_to_non_nullable
-              as Product,
+      storeProduct == freezed
+          ? _value.storeProduct
+          : storeProduct // ignore: cast_nullable_to_non_nullable
+              as StoreProduct,
       offeringIdentifier == freezed
           ? _value.offeringIdentifier
           : offeringIdentifier // ignore: cast_nullable_to_non_nullable
@@ -196,7 +196,7 @@ class _$_Package implements _Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           this.packageType,
       @JsonKey(name: 'product')
-          this.product,
+          this.storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           this.offeringIdentifier);
 
@@ -216,9 +216,9 @@ class _$_Package implements _Package {
   final PackageType packageType;
   @override
 
-  /// Product assigned to this package.
+  /// StoreProduct assigned to this package.
   @JsonKey(name: 'product')
-  final Product product;
+  final StoreProduct storeProduct;
   @override
 
   /// Offering this package belongs to.
@@ -227,7 +227,7 @@ class _$_Package implements _Package {
 
   @override
   String toString() {
-    return 'Package(identifier: $identifier, packageType: $packageType, product: $product, offeringIdentifier: $offeringIdentifier)';
+    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, offeringIdentifier: $offeringIdentifier)';
   }
 
   @override
@@ -239,7 +239,8 @@ class _$_Package implements _Package {
                 .equals(other.identifier, identifier) &&
             const DeepCollectionEquality()
                 .equals(other.packageType, packageType) &&
-            const DeepCollectionEquality().equals(other.product, product) &&
+            const DeepCollectionEquality()
+                .equals(other.storeProduct, storeProduct) &&
             const DeepCollectionEquality()
                 .equals(other.offeringIdentifier, offeringIdentifier));
   }
@@ -249,7 +250,7 @@ class _$_Package implements _Package {
       runtimeType,
       const DeepCollectionEquality().hash(identifier),
       const DeepCollectionEquality().hash(packageType),
-      const DeepCollectionEquality().hash(product),
+      const DeepCollectionEquality().hash(storeProduct),
       const DeepCollectionEquality().hash(offeringIdentifier));
 
   @JsonKey(ignore: true)
@@ -270,7 +271,7 @@ abstract class _Package implements Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          StoreProduct storeProduct,
       @JsonKey(name: 'offeringIdentifier')
           String offeringIdentifier) = _$_Package;
 
@@ -289,9 +290,9 @@ abstract class _Package implements Package {
   PackageType get packageType;
   @override
 
-  /// Product assigned to this package.
+  /// StoreProduct assigned to this package.
   @JsonKey(name: 'product')
-  Product get product;
+  StoreProduct get storeProduct;
   @override
 
   /// Offering this package belongs to.

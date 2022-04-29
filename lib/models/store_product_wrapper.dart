@@ -1,16 +1,16 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'discount.dart';
 import 'introductory_price.dart';
+import 'store_product_discount.dart';
 
-part 'product_wrapper.freezed.dart';
-part 'product_wrapper.g.dart';
+part 'store_product_wrapper.freezed.dart';
+part 'store_product_wrapper.g.dart';
 
 @freezed
 
-/// Contains all the product details associated with a Store product id
-class Product with _$Product {
-  const factory Product(
+/// Contains all the product details associated with a StoreProduct
+class StoreProduct with _$StoreProduct {
+  const factory StoreProduct(
     /// Product Id.
     @JsonKey(name: 'identifier') String identifier,
 
@@ -34,9 +34,10 @@ class Product with _$Product {
         IntroductoryPrice? introductoryPrice,
 
     /// Collection of discount offers for a product. Null for Android.
-    @JsonKey(name: 'discounts', nullable: true) List<Discount>? discounts,
-  }) = _Product;
+    @JsonKey(name: 'discounts', nullable: true)
+        List<StoreProductDiscount>? discounts,
+  }) = _StoreProduct;
 
-  factory Product.fromJson(Map<String, dynamic> json) =>
-      _$ProductFromJson(json);
+  factory StoreProduct.fromJson(Map<String, dynamic> json) =>
+      _$StoreProductFromJson(json);
 }

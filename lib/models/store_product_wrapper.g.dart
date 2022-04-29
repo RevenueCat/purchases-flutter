@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_wrapper.dart';
+part of 'store_product_wrapper.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Product _$$_ProductFromJson(Map json) => _$_Product(
+_$_StoreProduct _$$_StoreProductFromJson(Map json) => _$_StoreProduct(
       json['identifier'] as String,
       json['description'] as String,
       json['title'] as String,
@@ -18,11 +18,12 @@ _$_Product _$$_ProductFromJson(Map json) => _$_Product(
           : IntroductoryPrice.fromJson(
               Map<String, dynamic>.from(json['introPrice'] as Map)),
       discounts: (json['discounts'] as List<dynamic>?)
-          ?.map((e) => Discount.fromJson(Map<String, dynamic>.from(e as Map)))
+          ?.map((e) => StoreProductDiscount.fromJson(
+              Map<String, dynamic>.from(e as Map)))
           .toList(),
     );
 
-Map<String, dynamic> _$$_ProductToJson(_$_Product instance) =>
+Map<String, dynamic> _$$_StoreProductToJson(_$_StoreProduct instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'description': instance.description,
