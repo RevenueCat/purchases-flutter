@@ -203,9 +203,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "invalidateCustomerInfoCache":
                 invalidateCustomerInfoCache(result);
                 break;
+            case "getPromotionalOffer":
             case "presentCodeRedemptionSheet":
-                // NOOP
-                break;
             case "setSimulatesAskToBuyInSandbox":
                 // NOOP
                 break;

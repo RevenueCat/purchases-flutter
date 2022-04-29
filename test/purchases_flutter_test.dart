@@ -385,7 +385,7 @@ void main() {
         mockStoreProduct,
         'main',
       );
-      const mockPaymentDiscount = PaymentDiscount(
+      const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
         'aKeyIdentifier',
         'aNonce',
@@ -444,7 +444,7 @@ void main() {
         '\$199.99',
         'USD',
       );
-      const mockPaymentDiscount = PaymentDiscount(
+      const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
         'aKeyIdentifier',
         'aNonce',

@@ -155,7 +155,7 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     } else if ([@"canMakePayments" isEqualToString:call.method]) {
           NSArray<NSNumber*> *features = arguments[@"features"];
           [self canMakePaymentsWithFeatures:features result:result];
-    } else if ([@"getPaymentDiscount" isEqualToString:call.method]) {
+    } else if ([@"getPromotionalOffer" isEqualToString:call.method]) {
         NSString *productIdentifier = arguments[@"productIdentifier"];
         NSString *discountIdentifier = arguments[@"discountIdentifier"];
         [self promotionalOfferForProductIdentifier:productIdentifier
