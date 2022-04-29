@@ -6,7 +6,6 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.Store;
@@ -17,8 +16,7 @@ import com.revenuecat.purchases.hybridcommon.OnResult;
 import com.revenuecat.purchases.hybridcommon.OnResultAny;
 import com.revenuecat.purchases.hybridcommon.OnResultList;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
-import com.revenuecat.purchases.hybridcommon.mappers.PurchaserInfoMapperKt;
-import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
+import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -316,9 +314,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setupUpdatedPurchaserInfoListener() {
-        Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(purchaserInfo -> {
+        Purchases.getSharedInstance().setUpdatedCustomerInfoListener(purchaserInfo -> {
             if (channel != null) {
-                channel.invokeMethod(CUSTOMER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
+                channel.invokeMethod(CUSTOMER_INFO_UPDATED, CustomerInfoMapperKt.map(purchaserInfo));
             }
         });
     }
@@ -422,7 +420,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void getPurchaserInfo(final Result result) {
-        CommonKt.getPurchaserInfo(getOnResult(result));
+        CommonKt.getCustomerInfo(getOnResult(result));
     }
 
     private void syncPurchases(final Result result) {
@@ -443,7 +441,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void invalidatePurchaserInfoCache(Result result) {
-        CommonKt.invalidatePurchaserInfoCache();
+        CommonKt.invalidateCustomerInfoCache();
         result.success(null);
     }
 
