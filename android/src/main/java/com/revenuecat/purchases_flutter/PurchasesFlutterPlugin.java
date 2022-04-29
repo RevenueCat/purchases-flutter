@@ -303,7 +303,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             }
             CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode,
                     platformInfo, store);
-            setupUpdatedPurchaserInfoListener();
+            setUpdatedCustomerInfoListener();
             result.success(null);
         } else {
             result.error(
@@ -313,7 +313,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    private void setupUpdatedPurchaserInfoListener() {
+    private void setUpdatedCustomerInfoListener() {
         Purchases.getSharedInstance().setUpdatedCustomerInfoListener(purchaserInfo -> {
             if (channel != null) {
                 channel.invokeMethod(CUSTOMER_INFO_UPDATED, CustomerInfoMapperKt.map(purchaserInfo));
