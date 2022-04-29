@@ -355,8 +355,7 @@ class Purchases {
     final result =
         await _channel.invokeMethod('logIn', {'appUserID': appUserID});
     final customerInfo = CustomerInfo.fromJson(
-      // TODO: update dictionary key to customerInfo
-      Map<String, dynamic>.from(result['purchaserInfo']),
+      Map<String, dynamic>.from(result['customerInfo']),
     );
     final bool created = result['created'];
 
@@ -658,8 +657,7 @@ class Purchases {
       },
     );
     final customerInfo = CustomerInfo.fromJson(
-      // TODO: update dictionary key to customerInfo
-      Map<String, dynamic>.from(result['purchaserInfo']),
+      Map<String, dynamic>.from(result['customerInfo']),
     );
     final productIdentifier = result['productIdentifier'];
     return PromotedPurchaseResult(
@@ -682,8 +680,7 @@ class Purchases {
   static Map<String, dynamic> _getCustomerInfoJsonFromMap(
     Map<String, dynamic> response,
   ) =>
-      // TODO: update dictionary key to customerInfo
-      Map<String, dynamic>.from(response['purchaserInfo']);
+      Map<String, dynamic>.from(response['customerInfo']);
 
   static Future<Map<String, dynamic>> _invokeReturningMap(String method,
       // ignore: require_trailing_commas
