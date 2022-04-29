@@ -1,13 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'payment_discount.freezed.dart';
-part 'payment_discount.g.dart';
+part 'promotional_offer.freezed.dart';
+part 'promotional_offer.g.dart';
 
 @freezed
 
 /// The signed discount applied to a payment
-class PaymentDiscount with _$PaymentDiscount {
-  const factory PaymentDiscount(
+class PromotionalOffer with _$PromotionalOffer {
+  const factory PromotionalOffer(
     /// Identifier agreed upon with the App Store for a discount of your choosing.
     @JsonKey(name: 'identifier') String identifier,
 
@@ -23,8 +23,8 @@ class PaymentDiscount with _$PaymentDiscount {
 
     /// Timestamp of when the signature is created.
     @JsonKey(name: 'timestamp') int timestamp,
-  ) = _PaymentDiscount;
+  ) = _PromotionalOffer;
 
-  factory PaymentDiscount.fromJson(Map<String, dynamic> json) =>
-      _$PaymentDiscountFromJson(json);
+  factory PromotionalOffer.fromJson(Map<String, dynamic> json) =>
+      _$PromotionalOfferFromJson(json);
 }

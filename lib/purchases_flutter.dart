@@ -281,7 +281,7 @@ class Purchases {
     return customerInfo;
   }
 
-  /// iOS only. Purchase a product applying a given discount.
+  /// iOS only. Purchase a product applying a given promotional offer.
   ///
   /// Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
@@ -291,20 +291,20 @@ class Purchases {
   ///
   /// [storeProduct] The product to purchase.
   ///
-  /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
-  /// using [getPaymentDiscount].
+  /// [promotionalOffer] Promotional offer that will be applied to the product.
+  /// Retrieve this offer using [getPromotionalOffer].
   static Future<CustomerInfo> purchaseDiscountedProduct(
     StoreProduct product,
-    PaymentDiscount paymentDiscount,
+    PromotionalOffer promotionalOffer,
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
-      'signedDiscountTimestamp': paymentDiscount.timestamp.toString()
+      'signedDiscountTimestamp': promotionalOffer.timestamp.toString()
     });
     return customerInfo;
   }
 
-  /// iOS only. Purchase a package applying a given discount.
+  /// iOS only. Purchase a package applying a given promotional offer.
   ///
   /// Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
@@ -314,11 +314,11 @@ class Purchases {
   ///
   /// [packageToPurchase] The Package you wish to purchase
   ///
-  /// [paymentDiscount] Discount to apply to the product. Retrieve this discount
-  /// using [getPaymentDiscount].
+  /// [promotionalOffer] Promotional offer that will be applied to the product.
+  /// Retrieve this offer using [getPromotionalOffer].
   static Future<CustomerInfo> purchaseDiscountedPackage(
     Package packageToPurchase,
-    PaymentDiscount discount,
+    PromotionalOffer discount,
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
@@ -619,25 +619,26 @@ class Purchases {
     return result;
   }
 
-  /// iOS only. Use this function to retrieve the `PurchasesPaymentDiscount`
-  /// for a given `PurchasesPackage`.
+  /// iOS only.
   ///
-  /// Returns a [PaymentDiscount] object. Pass this object
+  /// Use this function to retrieve the `PromotionalOffer` to apply to a
+  /// product. Returns a [PromotionalOffer] object which should be passed
   /// to [purchaseDiscountedProduct] or [purchaseDiscountedPackage] to complete
-  /// the purchase. A null PaymentDiscount means
+  /// the discounted purchase. A null [PromotionalOffer] means the user is not
+  /// entitled to the discount.
   ///
-  /// [product] The `Product` the user intends to purchase.
+  /// [product] The `StoreProduct` the user intends to purchase.
   ///
-  /// [discount] The `Discount` to apply to the product.
-  static Future<PaymentDiscount> getPaymentDiscount(
+  /// [discount] The `StoreProductDiscount` to apply to the product.
+  static Future<PromotionalOffer> getPromotionalOffer(
     StoreProduct product,
     StoreProductDiscount discount,
   ) async {
-    final result = await _channel.invokeMethod('getPaymentDiscount', {
+    final result = await _channel.invokeMethod('getPromotionalOffer', {
       'productIdentifier': product.identifier,
       'discountIdentifier': discount.identifier
     });
-    return PaymentDiscount.fromJson(Map<String, dynamic>.from(result));
+    return PromotionalOffer.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// Android only. Call close when you are done with this instance of Purchases to disconnect

@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'payment_discount.dart';
+part of 'promotional_offer.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PaymentDiscount _$$_PaymentDiscountFromJson(Map json) => _$_PaymentDiscount(
+_$_PromotionalOffer _$$_PromotionalOfferFromJson(Map json) =>
+    _$_PromotionalOffer(
       json['identifier'] as String,
       json['keyIdentifier'] as String,
       json['nonce'] as String,
@@ -14,7 +15,7 @@ _$_PaymentDiscount _$$_PaymentDiscountFromJson(Map json) => _$_PaymentDiscount(
       json['timestamp'] as int,
     );
 
-Map<String, dynamic> _$$_PaymentDiscountToJson(_$_PaymentDiscount instance) =>
+Map<String, dynamic> _$$_PromotionalOfferToJson(_$_PromotionalOffer instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'keyIdentifier': instance.keyIdentifier,
