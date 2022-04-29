@@ -80,11 +80,13 @@ class Purchases {
   /// Set this if you would like the RevenueCat SDK to store its preferences in a different
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
-  static Future<void> setup(String apiKey,
-          {String? appUserId,
-          bool observerMode = false,
-          String? userDefaultsSuiteName,
-          bool useAmazon = false}) =>
+  static Future<void> setup(
+    String apiKey, {
+    String? appUserId,
+    bool observerMode = false,
+    String? userDefaultsSuiteName,
+    bool useAmazon = false,
+  }) =>
       _channel.invokeMethod(
         'setupPurchases',
         {
@@ -627,8 +629,8 @@ class Purchases {
   /// `callbackID` index in PurchasesFlutterPlugin.m's `startPurchaseBlocks`
   /// array.
   static Future<PromotedPurchaseResult> _startPromotedProductPurchase(
-      int callbackID,
-      ) async {
+    int callbackID,
+  ) async {
     final result = await _channel.invokeMethod(
       'startPromotedProductPurchase',
       {

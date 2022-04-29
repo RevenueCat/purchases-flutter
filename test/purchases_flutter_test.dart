@@ -515,8 +515,12 @@ void main() {
   });
 
   test('setupPurchases with amazon', () async {
-    await Purchases.setup('api_key',
-        appUserId: 'cesar', observerMode: true, useAmazon: true);
+    await Purchases.setup(
+      'api_key',
+      appUserId: 'cesar',
+      observerMode: true,
+      useAmazon: true,
+    );
     expect(
       log,
       <Matcher>[
@@ -535,7 +539,12 @@ void main() {
   });
 
   test('setupPurchases with amazon', () async {
-    await Purchases.setup('api_key', appUserId: 'cesar', observerMode: true, useAmazon: true);
+    await Purchases.setup(
+      'api_key',
+      appUserId: 'cesar',
+      observerMode: true,
+      useAmazon: true,
+    );
     expect(
       log,
       <Matcher>[
