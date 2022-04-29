@@ -164,7 +164,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 getAppUserID(result);
                 break;
             case "restorePurchases":
-                restoreTransactions(result);
+                restorePurchases(result);
                 break;
             case "logIn":
                 String appUserIDToLogIn = call.argument("appUserID");
@@ -397,8 +397,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(CommonKt.getAppUserID());
     }
 
-    private void restoreTransactions(final Result result) {
-        CommonKt.restoreTransactions(getOnResult(result));
+    private void restorePurchases(final Result result) {
+        CommonKt.restorePurchases(getOnResult(result));
     }
 
     private void logOut(final Result result) {
