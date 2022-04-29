@@ -201,7 +201,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 checkTrialOrIntroductoryPriceEligibility(productIdentifiers, result);
                 break;
             case "invalidateCustomerInfoCache":
-                invalidatePurchaserInfoCache(result);
+                invalidateCustomerInfoCache(result);
                 break;
             case "presentCodeRedemptionSheet":
                 // NOOP
@@ -440,7 +440,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(CommonKt.checkTrialOrIntroductoryPriceEligibility(productIDs));
     }
 
-    private void invalidatePurchaserInfoCache(Result result) {
+    private void invalidateCustomerInfoCache(Result result) {
         CommonKt.invalidateCustomerInfoCache();
         result.success(null);
     }
