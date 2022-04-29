@@ -2,17 +2,21 @@
 
 @import StoreKit;
 
-#import <PurchasesHybridCommon/PurchasesHybridCommon.h>
+@import PurchasesHybridCommon;
 
+typedef void (^RCPurchaseCompletedBlock)(RCStoreTransaction * _Nullable,
+                                         RCCustomerInfo * _Nullable,
+                                         NSError * _Nullable,
+                                         BOOL userCancelled);
+typedef void (^RCStartPurchaseBlock)(RCPurchaseCompletedBlock);
 
 @interface PurchasesFlutterPlugin () <RCPurchasesDelegate>
 
 @property (nonatomic, retain) FlutterMethodChannel *channel;
 @property (nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
-@property (nonatomic, retain) NSMutableArray<RCDeferredPromotionalPurchaseBlock> *startPurchaseBlocks;
+@property (nonatomic, retain) NSMutableArray<RCStartPurchaseBlock> *startPurchaseBlocks;
 
 @end
-
 
 NSString *PurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
 NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPromotedProductPurchase";
@@ -185,9 +189,9 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
                         observerMode:observerMode
                userDefaultsSuiteName:userDefaultsSuiteName
                       platformFlavor:self.platformFlavor
-               platformFlavorVersion:self.platformFlavorVersion];
+               platformFlavorVersion:self.platformFlavorVersion
+                   dangerousSettings:nil];
     RCPurchases.sharedPurchases.delegate = self;
-    [RCCommonFunctionality configure];
     result(nil);
 }
 
@@ -417,22 +421,21 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier
                          discountIdentifier:(nullable NSString *)discountIdentifier
                                      result:(FlutterResult)result {
-    [RCCommonFunctionality paymentDiscountForProductIdentifier:productIdentifier
-                                                      discount:discountIdentifier
-                                               completionBlock:^(NSDictionary * _Nullable responseDictionary,
-                                                                 RCErrorContainer * _Nullable error) {
-                                                   if (error) {
-                                                       [self rejectWithResult:result error:error];
-                                                   } else {
-                                                       result(responseDictionary);
-                                                   }
-                                               }];
+    [RCCommonFunctionality promotionalOfferForProductIdentifier:productIdentifier
+                                                       discount:discountIdentifier
+                                                completionBlock:^(NSDictionary *_Nullable responseDictionary,
+                                                        RCErrorContainer *_Nullable error) {
+                                                    if (error) {
+                                                        [self rejectWithResult:result error:error];
+                                                    } else {
+                                                        result(responseDictionary);
+                                                    }
+                                                }];
 }
 
 - (void)startPromotedProductPurchase:(NSNumber *)callbackID
                               result:(FlutterResult)result {
-    RCDeferredPromotionalPurchaseBlock makePurchaseBlock =
-        [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
+    RCStartPurchaseBlock makePurchaseBlock = [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
     [RCCommonFunctionality makeDeferredPurchase:makePurchaseBlock
                                 completionBlock:[self getResponseCompletionBlock:result]];
 }
@@ -449,14 +452,14 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                      arguments:customerInfo.dictionary];
 }
 
-- (void)         purchases:(RCPurchases *)purchases
-shouldPurchasePromoProduct:(SKProduct *)product
-            defermentBlock:(RCDeferredPromotionalPurchaseBlock)makeDeferredPurchase {
+- (void)      purchases:(RCPurchases *)purchases
+readyForPromotedProduct:(RCStoreProduct *)product
+               purchase:(RCStartPurchaseBlock)startPurchase {
     if (!self.startPurchaseBlocks) {
         self.startPurchaseBlocks = [NSMutableArray array];
     }
 
-    [self.startPurchaseBlocks addObject:makeDeferredPurchase];
+    [self.startPurchaseBlocks addObject:startPurchase];
     NSInteger position = [self.startPurchaseBlocks count] - 1;
     [self.channel invokeMethod:PurchasesReadyForPromotedProductPurchaseEvent
                      arguments:@{@"callbackID": @(position),
