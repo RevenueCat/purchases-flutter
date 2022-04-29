@@ -182,7 +182,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 setProxyURLString(proxyURLString, result);
                 break;
             case "getCustomerInfo":
-                getPurchaserInfo(result);
+                getCustomerInfo(result);
                 break;
             case "syncPurchases":
                 syncPurchases(result);
@@ -419,7 +419,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void getPurchaserInfo(final Result result) {
+    private void getCustomerInfo(final Result result) {
         CommonKt.getCustomerInfo(getOnResult(result));
     }
 
