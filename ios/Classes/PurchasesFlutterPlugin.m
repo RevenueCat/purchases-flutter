@@ -158,9 +158,9 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     } else if ([@"getPaymentDiscount" isEqualToString:call.method]) {
         NSString *productIdentifier = arguments[@"productIdentifier"];
         NSString *discountIdentifier = arguments[@"discountIdentifier"];
-        [self paymentDiscountForProductIdentifier:productIdentifier
-                               discountIdentifier:discountIdentifier
-                                           result:result];
+        [self promotionalOfferForProductIdentifier:productIdentifier
+                                discountIdentifier:discountIdentifier
+                                            result:result];
     } else if ([@"startPromotedProductPurchase" isEqualToString:call.method]) {
         NSNumber *callbackID = arguments[@"callbackID"];
         [self startPromotedProductPurchase:callbackID
@@ -418,9 +418,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(@([RCCommonFunctionality canMakePaymentsWithFeatures:features]));
 }
 
-- (void)paymentDiscountForProductIdentifier:(NSString *)productIdentifier
-                         discountIdentifier:(nullable NSString *)discountIdentifier
-                                     result:(FlutterResult)result {
+- (void)promotionalOfferForProductIdentifier:(NSString *)productIdentifier
+                          discountIdentifier:(nullable NSString *)discountIdentifier
+                                      result:(FlutterResult)result {
     [RCCommonFunctionality promotionalOfferForProductIdentifier:productIdentifier
                                                        discount:discountIdentifier
                                                 completionBlock:^(NSDictionary *_Nullable responseDictionary,
