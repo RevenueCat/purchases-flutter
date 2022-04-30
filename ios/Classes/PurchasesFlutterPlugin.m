@@ -167,6 +167,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
                                     result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
+    } else if ([@"showManageSubscriptions" isEqualToString:call.method]) {
+        [self showManageSubscriptions:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -442,6 +444,12 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)closeWithResult:(FlutterResult)result {
     result(nil);
+}
+
+- (void)showManageSubscriptions:(FlutterResult)result {
+    [RCCommonFunctionality showManageSubscriptions:^(RCErrorContainer * _Nullable error) {
+        [self rejectWithResult:result error:error];
+    }];
 }
 
 #pragma mark -

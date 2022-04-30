@@ -206,6 +206,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getPromotionalOffer":
             case "presentCodeRedemptionSheet":
             case "setSimulatesAskToBuyInSandbox":
+            case "showManageSubscriptions":
                 // NOOP
                 break;
             case "setAttributes":
