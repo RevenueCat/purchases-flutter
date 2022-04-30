@@ -207,6 +207,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "presentCodeRedemptionSheet":
             case "setSimulatesAskToBuyInSandbox":
             case "showManageSubscriptions":
+            case "beginRefundRequestForActiveEntitlement":
+            case "beginRefundRequestForProduct":
+            case "beginRefundRequestForEntitlement":
                 // NOOP
                 break;
             case "setAttributes":

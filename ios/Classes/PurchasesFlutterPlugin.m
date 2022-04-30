@@ -165,6 +165,14 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         NSNumber *callbackID = arguments[@"callbackID"];
         [self startPromotedProductPurchase:callbackID
                                     result:result];
+    } else if ([@"beginRefundRequestForActiveEntitlement" isEqualToString:call.method]) {
+        [self beginRefundRequestForActiveEntitlementWithResult:result];
+    } else if ([@"beginRefundRequestForProduct" isEqualToString:call.method]) {
+        NSString *productID = arguments[@"productIdentifier"];
+        [self beginRefundRequestForProduct:productID result:result];
+    } else if ([@"beginRefundRequestForEntitlement" isEqualToString:call.method]) {
+        NSString *entitlementID = arguments[@"entitlementIdentifier"];
+        [self beginRefundRequestForEntitlement:entitlementID result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else if ([@"showManageSubscriptions" isEqualToString:call.method]) {
@@ -433,6 +441,21 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                         result(responseDictionary);
                                                     }
                                                 }];
+}
+
+- (void)beginRefundRequestForActiveEntitlementWithResult:(FlutterResult)result {
+    [RCCommonFunctionality beginRefundRequestForActiveEntitlementWithCompletionBlock:
+            [self getResponseCompletionBlock:result]];
+}
+
+- (void)beginRefundRequestForProduct:(NSString *)productIdentifier result:(FlutterResult)result {
+    [RCCommonFunctionality beginRefundRequestForProduct:productIdentifier
+                                        completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)beginRefundRequestForEntitlement:(NSString *)entitlementIdentifier result:(FlutterResult)result {
+    [RCCommonFunctionality beginRefundRequestForEntitlement:entitlementIdentifier
+                                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)startPromotedProductPurchase:(NSNumber *)callbackID

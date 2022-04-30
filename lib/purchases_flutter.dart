@@ -664,6 +664,69 @@ class Purchases {
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
 
+  /// iOS only. Presents a refund request sheet in the current window scene for
+  /// the latest transaction associated with the active entitlement.
+  ///
+  /// Returns [RefundRequestStatus]: The status of the refund request.
+  /// Keep in mind the status could be [RefundRequestStatus.userCancelled]
+  ///
+  /// If the request was unsuccessful, no active entitlements could be found for
+  /// the user, or multiple active entitlements were found for the user,
+  /// a `PlatformException` will be thrown.
+  ///
+  /// Important: This method should only be used if your user can only
+  /// have a single active entitlement at a given time.
+  /// If a user could have more than one entitlement at a time, use
+  /// [beginRefundRequestForEntitlement] instead.
+  static Future<RefundRequestStatus>
+      beginRefundRequestForActiveEntitlement() async {
+    final response = await _channel.invokeMethod(
+      'beginRefundRequestForActiveEntitlement',
+    );
+    final int intStatus = response['status'];
+    return RefundRequestStatusExtension.from(intStatus);
+  }
+
+  /// iOS only. Presents a refund request sheet in the current window scene for
+  /// the latest transaction associated with the `product`
+  ///
+  /// Returns [RefundRequestStatus]: The status of the refund request.
+  /// Keep in mind the status could be [RefundRequestStatus.userCancelled]
+  ///
+  /// If the request was unsuccessful, a `PlatformException` will be thrown.
+  ///
+  /// [product] The [StoreProduct] to begin a refund request for.
+  static Future<RefundRequestStatus> beginRefundRequestForProduct(
+    StoreProduct product,
+  ) async {
+    final response = await _channel.invokeMethod(
+      'beginRefundRequestForProduct',
+      {'productIdentifier': product.identifier},
+    );
+    final int intStatus = response['status'];
+    return RefundRequestStatusExtension.from(intStatus);
+  }
+
+  /// iOS only. Presents a refund request sheet in the current window scene for
+  /// the latest transaction associated with the `entitlement`.
+  ///
+  /// Returns [RefundRequestStatus]: The status of the refund request.
+  /// Keep in mind the status could be [RefundRequestStatus.userCancelled]
+  ///
+  /// If the request was unsuccessful, a `PlatformException` will be thrown.
+  ///
+  /// [entitlement] The entitlement to begin a refund request for.
+  static Future<RefundRequestStatus> beginRefundRequestForEntitlement(
+    EntitlementInfo entitlement,
+  ) async {
+    final response = await _channel.invokeMethod(
+      'beginRefundRequestForEntitlement',
+      {'entitlementIdentifier': entitlement.identifier},
+    );
+    final int intStatus = response['status'];
+    return RefundRequestStatusExtension.from(intStatus);
+  }
+
   /// iOS only. Starts the purchase flow associated with the callback at
   /// `callbackID` index in PurchasesFlutterPlugin.m's `startPurchaseBlocks`
   /// array.
@@ -793,6 +856,31 @@ enum IntroEligibilityStatus {
 
   /// The user is eligible for a free trial or intro pricing for this product.
   introEligibilityStatusEligible
+}
+
+/// Status codes for refund requests.
+enum RefundRequestStatus {
+  /// User canceled submission of the refund request.
+  userCancelled,
+
+  /// Apple has received the refund request.
+  success,
+
+  /// There was an error with the request. See message for more details.
+  error
+}
+
+extension RefundRequestStatusExtension on RefundRequestStatus {
+  static RefundRequestStatus from(int index) {
+    switch (index) {
+      case 0:
+        return RefundRequestStatus.userCancelled;
+      case 1:
+        return RefundRequestStatus.success;
+      default:
+        return RefundRequestStatus.error;
+    }
+  }
 }
 
 /// Holds the introductory price status

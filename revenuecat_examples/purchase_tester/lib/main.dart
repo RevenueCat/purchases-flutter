@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter_example/src/constant.dart';
 
 import 'src/constant.dart';
 
@@ -141,7 +142,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   _PurchaseButton(package: monthly),
-                  _PurchaseButton(package: lifetime)
+                  _PurchaseButton(package: weekly)
                 ],
               ),
             ),
@@ -229,8 +230,45 @@ class CatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Cats Screen')),
-        body: const Center(
-          child: Text('User is pro'),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text('User is pro'),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    final refundStatus = await Purchases
+                        .beginRefundRequestForActiveEntitlement();
+                    print('refundStatus is $refundStatus');
+                  } on PlatformException catch (e) {
+                    final errorCode = PurchasesErrorHelper.getErrorCode(e);
+                    if (errorCode ==
+                        PurchasesErrorCode.beginRefundRequestError) {
+                      print('Error beginning refund request: ${e.message}');
+                    }
+                  }
+                  return const InitialScreen();
+                },
+                child: Text('Begin refund for active entitlement'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await Purchases.showManageSubscriptions();
+                  } on PlatformException catch (e) {
+                    final errorCode = PurchasesErrorHelper.getErrorCode(e);
+                    print('showManageSubError: $e');
+                    // if (errorCode == PurchasesErrorCode.beginRefundRequestError) {
+                    //   print('Error beginning refund request: ${e.message}');
+                    // }
+                  }
+                  return const InitialScreen();
+                },
+                child: Text('Show manage subscriptions modal'),
+              )
+            ],
+          ),
         ),
       );
 }
