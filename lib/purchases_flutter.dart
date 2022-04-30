@@ -641,6 +641,25 @@ class Purchases {
     return PromotionalOffer.fromJson(Map<String, dynamic>.from(result));
   }
 
+  /// iOS only. Use this function to open the manage subscriptions page.
+  ///
+  /// If it was not successful, a PlatformException will be thrown.
+  /// If the manage subscriptions page can't be opened, the
+  /// [managementURL] in the [CustomerInfo] will be opened.
+  ///
+  /// If [CustomerInfo.managementURL] is not available,
+  /// the App Store's subscription management section will be opened.
+  ///
+  /// The Future will return when the modal is opened, not when it's actually
+  /// closed. This is because of an undocumented change in StoreKit's behavior
+  /// between iOS 15.0 and 15.2, where 15.0 would return when the modal was
+  /// closed, and 15.2 returns when the modal is opened.
+  static Future<void> showManageSubscriptions() async {
+    await _channel.invokeMethod(
+      'showManageSubscriptions',
+    );
+  }
+
   /// Android only. Call close when you are done with this instance of Purchases to disconnect
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
