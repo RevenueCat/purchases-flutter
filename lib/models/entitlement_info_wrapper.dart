@@ -75,8 +75,7 @@ class EntitlementInfo with _$EntitlementInfo {
         bool isActive,
 
     /// True if the underlying subscription is set to renew at the end of
-    /// the billing period (expirationDate). Will always be True if entitlement
-    /// is for lifetime access.
+    /// the billing period (expirationDate).
     @JsonKey(name: 'willRenew')
         bool willRenew,
 
