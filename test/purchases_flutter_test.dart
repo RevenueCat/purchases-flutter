@@ -269,6 +269,18 @@ void main() {
     expect(PurchasesErrorCode.logOutWithAnonymousUserError.index, 22);
     expect(PurchasesErrorCode.configurationError.index, 23);
     expect(PurchasesErrorCode.unsupportedError.index, 24);
+    expect(PurchasesErrorCode.emptySubscriberAttributes.index, 25);
+    expect(PurchasesErrorCode.productDiscountMissingIdentifierError.index, 26);
+    expect(PurchasesErrorCode.missingAppUserIDForAliasCreationError.index, 27);
+    expect(
+        PurchasesErrorCode
+            .productDiscountMissingSubscriptionGroupIdentifierError.index,
+        28);
+    expect(PurchasesErrorCode.customerInfoError.index, 29);
+    expect(PurchasesErrorCode.systemInfoError.index, 30);
+    expect(PurchasesErrorCode.beginRefundRequestError.index, 31);
+    expect(PurchasesErrorCode.productRequestTimedOut.index, 32);
+    expect(PurchasesErrorCode.apiEndpointBlockedError.index, 33);
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
@@ -372,8 +384,54 @@ void main() {
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '24')),
       PurchasesErrorCode.unsupportedError,
     );
+
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '25')),
+      PurchasesErrorCode.emptySubscriberAttributes,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '26')),
+      PurchasesErrorCode.productDiscountMissingIdentifierError,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '27')),
+      PurchasesErrorCode.missingAppUserIDForAliasCreationError,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '28')),
+      PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '29')),
+      PurchasesErrorCode.customerInfoError,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '30')),
+      PurchasesErrorCode.systemInfoError,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '31')),
+      PurchasesErrorCode.beginRefundRequestError,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '32')),
+      PurchasesErrorCode.productRequestTimedOut,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '33')),
+      PurchasesErrorCode.apiEndpointBlockedError,
+    );
+
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '100')),
       PurchasesErrorCode.unknownError,
     );
   });
