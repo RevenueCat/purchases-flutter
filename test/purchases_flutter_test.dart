@@ -589,7 +589,7 @@ void main() {
       (PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
         ..observerMode = true
-        ..useAmazon = true),
+        ..store = Store.amazon),
     );
     expect(
       log,

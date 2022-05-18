@@ -1,3 +1,6 @@
+import '../purchases_flutter.dart';
+import 'store.dart';
+
 /// Used when calling [configure] to configure the RevenueCat plugin
 class PurchasesConfiguration {
   /// RevenueCat API Key.
@@ -20,18 +23,18 @@ class PurchasesConfiguration {
   /// use standardUserDefaults.
   String? userDefaultsSuiteName;
 
-  /// Android only. Set this to true if you are building the app
-  /// to be distributed in the Amazon Appstore
-  bool useAmazon = false;
+  /// Required to configure the plugin to be used in the Amazon Appstore.
+  /// Values different to [Store.amazon] don't have any effect.
+  Store? store;
 
 }
 
 /// A [PurchasesConfiguration] convenience object that
-/// sets [PurchasesConfiguration.useAmazon] to true
+/// sets [PurchasesConfiguration.store] to [Store.amazon]
 class AmazonConfiguration extends PurchasesConfiguration {
 
   AmazonConfiguration(String apiKey) : super(apiKey) {
-    useAmazon = true;
+    store = Store.amazon;
   }
 
 }
