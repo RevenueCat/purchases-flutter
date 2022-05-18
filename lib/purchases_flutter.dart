@@ -96,7 +96,7 @@ class Purchases {
         ..appUserID = appUserId
         ..observerMode = observerMode
         ..userDefaultsSuiteName = userDefaultsSuiteName
-        ..useAmazon = useAmazon
+        ..store = useAmazon ? Store.amazon : null
     );
     return configure(configuration);
   }
@@ -114,7 +114,7 @@ class Purchases {
         'appUserId': purchasesConfiguration.appUserID,
         'observerMode': purchasesConfiguration.observerMode,
         'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
-        'useAmazon': purchasesConfiguration.useAmazon
+        'useAmazon': purchasesConfiguration.store == Store.amazon
       },
     );
 
