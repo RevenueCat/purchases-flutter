@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
+import 'package:purchases_flutter/models/store.dart';
 
 void main() {
   test('unknown period if missing from json', () {
