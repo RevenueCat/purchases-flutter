@@ -163,26 +163,6 @@ class Purchases {
   ) =>
       _readyForPromotedProductPurchaseListeners.remove(listenerToRemove);
 
-  /// Deprecated in favor of set<NetworkId> functions.
-  /// Add a dict of attribution information
-  ///
-  /// [data] Attribution data from any of the [PurchasesAttributionNetwork].
-  ///
-  /// [network] Which network, see [PurchasesAttributionNetwork].
-  ///
-  /// [networkUserId] An optional unique id for identifying the user.
-  @Deprecated('Use the set<NetworkId> functions instead.')
-  static Future<void> addAttributionData(
-    Map<String, Object> data,
-    PurchasesAttributionNetwork network, {
-    String? networkUserId,
-  }) =>
-      _channel.invokeMethod('addAttributionData', {
-        'data': data,
-        'network': network.index,
-        'networkUserId': networkUserId
-      });
-
   /// Fetch the configured offerings for this users. Offerings allows you to
   /// configure your in-app products via RevenueCat and greatly simplifies
   /// management. See [the guide](https://docs.revenuecat.com/offerings) for
@@ -340,21 +320,6 @@ class Purchases {
   static Future<String> get appUserID async =>
       await _channel.invokeMethod('getAppUserID') as String;
 
-  /// Deprecated in favor of logIn.
-  /// This function will alias two appUserIDs together.
-  ///
-  /// Returns a [PurchaserInfo] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions.
-  ///
-  /// [newAppUserID] The new appUserID that should be linked to the currently
-  /// identified appUserID.
-  @Deprecated('Use logIn instead.')
-  static Future<CustomerInfo> createAlias(String newAppUserID) async {
-    final result = await _channel
-        .invokeMethod('createAlias', {'newAppUserID': newAppUserID});
-    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
-  }
-
   /// This function will logIn the current user with an appUserID.
   /// Typically this would be used after logging in a user to identify them without
   /// calling configure
@@ -376,22 +341,6 @@ class Purchases {
     return LogInResult(customerInfo: customerInfo, created: created);
   }
 
-  /// Deprecated in favor of logIn.
-  /// This function will identify the current user with an appUserID.
-  /// Typically this would be used after a logout to identify a new user without
-  /// calling configure
-  ///
-  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions.
-  ///
-  /// [newAppUserID] The appUserID that should be linked to the currently user
-  @Deprecated('Use logIn instead.')
-  static Future<CustomerInfo> identify(String appUserID) async {
-    final result =
-        await _channel.invokeMethod('identify', {'appUserID': appUserID});
-    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
-  }
-
   /// Logs out the  Purchases client, clearing the saved appUserID. This will
   /// generate a random user id and save it in the cache.
   ///
@@ -400,18 +349,6 @@ class Purchases {
   /// current user is anonymous.
   static Future<CustomerInfo> logOut() async {
     final result = await _channel.invokeMethod('logOut');
-    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
-  }
-
-  /// Deprecated in favor of logOut.
-  /// Resets the Purchases client clearing the saved appUserID. This will
-  /// generate a random user id and save it in the cache.
-  ///
-  /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
-  /// was a problem restoring transactions.
-  @Deprecated('Use logOut instead.')
-  static Future<CustomerInfo> reset() async {
-    final result = await _channel.invokeMethod('reset');
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
@@ -804,27 +741,6 @@ enum BillingFeature {
   /// [https://developer.android.com/reference/com/android/
   /// billingclient/api/BillingClient.FeatureType#PRICE_CHANGE_CONFIRMATION]
   priceChangeConfirmation
-}
-
-/// Supported Attribution networks.
-enum PurchasesAttributionNetwork {
-  /// [https://searchads.apple.com/]
-  appleSearchAds,
-
-  /// [https://www.adjust.com/]
-  adjust,
-
-  /// [https://www.appsflyer.com/]
-  appsflyer,
-
-  /// [http://branch.io/]
-  branch,
-
-  /// [http://tenjin.io/]
-  tenjin,
-
-  /// [https://developers.facebook.com/]
-  facebook
 }
 
 /// Possible IntroEligibility status.

@@ -138,12 +138,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean allowSharing = call.argument("allowSharing");
                 setAllowSharingAppStoreAccount(allowSharing, result);
                 break;
-            case "addAttributionData":
-                Map<String, String> data = call.argument("data");
-                int network = call.argument("network") != null ? (int) call.argument("network") : -1;
-                String networkUserId = call.argument("networkUserId");
-                addAttributionData(data, network, networkUserId, result);
-                break;
             case "getOfferings":
                 getOfferings(result);
                 break;
@@ -171,17 +165,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "restorePurchases":
                 restoreTransactions(result);
-                break;
-            case "reset":
-                reset(result);
-                break;
-            case "identify":
-                String appUserID = call.argument("appUserID");
-                identify(appUserID, result);
-                break;
-            case "createAlias":
-                String newAppUserID = call.argument("newAppUserID");
-                createAlias(newAppUserID, result);
                 break;
             case "logIn":
                 String appUserIDToLogIn = call.argument("appUserID");
@@ -357,12 +340,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    private void addAttributionData(Map<String, String> data, int network,
-                                    @Nullable String networkUserId, Result result) {
-        SubscriberAttributesKt.addAttributionData(data, network, networkUserId);
-        result.success(null);
-    }
-
     private void getOfferings(final Result result) {
         CommonKt.getOfferings(getOnResult(result));
     }
@@ -418,27 +395,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         CommonKt.restoreTransactions(getOnResult(result));
     }
 
-    @SuppressWarnings("deprecation")
-    private void reset(final Result result) {
-        CommonKt.reset(getOnResult(result));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void identify(String appUserID, final Result result) {
-        CommonKt.identify(appUserID, getOnResult(result));
-    }
-
     private void logOut(final Result result) {
         CommonKt.logOut(getOnResult(result));
     }
 
     private void logIn(String appUserID, final Result result) {
         CommonKt.logIn(appUserID, getOnResult(result));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void createAlias(String newAppUserID, final Result result) {
-        CommonKt.createAlias(newAppUserID, getOnResult(result));
     }
 
     private void setDebugLogsEnabled(boolean enabled, final Result result) {
