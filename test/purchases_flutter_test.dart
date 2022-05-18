@@ -538,12 +538,58 @@ void main() {
     );
   });
 
-  test('setupPurchases with amazon', () async {
-    await Purchases.setup(
-      'api_key',
-      appUserId: 'cesar',
-      observerMode: true,
-      useAmazon: true,
+  test('configure with amazon', () async {
+    await Purchases.configure(
+      (AmazonConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..observerMode = true),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
+  });
+
+  test('configure with base configuration', () async {
+    await Purchases.configure(
+      (PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..observerMode = true),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': false
+          },
+        )
+      ],
+    );
+  });
+
+  test('configure with base configuration and using amazon', () async {
+    await Purchases.configure(
+      (PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..observerMode = true
+        ..useAmazon = true),
     );
     expect(
       log,

@@ -80,23 +80,43 @@ class Purchases {
   /// Set this if you would like the RevenueCat SDK to store its preferences in a different
   /// NSUserDefaults suite, otherwise it will use standardUserDefaults.
   /// Default is null, which will make the SDK use standardUserDefaults.
+  ///
+  /// [useAmazon] Android only. Set this to true if you are building the app
+  /// to be distributed in the Amazon Appstore
+  @Deprecated('Use PurchasesConfiguration')
   static Future<void> setup(
     String apiKey, {
     String? appUserId,
     bool observerMode = false,
     String? userDefaultsSuiteName,
     bool useAmazon = false,
-  }) =>
-      _channel.invokeMethod(
-        'setupPurchases',
-        {
-          'apiKey': apiKey,
-          'appUserId': appUserId,
-          'observerMode': observerMode,
-          'userDefaultsSuiteName': userDefaultsSuiteName,
-          'useAmazon': useAmazon
-        },
-      );
+  }) {
+    final configuration = (
+        PurchasesConfiguration(apiKey)
+        ..appUserID = appUserId
+        ..observerMode = observerMode
+        ..userDefaultsSuiteName = userDefaultsSuiteName
+        ..useAmazon = useAmazon
+    );
+    return configure(configuration);
+  }
+
+  /// Sets up Purchases with your API key and an app user id.
+  ///
+  /// [PurchasesConfiguration] Object containing configuration parameters
+  static Future<void> configure(
+    PurchasesConfiguration purchasesConfiguration,
+  ) =>
+    _channel.invokeMethod(
+      'setupPurchases',
+      {
+        'apiKey': purchasesConfiguration.apiKey,
+        'appUserId': purchasesConfiguration.appUserID,
+        'observerMode': purchasesConfiguration.observerMode,
+        'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
+        'useAmazon': purchasesConfiguration.useAmazon
+      },
+    );
 
   // Default to TRUE, set this to FALSE if you are consuming and acknowledging transactions outside of the Purchases SDK.
   ///
