@@ -621,7 +621,7 @@ class Purchases {
 
   /// iOS only.
   ///
-  /// Use this function to retrieve the `PromotionalOffer` to apply to a
+  /// Use this function to retrieve the [PromotionalOffer] to apply to a
   /// product. Returns a [PromotionalOffer] object which should be passed
   /// to [purchaseDiscountedProduct] or [purchaseDiscountedPackage] to complete
   /// the discounted purchase. A null [PromotionalOffer] means the user is not
