@@ -85,6 +85,7 @@ class Purchases {
     String? appUserId,
     bool observerMode = false,
     String? userDefaultsSuiteName,
+    bool useAmazon = false,
   }) =>
       _channel.invokeMethod(
         'setupPurchases',
@@ -93,6 +94,7 @@ class Purchases {
           'appUserId': appUserId,
           'observerMode': observerMode,
           'userDefaultsSuiteName': userDefaultsSuiteName,
+          'useAmazon': useAmazon
         },
       );
 

@@ -72,7 +72,8 @@ class _PaywallState extends State<Paywall> {
                         style: kDescriptionTextStyle.copyWith(
                             fontSize: kFontSizeSuperSmall),
                       ),
-                      trailing: Text(myProductList[index].storeProduct.priceString,
+                      trailing: Text(
+                          myProductList[index].storeProduct.priceString,
                           style: kTitleTextStyle)),
                 );
               },

@@ -179,6 +179,7 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     if ([userDefaultsSuiteName isKindOfClass:NSNull.class]) {
         userDefaultsSuiteName = nil;
     }
+
     [RCPurchases configureWithAPIKey:apiKey
                            appUserID:appUserID
                         observerMode:observerMode
