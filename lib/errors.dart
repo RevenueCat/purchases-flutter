@@ -109,10 +109,16 @@ enum PurchasesErrorCode {
 
   /// Requests to RevenueCat are being blocked. See: https://rev.cat/dnsBlocking for more info.
   apiEndpointBlockedError,
+
+  /// The information associated with this PromotionalOffer is not valid.
+  /// See https://rev.cat/ios-subscription-offers for more info.
+  invalidPromotionalOfferError,
+
+  /// Error performing request because the internet connection appears to be offline.
+  offlineConnectionError,
 }
 
 extension PlatformExceptionRevenueCatExtension on PlatformException {
-
   PurchasesErrorCode get purchasesErrorCode {
     final errorCode = int.parse(code);
     if (errorCode >= PurchasesErrorCode.values.length) {
@@ -120,7 +126,6 @@ extension PlatformExceptionRevenueCatExtension on PlatformException {
     }
     return PurchasesErrorCode.values[errorCode];
   }
-
 }
 
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
