@@ -7,7 +7,7 @@ part 'offering_wrapper.g.dart';
 
 @freezed
 
-/// An offering is a collection of Packages (`Package`) available for the user
+/// An offering is a collection of [Package] available for the user
 /// to purchase. For more info see https://docs.revenuecat.com/docs/entitlements
 class Offering with _$Offering {
   const Offering._(); // Added constructor
@@ -18,7 +18,7 @@ class Offering with _$Offering {
     /// Offering description defined in RevenueCat dashboard.
     @JsonKey(name: 'serverDescription') String serverDescription,
 
-    /// Array of `Package` objects available for purchase.
+    /// Array of [Package] objects available for purchase.
     @JsonKey(name: 'availablePackages') List<Package> availablePackages, {
 
     /// Lifetime package type configured in the RevenueCat dashboard, if available.
