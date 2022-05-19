@@ -111,7 +111,20 @@ enum PurchasesErrorCode {
   apiEndpointBlockedError,
 }
 
+extension PlatformExceptionRevenueCatExtension on PlatformException {
+
+  PurchasesErrorCode get purchasesErrorCode {
+    final errorCode = int.parse(code);
+    if (errorCode >= PurchasesErrorCode.values.length) {
+      return PurchasesErrorCode.unknownError;
+    }
+    return PurchasesErrorCode.values[errorCode];
+  }
+
+}
+
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
+@Deprecated('Use platformException.purchasesErrorCode')
 class PurchasesErrorHelper {
   /// Use this to convert a PlatformException to a PurchasesErrorCode.
   /// It will return `PurchasesErrorCode.unknownError` if the error code is not

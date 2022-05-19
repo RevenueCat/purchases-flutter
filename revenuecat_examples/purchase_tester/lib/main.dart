@@ -142,7 +142,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   _PurchaseButton(package: monthly),
-                  _PurchaseButton(package: weekly)
+                  _PurchaseButton(package: lifetime)
                 ],
               ),
             ),
@@ -207,13 +207,14 @@ class _PurchaseButton extends StatelessWidget {
               return const CatsScreen();
             }
           } on PlatformException catch (e) {
-            final errorCode = PurchasesErrorHelper.getErrorCode(e);
-            if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+            if (e.purchasesErrorCode ==
+                PurchasesErrorCode.purchaseCancelledError) {
               print('User cancelled');
-            } else if (errorCode ==
+            } else if (e.purchasesErrorCode ==
                 PurchasesErrorCode.purchaseNotAllowedError) {
               print('User not allowed to purchase');
-            } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
+            } else if (e.purchasesErrorCode ==
+                PurchasesErrorCode.paymentPendingError) {
               print('Payment is pending');
             }
           }
@@ -234,7 +235,7 @@ class CatsScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text('User is pro'),
+              const Text('User is pro'),
               ElevatedButton(
                 onPressed: () async {
                   try {
@@ -242,22 +243,21 @@ class CatsScreen extends StatelessWidget {
                         .beginRefundRequestForActiveEntitlement();
                     print('refundStatus is $refundStatus');
                   } on PlatformException catch (e) {
-                    final errorCode = PurchasesErrorHelper.getErrorCode(e);
-                    if (errorCode ==
+                    if (e.purchasesErrorCode ==
                         PurchasesErrorCode.beginRefundRequestError) {
                       print('Error beginning refund request: ${e.message}');
                     }
                   }
                   return const InitialScreen();
                 },
-                child: Text('Begin refund for active entitlement'),
+                child: const Text('Begin refund for active entitlement'),
               ),
               ElevatedButton(
                 onPressed: () async {
                   try {
                     await Purchases.showManageSubscriptions();
                   } on PlatformException catch (e) {
-                    final errorCode = PurchasesErrorHelper.getErrorCode(e);
+                    final errorCode = e.purchasesErrorCode;
                     print('showManageSubError: $e');
                     // if (errorCode == PurchasesErrorCode.beginRefundRequestError) {
                     //   print('Error beginning refund request: ${e.message}');
@@ -265,7 +265,7 @@ class CatsScreen extends StatelessWidget {
                   }
                   return const InitialScreen();
                 },
-                child: Text('Show manage subscriptions modal'),
+                child: const Text('Show manage subscriptions modal'),
               )
             ],
           ),
