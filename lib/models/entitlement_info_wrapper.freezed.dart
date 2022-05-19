@@ -85,8 +85,7 @@ mixin _$EntitlementInfo {
   bool get isActive => throw _privateConstructorUsedError;
 
   /// True if the underlying subscription is set to renew at the end of
-  /// the billing period (expirationDate). Will always be True if entitlement
-  /// is for lifetime access.
+  /// the billing period (expirationDate).
   @JsonKey(name: 'willRenew')
   bool get willRenew => throw _privateConstructorUsedError;
 
@@ -431,8 +430,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   @override
 
   /// True if the underlying subscription is set to renew at the end of
-  /// the billing period (expirationDate). Will always be True if entitlement
-  /// is for lifetime access.
+  /// the billing period (expirationDate).
   @JsonKey(name: 'willRenew')
   final bool willRenew;
   @override
@@ -605,8 +603,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   @override
 
   /// True if the underlying subscription is set to renew at the end of
-  /// the billing period (expirationDate). Will always be True if entitlement
-  /// is for lifetime access.
+  /// the billing period (expirationDate).
   @JsonKey(name: 'willRenew')
   bool get willRenew;
   @override
