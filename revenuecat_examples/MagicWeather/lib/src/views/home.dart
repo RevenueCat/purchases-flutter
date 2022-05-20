@@ -7,6 +7,8 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:magic_weather_flutter/src/model/singletons_data.dart';
 import 'package:magic_weather_flutter/src/model/styles.dart';
 
+import '../../flavor_config.dart';
+
 final GlobalKey<NavigatorState> firstTabNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> secondTabNavKey = GlobalKey<NavigatorState>();
 
@@ -35,7 +37,17 @@ class AppContainerState extends State<AppContainer> {
 
     - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
     */
-    await Purchases.setup(apiKey, appUserId: null, observerMode: false);
+    PurchasesConfiguration configuration;
+    if (FlavorConfig.isForAmazonAppstore()) {
+      configuration = AmazonConfiguration(FlavorConfig.instance.apiKey)
+        ..appUserID = null
+        ..observerMode = false;
+    } else {
+      configuration = PurchasesConfiguration(FlavorConfig.instance.apiKey)
+        ..appUserID = null
+        ..observerMode = false;
+    }
+    await Purchases.configure(configuration);
 
     appData.appUserID = await Purchases.appUserID;
 

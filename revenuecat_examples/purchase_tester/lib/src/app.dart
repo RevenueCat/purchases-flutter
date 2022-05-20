@@ -1,18 +1,22 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import 'src/constant.dart';
+import '../flavor_config.dart';
 
-void main() => runApp(
-      const MaterialApp(
-        title: 'RevenueCat Sample',
-        home: InitialScreen(),
-      ),
+class PurchaseTester extends StatelessWidget {
+  const PurchaseTester({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'RevenueCat Sample',
+      home: InitialScreen(),
     );
+  }
+}
 
 // ignore: public_member_api_docs
 class InitialScreen extends StatefulWidget {
@@ -35,11 +39,13 @@ class _MyAppState extends State<InitialScreen> {
   Future<void> initPlatformState() async {
     await Purchases.setDebugLogsEnabled(true);
 
-    if (Platform.isAndroid) {
-      await Purchases.setup(googleApiKey);
+    PurchasesConfiguration configuration;
+    if (FlavorConfig.isForAmazonAppstore()) {
+      configuration = AmazonConfiguration(FlavorConfig.instance.apiKey);
     } else {
-      await Purchases.setup(appleApiKey);
+      configuration = PurchasesConfiguration(FlavorConfig.instance.apiKey);
     }
+    await Purchases.configure(configuration);
 
     final customerInfo = await Purchases.getCustomerInfo();
 
