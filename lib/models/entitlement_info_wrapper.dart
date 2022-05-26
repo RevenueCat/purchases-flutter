@@ -43,6 +43,10 @@ enum Store {
   @JsonValue('PROMOTIONAL')
   promotional,
 
+  /// For entitlements granted via Amazon App Store.
+  @JsonValue('AMAZON')
+  amazon,
+
   /// For entitlements granted via an unknown store.
   unknownStore
 }

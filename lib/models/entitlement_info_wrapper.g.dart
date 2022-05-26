@@ -58,6 +58,7 @@ const _$StoreEnumMap = {
   Store.playStore: 'PLAY_STORE',
   Store.stripe: 'STRIPE',
   Store.promotional: 'PROMOTIONAL',
+  Store.amazon: 'AMAZON',
   Store.unknownStore: 'unknownStore',
 };
 
