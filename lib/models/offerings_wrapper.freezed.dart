@@ -12,31 +12,11 @@ part of 'offerings_wrapper.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Offerings _$OfferingsFromJson(Map<String, dynamic> json) {
   return _Offerings.fromJson(json);
 }
-
-/// @nodoc
-class _$OfferingsTearOff {
-  const _$OfferingsTearOff();
-
-  _Offerings call(@JsonKey(name: 'all') Map<String, Offering> all,
-      {@JsonKey(name: 'current', nullable: true) Offering? current}) {
-    return _Offerings(
-      all,
-      current: current,
-    );
-  }
-
-  Offerings fromJson(Map<String, Object?> json) {
-    return Offerings.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Offerings = _$OfferingsTearOff();
 
 /// @nodoc
 mixin _$Offerings {
@@ -103,10 +83,10 @@ class _$OfferingsCopyWithImpl<$Res> implements $OfferingsCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
-  factory _$OfferingsCopyWith(
-          _Offerings value, $Res Function(_Offerings) then) =
-      __$OfferingsCopyWithImpl<$Res>;
+abstract class _$$_OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
+  factory _$$_OfferingsCopyWith(
+          _$_Offerings value, $Res Function(_$_Offerings) then) =
+      __$$_OfferingsCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'all') Map<String, Offering> all,
@@ -117,22 +97,23 @@ abstract class _$OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$OfferingsCopyWithImpl<$Res> extends _$OfferingsCopyWithImpl<$Res>
-    implements _$OfferingsCopyWith<$Res> {
-  __$OfferingsCopyWithImpl(_Offerings _value, $Res Function(_Offerings) _then)
-      : super(_value, (v) => _then(v as _Offerings));
+class __$$_OfferingsCopyWithImpl<$Res> extends _$OfferingsCopyWithImpl<$Res>
+    implements _$$_OfferingsCopyWith<$Res> {
+  __$$_OfferingsCopyWithImpl(
+      _$_Offerings _value, $Res Function(_$_Offerings) _then)
+      : super(_value, (v) => _then(v as _$_Offerings));
 
   @override
-  _Offerings get _value => super._value as _Offerings;
+  _$_Offerings get _value => super._value as _$_Offerings;
 
   @override
   $Res call({
     Object? all = freezed,
     Object? current = freezed,
   }) {
-    return _then(_Offerings(
+    return _then(_$_Offerings(
       all == freezed
-          ? _value.all
+          ? _value._all
           : all // ignore: cast_nullable_to_non_nullable
               as Map<String, Offering>,
       current: current == freezed
@@ -146,21 +127,27 @@ class __$OfferingsCopyWithImpl<$Res> extends _$OfferingsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Offerings extends _Offerings {
-  const _$_Offerings(@JsonKey(name: 'all') this.all,
+  const _$_Offerings(@JsonKey(name: 'all') final Map<String, Offering> all,
       {@JsonKey(name: 'current', nullable: true) this.current})
-      : super._();
+      : _all = all,
+        super._();
 
   factory _$_Offerings.fromJson(Map<String, dynamic> json) =>
       _$$_OfferingsFromJson(json);
 
-  @override
+  /// Map of all Offerings [Offering] objects keyed by their identifier.
+  final Map<String, Offering> _all;
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
-  @JsonKey(name: 'all')
-  final Map<String, Offering> all;
   @override
+  @JsonKey(name: 'all')
+  Map<String, Offering> get all {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_all);
+  }
 
   /// Current offering configured in the RevenueCat dashboard.
+  @override
   @JsonKey(name: 'current', nullable: true)
   final Offering? current;
 
@@ -173,21 +160,22 @@ class _$_Offerings extends _Offerings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Offerings &&
-            const DeepCollectionEquality().equals(other.all, all) &&
+            other is _$_Offerings &&
+            const DeepCollectionEquality().equals(other._all, _all) &&
             const DeepCollectionEquality().equals(other.current, current));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(all),
+      const DeepCollectionEquality().hash(_all),
       const DeepCollectionEquality().hash(current));
 
   @JsonKey(ignore: true)
   @override
-  _$OfferingsCopyWith<_Offerings> get copyWith =>
-      __$OfferingsCopyWithImpl<_Offerings>(this, _$identity);
+  _$$_OfferingsCopyWith<_$_Offerings> get copyWith =>
+      __$$_OfferingsCopyWithImpl<_$_Offerings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -196,8 +184,9 @@ class _$_Offerings extends _Offerings {
 }
 
 abstract class _Offerings extends Offerings {
-  const factory _Offerings(@JsonKey(name: 'all') Map<String, Offering> all,
-          {@JsonKey(name: 'current', nullable: true) Offering? current}) =
+  const factory _Offerings(
+          @JsonKey(name: 'all') final Map<String, Offering> all,
+          {@JsonKey(name: 'current', nullable: true) final Offering? current}) =
       _$_Offerings;
   const _Offerings._() : super._();
 
@@ -208,14 +197,14 @@ abstract class _Offerings extends Offerings {
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
   @JsonKey(name: 'all')
-  Map<String, Offering> get all;
+  Map<String, Offering> get all => throw _privateConstructorUsedError;
   @override
 
   /// Current offering configured in the RevenueCat dashboard.
   @JsonKey(name: 'current', nullable: true)
-  Offering? get current;
+  Offering? get current => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$OfferingsCopyWith<_Offerings> get copyWith =>
+  _$$_OfferingsCopyWith<_$_Offerings> get copyWith =>
       throw _privateConstructorUsedError;
 }
