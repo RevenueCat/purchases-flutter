@@ -15,17 +15,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  freezed_annotation: ^1.1.0
-  json_annotation: ^4.4.0
+  freezed_annotation: ^2.0.1
+  json_annotation: ^4.5.0
 
 dev_dependencies:
-  build_runner: ^2.1.4
+  build_runner: ^2.1.10
   flutter_driver:
     sdk: flutter
   flutter_lints: ^1.0.4
   flutter_test:
     sdk: flutter
-  freezed: ^1.1.1
+  freezed: ^2.0.2
   json_serializable: ^6.0.0
 
 flutter:

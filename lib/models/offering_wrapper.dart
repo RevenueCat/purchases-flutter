@@ -51,3 +51,12 @@ class Offering with _$Offering {
   factory Offering.fromJson(Map<String, dynamic> json) =>
       _$OfferingFromJson(json);
 }
+
+extension PackageListX on List<Package> {
+  Package? firstWhereOrNull(bool Function(Package element) test) {
+    for (final element in this) {
+      if (test(element)) return element;
+    }
+    return null;
+  }
+}
