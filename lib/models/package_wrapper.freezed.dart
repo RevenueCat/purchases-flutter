@@ -12,40 +12,11 @@ part of 'package_wrapper.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 Package _$PackageFromJson(Map<String, dynamic> json) {
   return _Package.fromJson(json);
 }
-
-/// @nodoc
-class _$PackageTearOff {
-  const _$PackageTearOff();
-
-  _Package call(
-      @JsonKey(name: 'identifier')
-          String identifier,
-      @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-          PackageType packageType,
-      @JsonKey(name: 'product')
-          Product product,
-      @JsonKey(name: 'offeringIdentifier')
-          String offeringIdentifier) {
-    return _Package(
-      identifier,
-      packageType,
-      product,
-      offeringIdentifier,
-    );
-  }
-
-  Package fromJson(Map<String, Object?> json) {
-    return Package.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Package = _$PackageTearOff();
 
 /// @nodoc
 mixin _$Package {
@@ -132,9 +103,10 @@ class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
-  factory _$PackageCopyWith(_Package value, $Res Function(_Package) then) =
-      __$PackageCopyWithImpl<$Res>;
+abstract class _$$_PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
+  factory _$$_PackageCopyWith(
+          _$_Package value, $Res Function(_$_Package) then) =
+      __$$_PackageCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'identifier')
@@ -151,13 +123,13 @@ abstract class _$PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PackageCopyWithImpl<$Res> extends _$PackageCopyWithImpl<$Res>
-    implements _$PackageCopyWith<$Res> {
-  __$PackageCopyWithImpl(_Package _value, $Res Function(_Package) _then)
-      : super(_value, (v) => _then(v as _Package));
+class __$$_PackageCopyWithImpl<$Res> extends _$PackageCopyWithImpl<$Res>
+    implements _$$_PackageCopyWith<$Res> {
+  __$$_PackageCopyWithImpl(_$_Package _value, $Res Function(_$_Package) _then)
+      : super(_value, (v) => _then(v as _$_Package));
 
   @override
-  _Package get _value => super._value as _Package;
+  _$_Package get _value => super._value as _$_Package;
 
   @override
   $Res call({
@@ -166,7 +138,7 @@ class __$PackageCopyWithImpl<$Res> extends _$PackageCopyWithImpl<$Res>
     Object? product = freezed,
     Object? offeringIdentifier = freezed,
   }) {
-    return _then(_Package(
+    return _then(_$_Package(
       identifier == freezed
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -203,25 +175,24 @@ class _$_Package implements _Package {
   factory _$_Package.fromJson(Map<String, dynamic> json) =>
       _$$_PackageFromJson(json);
 
-  @override
-
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
+  @override
   @JsonKey(name: 'identifier')
   final String identifier;
-  @override
 
   /// Package type for the product. Will be one of [PackageType].
+  @override
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
   final PackageType packageType;
-  @override
 
   /// Product assigned to this package.
+  @override
   @JsonKey(name: 'product')
   final Product product;
-  @override
 
   /// Offering this package belongs to.
+  @override
   @JsonKey(name: 'offeringIdentifier')
   final String offeringIdentifier;
 
@@ -234,7 +205,7 @@ class _$_Package implements _Package {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Package &&
+            other is _$_Package &&
             const DeepCollectionEquality()
                 .equals(other.identifier, identifier) &&
             const DeepCollectionEquality()
@@ -244,6 +215,7 @@ class _$_Package implements _Package {
                 .equals(other.offeringIdentifier, offeringIdentifier));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -254,8 +226,8 @@ class _$_Package implements _Package {
 
   @JsonKey(ignore: true)
   @override
-  _$PackageCopyWith<_Package> get copyWith =>
-      __$PackageCopyWithImpl<_Package>(this, _$identity);
+  _$$_PackageCopyWith<_$_Package> get copyWith =>
+      __$$_PackageCopyWithImpl<_$_Package>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -266,13 +238,13 @@ class _$_Package implements _Package {
 abstract class _Package implements Package {
   const factory _Package(
       @JsonKey(name: 'identifier')
-          String identifier,
+          final String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-          PackageType packageType,
+          final PackageType packageType,
       @JsonKey(name: 'product')
-          Product product,
+          final Product product,
       @JsonKey(name: 'offeringIdentifier')
-          String offeringIdentifier) = _$_Package;
+          final String offeringIdentifier) = _$_Package;
 
   factory _Package.fromJson(Map<String, dynamic> json) = _$_Package.fromJson;
 
@@ -281,24 +253,24 @@ abstract class _Package implements Package {
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
   @JsonKey(name: 'identifier')
-  String get identifier;
+  String get identifier => throw _privateConstructorUsedError;
   @override
 
   /// Package type for the product. Will be one of [PackageType].
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-  PackageType get packageType;
+  PackageType get packageType => throw _privateConstructorUsedError;
   @override
 
   /// Product assigned to this package.
   @JsonKey(name: 'product')
-  Product get product;
+  Product get product => throw _privateConstructorUsedError;
   @override
 
   /// Offering this package belongs to.
   @JsonKey(name: 'offeringIdentifier')
-  String get offeringIdentifier;
+  String get offeringIdentifier => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$PackageCopyWith<_Package> get copyWith =>
+  _$$_PackageCopyWith<_$_Package> get copyWith =>
       throw _privateConstructorUsedError;
 }

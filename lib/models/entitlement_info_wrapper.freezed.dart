@@ -12,67 +12,11 @@ part of 'entitlement_info_wrapper.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 EntitlementInfo _$EntitlementInfoFromJson(Map<String, dynamic> json) {
   return _EntitlementInfo.fromJson(json);
 }
-
-/// @nodoc
-class _$EntitlementInfoTearOff {
-  const _$EntitlementInfoTearOff();
-
-  _EntitlementInfo call(
-      @JsonKey(name: 'identifier')
-          String identifier,
-      @JsonKey(name: 'isActive')
-          bool isActive,
-      @JsonKey(name: 'willRenew')
-          bool willRenew,
-      @JsonKey(name: 'latestPurchaseDate')
-          String latestPurchaseDate,
-      @JsonKey(name: 'originalPurchaseDate')
-          String originalPurchaseDate,
-      @JsonKey(name: 'productIdentifier')
-          String productIdentifier,
-      @JsonKey(name: 'isSandbox')
-          bool isSandbox,
-      {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-          OwnershipType ownershipType = OwnershipType.unknown,
-      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-          Store store = Store.unknownStore,
-      @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-          PeriodType periodType = PeriodType.unknown,
-      @JsonKey(name: 'expirationDate', nullable: true)
-          String? expirationDate,
-      @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
-          String? unsubscribeDetectedAt,
-      @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
-          String? billingIssueDetectedAt}) {
-    return _EntitlementInfo(
-      identifier,
-      isActive,
-      willRenew,
-      latestPurchaseDate,
-      originalPurchaseDate,
-      productIdentifier,
-      isSandbox,
-      ownershipType: ownershipType,
-      store: store,
-      periodType: periodType,
-      expirationDate: expirationDate,
-      unsubscribeDetectedAt: unsubscribeDetectedAt,
-      billingIssueDetectedAt: billingIssueDetectedAt,
-    );
-  }
-
-  EntitlementInfo fromJson(Map<String, Object?> json) {
-    return EntitlementInfo.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $EntitlementInfo = _$EntitlementInfoTearOff();
 
 /// @nodoc
 mixin _$EntitlementInfo {
@@ -264,11 +208,11 @@ class _$EntitlementInfoCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$EntitlementInfoCopyWith<$Res>
+abstract class _$$_EntitlementInfoCopyWith<$Res>
     implements $EntitlementInfoCopyWith<$Res> {
-  factory _$EntitlementInfoCopyWith(
-          _EntitlementInfo value, $Res Function(_EntitlementInfo) then) =
-      __$EntitlementInfoCopyWithImpl<$Res>;
+  factory _$$_EntitlementInfoCopyWith(
+          _$_EntitlementInfo value, $Res Function(_$_EntitlementInfo) then) =
+      __$$_EntitlementInfoCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'identifier')
@@ -300,15 +244,15 @@ abstract class _$EntitlementInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$EntitlementInfoCopyWithImpl<$Res>
+class __$$_EntitlementInfoCopyWithImpl<$Res>
     extends _$EntitlementInfoCopyWithImpl<$Res>
-    implements _$EntitlementInfoCopyWith<$Res> {
-  __$EntitlementInfoCopyWithImpl(
-      _EntitlementInfo _value, $Res Function(_EntitlementInfo) _then)
-      : super(_value, (v) => _then(v as _EntitlementInfo));
+    implements _$$_EntitlementInfoCopyWith<$Res> {
+  __$$_EntitlementInfoCopyWithImpl(
+      _$_EntitlementInfo _value, $Res Function(_$_EntitlementInfo) _then)
+      : super(_value, (v) => _then(v as _$_EntitlementInfo));
 
   @override
-  _EntitlementInfo get _value => super._value as _EntitlementInfo;
+  _$_EntitlementInfo get _value => super._value as _$_EntitlementInfo;
 
   @override
   $Res call({
@@ -326,7 +270,7 @@ class __$EntitlementInfoCopyWithImpl<$Res>
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
   }) {
-    return _then(_EntitlementInfo(
+    return _then(_$_EntitlementInfo(
       identifier == freezed
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -417,82 +361,81 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   factory _$_EntitlementInfo.fromJson(Map<String, dynamic> json) =>
       _$$_EntitlementInfoFromJson(json);
 
-  @override
-
   /// The entitlement identifier configured in the RevenueCat dashboard
+  @override
   @JsonKey(name: 'identifier')
   final String identifier;
-  @override
 
   /// True if the user has access to this entitlement
+  @override
   @JsonKey(name: 'isActive')
   final bool isActive;
-  @override
 
   /// True if the underlying subscription is set to renew at the end of
   /// the billing period (expirationDate).
+  @override
   @JsonKey(name: 'willRenew')
   final bool willRenew;
-  @override
 
   /// The latest purchase or renewal date for the entitlement.
+  @override
   @JsonKey(name: 'latestPurchaseDate')
   final String latestPurchaseDate;
-  @override
 
   /// The first date this entitlement was purchased
+  @override
   @JsonKey(name: 'originalPurchaseDate')
   final String originalPurchaseDate;
-  @override
 
   /// The product identifier that unlocked this entitlement
+  @override
   @JsonKey(name: 'productIdentifier')
   final String productIdentifier;
-  @override
 
   /// False if this entitlement is unlocked via a production purchase
+  @override
   @JsonKey(name: 'isSandbox')
   final bool isSandbox;
-  @override
 
   /// Use this property to determine whether a purchase was made by the current
   /// user or shared to them by a family member. This can be useful for
   /// onboarding users who have had an entitlement shared with them, but might
   /// not be entirely aware of the benefits they now have.
+  @override
   @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
   final OwnershipType ownershipType;
-  @override
 
   /// The store where this entitlement was unlocked from
   /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
+  @override
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
   final Store store;
-  @override
 
   /// The last period type this entitlement was in
   /// Either: normal, intro, trial
+  @override
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
   final PeriodType periodType;
-  @override
 
   /// The expiration date for the entitlement, can be `null` for lifetime access.
   /// If the `periodType` is `trial`, this is the trial expiration date.
+  @override
   @JsonKey(name: 'expirationDate', nullable: true)
   final String? expirationDate;
-  @override
 
   /// The date an unsubscribe was detected. Can be `null` if it's still
   /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the `isActive` property.
+  @override
   @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
   final String? unsubscribeDetectedAt;
-  @override
 
   /// The date a billing issue was detected. Can be `null` if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the `isActive` property.
+  @override
   @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
   final String? billingIssueDetectedAt;
 
@@ -505,7 +448,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _EntitlementInfo &&
+            other is _$_EntitlementInfo &&
             const DeepCollectionEquality()
                 .equals(other.identifier, identifier) &&
             const DeepCollectionEquality().equals(other.isActive, isActive) &&
@@ -530,6 +473,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
                 .equals(other.billingIssueDetectedAt, billingIssueDetectedAt));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -549,8 +493,8 @@ class _$_EntitlementInfo implements _EntitlementInfo {
 
   @JsonKey(ignore: true)
   @override
-  _$EntitlementInfoCopyWith<_EntitlementInfo> get copyWith =>
-      __$EntitlementInfoCopyWithImpl<_EntitlementInfo>(this, _$identity);
+  _$$_EntitlementInfoCopyWith<_$_EntitlementInfo> get copyWith =>
+      __$$_EntitlementInfoCopyWithImpl<_$_EntitlementInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -561,31 +505,31 @@ class _$_EntitlementInfo implements _EntitlementInfo {
 abstract class _EntitlementInfo implements EntitlementInfo {
   const factory _EntitlementInfo(
       @JsonKey(name: 'identifier')
-          String identifier,
+          final String identifier,
       @JsonKey(name: 'isActive')
-          bool isActive,
+          final bool isActive,
       @JsonKey(name: 'willRenew')
-          bool willRenew,
+          final bool willRenew,
       @JsonKey(name: 'latestPurchaseDate')
-          String latestPurchaseDate,
+          final String latestPurchaseDate,
       @JsonKey(name: 'originalPurchaseDate')
-          String originalPurchaseDate,
+          final String originalPurchaseDate,
       @JsonKey(name: 'productIdentifier')
-          String productIdentifier,
+          final String productIdentifier,
       @JsonKey(name: 'isSandbox')
-          bool isSandbox,
+          final bool isSandbox,
       {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-          OwnershipType ownershipType,
+          final OwnershipType ownershipType,
       @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-          Store store,
+          final Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-          PeriodType periodType,
+          final PeriodType periodType,
       @JsonKey(name: 'expirationDate', nullable: true)
-          String? expirationDate,
+          final String? expirationDate,
       @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
-          String? unsubscribeDetectedAt,
+          final String? unsubscribeDetectedAt,
       @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
-          String? billingIssueDetectedAt}) = _$_EntitlementInfo;
+          final String? billingIssueDetectedAt}) = _$_EntitlementInfo;
 
   factory _EntitlementInfo.fromJson(Map<String, dynamic> json) =
       _$_EntitlementInfo.fromJson;
@@ -594,38 +538,38 @@ abstract class _EntitlementInfo implements EntitlementInfo {
 
   /// The entitlement identifier configured in the RevenueCat dashboard
   @JsonKey(name: 'identifier')
-  String get identifier;
+  String get identifier => throw _privateConstructorUsedError;
   @override
 
   /// True if the user has access to this entitlement
   @JsonKey(name: 'isActive')
-  bool get isActive;
+  bool get isActive => throw _privateConstructorUsedError;
   @override
 
   /// True if the underlying subscription is set to renew at the end of
   /// the billing period (expirationDate).
   @JsonKey(name: 'willRenew')
-  bool get willRenew;
+  bool get willRenew => throw _privateConstructorUsedError;
   @override
 
   /// The latest purchase or renewal date for the entitlement.
   @JsonKey(name: 'latestPurchaseDate')
-  String get latestPurchaseDate;
+  String get latestPurchaseDate => throw _privateConstructorUsedError;
   @override
 
   /// The first date this entitlement was purchased
   @JsonKey(name: 'originalPurchaseDate')
-  String get originalPurchaseDate;
+  String get originalPurchaseDate => throw _privateConstructorUsedError;
   @override
 
   /// The product identifier that unlocked this entitlement
   @JsonKey(name: 'productIdentifier')
-  String get productIdentifier;
+  String get productIdentifier => throw _privateConstructorUsedError;
   @override
 
   /// False if this entitlement is unlocked via a production purchase
   @JsonKey(name: 'isSandbox')
-  bool get isSandbox;
+  bool get isSandbox => throw _privateConstructorUsedError;
   @override
 
   /// Use this property to determine whether a purchase was made by the current
@@ -633,25 +577,25 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// onboarding users who have had an entitlement shared with them, but might
   /// not be entirely aware of the benefits they now have.
   @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-  OwnershipType get ownershipType;
+  OwnershipType get ownershipType => throw _privateConstructorUsedError;
   @override
 
   /// The store where this entitlement was unlocked from
   /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-  Store get store;
+  Store get store => throw _privateConstructorUsedError;
   @override
 
   /// The last period type this entitlement was in
   /// Either: normal, intro, trial
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-  PeriodType get periodType;
+  PeriodType get periodType => throw _privateConstructorUsedError;
   @override
 
   /// The expiration date for the entitlement, can be `null` for lifetime access.
   /// If the `periodType` is `trial`, this is the trial expiration date.
   @JsonKey(name: 'expirationDate', nullable: true)
-  String? get expirationDate;
+  String? get expirationDate => throw _privateConstructorUsedError;
   @override
 
   /// The date an unsubscribe was detected. Can be `null` if it's still
@@ -659,7 +603,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the `isActive` property.
   @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
-  String? get unsubscribeDetectedAt;
+  String? get unsubscribeDetectedAt => throw _privateConstructorUsedError;
   @override
 
   /// The date a billing issue was detected. Can be `null` if there is no
@@ -667,9 +611,9 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the `isActive` property.
   @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
-  String? get billingIssueDetectedAt;
+  String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$EntitlementInfoCopyWith<_EntitlementInfo> get copyWith =>
+  _$$_EntitlementInfoCopyWith<_$_EntitlementInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
