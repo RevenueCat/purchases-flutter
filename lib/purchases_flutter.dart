@@ -418,7 +418,7 @@ class Purchases {
   static Future<bool> get isAnonymous async =>
       await _channel.invokeMethod('isAnonymous') as bool;
 
-  /// Returns true if RevenueCat has already been intialized through [setup].
+  /// Returns true if RevenueCat has already been intialized through [configure].
   static Future<bool> get isConfigured async =>
       await _channel.invokeMethod('isConfigured') as bool;
 
