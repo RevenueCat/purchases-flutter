@@ -12,42 +12,11 @@ part of 'store_product_discount.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 StoreProductDiscount _$StoreProductDiscountFromJson(Map<String, dynamic> json) {
   return _StoreProductDiscount.fromJson(json);
 }
-
-/// @nodoc
-class _$StoreProductDiscountTearOff {
-  const _$StoreProductDiscountTearOff();
-
-  _StoreProductDiscount call(
-      @JsonKey(name: 'identifier') String identifier,
-      @JsonKey(name: 'price') double price,
-      @JsonKey(name: 'priceString') String priceString,
-      @JsonKey(name: 'cycles') int cycles,
-      @JsonKey(name: 'period') String period,
-      @JsonKey(name: 'periodUnit') String periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits) {
-    return _StoreProductDiscount(
-      identifier,
-      price,
-      priceString,
-      cycles,
-      period,
-      periodUnit,
-      periodNumberOfUnits,
-    );
-  }
-
-  StoreProductDiscount fromJson(Map<String, Object?> json) {
-    return StoreProductDiscount.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $StoreProductDiscount = _$StoreProductDiscountTearOff();
 
 /// @nodoc
 mixin _$StoreProductDiscount {
@@ -153,11 +122,11 @@ class _$StoreProductDiscountCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$StoreProductDiscountCopyWith<$Res>
+abstract class _$$_StoreProductDiscountCopyWith<$Res>
     implements $StoreProductDiscountCopyWith<$Res> {
-  factory _$StoreProductDiscountCopyWith(_StoreProductDiscount value,
-          $Res Function(_StoreProductDiscount) then) =
-      __$StoreProductDiscountCopyWithImpl<$Res>;
+  factory _$$_StoreProductDiscountCopyWith(_$_StoreProductDiscount value,
+          $Res Function(_$_StoreProductDiscount) then) =
+      __$$_StoreProductDiscountCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
@@ -170,15 +139,15 @@ abstract class _$StoreProductDiscountCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StoreProductDiscountCopyWithImpl<$Res>
+class __$$_StoreProductDiscountCopyWithImpl<$Res>
     extends _$StoreProductDiscountCopyWithImpl<$Res>
-    implements _$StoreProductDiscountCopyWith<$Res> {
-  __$StoreProductDiscountCopyWithImpl(
-      _StoreProductDiscount _value, $Res Function(_StoreProductDiscount) _then)
-      : super(_value, (v) => _then(v as _StoreProductDiscount));
+    implements _$$_StoreProductDiscountCopyWith<$Res> {
+  __$$_StoreProductDiscountCopyWithImpl(_$_StoreProductDiscount _value,
+      $Res Function(_$_StoreProductDiscount) _then)
+      : super(_value, (v) => _then(v as _$_StoreProductDiscount));
 
   @override
-  _StoreProductDiscount get _value => super._value as _StoreProductDiscount;
+  _$_StoreProductDiscount get _value => super._value as _$_StoreProductDiscount;
 
   @override
   $Res call({
@@ -190,7 +159,7 @@ class __$StoreProductDiscountCopyWithImpl<$Res>
     Object? periodUnit = freezed,
     Object? periodNumberOfUnits = freezed,
   }) {
-    return _then(_StoreProductDiscount(
+    return _then(_$_StoreProductDiscount(
       identifier == freezed
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -238,39 +207,38 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
   factory _$_StoreProductDiscount.fromJson(Map<String, dynamic> json) =>
       _$$_StoreProductDiscountFromJson(json);
 
-  @override
-
   /// Identifier of the discount.
+  @override
   @JsonKey(name: 'identifier')
   final String identifier;
-  @override
 
   /// Identifier of the discount.
+  @override
   @JsonKey(name: 'price')
   final double price;
-  @override
 
   /// Formatted price, including its currency sign, such as €3.99.
+  @override
   @JsonKey(name: 'priceString')
   final String priceString;
-  @override
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
+  @override
   @JsonKey(name: 'cycles')
   final int cycles;
-  @override
 
   /// Billing period of the discount, specified in ISO 8601 format.
+  @override
   @JsonKey(name: 'period')
   final String period;
-  @override
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
+  @override
   @JsonKey(name: 'periodUnit')
   final String periodUnit;
-  @override
 
   /// Number of units for the billing period of the discount.
+  @override
   @JsonKey(name: 'periodNumberOfUnits')
   final int periodNumberOfUnits;
 
@@ -283,7 +251,7 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _StoreProductDiscount &&
+            other is _$_StoreProductDiscount &&
             const DeepCollectionEquality()
                 .equals(other.identifier, identifier) &&
             const DeepCollectionEquality().equals(other.price, price) &&
@@ -297,6 +265,7 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
                 .equals(other.periodNumberOfUnits, periodNumberOfUnits));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -310,8 +279,8 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
 
   @JsonKey(ignore: true)
   @override
-  _$StoreProductDiscountCopyWith<_StoreProductDiscount> get copyWith =>
-      __$StoreProductDiscountCopyWithImpl<_StoreProductDiscount>(
+  _$$_StoreProductDiscountCopyWith<_$_StoreProductDiscount> get copyWith =>
+      __$$_StoreProductDiscountCopyWithImpl<_$_StoreProductDiscount>(
           this, _$identity);
 
   @override
@@ -322,13 +291,13 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
 
 abstract class _StoreProductDiscount implements StoreProductDiscount {
   const factory _StoreProductDiscount(
-          @JsonKey(name: 'identifier') String identifier,
-          @JsonKey(name: 'price') double price,
-          @JsonKey(name: 'priceString') String priceString,
-          @JsonKey(name: 'cycles') int cycles,
-          @JsonKey(name: 'period') String period,
-          @JsonKey(name: 'periodUnit') String periodUnit,
-          @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits) =
+          @JsonKey(name: 'identifier') final String identifier,
+          @JsonKey(name: 'price') final double price,
+          @JsonKey(name: 'priceString') final String priceString,
+          @JsonKey(name: 'cycles') final int cycles,
+          @JsonKey(name: 'period') final String period,
+          @JsonKey(name: 'periodUnit') final String periodUnit,
+          @JsonKey(name: 'periodNumberOfUnits') final int periodNumberOfUnits) =
       _$_StoreProductDiscount;
 
   factory _StoreProductDiscount.fromJson(Map<String, dynamic> json) =
@@ -338,39 +307,39 @@ abstract class _StoreProductDiscount implements StoreProductDiscount {
 
   /// Identifier of the discount.
   @JsonKey(name: 'identifier')
-  String get identifier;
+  String get identifier => throw _privateConstructorUsedError;
   @override
 
   /// Identifier of the discount.
   @JsonKey(name: 'price')
-  double get price;
+  double get price => throw _privateConstructorUsedError;
   @override
 
   /// Formatted price, including its currency sign, such as €3.99.
   @JsonKey(name: 'priceString')
-  String get priceString;
+  String get priceString => throw _privateConstructorUsedError;
   @override
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
   @JsonKey(name: 'cycles')
-  int get cycles;
+  int get cycles => throw _privateConstructorUsedError;
   @override
 
   /// Billing period of the discount, specified in ISO 8601 format.
   @JsonKey(name: 'period')
-  String get period;
+  String get period => throw _privateConstructorUsedError;
   @override
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
   @JsonKey(name: 'periodUnit')
-  String get periodUnit;
+  String get periodUnit => throw _privateConstructorUsedError;
   @override
 
   /// Number of units for the billing period of the discount.
   @JsonKey(name: 'periodNumberOfUnits')
-  int get periodNumberOfUnits;
+  int get periodNumberOfUnits => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$StoreProductDiscountCopyWith<_StoreProductDiscount> get copyWith =>
+  _$$_StoreProductDiscountCopyWith<_$_StoreProductDiscount> get copyWith =>
       throw _privateConstructorUsedError;
 }

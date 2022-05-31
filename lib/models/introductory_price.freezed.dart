@@ -12,47 +12,11 @@ part of 'introductory_price.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 IntroductoryPrice _$IntroductoryPriceFromJson(Map<String, dynamic> json) {
   return _IntroductoryPrice.fromJson(json);
 }
-
-/// @nodoc
-class _$IntroductoryPriceTearOff {
-  const _$IntroductoryPriceTearOff();
-
-  _IntroductoryPrice call(
-      @JsonKey(name: 'price')
-          double price,
-      @JsonKey(name: 'priceString')
-          String priceString,
-      @JsonKey(name: 'period')
-          String period,
-      @JsonKey(name: 'cycles')
-          int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-      @JsonKey(name: 'periodUnit')
-          String introPricePeriodUnit,
-      @JsonKey(name: 'periodNumberOfUnits')
-          int periodNumberOfUnits) {
-    return _IntroductoryPrice(
-      price,
-      priceString,
-      period,
-      cycles,
-      introPricePeriodUnit,
-      periodNumberOfUnits,
-    );
-  }
-
-  IntroductoryPrice fromJson(Map<String, Object?> json) {
-    return IntroductoryPrice.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $IntroductoryPrice = _$IntroductoryPriceTearOff();
 
 /// @nodoc
 mixin _$IntroductoryPrice {
@@ -160,11 +124,11 @@ class _$IntroductoryPriceCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$IntroductoryPriceCopyWith<$Res>
+abstract class _$$_IntroductoryPriceCopyWith<$Res>
     implements $IntroductoryPriceCopyWith<$Res> {
-  factory _$IntroductoryPriceCopyWith(
-          _IntroductoryPrice value, $Res Function(_IntroductoryPrice) then) =
-      __$IntroductoryPriceCopyWithImpl<$Res>;
+  factory _$$_IntroductoryPriceCopyWith(_$_IntroductoryPrice value,
+          $Res Function(_$_IntroductoryPrice) then) =
+      __$$_IntroductoryPriceCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'price')
@@ -183,15 +147,15 @@ abstract class _$IntroductoryPriceCopyWith<$Res>
 }
 
 /// @nodoc
-class __$IntroductoryPriceCopyWithImpl<$Res>
+class __$$_IntroductoryPriceCopyWithImpl<$Res>
     extends _$IntroductoryPriceCopyWithImpl<$Res>
-    implements _$IntroductoryPriceCopyWith<$Res> {
-  __$IntroductoryPriceCopyWithImpl(
-      _IntroductoryPrice _value, $Res Function(_IntroductoryPrice) _then)
-      : super(_value, (v) => _then(v as _IntroductoryPrice));
+    implements _$$_IntroductoryPriceCopyWith<$Res> {
+  __$$_IntroductoryPriceCopyWithImpl(
+      _$_IntroductoryPrice _value, $Res Function(_$_IntroductoryPrice) _then)
+      : super(_value, (v) => _then(v as _$_IntroductoryPrice));
 
   @override
-  _IntroductoryPrice get _value => super._value as _IntroductoryPrice;
+  _$_IntroductoryPrice get _value => super._value as _$_IntroductoryPrice;
 
   @override
   $Res call({
@@ -202,7 +166,7 @@ class __$IntroductoryPriceCopyWithImpl<$Res>
     Object? introPricePeriodUnit = freezed,
     Object? periodNumberOfUnits = freezed,
   }) {
-    return _then(_IntroductoryPrice(
+    return _then(_$_IntroductoryPrice(
       price == freezed
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -253,39 +217,38 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
   factory _$_IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
       _$$_IntroductoryPriceFromJson(json);
 
-  @override
-
   /// Introductory price of a subscription in the local currency.
+  @override
   @JsonKey(name: 'price')
   final double price;
-  @override
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
+  @override
   @JsonKey(name: 'priceString')
   final String priceString;
-  @override
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
+  @override
   @JsonKey(name: 'period')
   final String period;
-  @override
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
+  @override
   @JsonKey(name: 'cycles')
   final int cycles;
-  @override
 
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
+  @override
   @Deprecated('Use periodUnit property of type PeriodUnit instead.')
   @JsonKey(name: 'periodUnit')
   final String introPricePeriodUnit;
-  @override
 
   /// Number of units for the billing period of the introductory price.
+  @override
   @JsonKey(name: 'periodNumberOfUnits')
   final int periodNumberOfUnits;
 
@@ -298,7 +261,7 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _IntroductoryPrice &&
+            other is _$_IntroductoryPrice &&
             const DeepCollectionEquality().equals(other.price, price) &&
             const DeepCollectionEquality()
                 .equals(other.priceString, priceString) &&
@@ -310,6 +273,7 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
                 .equals(other.periodNumberOfUnits, periodNumberOfUnits));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -322,8 +286,9 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
 
   @JsonKey(ignore: true)
   @override
-  _$IntroductoryPriceCopyWith<_IntroductoryPrice> get copyWith =>
-      __$IntroductoryPriceCopyWithImpl<_IntroductoryPrice>(this, _$identity);
+  _$$_IntroductoryPriceCopyWith<_$_IntroductoryPrice> get copyWith =>
+      __$$_IntroductoryPriceCopyWithImpl<_$_IntroductoryPrice>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -334,18 +299,18 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
 abstract class _IntroductoryPrice extends IntroductoryPrice {
   const factory _IntroductoryPrice(
       @JsonKey(name: 'price')
-          double price,
+          final double price,
       @JsonKey(name: 'priceString')
-          String priceString,
+          final String priceString,
       @JsonKey(name: 'period')
-          String period,
+          final String period,
       @JsonKey(name: 'cycles')
-          int cycles,
+          final int cycles,
       @Deprecated('Use periodUnit property of type PeriodUnit instead.')
       @JsonKey(name: 'periodUnit')
-          String introPricePeriodUnit,
+          final String introPricePeriodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
-          int periodNumberOfUnits) = _$_IntroductoryPrice;
+          final int periodNumberOfUnits) = _$_IntroductoryPrice;
   const _IntroductoryPrice._() : super._();
 
   factory _IntroductoryPrice.fromJson(Map<String, dynamic> json) =
@@ -355,39 +320,39 @@ abstract class _IntroductoryPrice extends IntroductoryPrice {
 
   /// Introductory price of a subscription in the local currency.
   @JsonKey(name: 'price')
-  double get price;
+  double get price => throw _privateConstructorUsedError;
   @override
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
   @JsonKey(name: 'priceString')
-  String get priceString;
+  String get priceString => throw _privateConstructorUsedError;
   @override
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
   @JsonKey(name: 'period')
-  String get period;
+  String get period => throw _privateConstructorUsedError;
   @override
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
   @JsonKey(name: 'cycles')
-  int get cycles;
+  int get cycles => throw _privateConstructorUsedError;
   @override
 
   /// String representation of unit for the billing period of the introductory
   /// price, can be DAY, WEEK, MONTH or YEAR.
   @Deprecated('Use periodUnit property of type PeriodUnit instead.')
   @JsonKey(name: 'periodUnit')
-  String get introPricePeriodUnit;
+  String get introPricePeriodUnit => throw _privateConstructorUsedError;
   @override
 
   /// Number of units for the billing period of the introductory price.
   @JsonKey(name: 'periodNumberOfUnits')
-  int get periodNumberOfUnits;
+  int get periodNumberOfUnits => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$IntroductoryPriceCopyWith<_IntroductoryPrice> get copyWith =>
+  _$$_IntroductoryPriceCopyWith<_$_IntroductoryPrice> get copyWith =>
       throw _privateConstructorUsedError;
 }

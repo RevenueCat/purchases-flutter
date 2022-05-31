@@ -51,3 +51,14 @@ class Offering with _$Offering {
   factory Offering.fromJson(Map<String, dynamic> json) =>
       _$OfferingFromJson(json);
 }
+
+// Extension needed because this was a deprecation from freezed 1.x that
+// was removed in 2.x. Freezed is no longer including package:collection
+extension PackageListX on List<Package> {
+  Package? firstWhereOrNull(bool Function(Package element) test) {
+    for (final element in this) {
+      if (test(element)) return element;
+    }
+    return null;
+  }
+}

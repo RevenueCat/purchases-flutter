@@ -12,34 +12,11 @@ part of 'store_transaction.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 StoreTransaction _$StoreTransactionFromJson(Map<String, dynamic> json) {
   return _StoreTransaction.fromJson(json);
 }
-
-/// @nodoc
-class _$StoreTransactionTearOff {
-  const _$StoreTransactionTearOff();
-
-  _StoreTransaction call(
-      @JsonKey(name: 'revenueCatIdentifier') String revenueCatIdentifier,
-      @JsonKey(name: 'productIdentifier') String productIdentifier,
-      @JsonKey(name: 'purchaseDate') String purchaseDate) {
-    return _StoreTransaction(
-      revenueCatIdentifier,
-      productIdentifier,
-      purchaseDate,
-    );
-  }
-
-  StoreTransaction fromJson(Map<String, Object?> json) {
-    return StoreTransaction.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $StoreTransaction = _$StoreTransactionTearOff();
 
 /// @nodoc
 mixin _$StoreTransaction {
@@ -105,11 +82,11 @@ class _$StoreTransactionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$StoreTransactionCopyWith<$Res>
+abstract class _$$_StoreTransactionCopyWith<$Res>
     implements $StoreTransactionCopyWith<$Res> {
-  factory _$StoreTransactionCopyWith(
-          _StoreTransaction value, $Res Function(_StoreTransaction) then) =
-      __$StoreTransactionCopyWithImpl<$Res>;
+  factory _$$_StoreTransactionCopyWith(
+          _$_StoreTransaction value, $Res Function(_$_StoreTransaction) then) =
+      __$$_StoreTransactionCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'revenueCatIdentifier') String revenueCatIdentifier,
@@ -118,15 +95,15 @@ abstract class _$StoreTransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StoreTransactionCopyWithImpl<$Res>
+class __$$_StoreTransactionCopyWithImpl<$Res>
     extends _$StoreTransactionCopyWithImpl<$Res>
-    implements _$StoreTransactionCopyWith<$Res> {
-  __$StoreTransactionCopyWithImpl(
-      _StoreTransaction _value, $Res Function(_StoreTransaction) _then)
-      : super(_value, (v) => _then(v as _StoreTransaction));
+    implements _$$_StoreTransactionCopyWith<$Res> {
+  __$$_StoreTransactionCopyWithImpl(
+      _$_StoreTransaction _value, $Res Function(_$_StoreTransaction) _then)
+      : super(_value, (v) => _then(v as _$_StoreTransaction));
 
   @override
-  _StoreTransaction get _value => super._value as _StoreTransaction;
+  _$_StoreTransaction get _value => super._value as _$_StoreTransaction;
 
   @override
   $Res call({
@@ -134,7 +111,7 @@ class __$StoreTransactionCopyWithImpl<$Res>
     Object? productIdentifier = freezed,
     Object? purchaseDate = freezed,
   }) {
-    return _then(_StoreTransaction(
+    return _then(_$_StoreTransaction(
       revenueCatIdentifier == freezed
           ? _value.revenueCatIdentifier
           : revenueCatIdentifier // ignore: cast_nullable_to_non_nullable
@@ -162,19 +139,18 @@ class _$_StoreTransaction implements _StoreTransaction {
   factory _$_StoreTransaction.fromJson(Map<String, dynamic> json) =>
       _$$_StoreTransactionFromJson(json);
 
-  @override
-
   /// RevenueCat Id associated to the transaction.
+  @override
   @JsonKey(name: 'revenueCatIdentifier')
   final String revenueCatIdentifier;
-  @override
 
   /// Product Id associated with the transaction.
+  @override
   @JsonKey(name: 'productIdentifier')
   final String productIdentifier;
-  @override
 
   /// Purchase date of the transaction in ISO 8601 format.
+  @override
   @JsonKey(name: 'purchaseDate')
   final String purchaseDate;
 
@@ -187,7 +163,7 @@ class _$_StoreTransaction implements _StoreTransaction {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _StoreTransaction &&
+            other is _$_StoreTransaction &&
             const DeepCollectionEquality()
                 .equals(other.revenueCatIdentifier, revenueCatIdentifier) &&
             const DeepCollectionEquality()
@@ -196,6 +172,7 @@ class _$_StoreTransaction implements _StoreTransaction {
                 .equals(other.purchaseDate, purchaseDate));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -205,8 +182,8 @@ class _$_StoreTransaction implements _StoreTransaction {
 
   @JsonKey(ignore: true)
   @override
-  _$StoreTransactionCopyWith<_StoreTransaction> get copyWith =>
-      __$StoreTransactionCopyWithImpl<_StoreTransaction>(this, _$identity);
+  _$$_StoreTransactionCopyWith<_$_StoreTransaction> get copyWith =>
+      __$$_StoreTransactionCopyWithImpl<_$_StoreTransaction>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -216,9 +193,12 @@ class _$_StoreTransaction implements _StoreTransaction {
 
 abstract class _StoreTransaction implements StoreTransaction {
   const factory _StoreTransaction(
-      @JsonKey(name: 'revenueCatIdentifier') String revenueCatIdentifier,
-      @JsonKey(name: 'productIdentifier') String productIdentifier,
-      @JsonKey(name: 'purchaseDate') String purchaseDate) = _$_StoreTransaction;
+      @JsonKey(name: 'revenueCatIdentifier')
+          final String revenueCatIdentifier,
+      @JsonKey(name: 'productIdentifier')
+          final String productIdentifier,
+      @JsonKey(name: 'purchaseDate')
+          final String purchaseDate) = _$_StoreTransaction;
 
   factory _StoreTransaction.fromJson(Map<String, dynamic> json) =
       _$_StoreTransaction.fromJson;
@@ -227,19 +207,19 @@ abstract class _StoreTransaction implements StoreTransaction {
 
   /// RevenueCat Id associated to the transaction.
   @JsonKey(name: 'revenueCatIdentifier')
-  String get revenueCatIdentifier;
+  String get revenueCatIdentifier => throw _privateConstructorUsedError;
   @override
 
   /// Product Id associated with the transaction.
   @JsonKey(name: 'productIdentifier')
-  String get productIdentifier;
+  String get productIdentifier => throw _privateConstructorUsedError;
   @override
 
   /// Purchase date of the transaction in ISO 8601 format.
   @JsonKey(name: 'purchaseDate')
-  String get purchaseDate;
+  String get purchaseDate => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$StoreTransactionCopyWith<_StoreTransaction> get copyWith =>
+  _$$_StoreTransactionCopyWith<_$_StoreTransaction> get copyWith =>
       throw _privateConstructorUsedError;
 }

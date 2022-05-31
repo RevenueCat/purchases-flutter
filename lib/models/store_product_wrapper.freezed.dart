@@ -12,52 +12,11 @@ part of 'store_product_wrapper.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 StoreProduct _$StoreProductFromJson(Map<String, dynamic> json) {
   return _StoreProduct.fromJson(json);
 }
-
-/// @nodoc
-class _$StoreProductTearOff {
-  const _$StoreProductTearOff();
-
-  _StoreProduct call(
-      @JsonKey(name: 'identifier')
-          String identifier,
-      @JsonKey(name: 'description')
-          String description,
-      @JsonKey(name: 'title')
-          String title,
-      @JsonKey(name: 'price')
-          double price,
-      @JsonKey(name: 'price_string')
-          String priceString,
-      @JsonKey(name: 'currency_code')
-          String currencyCode,
-      {@JsonKey(name: 'introPrice', nullable: true)
-          IntroductoryPrice? introductoryPrice,
-      @JsonKey(name: 'discounts', nullable: true)
-          List<StoreProductDiscount>? discounts}) {
-    return _StoreProduct(
-      identifier,
-      description,
-      title,
-      price,
-      priceString,
-      currencyCode,
-      introductoryPrice: introductoryPrice,
-      discounts: discounts,
-    );
-  }
-
-  StoreProduct fromJson(Map<String, Object?> json) {
-    return StoreProduct.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $StoreProduct = _$StoreProductTearOff();
 
 /// @nodoc
 mixin _$StoreProduct {
@@ -195,11 +154,11 @@ class _$StoreProductCopyWithImpl<$Res> implements $StoreProductCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$StoreProductCopyWith<$Res>
+abstract class _$$_StoreProductCopyWith<$Res>
     implements $StoreProductCopyWith<$Res> {
-  factory _$StoreProductCopyWith(
-          _StoreProduct value, $Res Function(_StoreProduct) then) =
-      __$StoreProductCopyWithImpl<$Res>;
+  factory _$$_StoreProductCopyWith(
+          _$_StoreProduct value, $Res Function(_$_StoreProduct) then) =
+      __$$_StoreProductCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'identifier')
@@ -224,14 +183,15 @@ abstract class _$StoreProductCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StoreProductCopyWithImpl<$Res> extends _$StoreProductCopyWithImpl<$Res>
-    implements _$StoreProductCopyWith<$Res> {
-  __$StoreProductCopyWithImpl(
-      _StoreProduct _value, $Res Function(_StoreProduct) _then)
-      : super(_value, (v) => _then(v as _StoreProduct));
+class __$$_StoreProductCopyWithImpl<$Res>
+    extends _$StoreProductCopyWithImpl<$Res>
+    implements _$$_StoreProductCopyWith<$Res> {
+  __$$_StoreProductCopyWithImpl(
+      _$_StoreProduct _value, $Res Function(_$_StoreProduct) _then)
+      : super(_value, (v) => _then(v as _$_StoreProduct));
 
   @override
-  _StoreProduct get _value => super._value as _StoreProduct;
+  _$_StoreProduct get _value => super._value as _$_StoreProduct;
 
   @override
   $Res call({
@@ -244,7 +204,7 @@ class __$StoreProductCopyWithImpl<$Res> extends _$StoreProductCopyWithImpl<$Res>
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
   }) {
-    return _then(_StoreProduct(
+    return _then(_$_StoreProduct(
       identifier == freezed
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -274,7 +234,7 @@ class __$StoreProductCopyWithImpl<$Res> extends _$StoreProductCopyWithImpl<$Res>
           : introductoryPrice // ignore: cast_nullable_to_non_nullable
               as IntroductoryPrice?,
       discounts: discounts == freezed
-          ? _value.discounts
+          ? _value._discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
     ));
@@ -285,58 +245,74 @@ class __$StoreProductCopyWithImpl<$Res> extends _$StoreProductCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_StoreProduct implements _StoreProduct {
   const _$_StoreProduct(
-      @JsonKey(name: 'identifier') this.identifier,
-      @JsonKey(name: 'description') this.description,
-      @JsonKey(name: 'title') this.title,
-      @JsonKey(name: 'price') this.price,
-      @JsonKey(name: 'price_string') this.priceString,
-      @JsonKey(name: 'currency_code') this.currencyCode,
-      {@JsonKey(name: 'introPrice', nullable: true) this.introductoryPrice,
-      @JsonKey(name: 'discounts', nullable: true) this.discounts});
+      @JsonKey(name: 'identifier')
+          this.identifier,
+      @JsonKey(name: 'description')
+          this.description,
+      @JsonKey(name: 'title')
+          this.title,
+      @JsonKey(name: 'price')
+          this.price,
+      @JsonKey(name: 'price_string')
+          this.priceString,
+      @JsonKey(name: 'currency_code')
+          this.currencyCode,
+      {@JsonKey(name: 'introPrice', nullable: true)
+          this.introductoryPrice,
+      @JsonKey(name: 'discounts', nullable: true)
+          final List<StoreProductDiscount>? discounts})
+      : _discounts = discounts;
 
   factory _$_StoreProduct.fromJson(Map<String, dynamic> json) =>
       _$$_StoreProductFromJson(json);
 
-  @override
-
   /// Product Id.
+  @override
   @JsonKey(name: 'identifier')
   final String identifier;
-  @override
 
   /// Description of the product.
+  @override
   @JsonKey(name: 'description')
   final String description;
-  @override
 
   /// Title of the product.
+  @override
   @JsonKey(name: 'title')
   final String title;
-  @override
 
   /// Price of the product in the local currency.
+  @override
   @JsonKey(name: 'price')
   final double price;
-  @override
 
   /// Formatted price of the item, including its currency sign.
+  @override
   @JsonKey(name: 'price_string')
   final String priceString;
-  @override
 
   /// Currency code for price and original price.
+  @override
   @JsonKey(name: 'currency_code')
   final String currencyCode;
-  @override
 
   /// Introductory price for product. Can be null.
+  @override
   @JsonKey(name: 'introPrice', nullable: true)
   final IntroductoryPrice? introductoryPrice;
-  @override
 
   /// Collection of discount offers for a product. Null for Android.
+  final List<StoreProductDiscount>? _discounts;
+
+  /// Collection of discount offers for a product. Null for Android.
+  @override
   @JsonKey(name: 'discounts', nullable: true)
-  final List<StoreProductDiscount>? discounts;
+  List<StoreProductDiscount>? get discounts {
+    final value = _discounts;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -347,7 +323,7 @@ class _$_StoreProduct implements _StoreProduct {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _StoreProduct &&
+            other is _$_StoreProduct &&
             const DeepCollectionEquality()
                 .equals(other.identifier, identifier) &&
             const DeepCollectionEquality()
@@ -360,9 +336,11 @@ class _$_StoreProduct implements _StoreProduct {
                 .equals(other.currencyCode, currencyCode) &&
             const DeepCollectionEquality()
                 .equals(other.introductoryPrice, introductoryPrice) &&
-            const DeepCollectionEquality().equals(other.discounts, discounts));
+            const DeepCollectionEquality()
+                .equals(other._discounts, _discounts));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -373,12 +351,12 @@ class _$_StoreProduct implements _StoreProduct {
       const DeepCollectionEquality().hash(priceString),
       const DeepCollectionEquality().hash(currencyCode),
       const DeepCollectionEquality().hash(introductoryPrice),
-      const DeepCollectionEquality().hash(discounts));
+      const DeepCollectionEquality().hash(_discounts));
 
   @JsonKey(ignore: true)
   @override
-  _$StoreProductCopyWith<_StoreProduct> get copyWith =>
-      __$StoreProductCopyWithImpl<_StoreProduct>(this, _$identity);
+  _$$_StoreProductCopyWith<_$_StoreProduct> get copyWith =>
+      __$$_StoreProductCopyWithImpl<_$_StoreProduct>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
@@ -389,21 +367,21 @@ class _$_StoreProduct implements _StoreProduct {
 abstract class _StoreProduct implements StoreProduct {
   const factory _StoreProduct(
       @JsonKey(name: 'identifier')
-          String identifier,
+          final String identifier,
       @JsonKey(name: 'description')
-          String description,
+          final String description,
       @JsonKey(name: 'title')
-          String title,
+          final String title,
       @JsonKey(name: 'price')
-          double price,
+          final double price,
       @JsonKey(name: 'price_string')
-          String priceString,
+          final String priceString,
       @JsonKey(name: 'currency_code')
-          String currencyCode,
+          final String currencyCode,
       {@JsonKey(name: 'introPrice', nullable: true)
-          IntroductoryPrice? introductoryPrice,
+          final IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
-          List<StoreProductDiscount>? discounts}) = _$_StoreProduct;
+          final List<StoreProductDiscount>? discounts}) = _$_StoreProduct;
 
   factory _StoreProduct.fromJson(Map<String, dynamic> json) =
       _$_StoreProduct.fromJson;
@@ -412,44 +390,46 @@ abstract class _StoreProduct implements StoreProduct {
 
   /// Product Id.
   @JsonKey(name: 'identifier')
-  String get identifier;
+  String get identifier => throw _privateConstructorUsedError;
   @override
 
   /// Description of the product.
   @JsonKey(name: 'description')
-  String get description;
+  String get description => throw _privateConstructorUsedError;
   @override
 
   /// Title of the product.
   @JsonKey(name: 'title')
-  String get title;
+  String get title => throw _privateConstructorUsedError;
   @override
 
   /// Price of the product in the local currency.
   @JsonKey(name: 'price')
-  double get price;
+  double get price => throw _privateConstructorUsedError;
   @override
 
   /// Formatted price of the item, including its currency sign.
   @JsonKey(name: 'price_string')
-  String get priceString;
+  String get priceString => throw _privateConstructorUsedError;
   @override
 
   /// Currency code for price and original price.
   @JsonKey(name: 'currency_code')
-  String get currencyCode;
+  String get currencyCode => throw _privateConstructorUsedError;
   @override
 
   /// Introductory price for product. Can be null.
   @JsonKey(name: 'introPrice', nullable: true)
-  IntroductoryPrice? get introductoryPrice;
+  IntroductoryPrice? get introductoryPrice =>
+      throw _privateConstructorUsedError;
   @override
 
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
-  List<StoreProductDiscount>? get discounts;
+  List<StoreProductDiscount>? get discounts =>
+      throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$StoreProductCopyWith<_StoreProduct> get copyWith =>
+  _$$_StoreProductCopyWith<_$_StoreProduct> get copyWith =>
       throw _privateConstructorUsedError;
 }
