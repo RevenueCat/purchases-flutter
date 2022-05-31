@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import '../flavor_config.dart';
+import '../store_config.dart';
 
 class PurchaseTester extends StatelessWidget {
   const PurchaseTester({Key key}) : super(key: key);
