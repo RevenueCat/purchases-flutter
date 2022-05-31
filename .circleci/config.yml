@@ -117,7 +117,7 @@ jobs:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
             # flutter build generates files in android/ for building the app
-            flutter build apk
+            flutter build apk -t lib/main_google_play.dart
             ./gradlew app:assembleAndroidTest
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
       - persist_to_workspace:
@@ -202,10 +202,10 @@ workflows:
       - freezed
   android-integration-test:
     jobs:
-      - android-integration-test-build: *release-tags-and-branches
+      - android-integration-test-build
       - run-firebase-tests:
           requires:
             - android-integration-test-build
   ios-integration-test:
     jobs:
-      - ios-integration-test: *release-tags-and-branches
+      - ios-integration-test
