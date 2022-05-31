@@ -40,10 +40,10 @@ class _MyAppState extends State<InitialScreen> {
     await Purchases.setDebugLogsEnabled(true);
 
     PurchasesConfiguration configuration;
-    if (FlavorConfig.isForAmazonAppstore()) {
-      configuration = AmazonConfiguration(FlavorConfig.instance.apiKey);
+    if (StoreConfig.isForAmazonAppstore()) {
+      configuration = AmazonConfiguration(StoreConfig.instance.apiKey);
     } else {
-      configuration = PurchasesConfiguration(FlavorConfig.instance.apiKey);
+      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
     }
     await Purchases.configure(configuration);
 

@@ -1,33 +1,27 @@
 import 'package:flutter/foundation.dart';
 
-enum Flavor { appleStore, googlePlay, amazonAppstore }
+enum Store { appleStore, googlePlay, amazonAppstore }
 
-class FlavorValues {
-  FlavorValues({@required this.apiKey});
-
+class StoreConfig {
+  final Store store;
   final String apiKey;
-}
+  static StoreConfig _instance;
 
-class FlavorConfig {
-  final Flavor flavor;
-  final String apiKey;
-  static FlavorConfig _instance;
-
-  factory FlavorConfig({@required Flavor flavor, @required String apiKey}) {
-    _instance ??= FlavorConfig._internal(flavor, apiKey);
+  factory StoreConfig({@required Store store, @required String apiKey}) {
+    _instance ??= StoreConfig._internal(store, apiKey);
     return _instance;
   }
 
-  FlavorConfig._internal(this.flavor, this.apiKey);
+  StoreConfig._internal(this.store, this.apiKey);
 
-  static FlavorConfig get instance {
+  static StoreConfig get instance {
     return _instance;
   }
 
-  static bool isForAppleStore() => _instance.flavor == Flavor.appleStore;
+  static bool isForAppleStore() => _instance.store == Store.appleStore;
 
-  static bool isForGooglePlay() => _instance.flavor == Flavor.googlePlay;
+  static bool isForGooglePlay() => _instance.store == Store.googlePlay;
 
   static bool isForAmazonAppstore() =>
-      _instance.flavor == Flavor.amazonAppstore;
+      _instance.store == Store.amazonAppstore;
 }
