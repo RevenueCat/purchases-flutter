@@ -1,10 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:purchases_flutter_example/src/constant.dart';
+import 'package:magic_weather_flutter/src/app.dart';
+import 'package:magic_weather_flutter/src/constant.dart';
 
 import 'store_config.dart';
-import 'src/app.dart';
 
 void main() {
   if (Platform.isIOS || Platform.isMacOS) {
@@ -20,6 +20,5 @@ void main() {
       apiKey: useAmazon ? amazonApiKey : googleApiKey,
     );
   }
-
-  runApp(const PurchaseTester());
+  runApp(const MagicWeatherFlutter());
 }
