@@ -20,8 +20,8 @@ void main() {
   testWidgets('Purchaser info fetched successfully',
       (WidgetTester tester) async {
     try {
-      final purchaserInfo = await Purchases.getPurchaserInfo();
-      expect(purchaserInfo != null, true);
+      final customerInfo = await Purchases.getCustomerInfo();
+      expect(customerInfo != null, true);
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }

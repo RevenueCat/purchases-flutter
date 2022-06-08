@@ -60,6 +60,7 @@ const _$StoreEnumMap = {
   Store.promotional: 'PROMOTIONAL',
   Store.amazon: 'AMAZON',
   Store.unknownStore: 'unknownStore',
+  Store.amazon: 'AMAZON',
 };
 
 const _$PeriodTypeEnumMap = {

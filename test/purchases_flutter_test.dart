@@ -12,7 +12,7 @@ void main() {
   final log = <MethodCall>[];
   dynamic response;
   final randomGenerator = Random(DateTime.now().microsecondsSinceEpoch);
-  final mockPurchaserInfoResponse = {
+  final mockCustomerInfoResponse = {
     'originalAppUserId': 'pepe',
     'entitlements': {'all': {}, 'active': {}},
     'activeSubscriptions': [],
@@ -59,7 +59,8 @@ void main() {
             'apiKey': 'api_key',
             'appUserId': 'cesar',
             'observerMode': true,
-            'userDefaultsSuiteName': null
+            'userDefaultsSuiteName': null,
+            'useAmazon': false
           },
         )
       ],
@@ -172,12 +173,12 @@ void main() {
       final mockCreated = randomGenerator.nextBool();
       response = {
         'created': mockCreated,
-        'purchaserInfo': mockPurchaserInfoResponse
+        'customerInfo': mockCustomerInfoResponse
       };
       final logInResult = await Purchases.logIn('appUserID');
       expect(
-        logInResult.purchaserInfo,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        logInResult.customerInfo,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
       expect(logInResult.created, mockCreated);
     } on PlatformException catch (e) {
@@ -187,11 +188,11 @@ void main() {
 
   test('logOut calls successfully', () async {
     try {
-      response = mockPurchaserInfoResponse;
-      final purchaserInfo = await Purchases.logOut();
+      response = mockCustomerInfoResponse;
+      final customerInfo = await Purchases.logOut();
       expect(
-        purchaserInfo,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        customerInfo,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -337,9 +338,9 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -350,14 +351,14 @@ void main() {
       const mockPackage = Package(
         '\$rc_lifetime',
         PackageType.lifetime,
-        mockProduct,
+        mockStoreProduct,
         'main',
       );
       final purchasePackageResult =
           await Purchases.purchasePackage(mockPackage);
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -368,9 +369,9 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -381,10 +382,10 @@ void main() {
       const mockPackage = Package(
         '\$rc_lifetime',
         PackageType.lifetime,
-        mockProduct,
+        mockStoreProduct,
         'main',
       );
-      const mockPaymentDiscount = PaymentDiscount(
+      const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
         'aKeyIdentifier',
         'aNonce',
@@ -397,7 +398,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -408,9 +409,9 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -419,10 +420,10 @@ void main() {
         'USD',
       );
       final purchasePackageResult =
-          await Purchases.purchaseProduct(mockProduct.identifier);
+          await Purchases.purchaseProduct(mockStoreProduct.identifier);
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -433,9 +434,9 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'purchaserInfo': mockPurchaserInfoResponse
+        'customerInfo': mockCustomerInfoResponse
       };
-      const mockProduct = Product(
+      const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
         'lifetime (PurchasesSample)',
@@ -443,7 +444,7 @@ void main() {
         '\$199.99',
         'USD',
       );
-      const mockPaymentDiscount = PaymentDiscount(
+      const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
         'aKeyIdentifier',
         'aNonce',
@@ -451,12 +452,12 @@ void main() {
         123456,
       );
       final purchasePackageResult = await Purchases.purchaseDiscountedProduct(
-        mockProduct,
+        mockStoreProduct,
         mockPaymentDiscount,
       );
       expect(
         purchasePackageResult,
-        PurchaserInfo.fromJson(mockPurchaserInfoResponse),
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -511,5 +512,99 @@ void main() {
     const introPricePeriodUnitUnknown =
         IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'sadf', 14);
     expect(introPricePeriodUnitUnknown.periodUnit, PeriodUnit.unknown);
+  });
+
+  test('setupPurchases with amazon', () async {
+    await Purchases.setup(
+      'api_key',
+      appUserId: 'cesar',
+      observerMode: true,
+      useAmazon: true,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
+  });
+
+  test('configure with amazon', () async {
+    await Purchases.configure(
+      (AmazonConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..observerMode = true),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
+  });
+
+  test('configure with base configuration', () async {
+    await Purchases.configure(
+      (PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..observerMode = true),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': false
+          },
+        )
+      ],
+    );
+  });
+
+  test('configure with base configuration and using amazon', () async {
+    await Purchases.configure(
+      (PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..observerMode = true
+        ..store = Store.amazon),
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'observerMode': true,
+            'userDefaultsSuiteName': null,
+            'useAmazon': true
+          },
+        )
+      ],
+    );
   });
 }

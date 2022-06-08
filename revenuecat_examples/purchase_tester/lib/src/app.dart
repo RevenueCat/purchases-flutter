@@ -4,12 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-void main() => runApp(
-      const MaterialApp(
-        title: 'RevenueCat Sample',
-        home: InitialScreen(),
-      ),
+import '../store_config.dart';
+
+class PurchaseTester extends StatelessWidget {
+  const PurchaseTester({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      title: 'RevenueCat Sample',
+      home: InitialScreen(),
     );
+  }
+}
 
 // ignore: public_member_api_docs
 class InitialScreen extends StatefulWidget {
@@ -20,7 +27,7 @@ class InitialScreen extends StatefulWidget {
 }
 
 class _MyAppState extends State<InitialScreen> {
-  PurchaserInfo _purchaserInfo;
+  CustomerInfo _customerInfo;
 
   @override
   void initState() {
@@ -31,9 +38,16 @@ class _MyAppState extends State<InitialScreen> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     await Purchases.setDebugLogsEnabled(true);
-    await Purchases.setup('api_key');
 
-    final purchaserInfo = await Purchases.getPurchaserInfo();
+    PurchasesConfiguration configuration;
+    if (StoreConfig.isForAmazonAppstore()) {
+      configuration = AmazonConfiguration(StoreConfig.instance.apiKey);
+    } else {
+      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
+    }
+    await Purchases.configure(configuration);
+
+    final customerInfo = await Purchases.getCustomerInfo();
 
     Purchases.addReadyForPromotedProductPurchaseListener(
         (productID, startPurchase) async {
@@ -44,8 +58,8 @@ class _MyAppState extends State<InitialScreen> {
         final purchaseResult = await startPurchase.call();
         print('Promoted purchase for productID '
             '${purchaseResult.productIdentifier} completed, or product was'
-            'already purchased. purchaserInfo returned is:'
-            ' ${purchaseResult.purchaserInfo}');
+            'already purchased. customerInfo returned is:'
+            ' ${purchaseResult.customerInfo}');
       } on PlatformException catch (e) {
         print('Error purchasing promoted product: ${e.message}');
       }
@@ -57,13 +71,13 @@ class _MyAppState extends State<InitialScreen> {
     if (!mounted) return;
 
     setState(() {
-      _purchaserInfo = purchaserInfo;
+      _customerInfo = customerInfo;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_purchaserInfo == null) {
+    if (_customerInfo == null) {
       return Scaffold(
         appBar: AppBar(title: const Text('RevenueCat Sample App')),
         body: const Center(
@@ -71,7 +85,7 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      final isPro = _purchaserInfo.entitlements.active.containsKey('pro_cat');
+      final isPro = _customerInfo.entitlements.active.containsKey('pro_cat');
       if (isPro) {
         return const CatsScreen();
       } else {
@@ -121,8 +135,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
         final monthly = offering.monthly;
         final lifetime = offering.lifetime;
 
-        if (monthly.product.introductoryPrice != null) {
-          apiTestIntroductoryPrice(monthly.product.introductoryPrice);
+        if (monthly.storeProduct.introductoryPrice != null) {
+          apiTestIntroductoryPrice(monthly.storeProduct.introductoryPrice);
         }
 
         if (monthly != null && lifetime != null) {
@@ -192,8 +206,8 @@ class _PurchaseButton extends StatelessWidget {
   Widget build(BuildContext context) => ElevatedButton(
         onPressed: () async {
           try {
-            final purchaserInfo = await Purchases.purchasePackage(package);
-            final isPro = purchaserInfo.entitlements.all['pro_cat'].isActive;
+            final customerInfo = await Purchases.purchasePackage(package);
+            final isPro = customerInfo.entitlements.all['pro_cat'].isActive;
             if (isPro) {
               return const CatsScreen();
             }
@@ -210,7 +224,7 @@ class _PurchaseButton extends StatelessWidget {
           }
           return const InitialScreen();
         },
-        child: Text('Buy - (${package.product.priceString})'),
+        child: Text('Buy - (${package.storeProduct.priceString})'),
       );
 }
 

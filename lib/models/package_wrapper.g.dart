@@ -10,7 +10,7 @@ _$_Package _$$_PackageFromJson(Map json) => _$_Package(
       json['identifier'] as String,
       $enumDecode(_$PackageTypeEnumMap, json['packageType'],
           unknownValue: PackageType.unknown),
-      Product.fromJson(Map<String, dynamic>.from(json['product'] as Map)),
+      StoreProduct.fromJson(Map<String, dynamic>.from(json['product'] as Map)),
       json['offeringIdentifier'] as String,
     );
 
@@ -18,7 +18,7 @@ Map<String, dynamic> _$$_PackageToJson(_$_Package instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'packageType': _$PackageTypeEnumMap[instance.packageType],
-      'product': instance.product.toJson(),
+      'product': instance.storeProduct.toJson(),
       'offeringIdentifier': instance.offeringIdentifier,
     };
 

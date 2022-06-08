@@ -1,11 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'discount.freezed.dart';
-part 'discount.g.dart';
+part 'store_product_discount.freezed.dart';
+part 'store_product_discount.g.dart';
 
 @freezed
-class Discount with _$Discount {
-  const factory Discount(
+class StoreProductDiscount with _$StoreProductDiscount {
+  const factory StoreProductDiscount(
     /// Identifier of the discount.
     @JsonKey(name: 'identifier') String identifier,
 
@@ -26,8 +26,8 @@ class Discount with _$Discount {
 
     /// Number of units for the billing period of the discount.
     @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits,
-  ) = _Discount;
+  ) = _StoreProductDiscount;
 
-  factory Discount.fromJson(Map<String, dynamic> json) =>
-      _$DiscountFromJson(json);
+  factory StoreProductDiscount.fromJson(Map<String, dynamic> json) =>
+      _$StoreProductDiscountFromJson(json);
 }

@@ -85,8 +85,8 @@ enum PurchasesErrorCode {
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
 class PurchasesErrorHelper {
   /// Use this to convert a PlatformException to a PurchasesErrorCode.
-  /// It will return `PurchasesErrorCode.unknownError` if the error code is not
-  /// in the range of PurchasesErrorCodes.
+  /// It will return [PurchasesErrorCode.unknownError] if the error code is not
+  /// in the range of [PurchasesErrorCode].
   ///
   /// ```
   /// try {

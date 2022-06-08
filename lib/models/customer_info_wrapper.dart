@@ -1,17 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'entitlement_infos_wrapper.dart';
-import 'transaction.dart';
+import 'store_transaction.dart';
 
-part 'purchaser_info_wrapper.freezed.dart';
-part 'purchaser_info_wrapper.g.dart';
+part 'customer_info_wrapper.freezed.dart';
+part 'customer_info_wrapper.g.dart';
 
 @freezed
 
-/// Class containing all information regarding the purchaser
-class PurchaserInfo with _$PurchaserInfo {
-  const factory PurchaserInfo(
-    /// Entitlements attached to this purchaser info
+/// Class containing all information regarding the customer
+class CustomerInfo with _$CustomerInfo {
+  const factory CustomerInfo(
+    /// Entitlements attached to this customer info
     @JsonKey(name: 'entitlements') EntitlementInfos entitlements,
 
     /// Map of skus to purchase dates
@@ -27,7 +27,7 @@ class PurchaserInfo with _$PurchaserInfo {
     /// Returns all the non-subscription purchases a user has made.
     /// The purchases are ordered by purchase date in ascending order.
     @JsonKey(name: 'nonSubscriptionTransactions')
-        List<Transaction> nonSubscriptionTransactions,
+        List<StoreTransaction> nonSubscriptionTransactions,
 
     /// The date this user was first seen in RevenueCat.
     @JsonKey(name: 'firstSeen') String firstSeen,
@@ -66,8 +66,8 @@ class PurchaserInfo with _$PurchaserInfo {
     /// it will point there. If there are no active subscriptions it will be null.
     /// If there are multiple for different platforms, it will point to the device store.
     @JsonKey(name: 'managementURL') String? managementURL,
-  }) = _PurchaserInfo;
+  }) = _CustomerInfo;
 
-  factory PurchaserInfo.fromJson(Map<String, dynamic> json) =>
-      _$PurchaserInfoFromJson(json);
+  factory CustomerInfo.fromJson(Map<String, dynamic> json) =>
+      _$CustomerInfoFromJson(json);
 }
