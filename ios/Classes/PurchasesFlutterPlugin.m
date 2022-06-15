@@ -447,7 +447,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark -
 #pragma mark Delegate Methods
 
-- (void)purchases:(RCPurchases *)purchases didReceiveUpdatedCustomerInfo:(RCCustomerInfo *)customerInfo {
+- (void)purchases:(RCPurchases *)purchases receivedUpdatedCustomerInfo:(RCCustomerInfo *)customerInfo {
     [self.channel invokeMethod:PurchasesCustomerInfoUpdatedEvent
                      arguments:customerInfo.dictionary];
 }
