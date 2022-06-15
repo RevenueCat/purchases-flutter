@@ -318,12 +318,12 @@ class Purchases {
   /// Retrieve this offer using [getPromotionalOffer].
   static Future<CustomerInfo> purchaseDiscountedPackage(
     Package packageToPurchase,
-    PromotionalOffer discount,
+    PromotionalOffer promotionalOffer,
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'signedDiscountTimestamp': discount.timestamp.toString()
+      'signedDiscountTimestamp': promotionalOffer.timestamp.toString()
     });
     return customerInfo;
   }
