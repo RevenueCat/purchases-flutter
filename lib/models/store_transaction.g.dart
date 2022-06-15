@@ -8,14 +8,14 @@ part of 'store_transaction.dart';
 
 _$_StoreTransaction _$$_StoreTransactionFromJson(Map json) =>
     _$_StoreTransaction(
-      json['revenueCatIdentifier'] as String,
-      json['productIdentifier'] as String,
+      json['revenueCatId'] as String,
+      json['productId'] as String,
       json['purchaseDate'] as String,
     );
 
 Map<String, dynamic> _$$_StoreTransactionToJson(_$_StoreTransaction instance) =>
     <String, dynamic>{
-      'revenueCatIdentifier': instance.revenueCatIdentifier,
-      'productIdentifier': instance.productIdentifier,
+      'revenueCatId': instance.revenueCatIdentifier,
+      'productId': instance.productIdentifier,
       'purchaseDate': instance.purchaseDate,
     };

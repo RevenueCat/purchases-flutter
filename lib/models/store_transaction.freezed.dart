@@ -21,11 +21,11 @@ StoreTransaction _$StoreTransactionFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$StoreTransaction {
   /// RevenueCat Id associated to the transaction.
-  @JsonKey(name: 'revenueCatIdentifier')
+  @JsonKey(name: 'revenueCatId')
   String get revenueCatIdentifier => throw _privateConstructorUsedError;
 
   /// Product Id associated with the transaction.
-  @JsonKey(name: 'productIdentifier')
+  @JsonKey(name: 'productId')
   String get productIdentifier => throw _privateConstructorUsedError;
 
   /// Purchase date of the transaction in ISO 8601 format.
@@ -44,8 +44,8 @@ abstract class $StoreTransactionCopyWith<$Res> {
           StoreTransaction value, $Res Function(StoreTransaction) then) =
       _$StoreTransactionCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'revenueCatIdentifier') String revenueCatIdentifier,
-      @JsonKey(name: 'productIdentifier') String productIdentifier,
+      {@JsonKey(name: 'revenueCatId') String revenueCatIdentifier,
+      @JsonKey(name: 'productId') String productIdentifier,
       @JsonKey(name: 'purchaseDate') String purchaseDate});
 }
 
@@ -89,8 +89,8 @@ abstract class _$$_StoreTransactionCopyWith<$Res>
       __$$_StoreTransactionCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'revenueCatIdentifier') String revenueCatIdentifier,
-      @JsonKey(name: 'productIdentifier') String productIdentifier,
+      {@JsonKey(name: 'revenueCatId') String revenueCatIdentifier,
+      @JsonKey(name: 'productId') String productIdentifier,
       @JsonKey(name: 'purchaseDate') String purchaseDate});
 }
 
@@ -132,8 +132,8 @@ class __$$_StoreTransactionCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_StoreTransaction implements _StoreTransaction {
   const _$_StoreTransaction(
-      @JsonKey(name: 'revenueCatIdentifier') this.revenueCatIdentifier,
-      @JsonKey(name: 'productIdentifier') this.productIdentifier,
+      @JsonKey(name: 'revenueCatId') this.revenueCatIdentifier,
+      @JsonKey(name: 'productId') this.productIdentifier,
       @JsonKey(name: 'purchaseDate') this.purchaseDate);
 
   factory _$_StoreTransaction.fromJson(Map<String, dynamic> json) =>
@@ -141,12 +141,12 @@ class _$_StoreTransaction implements _StoreTransaction {
 
   /// RevenueCat Id associated to the transaction.
   @override
-  @JsonKey(name: 'revenueCatIdentifier')
+  @JsonKey(name: 'revenueCatId')
   final String revenueCatIdentifier;
 
   /// Product Id associated with the transaction.
   @override
-  @JsonKey(name: 'productIdentifier')
+  @JsonKey(name: 'productId')
   final String productIdentifier;
 
   /// Purchase date of the transaction in ISO 8601 format.
@@ -193,12 +193,10 @@ class _$_StoreTransaction implements _StoreTransaction {
 
 abstract class _StoreTransaction implements StoreTransaction {
   const factory _StoreTransaction(
-      @JsonKey(name: 'revenueCatIdentifier')
-          final String revenueCatIdentifier,
-      @JsonKey(name: 'productIdentifier')
-          final String productIdentifier,
-      @JsonKey(name: 'purchaseDate')
-          final String purchaseDate) = _$_StoreTransaction;
+          @JsonKey(name: 'revenueCatId') final String revenueCatIdentifier,
+          @JsonKey(name: 'productId') final String productIdentifier,
+          @JsonKey(name: 'purchaseDate') final String purchaseDate) =
+      _$_StoreTransaction;
 
   factory _StoreTransaction.fromJson(Map<String, dynamic> json) =
       _$_StoreTransaction.fromJson;
@@ -206,12 +204,12 @@ abstract class _StoreTransaction implements StoreTransaction {
   @override
 
   /// RevenueCat Id associated to the transaction.
-  @JsonKey(name: 'revenueCatIdentifier')
+  @JsonKey(name: 'revenueCatId')
   String get revenueCatIdentifier => throw _privateConstructorUsedError;
   @override
 
   /// Product Id associated with the transaction.
-  @JsonKey(name: 'productIdentifier')
+  @JsonKey(name: 'productId')
   String get productIdentifier => throw _privateConstructorUsedError;
   @override
 
