@@ -26,15 +26,6 @@ void main() {
     'nonSubscriptionTransactions': []
   };
 
-  final mockIntroductoryPriceJson = {
-    'price': 0.0,
-    'priceString': '\$0.00',
-    'period': 'P2W',
-    'cycles': 1,
-    'periodUnit': 'DAY',
-    'periodNumberOfUnits': 14,
-  };
-
   setUp(() {
     channel.setMockMethodCallHandler((call) async {
       log.add(call);
@@ -76,7 +67,7 @@ void main() {
         'price': 4.99,
         'price_string': '\$4.99',
         'currency_code': 'USD',
-        'introPrice': {
+        'intro_price': {
           'price': 0,
           'priceString': '\$0.00',
           'period': 'P1W',
@@ -85,12 +76,6 @@ void main() {
           'periodNumberOfUnits': 7
         },
         'discounts': null,
-        'intro_price': 0,
-        'intro_price_string': '\$0.00',
-        'intro_price_period': 'P1W',
-        'intro_price_cycles': 1,
-        'intro_price_period_unit': 'DAY',
-        'intro_price_period_number_of_units': 7
       }
     ];
     final list = await Purchases.getProducts(['sku_a']);
@@ -462,56 +447,6 @@ void main() {
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
-  });
-
-  test('IntroductoryPrice has both PeriodUnit enum and periodUnit string',
-      () async {
-    final mockIntroductoryPrice = IntroductoryPrice.fromJson(
-      mockIntroductoryPriceJson,
-    );
-    expect(mockIntroductoryPrice.periodUnit, PeriodUnit.day);
-    expect(mockIntroductoryPrice.introPricePeriodUnit, 'DAY');
-  });
-
-  test('IntroductoryPrice deprecated properties contain same values', () async {
-    final mockIntroPrice = IntroductoryPrice.fromJson(
-      mockIntroductoryPriceJson,
-    );
-    expect(mockIntroPrice.price, mockIntroPrice.introPrice);
-    expect(mockIntroPrice.priceString, mockIntroPrice.introPriceString);
-    expect(mockIntroPrice.period, mockIntroPrice.introPricePeriod);
-    expect(
-      mockIntroPrice.periodNumberOfUnits,
-      mockIntroPrice.introPricePeriodNumberOfUnits,
-    );
-    expect(mockIntroPrice.cycles, mockIntroPrice.introPriceCycles);
-  });
-
-  test('IntroductoryPrice PeriodUnit maps correctly', () async {
-    /// test day
-    const introPricePeriodUnitDay =
-        IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'DAY', 14);
-    expect(introPricePeriodUnitDay.periodUnit, PeriodUnit.day);
-
-    /// test week
-    const introPricePeriodUnitWeek =
-        IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'WEEK', 14);
-    expect(introPricePeriodUnitWeek.periodUnit, PeriodUnit.week);
-
-    /// test month
-    const introPricePeriodUnitMonth =
-        IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'MONTH', 14);
-    expect(introPricePeriodUnitMonth.periodUnit, PeriodUnit.month);
-
-    /// test year
-    const introPricePeriodUnitYear =
-        IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'YEAR', 14);
-    expect(introPricePeriodUnitYear.periodUnit, PeriodUnit.year);
-
-    /// test unknown
-    const introPricePeriodUnitUnknown =
-        IntroductoryPrice(0.0, '\$0.00', 'P2W', 1, 'sadf', 14);
-    expect(introPricePeriodUnitUnknown.periodUnit, PeriodUnit.unknown);
   });
 
   test('setupPurchases with amazon', () async {

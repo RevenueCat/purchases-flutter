@@ -10,21 +10,23 @@ void main() {
       };
 
   test('revenueCatIdentifier is correctly parsed', () {
-    final storeTransaction = StoreTransaction.fromJson(generateStoreTransactionJSON());
+    final storeTransaction =
+        StoreTransaction.fromJson(generateStoreTransactionJSON());
 
     expect(storeTransaction.revenueCatIdentifier, 'abd123cd');
   });
 
   test('productId is correctly parsed', () {
-    final storeTransaction = StoreTransaction.fromJson(generateStoreTransactionJSON());
+    final storeTransaction =
+        StoreTransaction.fromJson(generateStoreTransactionJSON());
 
     expect(storeTransaction.productIdentifier, 'consumable');
   });
 
   test('purchaseDate is correctly parsed', () {
-    final storeTransaction = StoreTransaction.fromJson(generateStoreTransactionJSON());
+    final storeTransaction =
+        StoreTransaction.fromJson(generateStoreTransactionJSON());
 
     expect(storeTransaction.purchaseDate, '2020-04-22T23:35:50.000Z');
   });
-
 }

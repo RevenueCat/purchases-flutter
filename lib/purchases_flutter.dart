@@ -91,13 +91,11 @@ class Purchases {
     String? userDefaultsSuiteName,
     bool useAmazon = false,
   }) {
-    final configuration = (
-        PurchasesConfiguration(apiKey)
-        ..appUserID = appUserId
-        ..observerMode = observerMode
-        ..userDefaultsSuiteName = userDefaultsSuiteName
-        ..store = useAmazon ? Store.amazon : null
-    );
+    final configuration = (PurchasesConfiguration(apiKey)
+      ..appUserID = appUserId
+      ..observerMode = observerMode
+      ..userDefaultsSuiteName = userDefaultsSuiteName
+      ..store = useAmazon ? Store.amazon : null);
     return configure(configuration);
   }
 
@@ -107,16 +105,16 @@ class Purchases {
   static Future<void> configure(
     PurchasesConfiguration purchasesConfiguration,
   ) =>
-    _channel.invokeMethod(
-      'setupPurchases',
-      {
-        'apiKey': purchasesConfiguration.apiKey,
-        'appUserId': purchasesConfiguration.appUserID,
-        'observerMode': purchasesConfiguration.observerMode,
-        'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
-        'useAmazon': purchasesConfiguration.store == Store.amazon
-      },
-    );
+      _channel.invokeMethod(
+        'setupPurchases',
+        {
+          'apiKey': purchasesConfiguration.apiKey,
+          'appUserId': purchasesConfiguration.appUserID,
+          'observerMode': purchasesConfiguration.observerMode,
+          'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
+          'useAmazon': purchasesConfiguration.store == Store.amazon
+        },
+      );
 
   // Default to TRUE, set this to FALSE if you are consuming and acknowledging transactions outside of the Purchases SDK.
   ///
