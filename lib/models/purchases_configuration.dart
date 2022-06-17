@@ -26,15 +26,12 @@ class PurchasesConfiguration {
   /// Required to configure the plugin to be used in the Amazon Appstore.
   /// Values different to [Store.amazon] don't have any effect.
   Store? store;
-
 }
 
 /// A [PurchasesConfiguration] convenience object that
 /// sets [PurchasesConfiguration.store] to [Store.amazon]
 class AmazonConfiguration extends PurchasesConfiguration {
-
   AmazonConfiguration(String apiKey) : super(apiKey) {
     store = Store.amazon;
   }
-
 }

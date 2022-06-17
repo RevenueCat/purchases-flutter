@@ -3,26 +3,25 @@ import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/models/store.dart';
 
 void main() {
-
   Map<String, Object?> generateEntitlementInfoJSON(String store) => {
-    'identifier': 'almost_pro',
-    'isActive': true,
-    'willRenew': true,
-    'periodType': 'NORMAL',
-    'latestPurchaseDateMillis': 1.58759855E9,
-    'latestPurchaseDate': '2020-04-22T23:35:50.000Z',
-    'originalPurchaseDateMillis': 1.591725245E9,
-    'originalPurchaseDate': '2020-06-09T17:54:05.000Z',
-    'expirationDateMillis': null,
-    'expirationDate': null,
-    'productIdentifier': 'consumable',
-    'isSandbox': true,
-    'unsubscribeDetectedAt': null,
-    'unsubscribeDetectedAtMillis': null,
-    'billingIssueDetectedAt': null,
-    'billingIssueDetectedAtMillis': null,
-    'store': store
-  };
+        'identifier': 'almost_pro',
+        'isActive': true,
+        'willRenew': true,
+        'periodType': 'NORMAL',
+        'latestPurchaseDateMillis': 1.58759855E9,
+        'latestPurchaseDate': '2020-04-22T23:35:50.000Z',
+        'originalPurchaseDateMillis': 1.591725245E9,
+        'originalPurchaseDate': '2020-06-09T17:54:05.000Z',
+        'expirationDateMillis': null,
+        'expirationDate': null,
+        'productIdentifier': 'consumable',
+        'isSandbox': true,
+        'unsubscribeDetectedAt': null,
+        'unsubscribeDetectedAtMillis': null,
+        'billingIssueDetectedAt': null,
+        'billingIssueDetectedAtMillis': null,
+        'store': store
+      };
 
   test('unknown period if missing from json', () {
     final entitlementInfoJson = {

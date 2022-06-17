@@ -39,11 +39,10 @@ mixin _$IntroductoryPrice {
   @JsonKey(name: 'cycles')
   int get cycles => throw _privateConstructorUsedError;
 
-  /// String representation of unit for the billing period of the introductory
-  /// price, can be DAY, WEEK, MONTH or YEAR.
-  @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-  @JsonKey(name: 'periodUnit')
-  String get introPricePeriodUnit => throw _privateConstructorUsedError;
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
+  @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+  PeriodUnit get periodUnit => throw _privateConstructorUsedError;
 
   /// Number of units for the billing period of the introductory price.
   @JsonKey(name: 'periodNumberOfUnits')
@@ -69,9 +68,8 @@ abstract class $IntroductoryPriceCopyWith<$Res> {
           String period,
       @JsonKey(name: 'cycles')
           int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-      @JsonKey(name: 'periodUnit')
-          String introPricePeriodUnit,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          PeriodUnit periodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
           int periodNumberOfUnits});
 }
@@ -91,7 +89,7 @@ class _$IntroductoryPriceCopyWithImpl<$Res>
     Object? priceString = freezed,
     Object? period = freezed,
     Object? cycles = freezed,
-    Object? introPricePeriodUnit = freezed,
+    Object? periodUnit = freezed,
     Object? periodNumberOfUnits = freezed,
   }) {
     return _then(_value.copyWith(
@@ -111,10 +109,10 @@ class _$IntroductoryPriceCopyWithImpl<$Res>
           ? _value.cycles
           : cycles // ignore: cast_nullable_to_non_nullable
               as int,
-      introPricePeriodUnit: introPricePeriodUnit == freezed
-          ? _value.introPricePeriodUnit
-          : introPricePeriodUnit // ignore: cast_nullable_to_non_nullable
-              as String,
+      periodUnit: periodUnit == freezed
+          ? _value.periodUnit
+          : periodUnit // ignore: cast_nullable_to_non_nullable
+              as PeriodUnit,
       periodNumberOfUnits: periodNumberOfUnits == freezed
           ? _value.periodNumberOfUnits
           : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
@@ -139,9 +137,8 @@ abstract class _$$_IntroductoryPriceCopyWith<$Res>
           String period,
       @JsonKey(name: 'cycles')
           int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-      @JsonKey(name: 'periodUnit')
-          String introPricePeriodUnit,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          PeriodUnit periodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
           int periodNumberOfUnits});
 }
@@ -163,7 +160,7 @@ class __$$_IntroductoryPriceCopyWithImpl<$Res>
     Object? priceString = freezed,
     Object? period = freezed,
     Object? cycles = freezed,
-    Object? introPricePeriodUnit = freezed,
+    Object? periodUnit = freezed,
     Object? periodNumberOfUnits = freezed,
   }) {
     return _then(_$_IntroductoryPrice(
@@ -183,10 +180,10 @@ class __$$_IntroductoryPriceCopyWithImpl<$Res>
           ? _value.cycles
           : cycles // ignore: cast_nullable_to_non_nullable
               as int,
-      introPricePeriodUnit == freezed
-          ? _value.introPricePeriodUnit
-          : introPricePeriodUnit // ignore: cast_nullable_to_non_nullable
-              as String,
+      periodUnit == freezed
+          ? _value.periodUnit
+          : periodUnit // ignore: cast_nullable_to_non_nullable
+              as PeriodUnit,
       periodNumberOfUnits == freezed
           ? _value.periodNumberOfUnits
           : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
@@ -197,7 +194,7 @@ class __$$_IntroductoryPriceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_IntroductoryPrice extends _IntroductoryPrice {
+class _$_IntroductoryPrice implements _IntroductoryPrice {
   const _$_IntroductoryPrice(
       @JsonKey(name: 'price')
           this.price,
@@ -207,12 +204,10 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
           this.period,
       @JsonKey(name: 'cycles')
           this.cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-      @JsonKey(name: 'periodUnit')
-          this.introPricePeriodUnit,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          this.periodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
-          this.periodNumberOfUnits)
-      : super._();
+          this.periodNumberOfUnits);
 
   factory _$_IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
       _$$_IntroductoryPriceFromJson(json);
@@ -240,12 +235,11 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
   @JsonKey(name: 'cycles')
   final int cycles;
 
-  /// String representation of unit for the billing period of the introductory
-  /// price, can be DAY, WEEK, MONTH or YEAR.
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
   @override
-  @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-  @JsonKey(name: 'periodUnit')
-  final String introPricePeriodUnit;
+  @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+  final PeriodUnit periodUnit;
 
   /// Number of units for the billing period of the introductory price.
   @override
@@ -254,7 +248,7 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
 
   @override
   String toString() {
-    return 'IntroductoryPrice(price: $price, priceString: $priceString, period: $period, cycles: $cycles, introPricePeriodUnit: $introPricePeriodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
+    return 'IntroductoryPrice(price: $price, priceString: $priceString, period: $period, cycles: $cycles, periodUnit: $periodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
   }
 
   @override
@@ -268,7 +262,7 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
             const DeepCollectionEquality().equals(other.period, period) &&
             const DeepCollectionEquality().equals(other.cycles, cycles) &&
             const DeepCollectionEquality()
-                .equals(other.introPricePeriodUnit, introPricePeriodUnit) &&
+                .equals(other.periodUnit, periodUnit) &&
             const DeepCollectionEquality()
                 .equals(other.periodNumberOfUnits, periodNumberOfUnits));
   }
@@ -281,7 +275,7 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
       const DeepCollectionEquality().hash(priceString),
       const DeepCollectionEquality().hash(period),
       const DeepCollectionEquality().hash(cycles),
-      const DeepCollectionEquality().hash(introPricePeriodUnit),
+      const DeepCollectionEquality().hash(periodUnit),
       const DeepCollectionEquality().hash(periodNumberOfUnits));
 
   @JsonKey(ignore: true)
@@ -296,7 +290,7 @@ class _$_IntroductoryPrice extends _IntroductoryPrice {
   }
 }
 
-abstract class _IntroductoryPrice extends IntroductoryPrice {
+abstract class _IntroductoryPrice implements IntroductoryPrice {
   const factory _IntroductoryPrice(
       @JsonKey(name: 'price')
           final double price,
@@ -306,12 +300,10 @@ abstract class _IntroductoryPrice extends IntroductoryPrice {
           final String period,
       @JsonKey(name: 'cycles')
           final int cycles,
-      @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-      @JsonKey(name: 'periodUnit')
-          final String introPricePeriodUnit,
+      @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+          final PeriodUnit periodUnit,
       @JsonKey(name: 'periodNumberOfUnits')
           final int periodNumberOfUnits) = _$_IntroductoryPrice;
-  const _IntroductoryPrice._() : super._();
 
   factory _IntroductoryPrice.fromJson(Map<String, dynamic> json) =
       _$_IntroductoryPrice.fromJson;
@@ -341,11 +333,10 @@ abstract class _IntroductoryPrice extends IntroductoryPrice {
   int get cycles => throw _privateConstructorUsedError;
   @override
 
-  /// String representation of unit for the billing period of the introductory
-  /// price, can be DAY, WEEK, MONTH or YEAR.
-  @Deprecated('Use periodUnit property of type PeriodUnit instead.')
-  @JsonKey(name: 'periodUnit')
-  String get introPricePeriodUnit => throw _privateConstructorUsedError;
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
+  @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
+  PeriodUnit get periodUnit => throw _privateConstructorUsedError;
   @override
 
   /// Number of units for the billing period of the introductory price.
