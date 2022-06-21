@@ -24,32 +24,35 @@ void main() {
     expect(mockIntroPrice.cycles, 1);
   });
 
-  test('IntroductoryPrice PeriodUnit maps correctly', () async {
-    /// test day
+  test('IntroductoryPrice PeriodUnit.day maps correctly', () async {
     final mockIntroPriceDay = IntroductoryPrice.fromJson(
       mockIntroductoryPriceJson(),
     );
     expect(mockIntroPriceDay.periodUnit, PeriodUnit.day);
+  });
 
-    /// test week
+  test('IntroductoryPrice PeriodUnit.week maps correctly', () async {
     final mockIntroPriceWeek = IntroductoryPrice.fromJson(
       mockIntroductoryPriceJson(periodUnit: 'WEEK'),
     );
     expect(mockIntroPriceWeek.periodUnit, PeriodUnit.week);
+  });
 
-    /// test month
+  test('IntroductoryPrice PeriodUnit.month maps correctly', () async {
     final mockIntroPriceMonth = IntroductoryPrice.fromJson(
       mockIntroductoryPriceJson(periodUnit: 'MONTH'),
     );
     expect(mockIntroPriceMonth.periodUnit, PeriodUnit.month);
+  });
 
-    /// test year
+  test('IntroductoryPrice PeriodUnit.year maps correctly', () async {
     final mockIntroPriceYear = IntroductoryPrice.fromJson(
       mockIntroductoryPriceJson(periodUnit: 'YEAR'),
     );
     expect(mockIntroPriceYear.periodUnit, PeriodUnit.year);
+  });
 
-    /// test unknown
+  test('IntroductoryPrice PeriodUnit.unknown maps correctly', () async {
     final mockIntroPriceUnknown = IntroductoryPrice.fromJson(
       mockIntroductoryPriceJson(periodUnit: 'asdf'),
     );
