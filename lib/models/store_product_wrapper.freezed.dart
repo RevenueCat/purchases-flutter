@@ -45,7 +45,7 @@ mixin _$StoreProduct {
   String get currencyCode => throw _privateConstructorUsedError;
 
   /// Introductory price for product. Can be null.
-  @JsonKey(name: 'introPrice', nullable: true)
+  @JsonKey(name: 'intro_price', nullable: true)
   IntroductoryPrice? get introductoryPrice =>
       throw _privateConstructorUsedError;
 
@@ -78,7 +78,7 @@ abstract class $StoreProductCopyWith<$Res> {
           String priceString,
       @JsonKey(name: 'currency_code')
           String currencyCode,
-      @JsonKey(name: 'introPrice', nullable: true)
+      @JsonKey(name: 'intro_price', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts});
@@ -173,7 +173,7 @@ abstract class _$$_StoreProductCopyWith<$Res>
           String priceString,
       @JsonKey(name: 'currency_code')
           String currencyCode,
-      @JsonKey(name: 'introPrice', nullable: true)
+      @JsonKey(name: 'intro_price', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts});
@@ -257,7 +257,7 @@ class _$_StoreProduct implements _StoreProduct {
           this.priceString,
       @JsonKey(name: 'currency_code')
           this.currencyCode,
-      {@JsonKey(name: 'introPrice', nullable: true)
+      {@JsonKey(name: 'intro_price', nullable: true)
           this.introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts})
@@ -298,7 +298,7 @@ class _$_StoreProduct implements _StoreProduct {
 
   /// Introductory price for product. Can be null.
   @override
-  @JsonKey(name: 'introPrice', nullable: true)
+  @JsonKey(name: 'intro_price', nullable: true)
   final IntroductoryPrice? introductoryPrice;
 
   /// Collection of discount offers for a product. Null for Android.
@@ -378,7 +378,7 @@ abstract class _StoreProduct implements StoreProduct {
           final String priceString,
       @JsonKey(name: 'currency_code')
           final String currencyCode,
-      {@JsonKey(name: 'introPrice', nullable: true)
+      {@JsonKey(name: 'intro_price', nullable: true)
           final IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts}) = _$_StoreProduct;
@@ -419,7 +419,7 @@ abstract class _StoreProduct implements StoreProduct {
   @override
 
   /// Introductory price for product. Can be null.
-  @JsonKey(name: 'introPrice', nullable: true)
+  @JsonKey(name: 'intro_price', nullable: true)
   IntroductoryPrice? get introductoryPrice =>
       throw _privateConstructorUsedError;
   @override
