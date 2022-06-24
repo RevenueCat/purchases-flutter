@@ -79,6 +79,28 @@ commands:
           name: Flutter doctor
           command: flutter doctor
 
+  install-gem-dependencies:
+    parameters:
+      directory:
+        type: string
+        default: .
+    steps:
+      # Bundler
+      - restore_cache:
+          keys:
+            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Bundle install
+          working_directory: << parameters.directory >>
+          command: |
+            bundle config set --local clean 'true'
+            bundle config set --local path 'vendor/bundle'
+            bundle install
+      - save_cache:
+          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -112,6 +134,7 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
+      - install-gem-dependencies
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
