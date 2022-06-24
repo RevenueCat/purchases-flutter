@@ -21,6 +21,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Increment build number and update changelog
 
+### run_api_tests
+
+```sh
+[bundle exec] fastlane run_api_tests
+```
+
+Builds and analyzes the api_tester project to make sure APIs are expected
+
 ----
 
 

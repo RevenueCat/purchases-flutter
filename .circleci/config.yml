@@ -106,6 +106,16 @@ jobs:
           name: Run tests
           command: flutter test
 
+  api_test:
+    description: "Run API tests for Flutter"
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run:
+          name: Run API tests
+          command: bundle exec fastlane run_api_tests
+
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
     docker:
@@ -199,6 +209,7 @@ workflows:
     jobs:
       - lint
       - test
+      - api_test
       - freezed
   android-integration-test:
     jobs:
