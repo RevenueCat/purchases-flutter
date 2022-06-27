@@ -104,10 +104,8 @@ end
 
 def check_api_tester_imports_up_to_date
   api_test_files = Dir
-    .glob("../api_tester/lib/**/*.dart")
+    .glob("../api_tester/lib/api_tests/**/*.dart")
     .reject { |file_path| File.directory?(file_path) }
-    .reject { |file_path| file_path.end_with?("main.dart") }
-    .reject { |file_path| file_path.end_with?("api_tests_import.dart") }
   import_file_lines = File.readlines("../api_tester/lib/api_tests_import.dart")
   api_test_files.each do |file_path|
     file_name = File.basename(file_path)
