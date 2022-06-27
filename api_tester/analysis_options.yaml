@@ -11,6 +11,7 @@ include: package:flutter_lints/flutter.yaml
 
 analyzer:
   errors:
+    # make sure flutter analyze catches missing case in the api tests
     missing_enum_constant_in_switch: error
     depend_on_referenced_packages: ignore
 

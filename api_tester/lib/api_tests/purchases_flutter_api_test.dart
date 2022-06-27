@@ -62,22 +62,18 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkGetOfferings() async {
-    Future<Offerings> offeringsFuture = Purchases.getOfferings();
     Offerings offerings = await Purchases.getOfferings();
   }
 
   void _checkGetProducts() async {
     List<String> productIdentifiers = List.empty();
     PurchaseType purchaseType = PurchaseType.subs;
-    Future<List<StoreProduct>> productsFuture = Purchases.getProducts(
-        productIdentifiers,
-        type: purchaseType
-    );
-    productsFuture = Purchases.getProducts(
-        productIdentifiers
-    );
     List<StoreProduct> products = await Purchases.getProducts(
         productIdentifiers
+    );
+    products = await Purchases.getProducts(
+      productIdentifiers,
+      type: purchaseType
     );
   }
 
@@ -85,28 +81,19 @@ class _PurchasesFlutterApiTest {
     String productIdentifier = "fakeProductId";
     UpgradeInfo? upgradeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
-    Future<CustomerInfo> customerInfoFuture = Purchases.purchaseProduct(
-      productIdentifier,
-      upgradeInfo: upgradeInfo,
-      type: purchaseType
-    );
-    customerInfoFuture = Purchases.purchaseProduct(
-        productIdentifier,
-        upgradeInfo: upgradeInfo
-    );
     CustomerInfo customerInfo = await Purchases.purchaseProduct(
         productIdentifier,
         upgradeInfo: upgradeInfo,
         type: purchaseType
     );
+    customerInfo = await Purchases.purchaseProduct(
+        productIdentifier,
+        upgradeInfo: upgradeInfo
+    );
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
-    Future<CustomerInfo> customerInfoFuture = Purchases.purchasePackage(
-        package,
-        upgradeInfo: upgradeInfo
-    );
     CustomerInfo customerInfo = await Purchases.purchasePackage(
         package,
         upgradeInfo: upgradeInfo
@@ -117,11 +104,6 @@ class _PurchasesFlutterApiTest {
       StoreProduct product,
       PromotionalOffer offer
       ) async {
-    Future<CustomerInfo> customerInfoFuture;
-    customerInfoFuture = Purchases.purchaseDiscountedProduct(
-        product,
-        offer
-    );
     CustomerInfo customerInfo = await Purchases.purchaseDiscountedProduct(
         product,
         offer
@@ -132,11 +114,6 @@ class _PurchasesFlutterApiTest {
       Package package,
       PromotionalOffer offer
       ) async {
-    Future<CustomerInfo> customerInfoFuture;
-    customerInfoFuture = Purchases.purchaseDiscountedPackage(
-        package,
-        offer
-    );
     CustomerInfo customerInfo = await Purchases.purchaseDiscountedPackage(
         package,
         offer
@@ -144,22 +121,18 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkRestorePurchases() async {
-    Future<CustomerInfo> customerInfoFuture = Purchases.restorePurchases();
     CustomerInfo customerInfo = await Purchases.restorePurchases();
   }
 
   void _checkAppUserId() async {
-    Future<String> appUserIdFuture = Purchases.appUserID;
     String appUserId = await Purchases.appUserID;
   }
 
   void _checkLogIn() async {
-    Future<LogInResult> logInResultFuture = Purchases.logIn("fakeUserId");
     LogInResult logInResult = await Purchases.logIn("fakeUserId");
   }
 
   void _checkLogOut() async {
-    Future<CustomerInfo> customerInfoFuture = Purchases.logOut();
     CustomerInfo customerInfo = await Purchases.logOut();
   }
 
@@ -183,7 +156,6 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkGetCustomerInfo() async {
-    Future<CustomerInfo> customerInfoFuture = Purchases.getCustomerInfo();
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
   }
 
@@ -198,21 +170,15 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkIsAnonymous() async {
-    Future<bool> isAnonymousFuture = Purchases.isAnonymous;
     bool isAnonymous = await Purchases.isAnonymous;
   }
 
   void _checkIsConfigured() async {
-    Future<bool> isConfiguredFuture = Purchases.isConfigured;
     bool isConfigured = await Purchases.isConfigured;
   }
 
   void _checkCheckTrialOrIntroductoryPriceEligibility() async {
-    Future<Map<String, IntroEligibility>> resultFuture;
     List<String> productIdentifiers = List.empty();
-    resultFuture = Purchases.checkTrialOrIntroductoryPriceEligibility(
-      productIdentifiers
-    );
     Map<String, IntroEligibility> result;
     result = await Purchases.checkTrialOrIntroductoryPriceEligibility(
       productIdentifiers
@@ -279,7 +245,6 @@ class _PurchasesFlutterApiTest {
 
   void _checkSetAirshipChannelId() async {
     String id = "fakeId";
-    Future<void> future = Purchases.setAirshipChannelID(id);
     await Purchases.setAirshipChannelID(id);
   }
 
@@ -319,19 +284,14 @@ class _PurchasesFlutterApiTest {
 
   void _checkCanMakePayments() async {
     List<BillingFeature> features = List.empty();
-    Future<void> future = Purchases.canMakePayments();
-    future = Purchases.canMakePayments(features);
     await Purchases.canMakePayments();
+    await Purchases.canMakePayments(features);
   }
 
   void _checkGetPromotionalOffer(
       StoreProduct product,
       StoreProductDiscount discount
       ) async {
-    Future<PromotionalOffer> future = Purchases.getPromotionalOffer(
-        product,
-        discount
-    );
     PromotionalOffer offer = await Purchases.getPromotionalOffer(
         product,
         discount
