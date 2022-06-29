@@ -32,6 +32,13 @@ lane :bump_and_update_changelog do |options|
   increment_version_in_pubspec(previous_version, new_version_number)
 end
 
+desc "Builds and analyzes the api_tester project to make sure APIs are expected"
+lane :run_api_tests do |options|
+  check_api_tester_imports_up_to_date
+  build_api_tester_apk
+  analyze_api_tester
+end
+
 platform :ios do
   desc "Increment build number"
   lane :bump do |options|
@@ -93,4 +100,29 @@ def replace_in(previous_text, new_text, path)
   sed_regex = 's|' + previous_text + '|' + new_text + '|'
   backup_extension = '.bck'
   sh("sed", '-i', backup_extension, sed_regex, path)
+end
+
+def check_api_tester_imports_up_to_date
+  api_test_files = Dir
+    .glob("../api_tester/lib/api_tests/**/*.dart")
+    .reject { |file_path| File.directory?(file_path) }
+  import_file_lines = File.readlines("../api_tester/lib/api_tests_import.dart")
+  api_test_files.each do |file_path|
+    file_name = File.basename(file_path)
+    unless import_file_lines.any? { |line| line.include?(file_name) }
+      UI.user_error!("api_tester api_tests_import.dart is not up-to-date. Missing #{file_name}")
+    end
+  end
+end
+
+def build_api_tester_apk
+  Dir.chdir("../api_tester") do
+    sh("flutter", "build", "apk", "--debug")
+  end
+end
+
+def analyze_api_tester
+  Dir.chdir("../api_tester") do
+    sh("flutter", "analyze")
+  end
 end
