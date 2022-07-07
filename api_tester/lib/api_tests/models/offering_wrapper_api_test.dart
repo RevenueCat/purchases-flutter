@@ -21,25 +21,17 @@ class _OfferingApiTest {
       Package? threeMonth,
       Package? twoMonth,
       Package? monthly,
-      Package? weekly
-      ) {
-    Offering offering = Offering(
-        identifier,
-        serverDescription,
-        availablePackages
-    );
-    offering = Offering(
-        identifier,
-        serverDescription,
-        availablePackages,
+      Package? weekly) {
+    Offering offering =
+        Offering(identifier, serverDescription, availablePackages);
+    offering = Offering(identifier, serverDescription, availablePackages,
         lifetime: lifetime,
         annual: annual,
         sixMonth: sixMonth,
         threeMonth: threeMonth,
         twoMonth: twoMonth,
         monthly: monthly,
-        weekly: weekly
-    );
+        weekly: weekly);
   }
 
   void _checkProperties(Offering offering) {

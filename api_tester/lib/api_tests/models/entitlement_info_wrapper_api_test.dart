@@ -4,7 +4,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 // ignore_for_file: unused_local_variable
 class _EntitlementInfoApiTest {
   void _checkPeriodType(PeriodType type) {
-    switch(type) {
+    switch (type) {
       case PeriodType.intro:
       case PeriodType.normal:
       case PeriodType.trial:
@@ -14,7 +14,7 @@ class _EntitlementInfoApiTest {
   }
 
   void _checkOwnershipType(OwnershipType type) {
-    switch(type) {
+    switch (type) {
       case OwnershipType.purchased:
       case OwnershipType.familyShared:
       case OwnershipType.unknown:
@@ -43,8 +43,7 @@ class _EntitlementInfoApiTest {
       PeriodType periodType,
       String? expirationDate,
       String? unsubscribeDetectedAt,
-      String? billingIssueDetectedAt
-      ) {
+      String? billingIssueDetectedAt) {
     EntitlementInfo entitlementInfo = EntitlementInfo(
         identifier,
         isActive,
@@ -52,23 +51,15 @@ class _EntitlementInfoApiTest {
         latestPurchaseDate,
         originalPurchaseDate,
         productIdentifier,
-        isSandbox
-    );
-    entitlementInfo = EntitlementInfo(
-        identifier,
-        isActive,
-        willRenew,
-        latestPurchaseDate,
-        originalPurchaseDate,
-        productIdentifier,
-        isSandbox,
+        isSandbox);
+    entitlementInfo = EntitlementInfo(identifier, isActive, willRenew,
+        latestPurchaseDate, originalPurchaseDate, productIdentifier, isSandbox,
         ownershipType: ownershipType,
         store: store,
         periodType: periodType,
         expirationDate: expirationDate,
         unsubscribeDetectedAt: unsubscribeDetectedAt,
-        billingIssueDetectedAt: billingIssueDetectedAt
-    );
+        billingIssueDetectedAt: billingIssueDetectedAt);
   }
 
   void _checkProperties(EntitlementInfo info) {

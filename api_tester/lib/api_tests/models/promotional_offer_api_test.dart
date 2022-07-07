@@ -11,20 +11,10 @@ class _PromotionalOfferApiTest {
     Map<String, dynamic> json = offer.toJson();
   }
 
-  void _checkConstructor(
-      String identifier,
-      String keyIdentifier,
-      String nonce,
-      String signature,
-      int timestamp
-      ) {
+  void _checkConstructor(String identifier, String keyIdentifier, String nonce,
+      String signature, int timestamp) {
     PromotionalOffer offer = PromotionalOffer(
-        identifier,
-        keyIdentifier,
-        nonce,
-        signature,
-        timestamp
-    );
+        identifier, keyIdentifier, nonce, signature, timestamp);
   }
 
   void _checkProperties(PromotionalOffer offer) {

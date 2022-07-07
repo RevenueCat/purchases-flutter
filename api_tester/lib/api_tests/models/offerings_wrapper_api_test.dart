@@ -11,10 +11,7 @@ class _OfferingsApiTest {
     Map<String, dynamic> json = offerings.toJson();
   }
 
-  void _checkConstructor(
-      Map<String, Offering> all,
-      Offering? current
-      ) {
+  void _checkConstructor(Map<String, Offering> all, Offering? current) {
     Offerings offerings = Offerings(all);
     offerings = Offerings(all, current: current);
   }

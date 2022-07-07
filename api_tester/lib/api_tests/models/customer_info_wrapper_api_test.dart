@@ -24,8 +24,7 @@ class _CustomerInfoApiTest {
       String? latestExpirationDate,
       String? originalPurchaseDate,
       String? originalApplicationVersion,
-      String? managementURL
-      ) {
+      String? managementURL) {
     CustomerInfo customerInfo = CustomerInfo(
         entitlements,
         allPurchaseDates,
@@ -35,8 +34,7 @@ class _CustomerInfoApiTest {
         firstSeen,
         originalAppUserId,
         allExpirationDates,
-        requestDate
-    );
+        requestDate);
     customerInfo = CustomerInfo(
         entitlements,
         allPurchaseDates,
@@ -50,8 +48,7 @@ class _CustomerInfoApiTest {
         latestExpirationDate: latestExpirationDate,
         originalPurchaseDate: originalPurchaseDate,
         originalApplicationVersion: originalApplicationVersion,
-        managementURL: managementURL
-    );
+        managementURL: managementURL);
   }
 
   void _checkProperties(CustomerInfo customerInfo) {

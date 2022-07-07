@@ -4,7 +4,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 // ignore_for_file: unused_local_variable
 class _PackageApiTest {
   void _checkPackageType(PackageType type) {
-    switch(type) {
+    switch (type) {
       case PackageType.unknown:
       case PackageType.custom:
       case PackageType.lifetime:
@@ -26,18 +26,10 @@ class _PackageApiTest {
     Map<String, dynamic> json = package.toJson();
   }
 
-  void _checkConstructor(
-      String identifier,
-      PackageType packageType,
-      StoreProduct storeProduct,
-      String offeringIdentifier
-      ) {
-    Package package = Package(
-        identifier,
-        packageType,
-        storeProduct,
-        offeringIdentifier
-    );
+  void _checkConstructor(String identifier, PackageType packageType,
+      StoreProduct storeProduct, String offeringIdentifier) {
+    Package package =
+        Package(identifier, packageType, storeProduct, offeringIdentifier);
   }
 
   void _checkProperties(Package package) {
