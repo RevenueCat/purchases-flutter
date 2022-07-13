@@ -17,7 +17,7 @@ _$_Package _$$_PackageFromJson(Map json) => _$_Package(
 Map<String, dynamic> _$$_PackageToJson(_$_Package instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
-      'packageType': _$PackageTypeEnumMap[instance.packageType],
+      'packageType': _$PackageTypeEnumMap[instance.packageType]!,
       'product': instance.storeProduct.toJson(),
       'offeringIdentifier': instance.offeringIdentifier,
     };

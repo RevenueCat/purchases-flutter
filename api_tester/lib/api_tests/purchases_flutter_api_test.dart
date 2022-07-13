@@ -4,20 +4,17 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 // ignore_for_file: unused_local_variable
 // ignore_for_file: deprecated_member_use
 class _PurchasesFlutterApiTest {
-
   void _checkSetup() {
     String apiKey = "fakeApiKey";
     String? userId = "fakeUserId";
     bool observerMode = false;
     String? userDefaultsSuiteName = "fakeSuiteName";
     bool useAmazon = false;
-    Future<void> callback = Purchases.setup(
-      apiKey,
-      appUserId: userId,
-      observerMode: observerMode,
-      userDefaultsSuiteName: userDefaultsSuiteName,
-      useAmazon: useAmazon
-    );
+    Future<void> callback = Purchases.setup(apiKey,
+        appUserId: userId,
+        observerMode: observerMode,
+        userDefaultsSuiteName: userDefaultsSuiteName,
+        useAmazon: useAmazon);
   }
 
   void _checkConfigure() {
@@ -46,18 +43,14 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkAddReadyForPromotedProductPurchaseListener() {
-    void listener(
-        String productIdentifier,
-        Future<PromotedPurchaseResult> Function() startPurchase
-        ) {}
+    void listener(String productIdentifier,
+        Future<PromotedPurchaseResult> Function() startPurchase) {}
     Purchases.addReadyForPromotedProductPurchaseListener(listener);
   }
 
   void _checkRemoveReadyForPromotedProductPurchaseListener() {
-    void listener(
-        String productIdentifier,
-        Future<PromotedPurchaseResult> Function() startPurchase
-        ) {}
+    void listener(String productIdentifier,
+        Future<PromotedPurchaseResult> Function() startPurchase) {}
     Purchases.removeReadyForPromotedProductPurchaseListener(listener);
   }
 
@@ -68,13 +61,10 @@ class _PurchasesFlutterApiTest {
   void _checkGetProducts() async {
     List<String> productIdentifiers = List.empty();
     PurchaseType purchaseType = PurchaseType.subs;
-    List<StoreProduct> products = await Purchases.getProducts(
-        productIdentifiers
-    );
-    products = await Purchases.getProducts(
-      productIdentifiers,
-      type: purchaseType
-    );
+    List<StoreProduct> products =
+        await Purchases.getProducts(productIdentifiers);
+    products =
+        await Purchases.getProducts(productIdentifiers, type: purchaseType);
   }
 
   void _checkPurchaseProduct() async {
@@ -84,40 +74,27 @@ class _PurchasesFlutterApiTest {
     CustomerInfo customerInfo = await Purchases.purchaseProduct(
         productIdentifier,
         upgradeInfo: upgradeInfo,
-        type: purchaseType
-    );
-    customerInfo = await Purchases.purchaseProduct(
-        productIdentifier,
-        upgradeInfo: upgradeInfo
-    );
+        type: purchaseType);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        upgradeInfo: upgradeInfo);
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
-    CustomerInfo customerInfo = await Purchases.purchasePackage(
-        package,
-        upgradeInfo: upgradeInfo
-    );
+    CustomerInfo customerInfo =
+        await Purchases.purchasePackage(package, upgradeInfo: upgradeInfo);
   }
 
   void _checkPurchaseDiscountedProduct(
-      StoreProduct product,
-      PromotionalOffer offer
-      ) async {
-    CustomerInfo customerInfo = await Purchases.purchaseDiscountedProduct(
-        product,
-        offer
-    );
+      StoreProduct product, PromotionalOffer offer) async {
+    CustomerInfo customerInfo =
+        await Purchases.purchaseDiscountedProduct(product, offer);
   }
 
   void _checkPurchaseDiscountedPackage(
-      Package package,
-      PromotionalOffer offer
-      ) async {
-    CustomerInfo customerInfo = await Purchases.purchaseDiscountedPackage(
-        package,
-        offer
-    );
+      Package package, PromotionalOffer offer) async {
+    CustomerInfo customerInfo =
+        await Purchases.purchaseDiscountedPackage(package, offer);
   }
 
   void _checkRestorePurchases() async {
@@ -138,16 +115,14 @@ class _PurchasesFlutterApiTest {
 
   void _checkSetDebugLogsEnabled() {
     bool setDebugLogsEnabled = false;
-    Future<void> setDebugLogsEnabledFuture = Purchases.setDebugLogsEnabled(
-        setDebugLogsEnabled
-    );
+    Future<void> setDebugLogsEnabledFuture =
+        Purchases.setDebugLogsEnabled(setDebugLogsEnabled);
   }
 
   void _checkSetSimulatesAskToBuyInSandbox() {
     bool setSimulatesAskToBuyInSandbox = false;
-    Future<void> future = Purchases.setSimulatesAskToBuyInSandbox(
-        setSimulatesAskToBuyInSandbox
-    );
+    Future<void> future =
+        Purchases.setSimulatesAskToBuyInSandbox(setSimulatesAskToBuyInSandbox);
   }
 
   void _checkSetProxyUrl() {
@@ -181,8 +156,7 @@ class _PurchasesFlutterApiTest {
     List<String> productIdentifiers = List.empty();
     Map<String, IntroEligibility> result;
     result = await Purchases.checkTrialOrIntroductoryPriceEligibility(
-      productIdentifiers
-    );
+        productIdentifiers);
   }
 
   void _checkInvalidateCustomerInfoCache() {
@@ -289,13 +263,9 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkGetPromotionalOffer(
-      StoreProduct product,
-      StoreProductDiscount discount
-      ) async {
-    PromotionalOffer offer = await Purchases.getPromotionalOffer(
-        product,
-        discount
-    );
+      StoreProduct product, StoreProductDiscount discount) async {
+    PromotionalOffer offer =
+        await Purchases.getPromotionalOffer(product, discount);
   }
 
   void _checkClose() {
@@ -313,7 +283,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkProrationMode(ProrationMode prorationMode) {
-    switch(prorationMode) {
+    switch (prorationMode) {
       case ProrationMode.unknownSubscriptionUpgradeDowngradePolicy:
       case ProrationMode.immediateWithTimeProration:
       case ProrationMode.immediateAndChargeProratedPrice:
@@ -324,7 +294,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkPurchaseType(PurchaseType type) {
-    switch(type) {
+    switch (type) {
       case PurchaseType.subs:
       case PurchaseType.inapp:
         break;
@@ -332,7 +302,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkBillingFeature(BillingFeature feature) {
-    switch(feature) {
+    switch (feature) {
       case BillingFeature.subscriptions:
       case BillingFeature.subscriptionsUpdate:
       case BillingFeature.inAppItemsOnVr:
@@ -343,7 +313,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkIntroEligibilityStatus(IntroEligibilityStatus status) {
-    switch(status) {
+    switch (status) {
       case IntroEligibilityStatus.introEligibilityStatusUnknown:
       case IntroEligibilityStatus.introEligibilityStatusIneligible:
       case IntroEligibilityStatus.introEligibilityStatusEligible:
@@ -360,10 +330,8 @@ class _PurchasesFlutterApiTest {
 
   void _checkLogInResult(CustomerInfo customerInfo) {
     bool created = false;
-    LogInResult logInResult = LogInResult(
-        created: created,
-        customerInfo: customerInfo
-    );
+    LogInResult logInResult =
+        LogInResult(created: created, customerInfo: customerInfo);
     bool storedCreated = logInResult.created;
     CustomerInfo storedCustomerInfo = logInResult.customerInfo;
   }
@@ -371,9 +339,7 @@ class _PurchasesFlutterApiTest {
   void _checkPromotedPurchaseResult(CustomerInfo customerInfo) {
     String productIdentifier = "fakeProductId";
     PromotedPurchaseResult purchaseResult = PromotedPurchaseResult(
-        productIdentifier: productIdentifier,
-        customerInfo: customerInfo
-    );
+        productIdentifier: productIdentifier, customerInfo: customerInfo);
     String storedProductIdentifier = purchaseResult.productIdentifier;
     CustomerInfo storedCustomerInfo = purchaseResult.customerInfo;
   }

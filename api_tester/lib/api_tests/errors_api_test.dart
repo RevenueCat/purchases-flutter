@@ -5,7 +5,7 @@ import 'package:purchases_flutter/errors.dart';
 // ignore_for_file: unused_local_variable
 class _ErrorsApiTest {
   void _checkPurchasesErrorCode(PurchasesErrorCode code) {
-    switch(code) {
+    switch (code) {
       case PurchasesErrorCode.unknownError:
       case PurchasesErrorCode.purchaseCancelledError:
       case PurchasesErrorCode.storeProblemError:

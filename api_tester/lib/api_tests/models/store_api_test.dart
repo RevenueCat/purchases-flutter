@@ -4,7 +4,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 // ignore_for_file: unused_local_variable
 class _StoreApiTest {
   void _checkStore(Store store) {
-    switch(store) {
+    switch (store) {
       case Store.appStore:
       case Store.macAppStore:
       case Store.playStore:

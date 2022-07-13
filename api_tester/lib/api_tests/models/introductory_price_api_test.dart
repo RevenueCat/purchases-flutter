@@ -4,7 +4,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 // ignore_for_file: unused_local_variable
 class _IntroductoryPriceApiTest {
   void _checkPeriodUnit(PeriodUnit periodUnit) {
-    switch(periodUnit) {
+    switch (periodUnit) {
       case PeriodUnit.day:
       case PeriodUnit.week:
       case PeriodUnit.month:
@@ -22,22 +22,10 @@ class _IntroductoryPriceApiTest {
     Map<String, dynamic> json = introductoryPrice.toJson();
   }
 
-  void _checkConstructor(
-      double price,
-      String priceString,
-      String period,
-      int cycles,
-      PeriodUnit periodUnit,
-      int periodNumberOfUnits
-      ) {
+  void _checkConstructor(double price, String priceString, String period,
+      int cycles, PeriodUnit periodUnit, int periodNumberOfUnits) {
     IntroductoryPrice introductoryPrice = IntroductoryPrice(
-        price,
-        priceString,
-        period,
-        cycles,
-        periodUnit,
-        periodNumberOfUnits
-    );
+        price, priceString, period, cycles, periodUnit, periodNumberOfUnits);
   }
 
   void _checkProperties(IntroductoryPrice introductoryPrice) {

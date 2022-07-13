@@ -24,7 +24,7 @@ Map<String, dynamic> _$$_IntroductoryPriceToJson(
       'priceString': instance.priceString,
       'period': instance.period,
       'cycles': instance.cycles,
-      'periodUnit': _$PeriodUnitEnumMap[instance.periodUnit],
+      'periodUnit': _$PeriodUnitEnumMap[instance.periodUnit]!,
       'periodNumberOfUnits': instance.periodNumberOfUnits,
     };
 

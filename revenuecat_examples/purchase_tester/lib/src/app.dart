@@ -159,7 +159,6 @@ class _UpsellScreenState extends State<UpsellScreen> {
       ),
     );
   }
-
 }
 
 class _PurchaseButton extends StatelessWidget {

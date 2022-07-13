@@ -11,24 +11,10 @@ class _StoreProductDiscountApiTest {
     Map<String, dynamic> json = discount.toJson();
   }
 
-  void _checkConstructor(
-      String identifier,
-      double price,
-      String priceString,
-      int cycles,
-      String period,
-      String periodUnit,
-      int periodNumberOfUnits
-      ) {
-    StoreProductDiscount discount = StoreProductDiscount(
-        identifier,
-        price,
-        priceString,
-        cycles,
-        period,
-        periodUnit,
-        periodNumberOfUnits
-    );
+  void _checkConstructor(String identifier, double price, String priceString,
+      int cycles, String period, String periodUnit, int periodNumberOfUnits) {
+    StoreProductDiscount discount = StoreProductDiscount(identifier, price,
+        priceString, cycles, period, periodUnit, periodNumberOfUnits);
   }
 
   void _checkProperties(StoreProductDiscount discount) {
