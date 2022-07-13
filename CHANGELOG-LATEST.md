@@ -20,7 +20,10 @@ This version of the SDK automatically uses StoreKit 2 APIs under the hood only f
 #### New types and cleaned up naming
 New types that wrap native types from Apple, Google and Amazon, and we cleaned up the naming of other types and methods for a more consistent experience. 
 
-`Purchases.setup` has been deprecated in favor of `Purchases.configure`, which accepts a new `PurchasesConfiguration` object.
+### Deprecated APIs
+| 3.x | 4.0.0 |
+| :-: | :-: |
+| `Purchases.setup` | `Purchases.configure` |
 
 ### Removed APIs
 | 3.x | 4.0.0 |
