@@ -82,20 +82,6 @@ void main() {
     expect(list.length, 1);
   });
 
-  test('checkTrialOrIntroductoryPriceEligibility returns eligibility map',
-      () async {
-    response = {
-      'monthly_intro_pricing_one_week': {
-        'status': 0,
-        'description': 'Status indeterminate.'
-      }
-    };
-    final list = await Purchases.checkTrialOrIntroductoryPriceEligibility(
-      ['monthly_intro_pricing_one_week'],
-    );
-    expect(list.length, 1);
-  });
-
   test('canMakePayments with no params calls successfully', () async {
     response = Random().nextBool();
     final receivedCanMakePayments = await Purchases.canMakePayments();
