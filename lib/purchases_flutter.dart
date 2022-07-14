@@ -772,7 +772,10 @@ enum IntroEligibilityStatus {
   introEligibilityStatusIneligible,
 
   /// The user is eligible for a free trial or intro pricing for this product.
-  introEligibilityStatusEligible
+  introEligibilityStatusEligible,
+
+  /// There is no free trial or intro pricing for this product.
+  introEligibilityStatusNoIntroOfferExists
 }
 
 /// Holds the introductory price status

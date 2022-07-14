@@ -317,6 +317,7 @@ class _PurchasesFlutterApiTest {
       case IntroEligibilityStatus.introEligibilityStatusUnknown:
       case IntroEligibilityStatus.introEligibilityStatusIneligible:
       case IntroEligibilityStatus.introEligibilityStatusEligible:
+      case IntroEligibilityStatus.introEligibilityStatusNoIntroOfferExists:
         break;
     }
   }
