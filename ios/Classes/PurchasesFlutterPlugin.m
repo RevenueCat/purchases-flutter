@@ -190,6 +190,7 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
                userDefaultsSuiteName:userDefaultsSuiteName
                       platformFlavor:self.platformFlavor
                platformFlavorVersion:self.platformFlavorVersion
+            usesStoreKit2IfAvailable:true
                    dangerousSettings:nil];
     RCPurchases.sharedPurchases.delegate = self;
     result(nil);
