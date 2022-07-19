@@ -1,4 +1,4 @@
-## 4.0.0
+## 4.0.0-rc.1
 ⚠️ ⚠️ Important ⚠️ ⚠️ Observer mode for Amazon is not supported yet.
 
 ### Features
