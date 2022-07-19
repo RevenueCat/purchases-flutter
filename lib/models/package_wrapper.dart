@@ -63,9 +63,9 @@ class Package with _$Package {
     )
         PackageType packageType,
 
-    /// Product assigned to this package.
+    /// StoreProduct assigned to this package.
     @JsonKey(name: 'product')
-        Product product,
+        StoreProduct storeProduct,
 
     /// Offering this package belongs to.
     @JsonKey(name: 'offeringIdentifier')

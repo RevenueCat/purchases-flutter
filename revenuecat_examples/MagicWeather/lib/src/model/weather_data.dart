@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:magic_weather_flutter/src/model/styles.dart';
 
 enum TemperatureUnit { f, c }
+
 enum Environment {
   mercury,
   venus,

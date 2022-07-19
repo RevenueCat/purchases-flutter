@@ -28,7 +28,7 @@ mixin _$Offering {
   @JsonKey(name: 'serverDescription')
   String get serverDescription => throw _privateConstructorUsedError;
 
-  /// Array of `Package` objects available for purchase.
+  /// Array of [Package] objects available for purchase.
   @JsonKey(name: 'availablePackages')
   List<Package> get availablePackages => throw _privateConstructorUsedError;
 
@@ -366,10 +366,10 @@ class _$_Offering extends _Offering {
   @JsonKey(name: 'serverDescription')
   final String serverDescription;
 
-  /// Array of `Package` objects available for purchase.
+  /// Array of [Package] objects available for purchase.
   final List<Package> _availablePackages;
 
-  /// Array of `Package` objects available for purchase.
+  /// Array of [Package] objects available for purchase.
   @override
   @JsonKey(name: 'availablePackages')
   List<Package> get availablePackages {
@@ -492,7 +492,7 @@ abstract class _Offering extends Offering {
   String get serverDescription => throw _privateConstructorUsedError;
   @override
 
-  /// Array of `Package` objects available for purchase.
+  /// Array of [Package] objects available for purchase.
   @JsonKey(name: 'availablePackages')
   List<Package> get availablePackages => throw _privateConstructorUsedError;
   @override

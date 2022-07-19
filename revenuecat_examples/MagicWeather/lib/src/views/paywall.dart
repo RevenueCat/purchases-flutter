@@ -51,10 +51,10 @@ class _PaywallState extends State<Paywall> {
                   child: ListTile(
                       onTap: () async {
                         try {
-                          PurchaserInfo purchaserInfo =
+                          CustomerInfo customerInfo =
                               await Purchases.purchasePackage(
                                   myProductList[index]);
-                          appData.entitlementIsActive = purchaserInfo
+                          appData.entitlementIsActive = customerInfo
                               .entitlements.all[entitlementID].isActive;
                         } catch (e) {
                           print(e);
@@ -64,15 +64,16 @@ class _PaywallState extends State<Paywall> {
                         Navigator.pop(context);
                       },
                       title: Text(
-                        myProductList[index].product.title,
+                        myProductList[index].storeProduct.title,
                         style: kTitleTextStyle,
                       ),
                       subtitle: Text(
-                        myProductList[index].product.description,
+                        myProductList[index].storeProduct.description,
                         style: kDescriptionTextStyle.copyWith(
                             fontSize: kFontSizeSuperSmall),
                       ),
-                      trailing: Text(myProductList[index].product.priceString,
+                      trailing: Text(
+                          myProductList[index].storeProduct.priceString,
                           style: kTitleTextStyle)),
                 );
               },

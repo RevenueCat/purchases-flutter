@@ -79,6 +79,28 @@ commands:
           name: Flutter doctor
           command: flutter doctor
 
+  install-gem-dependencies:
+    parameters:
+      directory:
+        type: string
+        default: .
+    steps:
+      # Bundler
+      - restore_cache:
+          keys:
+            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Bundle install
+          working_directory: << parameters.directory >>
+          command: |
+            bundle config set --local clean 'true'
+            bundle config set --local path 'vendor/bundle'
+            bundle install
+      - save_cache:
+          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -105,6 +127,17 @@ jobs:
       - run:
           name: Run tests
           command: flutter test
+
+  api_test:
+    description: "Run API tests for Flutter"
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - install-gem-dependencies
+      - run:
+          name: Run API tests
+          command: bundle exec fastlane run_api_tests
 
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
@@ -158,7 +191,7 @@ jobs:
   ios-integration-test:
     description: "Run integration tests for Flutter"
     macos:
-      xcode: 12.3.0
+      xcode: 13.4.0
     steps:
       - checkout
       - run:
@@ -199,6 +232,7 @@ workflows:
     jobs:
       - lint
       - test
+      - api_test
       - freezed
   android-integration-test:
     jobs:

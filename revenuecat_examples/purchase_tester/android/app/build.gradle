@@ -38,6 +38,13 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // purchases-hybrid-common has two variants, but this library doesn't have any
+        // Gradle doesn't know which variant of purchases-hybrid-common to use when using
+        // includeBuild and working with a local copy of purchases-hybrid-common
+        // This line also needs to be added to purchases_flutter's build.gradle
+        // https://developer.android.com/studio/build/build-variants#resolve_matching_errors
+        missingDimensionStrategy 'dependencyVersions', 'latestDependencies', 'unityIAP'
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -53,6 +60,7 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

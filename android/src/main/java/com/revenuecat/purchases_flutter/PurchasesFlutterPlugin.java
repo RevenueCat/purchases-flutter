@@ -6,9 +6,9 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.revenuecat.purchases.PurchaserInfo;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
+import com.revenuecat.purchases.Store;
 import com.revenuecat.purchases.common.PlatformInfo;
 import com.revenuecat.purchases.hybridcommon.CommonKt;
 import com.revenuecat.purchases.hybridcommon.ErrorContainer;
@@ -16,8 +16,7 @@ import com.revenuecat.purchases.hybridcommon.OnResult;
 import com.revenuecat.purchases.hybridcommon.OnResultAny;
 import com.revenuecat.purchases.hybridcommon.OnResultList;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
-import com.revenuecat.purchases.hybridcommon.mappers.PurchaserInfoMapperKt;
-import com.revenuecat.purchases.interfaces.UpdatedPurchaserInfoListener;
+import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,7 +40,7 @@ import kotlin.UninitializedPropertyAccessException;
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
-    private static final String PURCHASER_INFO_UPDATED = "Purchases-PurchaserInfoUpdated";
+    private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
 
     // Only set registrar for v1 embedder.
     @SuppressWarnings("deprecation")
@@ -52,7 +51,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "3.10.0";
+    private static final String PLUGIN_VERSION = "4.0.0-rc.1";
 
     /**
      * Plugin registration.
@@ -126,9 +125,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String apiKey = call.argument("apiKey");
                 String appUserId = call.argument("appUserId");
                 Boolean observerMode = call.argument("observerMode");
+                Boolean useAmazon = call.argument("useAmazon");
                 //noinspection unused
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
-                setupPurchases(apiKey, appUserId, observerMode, result);
+                setupPurchases(apiKey, appUserId, observerMode, useAmazon, result);
                 break;
             case "setFinishTransactions":
                 Boolean finishTransactions = call.argument("finishTransactions");
@@ -137,12 +137,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
                 setAllowSharingAppStoreAccount(allowSharing, result);
-                break;
-            case "addAttributionData":
-                Map<String, String> data = call.argument("data");
-                int network = call.argument("network") != null ? (int) call.argument("network") : -1;
-                String networkUserId = call.argument("networkUserId");
-                addAttributionData(data, network, networkUserId, result);
                 break;
             case "getOfferings":
                 getOfferings(result);
@@ -169,19 +163,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getAppUserID":
                 getAppUserID(result);
                 break;
-            case "restoreTransactions":
-                restoreTransactions(result);
-                break;
-            case "reset":
-                reset(result);
-                break;
-            case "identify":
-                String appUserID = call.argument("appUserID");
-                identify(appUserID, result);
-                break;
-            case "createAlias":
-                String newAppUserID = call.argument("newAppUserID");
-                createAlias(newAppUserID, result);
+            case "restorePurchases":
+                restorePurchases(result);
                 break;
             case "logIn":
                 String appUserIDToLogIn = call.argument("appUserID");
@@ -198,8 +181,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String proxyURLString = call.argument("proxyURLString");
                 setProxyURLString(proxyURLString, result);
                 break;
-            case "getPurchaserInfo":
-                getPurchaserInfo(result);
+            case "getCustomerInfo":
+                getCustomerInfo(result);
                 break;
             case "syncPurchases":
                 syncPurchases(result);
@@ -217,12 +200,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 productIdentifiers = call.argument("productIdentifiers");
                 checkTrialOrIntroductoryPriceEligibility(productIdentifiers, result);
                 break;
-            case "invalidatePurchaserInfoCache":
-                invalidatePurchaserInfoCache(result);
+            case "invalidateCustomerInfoCache":
+                invalidateCustomerInfoCache(result);
                 break;
+            case "getPromotionalOffer":
             case "presentCodeRedemptionSheet":
-                // NOOP
-                break;
             case "setSimulatesAskToBuyInSandbox":
                 // NOOP
                 break;
@@ -310,11 +292,17 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode, final Result result) {
+    private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
+                                @Nullable Boolean useAmazon, final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
-            CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode, platformInfo);
-            setupUpdatedPurchaserInfoListener();
+            Store store = Store.PLAY_STORE;
+            if (useAmazon != null && useAmazon) {
+                store = Store.AMAZON;
+            }
+            CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode,
+                    platformInfo, store);
+            setUpdatedCustomerInfoListener();
             result.success(null);
         } else {
             result.error(
@@ -324,13 +312,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    private void setupUpdatedPurchaserInfoListener() {
-        Purchases.getSharedInstance().setUpdatedPurchaserInfoListener(new UpdatedPurchaserInfoListener() {
-            @Override
-            public void onReceived(@NonNull PurchaserInfo purchaserInfo) {
-                if (channel != null) {
-                    channel.invokeMethod(PURCHASER_INFO_UPDATED, PurchaserInfoMapperKt.map(purchaserInfo));
-                }
+    private void setUpdatedCustomerInfoListener() {
+        Purchases.getSharedInstance().setUpdatedCustomerInfoListener(customerInfo -> {
+            if (channel != null) {
+                channel.invokeMethod(CUSTOMER_INFO_UPDATED, CustomerInfoMapperKt.map(customerInfo));
             }
         });
     }
@@ -358,12 +343,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     "Missing allowSharing argument",
                     null);
         }
-    }
-
-    private void addAttributionData(Map<String, String> data, int network,
-                                    @Nullable String networkUserId, Result result) {
-        SubscriberAttributesKt.addAttributionData(data, network, networkUserId);
-        result.success(null);
     }
 
     private void getOfferings(final Result result) {
@@ -417,18 +396,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(CommonKt.getAppUserID());
     }
 
-    private void restoreTransactions(final Result result) {
-        CommonKt.restoreTransactions(getOnResult(result));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void reset(final Result result) {
-        CommonKt.reset(getOnResult(result));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void identify(String appUserID, final Result result) {
-        CommonKt.identify(appUserID, getOnResult(result));
+    private void restorePurchases(final Result result) {
+        CommonKt.restorePurchases(getOnResult(result));
     }
 
     private void logOut(final Result result) {
@@ -437,11 +406,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void logIn(String appUserID, final Result result) {
         CommonKt.logIn(appUserID, getOnResult(result));
-    }
-
-    @SuppressWarnings("deprecation")
-    private void createAlias(String newAppUserID, final Result result) {
-        CommonKt.createAlias(newAppUserID, getOnResult(result));
     }
 
     private void setDebugLogsEnabled(boolean enabled, final Result result) {
@@ -454,8 +418,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void getPurchaserInfo(final Result result) {
-        CommonKt.getPurchaserInfo(getOnResult(result));
+    private void getCustomerInfo(final Result result) {
+        CommonKt.getCustomerInfo(getOnResult(result));
     }
 
     private void syncPurchases(final Result result) {
@@ -475,8 +439,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(CommonKt.checkTrialOrIntroductoryPriceEligibility(productIDs));
     }
 
-    private void invalidatePurchaserInfoCache(Result result) {
-        CommonKt.invalidatePurchaserInfoCache();
+    private void invalidateCustomerInfoCache(Result result) {
+        CommonKt.invalidateCustomerInfoCache();
         result.success(null);
     }
 

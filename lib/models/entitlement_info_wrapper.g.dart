@@ -38,9 +38,9 @@ Map<String, dynamic> _$$_EntitlementInfoToJson(_$_EntitlementInfo instance) =>
       'originalPurchaseDate': instance.originalPurchaseDate,
       'productIdentifier': instance.productIdentifier,
       'isSandbox': instance.isSandbox,
-      'ownershipType': _$OwnershipTypeEnumMap[instance.ownershipType],
-      'store': _$StoreEnumMap[instance.store],
-      'periodType': _$PeriodTypeEnumMap[instance.periodType],
+      'ownershipType': _$OwnershipTypeEnumMap[instance.ownershipType]!,
+      'store': _$StoreEnumMap[instance.store]!,
+      'periodType': _$PeriodTypeEnumMap[instance.periodType]!,
       'expirationDate': instance.expirationDate,
       'unsubscribeDetectedAt': instance.unsubscribeDetectedAt,
       'billingIssueDetectedAt': instance.billingIssueDetectedAt,
@@ -59,6 +59,7 @@ const _$StoreEnumMap = {
   Store.stripe: 'STRIPE',
   Store.promotional: 'PROMOTIONAL',
   Store.unknownStore: 'unknownStore',
+  Store.amazon: 'AMAZON',
 };
 
 const _$PeriodTypeEnumMap = {

@@ -57,31 +57,30 @@ mixin _$EntitlementInfo {
   OwnershipType get ownershipType => throw _privateConstructorUsedError;
 
   /// The store where this entitlement was unlocked from
-  /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
   Store get store => throw _privateConstructorUsedError;
 
   /// The last period type this entitlement was in
-  /// Either: normal, intro, trial
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
   PeriodType get periodType => throw _privateConstructorUsedError;
 
-  /// The expiration date for the entitlement, can be `null` for lifetime access.
-  /// If the `periodType` is `trial`, this is the trial expiration date.
+  /// The expiration date for the entitlement, can be null for lifetime access.
+  /// If the [periodType] is [PeriodType.trial],
+  /// this is the trial expiration date.
   @JsonKey(name: 'expirationDate', nullable: true)
   String? get expirationDate => throw _privateConstructorUsedError;
 
-  /// The date an unsubscribe was detected. Can be `null` if it's still
+  /// The date an unsubscribe was detected. Can be null if it's still
   /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
-  /// Check the `isActive` property.
+  /// Check the [isActive] property.
   @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
   String? get unsubscribeDetectedAt => throw _privateConstructorUsedError;
 
-  /// The date a billing issue was detected. Can be `null` if there is no
+  /// The date a billing issue was detected. Can be null if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
-  /// Check the `isActive` property.
+  /// Check the [isActive] property.
   @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
   String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
 
@@ -406,35 +405,34 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   final OwnershipType ownershipType;
 
   /// The store where this entitlement was unlocked from
-  /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
   @override
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
   final Store store;
 
   /// The last period type this entitlement was in
-  /// Either: normal, intro, trial
   @override
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
   final PeriodType periodType;
 
-  /// The expiration date for the entitlement, can be `null` for lifetime access.
-  /// If the `periodType` is `trial`, this is the trial expiration date.
+  /// The expiration date for the entitlement, can be null for lifetime access.
+  /// If the [periodType] is [PeriodType.trial],
+  /// this is the trial expiration date.
   @override
   @JsonKey(name: 'expirationDate', nullable: true)
   final String? expirationDate;
 
-  /// The date an unsubscribe was detected. Can be `null` if it's still
+  /// The date an unsubscribe was detected. Can be null if it's still
   /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
-  /// Check the `isActive` property.
+  /// Check the [isActive] property.
   @override
   @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
   final String? unsubscribeDetectedAt;
 
-  /// The date a billing issue was detected. Can be `null` if there is no
+  /// The date a billing issue was detected. Can be null if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
-  /// Check the `isActive` property.
+  /// Check the [isActive] property.
   @override
   @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
   final String? billingIssueDetectedAt;
@@ -581,35 +579,34 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   @override
 
   /// The store where this entitlement was unlocked from
-  /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
   Store get store => throw _privateConstructorUsedError;
   @override
 
   /// The last period type this entitlement was in
-  /// Either: normal, intro, trial
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
   PeriodType get periodType => throw _privateConstructorUsedError;
   @override
 
-  /// The expiration date for the entitlement, can be `null` for lifetime access.
-  /// If the `periodType` is `trial`, this is the trial expiration date.
+  /// The expiration date for the entitlement, can be null for lifetime access.
+  /// If the [periodType] is [PeriodType.trial],
+  /// this is the trial expiration date.
   @JsonKey(name: 'expirationDate', nullable: true)
   String? get expirationDate => throw _privateConstructorUsedError;
   @override
 
-  /// The date an unsubscribe was detected. Can be `null` if it's still
+  /// The date an unsubscribe was detected. Can be null if it's still
   /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
-  /// Check the `isActive` property.
+  /// Check the [isActive] property.
   @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
   String? get unsubscribeDetectedAt => throw _privateConstructorUsedError;
   @override
 
-  /// The date a billing issue was detected. Can be `null` if there is no
+  /// The date a billing issue was detected. Can be null if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
-  /// Check the `isActive` property.
+  /// Check the [isActive] property.
   @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
   String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
   @override

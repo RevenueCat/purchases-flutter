@@ -1,6 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'store.dart';
 
 part 'entitlement_info_wrapper.freezed.dart';
+
 part 'entitlement_info_wrapper.g.dart';
 
 /// Enum of supported period types for an entitlement.
@@ -21,32 +23,6 @@ enum PeriodType {
   unknown
 }
 
-/// Enum of supported stores
-enum Store {
-  /// For entitlements granted via Apple App Store.
-  @JsonValue('APP_STORE')
-  appStore,
-
-  /// For entitlements granted via Apple Mac App Store.
-  @JsonValue('MAC_APP_STORE')
-  macAppStore,
-
-  /// For entitlements granted via Google Play Store.
-  @JsonValue('PLAY_STORE')
-  playStore,
-
-  /// For entitlements granted via Stripe.
-  @JsonValue('STRIPE')
-  stripe,
-
-  /// For entitlements granted via a promo in RevenueCat.
-  @JsonValue('PROMOTIONAL')
-  promotional,
-
-  /// For entitlements granted via an unknown store.
-  unknownStore
-}
-
 /// Enum of ownership types
 enum OwnershipType {
   /// The purchase was made directly by this user.
@@ -61,9 +37,9 @@ enum OwnershipType {
   unknown
 }
 
+/// The EntitlementInfo object gives you access to all of the information about
+/// the status of a user entitlement.
 @freezed
-
-/// The EntitlementInfo object gives you access to all of the information about the status of a user entitlement.
 class EntitlementInfo with _$EntitlementInfo {
   const factory EntitlementInfo(
     /// The entitlement identifier configured in the RevenueCat dashboard
@@ -107,33 +83,38 @@ class EntitlementInfo with _$EntitlementInfo {
         OwnershipType ownershipType,
 
     /// The store where this entitlement was unlocked from
-    /// Either: appStore, macAppStore, playStore, stripe, promotional, unknownStore
     @Default(Store.unknownStore)
-    @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
+    @JsonKey(
+      name: 'store',
+      unknownEnumValue: Store.unknownStore,
+    )
         Store store,
 
     /// The last period type this entitlement was in
-    /// Either: normal, intro, trial
     @Default(PeriodType.unknown)
-    @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
+    @JsonKey(
+      name: 'periodType',
+      unknownEnumValue: PeriodType.unknown,
+    )
         PeriodType periodType,
 
-    /// The expiration date for the entitlement, can be `null` for lifetime access.
-    /// If the `periodType` is `trial`, this is the trial expiration date.
+    /// The expiration date for the entitlement, can be null for lifetime access.
+    /// If the [periodType] is [PeriodType.trial],
+    /// this is the trial expiration date.
     @JsonKey(name: 'expirationDate', nullable: true)
         String? expirationDate,
 
-    /// The date an unsubscribe was detected. Can be `null` if it's still
+    /// The date an unsubscribe was detected. Can be null if it's still
     /// subscribed or product is not a subscription.
     /// @note: Entitlement may still be active even if user has unsubscribed.
-    /// Check the `isActive` property.
+    /// Check the [isActive] property.
     @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
         String? unsubscribeDetectedAt,
 
-    /// The date a billing issue was detected. Can be `null` if there is no
+    /// The date a billing issue was detected. Can be null if there is no
     /// billing issue or an issue has been resolved.
     /// @note: Entitlement may still be active even if there is a billing issue.
-    /// Check the `isActive` property.
+    /// Check the [isActive] property.
     @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
         String? billingIssueDetectedAt,
   }) = _EntitlementInfo;
