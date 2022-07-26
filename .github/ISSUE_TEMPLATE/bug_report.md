@@ -13,6 +13,8 @@ assignees: ""
 - [ ] I have searched for [existing Github issues](https://github.com/RevenueCat/purchases-flutter/issues)
 
 # ‼️ Required data ‼️ #
+**Do not remove any of the steps from the template below. If a step is not applicable to your issue, please leave that step empty.**
+
 There are a lot of things that can contribute to things not working. Having a very basic understanding of your environment will help us understand your issue faster!
 
 ## Environment ##
@@ -25,8 +27,7 @@ There are a lot of things that can contribute to things not working. Having a ve
 **Other information** (e.g. stacktraces, related issues, suggestions how to fix, links for us to have context, eg. stackoverflow, etc.)
 
 ## Describe the bug ##
-A clear and concise description of what the bug is. The more detail you can provide the faster our team will be able to triage and resolve the issue. **Do not remove any of the steps from the template below. If a step is not applicable to your issue, please leave that step empty.**
-
+A clear and concise description of what the bug is. The more detail you can provide the faster our team will be able to triage and resolve the issue. 
 
 ## Additional context ##
 Add any other context about the problem here.
