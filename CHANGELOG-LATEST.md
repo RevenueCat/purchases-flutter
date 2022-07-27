@@ -1,3 +1,7 @@
+## 4.0.0-rc.2
+
+- Fixes [userCancelled crash](https://github.com/RevenueCat/purchases-flutter/issues/403): [PR](https://github.com/RevenueCat/purchases-flutter/pull/404)
+
 ## 4.0.0-rc.1
 ⚠️ ⚠️ Important ⚠️ ⚠️ Observer mode for Amazon is not supported yet.
 

@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'purchases_flutter'
-  s.version          = '4.0.0-rc.1'
+  s.version          = '4.0.0-rc.2'
   s.summary          = 'Cross-platform subscriptions framework for Flutter.'
   s.description      = <<-DESC
   Client for the RevenueCat subscription and purchase tracking system, making implementing in-app subscriptions in Flutter easy - receipt validation and status tracking included!
