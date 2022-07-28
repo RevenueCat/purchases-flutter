@@ -1,7 +1,5 @@
 name: purchases_flutter
-description: A Flutter plugin that makes it simple to add and manage in-app
-  purchases (IAP) and subscriptions. Supports Android, iOS, macOS, iPadOS, and
-  watchOS.
+description: Flutter in-app purchases and subscriptions made easy. The plugin supports Apple, Android, and the web.
 version: 4.0.0-rc.2
 homepage: https://www.revenuecat.com/
 repository: https://github.com/RevenueCat/purchases-flutter
