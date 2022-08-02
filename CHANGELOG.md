@@ -1,3 +1,8 @@
+## 4.0.0
+TEST (please ignore)
+* Update pubspec.yaml (#406) via Corey Rabazinski (@CoreyRab)
+* Update bug_report.md (#402) via Joshua Liebowitz (@taquitos)
+
 ## 4.0.0-rc.2
 
 - Fixes [userCancelled crash](https://github.com/RevenueCat/purchases-flutter/issues/403): [PR](https://github.com/RevenueCat/purchases-flutter/pull/404)
