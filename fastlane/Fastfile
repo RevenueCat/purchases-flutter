@@ -32,7 +32,7 @@ before_all do
   update_fastlane  
 end
 
-desc "Bump version, update swift header, edit changelog, and create pull request"
+desc "Bump version, edit changelog, and create pull request"
 lane :bump do |options|
   bump_version_update_changelog_create_pr(
     current_version: current_version_number,

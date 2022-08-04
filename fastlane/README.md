@@ -19,7 +19,7 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 [bundle exec] fastlane bump
 ```
 
-Bump version, update swift header, edit changelog, and create pull request
+Bump version, edit changelog, and create pull request
 
 ### run_api_tests
 
