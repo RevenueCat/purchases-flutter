@@ -35,3 +35,5 @@ revenuecat_examples/purchase_tester/ios/Flutter/.last_build_id
 revenuecat_examples/purchase_tester/android/.composite-enable
 fastlane/report.xml
 *.bck
+
+fastlane/.env

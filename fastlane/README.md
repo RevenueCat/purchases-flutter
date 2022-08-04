@@ -13,13 +13,13 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 # Available Actions
 
-### bump_and_update_changelog
+### bump
 
 ```sh
-[bundle exec] fastlane bump_and_update_changelog
+[bundle exec] fastlane bump
 ```
 
-Increment build number and update changelog
+Bump version, edit changelog, and create pull request
 
 ### run_api_tests
 
@@ -28,32 +28,6 @@ Increment build number and update changelog
 ```
 
 Builds and analyzes the api_tester project to make sure APIs are expected
-
-----
-
-
-## iOS
-
-### ios bump
-
-```sh
-[bundle exec] fastlane ios bump
-```
-
-Increment build number
-
-----
-
-
-## Android
-
-### android bump
-
-```sh
-[bundle exec] fastlane android bump
-```
-
-Increment build number
 
 ----
 
