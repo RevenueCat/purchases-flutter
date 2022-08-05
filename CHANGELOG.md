@@ -1,6 +1,6 @@
 ## 4.0.0
 
-RevenueCat Unity SDK v4 is here!! 
+RevenueCat Flutter SDK v4 is here!! 
 
 ![Dancing cats](https://media.giphy.com/media/lkbNG2zqzHZUA/giphy.gif)
 
@@ -310,7 +310,7 @@ The purchase modal will not show correctly for Amazon in these environments.
 ## 3.4.5
 
 - Bumped purchases-android to 4.3.1 [Changelog here](https://github.com/RevenueCat/purchases-android/releases/4.3.1),
-which fixes canMakePayments not returning (see related issue: https://github.com/RevenueCat/purchases-unity/issues/61)
+which fixes canMakePayments not returning (see related issue: https://github.com/RevenueCat/purchases-flutter/issues/61)
 - Bumped purchases-hybrid-common to 1.9.1 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/tag/1.9.1)
 
 ## 3.4.4
