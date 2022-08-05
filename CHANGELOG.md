@@ -66,11 +66,6 @@ New types that wrap native types from Apple, Google and Amazon, and we cleaned u
 ### Moved classes
 - `Store` enum has been moved from `entitlement_info_wrapper.dart` to `store.dart`
 
-### Other
-* Support fastlane plugin revenuecat internal (#410) via Toni Rico (@tonidero)
-* Update pubspec.yaml (#406) via Corey Rabazinski (@CoreyRab)
-* Update bug_report.md (#402) via Joshua Liebowitz (@taquitos)
-
 ## 4.0.0-rc.2
 
 - Fixes [userCancelled crash](https://github.com/RevenueCat/purchases-flutter/issues/403): [PR](https://github.com/RevenueCat/purchases-flutter/pull/404)
