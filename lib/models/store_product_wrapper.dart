@@ -24,13 +24,13 @@ class StoreProduct with _$StoreProduct {
     @JsonKey(name: 'price') double price,
 
     /// Formatted price of the item, including its currency sign.
-    @JsonKey(name: 'price_string') String priceString,
+    @JsonKey(name: 'priceString') String priceString,
 
     /// Currency code for price and original price.
-    @JsonKey(name: 'currency_code') String currencyCode, {
+    @JsonKey(name: 'currencyCode') String currencyCode, {
 
     /// Introductory price for product. Can be null.
-    @JsonKey(name: 'intro_price', nullable: true)
+    @JsonKey(name: 'introPrice', nullable: true)
         IntroductoryPrice? introductoryPrice,
 
     /// Collection of discount offers for a product. Null for Android.

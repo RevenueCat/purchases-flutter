@@ -11,12 +11,12 @@ _$_StoreProduct _$$_StoreProductFromJson(Map json) => _$_StoreProduct(
       json['description'] as String,
       json['title'] as String,
       (json['price'] as num).toDouble(),
-      json['price_string'] as String,
-      json['currency_code'] as String,
-      introductoryPrice: json['intro_price'] == null
+      json['priceString'] as String,
+      json['currencyCode'] as String,
+      introductoryPrice: json['introPrice'] == null
           ? null
           : IntroductoryPrice.fromJson(
-              Map<String, dynamic>.from(json['intro_price'] as Map)),
+              Map<String, dynamic>.from(json['introPrice'] as Map)),
       discounts: (json['discounts'] as List<dynamic>?)
           ?.map((e) => StoreProductDiscount.fromJson(
               Map<String, dynamic>.from(e as Map)))
@@ -29,8 +29,8 @@ Map<String, dynamic> _$$_StoreProductToJson(_$_StoreProduct instance) =>
       'description': instance.description,
       'title': instance.title,
       'price': instance.price,
-      'price_string': instance.priceString,
-      'currency_code': instance.currencyCode,
-      'intro_price': instance.introductoryPrice?.toJson(),
+      'priceString': instance.priceString,
+      'currencyCode': instance.currencyCode,
+      'introPrice': instance.introductoryPrice?.toJson(),
       'discounts': instance.discounts?.map((e) => e.toJson()).toList(),
     };
