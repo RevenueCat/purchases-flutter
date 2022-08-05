@@ -1,8 +1,9 @@
-## 4.0.0-rc.2
+RevenueCat Flutter SDK v4 is here!! 
 
-- Fixes [userCancelled crash](https://github.com/RevenueCat/purchases-flutter/issues/403): [PR](https://github.com/RevenueCat/purchases-flutter/pull/404)
+![Dancing cats](https://media.giphy.com/media/lkbNG2zqzHZUA/giphy.gif)
 
-## 4.0.0-rc.1
+[Full Changelog](https://github.com/revenuecat/purchases-flutter/compare/3.10.0...4.0.0)
+
 ⚠️ ⚠️ Important ⚠️ ⚠️ Observer mode for Amazon is not supported yet.
 
 ### Features
