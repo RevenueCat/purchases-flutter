@@ -1,11 +1,11 @@
 PODS:
   - FlutterMacOS (1.0.0)
-  - purchases_flutter (4.0.0-rc.1):
+  - purchases_flutter (4.0.1):
     - FlutterMacOS
-    - PurchasesHybridCommon (= 3.3.0)
-  - PurchasesHybridCommon (3.3.0):
-    - RevenueCat (= 4.9.0)
-  - RevenueCat (4.9.0)
+    - PurchasesHybridCommon (= 4.0.2)
+  - PurchasesHybridCommon (4.0.2):
+    - RevenueCat (= 4.9.1)
+  - RevenueCat (4.9.1)
 
 DEPENDENCIES:
   - FlutterMacOS (from `Flutter/ephemeral`)
@@ -24,9 +24,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FlutterMacOS: 57701585bf7de1b3fc2bb61f6378d73bbdea8424
-  purchases_flutter: c9fef0b5d76bbb777b7addee0985b32663381250
-  PurchasesHybridCommon: 5c3e18d6813dc1c256d2fb9f295d73d2230d46d1
-  RevenueCat: d5ec5e2944eedce83497218f0dc01eda546dd7a7
+  purchases_flutter: 31192b066a412578892cd635699da7c731747b1e
+  PurchasesHybridCommon: a659d9845f082ae4fede9062eb8434150d1ef225
+  RevenueCat: d4a0bae05309a496f70d2b80e7e65265c01dc5c9
 
 PODFILE CHECKSUM: a884f6dd3f7494f3892ee6c81feea3a3abbf9153
 
