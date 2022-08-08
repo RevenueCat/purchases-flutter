@@ -37,15 +37,15 @@ mixin _$StoreProduct {
   double get price => throw _privateConstructorUsedError;
 
   /// Formatted price of the item, including its currency sign.
-  @JsonKey(name: 'price_string')
+  @JsonKey(name: 'priceString')
   String get priceString => throw _privateConstructorUsedError;
 
   /// Currency code for price and original price.
-  @JsonKey(name: 'currency_code')
+  @JsonKey(name: 'currencyCode')
   String get currencyCode => throw _privateConstructorUsedError;
 
   /// Introductory price for product. Can be null.
-  @JsonKey(name: 'intro_price', nullable: true)
+  @JsonKey(name: 'introPrice', nullable: true)
   IntroductoryPrice? get introductoryPrice =>
       throw _privateConstructorUsedError;
 
@@ -74,11 +74,11 @@ abstract class $StoreProductCopyWith<$Res> {
           String title,
       @JsonKey(name: 'price')
           double price,
-      @JsonKey(name: 'price_string')
+      @JsonKey(name: 'priceString')
           String priceString,
-      @JsonKey(name: 'currency_code')
+      @JsonKey(name: 'currencyCode')
           String currencyCode,
-      @JsonKey(name: 'intro_price', nullable: true)
+      @JsonKey(name: 'introPrice', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts});
@@ -169,11 +169,11 @@ abstract class _$$_StoreProductCopyWith<$Res>
           String title,
       @JsonKey(name: 'price')
           double price,
-      @JsonKey(name: 'price_string')
+      @JsonKey(name: 'priceString')
           String priceString,
-      @JsonKey(name: 'currency_code')
+      @JsonKey(name: 'currencyCode')
           String currencyCode,
-      @JsonKey(name: 'intro_price', nullable: true)
+      @JsonKey(name: 'introPrice', nullable: true)
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts});
@@ -253,11 +253,11 @@ class _$_StoreProduct implements _StoreProduct {
           this.title,
       @JsonKey(name: 'price')
           this.price,
-      @JsonKey(name: 'price_string')
+      @JsonKey(name: 'priceString')
           this.priceString,
-      @JsonKey(name: 'currency_code')
+      @JsonKey(name: 'currencyCode')
           this.currencyCode,
-      {@JsonKey(name: 'intro_price', nullable: true)
+      {@JsonKey(name: 'introPrice', nullable: true)
           this.introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts})
@@ -288,17 +288,17 @@ class _$_StoreProduct implements _StoreProduct {
 
   /// Formatted price of the item, including its currency sign.
   @override
-  @JsonKey(name: 'price_string')
+  @JsonKey(name: 'priceString')
   final String priceString;
 
   /// Currency code for price and original price.
   @override
-  @JsonKey(name: 'currency_code')
+  @JsonKey(name: 'currencyCode')
   final String currencyCode;
 
   /// Introductory price for product. Can be null.
   @override
-  @JsonKey(name: 'intro_price', nullable: true)
+  @JsonKey(name: 'introPrice', nullable: true)
   final IntroductoryPrice? introductoryPrice;
 
   /// Collection of discount offers for a product. Null for Android.
@@ -374,11 +374,11 @@ abstract class _StoreProduct implements StoreProduct {
           final String title,
       @JsonKey(name: 'price')
           final double price,
-      @JsonKey(name: 'price_string')
+      @JsonKey(name: 'priceString')
           final String priceString,
-      @JsonKey(name: 'currency_code')
+      @JsonKey(name: 'currencyCode')
           final String currencyCode,
-      {@JsonKey(name: 'intro_price', nullable: true)
+      {@JsonKey(name: 'introPrice', nullable: true)
           final IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts}) = _$_StoreProduct;
@@ -409,17 +409,17 @@ abstract class _StoreProduct implements StoreProduct {
   @override
 
   /// Formatted price of the item, including its currency sign.
-  @JsonKey(name: 'price_string')
+  @JsonKey(name: 'priceString')
   String get priceString => throw _privateConstructorUsedError;
   @override
 
   /// Currency code for price and original price.
-  @JsonKey(name: 'currency_code')
+  @JsonKey(name: 'currencyCode')
   String get currencyCode => throw _privateConstructorUsedError;
   @override
 
   /// Introductory price for product. Can be null.
-  @JsonKey(name: 'intro_price', nullable: true)
+  @JsonKey(name: 'introPrice', nullable: true)
   IntroductoryPrice? get introductoryPrice =>
       throw _privateConstructorUsedError;
   @override

@@ -9,9 +9,9 @@ void main() {
         'description': 'Monthly Product Intro Pricing One Week',
         'title': 'Monthly Product Intro Pricing One Week (PurchasesSample)',
         'price': 4.99,
-        'price_string': '\$4.99',
-        'currency_code': 'USD',
-        'intro_price': {
+        'priceString': '\$4.99',
+        'currencyCode': 'USD',
+        'introPrice': {
           'price': 0,
           'priceString': '\$0.00',
           'period': 'P1W',
@@ -39,7 +39,7 @@ void main() {
             'priceString': '\$0.00'
           }
         ],
-        'product_category': 'SUBSCRIPTION'
+        'productCategory': 'SUBSCRIPTION'
       };
 
   test('StoreProduct maps correctly', () async {
