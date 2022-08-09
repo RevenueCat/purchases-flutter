@@ -37,6 +37,7 @@ end
 
 desc "Bump version, edit changelog, and create pull request"
 lane :bump do |options|
+  phc_version = get_phc_version
   bump_version_update_changelog_create_pr(
     current_version: current_version_number,
     changelog_latest_path: changelog_latest_path,
@@ -48,6 +49,13 @@ lane :bump do |options|
     branch: options[:branch],
     editor: options[:editor]
   )
+  update_hybrids_versions_file(
+    versions_file_path: './VERSIONS.md',
+    new_sdk_version: current_version_number,
+    hybrid_common_version: phc_version
+  )
+  commit_current_changes
+  push_to_git_remote(set_upstream: true)
 end
 
 desc "Create release"
@@ -56,7 +64,7 @@ lane :release do |options|
     sh('flutter', 'pub', 'pub', 'publish', '--dry-run')
     # github_release(version: current_version_number)
     setup_credentials_file
-    # sh('flutter', 'pub', 'pub', 'publish')
+    sh('flutter', 'pub', 'pub', 'publish')
   end
 end
 
@@ -147,4 +155,20 @@ def analyze_api_tester
   Dir.chdir("../api_tester") do
     sh("flutter", "analyze")
   end
+end
+
+def get_phc_version
+  android_build_gradle_path = '../android/build.gradle'
+  android_build_gradle_contents = File.read(android_build_gradle_path)
+  android_phc_version = android_build_gradle_contents.match("ext.common_version = '(.*)'").captures[0]
+  UI.user_error!("Android PHC version not found.") if android_phc_version.nil?
+
+  ios_podspec_path = '../ios/purchases_flutter.podspec'
+  ios_podspec_contents = File.read(ios_podspec_path)
+  ios_phc_version = ios_podspec_contents.match("s.dependency 'PurchasesHybridCommon', '(.*)'").captures[0]
+  UI.user_error!("iOS PHC version not found.") if ios_phc_version.nil?
+
+  UI.user_error!("Android and iOS PHC versions don't match. Please make sure they match.") if android_phc_version != ios_phc_version
+
+  ios_phc_version
 end

@@ -277,7 +277,6 @@ workflows:
       - test
       - api_test
       - freezed
-      - make-release
   android-integration-test:
     jobs:
       - android-integration-test-build: *release-tags-and-branches
