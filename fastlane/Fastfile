@@ -113,7 +113,7 @@ def setup_credentials_file
     "scopes": scopes,
     "expiration": expiration.to_i
   }
-  home_folder = ENV['XDG_CONFIG_HOME'] || ENV['HOME']
+  home_folder = ENV['HOME']
   output_relative_path = OS.mac? ? "Library/Application\ Support/dart/pub-credentials.json" : ".config/dart/pub-credentials.json"
   output_path = File.join(home_folder, output_relative_path)
 
