@@ -145,8 +145,8 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkEnableAdServicesAttributionTokenCollection() {
-    Future<void> future;
-    future = Purchases.enableAdServicesAttributionTokenCollection();
+    Future<void> future =
+        Purchases.enableAdServicesAttributionTokenCollection();
   }
 
   void _checkIsAnonymous() async {
