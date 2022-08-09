@@ -37,3 +37,6 @@ fastlane/report.xml
 *.bck
 
 fastlane/.env
+
+# CI created folders
+vendor/
