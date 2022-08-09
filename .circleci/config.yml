@@ -1,5 +1,3 @@
-
-
 version: 2.1
 
 aliases:
@@ -249,7 +247,7 @@ jobs:
   prepare-next-version:
     description: "Creates a PR with the new snapshot version"
     docker:
-      - image: cirrusci/flutter
+      - image: cimg/ruby:3.1.2
     steps:
       - checkout
       - install-gem-dependencies

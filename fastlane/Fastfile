@@ -61,10 +61,10 @@ end
 desc "Create release"
 lane :release do |options|
   Dir.chdir('..') do
-    sh('flutter', 'pub', 'pub', 'publish', '--dry-run')
+    sh('flutter', 'pub', 'publish', '--dry-run')
     github_release(version: current_version_number)
     setup_credentials_file
-    sh('flutter', 'pub', 'pub', 'publish', '--force')
+    sh('flutter', 'pub', 'publish', '--force')
   end
 end
 
