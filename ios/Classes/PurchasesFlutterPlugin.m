@@ -89,6 +89,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self syncPurchasesWithResult:result];
     } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
         [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
+    } else if ([@"enableAdServicesAttributionTokenCollection" isEqualToString:call.method]) {
+        [self enableAdServicesAttributionTokenCollection:result];
     } else if ([@"isAnonymous" isEqualToString:call.method]) {
         [self isAnonymousWithResult:result];
     } else if ([@"isConfigured" isEqualToString:call.method]) {
@@ -286,6 +288,15 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
                                                  result:(FlutterResult)result {
     [RCCommonFunctionality setAutomaticAppleSearchAdsAttributionCollection:enabled];
+    result(nil);
+}
+
+- (void)enableAdServicesAttributionTokenCollection:(FlutterResult)result {
+    if (@available(iOS 14.3, macOS 11.1, macCatalyst 14.3, *)) {
+        [RCCommonFunctionality enableAdServicesAttributionTokenCollection];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to enable AdServices attribution token collection, but it's only available on iOS 14.3 or greater or macOS 11.1 or greater.");
+    }
     result(nil);
 }
 
