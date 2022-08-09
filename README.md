@@ -28,7 +28,7 @@ This version of the SDK doesn't have support for Amazon Store. If you would like
 To use this plugin, add `purchases_flutter` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
 ### Requirements
-*purchases_flutter* requires XCode 10.2+ and minimum targets iOS 9.0+.
+*purchases_flutter* requires XCode 13.3.1+ and minimum targets iOS 11.0+.
 
 ## Getting Started
 For more detailed information, you can view our complete documentation at [docs.revenuecat.com](https://docs.revenuecat.com/docs/flutter).
