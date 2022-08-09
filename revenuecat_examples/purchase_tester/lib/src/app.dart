@@ -48,6 +48,8 @@ class _MyAppState extends State<InitialScreen> {
     }
     await Purchases.configure(configuration);
 
+    await Purchases.enableAdServicesAttributionTokenCollection();
+
     final customerInfo = await Purchases.getCustomerInfo();
 
     Purchases.addReadyForPromotedProductPurchaseListener(
