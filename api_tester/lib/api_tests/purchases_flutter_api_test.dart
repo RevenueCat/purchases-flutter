@@ -144,6 +144,11 @@ class _PurchasesFlutterApiTest {
     future = Purchases.setAutomaticAppleSearchAdsAttributionCollection(enabled);
   }
 
+  void _checkEnableAdServicesAttributionTokenCollection() {
+    Future<void> future =
+        Purchases.enableAdServicesAttributionTokenCollection();
+  }
+
   void _checkIsAnonymous() async {
     bool isAnonymous = await Purchases.isAnonymous;
   }

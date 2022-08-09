@@ -190,6 +190,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setAutomaticAppleSearchAdsAttributionCollection":
                 // NOOP
                 break;
+            case "enableAdServicesAttributionTokenCollection":
+                // NOOP
+                break;
             case "isAnonymous":
                 isAnonymous(result);
                 break;
