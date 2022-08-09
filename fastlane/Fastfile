@@ -64,7 +64,7 @@ lane :release do |options|
     sh('flutter', 'pub', 'pub', 'publish', '--dry-run')
     github_release(version: current_version_number)
     setup_credentials_file
-    sh('flutter', 'pub', 'pub', 'publish')
+    sh('flutter', 'pub', 'pub', 'publish', '--force')
   end
 end
 
