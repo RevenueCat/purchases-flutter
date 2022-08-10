@@ -118,6 +118,14 @@ commands:
             ssh-keyscan $ip; \
             done 2>/dev/null >> ~/.ssh/known_hosts
 
+  setup-git-credentials:
+    steps:
+      - run:
+          name: Setup Git config
+          command: |
+            git config user.email $GIT_EMAIL
+            git config user.name $GIT_USERNAME
+
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -252,6 +260,7 @@ jobs:
       - checkout
       - install-gem-dependencies
       - trust-github-key
+      - setup-git-credentials
       - run:
           name: Prepare next version
           command: bundle exec fastlane prepare_next_version
