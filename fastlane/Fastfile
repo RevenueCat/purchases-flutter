@@ -54,7 +54,7 @@ lane :bump do |options|
     new_sdk_version: current_version_number,
     hybrid_common_version: phc_version
   )
-  commit_current_changes
+  commit_current_changes(commit_message: 'Update VERSIONS.md')
   push_to_git_remote(set_upstream: true)
 end
 
@@ -62,8 +62,10 @@ desc "Create release"
 lane :release do |options|
   Dir.chdir('..') do
     sh('flutter', 'pub', 'publish', '--dry-run')
+  end
     github_release(version: current_version_number)
     setup_credentials_file
+  Dir.chdir('..') do
     sh('flutter', 'pub', 'publish', '--force')
   end
 end
