@@ -54,7 +54,7 @@ lane :bump do |options|
     new_sdk_version: current_version_number,
     hybrid_common_version: phc_version
   )
-  commit_current_changes
+  commit_current_changes(commit_message: 'Update VERSIONS.md')
   push_to_git_remote(set_upstream: true)
 end
 
