@@ -40,3 +40,4 @@ fastlane/.env
 
 # CI created folders
 vendor/
+.bundle/
