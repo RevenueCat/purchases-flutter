@@ -14,8 +14,11 @@
 # update_fastlane
 
 require 'yaml'
+require 'os'
+require 'fileutils'
 
 files_with_version_number = [
+  './.version',
   './pubspec.yaml',
   './ios/purchases_flutter.podspec',
   './macos/purchases_flutter.podspec',
@@ -34,6 +37,7 @@ end
 
 desc "Bump version, edit changelog, and create pull request"
 lane :bump do |options|
+  phc_version = get_phc_version
   bump_version_update_changelog_create_pr(
     current_version: current_version_number,
     changelog_latest_path: changelog_latest_path,
@@ -45,6 +49,45 @@ lane :bump do |options|
     branch: options[:branch],
     editor: options[:editor]
   )
+  update_hybrids_versions_file(
+    versions_file_path: './VERSIONS.md',
+    new_sdk_version: current_version_number,
+    hybrid_common_version: phc_version
+  )
+  commit_current_changes
+  push_to_git_remote(set_upstream: true)
+end
+
+desc "Create release"
+lane :release do |options|
+  Dir.chdir('..') do
+    sh('flutter', 'pub', 'publish', '--dry-run')
+    github_release(version: current_version_number)
+    setup_credentials_file
+    sh('flutter', 'pub', 'publish', '--force')
+  end
+end
+
+desc "Make github release"
+lane :github_release do |options|
+  create_github_release(
+    version: options[:version],
+    repo_name: repo_name,
+    github_api_token: ENV["GITHUB_TOKEN"],
+    changelog_latest_path: changelog_latest_path,
+    upload_assets: []
+  )
+end
+
+desc "Creates PR changing version to next minor adding a -SNAPSHOT suffix"
+lane :prepare_next_version do |options|
+  create_next_snapshot_version(
+    current_version: current_version_number,
+    repo_name: repo_name,
+    github_pr_token: ENV["GITHUB_PULL_REQUEST_API_TOKEN"],
+    files_to_update: files_with_version_number,
+    files_to_update_without_prerelease_modifiers: []
+  )
 end
 
 desc "Builds and analyzes the api_tester project to make sure APIs are expected"
@@ -54,12 +97,39 @@ lane :run_api_tests do |options|
   analyze_api_tester
 end
 
-def current_version_number
-  pubspec_location = "../pubspec.yaml"
-  pubspec = YAML.load_file(pubspec_location)
+def setup_credentials_file
+  access_token = ENV['FLUTTER_PUB_ACCESS_TOKEN'] || UI.user_error!('Need to set FLUTTER_PUB_ACCESS_TOKEN to publish package.')
+  refresh_token = ENV['FLUTTER_PUB_REFRESH_TOKEN'] || UI.user_error!('Need to set FLUTTER_PUB_REFRESH_TOKEN to publish package.')
+  id_token = ENV['FLUTTER_PUB_ID_TOKEN'] || UI.user_error!('Need to set FLUTTER_PUB_ID_TOKEN to publish package.')
+  expiration = ENV['FLUTTER_PUB_EXPIRATION_TIMESTAMP'] || UI.user_error!('Need to set FLUTTER_PUB_EXPIRATION_TIMESTAMP to publish package.')
+  token_endpoint = 'https://accounts.google.com/o/oauth2/token'
+  scopes = ['openid', 'https://www.googleapis.com/auth/userinfo.email']
 
-  current_version = pubspec["version"]
-  return current_version
+  credentials_hash = {
+    "accessToken": access_token,
+    "refreshToken": refresh_token,
+    "idToken": id_token,
+    "tokenEndpoint": token_endpoint,
+    "scopes": scopes,
+    "expiration": expiration.to_i
+  }
+  home_folder = ENV['HOME']
+  output_relative_path = OS.mac? ? "Library/Application\ Support/dart/pub-credentials.json" : ".config/dart/pub-credentials.json"
+  output_path = File.join(home_folder, output_relative_path)
+
+  if File.exist?(output_path)
+    UI.message('Credentials file already exists. Skipping setup')
+    return
+  end
+
+  UI.message('Creating credentials file')
+  output_directory = File.dirname(output_path)
+  FileUtils.mkpath(output_directory)
+  File.write(output_path, credentials_hash.to_json)
+end
+
+def current_version_number
+  File.read("../.version").strip
 end
 
 def check_api_tester_imports_up_to_date
@@ -85,4 +155,20 @@ def analyze_api_tester
   Dir.chdir("../api_tester") do
     sh("flutter", "analyze")
   end
+end
+
+def get_phc_version
+  android_build_gradle_path = '../android/build.gradle'
+  android_build_gradle_contents = File.read(android_build_gradle_path)
+  android_phc_version = android_build_gradle_contents.match("ext.common_version = '(.*)'").captures[0]
+  UI.user_error!("Android PHC version not found.") if android_phc_version.nil?
+
+  ios_podspec_path = '../ios/purchases_flutter.podspec'
+  ios_podspec_contents = File.read(ios_podspec_path)
+  ios_phc_version = ios_podspec_contents.match("s.dependency 'PurchasesHybridCommon', '(.*)'").captures[0]
+  UI.user_error!("iOS PHC version not found.") if ios_phc_version.nil?
+
+  UI.user_error!("Android and iOS PHC versions don't match. Please make sure they match.") if android_phc_version != ios_phc_version
+
+  ios_phc_version
 end

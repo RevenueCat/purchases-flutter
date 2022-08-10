@@ -8,9 +8,6 @@
 1. Update to the latest SDK versions in ios/purchases_flutter.podspec, macos/purchases_flutter.podspec and android/build.gradle.
 1. Update versions in VERSIONS.md and push changes
 1. If purchases-hybrid-common was updated, run `pod update PurchasesHybridCommon` in both `MagicWeather` and `purchase_tester`
-1. `flutter pub pub publish --dry-run`
 1. Wait until PR approved and make sure local copy matches remote
-1. `git tag x.y.z`
-1. `git push origin --tags`
-1. Create a new release in github
-1. `flutter pub pub publish`
+1. Run `flutter pub publish --dry-run`. Fix any errors if any show
+1. Create a tag for the new release in the last commit of the branch and push the tag. The rest will be performed automatically by CircleCI. If the automation fails, you can revert to manually calling `bundle exec fastlane release`.

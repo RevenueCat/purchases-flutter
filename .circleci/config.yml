@@ -1,11 +1,18 @@
-release-tags-and-branches: &release-tags-and-branches
-  filters:
-    tags:
-      ignore: /^.*-SNAPSHOT/
-    branches:
-      only: /^release\/.*/
-
 version: 2.1
+
+aliases:
+  release-tags-and-branches: &release-tags-and-branches
+    filters:
+      tags:
+        ignore: /^.*-SNAPSHOT/
+      branches:
+        only: /^release\/.*/
+  release-tags: &release-tags
+    filters: 
+      tags:
+        ignore: /^.*-SNAPSHOT/
+      branches:
+        ignore: /.*/
 
 orbs:
   android: circleci/android@0.2.1
@@ -100,6 +107,16 @@ commands:
           key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
+
+  trust-github-key:
+    steps:
+      - run:
+          name: Trust GitHub key
+          command: |
+            for ip in $(dig @8.8.8.8 github.com +short); \
+            do ssh-keyscan github.com,$ip; \
+            ssh-keyscan $ip; \
+            done 2>/dev/null >> ~/.ssh/known_hosts
 
 jobs:
   lint:
@@ -227,6 +244,30 @@ jobs:
       - swissknife/fail_if_dirty:
           print-modified-files: true
 
+  prepare-next-version:
+    description: "Creates a PR with the new snapshot version"
+    docker:
+      - image: cimg/ruby:3.1.2
+    steps:
+      - checkout
+      - install-gem-dependencies
+      - trust-github-key
+      - run:
+          name: Prepare next version
+          command: bundle exec fastlane prepare_next_version
+
+  make-release:
+    description: "Publishes the new version to pub.dev and creates a github release"
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - install-gem-dependencies
+      - trust-github-key
+      - run:
+          name: release
+          command: bundle exec fastlane release
+
 workflows:
   test:
     jobs:
@@ -243,3 +284,8 @@ workflows:
   ios-integration-test:
     jobs:
       - ios-integration-test: *release-tags-and-branches
+
+  deploy:
+    jobs:
+      - make-release: *release-tags
+      - prepare-next-version: *release-tags

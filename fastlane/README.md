@@ -21,6 +21,30 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Bump version, edit changelog, and create pull request
 
+### release
+
+```sh
+[bundle exec] fastlane release
+```
+
+Create release
+
+### github_release
+
+```sh
+[bundle exec] fastlane github_release
+```
+
+Make github release
+
+### prepare_next_version
+
+```sh
+[bundle exec] fastlane prepare_next_version
+```
+
+Creates PR changing version to next minor adding a -SNAPSHOT suffix
+
 ### run_api_tests
 
 ```sh
