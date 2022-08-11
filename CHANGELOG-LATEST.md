@@ -1,5 +1,5 @@
-### New features
-* New method for automatic collecting of attribution tokens on iOS and macOS using AdServices - `Purchases.enableAdServicesAttributionTokenCollection()` (https://github.com/RevenueCat/purchases-ios/pull/1727)
+### Fixes
+* Fix for no-op calls on Android (enableAdServicesAttributionTokenCollection) (#434) via Josh Holtz (@joshdholtz)
 
 ### Other Changes
-* Updating Hybrid Common to 4.1.0 (#424)
+* Setup credentials in prepare_next_version job (#430) via Toni Rico (@tonidero)
