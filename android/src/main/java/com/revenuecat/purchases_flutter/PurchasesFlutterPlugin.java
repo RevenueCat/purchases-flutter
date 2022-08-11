@@ -189,9 +189,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "setAutomaticAppleSearchAdsAttributionCollection":
                 // NOOP
+                result.success(null);
                 break;
             case "enableAdServicesAttributionTokenCollection":
                 // NOOP
+                result.success(null);
                 break;
             case "isAnonymous":
                 isAnonymous(result);
@@ -210,6 +212,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "presentCodeRedemptionSheet":
             case "setSimulatesAskToBuyInSandbox":
                 // NOOP
+                result.success(null);
                 break;
             case "setAttributes":
                 Map<String, String> attributes = call.argument("attributes");
