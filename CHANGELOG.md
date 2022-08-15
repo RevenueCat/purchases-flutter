@@ -1,3 +1,6 @@
+## 4.1.2
+* Bump compileSdkVersion for flutter in android (#436) via Toni Rico (@tonidero)
+
 ## 4.1.1
 ### Fixes
 * Fix for no-op calls on Android (enableAdServicesAttributionTokenCollection) (#434) via Josh Holtz (@joshdholtz)
