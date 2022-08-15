@@ -1,3 +1,7 @@
+## 4.1.2
+### Fixes
+* Bump compileSdkVersion to version 31 (#436) via Toni Rico (@tonidero)
+
 ## 4.1.1
 ### Fixes
 * Fix for no-op calls on Android (enableAdServicesAttributionTokenCollection) (#434) via Josh Holtz (@joshdholtz)
@@ -14,7 +18,7 @@
 
 ## 4.0.1
 
-### Bumped dependencies 
+### Bumped dependencies
 - Kotlin to 1.6.21
 - purchases-hybrid-common to 4.0.2
 - purchases-ios to 4.9.1
@@ -24,7 +28,7 @@ In addition to all the changes included in the latest major release [4.0.0](http
 
 ## 4.0.0
 
-RevenueCat Flutter SDK v4 is here!! 
+RevenueCat Flutter SDK v4 is here!!
 
 ![Dancing cats](https://media.giphy.com/media/lkbNG2zqzHZUA/giphy.gif)
 
@@ -46,10 +50,10 @@ You can enable Amazon Appstore support by configuring the SDK using the new `Rev
 For more information around configuration please take a look at the [Amazon Appstore section in our docs](https://docs.revenuecat.com/docs/amazon-platform-resources). The official [Amazon In-App Purchasing docs](https://developer.amazon.com/docs/in-app-purchasing/iap-overview.html) also contain very valuable information, especially around testing and best practices.
 
 #### StoreKit 2 support
-This version of the SDK automatically uses StoreKit 2 APIs under the hood only for APIs that the RevenueCat team has determined work better than StoreKit 1. 
+This version of the SDK automatically uses StoreKit 2 APIs under the hood only for APIs that the RevenueCat team has determined work better than StoreKit 1.
 
 #### New types and cleaned up naming
-New types that wrap native types from Apple, Google and Amazon, and we cleaned up the naming of other types and methods for a more consistent experience. 
+New types that wrap native types from Apple, Google and Amazon, and we cleaned up the naming of other types and methods for a more consistent experience.
 
 ### Deprecated APIs
 | 3.x | 4.0.0 |
@@ -111,10 +115,10 @@ You can enable Amazon Appstore support by configuring the SDK using the new `Rev
 For more information around configuration please take a look at the [Amazon Appstore section in our docs](https://docs.revenuecat.com/docs/amazon-platform-resources). The official [Amazon In-App Purchasing docs](https://developer.amazon.com/docs/in-app-purchasing/iap-overview.html) also contain very valuable information, especially around testing and best practices.
 
 #### StoreKit 2 support
-This version of the SDK automatically uses StoreKit 2 APIs under the hood only for APIs that the RevenueCat team has determined work better than StoreKit 1. 
+This version of the SDK automatically uses StoreKit 2 APIs under the hood only for APIs that the RevenueCat team has determined work better than StoreKit 1.
 
 #### New types and cleaned up naming
-New types that wrap native types from Apple, Google and Amazon, and we cleaned up the naming of other types and methods for a more consistent experience. 
+New types that wrap native types from Apple, Google and Amazon, and we cleaned up the naming of other types and methods for a more consistent experience.
 
 ### Deprecated APIs
 | 3.x | 4.0.0 |
@@ -172,10 +176,10 @@ You can enable Amazon Appstore support by configuring the SDK using the new `Rev
 For more information around configuration please take a look at the [Amazon Appstore section in our docs](https://docs.revenuecat.com/docs/amazon-platform-resources). The official [Amazon In-App Purchasing docs](https://developer.amazon.com/docs/in-app-purchasing/iap-overview.html) also contain very valuable information, especially around testing and best practices.
 
 #### StoreKit 2 support
-This version of the SDK automatically uses StoreKit 2 APIs under the hood only for APIs that the RevenueCat team has determined work better than StoreKit 1. 
+This version of the SDK automatically uses StoreKit 2 APIs under the hood only for APIs that the RevenueCat team has determined work better than StoreKit 1.
 
 #### New types and cleaned up naming
-New types that wrap native types from Apple, Google and Amazon, and we cleaned up the naming of other types and methods for a more consistent experience. 
+New types that wrap native types from Apple, Google and Amazon, and we cleaned up the naming of other types and methods for a more consistent experience.
 
 ### Deprecated APIs
 | 3.x | 4.0.0 |
@@ -229,11 +233,11 @@ The purchase modal will not show correctly for Amazon in these environments.
 
 ## 3.10.0
 
-- Add support for iOS promoted purchases (https://github.com/RevenueCat/purchases-flutter/pull/344)  
-  New type: `ReadyForPromotedProductPurchaseListener`  
+- Add support for iOS promoted purchases (https://github.com/RevenueCat/purchases-flutter/pull/344)
+  New type: `ReadyForPromotedProductPurchaseListener`
   New methods: `addReadyForPromotedProductPurchaseListener(ReadyForPromotedProductPurchaseListener listener)`
   `removeReadyForPromotedProductPurchaseListener(ReadyForPromotedProductPurchaseListener listenerToRemove)`
-  
+
 ## 3.9.5
 
 - Add instructions for how to install Amazon Store version in README (https://github.com/RevenueCat/purchases-flutter/pull/330)
@@ -280,7 +284,7 @@ The purchase modal will not show correctly for Amazon in these environments.
   `IntroductoryPrice.introPrice` -> `IntroductoryPrice.price`
   `IntroductoryPrice.introPriceString` -> `IntroductoryPrice.priceString`
   `IntroductoryPrice.introPriceCycles` -> `IntroductoryPrice.cycles`
-  `IntroductoryPrice.introPricePeriodNumberOfUnits` -> `IntroductoryPrice.periodNumberOfUnits` 
+  `IntroductoryPrice.introPricePeriodNumberOfUnits` -> `IntroductoryPrice.periodNumberOfUnits`
 
 ## 3.8.0
 
@@ -325,7 +329,7 @@ The purchase modal will not show correctly for Amazon in these environments.
   [3.12.6 Changelog here](https://github.com/RevenueCat/purchases-ios/releases/tag/3.12.6)
   [3.12.5 Changelog here](https://github.com/RevenueCat/purchases-ios/releases/tag/3.12.5)
   [3.12.4 Changelog here](https://github.com/RevenueCat/purchases-ios/releases/tag/3.12.4)
-  
+
 ## 3.4.5
 
 - Bumped purchases-android to 4.3.1 [Changelog here](https://github.com/RevenueCat/purchases-android/releases/4.3.1),
@@ -351,7 +355,7 @@ which fixes canMakePayments not returning (see related issue: https://github.com
 
 ## 3.4.1
 
-- Fixed a bug where the wrong error code would be returned when mapping to JSON in Android. 
+- Fixed a bug where the wrong error code would be returned when mapping to JSON in Android.
 - Bumped `purchases-hybrid-common` to 1.8.1. [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/1.8.1)
     https://github.com/RevenueCat/purchases-flutter/pull/225
 
@@ -359,13 +363,13 @@ which fixes canMakePayments not returning (see related issue: https://github.com
 
 ### Identity V3:
 
-In this version, we’ve redesigned the way that user identification works. 
+In this version, we’ve redesigned the way that user identification works.
 Detailed docs about the new system are available [here](https://docs.revenuecat.com/v3.2/docs/user-ids).
 
 #### New methods
-- Introduces `logIn`, a new way of identifying users, which also returns whether a new user has been registered in the system. 
-`logIn` uses a new backend endpoint. 
-- Introduces `logOut`, a replacement for `reset`. 
+- Introduces `logIn`, a new way of identifying users, which also returns whether a new user has been registered in the system.
+`logIn` uses a new backend endpoint.
+- Introduces `logOut`, a replacement for `reset`.
 
 #### Deprecations
 - deprecates `createAlias` in favor of `logIn`.
@@ -411,7 +415,7 @@ Detailed docs about the new system are available [here](https://docs.revenuecat.
 
 ## 3.1.0
 
-- iOS: 
+- iOS:
     - Added a new method `setSimulatesAskToBuyInSandbox`, that allows developers to test deferred purchases easily.
 - Bumped purchases-hybrid-common to 1.6.1 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/1.6.1)
 - Bumped purchases-ios to 3.10.6 [Changelog here](https://github.com/RevenueCat/purchases-ios/releases/3.10.6)
@@ -457,7 +461,7 @@ Detailed docs about the new system are available [here](https://docs.revenuecat.
 - removes deprecated `getEntitlements`, replaced by `getOfferings`
 - removes deprecated `makePurchase`, replaced by `purchaseProduct`
 
-- iOS: 
+- iOS:
     - added new method, `syncPurchases`, that enables syncing the purchases in the local receipt with the backend without risking a password prompt. The method was already available on Android.
     - added a new method, `presentCodeRedemptionSheet`, for offer codes redemption.
 - Bumped purchases-hybrid-common to 1.5.0 [Changelog here](https://github.com/RevenueCat/purchases-hybrid-common/releases/1.5.0)
@@ -467,7 +471,7 @@ Detailed docs about the new system are available [here](https://docs.revenuecat.
 ## 1.4.3
 
 - Explicitly added `Purchases` framework to podspec's linker flags so it gets correctly linked in the plugin pod.
-Fixed mapping of xcconfig files in Runner example. 
+Fixed mapping of xcconfig files in Runner example.
     https://github.com/RevenueCat/purchases-flutter/pull/128
 
 ## 1.4.2
@@ -542,7 +546,7 @@ for a user in RevenueCat. More info: https://docs.revenuecat.com/docs/user-attri
 
 ## 1.0.5
 
-- Updates README.md 
+- Updates README.md
 - Specifies compatible platforms
 
 ## 1.0.4
@@ -565,7 +569,7 @@ for a user in RevenueCat. More info: https://docs.revenuecat.com/docs/user-attri
 
 ## 1.0.0
 
-- Added `PurchasesErrorHelper.getErrorCode(PlatformException)` and enum of `PurchasesErrorCode` to make handling errors easier. (#3) 
+- Added `PurchasesErrorHelper.getErrorCode(PlatformException)` and enum of `PurchasesErrorCode` to make handling errors easier. (#3)
 - Support for new Offerings system.
 - Deprecates `makePurchase` methods. Replaces with `purchasePackage`
 - Deprecates `getEntitlements` method. Replaces with `getOfferings`
