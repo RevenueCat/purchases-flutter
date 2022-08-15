@@ -1,6 +1,6 @@
 ## 4.1.2
 ### Fixes
-* Bump compileSdkVersion for flutter in android (#436) via Toni Rico (@tonidero)
+* Bump compileSdkVersion to version 31 (#436) via Toni Rico (@tonidero)
 
 ## 4.1.1
 ### Fixes
