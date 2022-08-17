@@ -186,15 +186,16 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         userDefaultsSuiteName = nil;
     }
 
-    [RCPurchases configureWithAPIKey:apiKey
-                           appUserID:appUserID
-                        observerMode:observerMode
-               userDefaultsSuiteName:userDefaultsSuiteName
-                      platformFlavor:self.platformFlavor
-               platformFlavorVersion:self.platformFlavorVersion
-            usesStoreKit2IfAvailable:false
-                   dangerousSettings:nil];
-    RCPurchases.sharedPurchases.delegate = self;
+    RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
+                                                    appUserID:appUserID
+                                                 observerMode:observerMode
+                                        userDefaultsSuiteName:userDefaultsSuiteName
+                                               platformFlavor:self.platformFlavor
+                                        platformFlavorVersion:self.platformFlavorVersion
+                                     usesStoreKit2IfAvailable:false
+                                            dangerousSettings:nil];
+    purchases.delegate = self;
+
     result(nil);
 }
 
