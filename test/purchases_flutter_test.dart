@@ -40,7 +40,7 @@ void main() {
   });
 
   test('setupPurchases', () async {
-    await Purchases.setup('api_key', appUserId: 'cesar', observerMode: true);
+    await Purchases.setup('api_key', appUserId: 'cesar', observerMode: true, usesStoreKit2IfAvailable: false);
     expect(
       log,
       <Matcher>[
@@ -51,7 +51,8 @@ void main() {
             'appUserId': 'cesar',
             'observerMode': true,
             'userDefaultsSuiteName': null,
-            'useAmazon': false
+            'useAmazon': false,
+            'usesStoreKit2IfAvailable': false
           },
         )
       ],
@@ -452,7 +453,8 @@ void main() {
             'appUserId': 'cesar',
             'observerMode': true,
             'userDefaultsSuiteName': null,
-            'useAmazon': true
+            'useAmazon': true,
+            'usesStoreKit2IfAvailable': true
           },
         )
       ],
@@ -475,7 +477,8 @@ void main() {
             'appUserId': 'cesar',
             'observerMode': true,
             'userDefaultsSuiteName': null,
-            'useAmazon': true
+            'useAmazon': true,
+            'usesStoreKit2IfAvailable': true
           },
         )
       ],
@@ -498,7 +501,8 @@ void main() {
             'appUserId': 'cesar',
             'observerMode': true,
             'userDefaultsSuiteName': null,
-            'useAmazon': false
+            'useAmazon': false,
+            'usesStoreKit2IfAvailable': true
           },
         )
       ],
@@ -522,7 +526,8 @@ void main() {
             'appUserId': 'cesar',
             'observerMode': true,
             'userDefaultsSuiteName': null,
-            'useAmazon': true
+            'useAmazon': true,
+            'usesStoreKit2IfAvailable': true
           },
         )
       ],

@@ -10,11 +10,14 @@ class _PurchasesFlutterApiTest {
     bool observerMode = false;
     String? userDefaultsSuiteName = "fakeSuiteName";
     bool useAmazon = false;
+    bool usesStoreKit2IfAvailable = true;
     Future<void> callback = Purchases.setup(apiKey,
         appUserId: userId,
         observerMode: observerMode,
         userDefaultsSuiteName: userDefaultsSuiteName,
-        useAmazon: useAmazon);
+        useAmazon: useAmazon,
+        usesStoreKit2IfAvailable: usesStoreKit2IfAvailable
+    );
   }
 
   void _checkConfigure() {
