@@ -13,11 +13,18 @@ aliases:
         ignore: /^.*-SNAPSHOT/
       branches:
         ignore: /.*/
+  release-branches: &release-branches
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        only: /^release\/.*/
 
 orbs:
   android: circleci/android@0.2.1
   gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
+  revenuecat: revenuecat/sdks-common-config@dev:01a27fcc557ae1c84721b437e6a7720a9b2e126d
 
 commands:
 
@@ -107,24 +114,6 @@ commands:
           key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-
-  trust-github-key:
-    steps:
-      - run:
-          name: Trust GitHub key
-          command: |
-            for ip in $(dig @8.8.8.8 github.com +short); \
-            do ssh-keyscan github.com,$ip; \
-            ssh-keyscan $ip; \
-            done 2>/dev/null >> ~/.ssh/known_hosts
-
-  setup-git-credentials:
-    steps:
-      - run:
-          name: Setup Git config
-          command: |
-            git config user.email $GIT_EMAIL
-            git config user.name $GIT_USERNAME
 
 jobs:
   lint:
@@ -259,8 +248,8 @@ jobs:
     steps:
       - checkout
       - install-gem-dependencies
-      - trust-github-key
-      - setup-git-credentials
+      - revenuecat/trust-github-key
+      - revenuecat/setup-git-credentials
       - run:
           name: Prepare next version
           command: bundle exec fastlane prepare_next_version
@@ -272,29 +261,54 @@ jobs:
     steps:
       - checkout
       - install-gem-dependencies
-      - trust-github-key
+      - revenuecat/trust-github-key
       - run:
           name: release
           command: bundle exec fastlane release
 
 workflows:
   test:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - lint
       - test
       - api_test
       - freezed
   android-integration-test:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - android-integration-test-build: *release-tags-and-branches
       - run-firebase-tests:
           requires:
             - android-integration-test-build
   ios-integration-test:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - ios-integration-test: *release-tags-and-branches
-
   deploy:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
+      - hold:
+          type: approval
+          <<: *release-branches
+      - revenuecat/tag-current-branch:
+          requires:
+            - hold
+          <<: *release-branches
       - make-release: *release-tags
       - prepare-next-version: *release-tags
+  weekly-run-workflow:
+    when:
+      and:
+        - equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+        - equal: [ "release-train", << pipeline.schedule.name >> ]
+    jobs:
+      - revenuecat/automatic-bump
