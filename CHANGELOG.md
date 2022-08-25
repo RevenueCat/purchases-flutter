@@ -1,4 +1,4 @@
-## 4.1.3
+## 4.2.0
 ### Fixes
 - Fixed crash when cancelling purchases (#403) via NachoSoto (@NachoSoto)
 
