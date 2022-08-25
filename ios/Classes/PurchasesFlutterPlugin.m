@@ -46,11 +46,13 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
+        BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
                 observerMode:observerMode
        userDefaultsSuiteName:userDefaultsSuiteName
+    usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -178,6 +180,7 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
+usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -192,7 +195,7 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
-                                     usesStoreKit2IfAvailable:false
+                                     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
                                             dangerousSettings:nil];
     purchases.delegate = self;
 

@@ -83,6 +83,9 @@ class Purchases {
   ///
   /// [useAmazon] Android only. Set this to true if you are building the app
   /// to be distributed in the Amazon Appstore
+
+  /// [usesStoreKit2IfAvailable] iOS-only, will be ignored for Android.
+  /// Set this to FALSE to disable StoreKit2.
   @Deprecated('Use PurchasesConfiguration')
   static Future<void> setup(
     String apiKey, {
@@ -90,12 +93,15 @@ class Purchases {
     bool observerMode = false,
     String? userDefaultsSuiteName,
     bool useAmazon = false,
+    bool usesStoreKit2IfAvailable = true,
   }) {
     final configuration = (PurchasesConfiguration(apiKey)
       ..appUserID = appUserId
       ..observerMode = observerMode
       ..userDefaultsSuiteName = userDefaultsSuiteName
-      ..store = useAmazon ? Store.amazon : null);
+      ..store = useAmazon ? Store.amazon : null
+      ..usesStoreKit2IfAvailable = usesStoreKit2IfAvailable
+      );
     return configure(configuration);
   }
 
@@ -112,7 +118,8 @@ class Purchases {
           'appUserId': purchasesConfiguration.appUserID,
           'observerMode': purchasesConfiguration.observerMode,
           'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
-          'useAmazon': purchasesConfiguration.store == Store.amazon
+          'useAmazon': purchasesConfiguration.store == Store.amazon,
+          'usesStoreKit2IfAvailable': purchasesConfiguration.usesStoreKit2IfAvailable
         },
       );
 

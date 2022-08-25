@@ -12,6 +12,7 @@ class _PurchaseConfigurationApiTest {
     bool observerMode = configuration.observerMode;
     String? userDefaultsSuiteName = configuration.userDefaultsSuiteName;
     Store? store = configuration.store;
+    bool usesStoreKit2IfAvailable = configuration.usesStoreKit2IfAvailable;
     configuration.appUserID = null;
     configuration.appUserID = "fakeUserId";
     configuration.observerMode = false;
@@ -19,6 +20,7 @@ class _PurchaseConfigurationApiTest {
     configuration.userDefaultsSuiteName = "fakeSuiteName";
     configuration.store = null;
     configuration.store = Store.playStore;
+    configuration.usesStoreKit2IfAvailable = true;
   }
 
   void _checkAmazonConfigurationConstructor() {

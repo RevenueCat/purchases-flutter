@@ -128,6 +128,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean useAmazon = call.argument("useAmazon");
                 //noinspection unused
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
+                //noinspection unused
+                Boolean usesStoreKit2IfAvailable = call.argument("usesStoreKit2IfAvailable"); // iOS-only, unused.
                 setupPurchases(apiKey, appUserId, observerMode, useAmazon, result);
                 break;
             case "setFinishTransactions":
