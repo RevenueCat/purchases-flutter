@@ -13,12 +13,18 @@ aliases:
         ignore: /^.*-SNAPSHOT/
       branches:
         ignore: /.*/
+  release-branches: &release-branches
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        only: /^release\/.*/
 
 orbs:
   android: circleci/android@0.2.1
   gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@1.1.0
+  revenuecat: revenuecat/sdks-common-config@2.0.0
 
 commands:
 
@@ -87,46 +93,6 @@ commands:
           name: Flutter doctor
           command: flutter doctor
 
-  install-gem-dependencies:
-    parameters:
-      directory:
-        type: string
-        default: .
-    steps:
-      # Bundler
-      - restore_cache:
-          keys:
-            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
-      - run:
-          name: Bundle install
-          working_directory: << parameters.directory >>
-          command: |
-            bundle config set --local clean 'true'
-            bundle config set --local path 'vendor/bundle'
-            bundle install
-      - save_cache:
-          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-
-  trust-github-key:
-    steps:
-      - run:
-          name: Trust GitHub key
-          command: |
-            for ip in $(dig @8.8.8.8 github.com +short); \
-            do ssh-keyscan github.com,$ip; \
-            ssh-keyscan $ip; \
-            done 2>/dev/null >> ~/.ssh/known_hosts
-
-  setup-git-credentials:
-    steps:
-      - run:
-          name: Setup Git config
-          command: |
-            git config user.email $GIT_EMAIL
-            git config user.name $GIT_USERNAME
-
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -160,7 +126,8 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - install-gem-dependencies
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
@@ -259,9 +226,10 @@ jobs:
       - image: cimg/ruby:3.1.2
     steps:
       - checkout
-      - install-gem-dependencies
-      - trust-github-key
-      - setup-git-credentials
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - revenuecat/setup-git-credentials
       - run:
           name: Prepare next version
           command: bundle exec fastlane prepare_next_version
@@ -272,8 +240,9 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - install-gem-dependencies
-      - trust-github-key
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
       - run:
           name: release
           command: bundle exec fastlane release
@@ -283,22 +252,47 @@ workflows:
     jobs:
       - revenuecat/danger
   test:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - lint
       - test
       - api_test
       - freezed
   android-integration-test:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - android-integration-test-build: *release-tags-and-branches
       - run-firebase-tests:
           requires:
             - android-integration-test-build
   ios-integration-test:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - ios-integration-test: *release-tags-and-branches
-
   deploy:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
+      - hold:
+          type: approval
+          <<: *release-branches
+      - revenuecat/tag-current-branch:
+          requires:
+            - hold
+          <<: *release-branches
       - make-release: *release-tags
       - prepare-next-version: *release-tags
+  weekly-run-workflow:
+    when:
+      and:
+        - equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+        - equal: [ "release-train", << pipeline.schedule.name >> ]
+    jobs:
+      - revenuecat/automatic-bump
