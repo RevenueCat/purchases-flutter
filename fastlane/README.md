@@ -21,6 +21,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Bump version, edit changelog, and create pull request
 
+### automatic_bump
+
+```sh
+[bundle exec] fastlane automatic_bump
+```
+
+Automatically bumps version, edit changelog, and create pull request
+
 ### release
 
 ```sh
@@ -52,6 +60,14 @@ Creates PR changing version to next minor adding a -SNAPSHOT suffix
 ```
 
 Builds and analyzes the api_tester project to make sure APIs are expected
+
+### tag_current_branch
+
+```sh
+[bundle exec] fastlane tag_current_branch
+```
+
+Tag current branch with current version number
 
 ----
 
