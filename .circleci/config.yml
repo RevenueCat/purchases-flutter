@@ -248,6 +248,9 @@ jobs:
           command: bundle exec fastlane release
 
 workflows:
+  danger:
+    jobs:
+      - revenuecat/danger
   test:
     when:
       not:
