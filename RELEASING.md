@@ -8,6 +8,7 @@
     4. A new branch and PR will automatically be created
 1. Update to the latest SDK versions in ios/purchases_flutter.podspec, macos/purchases_flutter.podspec and android/build.gradle.
 1. If purchases-hybrid-common was updated, run `pod update PurchasesHybridCommon` in both `MagicWeather` and `purchase_tester`
+1. Wait until PR is approved (don't merge yet) and pull branch from origin (to make sure you've got all the changes locally)
 1. Run `flutter pub publish --dry-run`. Fix any errors if any show
 1. When the PR is approved, approve the hold job created in CircleCI. CircleCI will create a tag for the version. Alternatively, you can tag the last commit in the release branch and push it to the repository.
 1. The rest will be performed automatically by CircleCI. If the automation fails, you can revert to manually calling `bundle exec fastlane release`.
