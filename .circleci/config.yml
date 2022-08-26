@@ -24,7 +24,7 @@ orbs:
   android: circleci/android@0.2.1
   gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@dev:01a27fcc557ae1c84721b437e6a7720a9b2e126d
+  revenuecat: revenuecat/sdks-common-config@2.0.0
 
 commands:
 
@@ -93,28 +93,6 @@ commands:
           name: Flutter doctor
           command: flutter doctor
 
-  install-gem-dependencies:
-    parameters:
-      directory:
-        type: string
-        default: .
-    steps:
-      # Bundler
-      - restore_cache:
-          keys:
-            - v1-gem-cache-{{ checksum "Gemfile.lock" }}
-      - run:
-          name: Bundle install
-          working_directory: << parameters.directory >>
-          command: |
-            bundle config set --local clean 'true'
-            bundle config set --local path 'vendor/bundle'
-            bundle install
-      - save_cache:
-          key: v1-gem-cache-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
-
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -148,7 +126,8 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - install-gem-dependencies
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
@@ -247,7 +226,8 @@ jobs:
       - image: cimg/ruby:3.1.2
     steps:
       - checkout
-      - install-gem-dependencies
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
       - revenuecat/trust-github-key
       - revenuecat/setup-git-credentials
       - run:
@@ -260,7 +240,8 @@ jobs:
       - image: cirrusci/flutter
     steps:
       - checkout
-      - install-gem-dependencies
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
       - revenuecat/trust-github-key
       - run:
           name: release
