@@ -181,6 +181,10 @@ GEM
     jmespath (1.6.1)
     json (2.6.2)
     jwt (2.5.0)
+    kramdown (2.4.0)
+      rexml
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
     memoist (0.16.2)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
