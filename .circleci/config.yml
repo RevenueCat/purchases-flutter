@@ -219,6 +219,8 @@ jobs:
       - build-flutter-project
       - swissknife/fail_if_dirty:
           print-modified-files: true
+      - store_artifacts:
+          path: pubspec.lock
 
   prepare-next-version:
     description: "Creates a PR with the new snapshot version"
