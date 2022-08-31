@@ -219,6 +219,8 @@ jobs:
       - build-flutter-project
       - swissknife/fail_if_dirty:
           print-modified-files: true
+      - store_artifacts:
+          path: pubspec.lock
 
   prepare-next-version:
     description: "Creates a PR with the new snapshot version"
@@ -296,3 +298,18 @@ workflows:
         - equal: [ "release-train", << pipeline.schedule.name >> ]
     jobs:
       - revenuecat/automatic-bump
+  manual-trigger-bump:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+    jobs:
+      - trigger-automatic-release:
+          type: approval
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              only: main
+      - revenuecat/automatic-bump:
+          requires:
+            - trigger-automatic-release

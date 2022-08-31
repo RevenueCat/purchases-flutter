@@ -1,9 +1,9 @@
 group 'com.revenuecat.purchases_flutter'
-version '4.3.0-SNAPSHOT'
+version '4.2.1'
 
 buildscript {
     ext.kotlin_version = '1.6.21'
-    ext.common_version = '4.1.4'
+    ext.common_version = '4.2.1'
     repositories {
         google()
         mavenCentral()
