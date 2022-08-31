@@ -296,3 +296,18 @@ workflows:
         - equal: [ "release-train", << pipeline.schedule.name >> ]
     jobs:
       - revenuecat/automatic-bump
+  manual-trigger-bump:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+    jobs:
+      - trigger-automatic-release:
+          type: approval
+          filters:
+            tags:
+              ignore: /.*/
+            branches:
+              only: main
+      - revenuecat/automatic-bump:
+          requires:
+            - trigger-automatic-release
