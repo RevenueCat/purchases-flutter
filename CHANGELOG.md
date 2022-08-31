@@ -1,6 +1,6 @@
 ## 4.2.1
 ### Fixes
-* `purchaseProduct` not working when SK2 is enabled (#431)
+* `purchaseProduct` not working when SK2 is enabled
 
 ### Other Changes
 * Updated purchases-hybrid-common to 4.2.1
