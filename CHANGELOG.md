@@ -1,3 +1,16 @@
+## 4.2.1
+### Fixes
+* `purchaseProduct` not working when SK2 is enabled (#431)
+
+### Other Changes
+* Updated purchases-hybrid-common to 4.2.1
+* Skip release if needed and change type of message (#460) via Cesar de la Vega (@vegaro)
+* Update fastlane-plugin-revenuecat_internal (#456) via Cesar de la Vega (@vegaro)
+* Update RELEASING docs (#458) via Cesar de la Vega (@vegaro)
+* Add `next_version` and `automatic_release` to automatic_bump (#457) via Cesar de la Vega (@vegaro)
+* Release train (#454) via Cesar de la Vega (@vegaro)
+* Configures Danger (#452) via Cesar de la Vega (@vegaro)
+
 ## 4.2.0
 ### Fixes
 - Fixed crash when cancelling purchases (#403) via NachoSoto (@NachoSoto)

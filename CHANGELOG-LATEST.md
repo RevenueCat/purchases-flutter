@@ -1,9 +1,11 @@
 ### Fixes
-- Fixed crash when cancelling purchases (#403) via NachoSoto (@NachoSoto)
+* `purchaseProduct` not working when SK2 is enabled (#431)
 
 ### Other Changes
-* Updated `purchases-ios` to 4.10.2
-* Re-enabled `SK2` as the default on iOS
-* `PurchasesFlutterPlugin`: silenced unused warning (#444) via NachoSoto (@NachoSoto)
-* `README`: removed `Amazon` note since it's now supported. (#442) via NachoSoto (@NachoSoto)
-* Update fastlane plugin (#440) via Toni Rico (@tonidero)
+* Updated purchases-hybrid-common to 4.2.1
+* Skip release if needed and change type of message (#460) via Cesar de la Vega (@vegaro)
+* Update fastlane-plugin-revenuecat_internal (#456) via Cesar de la Vega (@vegaro)
+* Update RELEASING docs (#458) via Cesar de la Vega (@vegaro)
+* Add `next_version` and `automatic_release` to automatic_bump (#457) via Cesar de la Vega (@vegaro)
+* Release train (#454) via Cesar de la Vega (@vegaro)
+* Configures Danger (#452) via Cesar de la Vega (@vegaro)
