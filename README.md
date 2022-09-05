@@ -23,11 +23,11 @@
 ## Installation
 To use this plugin, add `purchases_flutter` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
-## SDK Reference
- Our full SDK reference [can be found here](https://pub.dev/documentation/purchases_flutter/latest/).
-
 ### Requirements
 *purchases_flutter* requires XCode 13.3.1+ and minimum targets iOS 11.0+.
+
+## SDK Reference
+ Our full SDK reference [can be found here](https://pub.dev/documentation/purchases_flutter/latest/).
 
 ## Getting Started
 For more detailed information, you can view our complete documentation at [docs.revenuecat.com](https://docs.revenuecat.com/docs/flutter).
