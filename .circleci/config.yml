@@ -8,7 +8,7 @@ aliases:
       branches:
         only: /^release\/.*/
   release-tags: &release-tags
-    filters: 
+    filters:
       tags:
         ignore: /^.*-SNAPSHOT/
       branches:
@@ -19,6 +19,12 @@ aliases:
         ignore: /.*/
       branches:
         only: /^release\/.*/
+  only-main-branch: &only-main-branch
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        only: main
 
 orbs:
   android: circleci/android@0.2.1
@@ -51,7 +57,7 @@ commands:
       project:
         default: .
         type: string
-    steps:  
+    steps:
       - flutter-get-dependencies:
           project: <<parameters.project>>
       - run:
@@ -290,7 +296,13 @@ workflows:
             - hold
           <<: *release-branches
       - make-release: *release-tags
-      - prepare-next-version: *release-tags
+  snapshot-bump:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+    jobs:
+      - prepare-next-version:
+          <<: *only-main-branch
   weekly-run-workflow:
     when:
       and:
