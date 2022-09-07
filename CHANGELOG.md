@@ -1,3 +1,7 @@
+## 4.2.2
+### Other Changes
+* add SDK reference docs link (#461) via Andy Boedo (@aboedo)
+
 ## 4.2.1
 ### Fixes
 * `purchaseProduct` not working when SK2 is enabled (https://github.com/RevenueCat/react-native-purchases/issues/402)
