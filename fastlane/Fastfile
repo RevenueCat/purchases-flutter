@@ -139,7 +139,7 @@ lane :update_hybrid_common_versions do |options|
     UI.user_error!("Missing `version` argument")
   end
 
-  previous_version_number = parse_previous_hybrid_version
+  previous_version_number = get_phc_version
 
   # Add to options so if we're chaining lanes together, the other lanes get it
   options[:previous_hybrid_version] = previous_version_number
@@ -221,12 +221,6 @@ end
 ###############################################################################
 # Helper functions 🤜🤛                                                      #
 ###############################################################################
-
-def parse_previous_hybrid_version
-  Dir.chdir(get_root_folder) do
-    return (sh "cat ios/purchases_flutter.podspec | grep \'\"PurchasesHybridCommon\", \' | awk \'{print($3)}\' | sed \"s/\'//g\"").strip
-  end
-end
 
 def parse_pod_version
   Dir.chdir(get_root_folder) do
