@@ -69,6 +69,38 @@ Builds and analyzes the api_tester project to make sure APIs are expected
 
 Tag current branch with current version number
 
+### update_hybrid_common_versions
+
+```sh
+[bundle exec] fastlane update_hybrid_common_versions
+```
+
+Update hybrid common pod and gradle
+
+### build_hybrid_example
+
+```sh
+[bundle exec] fastlane build_hybrid_example
+```
+
+Build hybrid example
+
+### update_ios_pod
+
+```sh
+[bundle exec] fastlane update_ios_pod
+```
+
+Update iOS pod version during hybrid update
+
+### update_hybrid_common
+
+```sh
+[bundle exec] fastlane update_hybrid_common
+```
+
+Update Hybrid Common, Build PurchaseTester, and updates download scripts. Calls update_hybrid_common, then build_hybrid_example then update_ios_pod
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

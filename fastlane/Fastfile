@@ -234,6 +234,10 @@ def parse_pod_version
   end
 end
 
+def get_root_folder
+  return File.expand_path('../../', __FILE__)
+end
+
 def setup_credentials_file
   access_token = ENV['FLUTTER_PUB_ACCESS_TOKEN'] || UI.user_error!('Need to set FLUTTER_PUB_ACCESS_TOKEN to publish package.')
   refresh_token = ENV['FLUTTER_PUB_REFRESH_TOKEN'] || UI.user_error!('Need to set FLUTTER_PUB_REFRESH_TOKEN to publish package.')
