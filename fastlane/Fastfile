@@ -165,7 +165,6 @@ end
 
 desc "Build hybrid example"
 lane :build_hybrid_example do |options|
-  options[:previous_pod_version] = parse_pod_version
   Dir.chdir(File.expand_path("revenuecat_examples/MagicWeather/ios", get_root_folder)) do
     sh("pod update PurchasesHybridCommon --repo-update")
     sh("pod install")
@@ -180,38 +179,6 @@ lane :build_hybrid_example do |options|
   end
 end
 
-desc "Update iOS pod version during hybrid update"
-lane :update_ios_pod do |options|
-  if options[:dry_run]
-    dry_run = true
-  end
-  if options[:version]
-    new_version_number = options[:version]
-  else
-    UI.user_error!("Missing `version` argument")
-  end
-
-  if options[:previous_pod_version]
-    previous_pod_version = options[:previous_pod_version]
-  else
-    UI.user_error!("Missing `previous_pod_version` argument")
-  end
-
-  if options[:previous_hybrid_version]
-    previous_hybrid_version = options[:previous_hybrid_version]
-  else
-    UI.user_error!("Missing `previous_hybrid_version` argument")
-  end
-
-  new_pod_version = parse_pod_version
-
-  UI.message("ℹ️  Current Purchases version: #{previous_hybrid_version}")
-  UI.message("ℹ️  New Purchases version    : #{new_version_number}")
-  UI.message("ℹ️  Current Pod version      : #{previous_pod_version}")
-  UI.message("ℹ️  New Pod version          : #{new_pod_version}")
-  UI.message("ℹ️  Nothing more to do, dry_run: #{dry_run}")
-end
-
 desc "Update Hybrid Common, Build PurchaseTester, and updates download scripts. Calls update_hybrid_common, then build_hybrid_example then update_ios_pod"
 lane :update_hybrid_common do |options|
   update_hybrid_common_versions(options)
@@ -221,12 +188,6 @@ end
 ###############################################################################
 # Helper functions 🤜🤛                                                      #
 ###############################################################################
-
-def parse_pod_version
-  Dir.chdir(get_root_folder) do
-    return sh("cat revenuecat_examples/MagicWeather/ios/Podfile.lock | grep \' RevenueCat (=\' | awk \'{print($4)}\' | sed \"s/)//g\"").strip
-  end
-end
 
 def get_root_folder
   return File.expand_path('../../', __FILE__)
