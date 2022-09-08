@@ -224,13 +224,13 @@ end
 
 def parse_previous_hybrid_version
   Dir.chdir(get_root_folder) do
-    return (sh "cat RNPurchases.podspec | grep \'\"PurchasesHybridCommon\", \' | awk \'{print($3)}\' | sed \"s/\'//g\"").strip
+    return (sh "cat ios/purchases_flutter.podspec | grep \'\"PurchasesHybridCommon\", \' | awk \'{print($3)}\' | sed \"s/\'//g\"").strip
   end
 end
 
 def parse_pod_version
   Dir.chdir(get_root_folder) do
-    return sh("cat examples/MagicWeather/ios/Podfile.lock | grep \' RevenueCat (=\' | awk \'{print($4)}\' | sed \"s/)//g\"").strip
+    return sh("cat revenuecat_examples/MagicWeather/ios/Podfile.lock | grep \' RevenueCat (=\' | awk \'{print($4)}\' | sed \"s/)//g\"").strip
   end
 end
 
