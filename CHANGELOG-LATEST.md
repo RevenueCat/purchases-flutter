@@ -1,5 +1,5 @@
 ### Fixes
-* `purchaseProduct` not working when SK2 is enabled (#431)
+* `purchaseProduct` not working when SK2 is enabled (https://github.com/RevenueCat/react-native-purchases/issues/402)
 
 ### Other Changes
 * Updated purchases-hybrid-common to 4.2.1
