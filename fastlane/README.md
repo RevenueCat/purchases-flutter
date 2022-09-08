@@ -85,14 +85,6 @@ Update hybrid common pod and gradle
 
 Build hybrid example
 
-### update_ios_pod
-
-```sh
-[bundle exec] fastlane update_ios_pod
-```
-
-Update iOS pod version during hybrid update
-
 ### update_hybrid_common
 
 ```sh
