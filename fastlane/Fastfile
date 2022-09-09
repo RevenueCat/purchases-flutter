@@ -128,6 +128,71 @@ lane :tag_current_branch do |options|
   push_git_tags(tag: version_number)
 end
 
+desc "Update hybrid common pod and gradle"
+lane :update_hybrid_common_versions do |options|
+  if options[:dry_run]
+    dry_run = true
+  end
+  if options[:version]
+    new_version_number = options[:version]
+  else
+    UI.user_error!("Missing `version` argument")
+  end
+
+  previous_version_number = get_phc_version
+
+  # Add to options so if we're chaining lanes together, the other lanes get it
+  options[:previous_hybrid_version] = previous_version_number
+
+  UI.message("ℹ️  Current Purchases Hybrid Common version: #{previous_version_number}")
+  UI.message("ℹ️  Setting Purchases Hybrid Common version: #{new_version_number}")
+  files_to_update = [
+    'ios/purchases_flutter.podspec',
+    'macos/purchases_flutter.podspec',
+    'android/build.gradle',
+  ]
+
+  if dry_run
+    UI.message("ℹ️  Nothing more to do, dry_run: true")
+  else
+    replace_text_in_files(
+      previous_text: previous_version_number,
+      new_text: new_version_number,
+      paths_of_files_to_update: files_to_update
+    )
+  end
+end
+
+desc "Build hybrid example"
+lane :build_hybrid_example do |options|
+  Dir.chdir(File.expand_path("revenuecat_examples/MagicWeather/ios", get_root_folder)) do
+    sh("pod update PurchasesHybridCommon --repo-update")
+    sh("pod install")
+  end
+  Dir.chdir(File.expand_path("revenuecat_examples/purchase_tester/ios", get_root_folder)) do
+    sh("pod update PurchasesHybridCommon --repo-update")
+    sh("pod install")
+  end
+  Dir.chdir(File.expand_path("revenuecat_examples/purchase_tester/macos", get_root_folder)) do
+    sh("pod update PurchasesHybridCommon --repo-update")
+    sh("pod install")
+  end
+end
+
+desc "Update Hybrid Common, Build PurchaseTester, and updates download scripts. Calls update_hybrid_common, then build_hybrid_example then update_ios_pod"
+lane :update_hybrid_common do |options|
+  update_hybrid_common_versions(options)
+  build_hybrid_example(options)
+end
+
+###############################################################################
+# Helper functions 🤜🤛                                                      #
+###############################################################################
+
+def get_root_folder
+  return File.expand_path('../../', __FILE__)
+end
+
 def setup_credentials_file
   access_token = ENV['FLUTTER_PUB_ACCESS_TOKEN'] || UI.user_error!('Need to set FLUTTER_PUB_ACCESS_TOKEN to publish package.')
   refresh_token = ENV['FLUTTER_PUB_REFRESH_TOKEN'] || UI.user_error!('Need to set FLUTTER_PUB_REFRESH_TOKEN to publish package.')

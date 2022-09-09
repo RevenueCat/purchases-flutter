@@ -6,7 +6,7 @@
     2. Input new version number
     3. Update CHANGELOG.latest.md to include the latest changes. Call out API changes (if any). You can use the existing CHANGELOG.md as a base for formatting. To compile the changelog, you can compare the changes between the base branch for the release (usually main) against the latest release, by checking https://github.com/revenuecat/purchases-flutter/compare/<latest_release>...<base_branch>. For example, https://github.com/revenuecat/purchases-flutter/compare/3.10.0...main.
     4. A new branch and PR will automatically be created
-1. Update to the latest SDK versions in `ios/purchases_flutter.podspec`, `macos/purchases_flutter.podspec` and `android/build.gradle`.
+1. `bundle exec fastlane update_hybrid_common version:x.x.x` to set the purchases-hybrid-common version number if needed.
 1. If purchases-hybrid-common was updated, run `pod update PurchasesHybridCommon` in both `MagicWeather` and `purchase_tester`
 1. Wait until PR is approved (don't merge yet) and pull branch from origin (to make sure you've got all the changes locally)
 1. Run `flutter pub publish --dry-run`. Fix any errors if any show
