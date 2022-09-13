@@ -337,19 +337,9 @@ workflows:
       - revenuecat/automatic-bump
   manual-trigger-bump:
     when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+      equal: [ bump, << pipeline.parameters.action >> ]
     jobs:
-      - trigger-automatic-release:
-          type: approval
-          filters:
-            tags:
-              ignore: /.*/
-            branches:
-              only: main
-      - revenuecat/automatic-bump:
-          requires:
-            - trigger-automatic-release
+      - revenuecat/automatic-bump
   update-hybrid-common-versions:
     when:
       equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
