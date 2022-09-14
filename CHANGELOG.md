@@ -1,3 +1,10 @@
+## 4.2.2
+### Other Changes
+* Adds lane to update purchases-hybrid-common (#468) via Cesar de la Vega (@vegaro)
+* Remove wrong link from Changelog (#464) via Cesar de la Vega (@vegaro)
+* Move to SNAPSHOT version on every commit to main if needed (#466) via Toni Rico (@tonidero)
+* add SDK reference docs link (#461) via Andy Boedo (@aboedo)
+
 ## 4.2.1
 ### Fixes
 * `purchaseProduct` not working when SK2 is enabled (https://github.com/RevenueCat/react-native-purchases/issues/402)
