@@ -160,20 +160,13 @@ lane :update_hybrid_common_versions do |options|
     next
   end
 
-  if options[:open_pr]
-    bump_phc_version_create_pr(
-      repo_name: "purchases-flutter",
-      files_to_update: files_to_update,
-      current_version: current_phc_version,
-      next_version: new_version_number
-    )
-  else
-    replace_text_in_files(
-      previous_text: current_phc_version,
-      new_text: new_version_number,
-      paths_of_files_to_update: files_to_update
-    )
-  end
+  bump_phc_version_create_pr(
+    repo_name: "purchases-flutter",
+    files_to_update: files_to_update,
+    current_version: current_phc_version,
+    next_version: new_version_number,
+    open_pr: options[:open_pr]
+  )
 end
 
 desc "Build hybrid example"
