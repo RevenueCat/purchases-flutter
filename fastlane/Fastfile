@@ -160,12 +160,13 @@ lane :update_hybrid_common_versions do |options|
     next
   end
 
-  bump_phc_version_create_pr(
+  bump_phc_version(
     repo_name: "purchases-flutter",
     files_to_update: files_to_update,
     current_version: current_phc_version,
     next_version: new_version_number,
-    open_pr: options[:open_pr]
+    open_pr: options[:open_pr] || false,
+    automatic_release: options[:automatic_release] || false,
   )
 end
 

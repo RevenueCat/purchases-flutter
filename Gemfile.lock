@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/RevenueCat/fastlane-plugin-revenuecat_internal
-  revision: 1269f49ad16be4fc7b38ff8b75e17f819f6af6c8
+  revision: 1486cfa4a828b736408ae7993b42614fa3a9bd34
   specs:
     fastlane-plugin-revenuecat_internal (0.1.0)
 
@@ -22,8 +22,8 @@ GEM
     artifactory (3.0.15)
     atomos (0.1.3)
     aws-eventstream (1.2.0)
-    aws-partitions (1.636.0)
-    aws-sdk-core (3.154.0)
+    aws-partitions (1.637.0)
+    aws-sdk-core (3.155.0)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.525.0)
       aws-sigv4 (~> 1.1)
