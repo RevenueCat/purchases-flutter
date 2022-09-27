@@ -152,21 +152,21 @@ lane :update_hybrid_common_versions do |options|
   files_to_update = [
     'ios/purchases_flutter.podspec',
     'macos/purchases_flutter.podspec',
-    'android/build.gradle',
+    'android/build.gradle'
   ]
 
   if dry_run
-    UI.message("ℹ️  Nothing more to do, dry_run: true")
+    UI.message('ℹ️  Nothing more to do, dry_run: true')
     next
   end
 
   bump_phc_version(
-    repo_name: "purchases-flutter",
+    repo_name: 'purchases-flutter',
     files_to_update: files_to_update,
     current_version: current_phc_version,
     next_version: new_version_number,
     open_pr: options[:open_pr] || false,
-    automatic_release: options[:automatic_release] || false,
+    automatic_release: options[:automatic_release] || false
   )
 end
 
