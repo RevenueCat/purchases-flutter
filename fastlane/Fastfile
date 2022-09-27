@@ -129,6 +129,12 @@ lane :tag_current_branch do |options|
 end
 
 desc "Update hybrid common pod and gradle"
+lane :update_hybrid_common_versions_and_open_pr do |options|
+  options[:open_pr] = true
+  update_hybrid_common_versions(options)
+end
+
+desc "Update hybrid common pod and gradle"
 lane :update_hybrid_common_versions do |options|
   if options[:dry_run]
     dry_run = true
@@ -139,28 +145,29 @@ lane :update_hybrid_common_versions do |options|
     UI.user_error!("Missing `version` argument")
   end
 
-  previous_version_number = get_phc_version
+  current_phc_version = get_phc_version
 
-  # Add to options so if we're chaining lanes together, the other lanes get it
-  options[:previous_hybrid_version] = previous_version_number
-
-  UI.message("ℹ️  Current Purchases Hybrid Common version: #{previous_version_number}")
+  UI.message("ℹ️  Current Purchases Hybrid Common version: #{current_phc_version}")
   UI.message("ℹ️  Setting Purchases Hybrid Common version: #{new_version_number}")
   files_to_update = [
     'ios/purchases_flutter.podspec',
     'macos/purchases_flutter.podspec',
-    'android/build.gradle',
+    'android/build.gradle'
   ]
 
   if dry_run
-    UI.message("ℹ️  Nothing more to do, dry_run: true")
-  else
-    replace_text_in_files(
-      previous_text: previous_version_number,
-      new_text: new_version_number,
-      paths_of_files_to_update: files_to_update
-    )
+    UI.message('ℹ️  Nothing more to do, dry_run: true')
+    next
   end
+
+  bump_phc_version(
+    repo_name: 'purchases-flutter',
+    files_to_update: files_to_update,
+    current_version: current_phc_version,
+    next_version: new_version_number,
+    open_pr: options[:open_pr] || false,
+    automatic_release: options[:automatic_release] || false
+  )
 end
 
 desc "Build hybrid example"

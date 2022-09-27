@@ -32,6 +32,15 @@ orbs:
   swissknife: roopakv/swissknife@0.65.0
   revenuecat: revenuecat/sdks-common-config@2.0.0
 
+parameters:
+  action:
+    type: enum
+    enum: [build, upgrade-hybrid-common, bump]
+    default: build
+  hybrid-common-version:
+    type: string
+    default: ''
+
 commands:
 
   replace-api-key:
@@ -242,6 +251,20 @@ jobs:
           name: Prepare next version
           command: bundle exec fastlane prepare_next_version
 
+  update-hybrid-common-versions:
+    description: "Creates a PR updating purchases-hybrid-common to latest release"
+    docker:
+      - image: cimg/ruby:3.1.2
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - revenuecat/setup-git-credentials
+      - run:
+          name: Prepare next version
+          command: bundle exec fastlane update_hybrid_common_versions version:<< pipeline.parameters.hybrid-common-version >> open_pr:true automatic_release:true
+
   make-release:
     description: "Publishes the new version to pub.dev and creates a github release"
     docker:
@@ -312,16 +335,11 @@ workflows:
       - revenuecat/automatic-bump
   manual-trigger-bump:
     when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+      equal: [ bump, << pipeline.parameters.action >> ]
     jobs:
-      - trigger-automatic-release:
-          type: approval
-          filters:
-            tags:
-              ignore: /.*/
-            branches:
-              only: main
-      - revenuecat/automatic-bump:
-          requires:
-            - trigger-automatic-release
+      - revenuecat/automatic-bump
+  update-hybrid-common-versions:
+    when:
+      equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
+    jobs:
+      - update-hybrid-common-versions
