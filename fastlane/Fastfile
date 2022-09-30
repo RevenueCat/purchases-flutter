@@ -129,12 +129,6 @@ lane :tag_current_branch do |options|
 end
 
 desc "Update hybrid common pod and gradle"
-lane :update_hybrid_common_versions_and_open_pr do |options|
-  options[:open_pr] = true
-  update_hybrid_common_versions(options)
-end
-
-desc "Update hybrid common pod and gradle"
 lane :update_hybrid_common_versions do |options|
   if options[:dry_run]
     dry_run = true

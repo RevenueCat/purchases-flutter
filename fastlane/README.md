@@ -69,14 +69,6 @@ Builds and analyzes the api_tester project to make sure APIs are expected
 
 Tag current branch with current version number
 
-### update_hybrid_common_versions_and_open_pr
-
-```sh
-[bundle exec] fastlane update_hybrid_common_versions_and_open_pr
-```
-
-Update hybrid common pod and gradle
-
 ### update_hybrid_common_versions
 
 ```sh
