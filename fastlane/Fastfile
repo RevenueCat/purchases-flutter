@@ -167,10 +167,12 @@ end
 desc "Build hybrid example"
 lane :build_hybrid_example do |options|
   Dir.chdir(File.expand_path("revenuecat_examples/MagicWeather/ios", get_root_folder)) do
+    sh("flutter pub get")
     sh("pod update PurchasesHybridCommon --repo-update")
     sh("pod install")
   end
   Dir.chdir(File.expand_path("revenuecat_examples/purchase_tester/ios", get_root_folder)) do
+    sh("flutter pub get")
     sh("pod update PurchasesHybridCommon --repo-update")
     sh("pod install")
   end
