@@ -254,9 +254,12 @@ jobs:
   update-hybrid-common-versions:
     description: "Creates a PR updating purchases-hybrid-common to latest release"
     docker:
-      - image: cirrusci/flutter
+      - image: cirrusci/flutter:stable
     steps:
       - checkout
+      - run:
+          name: Fix permissions
+          command: sudo chown -R cirrus:cirrus .
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - revenuecat/trust-github-key
