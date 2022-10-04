@@ -257,9 +257,6 @@ jobs:
       - image: cirrusci/flutter:stable
     steps:
       - checkout
-      - run:
-          name: Fix permissions
-          command: sudo chown -R cirrus:cirrus .
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - revenuecat/trust-github-key
