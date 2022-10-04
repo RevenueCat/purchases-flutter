@@ -261,6 +261,7 @@ jobs:
           cache-version: v1
       - revenuecat/trust-github-key
       - revenuecat/setup-git-credentials
+      - setup-flutter
       - run:
           name: Prepare next version
           command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.hybrid-common-version >> open_pr:true automatic_release:true
