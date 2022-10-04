@@ -254,7 +254,7 @@ jobs:
   update-hybrid-common-versions:
     description: "Creates a PR updating purchases-hybrid-common to latest release"
     docker:
-      - image: cimg/ruby:3.1.2
+      - image: cirrusci/flutter
     steps:
       - checkout
       - revenuecat/install-gem-unix-dependencies:
@@ -263,7 +263,8 @@ jobs:
       - revenuecat/setup-git-credentials
       - run:
           name: Prepare next version
-          command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.hybrid-common-version >> open_pr:true automatic_release:true
+          command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.hybrid-common-version >> automatic_release:true
+          # command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.hybrid-common-version >> open_pr:true automatic_release:true
 
   make-release:
     description: "Publishes the new version to pub.dev and creates a github release"
