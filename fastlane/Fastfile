@@ -179,6 +179,7 @@ lane :build_hybrid_example do |options|
     sh("pod install")
   end
   Dir.chdir(File.expand_path("revenuecat_examples/purchase_tester/macos", get_root_folder)) do
+    sh("flutter precache --macos")
     sh("pod update PurchasesHybridCommon --repo-update")
     sh("pod install")
   end
