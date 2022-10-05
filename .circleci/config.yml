@@ -340,7 +340,7 @@ workflows:
     jobs:
       - revenuecat/automatic-bump
   update-hybrid-common-versions:
-    when:
-      equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
+    # when:
+      # equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
     jobs:
       - update-hybrid-common-versions
