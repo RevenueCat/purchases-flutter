@@ -189,8 +189,13 @@ desc "Update Hybrid Common, Build PurchaseTester, and updates download scripts. 
 lane :update_hybrid_common do |options|
   update_hybrid_common_versions(options)
   build_hybrid_example(options)
-  commit_current_changes(commit_message: 'Update examples')
-  push_to_git_remote(set_upstream: true)
+  current_branch = sh("git branch --show-current").strip
+  unless current_branch == 'main'
+    commit_current_changes(commit_message: 'Update examples')
+    push_to_git_remote(set_upstream: true)
+  else
+    UI.message("Current branch is main. Skipping pushing to branch.")
+  end
 end
 
 ###############################################################################
