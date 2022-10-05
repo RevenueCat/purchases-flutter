@@ -264,7 +264,7 @@ jobs:
       - setup-flutter
       - run:
           name: Prepare next version
-          command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.hybrid-common-version >> open_pr:true automatic_release:true
+          command: bundle exec fastlane update_hybrid_common version:4.3.1 open_pr:true automatic_release:true
 
   make-release:
     description: "Publishes the new version to pub.dev and creates a github release"
