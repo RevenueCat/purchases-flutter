@@ -37,9 +37,12 @@ parameters:
     type: enum
     enum: [build, upgrade-hybrid-common, bump]
     default: build
-  hybrid-common-version:
+  version:
     type: string
     default: ''
+  automatic:
+    type: boolean
+    default: false
 
 commands:
 
@@ -264,7 +267,7 @@ jobs:
       - setup-flutter
       - run:
           name: Prepare next version
-          command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.hybrid-common-version >> open_pr:true automatic_release:true
+          command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.version >> open_pr:true automatic_release:<< pipeline.parameters.automatic >>
 
   make-release:
     description: "Publishes the new version to pub.dev and creates a github release"
