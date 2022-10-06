@@ -30,7 +30,7 @@ orbs:
   android: circleci/android@0.2.1
   gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@2.0.0
+  revenuecat: revenuecat/sdks-common-config@2.1.0
 
 parameters:
   action:
