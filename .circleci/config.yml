@@ -30,16 +30,19 @@ orbs:
   android: circleci/android@0.2.1
   gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@2.0.0
+  revenuecat: revenuecat/sdks-common-config@2.1.0
 
 parameters:
   action:
     type: enum
     enum: [build, upgrade-hybrid-common, bump]
     default: build
-  hybrid-common-version:
+  version:
     type: string
     default: ''
+  automatic:
+    type: boolean
+    default: false
 
 commands:
 
@@ -263,9 +266,12 @@ jobs:
       - revenuecat/setup-git-credentials
       - setup-flutter
       - run:
-          name: Prepare next version
-          command: bundle exec fastlane update_hybrid_common version:<< pipeline.parameters.hybrid-common-version >> open_pr:true automatic_release:true
-
+          name: Updating to next version of phc
+          command: |
+            bundle exec fastlane update_hybrid_common \
+            version:<< pipeline.parameters.version >> \
+            open_pr:true \
+            automatic_release:<< pipeline.parameters.automatic >>
   make-release:
     description: "Publishes the new version to pub.dev and creates a github release"
     docker:
