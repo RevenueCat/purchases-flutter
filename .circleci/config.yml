@@ -209,9 +209,6 @@ jobs:
           name: Open simulator
           command: xcrun instruments -w "iPhone 11 Pro (14.3) [" || true
       - setup-flutter
-      - restore_cache:
-          name: Restore cocoapods specs and pods
-          key: v1-cocoapods-{{ checksum "./revenuecat_examples/purchase_tester/ios/Podfile.lock" }}-{{ arch }}
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -221,12 +218,6 @@ jobs:
             cd revenuecat_examples/purchase_tester
             flutter drive --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
-      - save_cache:
-          name: Save cocoapods specs and pods cache
-          key: v1-cocoapods-{{ checksum "./revenuecat_examples/purchase_tester/ios/Podfile.lock" }}-{{ arch }}
-          paths:
-            - ./revenuecat_examples/purchase_tester/ios/Pods
-            - ~/.cocoapods
 
   freezed:
     description: "Check if Freezed files need to be added to repo"
