@@ -1,3 +1,9 @@
+## 4.3.1
+### Other Changes
+* [AUTOMATIC] Updates purchases-hybrid-common to 4.3.2 (#502) via RevenueCat Git Bot (@RCGitBot)
+* Ignore Podfile.lock files (#503) via Cesar de la Vega (@vegaro)
+* Update update-hybrid-common-versions parameters (#495) via Cesar de la Vega (@vegaro)
+
 ## 4.3.0
 ### Other Changes
 * Another fix on update_hybrid_common (#491) via Cesar de la Vega (@vegaro)
