@@ -1,12 +1,6 @@
 version: 2.1
 
 aliases:
-  release-tags-and-branches: &release-tags-and-branches
-    filters:
-      tags:
-        ignore: /^.*-SNAPSHOT/
-      branches:
-        only: /^release\/.*/
   release-tags: &release-tags
     filters:
       tags:
@@ -289,28 +283,21 @@ workflows:
       - test
       - api_test
       - freezed
-  android-integration-test:
-    when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-    jobs:
-      - android-integration-test-build: *release-tags-and-branches
-      - run-firebase-tests:
-          requires:
-            - android-integration-test-build
-  ios-integration-test:
-    when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-    jobs:
-      - ios-integration-test: *release-tags-and-branches
   deploy:
     when:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
+      - ios-integration-test: *release-branches
+      - android-integration-test-build: *release-branches
+      - run-firebase-tests:
+          requires:
+            - android-integration-test-build
       - hold:
           type: approval
+          requires:
+            - ios-integration-test
+            - run-firebase-tests
           <<: *release-branches
       - revenuecat/tag-current-branch:
           requires:
