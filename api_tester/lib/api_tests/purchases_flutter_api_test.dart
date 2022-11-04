@@ -220,6 +220,21 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.setMparticleID(id);
   }
 
+  void _checkSetCleverTapID() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setCleverTapID(id);
+  }
+
+  void _checkSetMixpanelDistinctID() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setMixpanelDistinctID(id);
+  }
+
+  void _checkSetFirebaseAppInstanceId() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setFirebaseAppInstanceId(id);
+  }
+
   void _checkSetOnesignalId() {
     String id = "fakeId";
     Future<void> future = Purchases.setOnesignalID(id);

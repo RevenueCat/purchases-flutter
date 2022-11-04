@@ -252,6 +252,18 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String mparticleID = call.argument("mparticleID");
                 setMparticleID(mparticleID, result);
                 break;
+            case "setCleverTapID":
+                String cleverTapID = call.argument("cleverTapID");
+                setCleverTapID(cleverTapID, result);
+                break;
+            case "setMixpanelDistinctID":
+                String mixpanelDistinctID = call.argument("mixpanelDistinctID");
+                setMixpanelDistinctID(mixpanelDistinctID, result);
+                break;
+            case "setFirebaseAppInstanceID":
+                String firebaseAppInstanceID = call.argument("firebaseAppInstanceID");
+                setFirebaseAppInstanceID(firebaseAppInstanceID, result);
+                break;
             case "setOnesignalID":
                 String onesignalID = call.argument("onesignalID");
                 setOnesignalID(onesignalID, result);
@@ -498,6 +510,21 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setMparticleID(String mparticleID, final Result result) { 
         SubscriberAttributesKt.setMparticleID(mparticleID);
+        result.success(null);
+    }
+
+    private void setCleverTapID(String cleverTapID, final Result result) {
+        SubscriberAttributesKt.setCleverTapID(cleverTapID);
+        result.success(null);
+    }
+
+    private void setMixpanelDistinctID(String mixpanelDistinctID, final Result result) {
+        SubscriberAttributesKt.setMixpanelDistinctID(mixpanelDistinctID);
+        result.success(null);
+    }
+
+    private void setFirebaseAppInstanceID(String firebaseAppInstanceId, final Result result) {
+        SubscriberAttributesKt.setFirebaseAppInstanceID(firebaseAppInstanceId);
         result.success(null);
     }
 
