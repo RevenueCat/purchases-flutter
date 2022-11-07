@@ -130,6 +130,15 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     } else if ([@"setMparticleID" isEqualToString:call.method]) {
         NSString *mparticleID = arguments[@"mparticleID"];
         [self setMparticleID:mparticleID result:result];
+    } else if([@"setCleverTapID" isEqualToString:call.method]) {
+        NSString *cleverTapID = arguments[@"cleverTapID"];
+        [self setCleverTapID:cleverTapID result:result];
+    } else if([@"setMixpanelDistinctID" isEqualToString:call.method]) {
+        NSString *mixpanelDistinctID = arguments[@"mixpanelDistinctID"];
+        [self setMixpanelDistinctID:mixpanelDistinctID result:result];
+    } else if([@"setFirebaseAppInstanceID" isEqualToString:call.method]) {
+        NSString *firebaseAppInstanceID = arguments[@"firebaseAppInstanceID"];
+        [self setFirebaseAppInstanceID:firebaseAppInstanceID result:result];
     } else if ([@"setOnesignalID" isEqualToString:call.method]) {
         NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
@@ -382,6 +391,21 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)setMparticleID:(nullable NSString *)mparticleID result:(FlutterResult)result {
     [RCCommonFunctionality setMparticleID:mparticleID];
+    result(nil);
+}
+
+- (void)setCleverTapID:(nullable NSString *)cleverTapID result:(FlutterResult)result {
+    [RCCommonFunctionality setCleverTapID:cleverTapID];
+    result(nil);
+}
+
+- (void)setMixpanelDistinctID:(nullable NSString *)mixpanelDistinctID result:(FlutterResult)result {
+    [RCCommonFunctionality setMixpanelDistinctID:mixpanelDistinctID];
+    result(nil);
+}
+
+- (void)setFirebaseAppInstanceID:(nullable NSString *)firebaseAppInstanceId result:(FlutterResult)result {
+    [RCCommonFunctionality setFirebaseAppInstanceID:firebaseAppInstanceId];
     result(nil);
 }
 
