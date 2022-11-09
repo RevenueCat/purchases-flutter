@@ -1,3 +1,5 @@
+### New Features
+* Add setCleverTapId, setMixpanelDistinctID, setFirebaseAppInstanceId (#522) via Sergio Durban Belmonte (@sdurban)
 ### Other Changes
-* Update fastlane-plugin-revenuecat_internal (#518) via Cesar de la Vega (@vegaro)
-* [AUTOMATIC] Updates purchases-hybrid-common to 4.3.6 (#517) via RevenueCat Git Bot (@RCGitBot)
+* [AUTOMATIC] Updates purchases-hybrid-common to 4.4.0 (#523) via RevenueCat Git Bot (@RCGitBot)
+* Makes hold job depend on integration tests (#521) via Cesar de la Vega (@vegaro)
