@@ -1,3 +1,8 @@
+## 4.5.1
+### Other Changes
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.5.1 (#544) via RevenueCat Git Bot (@RCGitBot)
+* Update ReadMe.md (#524) via kmurphy-rc (@kmurphy-rc)
+
 ## 4.5.0
 ### Other Changes
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.5.0 (#539) via RevenueCat Git Bot (@RCGitBot)
