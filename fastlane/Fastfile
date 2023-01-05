@@ -29,6 +29,7 @@ files_with_version_number = [
 repo_name = 'purchases-flutter'
 changelog_latest_path = './CHANGELOG-LATEST.md'
 changelog_path = './CHANGELOG.md'
+versions_path = './VERSIONS.md'
 
 before_all do
   setup_circle_ci
@@ -48,10 +49,12 @@ lane :bump do |options|
     github_rate_limit: options[:github_rate_limit],
     editor: options[:editor],
     next_version: options[:next_version],
-    automatic_release: options[:automatic_release]
+    automatic_release: options[:automatic_release],
+    hybrid_common_version: phc_version,
+    versions_file_path: versions_path
   )
   update_hybrids_versions_file(
-    versions_file_path: './VERSIONS.md',
+    versions_file_path: versions_path,
     new_sdk_version: current_version_number,
     hybrid_common_version: phc_version
   )
