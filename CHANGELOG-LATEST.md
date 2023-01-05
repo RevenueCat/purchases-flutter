@@ -1,8 +1,6 @@
 ### Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.7.0 (#566) via RevenueCat Git Bot (@RCGitBot)
   * (iOS 4.16.0)[https://github.com/RevenueCat/purchases-ios/releases/tag/4.16.0]
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.6.0 (#562) via RevenueCat Git Bot (@RCGitBot)
-  * (iOS 4.16.0)[https://github.com/RevenueCat/purchases-ios/releases/tag/4.16.0]
 ### Other Changes
 * Adds missing params for better changelogs when bumping (#569) via Cesar de la Vega (@vegaro)
 * Update Gemfile.lock (#568) via Cesar de la Vega (@vegaro)
