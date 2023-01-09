@@ -1,3 +1,13 @@
+## 4.6.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.7.0 (#566) via RevenueCat Git Bot (@RCGitBot)
+  * (iOS 4.16.0)[https://github.com/RevenueCat/purchases-ios/releases/tag/4.16.0]
+### Other Changes
+* Adds missing params for better changelogs when bumping (#569) via Cesar de la Vega (@vegaro)
+* Update Gemfile.lock (#568) via Cesar de la Vega (@vegaro)
+* remove stalebot in favor of SLAs in Zendesk (#563) via Andy Boedo (@aboedo)
+* Update fastlane-plugin-revenuecat_internal to latest version (#561) via Cesar de la Vega (@vegaro)
+
 ## 4.5.5
 ### Other Changes
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.5.4 (#558) via RevenueCat Git Bot (@RCGitBot)
