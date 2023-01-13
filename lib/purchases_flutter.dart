@@ -43,13 +43,17 @@ class Purchases {
   static final Set<ReadyForPromotedProductPurchaseListener>
       _readyForPromotedProductPurchaseListeners = {};
 
+  static CustomerInfo? _lastReceivedCustomerInfo;
+
   static final _channel = const MethodChannel('purchases_flutter')
     ..setMethodCallHandler((call) async {
       switch (call.method) {
         case 'Purchases-CustomerInfoUpdated':
+          final args = Map<String, dynamic>.from(call.arguments);
+          final customerInfo = CustomerInfo.fromJson(args);
+          _lastReceivedCustomerInfo = customerInfo;
           for (final listener in _customerInfoUpdateListeners) {
-            final args = Map<String, dynamic>.from(call.arguments);
-            listener(CustomerInfo.fromJson(args));
+            listener(customerInfo);
           }
           break;
         case 'Purchases-ReadyForPromotedProductPurchase':
@@ -159,8 +163,15 @@ class Purchases {
   /// [customerInfoUpdateListener] CustomerInfo update listener.
   static void addCustomerInfoUpdateListener(
     CustomerInfoUpdateListener customerInfoUpdateListener,
-  ) =>
-      _customerInfoUpdateListeners.add(customerInfoUpdateListener);
+  ) {
+    _customerInfoUpdateListeners.add(customerInfoUpdateListener);
+    if (_customerInfoUpdateListeners.length == 1) {
+      final lastReceivedCustomerInfo = _lastReceivedCustomerInfo;
+      if (lastReceivedCustomerInfo != null) {
+        customerInfoUpdateListener(lastReceivedCustomerInfo);
+      }
+    }
+  }
 
   /// Removes a given CustomerInfoUpdateListener
   ///
