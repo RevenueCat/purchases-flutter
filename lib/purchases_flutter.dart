@@ -106,6 +106,7 @@ class Purchases {
       ..store = useAmazon ? Store.amazon : null
       ..usesStoreKit2IfAvailable = usesStoreKit2IfAvailable
       );
+    _lastReceivedCustomerInfo = null;
     return configure(configuration);
   }
 
