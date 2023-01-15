@@ -166,11 +166,9 @@ class Purchases {
     CustomerInfoUpdateListener customerInfoUpdateListener,
   ) {
     _customerInfoUpdateListeners.add(customerInfoUpdateListener);
-    if (_customerInfoUpdateListeners.length == 1) {
-      final lastReceivedCustomerInfo = _lastReceivedCustomerInfo;
-      if (lastReceivedCustomerInfo != null) {
-        customerInfoUpdateListener(lastReceivedCustomerInfo);
-      }
+    final lastReceivedCustomerInfo = _lastReceivedCustomerInfo;
+    if (lastReceivedCustomerInfo != null) {
+      customerInfoUpdateListener(lastReceivedCustomerInfo);
     }
   }
 
