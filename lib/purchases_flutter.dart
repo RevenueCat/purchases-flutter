@@ -674,6 +674,75 @@ class Purchases {
     return PromotionalOffer.fromJson(Map<String, dynamic>.from(result));
   }
 
+  /// iOS 15+ only. Presents a refund request sheet in the current window scene for
+  /// the latest transaction associated with the active entitlement.
+  ///
+  /// Returns [RefundRequestStatus]: The status of the refund request.
+  /// Keep in mind the status could be [RefundRequestStatus.userCancelled]
+  ///
+  /// If the request was unsuccessful, no active entitlements could be found for
+  /// the user, or multiple active entitlements were found for the user,
+  /// a `PlatformException` will be thrown.
+  /// If called in an unsupported platform (Android or iOS < 15) a
+  /// `UnsupportedPlatformException` will be thrown.
+  ///
+  /// Important: This method should only be used if your user can only
+  /// have a single active entitlement at a given time.
+  /// If a user could have more than one entitlement at a time, use
+  /// [beginRefundRequestForEntitlement] instead.
+  static Future<RefundRequestStatus>
+      beginRefundRequestForActiveEntitlement() async {
+    final statusCode = await _channel.invokeMethod(
+      'beginRefundRequestForActiveEntitlement',
+    );
+    if (statusCode == null) throw UnsupportedPlatformException();
+    return RefundRequestStatusExtension.from(statusCode);
+  }
+
+  /// iOS 15+ only. Presents a refund request sheet in the current window scene for
+  /// the latest transaction associated with the `product`
+  ///
+  /// Returns [RefundRequestStatus]: The status of the refund request.
+  /// Keep in mind the status could be [RefundRequestStatus.userCancelled]
+  ///
+  /// If the request was unsuccessful, a `PlatformException` will be thrown.
+  /// If called in an unsupported platform (Android or iOS < 15) a
+  /// `UnsupportedPlatformException` will be thrown.
+  ///
+  /// [product] The [StoreProduct] to begin a refund request for.
+  static Future<RefundRequestStatus> beginRefundRequestForProduct(
+    StoreProduct product,
+  ) async {
+    final statusCode = await _channel.invokeMethod(
+      'beginRefundRequestForProduct',
+      {'productIdentifier': product.identifier},
+    );
+    if (statusCode == null) throw UnsupportedPlatformException();
+    return RefundRequestStatusExtension.from(statusCode);
+  }
+
+  /// iOS 15+ only. Presents a refund request sheet in the current window scene for
+  /// the latest transaction associated with the `entitlement`.
+  ///
+  /// Returns [RefundRequestStatus]: The status of the refund request.
+  /// Keep in mind the status could be [RefundRequestStatus.userCancelled]
+  ///
+  /// If the request was unsuccessful, a `PlatformException` will be thrown.
+  /// If called in an unsupported platform (Android or iOS < 15) a
+  /// `UnsupportedPlatformException` will be thrown.
+  ///
+  /// [entitlement] The entitlement to begin a refund request for.
+  static Future<RefundRequestStatus> beginRefundRequestForEntitlement(
+    EntitlementInfo entitlement,
+  ) async {
+    final statusCode = await _channel.invokeMethod(
+      'beginRefundRequestForEntitlement',
+      {'entitlementIdentifier': entitlement.identifier},
+    );
+    if (statusCode == null) throw UnsupportedPlatformException();
+    return RefundRequestStatusExtension.from(statusCode);
+  }
+
   /// Android only. Call close when you are done with this instance of Purchases to disconnect
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
@@ -826,6 +895,31 @@ class IntroEligibility {
         description = map['description'];
 }
 
+/// Status codes for refund requests.
+enum RefundRequestStatus {
+  /// User canceled submission of the refund request.
+  userCancelled,
+
+  /// Apple has received the refund request.
+  success,
+
+  /// There was an error with the request. See message for more details.
+  error
+}
+
+extension RefundRequestStatusExtension on RefundRequestStatus {
+  static RefundRequestStatus from(int index) {
+    switch (index) {
+      case 0:
+        return RefundRequestStatus.success;
+      case 1:
+        return RefundRequestStatus.userCancelled;
+      default:
+        return RefundRequestStatus.error;
+    }
+  }
+}
+
 /// Class used to hold the result of the logIn method
 class LogInResult {
   /// true if the logged in user has been created in the
@@ -852,4 +946,7 @@ class PromotedPurchaseResult {
     required this.productIdentifier,
     required this.customerInfo,
   });
+}
+
+class UnsupportedPlatformException implements Exception {
 }
