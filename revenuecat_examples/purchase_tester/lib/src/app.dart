@@ -202,8 +202,29 @@ class CatsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Cats Screen')),
-        body: const Center(
-          child: Text('User is pro'),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('User is pro'),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    final customerInfo = await Purchases.getCustomerInfo();
+                    final refundStatus = await Purchases
+                        .beginRefundRequestForEntitlement(
+                          customerInfo.entitlements.active['pro_cat']
+                        );
+                    print('Refund request successful with status: $refundStatus');
+                  } catch (e) {
+                    print('Refund request exception: $e');
+                  }
+                  return const InitialScreen();
+                },
+                child: const Text('Begin refund for pro_cat entitlement'),
+              ),
+            ],
+          )
         ),
       );
 }
