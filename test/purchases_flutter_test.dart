@@ -197,6 +197,17 @@ void main() {
     expect(PurchasesErrorCode.logOutWithAnonymousUserError.index, 22);
     expect(PurchasesErrorCode.configurationError.index, 23);
     expect(PurchasesErrorCode.unsupportedError.index, 24);
+    expect(PurchasesErrorCode.emptySubscriberAttributesError.index, 25);
+    expect(PurchasesErrorCode.productDiscountMissingIdentifierError.index, 26);
+    expect(PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError.index, 27);
+    expect(PurchasesErrorCode.customerInfoError.index, 28);
+    expect(PurchasesErrorCode.systemInfoError.index, 29);
+    expect(PurchasesErrorCode.beginRefundRequestError.index, 30);
+    expect(PurchasesErrorCode.productRequestTimeout.index, 31);
+    expect(PurchasesErrorCode.apiEndpointBlocked.index, 32);
+    expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 33);
+    expect(PurchasesErrorCode.offlineConnectionError.index, 34);
+
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
@@ -302,6 +313,46 @@ void main() {
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '25')),
+      PurchasesErrorCode.emptySubscriberAttributesError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '26')),
+      PurchasesErrorCode.productDiscountMissingIdentifierError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '27')),
+      PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '28')),
+      PurchasesErrorCode.customerInfoError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '29')),
+      PurchasesErrorCode.systemInfoError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '30')),
+      PurchasesErrorCode.beginRefundRequestError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '31')),
+      PurchasesErrorCode.productRequestTimeout,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '32')),
+      PurchasesErrorCode.apiEndpointBlocked,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '33')),
+      PurchasesErrorCode.invalidPromotionalOfferError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '34')),
+      PurchasesErrorCode.offlineConnectionError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '35')),
       PurchasesErrorCode.unknownError,
     );
   });
@@ -532,5 +583,112 @@ void main() {
         )
       ],
     );
+  });
+
+  test('beginRefundRequestForActiveEntitlement calls channel correctly for success', () async {
+    response = 0; // Success code
+    final refundRequestStatus = await Purchases.beginRefundRequestForActiveEntitlement();
+
+    expect(refundRequestStatus, RefundRequestStatus.success);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'beginRefundRequestForActiveEntitlement',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('beginRefundRequestForActiveEntitlement calls channel correctly for user cancelled', () async {
+    response = 1; // User cancelled code
+    final refundRequestStatus = await Purchases.beginRefundRequestForActiveEntitlement();
+
+    expect(refundRequestStatus, RefundRequestStatus.userCancelled);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'beginRefundRequestForActiveEntitlement',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('beginRefundRequestForActiveEntitlement calls channel correctly for error', () async {
+    response = 2; // Error code
+    final refundRequestStatus = await Purchases.beginRefundRequestForActiveEntitlement();
+
+    expect(refundRequestStatus, RefundRequestStatus.error);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'beginRefundRequestForActiveEntitlement',
+        arguments: null,
+      )
+    ]);
+  });
+
+  test('beginRefundRequestForActiveEntitlement throws UnsupportedPlatformException', () async {
+    response = null;
+    try {
+      await Purchases.beginRefundRequestForActiveEntitlement();
+      fail('Should have thrown an exception');
+    } on UnsupportedPlatformException {
+      // Success
+    }
+  });
+
+  test('beginRefundRequestForProduct calls channel correctly', () async {
+    response = 0; // Success
+
+    const mockStoreProduct = StoreProduct(
+      'com.revenuecat.lifetime',
+      'description',
+      'lifetime (PurchasesSample)',
+      199.99,
+      '\$199.99',
+      'USD',
+    );
+
+    final refundRequestStatus = await Purchases.beginRefundRequestForProduct(mockStoreProduct);
+
+    expect(refundRequestStatus, RefundRequestStatus.success);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'beginRefundRequestForProduct',
+        arguments: {'productIdentifier': 'com.revenuecat.lifetime'},
+      )
+    ]);
+  });
+
+    test('beginRefundRequestForEntitlement calls channel correctly', () async {
+    response = 0; // Success
+
+    final entitlementInfoJson = {
+        'identifier': 'almost_pro',
+        'isActive': true,
+        'willRenew': true,
+        'periodType': 'NORMAL',
+        'latestPurchaseDateMillis': 1.58759855E9,
+        'latestPurchaseDate': '2020-04-22T23:35:50.000Z',
+        'originalPurchaseDateMillis': 1.591725245E9,
+        'originalPurchaseDate': '2020-06-09T17:54:05.000Z',
+        'expirationDateMillis': null,
+        'expirationDate': null,
+        'productIdentifier': 'consumable',
+        'isSandbox': true,
+        'unsubscribeDetectedAt': null,
+        'unsubscribeDetectedAtMillis': null,
+        'billingIssueDetectedAt': null,
+        'billingIssueDetectedAtMillis': null,
+        'store': Store.appStore
+      };
+    final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
+
+    final refundRequestStatus = await Purchases.beginRefundRequestForEntitlement(entitlementInfo);
+
+    expect(refundRequestStatus, RefundRequestStatus.success);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'beginRefundRequestForEntitlement',
+        arguments: {'entitlementIdentifier': 'almost_pro'},
+      )
+    ]);
   });
 }

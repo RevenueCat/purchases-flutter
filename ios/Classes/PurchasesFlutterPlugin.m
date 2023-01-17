@@ -168,6 +168,14 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     } else if ([@"canMakePayments" isEqualToString:call.method]) {
           NSArray<NSNumber*> *features = arguments[@"features"];
           [self canMakePaymentsWithFeatures:features result:result];
+    } else if ([@"beginRefundRequestForActiveEntitlement" isEqualToString:call.method]) {
+        [self beginRefundRequestForActiveEntitlementWithResult:result];
+    } else if ([@"beginRefundRequestForProduct" isEqualToString:call.method]) {
+        NSString *productID = arguments[@"productIdentifier"];
+        [self beginRefundRequestForProduct:productID result:result];
+    } else if ([@"beginRefundRequestForEntitlement" isEqualToString:call.method]) {
+        NSString *entitlementID = arguments[@"entitlementIdentifier"];
+        [self beginRefundRequestForEntitlement:entitlementID result:result];
     } else if ([@"getPromotionalOffer" isEqualToString:call.method]) {
         NSString *productIdentifier = arguments[@"productIdentifier"];
         NSString *discountIdentifier = arguments[@"discountIdentifier"];
@@ -473,6 +481,32 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                 }];
 }
 
+- (void)beginRefundRequestForActiveEntitlementWithResult:(FlutterResult)result {
+    if (@available(iOS 15, *)) {
+        [RCCommonFunctionality beginRefundRequestForActiveEntitlementCompletion:[self getBeginRefundResponseCompletionBlock:result]];
+    } else {
+        result(nil);
+    }
+}
+
+- (void)beginRefundRequestForProduct:(NSString *)productIdentifier result:(FlutterResult)result {
+    if (@available(iOS 15, *)) {
+        [RCCommonFunctionality beginRefundRequestProductId:productIdentifier
+                                           completionBlock:[self getBeginRefundResponseCompletionBlock:result]];
+    } else {
+        result(nil);
+    }
+}
+
+- (void)beginRefundRequestForEntitlement:(NSString *)entitlementIdentifier result:(FlutterResult)result {
+    if (@available(iOS 15, *)) {
+        [RCCommonFunctionality beginRefundRequestEntitlementId:entitlementIdentifier
+                                               completionBlock:[self getBeginRefundResponseCompletionBlock:result]];
+    } else {
+        result(nil);
+    }
+}
+
 - (void)startPromotedProductPurchase:(NSNumber *)callbackID
                               result:(FlutterResult)result {
     RCStartPurchaseBlock makePurchaseBlock = [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
@@ -522,6 +556,18 @@ readyForPromotedProduct:(RCStoreProduct *)product
             [self rejectWithResult:result error:error];
         } else {
             result(resultDictionary);
+        }
+    };
+}
+
+- (void (^)(RCErrorContainer *))getBeginRefundResponseCompletionBlock:(FlutterResult)result {
+    return ^(RCErrorContainer * _Nullable error) {
+        if (error == nil) {
+            result(@0);
+        } else if ([error.info[@"userCancelled"] isEqual: @YES]) {
+            result(@1);
+        } else {
+            [self rejectWithResult:result error:error];
         }
     };
 }

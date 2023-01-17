@@ -31,6 +31,16 @@ class _ErrorsApiTest {
       case PurchasesErrorCode.logOutWithAnonymousUserError:
       case PurchasesErrorCode.configurationError:
       case PurchasesErrorCode.unsupportedError:
+      case PurchasesErrorCode.emptySubscriberAttributesError:
+      case PurchasesErrorCode.productDiscountMissingIdentifierError:
+      case PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError:
+      case PurchasesErrorCode.customerInfoError:
+      case PurchasesErrorCode.systemInfoError:
+      case PurchasesErrorCode.beginRefundRequestError:
+      case PurchasesErrorCode.productRequestTimeout:
+      case PurchasesErrorCode.apiEndpointBlocked:
+      case PurchasesErrorCode.invalidPromotionalOfferError:
+      case PurchasesErrorCode.offlineConnectionError:
         break;
     }
   }
