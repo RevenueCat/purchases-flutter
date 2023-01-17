@@ -530,7 +530,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
     return @"flutter";
 }
 
-- (NSString *)platformFlavorVersion { 
+- (NSString *)platformFlavorVersion {
     return @"4.7.0";
 }
 
