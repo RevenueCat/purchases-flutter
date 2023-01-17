@@ -25,7 +25,8 @@ class _StoreProductApiTest {
         identifier, description, title, price, priceString, currencyCode);
     product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode,
-        introductoryPrice: introductoryPrice, discounts: discounts,
+        introductoryPrice: introductoryPrice,
+        discounts: discounts,
         subscriptionPeriod: subscriptionPeriod);
   }
 
