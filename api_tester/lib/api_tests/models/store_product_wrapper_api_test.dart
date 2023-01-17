@@ -19,12 +19,14 @@ class _StoreProductApiTest {
       String priceString,
       String currencyCode,
       IntroductoryPrice? introductoryPrice,
-      List<StoreProductDiscount>? discounts) {
+      List<StoreProductDiscount>? discounts,
+      String? subscriptionPeriod) {
     StoreProduct product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode);
     product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode,
-        introductoryPrice: introductoryPrice, discounts: discounts);
+        introductoryPrice: introductoryPrice, discounts: discounts,
+        subscriptionPeriod: subscriptionPeriod);
   }
 
   void _checkProperties(StoreProduct product) {
