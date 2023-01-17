@@ -16,8 +16,7 @@ class _PurchasesFlutterApiTest {
         observerMode: observerMode,
         userDefaultsSuiteName: userDefaultsSuiteName,
         useAmazon: useAmazon,
-        usesStoreKit2IfAvailable: usesStoreKit2IfAvailable
-    );
+        usesStoreKit2IfAvailable: usesStoreKit2IfAvailable);
   }
 
   void _checkConfigure() {

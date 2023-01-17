@@ -100,8 +100,7 @@ class Purchases {
       ..observerMode = observerMode
       ..userDefaultsSuiteName = userDefaultsSuiteName
       ..store = useAmazon ? Store.amazon : null
-      ..usesStoreKit2IfAvailable = usesStoreKit2IfAvailable
-      );
+      ..usesStoreKit2IfAvailable = usesStoreKit2IfAvailable);
     return configure(configuration);
   }
 
@@ -119,7 +118,8 @@ class Purchases {
           'observerMode': purchasesConfiguration.observerMode,
           'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
           'useAmazon': purchasesConfiguration.store == Store.amazon,
-          'usesStoreKit2IfAvailable': purchasesConfiguration.usesStoreKit2IfAvailable
+          'usesStoreKit2IfAvailable':
+              purchasesConfiguration.usesStoreKit2IfAvailable
         },
       );
 
@@ -564,14 +564,16 @@ class Purchases {
   ///
   /// [mixpanelDistinctID] Empty String or null will delete the subscriber attribute.
   static Future<void> setMixpanelDistinctID(String mixpanelDistinctID) =>
-      _channel.invokeMethod('setMixpanelDistinctID', {'mixpanelDistinctID': mixpanelDistinctID});
+      _channel.invokeMethod(
+          'setMixpanelDistinctID', {'mixpanelDistinctID': mixpanelDistinctID});
 
   /// Subscriber attribute associated with the Firebase Instance Id for the user
   /// Required for the RevenueCat Firebase integration
   ///
   /// [firebaseAppInstanceId] Empty String or null will delete the subscriber attribute.
   static Future<void> setFirebaseAppInstanceId(String firebaseAppInstanceId) =>
-      _channel.invokeMethod('setFirebaseAppInstanceID', {'firebaseAppInstanceID': firebaseAppInstanceId});
+      _channel.invokeMethod('setFirebaseAppInstanceID',
+          {'firebaseAppInstanceID': firebaseAppInstanceId});
 
   /// Subscriber attribute associated with the OneSignal Player Id for the user
   /// Required for the RevenueCat OneSignal integration

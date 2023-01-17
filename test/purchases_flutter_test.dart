@@ -40,7 +40,10 @@ void main() {
   });
 
   test('setupPurchases', () async {
-    await Purchases.setup('api_key', appUserId: 'cesar', observerMode: true, usesStoreKit2IfAvailable: false);
+    await Purchases.setup('api_key',
+        appUserId: 'cesar',
+        observerMode: true,
+        usesStoreKit2IfAvailable: false);
     expect(
       log,
       <Matcher>[
