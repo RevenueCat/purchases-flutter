@@ -69,7 +69,7 @@ void main() {
     );
   });
 
-  test('addCustomerInfoUpdateListener does not call listener if does not have one', () async {
+  test('addCustomerInfoUpdateListener does not call listener if it does not have one', () async {
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
       fail('listener should not be called if previous customer info was not set');
     });
