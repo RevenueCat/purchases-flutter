@@ -93,7 +93,7 @@ void main() {
     expect(listener2Called, true);
   });
 
-  test('addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info', () async {
+  test('addCustomerInfoUpdateListener calls each listener immediately with latest customer info', () async {
     channel.setMockMethodCallHandler(null);
     _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
     var listener1Called = false;
@@ -107,28 +107,6 @@ void main() {
     var listener2Called = false;
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
       expect(customerInfo.originalAppUserId, 'pepe2');
-      listener2Called = true;
-    });
-    expect(listener1Called, true);
-    expect(listener2Called, true);
-  });
-
-  test('addCustomerInfoUpdateListener calls each listener immediately with latest customer info', () async {
-    channel.setMockMethodCallHandler(null);
-    final methodCall = MethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
-    ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
-      'purchases_flutter',
-      const StandardMethodCodec().encodeMethodCall(methodCall),
-      (ByteData? data){},
-    );
-    var listener1Called = false;
-    Purchases.addCustomerInfoUpdateListener((customerInfo) {
-      expect(customerInfo.originalAppUserId, 'pepe');
-      listener1Called = true;
-    });
-    var listener2Called = false;
-    Purchases.addCustomerInfoUpdateListener((customerInfo) {
-      expect(customerInfo.originalAppUserId, 'pepe');
       listener2Called = true;
     });
     expect(listener1Called, true);
