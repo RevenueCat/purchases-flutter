@@ -5,6 +5,16 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
+
+void _performDartSideChannelMethodCall(String methodName, dynamic params) {
+  final methodCall = MethodCall(methodName, params);
+  ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+    'purchases_flutter',
+    const StandardMethodCodec().encodeMethodCall(methodCall),
+    (ByteData? data){},
+  );
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -57,6 +67,72 @@ void main() {
         )
       ],
     );
+  });
+
+  test('addCustomerInfoUpdateListener does not call listener if does not have one', () async {
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      fail('listener should not be called if previous customer info was not set');
+    });
+    expect(log, <Matcher>[]);
+  });
+
+  test('addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info', () async {
+    channel.setMockMethodCallHandler(null);
+    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
+    var listener1Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener1Called = true;
+    });
+    var listener2Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener2Called = true;
+    });
+    expect(listener1Called, true);
+    expect(listener2Called, true);
+  });
+
+  test('addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info', () async {
+    channel.setMockMethodCallHandler(null);
+    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
+    var listener1Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener1Called = true;
+    });
+    final mockCustomerInfoResponse2 = Map<String, dynamic>.from(mockCustomerInfoResponse);
+    mockCustomerInfoResponse2['originalAppUserId'] = 'pepe2';
+    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse2);
+    var listener2Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe2');
+      listener2Called = true;
+    });
+    expect(listener1Called, true);
+    expect(listener2Called, true);
+  });
+
+  test('addCustomerInfoUpdateListener calls each listener immediately with latest customer info', () async {
+    channel.setMockMethodCallHandler(null);
+    final methodCall = MethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
+    ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+      'purchases_flutter',
+      const StandardMethodCodec().encodeMethodCall(methodCall),
+      (ByteData? data){},
+    );
+    var listener1Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener1Called = true;
+    });
+    var listener2Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener2Called = true;
+    });
+    expect(listener1Called, true);
+    expect(listener2Called, true);
   });
 
   test('getProductsList returns list of products', () async {
