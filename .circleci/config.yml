@@ -348,6 +348,7 @@ workflows:
           type: approval
           requires:
             - ios-integration-test
+            - macos-integration-test
             - run-firebase-tests
           <<: *release-branches
       - revenuecat/tag-current-branch:
