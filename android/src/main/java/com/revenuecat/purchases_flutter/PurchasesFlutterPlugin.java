@@ -51,7 +51,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Activity activity;
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "4.6.0";
+    private static final String PLUGIN_VERSION = "4.8.0-SNAPSHOT";
 
     /**
      * Plugin registration.
@@ -213,6 +213,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getPromotionalOffer":
             case "presentCodeRedemptionSheet":
             case "setSimulatesAskToBuyInSandbox":
+            case "beginRefundRequestForActiveEntitlement":
+            case "beginRefundRequestForProduct":
+            case "beginRefundRequestForEntitlement":
                 // NOOP
                 result.success(null);
                 break;
@@ -493,22 +496,22 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void setAdjustID(String adjustID, final Result result) { 
+    private void setAdjustID(String adjustID, final Result result) {
         SubscriberAttributesKt.setAdjustID(adjustID);
         result.success(null);
     }
 
-    private void setAppsflyerID(String appsflyerID, final Result result) { 
+    private void setAppsflyerID(String appsflyerID, final Result result) {
         SubscriberAttributesKt.setAppsflyerID(appsflyerID);
         result.success(null);
     }
 
-    private void setFBAnonymousID(String fbAnonymousID, final Result result) { 
+    private void setFBAnonymousID(String fbAnonymousID, final Result result) {
         SubscriberAttributesKt.setFBAnonymousID(fbAnonymousID);
         result.success(null);
     }
 
-    private void setMparticleID(String mparticleID, final Result result) { 
+    private void setMparticleID(String mparticleID, final Result result) {
         SubscriberAttributesKt.setMparticleID(mparticleID);
         result.success(null);
     }
@@ -528,7 +531,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void setOnesignalID(String onesignalID, final Result result) { 
+    private void setOnesignalID(String onesignalID, final Result result) {
         SubscriberAttributesKt.setOnesignalID(onesignalID);
         result.success(null);
     }
@@ -543,32 +546,32 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void setCampaign(String campaign, final Result result) { 
+    private void setCampaign(String campaign, final Result result) {
         SubscriberAttributesKt.setCampaign(campaign);
         result.success(null);
     }
 
-    private void setAdGroup(String adGroup, final Result result) { 
+    private void setAdGroup(String adGroup, final Result result) {
         SubscriberAttributesKt.setAdGroup(adGroup);
         result.success(null);
     }
 
-    private void setAd(String ad, final Result result) { 
+    private void setAd(String ad, final Result result) {
         SubscriberAttributesKt.setAd(ad);
         result.success(null);
     }
 
-    private void setKeyword(String keyword, final Result result) { 
+    private void setKeyword(String keyword, final Result result) {
         SubscriberAttributesKt.setKeyword(keyword);
         result.success(null);
     }
 
-    private void setCreative(String creative, final Result result) { 
+    private void setCreative(String creative, final Result result) {
         SubscriberAttributesKt.setCreative(creative);
         result.success(null);
     }
 
-    private void collectDeviceIdentifiers(final Result result) { 
+    private void collectDeviceIdentifiers(final Result result) {
         SubscriberAttributesKt.collectDeviceIdentifiers();
         result.success(null);
     }

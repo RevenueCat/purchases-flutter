@@ -366,4 +366,29 @@ class _PurchasesFlutterApiTest {
     String storedProductIdentifier = purchaseResult.productIdentifier;
     CustomerInfo storedCustomerInfo = purchaseResult.customerInfo;
   }
+
+  void _checkRefundRequestStatus(RefundRequestStatus status) {
+    switch(status) {
+      case RefundRequestStatus.success:
+      case RefundRequestStatus.userCancelled:
+      case RefundRequestStatus.error:
+        break;
+    }
+    int statusCode = 0;
+    RefundRequestStatus processedStatus = RefundRequestStatusExtension.from(statusCode);
+  }
+
+  void _checkBeginRefundRequestForActiveEntitlement() async {
+    RefundRequestStatus status = await Purchases.beginRefundRequestForActiveEntitlement();
+  }
+
+  void _checkBeginRefundRequestForProduct(StoreProduct product) async {
+    RefundRequestStatus status = await Purchases.beginRefundRequestForProduct(product);
+  }
+
+  void _checkBeginRefundRequestForEntitlement(EntitlementInfo entitlement) async {
+    RefundRequestStatus status = await Purchases.beginRefundRequestForEntitlement(
+      entitlement
+    );
+  }
 }

@@ -80,6 +80,39 @@ enum PurchasesErrorCode {
   /// There was a problem with the operation. Looks like we doesn't support that yet.
   /// Check the underlying error for more details.
   unsupportedError,
+
+  /// A request for subscriber attributes returned none.
+  emptySubscriberAttributesError,
+
+  /// The SKProductDiscount or Product.SubscriptionOffer wrapped
+  /// by StoreProductDiscount is missing an identifier.
+  /// This is a required property and likely an AppStore quirk that it is missing.
+  productDiscountMissingIdentifierError,
+
+  /// Unable to create a discount offer, the product is missing a subscriptionGroupIdentifier.
+  productDiscountMissingSubscriptionGroupIdentifierError,
+
+  /// There was a problem related to the customer info.
+  customerInfoError,
+
+  /// There was a problem related to the system info.
+  systemInfoError,
+
+  /// Error when trying to begin refund request.
+  beginRefundRequestError,
+
+  /// SKProductsRequest took too long to complete.
+  productRequestTimeout,
+
+  /// Requests to RevenueCat are being blocked. See: https://rev.cat/dnsBlocking for more info.
+  apiEndpointBlocked,
+
+  /// The information associated with this PromotionalOffer is not valid.
+  /// See https://rev.cat/ios-subscription-offers for more info.
+  invalidPromotionalOfferError,
+
+  /// Error performing request because the internet connection appears to be offline.
+  offlineConnectionError
 }
 
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
