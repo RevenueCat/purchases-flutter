@@ -169,13 +169,19 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
           NSArray<NSNumber*> *features = arguments[@"features"];
           [self canMakePaymentsWithFeatures:features result:result];
     } else if ([@"beginRefundRequestForActiveEntitlement" isEqualToString:call.method]) {
+#if TARGET_OS_IPHONE
         [self beginRefundRequestForActiveEntitlementWithResult:result];
+#endif
     } else if ([@"beginRefundRequestForProduct" isEqualToString:call.method]) {
+#if TARGET_OS_IPHONE
         NSString *productID = arguments[@"productIdentifier"];
         [self beginRefundRequestForProduct:productID result:result];
+#endif
     } else if ([@"beginRefundRequestForEntitlement" isEqualToString:call.method]) {
+#if TARGET_OS_IPHONE
         NSString *entitlementID = arguments[@"entitlementIdentifier"];
         [self beginRefundRequestForEntitlement:entitlementID result:result];
+#endif
     } else if ([@"getPromotionalOffer" isEqualToString:call.method]) {
         NSString *productIdentifier = arguments[@"productIdentifier"];
         NSString *discountIdentifier = arguments[@"discountIdentifier"];
@@ -481,6 +487,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                 }];
 }
 
+#if TARGET_OS_IPHONE
 - (void)beginRefundRequestForActiveEntitlementWithResult:(FlutterResult)result {
     if (@available(iOS 15, *)) {
         [RCCommonFunctionality beginRefundRequestForActiveEntitlementCompletion:[self getBeginRefundResponseCompletionBlock:result]];
@@ -506,6 +513,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
         result(nil);
     }
 }
+#endif
 
 - (void)startPromotedProductPurchase:(NSNumber *)callbackID
                               result:(FlutterResult)result {
