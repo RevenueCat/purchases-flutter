@@ -171,16 +171,22 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
     } else if ([@"beginRefundRequestForActiveEntitlement" isEqualToString:call.method]) {
 #if TARGET_OS_IPHONE
         [self beginRefundRequestForActiveEntitlementWithResult:result];
+#else
+        result(nil);
 #endif
     } else if ([@"beginRefundRequestForProduct" isEqualToString:call.method]) {
 #if TARGET_OS_IPHONE
         NSString *productID = arguments[@"productIdentifier"];
         [self beginRefundRequestForProduct:productID result:result];
+#else
+        result(nil);
 #endif
     } else if ([@"beginRefundRequestForEntitlement" isEqualToString:call.method]) {
 #if TARGET_OS_IPHONE
         NSString *entitlementID = arguments[@"entitlementIdentifier"];
         [self beginRefundRequestForEntitlement:entitlementID result:result];
+#else
+        result(nil);
 #endif
     } else if ([@"getPromotionalOffer" isEqualToString:call.method]) {
         NSString *productIdentifier = arguments[@"productIdentifier"];
