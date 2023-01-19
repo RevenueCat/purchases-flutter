@@ -338,8 +338,8 @@ workflows:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - ios-integration-test
-      - macos-integration-test
+      - ios-integration-test: *release-branches
+      - macos-integration-test: *release-branches
       - android-integration-test-build: *release-branches
       - run-firebase-tests:
           requires:
