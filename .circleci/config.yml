@@ -25,6 +25,7 @@ orbs:
   gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
   revenuecat: revenuecat/sdks-common-config@2.1.0
+  macos: circleci/macos@2.3.2
 
 parameters:
   action:
@@ -104,6 +105,29 @@ commands:
       - run:
           name: Flutter doctor
           command: flutter doctor
+  
+  install-and-create-sim:
+    parameters:
+      install-simulator-name:
+        type: string
+      sim-device-type:
+        type: string
+      sim-device-runtime:
+        type: string
+      sim-name:
+        type: string
+    steps:
+      - run:
+          name: Install xcode-install
+          command: gem install xcode-install
+      - run:
+          name: Install simulator
+          command: | # Print all available simulators and install required one
+              xcversion simulators
+              xcversion simulators --install="<< parameters.install-simulator-name >>"
+      - run:
+          name: Create simulator
+          command: xcrun simctl create '<< parameters.sim-name >>' com.apple.CoreSimulator.SimDeviceType.<< parameters.sim-device-type >> com.apple.CoreSimulator.SimRuntime.<< parameters.sim-device-runtime >>
 
 jobs:
   lint:
@@ -195,13 +219,39 @@ jobs:
 
   ios-integration-test:
     description: "Run integration tests for Flutter"
+    resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 13.4.0
+      xcode: 13.4.1
+    shell: /bin/bash --login -o pipefail
     steps:
       - checkout
+      - install-and-create-sim:
+          install-simulator-name: iOS 15.4 Simulator
+          sim-device-type: iPhone-13
+          sim-device-runtime: iOS-15-4
+          sim-name: iPhone 13 (15.4)
+      - macos/preboot-simulator:
+          device: iPhone 13
+          version: '15.4'
+      - setup-flutter
+      - replace-api-key
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
       - run:
-          name: Open simulator
-          command: xcrun instruments -w "iPhone 11 Pro (14.3) [" || true
+          name: Run Flutter integration tests
+          command: |
+            cd revenuecat_examples/purchase_tester
+            flutter drive --target=integration_test/app_test.dart \
+            --driver=test_driver/integration_test.dart
+
+  macos-integration-test:
+    description: "Run integration tests for Flutter"
+    resource_class: macos.x86.medium.gen2
+    macos:
+      xcode: 13.4.1
+    shell: /bin/bash --login -o pipefail
+    steps:
+      - checkout
       - setup-flutter
       - replace-api-key
       - build-flutter-project:
@@ -288,7 +338,8 @@ workflows:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - ios-integration-test: *release-branches
+      - ios-integration-test
+      - macos-integration-test
       - android-integration-test-build: *release-branches
       - run-firebase-tests:
           requires:
