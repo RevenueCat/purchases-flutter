@@ -202,14 +202,15 @@ void main() {
     expect(PurchasesErrorCode.unsupportedError.index, 24);
     expect(PurchasesErrorCode.emptySubscriberAttributesError.index, 25);
     expect(PurchasesErrorCode.productDiscountMissingIdentifierError.index, 26);
-    expect(PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError.index, 27);
-    expect(PurchasesErrorCode.customerInfoError.index, 28);
-    expect(PurchasesErrorCode.systemInfoError.index, 29);
-    expect(PurchasesErrorCode.beginRefundRequestError.index, 30);
-    expect(PurchasesErrorCode.productRequestTimeout.index, 31);
-    expect(PurchasesErrorCode.apiEndpointBlocked.index, 32);
-    expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 33);
-    expect(PurchasesErrorCode.offlineConnectionError.index, 34);
+    expect(PurchasesErrorCode.unknownNonNativeError.index, 27);
+    expect(PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError.index, 28);
+    expect(PurchasesErrorCode.customerInfoError.index, 29);
+    expect(PurchasesErrorCode.systemInfoError.index, 30);
+    expect(PurchasesErrorCode.beginRefundRequestError.index, 31);
+    expect(PurchasesErrorCode.productRequestTimeout.index, 32);
+    expect(PurchasesErrorCode.apiEndpointBlocked.index, 33);
+    expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 34);
+    expect(PurchasesErrorCode.offlineConnectionError.index, 35);
 
   });
 
@@ -324,38 +325,42 @@ void main() {
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '27')),
-      PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError,
+      PurchasesErrorCode.unknownNonNativeError,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '28')),
-      PurchasesErrorCode.customerInfoError,
+      PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '29')),
-      PurchasesErrorCode.systemInfoError,
+      PurchasesErrorCode.customerInfoError,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '30')),
-      PurchasesErrorCode.beginRefundRequestError,
+      PurchasesErrorCode.systemInfoError,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '31')),
-      PurchasesErrorCode.productRequestTimeout,
+      PurchasesErrorCode.beginRefundRequestError,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '32')),
-      PurchasesErrorCode.apiEndpointBlocked,
+      PurchasesErrorCode.productRequestTimeout,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '33')),
-      PurchasesErrorCode.invalidPromotionalOfferError,
+      PurchasesErrorCode.apiEndpointBlocked,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '34')),
-      PurchasesErrorCode.offlineConnectionError,
+      PurchasesErrorCode.invalidPromotionalOfferError,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '35')),
+      PurchasesErrorCode.offlineConnectionError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '36')),
       PurchasesErrorCode.unknownError,
     );
   });
