@@ -97,7 +97,7 @@ class Purchases {
     bool observerMode = false,
     String? userDefaultsSuiteName,
     bool useAmazon = false,
-    bool usesStoreKit2IfAvailable = true,
+    bool usesStoreKit2IfAvailable = false,
   }) {
     final configuration = (PurchasesConfiguration(apiKey)
       ..appUserID = appUserId
