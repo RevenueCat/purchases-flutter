@@ -25,8 +25,8 @@ class PurchasesConfiguration {
 
   /// iOS-only, will be ignored for Android.
   /// Set this to FALSE to disable StoreKit2.
-  /// Default is TRUE.
-  bool usesStoreKit2IfAvailable = true;
+  /// Default is FALSE.
+  bool usesStoreKit2IfAvailable = false;
 
   /// Required to configure the plugin to be used in the Amazon Appstore.
   /// Values different to [Store.amazon] don't have any effect.
