@@ -508,7 +508,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': true
+            'usesStoreKit2IfAvailable': false
           },
         )
       ],
@@ -532,7 +532,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': true
+            'usesStoreKit2IfAvailable': false
           },
         )
       ],
@@ -556,7 +556,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': false,
-            'usesStoreKit2IfAvailable': true
+            'usesStoreKit2IfAvailable': false
           },
         )
       ],
@@ -581,7 +581,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': true
+            'usesStoreKit2IfAvailable': false
           },
         )
       ],
