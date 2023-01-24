@@ -35,6 +35,11 @@ typedef ReadyForPromotedProductPurchaseListener = void Function(
   Future<PromotedPurchaseResult> Function() startPurchase,
 );
 
+typedef LogHandler = void Function(
+  LogLevel logLevel,
+  String message,
+);
+
 /// Entry point for Purchases.
 class Purchases {
   static final Set<CustomerInfoUpdateListener> _customerInfoUpdateListeners =
@@ -44,6 +49,8 @@ class Purchases {
       _readyForPromotedProductPurchaseListeners = {};
 
   static CustomerInfo? _lastReceivedCustomerInfo;
+
+  static LogHandler? _logHandler;
 
   static final _channel = const MethodChannel('purchases_flutter')
     ..setMethodCallHandler((call) async {
@@ -66,6 +73,9 @@ class Purchases {
               () => _startPromotedProductPurchase(callbackID),
             );
           }
+          break;
+        case 'Purchases-LogHandlerEvent':
+          handleLogHandlerEvent(call);
           break;
       }
     });
@@ -769,6 +779,19 @@ class Purchases {
   /// Android only. Call close when you are done with this instance of Purchases to disconnect
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
+
+  static Future<void> setLogHandler(LogHandler logHandler) async {
+    _logHandler = logHandler;
+    await _channel.invokeMethod('setLogHandler');
+  }
+
+  static void handleLogHandlerEvent(MethodCall call) {
+    final args = Map<String, dynamic>.from(call.arguments);
+    final logLevelName = args['logLevel'];
+    final logLevel = LogLevel.values.firstWhere((e) => e.name.toUpperCase() == logLevelName);
+    final msg = args['message'];
+    _logHandler?.call(logLevel, msg);
+  }
 
   /// iOS only. Starts the purchase flow associated with the callback at
   /// [callbackID] index in PurchasesFlutterPlugin.m's [startPurchaseBlocks]
