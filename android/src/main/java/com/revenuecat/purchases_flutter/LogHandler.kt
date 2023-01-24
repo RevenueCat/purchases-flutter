@@ -12,9 +12,7 @@ class LogHandler(
     }
 
     override fun e(tag: String, msg: String, throwable: Throwable?) {
-        val message = throwable?.let {
-            "$msg. Throwable: $it"
-        } ?: msg
+        val message = throwable?.let { "$msg. Throwable: $it" } ?: msg
         callback(
             mapOf(
                 "logLevel" to "ERROR", "message" to message
