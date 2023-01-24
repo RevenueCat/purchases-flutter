@@ -389,8 +389,15 @@ class Purchases {
   }
 
   /// Enables/Disables debugs logs
+  @Deprecated('Use setLogLevel')
   static Future<void> setDebugLogsEnabled(bool enabled) =>
       _channel.invokeMethod('setDebugLogsEnabled', {'enabled': enabled});
+
+  /// Configures log level
+  /// Used to set the log level. Useful for debugging issues with the lovely team @RevenueCat.
+  /// The default is {LOG_LEVEL.INFO} in release builds and {LOG_LEVEL.DEBUG} in debug builds.
+  static Future<void> setLogLevel(LogLevel level) =>
+      _channel.invokeMethod('setLogLevel', {'level': level.name.toUpperCase()});
 
   ///
   /// iOS only. Set this property to true *only* when testing the ask-to-buy / SCA purchases flow.
@@ -920,6 +927,15 @@ enum RefundRequestStatus {
   success,
 
   /// There was an error with the request. See message for more details.
+  error
+}
+
+/// Log levels.
+enum LogLevel {
+  verbose,
+  debug,
+  info,
+  warn,
   error
 }
 

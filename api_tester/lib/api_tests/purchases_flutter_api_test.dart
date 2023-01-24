@@ -121,6 +121,23 @@ class _PurchasesFlutterApiTest {
         Purchases.setDebugLogsEnabled(setDebugLogsEnabled);
   }
 
+  void _checkSetLogLevel() {
+    LogLevel logLevel = LogLevel.debug;
+    Future<void> setLogLevelFuture =
+        Purchases.setLogLevel(logLevel);
+  }
+
+  void _checkLogLevels(LogLevel level) {
+    switch (level) {
+      case LogLevel.verbose:
+      case LogLevel.debug:
+      case LogLevel.info:
+      case LogLevel.warn:
+      case LogLevel.error:
+        break;
+    }
+  }
+
   void _checkSetSimulatesAskToBuyInSandbox() {
     bool setSimulatesAskToBuyInSandbox = false;
     Future<void> future =

@@ -38,7 +38,7 @@ class _MyAppState extends State<InitialScreen> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    await Purchases.setDebugLogsEnabled(true);
+    await Purchases.setLogLevel(LogLevel.debug);
 
     PurchasesConfiguration configuration;
     if (StoreConfig.isForAmazonAppstore()) {

@@ -81,6 +81,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
         [self logInAppUserID:arguments[@"appUserID"] result:result];
     } else if ([@"setDebugLogsEnabled" isEqualToString:call.method]) {
         [self setDebugLogsEnabled:[arguments[@"enabled"] boolValue] result:result];
+    } else if ([@"setLogLevel" isEqualToString:call.method]) {
+        [self setLogLevel:arguments[@"level"] result:result];
     } else if ([@"setSimulatesAskToBuyInSandbox" isEqualToString:call.method]) {
         [self setSimulatesAskToBuyInSandbox:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setProxyURLString" isEqualToString:call.method]) {
@@ -299,6 +301,12 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)setDebugLogsEnabled:(BOOL)enabled
                      result:(FlutterResult)result {
     [RCCommonFunctionality setDebugLogsEnabled:enabled];
+    result(nil);
+}
+
+- (void)setLogLevel:(NSString *)level
+             result:(FlutterResult)result {
+    [RCCommonFunctionality setLogLevel:level];
     result(nil);
 }
 
