@@ -280,15 +280,15 @@ jobs:
       - store_artifacts:
           path: pubspec.lock
 
-  dart-analyze:
+  dry-run-release:
     description: "Check if Freezed files need to be added to repo"
     docker:
       - image: cirrusci/flutter
     steps:
       - checkout
       - run:
-          name: Dart Analyze
-          command: dart analyze
+          name: Dry Run Release
+          command: flutter pub publish --dry-run
 
   prepare-next-version:
     description: "Creates a PR with the new snapshot version"
@@ -348,7 +348,7 @@ workflows:
       - test
       - api_test
       - freezed
-      - dart-analyze
+      - dry-run-release
   deploy:
     when:
       not:
