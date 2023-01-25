@@ -95,10 +95,14 @@ commands:
 
   setup-flutter:
     description: "setup Flutter"
+    parameters:
+      version:
+        type: string
+        default: stable
     steps:
       - run:
           name: Download flutter SDK
-          command: git clone --depth 1 --branch 3.3.10 https://github.com/flutter/flutter.git flutter
+          command: git clone --depth 1 --branch << parameters.version >> https://github.com/flutter/flutter.git flutter
       - run:
           name: Setup environment variables
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
@@ -252,7 +256,8 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - setup-flutter
+      - setup-flutter:
+          version: '3.3.10'
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
