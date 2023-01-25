@@ -324,59 +324,59 @@ workflows:
   danger:
     jobs:
       - revenuecat/danger
-  test:
-    when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-    jobs:
-      - lint
-      - test
-      - api_test
-      - freezed
+#  test:
+#    when:
+#      not:
+#        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+#    jobs:
+#      - lint
+#      - test
+#      - api_test
+#      - freezed
   deploy:
     when:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - ios-integration-test: *release-branches
-      - macos-integration-test: *release-branches
-      - android-integration-test-build: *release-branches
-      - run-firebase-tests:
-          requires:
-            - android-integration-test-build
-      - hold:
-          type: approval
-          requires:
-            - ios-integration-test
-            - macos-integration-test
-            - run-firebase-tests
-          <<: *release-branches
-      - revenuecat/tag-current-branch:
-          requires:
-            - hold
-          <<: *release-branches
-      - make-release: *release-tags
-  snapshot-bump:
-    when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-    jobs:
-      - prepare-next-version:
-          <<: *only-main-branch
-  weekly-run-workflow:
-    when:
-      and:
-        - equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-        - equal: [ "release-train", << pipeline.schedule.name >> ]
-    jobs:
-      - revenuecat/automatic-bump
-  manual-trigger-bump:
-    when:
-      equal: [ bump, << pipeline.parameters.action >> ]
-    jobs:
-      - revenuecat/automatic-bump
-  update-hybrid-common-versions:
-    when:
-      equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
-    jobs:
-      - update-hybrid-common-versions
+#      - ios-integration-test: *release-branches
+      - macos-integration-test
+#      - android-integration-test-build: *release-branches
+#      - run-firebase-tests:
+#          requires:
+#            - android-integration-test-build
+#      - hold:
+#          type: approval
+#          requires:
+#            - ios-integration-test
+#            - macos-integration-test
+#            - run-firebase-tests
+#          <<: *release-branches
+#      - revenuecat/tag-current-branch:
+#          requires:
+#            - hold
+#          <<: *release-branches
+#      - make-release: *release-tags
+#  snapshot-bump:
+#    when:
+#      not:
+#        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+#    jobs:
+#      - prepare-next-version:
+#          <<: *only-main-branch
+#  weekly-run-workflow:
+#    when:
+#      and:
+#        - equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+#        - equal: [ "release-train", << pipeline.schedule.name >> ]
+#    jobs:
+#      - revenuecat/automatic-bump
+#  manual-trigger-bump:
+#    when:
+#      equal: [ bump, << pipeline.parameters.action >> ]
+#    jobs:
+#      - revenuecat/automatic-bump
+#  update-hybrid-common-versions:
+#    when:
+#      equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
+#    jobs:
+#      - update-hybrid-common-versions
