@@ -280,6 +280,16 @@ jobs:
       - store_artifacts:
           path: pubspec.lock
 
+  dart-analyze:
+    description: "Check if Freezed files need to be added to repo"
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run:
+          name: Dart Analyze
+          command: dart analyze
+
   prepare-next-version:
     description: "Creates a PR with the new snapshot version"
     docker:
