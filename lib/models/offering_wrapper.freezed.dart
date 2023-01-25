@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'offering_wrapper.dart';
 
@@ -69,7 +69,8 @@ mixin _$Offering {
 /// @nodoc
 abstract class $OfferingCopyWith<$Res> {
   factory $OfferingCopyWith(Offering value, $Res Function(Offering) then) =
-      _$OfferingCopyWithImpl<$Res>;
+      _$OfferingCopyWithImpl<$Res, Offering>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'serverDescription') String serverDescription,
@@ -92,18 +93,21 @@ abstract class $OfferingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OfferingCopyWithImpl<$Res> implements $OfferingCopyWith<$Res> {
+class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
+    implements $OfferingCopyWith<$Res> {
   _$OfferingCopyWithImpl(this._value, this._then);
 
-  final Offering _value;
   // ignore: unused_field
-  final $Res Function(Offering) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? serverDescription = freezed,
-    Object? availablePackages = freezed,
+    Object? identifier = null,
+    Object? serverDescription = null,
+    Object? availablePackages = null,
     Object? lifetime = freezed,
     Object? annual = freezed,
     Object? sixMonth = freezed,
@@ -113,123 +117,130 @@ class _$OfferingCopyWithImpl<$Res> implements $OfferingCopyWith<$Res> {
     Object? weekly = freezed,
   }) {
     return _then(_value.copyWith(
-      identifier: identifier == freezed
+      identifier: null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      serverDescription: serverDescription == freezed
+      serverDescription: null == serverDescription
           ? _value.serverDescription
           : serverDescription // ignore: cast_nullable_to_non_nullable
               as String,
-      availablePackages: availablePackages == freezed
+      availablePackages: null == availablePackages
           ? _value.availablePackages
           : availablePackages // ignore: cast_nullable_to_non_nullable
               as List<Package>,
-      lifetime: lifetime == freezed
+      lifetime: freezed == lifetime
           ? _value.lifetime
           : lifetime // ignore: cast_nullable_to_non_nullable
               as Package?,
-      annual: annual == freezed
+      annual: freezed == annual
           ? _value.annual
           : annual // ignore: cast_nullable_to_non_nullable
               as Package?,
-      sixMonth: sixMonth == freezed
+      sixMonth: freezed == sixMonth
           ? _value.sixMonth
           : sixMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
-      threeMonth: threeMonth == freezed
+      threeMonth: freezed == threeMonth
           ? _value.threeMonth
           : threeMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
-      twoMonth: twoMonth == freezed
+      twoMonth: freezed == twoMonth
           ? _value.twoMonth
           : twoMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
-      monthly: monthly == freezed
+      monthly: freezed == monthly
           ? _value.monthly
           : monthly // ignore: cast_nullable_to_non_nullable
               as Package?,
-      weekly: weekly == freezed
+      weekly: freezed == weekly
           ? _value.weekly
           : weekly // ignore: cast_nullable_to_non_nullable
               as Package?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get lifetime {
     if (_value.lifetime == null) {
       return null;
     }
 
     return $PackageCopyWith<$Res>(_value.lifetime!, (value) {
-      return _then(_value.copyWith(lifetime: value));
+      return _then(_value.copyWith(lifetime: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get annual {
     if (_value.annual == null) {
       return null;
     }
 
     return $PackageCopyWith<$Res>(_value.annual!, (value) {
-      return _then(_value.copyWith(annual: value));
+      return _then(_value.copyWith(annual: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get sixMonth {
     if (_value.sixMonth == null) {
       return null;
     }
 
     return $PackageCopyWith<$Res>(_value.sixMonth!, (value) {
-      return _then(_value.copyWith(sixMonth: value));
+      return _then(_value.copyWith(sixMonth: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get threeMonth {
     if (_value.threeMonth == null) {
       return null;
     }
 
     return $PackageCopyWith<$Res>(_value.threeMonth!, (value) {
-      return _then(_value.copyWith(threeMonth: value));
+      return _then(_value.copyWith(threeMonth: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get twoMonth {
     if (_value.twoMonth == null) {
       return null;
     }
 
     return $PackageCopyWith<$Res>(_value.twoMonth!, (value) {
-      return _then(_value.copyWith(twoMonth: value));
+      return _then(_value.copyWith(twoMonth: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get monthly {
     if (_value.monthly == null) {
       return null;
     }
 
     return $PackageCopyWith<$Res>(_value.monthly!, (value) {
-      return _then(_value.copyWith(monthly: value));
+      return _then(_value.copyWith(monthly: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get weekly {
     if (_value.weekly == null) {
       return null;
     }
 
     return $PackageCopyWith<$Res>(_value.weekly!, (value) {
-      return _then(_value.copyWith(weekly: value));
+      return _then(_value.copyWith(weekly: value) as $Val);
     });
   }
 }
@@ -240,6 +251,7 @@ abstract class _$$_OfferingCopyWith<$Res> implements $OfferingCopyWith<$Res> {
           _$_Offering value, $Res Function(_$_Offering) then) =
       __$$_OfferingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'serverDescription') String serverDescription,
@@ -269,20 +281,19 @@ abstract class _$$_OfferingCopyWith<$Res> implements $OfferingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_OfferingCopyWithImpl<$Res> extends _$OfferingCopyWithImpl<$Res>
+class __$$_OfferingCopyWithImpl<$Res>
+    extends _$OfferingCopyWithImpl<$Res, _$_Offering>
     implements _$$_OfferingCopyWith<$Res> {
   __$$_OfferingCopyWithImpl(
       _$_Offering _value, $Res Function(_$_Offering) _then)
-      : super(_value, (v) => _then(v as _$_Offering));
+      : super(_value, _then);
 
-  @override
-  _$_Offering get _value => super._value as _$_Offering;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? serverDescription = freezed,
-    Object? availablePackages = freezed,
+    Object? identifier = null,
+    Object? serverDescription = null,
+    Object? availablePackages = null,
     Object? lifetime = freezed,
     Object? annual = freezed,
     Object? sixMonth = freezed,
@@ -292,43 +303,43 @@ class __$$_OfferingCopyWithImpl<$Res> extends _$OfferingCopyWithImpl<$Res>
     Object? weekly = freezed,
   }) {
     return _then(_$_Offering(
-      identifier == freezed
+      null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      serverDescription == freezed
+      null == serverDescription
           ? _value.serverDescription
           : serverDescription // ignore: cast_nullable_to_non_nullable
               as String,
-      availablePackages == freezed
+      null == availablePackages
           ? _value._availablePackages
           : availablePackages // ignore: cast_nullable_to_non_nullable
               as List<Package>,
-      lifetime: lifetime == freezed
+      lifetime: freezed == lifetime
           ? _value.lifetime
           : lifetime // ignore: cast_nullable_to_non_nullable
               as Package?,
-      annual: annual == freezed
+      annual: freezed == annual
           ? _value.annual
           : annual // ignore: cast_nullable_to_non_nullable
               as Package?,
-      sixMonth: sixMonth == freezed
+      sixMonth: freezed == sixMonth
           ? _value.sixMonth
           : sixMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
-      threeMonth: threeMonth == freezed
+      threeMonth: freezed == threeMonth
           ? _value.threeMonth
           : threeMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
-      twoMonth: twoMonth == freezed
+      twoMonth: freezed == twoMonth
           ? _value.twoMonth
           : twoMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
-      monthly: monthly == freezed
+      monthly: freezed == monthly
           ? _value.monthly
           : monthly // ignore: cast_nullable_to_non_nullable
               as Package?,
-      weekly: weekly == freezed
+      weekly: freezed == weekly
           ? _value.weekly
           : weekly // ignore: cast_nullable_to_non_nullable
               as Package?,
@@ -373,6 +384,8 @@ class _$_Offering extends _Offering {
   @override
   @JsonKey(name: 'availablePackages')
   List<Package> get availablePackages {
+    if (_availablePackages is EqualUnmodifiableListView)
+      return _availablePackages;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_availablePackages);
   }
@@ -422,45 +435,51 @@ class _$_Offering extends _Offering {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Offering &&
-            const DeepCollectionEquality()
-                .equals(other.identifier, identifier) &&
-            const DeepCollectionEquality()
-                .equals(other.serverDescription, serverDescription) &&
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.serverDescription, serverDescription) ||
+                other.serverDescription == serverDescription) &&
             const DeepCollectionEquality()
                 .equals(other._availablePackages, _availablePackages) &&
-            const DeepCollectionEquality().equals(other.lifetime, lifetime) &&
-            const DeepCollectionEquality().equals(other.annual, annual) &&
-            const DeepCollectionEquality().equals(other.sixMonth, sixMonth) &&
-            const DeepCollectionEquality()
-                .equals(other.threeMonth, threeMonth) &&
-            const DeepCollectionEquality().equals(other.twoMonth, twoMonth) &&
-            const DeepCollectionEquality().equals(other.monthly, monthly) &&
-            const DeepCollectionEquality().equals(other.weekly, weekly));
+            (identical(other.lifetime, lifetime) ||
+                other.lifetime == lifetime) &&
+            (identical(other.annual, annual) || other.annual == annual) &&
+            (identical(other.sixMonth, sixMonth) ||
+                other.sixMonth == sixMonth) &&
+            (identical(other.threeMonth, threeMonth) ||
+                other.threeMonth == threeMonth) &&
+            (identical(other.twoMonth, twoMonth) ||
+                other.twoMonth == twoMonth) &&
+            (identical(other.monthly, monthly) || other.monthly == monthly) &&
+            (identical(other.weekly, weekly) || other.weekly == weekly));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(identifier),
-      const DeepCollectionEquality().hash(serverDescription),
+      identifier,
+      serverDescription,
       const DeepCollectionEquality().hash(_availablePackages),
-      const DeepCollectionEquality().hash(lifetime),
-      const DeepCollectionEquality().hash(annual),
-      const DeepCollectionEquality().hash(sixMonth),
-      const DeepCollectionEquality().hash(threeMonth),
-      const DeepCollectionEquality().hash(twoMonth),
-      const DeepCollectionEquality().hash(monthly),
-      const DeepCollectionEquality().hash(weekly));
+      lifetime,
+      annual,
+      sixMonth,
+      threeMonth,
+      twoMonth,
+      monthly,
+      weekly);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_OfferingCopyWith<_$_Offering> get copyWith =>
       __$$_OfferingCopyWithImpl<_$_Offering>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OfferingToJson(this);
+    return _$$_OfferingToJson(
+      this,
+    );
   }
 }
 
@@ -484,52 +503,52 @@ abstract class _Offering extends Offering {
 
   /// Unique identifier defined in RevenueCat dashboard.
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// Offering description defined in RevenueCat dashboard.
   @JsonKey(name: 'serverDescription')
-  String get serverDescription => throw _privateConstructorUsedError;
+  String get serverDescription;
   @override
 
   /// Array of [Package] objects available for purchase.
   @JsonKey(name: 'availablePackages')
-  List<Package> get availablePackages => throw _privateConstructorUsedError;
+  List<Package> get availablePackages;
   @override
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'lifetime')
-  Package? get lifetime => throw _privateConstructorUsedError;
+  Package? get lifetime;
   @override
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'annual')
-  Package? get annual => throw _privateConstructorUsedError;
+  Package? get annual;
   @override
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'sixMonth')
-  Package? get sixMonth => throw _privateConstructorUsedError;
+  Package? get sixMonth;
   @override
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'threeMonth')
-  Package? get threeMonth => throw _privateConstructorUsedError;
+  Package? get threeMonth;
   @override
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'twoMonth')
-  Package? get twoMonth => throw _privateConstructorUsedError;
+  Package? get twoMonth;
   @override
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'monthly')
-  Package? get monthly => throw _privateConstructorUsedError;
+  Package? get monthly;
   @override
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
   @JsonKey(name: 'weekly')
-  Package? get weekly => throw _privateConstructorUsedError;
+  Package? get weekly;
   @override
   @JsonKey(ignore: true)
   _$$_OfferingCopyWith<_$_Offering> get copyWith =>

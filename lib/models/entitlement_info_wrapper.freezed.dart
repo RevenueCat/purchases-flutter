@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'entitlement_info_wrapper.dart';
 
@@ -94,7 +94,8 @@ mixin _$EntitlementInfo {
 abstract class $EntitlementInfoCopyWith<$Res> {
   factory $EntitlementInfoCopyWith(
           EntitlementInfo value, $Res Function(EntitlementInfo) then) =
-      _$EntitlementInfoCopyWithImpl<$Res>;
+      _$EntitlementInfoCopyWithImpl<$Res, EntitlementInfo>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier')
           String identifier,
@@ -125,84 +126,86 @@ abstract class $EntitlementInfoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$EntitlementInfoCopyWithImpl<$Res>
+class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
     implements $EntitlementInfoCopyWith<$Res> {
   _$EntitlementInfoCopyWithImpl(this._value, this._then);
 
-  final EntitlementInfo _value;
   // ignore: unused_field
-  final $Res Function(EntitlementInfo) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? isActive = freezed,
-    Object? willRenew = freezed,
-    Object? latestPurchaseDate = freezed,
-    Object? originalPurchaseDate = freezed,
-    Object? productIdentifier = freezed,
-    Object? isSandbox = freezed,
-    Object? ownershipType = freezed,
-    Object? store = freezed,
-    Object? periodType = freezed,
+    Object? identifier = null,
+    Object? isActive = null,
+    Object? willRenew = null,
+    Object? latestPurchaseDate = null,
+    Object? originalPurchaseDate = null,
+    Object? productIdentifier = null,
+    Object? isSandbox = null,
+    Object? ownershipType = null,
+    Object? store = null,
+    Object? periodType = null,
     Object? expirationDate = freezed,
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      identifier: identifier == freezed
+      identifier: null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      isActive: isActive == freezed
+      isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
-      willRenew: willRenew == freezed
+      willRenew: null == willRenew
           ? _value.willRenew
           : willRenew // ignore: cast_nullable_to_non_nullable
               as bool,
-      latestPurchaseDate: latestPurchaseDate == freezed
+      latestPurchaseDate: null == latestPurchaseDate
           ? _value.latestPurchaseDate
           : latestPurchaseDate // ignore: cast_nullable_to_non_nullable
               as String,
-      originalPurchaseDate: originalPurchaseDate == freezed
+      originalPurchaseDate: null == originalPurchaseDate
           ? _value.originalPurchaseDate
           : originalPurchaseDate // ignore: cast_nullable_to_non_nullable
               as String,
-      productIdentifier: productIdentifier == freezed
+      productIdentifier: null == productIdentifier
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      isSandbox: isSandbox == freezed
+      isSandbox: null == isSandbox
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
               as bool,
-      ownershipType: ownershipType == freezed
+      ownershipType: null == ownershipType
           ? _value.ownershipType
           : ownershipType // ignore: cast_nullable_to_non_nullable
               as OwnershipType,
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as Store,
-      periodType: periodType == freezed
+      periodType: null == periodType
           ? _value.periodType
           : periodType // ignore: cast_nullable_to_non_nullable
               as PeriodType,
-      expirationDate: expirationDate == freezed
+      expirationDate: freezed == expirationDate
           ? _value.expirationDate
           : expirationDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      unsubscribeDetectedAt: unsubscribeDetectedAt == freezed
+      unsubscribeDetectedAt: freezed == unsubscribeDetectedAt
           ? _value.unsubscribeDetectedAt
           : unsubscribeDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      billingIssueDetectedAt: billingIssueDetectedAt == freezed
+      billingIssueDetectedAt: freezed == billingIssueDetectedAt
           ? _value.billingIssueDetectedAt
           : billingIssueDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
@@ -213,6 +216,7 @@ abstract class _$$_EntitlementInfoCopyWith<$Res>
           _$_EntitlementInfo value, $Res Function(_$_EntitlementInfo) then) =
       __$$_EntitlementInfoCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier')
           String identifier,
@@ -244,81 +248,79 @@ abstract class _$$_EntitlementInfoCopyWith<$Res>
 
 /// @nodoc
 class __$$_EntitlementInfoCopyWithImpl<$Res>
-    extends _$EntitlementInfoCopyWithImpl<$Res>
+    extends _$EntitlementInfoCopyWithImpl<$Res, _$_EntitlementInfo>
     implements _$$_EntitlementInfoCopyWith<$Res> {
   __$$_EntitlementInfoCopyWithImpl(
       _$_EntitlementInfo _value, $Res Function(_$_EntitlementInfo) _then)
-      : super(_value, (v) => _then(v as _$_EntitlementInfo));
+      : super(_value, _then);
 
-  @override
-  _$_EntitlementInfo get _value => super._value as _$_EntitlementInfo;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? isActive = freezed,
-    Object? willRenew = freezed,
-    Object? latestPurchaseDate = freezed,
-    Object? originalPurchaseDate = freezed,
-    Object? productIdentifier = freezed,
-    Object? isSandbox = freezed,
-    Object? ownershipType = freezed,
-    Object? store = freezed,
-    Object? periodType = freezed,
+    Object? identifier = null,
+    Object? isActive = null,
+    Object? willRenew = null,
+    Object? latestPurchaseDate = null,
+    Object? originalPurchaseDate = null,
+    Object? productIdentifier = null,
+    Object? isSandbox = null,
+    Object? ownershipType = null,
+    Object? store = null,
+    Object? periodType = null,
     Object? expirationDate = freezed,
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
   }) {
     return _then(_$_EntitlementInfo(
-      identifier == freezed
+      null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      isActive == freezed
+      null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
-      willRenew == freezed
+      null == willRenew
           ? _value.willRenew
           : willRenew // ignore: cast_nullable_to_non_nullable
               as bool,
-      latestPurchaseDate == freezed
+      null == latestPurchaseDate
           ? _value.latestPurchaseDate
           : latestPurchaseDate // ignore: cast_nullable_to_non_nullable
               as String,
-      originalPurchaseDate == freezed
+      null == originalPurchaseDate
           ? _value.originalPurchaseDate
           : originalPurchaseDate // ignore: cast_nullable_to_non_nullable
               as String,
-      productIdentifier == freezed
+      null == productIdentifier
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      isSandbox == freezed
+      null == isSandbox
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
               as bool,
-      ownershipType: ownershipType == freezed
+      ownershipType: null == ownershipType
           ? _value.ownershipType
           : ownershipType // ignore: cast_nullable_to_non_nullable
               as OwnershipType,
-      store: store == freezed
+      store: null == store
           ? _value.store
           : store // ignore: cast_nullable_to_non_nullable
               as Store,
-      periodType: periodType == freezed
+      periodType: null == periodType
           ? _value.periodType
           : periodType // ignore: cast_nullable_to_non_nullable
               as PeriodType,
-      expirationDate: expirationDate == freezed
+      expirationDate: freezed == expirationDate
           ? _value.expirationDate
           : expirationDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      unsubscribeDetectedAt: unsubscribeDetectedAt == freezed
+      unsubscribeDetectedAt: freezed == unsubscribeDetectedAt
           ? _value.unsubscribeDetectedAt
           : unsubscribeDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      billingIssueDetectedAt: billingIssueDetectedAt == freezed
+      billingIssueDetectedAt: freezed == billingIssueDetectedAt
           ? _value.billingIssueDetectedAt
           : billingIssueDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -447,56 +449,62 @@ class _$_EntitlementInfo implements _EntitlementInfo {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EntitlementInfo &&
-            const DeepCollectionEquality()
-                .equals(other.identifier, identifier) &&
-            const DeepCollectionEquality().equals(other.isActive, isActive) &&
-            const DeepCollectionEquality().equals(other.willRenew, willRenew) &&
-            const DeepCollectionEquality()
-                .equals(other.latestPurchaseDate, latestPurchaseDate) &&
-            const DeepCollectionEquality()
-                .equals(other.originalPurchaseDate, originalPurchaseDate) &&
-            const DeepCollectionEquality()
-                .equals(other.productIdentifier, productIdentifier) &&
-            const DeepCollectionEquality().equals(other.isSandbox, isSandbox) &&
-            const DeepCollectionEquality()
-                .equals(other.ownershipType, ownershipType) &&
-            const DeepCollectionEquality().equals(other.store, store) &&
-            const DeepCollectionEquality()
-                .equals(other.periodType, periodType) &&
-            const DeepCollectionEquality()
-                .equals(other.expirationDate, expirationDate) &&
-            const DeepCollectionEquality()
-                .equals(other.unsubscribeDetectedAt, unsubscribeDetectedAt) &&
-            const DeepCollectionEquality()
-                .equals(other.billingIssueDetectedAt, billingIssueDetectedAt));
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.willRenew, willRenew) ||
+                other.willRenew == willRenew) &&
+            (identical(other.latestPurchaseDate, latestPurchaseDate) ||
+                other.latestPurchaseDate == latestPurchaseDate) &&
+            (identical(other.originalPurchaseDate, originalPurchaseDate) ||
+                other.originalPurchaseDate == originalPurchaseDate) &&
+            (identical(other.productIdentifier, productIdentifier) ||
+                other.productIdentifier == productIdentifier) &&
+            (identical(other.isSandbox, isSandbox) ||
+                other.isSandbox == isSandbox) &&
+            (identical(other.ownershipType, ownershipType) ||
+                other.ownershipType == ownershipType) &&
+            (identical(other.store, store) || other.store == store) &&
+            (identical(other.periodType, periodType) ||
+                other.periodType == periodType) &&
+            (identical(other.expirationDate, expirationDate) ||
+                other.expirationDate == expirationDate) &&
+            (identical(other.unsubscribeDetectedAt, unsubscribeDetectedAt) ||
+                other.unsubscribeDetectedAt == unsubscribeDetectedAt) &&
+            (identical(other.billingIssueDetectedAt, billingIssueDetectedAt) ||
+                other.billingIssueDetectedAt == billingIssueDetectedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(identifier),
-      const DeepCollectionEquality().hash(isActive),
-      const DeepCollectionEquality().hash(willRenew),
-      const DeepCollectionEquality().hash(latestPurchaseDate),
-      const DeepCollectionEquality().hash(originalPurchaseDate),
-      const DeepCollectionEquality().hash(productIdentifier),
-      const DeepCollectionEquality().hash(isSandbox),
-      const DeepCollectionEquality().hash(ownershipType),
-      const DeepCollectionEquality().hash(store),
-      const DeepCollectionEquality().hash(periodType),
-      const DeepCollectionEquality().hash(expirationDate),
-      const DeepCollectionEquality().hash(unsubscribeDetectedAt),
-      const DeepCollectionEquality().hash(billingIssueDetectedAt));
+      identifier,
+      isActive,
+      willRenew,
+      latestPurchaseDate,
+      originalPurchaseDate,
+      productIdentifier,
+      isSandbox,
+      ownershipType,
+      store,
+      periodType,
+      expirationDate,
+      unsubscribeDetectedAt,
+      billingIssueDetectedAt);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EntitlementInfoCopyWith<_$_EntitlementInfo> get copyWith =>
       __$$_EntitlementInfoCopyWithImpl<_$_EntitlementInfo>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EntitlementInfoToJson(this);
+    return _$$_EntitlementInfoToJson(
+      this,
+    );
   }
 }
 
@@ -536,38 +544,38 @@ abstract class _EntitlementInfo implements EntitlementInfo {
 
   /// The entitlement identifier configured in the RevenueCat dashboard
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// True if the user has access to this entitlement
   @JsonKey(name: 'isActive')
-  bool get isActive => throw _privateConstructorUsedError;
+  bool get isActive;
   @override
 
   /// True if the underlying subscription is set to renew at the end of
   /// the billing period (expirationDate).
   @JsonKey(name: 'willRenew')
-  bool get willRenew => throw _privateConstructorUsedError;
+  bool get willRenew;
   @override
 
   /// The latest purchase or renewal date for the entitlement.
   @JsonKey(name: 'latestPurchaseDate')
-  String get latestPurchaseDate => throw _privateConstructorUsedError;
+  String get latestPurchaseDate;
   @override
 
   /// The first date this entitlement was purchased
   @JsonKey(name: 'originalPurchaseDate')
-  String get originalPurchaseDate => throw _privateConstructorUsedError;
+  String get originalPurchaseDate;
   @override
 
   /// The product identifier that unlocked this entitlement
   @JsonKey(name: 'productIdentifier')
-  String get productIdentifier => throw _privateConstructorUsedError;
+  String get productIdentifier;
   @override
 
   /// False if this entitlement is unlocked via a production purchase
   @JsonKey(name: 'isSandbox')
-  bool get isSandbox => throw _privateConstructorUsedError;
+  bool get isSandbox;
   @override
 
   /// Use this property to determine whether a purchase was made by the current
@@ -575,24 +583,24 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// onboarding users who have had an entitlement shared with them, but might
   /// not be entirely aware of the benefits they now have.
   @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-  OwnershipType get ownershipType => throw _privateConstructorUsedError;
+  OwnershipType get ownershipType;
   @override
 
   /// The store where this entitlement was unlocked from
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-  Store get store => throw _privateConstructorUsedError;
+  Store get store;
   @override
 
   /// The last period type this entitlement was in
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-  PeriodType get periodType => throw _privateConstructorUsedError;
+  PeriodType get periodType;
   @override
 
   /// The expiration date for the entitlement, can be null for lifetime access.
   /// If the [periodType] is [PeriodType.trial],
   /// this is the trial expiration date.
   @JsonKey(name: 'expirationDate', nullable: true)
-  String? get expirationDate => throw _privateConstructorUsedError;
+  String? get expirationDate;
   @override
 
   /// The date an unsubscribe was detected. Can be null if it's still
@@ -600,7 +608,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the [isActive] property.
   @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
-  String? get unsubscribeDetectedAt => throw _privateConstructorUsedError;
+  String? get unsubscribeDetectedAt;
   @override
 
   /// The date a billing issue was detected. Can be null if there is no
@@ -608,7 +616,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the [isActive] property.
   @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
-  String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
+  String? get billingIssueDetectedAt;
   @override
   @JsonKey(ignore: true)
   _$$_EntitlementInfoCopyWith<_$_EntitlementInfo> get copyWith =>

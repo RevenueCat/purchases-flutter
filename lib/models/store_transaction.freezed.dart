@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'store_transaction.dart';
 
@@ -42,7 +42,8 @@ mixin _$StoreTransaction {
 abstract class $StoreTransactionCopyWith<$Res> {
   factory $StoreTransactionCopyWith(
           StoreTransaction value, $Res Function(StoreTransaction) then) =
-      _$StoreTransactionCopyWithImpl<$Res>;
+      _$StoreTransactionCopyWithImpl<$Res, StoreTransaction>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'revenueCatId') String revenueCatIdentifier,
       @JsonKey(name: 'productId') String productIdentifier,
@@ -50,34 +51,36 @@ abstract class $StoreTransactionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StoreTransactionCopyWithImpl<$Res>
+class _$StoreTransactionCopyWithImpl<$Res, $Val extends StoreTransaction>
     implements $StoreTransactionCopyWith<$Res> {
   _$StoreTransactionCopyWithImpl(this._value, this._then);
 
-  final StoreTransaction _value;
   // ignore: unused_field
-  final $Res Function(StoreTransaction) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? revenueCatIdentifier = freezed,
-    Object? productIdentifier = freezed,
-    Object? purchaseDate = freezed,
+    Object? revenueCatIdentifier = null,
+    Object? productIdentifier = null,
+    Object? purchaseDate = null,
   }) {
     return _then(_value.copyWith(
-      revenueCatIdentifier: revenueCatIdentifier == freezed
+      revenueCatIdentifier: null == revenueCatIdentifier
           ? _value.revenueCatIdentifier
           : revenueCatIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      productIdentifier: productIdentifier == freezed
+      productIdentifier: null == productIdentifier
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      purchaseDate: purchaseDate == freezed
+      purchaseDate: null == purchaseDate
           ? _value.purchaseDate
           : purchaseDate // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -88,6 +91,7 @@ abstract class _$$_StoreTransactionCopyWith<$Res>
           _$_StoreTransaction value, $Res Function(_$_StoreTransaction) then) =
       __$$_StoreTransactionCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'revenueCatId') String revenueCatIdentifier,
       @JsonKey(name: 'productId') String productIdentifier,
@@ -96,31 +100,29 @@ abstract class _$$_StoreTransactionCopyWith<$Res>
 
 /// @nodoc
 class __$$_StoreTransactionCopyWithImpl<$Res>
-    extends _$StoreTransactionCopyWithImpl<$Res>
+    extends _$StoreTransactionCopyWithImpl<$Res, _$_StoreTransaction>
     implements _$$_StoreTransactionCopyWith<$Res> {
   __$$_StoreTransactionCopyWithImpl(
       _$_StoreTransaction _value, $Res Function(_$_StoreTransaction) _then)
-      : super(_value, (v) => _then(v as _$_StoreTransaction));
+      : super(_value, _then);
 
-  @override
-  _$_StoreTransaction get _value => super._value as _$_StoreTransaction;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? revenueCatIdentifier = freezed,
-    Object? productIdentifier = freezed,
-    Object? purchaseDate = freezed,
+    Object? revenueCatIdentifier = null,
+    Object? productIdentifier = null,
+    Object? purchaseDate = null,
   }) {
     return _then(_$_StoreTransaction(
-      revenueCatIdentifier == freezed
+      null == revenueCatIdentifier
           ? _value.revenueCatIdentifier
           : revenueCatIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      productIdentifier == freezed
+      null == productIdentifier
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      purchaseDate == freezed
+      null == purchaseDate
           ? _value.purchaseDate
           : purchaseDate // ignore: cast_nullable_to_non_nullable
               as String,
@@ -164,30 +166,30 @@ class _$_StoreTransaction implements _StoreTransaction {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_StoreTransaction &&
-            const DeepCollectionEquality()
-                .equals(other.revenueCatIdentifier, revenueCatIdentifier) &&
-            const DeepCollectionEquality()
-                .equals(other.productIdentifier, productIdentifier) &&
-            const DeepCollectionEquality()
-                .equals(other.purchaseDate, purchaseDate));
+            (identical(other.revenueCatIdentifier, revenueCatIdentifier) ||
+                other.revenueCatIdentifier == revenueCatIdentifier) &&
+            (identical(other.productIdentifier, productIdentifier) ||
+                other.productIdentifier == productIdentifier) &&
+            (identical(other.purchaseDate, purchaseDate) ||
+                other.purchaseDate == purchaseDate));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(revenueCatIdentifier),
-      const DeepCollectionEquality().hash(productIdentifier),
-      const DeepCollectionEquality().hash(purchaseDate));
+      runtimeType, revenueCatIdentifier, productIdentifier, purchaseDate);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_StoreTransactionCopyWith<_$_StoreTransaction> get copyWith =>
       __$$_StoreTransactionCopyWithImpl<_$_StoreTransaction>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StoreTransactionToJson(this);
+    return _$$_StoreTransactionToJson(
+      this,
+    );
   }
 }
 
@@ -205,17 +207,17 @@ abstract class _StoreTransaction implements StoreTransaction {
 
   /// RevenueCat Id associated to the transaction.
   @JsonKey(name: 'revenueCatId')
-  String get revenueCatIdentifier => throw _privateConstructorUsedError;
+  String get revenueCatIdentifier;
   @override
 
   /// Product Id associated with the transaction.
   @JsonKey(name: 'productId')
-  String get productIdentifier => throw _privateConstructorUsedError;
+  String get productIdentifier;
   @override
 
   /// Purchase date of the transaction in ISO 8601 format.
   @JsonKey(name: 'purchaseDate')
-  String get purchaseDate => throw _privateConstructorUsedError;
+  String get purchaseDate;
   @override
   @JsonKey(ignore: true)
   _$$_StoreTransactionCopyWith<_$_StoreTransaction> get copyWith =>

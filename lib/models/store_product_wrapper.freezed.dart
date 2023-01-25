@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'store_product_wrapper.dart';
 
@@ -72,7 +72,8 @@ mixin _$StoreProduct {
 abstract class $StoreProductCopyWith<$Res> {
   factory $StoreProductCopyWith(
           StoreProduct value, $Res Function(StoreProduct) then) =
-      _$StoreProductCopyWithImpl<$Res>;
+      _$StoreProductCopyWithImpl<$Res, StoreProduct>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier')
           String identifier,
@@ -97,73 +98,77 @@ abstract class $StoreProductCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StoreProductCopyWithImpl<$Res> implements $StoreProductCopyWith<$Res> {
+class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
+    implements $StoreProductCopyWith<$Res> {
   _$StoreProductCopyWithImpl(this._value, this._then);
 
-  final StoreProduct _value;
   // ignore: unused_field
-  final $Res Function(StoreProduct) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? description = freezed,
-    Object? title = freezed,
-    Object? price = freezed,
-    Object? priceString = freezed,
-    Object? currencyCode = freezed,
+    Object? identifier = null,
+    Object? description = null,
+    Object? title = null,
+    Object? price = null,
+    Object? priceString = null,
+    Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_value.copyWith(
-      identifier: identifier == freezed
+      identifier: null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      description: description == freezed
+      description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      priceString: priceString == freezed
+      priceString: null == priceString
           ? _value.priceString
           : priceString // ignore: cast_nullable_to_non_nullable
               as String,
-      currencyCode: currencyCode == freezed
+      currencyCode: null == currencyCode
           ? _value.currencyCode
           : currencyCode // ignore: cast_nullable_to_non_nullable
               as String,
-      introductoryPrice: introductoryPrice == freezed
+      introductoryPrice: freezed == introductoryPrice
           ? _value.introductoryPrice
           : introductoryPrice // ignore: cast_nullable_to_non_nullable
               as IntroductoryPrice?,
-      discounts: discounts == freezed
+      discounts: freezed == discounts
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
-      subscriptionPeriod: subscriptionPeriod == freezed
+      subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice {
     if (_value.introductoryPrice == null) {
       return null;
     }
 
     return $IntroductoryPriceCopyWith<$Res>(_value.introductoryPrice!, (value) {
-      return _then(_value.copyWith(introductoryPrice: value));
+      return _then(_value.copyWith(introductoryPrice: value) as $Val);
     });
   }
 }
@@ -175,6 +180,7 @@ abstract class _$$_StoreProductCopyWith<$Res>
           _$_StoreProduct value, $Res Function(_$_StoreProduct) then) =
       __$$_StoreProductCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier')
           String identifier,
@@ -201,61 +207,59 @@ abstract class _$$_StoreProductCopyWith<$Res>
 
 /// @nodoc
 class __$$_StoreProductCopyWithImpl<$Res>
-    extends _$StoreProductCopyWithImpl<$Res>
+    extends _$StoreProductCopyWithImpl<$Res, _$_StoreProduct>
     implements _$$_StoreProductCopyWith<$Res> {
   __$$_StoreProductCopyWithImpl(
       _$_StoreProduct _value, $Res Function(_$_StoreProduct) _then)
-      : super(_value, (v) => _then(v as _$_StoreProduct));
+      : super(_value, _then);
 
-  @override
-  _$_StoreProduct get _value => super._value as _$_StoreProduct;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? description = freezed,
-    Object? title = freezed,
-    Object? price = freezed,
-    Object? priceString = freezed,
-    Object? currencyCode = freezed,
+    Object? identifier = null,
+    Object? description = null,
+    Object? title = null,
+    Object? price = null,
+    Object? priceString = null,
+    Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_$_StoreProduct(
-      identifier == freezed
+      null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      description == freezed
+      null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      title == freezed
+      null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      price == freezed
+      null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      priceString == freezed
+      null == priceString
           ? _value.priceString
           : priceString // ignore: cast_nullable_to_non_nullable
               as String,
-      currencyCode == freezed
+      null == currencyCode
           ? _value.currencyCode
           : currencyCode // ignore: cast_nullable_to_non_nullable
               as String,
-      introductoryPrice: introductoryPrice == freezed
+      introductoryPrice: freezed == introductoryPrice
           ? _value.introductoryPrice
           : introductoryPrice // ignore: cast_nullable_to_non_nullable
               as IntroductoryPrice?,
-      discounts: discounts == freezed
+      discounts: freezed == discounts
           ? _value._discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
-      subscriptionPeriod: subscriptionPeriod == freezed
+      subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -334,6 +338,7 @@ class _$_StoreProduct implements _StoreProduct {
   List<StoreProductDiscount>? get discounts {
     final value = _discounts;
     if (value == null) return null;
+    if (_discounts is EqualUnmodifiableListView) return _discounts;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
@@ -357,46 +362,49 @@ class _$_StoreProduct implements _StoreProduct {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_StoreProduct &&
-            const DeepCollectionEquality()
-                .equals(other.identifier, identifier) &&
-            const DeepCollectionEquality()
-                .equals(other.description, description) &&
-            const DeepCollectionEquality().equals(other.title, title) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
-            const DeepCollectionEquality()
-                .equals(other.priceString, priceString) &&
-            const DeepCollectionEquality()
-                .equals(other.currencyCode, currencyCode) &&
-            const DeepCollectionEquality()
-                .equals(other.introductoryPrice, introductoryPrice) &&
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.priceString, priceString) ||
+                other.priceString == priceString) &&
+            (identical(other.currencyCode, currencyCode) ||
+                other.currencyCode == currencyCode) &&
+            (identical(other.introductoryPrice, introductoryPrice) ||
+                other.introductoryPrice == introductoryPrice) &&
             const DeepCollectionEquality()
                 .equals(other._discounts, _discounts) &&
-            const DeepCollectionEquality()
-                .equals(other.subscriptionPeriod, subscriptionPeriod));
+            (identical(other.subscriptionPeriod, subscriptionPeriod) ||
+                other.subscriptionPeriod == subscriptionPeriod));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(identifier),
-      const DeepCollectionEquality().hash(description),
-      const DeepCollectionEquality().hash(title),
-      const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(priceString),
-      const DeepCollectionEquality().hash(currencyCode),
-      const DeepCollectionEquality().hash(introductoryPrice),
+      identifier,
+      description,
+      title,
+      price,
+      priceString,
+      currencyCode,
+      introductoryPrice,
       const DeepCollectionEquality().hash(_discounts),
-      const DeepCollectionEquality().hash(subscriptionPeriod));
+      subscriptionPeriod);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_StoreProductCopyWith<_$_StoreProduct> get copyWith =>
       __$$_StoreProductCopyWithImpl<_$_StoreProduct>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StoreProductToJson(this);
+    return _$$_StoreProductToJson(
+      this,
+    );
   }
 }
 
@@ -428,44 +436,42 @@ abstract class _StoreProduct implements StoreProduct {
 
   /// Product Id.
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// Description of the product.
   @JsonKey(name: 'description')
-  String get description => throw _privateConstructorUsedError;
+  String get description;
   @override
 
   /// Title of the product.
   @JsonKey(name: 'title')
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
 
   /// Price of the product in the local currency.
   @JsonKey(name: 'price')
-  double get price => throw _privateConstructorUsedError;
+  double get price;
   @override
 
   /// Formatted price of the item, including its currency sign.
   @JsonKey(name: 'priceString')
-  String get priceString => throw _privateConstructorUsedError;
+  String get priceString;
   @override
 
   /// Currency code for price and original price.
   @JsonKey(name: 'currencyCode')
-  String get currencyCode => throw _privateConstructorUsedError;
+  String get currencyCode;
   @override
 
   /// Introductory price for product. Can be null.
   @JsonKey(name: 'introPrice', nullable: true)
-  IntroductoryPrice? get introductoryPrice =>
-      throw _privateConstructorUsedError;
+  IntroductoryPrice? get introductoryPrice;
   @override
 
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
-  List<StoreProductDiscount>? get discounts =>
-      throw _privateConstructorUsedError;
+  List<StoreProductDiscount>? get discounts;
   @override
 
   /// Subscription period, specified in ISO 8601 format. For example,
@@ -474,7 +480,7 @@ abstract class _StoreProduct implements StoreProduct {
   /// and P1Y equates to one year.
   /// Note: Not available for Amazon.
   @JsonKey(name: 'subscriptionPeriod', nullable: true)
-  String? get subscriptionPeriod => throw _privateConstructorUsedError;
+  String? get subscriptionPeriod;
   @override
   @JsonKey(ignore: true)
   _$$_StoreProductCopyWith<_$_StoreProduct> get copyWith =>
