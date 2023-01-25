@@ -348,6 +348,7 @@ workflows:
       - test
       - api_test
       - freezed
+      - dart-analyze
   deploy:
     when:
       not:
