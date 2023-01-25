@@ -98,7 +98,7 @@ commands:
     steps:
       - run:
           name: Download flutter SDK
-          command: git clone --depth 1 --branch 3.3.10 https://github.com/flutter/flutter.git flutter
+          command: git clone -b stable https://github.com/flutter/flutter.git flutter
       - run:
           name: Setup environment variables
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
@@ -261,7 +261,7 @@ jobs:
           command: |
             cd revenuecat_examples/purchase_tester
             flutter drive --target=integration_test/app_test.dart \
-            --driver=test_driver/integration_test.dart -v
+            --driver=test_driver/integration_test.dart –-debug -v
 
   freezed:
     description: "Check if Freezed files need to be added to repo"
