@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'offerings_wrapper.dart';
 
@@ -37,7 +37,8 @@ mixin _$Offerings {
 /// @nodoc
 abstract class $OfferingsCopyWith<$Res> {
   factory $OfferingsCopyWith(Offerings value, $Res Function(Offerings) then) =
-      _$OfferingsCopyWithImpl<$Res>;
+      _$OfferingsCopyWithImpl<$Res, Offerings>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'all') Map<String, Offering> all,
       @JsonKey(name: 'current', nullable: true) Offering? current});
@@ -46,38 +47,42 @@ abstract class $OfferingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OfferingsCopyWithImpl<$Res> implements $OfferingsCopyWith<$Res> {
+class _$OfferingsCopyWithImpl<$Res, $Val extends Offerings>
+    implements $OfferingsCopyWith<$Res> {
   _$OfferingsCopyWithImpl(this._value, this._then);
 
-  final Offerings _value;
   // ignore: unused_field
-  final $Res Function(Offerings) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? all = freezed,
+    Object? all = null,
     Object? current = freezed,
   }) {
     return _then(_value.copyWith(
-      all: all == freezed
+      all: null == all
           ? _value.all
           : all // ignore: cast_nullable_to_non_nullable
               as Map<String, Offering>,
-      current: current == freezed
+      current: freezed == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
               as Offering?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $OfferingCopyWith<$Res>? get current {
     if (_value.current == null) {
       return null;
     }
 
     return $OfferingCopyWith<$Res>(_value.current!, (value) {
-      return _then(_value.copyWith(current: value));
+      return _then(_value.copyWith(current: value) as $Val);
     });
   }
 }
@@ -88,6 +93,7 @@ abstract class _$$_OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
           _$_Offerings value, $Res Function(_$_Offerings) then) =
       __$$_OfferingsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'all') Map<String, Offering> all,
       @JsonKey(name: 'current', nullable: true) Offering? current});
@@ -97,26 +103,25 @@ abstract class _$$_OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_OfferingsCopyWithImpl<$Res> extends _$OfferingsCopyWithImpl<$Res>
+class __$$_OfferingsCopyWithImpl<$Res>
+    extends _$OfferingsCopyWithImpl<$Res, _$_Offerings>
     implements _$$_OfferingsCopyWith<$Res> {
   __$$_OfferingsCopyWithImpl(
       _$_Offerings _value, $Res Function(_$_Offerings) _then)
-      : super(_value, (v) => _then(v as _$_Offerings));
+      : super(_value, _then);
 
-  @override
-  _$_Offerings get _value => super._value as _$_Offerings;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? all = freezed,
+    Object? all = null,
     Object? current = freezed,
   }) {
     return _then(_$_Offerings(
-      all == freezed
+      null == all
           ? _value._all
           : all // ignore: cast_nullable_to_non_nullable
               as Map<String, Offering>,
-      current: current == freezed
+      current: freezed == current
           ? _value.current
           : current // ignore: cast_nullable_to_non_nullable
               as Offering?,
@@ -142,6 +147,7 @@ class _$_Offerings extends _Offerings {
   @override
   @JsonKey(name: 'all')
   Map<String, Offering> get all {
+    if (_all is EqualUnmodifiableMapView) return _all;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_all);
   }
@@ -162,24 +168,25 @@ class _$_Offerings extends _Offerings {
         (other.runtimeType == runtimeType &&
             other is _$_Offerings &&
             const DeepCollectionEquality().equals(other._all, _all) &&
-            const DeepCollectionEquality().equals(other.current, current));
+            (identical(other.current, current) || other.current == current));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_all),
-      const DeepCollectionEquality().hash(current));
+      runtimeType, const DeepCollectionEquality().hash(_all), current);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_OfferingsCopyWith<_$_Offerings> get copyWith =>
       __$$_OfferingsCopyWithImpl<_$_Offerings>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OfferingsToJson(this);
+    return _$$_OfferingsToJson(
+      this,
+    );
   }
 }
 
@@ -197,12 +204,12 @@ abstract class _Offerings extends Offerings {
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
   @JsonKey(name: 'all')
-  Map<String, Offering> get all => throw _privateConstructorUsedError;
+  Map<String, Offering> get all;
   @override
 
   /// Current offering configured in the RevenueCat dashboard.
   @JsonKey(name: 'current', nullable: true)
-  Offering? get current => throw _privateConstructorUsedError;
+  Offering? get current;
   @override
   @JsonKey(ignore: true)
   _$$_OfferingsCopyWith<_$_Offerings> get copyWith =>

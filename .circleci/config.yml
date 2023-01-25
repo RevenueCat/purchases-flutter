@@ -95,10 +95,14 @@ commands:
 
   setup-flutter:
     description: "setup Flutter"
+    parameters:
+      version:
+        type: string
+        default: stable
     steps:
       - run:
           name: Download flutter SDK
-          command: git clone -b stable https://github.com/flutter/flutter.git flutter
+          command: git clone --depth 1 --branch << parameters.version >> https://github.com/flutter/flutter.git flutter
       - run:
           name: Setup environment variables
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
@@ -252,7 +256,8 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - setup-flutter
+      - setup-flutter:
+          version: '3.3.10'
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -274,6 +279,16 @@ jobs:
           print-modified-files: true
       - store_artifacts:
           path: pubspec.lock
+
+  dry-run-release:
+    description: "Check if Freezed files need to be added to repo"
+    docker:
+      - image: cirrusci/flutter
+    steps:
+      - checkout
+      - run:
+          name: Dry Run Release
+          command: flutter pub publish --dry-run
 
   prepare-next-version:
     description: "Creates a PR with the new snapshot version"
@@ -333,6 +348,7 @@ workflows:
       - test
       - api_test
       - freezed
+      - dry-run-release
   deploy:
     when:
       not:

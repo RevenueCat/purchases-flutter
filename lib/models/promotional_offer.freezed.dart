@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'promotional_offer.dart';
 
@@ -51,7 +51,8 @@ mixin _$PromotionalOffer {
 abstract class $PromotionalOfferCopyWith<$Res> {
   factory $PromotionalOfferCopyWith(
           PromotionalOffer value, $Res Function(PromotionalOffer) then) =
-      _$PromotionalOfferCopyWithImpl<$Res>;
+      _$PromotionalOfferCopyWithImpl<$Res, PromotionalOffer>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'keyIdentifier') String keyIdentifier,
@@ -61,44 +62,46 @@ abstract class $PromotionalOfferCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PromotionalOfferCopyWithImpl<$Res>
+class _$PromotionalOfferCopyWithImpl<$Res, $Val extends PromotionalOffer>
     implements $PromotionalOfferCopyWith<$Res> {
   _$PromotionalOfferCopyWithImpl(this._value, this._then);
 
-  final PromotionalOffer _value;
   // ignore: unused_field
-  final $Res Function(PromotionalOffer) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? keyIdentifier = freezed,
-    Object? nonce = freezed,
-    Object? signature = freezed,
-    Object? timestamp = freezed,
+    Object? identifier = null,
+    Object? keyIdentifier = null,
+    Object? nonce = null,
+    Object? signature = null,
+    Object? timestamp = null,
   }) {
     return _then(_value.copyWith(
-      identifier: identifier == freezed
+      identifier: null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      keyIdentifier: keyIdentifier == freezed
+      keyIdentifier: null == keyIdentifier
           ? _value.keyIdentifier
           : keyIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      nonce: nonce == freezed
+      nonce: null == nonce
           ? _value.nonce
           : nonce // ignore: cast_nullable_to_non_nullable
               as String,
-      signature: signature == freezed
+      signature: null == signature
           ? _value.signature
           : signature // ignore: cast_nullable_to_non_nullable
               as String,
-      timestamp: timestamp == freezed
+      timestamp: null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -109,6 +112,7 @@ abstract class _$$_PromotionalOfferCopyWith<$Res>
           _$_PromotionalOffer value, $Res Function(_$_PromotionalOffer) then) =
       __$$_PromotionalOfferCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'keyIdentifier') String keyIdentifier,
@@ -119,41 +123,39 @@ abstract class _$$_PromotionalOfferCopyWith<$Res>
 
 /// @nodoc
 class __$$_PromotionalOfferCopyWithImpl<$Res>
-    extends _$PromotionalOfferCopyWithImpl<$Res>
+    extends _$PromotionalOfferCopyWithImpl<$Res, _$_PromotionalOffer>
     implements _$$_PromotionalOfferCopyWith<$Res> {
   __$$_PromotionalOfferCopyWithImpl(
       _$_PromotionalOffer _value, $Res Function(_$_PromotionalOffer) _then)
-      : super(_value, (v) => _then(v as _$_PromotionalOffer));
+      : super(_value, _then);
 
-  @override
-  _$_PromotionalOffer get _value => super._value as _$_PromotionalOffer;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? keyIdentifier = freezed,
-    Object? nonce = freezed,
-    Object? signature = freezed,
-    Object? timestamp = freezed,
+    Object? identifier = null,
+    Object? keyIdentifier = null,
+    Object? nonce = null,
+    Object? signature = null,
+    Object? timestamp = null,
   }) {
     return _then(_$_PromotionalOffer(
-      identifier == freezed
+      null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      keyIdentifier == freezed
+      null == keyIdentifier
           ? _value.keyIdentifier
           : keyIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      nonce == freezed
+      null == nonce
           ? _value.nonce
           : nonce // ignore: cast_nullable_to_non_nullable
               as String,
-      signature == freezed
+      null == signature
           ? _value.signature
           : signature // ignore: cast_nullable_to_non_nullable
               as String,
-      timestamp == freezed
+      null == timestamp
           ? _value.timestamp
           : timestamp // ignore: cast_nullable_to_non_nullable
               as int,
@@ -210,33 +212,33 @@ class _$_PromotionalOffer implements _PromotionalOffer {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PromotionalOffer &&
-            const DeepCollectionEquality()
-                .equals(other.identifier, identifier) &&
-            const DeepCollectionEquality()
-                .equals(other.keyIdentifier, keyIdentifier) &&
-            const DeepCollectionEquality().equals(other.nonce, nonce) &&
-            const DeepCollectionEquality().equals(other.signature, signature) &&
-            const DeepCollectionEquality().equals(other.timestamp, timestamp));
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.keyIdentifier, keyIdentifier) ||
+                other.keyIdentifier == keyIdentifier) &&
+            (identical(other.nonce, nonce) || other.nonce == nonce) &&
+            (identical(other.signature, signature) ||
+                other.signature == signature) &&
+            (identical(other.timestamp, timestamp) ||
+                other.timestamp == timestamp));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(identifier),
-      const DeepCollectionEquality().hash(keyIdentifier),
-      const DeepCollectionEquality().hash(nonce),
-      const DeepCollectionEquality().hash(signature),
-      const DeepCollectionEquality().hash(timestamp));
+      runtimeType, identifier, keyIdentifier, nonce, signature, timestamp);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PromotionalOfferCopyWith<_$_PromotionalOffer> get copyWith =>
       __$$_PromotionalOfferCopyWithImpl<_$_PromotionalOffer>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PromotionalOfferToJson(this);
+    return _$$_PromotionalOfferToJson(
+      this,
+    );
   }
 }
 
@@ -255,28 +257,28 @@ abstract class _PromotionalOffer implements PromotionalOffer {
 
   /// Identifier agreed upon with the App Store for a discount of your choosing.
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// The identifier of the public/private key pair agreed upon with the
   /// App Store when the keys were generated.
   @JsonKey(name: 'keyIdentifier')
-  String get keyIdentifier => throw _privateConstructorUsedError;
+  String get keyIdentifier;
   @override
 
   /// One-time use random entropy-adding value for security.
   @JsonKey(name: 'nonce')
-  String get nonce => throw _privateConstructorUsedError;
+  String get nonce;
   @override
 
   /// The cryptographic signature generated by your private key.
   @JsonKey(name: 'signature')
-  String get signature => throw _privateConstructorUsedError;
+  String get signature;
   @override
 
   /// Timestamp of when the signature is created.
   @JsonKey(name: 'timestamp')
-  int get timestamp => throw _privateConstructorUsedError;
+  int get timestamp;
   @override
   @JsonKey(ignore: true)
   _$$_PromotionalOfferCopyWith<_$_PromotionalOffer> get copyWith =>

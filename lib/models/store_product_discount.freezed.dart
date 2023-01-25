@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'store_product_discount.dart';
 
@@ -58,7 +58,8 @@ mixin _$StoreProductDiscount {
 abstract class $StoreProductDiscountCopyWith<$Res> {
   factory $StoreProductDiscountCopyWith(StoreProductDiscount value,
           $Res Function(StoreProductDiscount) then) =
-      _$StoreProductDiscountCopyWithImpl<$Res>;
+      _$StoreProductDiscountCopyWithImpl<$Res, StoreProductDiscount>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'price') double price,
@@ -70,54 +71,57 @@ abstract class $StoreProductDiscountCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StoreProductDiscountCopyWithImpl<$Res>
+class _$StoreProductDiscountCopyWithImpl<$Res,
+        $Val extends StoreProductDiscount>
     implements $StoreProductDiscountCopyWith<$Res> {
   _$StoreProductDiscountCopyWithImpl(this._value, this._then);
 
-  final StoreProductDiscount _value;
   // ignore: unused_field
-  final $Res Function(StoreProductDiscount) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? price = freezed,
-    Object? priceString = freezed,
-    Object? cycles = freezed,
-    Object? period = freezed,
-    Object? periodUnit = freezed,
-    Object? periodNumberOfUnits = freezed,
+    Object? identifier = null,
+    Object? price = null,
+    Object? priceString = null,
+    Object? cycles = null,
+    Object? period = null,
+    Object? periodUnit = null,
+    Object? periodNumberOfUnits = null,
   }) {
     return _then(_value.copyWith(
-      identifier: identifier == freezed
+      identifier: null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      price: price == freezed
+      price: null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      priceString: priceString == freezed
+      priceString: null == priceString
           ? _value.priceString
           : priceString // ignore: cast_nullable_to_non_nullable
               as String,
-      cycles: cycles == freezed
+      cycles: null == cycles
           ? _value.cycles
           : cycles // ignore: cast_nullable_to_non_nullable
               as int,
-      period: period == freezed
+      period: null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
               as String,
-      periodUnit: periodUnit == freezed
+      periodUnit: null == periodUnit
           ? _value.periodUnit
           : periodUnit // ignore: cast_nullable_to_non_nullable
               as String,
-      periodNumberOfUnits: periodNumberOfUnits == freezed
+      periodNumberOfUnits: null == periodNumberOfUnits
           ? _value.periodNumberOfUnits
           : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -128,6 +132,7 @@ abstract class _$$_StoreProductDiscountCopyWith<$Res>
           $Res Function(_$_StoreProductDiscount) then) =
       __$$_StoreProductDiscountCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'price') double price,
@@ -140,51 +145,49 @@ abstract class _$$_StoreProductDiscountCopyWith<$Res>
 
 /// @nodoc
 class __$$_StoreProductDiscountCopyWithImpl<$Res>
-    extends _$StoreProductDiscountCopyWithImpl<$Res>
+    extends _$StoreProductDiscountCopyWithImpl<$Res, _$_StoreProductDiscount>
     implements _$$_StoreProductDiscountCopyWith<$Res> {
   __$$_StoreProductDiscountCopyWithImpl(_$_StoreProductDiscount _value,
       $Res Function(_$_StoreProductDiscount) _then)
-      : super(_value, (v) => _then(v as _$_StoreProductDiscount));
+      : super(_value, _then);
 
-  @override
-  _$_StoreProductDiscount get _value => super._value as _$_StoreProductDiscount;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? price = freezed,
-    Object? priceString = freezed,
-    Object? cycles = freezed,
-    Object? period = freezed,
-    Object? periodUnit = freezed,
-    Object? periodNumberOfUnits = freezed,
+    Object? identifier = null,
+    Object? price = null,
+    Object? priceString = null,
+    Object? cycles = null,
+    Object? period = null,
+    Object? periodUnit = null,
+    Object? periodNumberOfUnits = null,
   }) {
     return _then(_$_StoreProductDiscount(
-      identifier == freezed
+      null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      price == freezed
+      null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      priceString == freezed
+      null == priceString
           ? _value.priceString
           : priceString // ignore: cast_nullable_to_non_nullable
               as String,
-      cycles == freezed
+      null == cycles
           ? _value.cycles
           : cycles // ignore: cast_nullable_to_non_nullable
               as int,
-      period == freezed
+      null == period
           ? _value.period
           : period // ignore: cast_nullable_to_non_nullable
               as String,
-      periodUnit == freezed
+      null == periodUnit
           ? _value.periodUnit
           : periodUnit // ignore: cast_nullable_to_non_nullable
               as String,
-      periodNumberOfUnits == freezed
+      null == periodNumberOfUnits
           ? _value.periodNumberOfUnits
           : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
               as int,
@@ -252,40 +255,36 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_StoreProductDiscount &&
-            const DeepCollectionEquality()
-                .equals(other.identifier, identifier) &&
-            const DeepCollectionEquality().equals(other.price, price) &&
-            const DeepCollectionEquality()
-                .equals(other.priceString, priceString) &&
-            const DeepCollectionEquality().equals(other.cycles, cycles) &&
-            const DeepCollectionEquality().equals(other.period, period) &&
-            const DeepCollectionEquality()
-                .equals(other.periodUnit, periodUnit) &&
-            const DeepCollectionEquality()
-                .equals(other.periodNumberOfUnits, periodNumberOfUnits));
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.priceString, priceString) ||
+                other.priceString == priceString) &&
+            (identical(other.cycles, cycles) || other.cycles == cycles) &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.periodUnit, periodUnit) ||
+                other.periodUnit == periodUnit) &&
+            (identical(other.periodNumberOfUnits, periodNumberOfUnits) ||
+                other.periodNumberOfUnits == periodNumberOfUnits));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(identifier),
-      const DeepCollectionEquality().hash(price),
-      const DeepCollectionEquality().hash(priceString),
-      const DeepCollectionEquality().hash(cycles),
-      const DeepCollectionEquality().hash(period),
-      const DeepCollectionEquality().hash(periodUnit),
-      const DeepCollectionEquality().hash(periodNumberOfUnits));
+  int get hashCode => Object.hash(runtimeType, identifier, price, priceString,
+      cycles, period, periodUnit, periodNumberOfUnits);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_StoreProductDiscountCopyWith<_$_StoreProductDiscount> get copyWith =>
       __$$_StoreProductDiscountCopyWithImpl<_$_StoreProductDiscount>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StoreProductDiscountToJson(this);
+    return _$$_StoreProductDiscountToJson(
+      this,
+    );
   }
 }
 
@@ -307,37 +306,37 @@ abstract class _StoreProductDiscount implements StoreProductDiscount {
 
   /// Identifier of the discount.
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// Identifier of the discount.
   @JsonKey(name: 'price')
-  double get price => throw _privateConstructorUsedError;
+  double get price;
   @override
 
   /// Formatted price, including its currency sign, such as €3.99.
   @JsonKey(name: 'priceString')
-  String get priceString => throw _privateConstructorUsedError;
+  String get priceString;
   @override
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
   @JsonKey(name: 'cycles')
-  int get cycles => throw _privateConstructorUsedError;
+  int get cycles;
   @override
 
   /// Billing period of the discount, specified in ISO 8601 format.
   @JsonKey(name: 'period')
-  String get period => throw _privateConstructorUsedError;
+  String get period;
   @override
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
   @JsonKey(name: 'periodUnit')
-  String get periodUnit => throw _privateConstructorUsedError;
+  String get periodUnit;
   @override
 
   /// Number of units for the billing period of the discount.
   @JsonKey(name: 'periodNumberOfUnits')
-  int get periodNumberOfUnits => throw _privateConstructorUsedError;
+  int get periodNumberOfUnits;
   @override
   @JsonKey(ignore: true)
   _$$_StoreProductDiscountCopyWith<_$_StoreProductDiscount> get copyWith =>

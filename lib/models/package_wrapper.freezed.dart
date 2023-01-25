@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'package_wrapper.dart';
 
@@ -45,7 +45,8 @@ mixin _$Package {
 /// @nodoc
 abstract class $PackageCopyWith<$Res> {
   factory $PackageCopyWith(Package value, $Res Function(Package) then) =
-      _$PackageCopyWithImpl<$Res>;
+      _$PackageCopyWithImpl<$Res, Package>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier')
           String identifier,
@@ -60,44 +61,48 @@ abstract class $PackageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
+class _$PackageCopyWithImpl<$Res, $Val extends Package>
+    implements $PackageCopyWith<$Res> {
   _$PackageCopyWithImpl(this._value, this._then);
 
-  final Package _value;
   // ignore: unused_field
-  final $Res Function(Package) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? packageType = freezed,
-    Object? storeProduct = freezed,
-    Object? offeringIdentifier = freezed,
+    Object? identifier = null,
+    Object? packageType = null,
+    Object? storeProduct = null,
+    Object? offeringIdentifier = null,
   }) {
     return _then(_value.copyWith(
-      identifier: identifier == freezed
+      identifier: null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      packageType: packageType == freezed
+      packageType: null == packageType
           ? _value.packageType
           : packageType // ignore: cast_nullable_to_non_nullable
               as PackageType,
-      storeProduct: storeProduct == freezed
+      storeProduct: null == storeProduct
           ? _value.storeProduct
           : storeProduct // ignore: cast_nullable_to_non_nullable
               as StoreProduct,
-      offeringIdentifier: offeringIdentifier == freezed
+      offeringIdentifier: null == offeringIdentifier
           ? _value.offeringIdentifier
           : offeringIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StoreProductCopyWith<$Res> get storeProduct {
     return $StoreProductCopyWith<$Res>(_value.storeProduct, (value) {
-      return _then(_value.copyWith(storeProduct: value));
+      return _then(_value.copyWith(storeProduct: value) as $Val);
     });
   }
 }
@@ -108,6 +113,7 @@ abstract class _$$_PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
           _$_Package value, $Res Function(_$_Package) then) =
       __$$_PackageCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'identifier')
           String identifier,
@@ -123,35 +129,34 @@ abstract class _$$_PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PackageCopyWithImpl<$Res> extends _$PackageCopyWithImpl<$Res>
+class __$$_PackageCopyWithImpl<$Res>
+    extends _$PackageCopyWithImpl<$Res, _$_Package>
     implements _$$_PackageCopyWith<$Res> {
   __$$_PackageCopyWithImpl(_$_Package _value, $Res Function(_$_Package) _then)
-      : super(_value, (v) => _then(v as _$_Package));
+      : super(_value, _then);
 
-  @override
-  _$_Package get _value => super._value as _$_Package;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? identifier = freezed,
-    Object? packageType = freezed,
-    Object? storeProduct = freezed,
-    Object? offeringIdentifier = freezed,
+    Object? identifier = null,
+    Object? packageType = null,
+    Object? storeProduct = null,
+    Object? offeringIdentifier = null,
   }) {
     return _then(_$_Package(
-      identifier == freezed
+      null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      packageType == freezed
+      null == packageType
           ? _value.packageType
           : packageType // ignore: cast_nullable_to_non_nullable
               as PackageType,
-      storeProduct == freezed
+      null == storeProduct
           ? _value.storeProduct
           : storeProduct // ignore: cast_nullable_to_non_nullable
               as StoreProduct,
-      offeringIdentifier == freezed
+      null == offeringIdentifier
           ? _value.offeringIdentifier
           : offeringIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
@@ -206,33 +211,32 @@ class _$_Package implements _Package {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Package &&
-            const DeepCollectionEquality()
-                .equals(other.identifier, identifier) &&
-            const DeepCollectionEquality()
-                .equals(other.packageType, packageType) &&
-            const DeepCollectionEquality()
-                .equals(other.storeProduct, storeProduct) &&
-            const DeepCollectionEquality()
-                .equals(other.offeringIdentifier, offeringIdentifier));
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.packageType, packageType) ||
+                other.packageType == packageType) &&
+            (identical(other.storeProduct, storeProduct) ||
+                other.storeProduct == storeProduct) &&
+            (identical(other.offeringIdentifier, offeringIdentifier) ||
+                other.offeringIdentifier == offeringIdentifier));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(identifier),
-      const DeepCollectionEquality().hash(packageType),
-      const DeepCollectionEquality().hash(storeProduct),
-      const DeepCollectionEquality().hash(offeringIdentifier));
+      runtimeType, identifier, packageType, storeProduct, offeringIdentifier);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PackageCopyWith<_$_Package> get copyWith =>
       __$$_PackageCopyWithImpl<_$_Package>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PackageToJson(this);
+    return _$$_PackageToJson(
+      this,
+    );
   }
 }
 
@@ -254,22 +258,22 @@ abstract class _Package implements Package {
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
   @JsonKey(name: 'identifier')
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
   @override
 
   /// Package type for the product. Will be one of [PackageType].
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-  PackageType get packageType => throw _privateConstructorUsedError;
+  PackageType get packageType;
   @override
 
   /// StoreProduct assigned to this package.
   @JsonKey(name: 'product')
-  StoreProduct get storeProduct => throw _privateConstructorUsedError;
+  StoreProduct get storeProduct;
   @override
 
   /// Offering this package belongs to.
   @JsonKey(name: 'offeringIdentifier')
-  String get offeringIdentifier => throw _privateConstructorUsedError;
+  String get offeringIdentifier;
   @override
   @JsonKey(ignore: true)
   _$$_PackageCopyWith<_$_Package> get copyWith =>
