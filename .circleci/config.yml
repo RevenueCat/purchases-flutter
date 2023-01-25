@@ -261,7 +261,7 @@ jobs:
           command: |
             cd revenuecat_examples/purchase_tester
             flutter drive --target=integration_test/app_test.dart \
-            --driver=test_driver/integration_test.dart
+            --driver=test_driver/integration_test.dart -v
 
   freezed:
     description: "Check if Freezed files need to be added to repo"
