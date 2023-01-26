@@ -788,7 +788,7 @@ class Purchases {
   static void handleLogHandlerEvent(MethodCall call) {
     final args = Map<String, dynamic>.from(call.arguments);
     final logLevelName = args['logLevel'];
-    final logLevel = LogLevel.values.firstWhere((e) => e.name.toUpperCase() == logLevelName);
+    final logLevel = LogLevel.values.firstWhere((e) => e.name == logLevelName);
     final msg = args['message'];
     _logHandler?.call(logLevel, msg);
   }
