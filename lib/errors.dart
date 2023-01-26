@@ -89,6 +89,9 @@ enum PurchasesErrorCode {
   /// This is a required property and likely an AppStore quirk that it is missing.
   productDiscountMissingIdentifierError,
 
+  /// Unknown error
+  unknownNonNativeError,
+
   /// Unable to create a discount offer, the product is missing a subscriptionGroupIdentifier.
   productDiscountMissingSubscriptionGroupIdentifierError,
 
