@@ -615,12 +615,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setLogHandler(final Result result) {
-        Purchases.setLogHandler(new LogHandler(logData -> {
+        CommonKt.setLogHandler(logData -> {
             if (channel != null) {
                 channel.invokeMethod(LOG_HANDLER_EVENT, logData);
             }
             return null;
-        }));
+        });
         result.success(null);
     }
 
