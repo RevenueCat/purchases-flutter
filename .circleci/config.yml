@@ -348,7 +348,7 @@ workflows:
       - test
       - api_test
       - freezed
-      - dry-run-release
+      - dry-run-release: *release-branches
   deploy:
     when:
       not:
