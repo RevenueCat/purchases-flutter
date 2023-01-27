@@ -5,6 +5,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
+
+/// Testing utility that allows you to emit messages as if they were coming directly from the native SDKs.
+/// This is useful to test the Flutter response for listeners set on the native SDKs.
+/// Make sure you don't mock the MethodChannel when using this.
+/// To mock a call from the native SDKs to Flutter, just pass the method name that Flutter
+/// expects, then the parameters the SDK would send to Flutter on that call.
+void _performDartSideChannelMethodCall(String methodName, dynamic params) {
+  final methodCall = MethodCall(methodName, params);
+  ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+    'purchases_flutter',
+    const StandardMethodCodec().encodeMethodCall(methodCall),
+    (ByteData? data){},
+  );
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -59,6 +74,52 @@ void main() {
         )
       ],
     );
+  });
+
+  test('addCustomerInfoUpdateListener does not call listener if it does not have one', () async {
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      fail('listener should not be called if previous customer info was not set');
+    });
+    expect(log, <Matcher>[]);
+  });
+
+  test('addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info', () async {
+    /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
+    channel.setMockMethodCallHandler(null);
+    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
+    var listener1Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener1Called = true;
+    });
+    var listener2Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener2Called = true;
+    });
+    expect(listener1Called, true);
+    expect(listener2Called, true);
+  });
+
+  test('addCustomerInfoUpdateListener calls each listener immediately with latest customer info', () async {
+    /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
+    channel.setMockMethodCallHandler(null);
+    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
+    var listener1Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe');
+      listener1Called = true;
+    });
+    final mockCustomerInfoResponse2 = Map<String, dynamic>.from(mockCustomerInfoResponse);
+    mockCustomerInfoResponse2['originalAppUserId'] = 'pepe2';
+    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse2);
+    var listener2Called = false;
+    Purchases.addCustomerInfoUpdateListener((customerInfo) {
+      expect(customerInfo.originalAppUserId, 'pepe2');
+      listener2Called = true;
+    });
+    expect(listener1Called, true);
+    expect(listener2Called, true);
   });
 
   test('getProductsList returns list of products', () async {
