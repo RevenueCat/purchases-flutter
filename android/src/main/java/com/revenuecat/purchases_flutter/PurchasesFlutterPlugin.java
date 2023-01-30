@@ -616,8 +616,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setLogHandler(final Result result) {
         CommonKt.setLogHandler(logData -> {
-            if (channel != null) {
-                channel.invokeMethod(LOG_HANDLER_EVENT, logData);
+            if (channel != null && this.activity != null) {
+                this.activity.runOnUiThread(() -> channel.invokeMethod(LOG_HANDLER_EVENT, logData));
             }
             return null;
         });

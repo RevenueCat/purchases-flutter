@@ -544,9 +544,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)setLogHandlerWithResult:(FlutterResult)result {
-    [RCCommonFunctionality setLogHanderWithCompletion:^(NSDictionary<NSString *,NSString *> * _Nonnull logDetails) {
-        [self.channel invokeMethod:PurchasesLogHandlerEvent
-                         arguments:logDetails];
+    [RCCommonFunctionality setLogHanderOnLogReceived:^(NSDictionary<NSString *,NSString *> * _Nonnull logDetails) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.channel invokeMethod:PurchasesLogHandlerEvent
+                             arguments:logDetails];
+        });
     }];
     result(nil);
 }

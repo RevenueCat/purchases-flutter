@@ -138,6 +138,12 @@ class _PurchasesFlutterApiTest {
     }
   }
 
+  void _checkLogHandler(LogHandler logHandler) {
+    Future<void> setLogHandler = Purchases.setLogHandler((LogLevel logLevel, String message) {
+
+    });
+  }
+
   void _checkSetSimulatesAskToBuyInSandbox() {
     bool setSimulatesAskToBuyInSandbox = false;
     Future<void> future =

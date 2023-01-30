@@ -782,13 +782,13 @@ class Purchases {
 
   static Future<void> setLogHandler(LogHandler logHandler) async {
     _logHandler = logHandler;
-    await _channel.invokeMethod('setLogHandler');
+    return await _channel.invokeMethod('setLogHandler');
   }
 
   static void handleLogHandlerEvent(MethodCall call) {
     final args = Map<String, dynamic>.from(call.arguments);
     final logLevelName = args['logLevel'];
-    final logLevel = LogLevel.values.firstWhere((e) => e.name == logLevelName);
+    final logLevel = LogLevel.values.firstWhere((e) => e.name.toUpperCase() == logLevelName);
     final msg = args['message'];
     _logHandler?.call(logLevel, msg);
   }
