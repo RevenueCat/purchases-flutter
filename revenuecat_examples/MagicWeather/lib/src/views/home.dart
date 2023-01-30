@@ -30,7 +30,7 @@ class AppContainerState extends State<AppContainer> {
 
   Future<void> initPlatformState() async {
     // Enable debug logs before calling `configure`.
-    await Purchases.setDebugLogsEnabled(true);
+    await Purchases.setLogLevel(LogLevel.DEBUG);
 
     /*
     - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids

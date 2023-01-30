@@ -179,6 +179,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
                 setDebugLogsEnabled(enabled, result);
                 break;
+            case "setLogLevel":
+                String level = (String) call.argument("level");
+                setLogLevel(level, result);
+                break;
             case "setProxyURLString":
                 String proxyURLString = call.argument("proxyURLString");
                 setProxyURLString(proxyURLString, result);
@@ -433,6 +437,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setDebugLogsEnabled(boolean enabled, final Result result) {
         CommonKt.setDebugLogsEnabled(enabled);
+        result.success(null);
+    }
+
+    private void setLogLevel(String level, final Result result) {
+        CommonKt.setLogLevel(level);
         result.success(null);
     }
 
