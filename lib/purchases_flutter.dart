@@ -783,7 +783,7 @@ class Purchases {
   /// Set a custom log handler for redirecting logs to your own logging system.
   /// By default, this sends info, warning, and error messages.
   /// If you wish to receive Debug level messages, see [setLogLevel].
-  /// 
+  ///
   /// [logHandler] It will get called for each log event.
   /// Implement this function to redirect the log to your own logging system
   static Future<void> setLogHandler(LogHandler logHandler) async {

@@ -16,7 +16,7 @@ void _performDartSideChannelMethodCall(String methodName, dynamic params) {
   ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
     'purchases_flutter',
     const StandardMethodCodec().encodeMethodCall(methodCall),
-    (ByteData? data){},
+    (ByteData? data) {},
   );
 }
 
@@ -41,6 +41,11 @@ void main() {
     'nonSubscriptionTransactions': []
   };
 
+  final mockLog = {
+    'logLevel': 'DEBUG',
+    'message': 'A log sent',
+  };
+
   setUp(() {
     channel.setMockMethodCallHandler((call) async {
       log.add(call);
@@ -55,9 +60,11 @@ void main() {
   });
 
   test('setupPurchases', () async {
-    await Purchases.setup('api_key',
-        appUserId: 'cesar',
-        observerMode: true,);
+    await Purchases.setup(
+      'api_key',
+      appUserId: 'cesar',
+      observerMode: true,
+    );
     expect(
       log,
       <Matcher>[
@@ -76,17 +83,26 @@ void main() {
     );
   });
 
-  test('addCustomerInfoUpdateListener does not call listener if it does not have one', () async {
+  test(
+      'addCustomerInfoUpdateListener does not call listener if it does not have one',
+      () async {
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
-      fail('listener should not be called if previous customer info was not set');
+      fail(
+        'listener should not be called if previous customer info was not set',
+      );
     });
     expect(log, <Matcher>[]);
   });
 
-  test('addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info', () async {
+  test(
+      'addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info',
+      () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
     channel.setMockMethodCallHandler(null);
-    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
+    _performDartSideChannelMethodCall(
+      'Purchases-CustomerInfoUpdated',
+      mockCustomerInfoResponse,
+    );
     var listener1Called = false;
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
       expect(customerInfo.originalAppUserId, 'pepe');
@@ -101,18 +117,27 @@ void main() {
     expect(listener2Called, true);
   });
 
-  test('addCustomerInfoUpdateListener calls each listener immediately with latest customer info', () async {
+  test(
+      'addCustomerInfoUpdateListener calls each listener immediately with latest customer info',
+      () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
     channel.setMockMethodCallHandler(null);
-    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse);
+    _performDartSideChannelMethodCall(
+      'Purchases-CustomerInfoUpdated',
+      mockCustomerInfoResponse,
+    );
     var listener1Called = false;
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
       expect(customerInfo.originalAppUserId, 'pepe');
       listener1Called = true;
     });
-    final mockCustomerInfoResponse2 = Map<String, dynamic>.from(mockCustomerInfoResponse);
+    final mockCustomerInfoResponse2 =
+        Map<String, dynamic>.from(mockCustomerInfoResponse);
     mockCustomerInfoResponse2['originalAppUserId'] = 'pepe2';
-    _performDartSideChannelMethodCall('Purchases-CustomerInfoUpdated', mockCustomerInfoResponse2);
+    _performDartSideChannelMethodCall(
+      'Purchases-CustomerInfoUpdated',
+      mockCustomerInfoResponse2,
+    );
     var listener2Called = false;
     Purchases.addCustomerInfoUpdateListener((customerInfo) {
       expect(customerInfo.originalAppUserId, 'pepe2');
@@ -263,7 +288,11 @@ void main() {
     expect(PurchasesErrorCode.emptySubscriberAttributesError.index, 25);
     expect(PurchasesErrorCode.productDiscountMissingIdentifierError.index, 26);
     expect(PurchasesErrorCode.unknownNonNativeError.index, 27);
-    expect(PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError.index, 28);
+    expect(
+      PurchasesErrorCode
+          .productDiscountMissingSubscriptionGroupIdentifierError.index,
+      28,
+    );
     expect(PurchasesErrorCode.customerInfoError.index, 29);
     expect(PurchasesErrorCode.systemInfoError.index, 30);
     expect(PurchasesErrorCode.beginRefundRequestError.index, 31);
@@ -271,7 +300,6 @@ void main() {
     expect(PurchasesErrorCode.apiEndpointBlocked.index, 33);
     expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 34);
     expect(PurchasesErrorCode.offlineConnectionError.index, 35);
-
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
@@ -653,9 +681,12 @@ void main() {
     );
   });
 
-  test('beginRefundRequestForActiveEntitlement calls channel correctly for success', () async {
+  test(
+      'beginRefundRequestForActiveEntitlement calls channel correctly for success',
+      () async {
     response = 0; // Success code
-    final refundRequestStatus = await Purchases.beginRefundRequestForActiveEntitlement();
+    final refundRequestStatus =
+        await Purchases.beginRefundRequestForActiveEntitlement();
 
     expect(refundRequestStatus, RefundRequestStatus.success);
     expect(log, <Matcher>[
@@ -666,9 +697,12 @@ void main() {
     ]);
   });
 
-  test('beginRefundRequestForActiveEntitlement calls channel correctly for user cancelled', () async {
+  test(
+      'beginRefundRequestForActiveEntitlement calls channel correctly for user cancelled',
+      () async {
     response = 1; // User cancelled code
-    final refundRequestStatus = await Purchases.beginRefundRequestForActiveEntitlement();
+    final refundRequestStatus =
+        await Purchases.beginRefundRequestForActiveEntitlement();
 
     expect(refundRequestStatus, RefundRequestStatus.userCancelled);
     expect(log, <Matcher>[
@@ -679,9 +713,12 @@ void main() {
     ]);
   });
 
-  test('beginRefundRequestForActiveEntitlement calls channel correctly for error', () async {
+  test(
+      'beginRefundRequestForActiveEntitlement calls channel correctly for error',
+      () async {
     response = 2; // Error code
-    final refundRequestStatus = await Purchases.beginRefundRequestForActiveEntitlement();
+    final refundRequestStatus =
+        await Purchases.beginRefundRequestForActiveEntitlement();
 
     expect(refundRequestStatus, RefundRequestStatus.error);
     expect(log, <Matcher>[
@@ -692,7 +729,9 @@ void main() {
     ]);
   });
 
-  test('beginRefundRequestForActiveEntitlement throws UnsupportedPlatformException', () async {
+  test(
+      'beginRefundRequestForActiveEntitlement throws UnsupportedPlatformException',
+      () async {
     response = null;
     try {
       await Purchases.beginRefundRequestForActiveEntitlement();
@@ -714,7 +753,8 @@ void main() {
       'USD',
     );
 
-    final refundRequestStatus = await Purchases.beginRefundRequestForProduct(mockStoreProduct);
+    final refundRequestStatus =
+        await Purchases.beginRefundRequestForProduct(mockStoreProduct);
 
     expect(refundRequestStatus, RefundRequestStatus.success);
     expect(log, <Matcher>[
@@ -725,31 +765,32 @@ void main() {
     ]);
   });
 
-    test('beginRefundRequestForEntitlement calls channel correctly', () async {
+  test('beginRefundRequestForEntitlement calls channel correctly', () async {
     response = 0; // Success
 
     final entitlementInfoJson = {
-        'identifier': 'almost_pro',
-        'isActive': true,
-        'willRenew': true,
-        'periodType': 'NORMAL',
-        'latestPurchaseDateMillis': 1.58759855E9,
-        'latestPurchaseDate': '2020-04-22T23:35:50.000Z',
-        'originalPurchaseDateMillis': 1.591725245E9,
-        'originalPurchaseDate': '2020-06-09T17:54:05.000Z',
-        'expirationDateMillis': null,
-        'expirationDate': null,
-        'productIdentifier': 'consumable',
-        'isSandbox': true,
-        'unsubscribeDetectedAt': null,
-        'unsubscribeDetectedAtMillis': null,
-        'billingIssueDetectedAt': null,
-        'billingIssueDetectedAtMillis': null,
-        'store': Store.appStore
-      };
+      'identifier': 'almost_pro',
+      'isActive': true,
+      'willRenew': true,
+      'periodType': 'NORMAL',
+      'latestPurchaseDateMillis': 1.58759855E9,
+      'latestPurchaseDate': '2020-04-22T23:35:50.000Z',
+      'originalPurchaseDateMillis': 1.591725245E9,
+      'originalPurchaseDate': '2020-06-09T17:54:05.000Z',
+      'expirationDateMillis': null,
+      'expirationDate': null,
+      'productIdentifier': 'consumable',
+      'isSandbox': true,
+      'unsubscribeDetectedAt': null,
+      'unsubscribeDetectedAtMillis': null,
+      'billingIssueDetectedAt': null,
+      'billingIssueDetectedAtMillis': null,
+      'store': Store.appStore
+    };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
-    final refundRequestStatus = await Purchases.beginRefundRequestForEntitlement(entitlementInfo);
+    final refundRequestStatus =
+        await Purchases.beginRefundRequestForEntitlement(entitlementInfo);
 
     expect(refundRequestStatus, RefundRequestStatus.success);
     expect(log, <Matcher>[
@@ -758,5 +799,23 @@ void main() {
         arguments: {'entitlementIdentifier': 'almost_pro'},
       )
     ]);
+  });
+
+  test('setupPurchases with amazon', () async {
+    LogLevel? receivedLogLevel;
+    await Purchases.setLogHandler((logLevel, message) {
+      expect(message, mockLog['message']);
+      receivedLogLevel = logLevel;
+    });
+    for (final logLevel in LogLevel.values) {
+      _performDartSideChannelMethodCall(
+        'Purchases-LogHandlerEvent',
+        {
+          'logLevel': logLevel.name.toUpperCase(),
+          'message': 'A log sent',
+        },
+      );
+      expect(receivedLogLevel, logLevel);
+    }
   });
 }
