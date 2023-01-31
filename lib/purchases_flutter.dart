@@ -780,6 +780,9 @@ class Purchases {
   /// from the billing services and clean up resources
   static Future<void> close() => _channel.invokeMethod('close');
 
+  /// Set a custom log handler for redirecting logs to your own logging system.
+  /// By default, this sends info, warning, and error messages.
+  /// If you wish to receive Debug level messages, see [setLogLevel].
   static Future<void> setLogHandler(LogHandler logHandler) async {
     _logHandler = logHandler;
     return await _channel.invokeMethod('setLogHandler');
