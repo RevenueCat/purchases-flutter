@@ -2,6 +2,8 @@ package com.revenuecat.purchases_flutter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,6 +52,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Context applicationContext;
     @Nullable private MethodChannel channel;
     @Nullable private Activity activity;
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
     private static final String PLUGIN_VERSION = "4.9.0-SNAPSHOT";
@@ -346,7 +350,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private void setUpdatedCustomerInfoListener() {
         Purchases.getSharedInstance().setUpdatedCustomerInfoListener(customerInfo -> {
             if (channel != null) {
-                channel.invokeMethod(CUSTOMER_INFO_UPDATED, CustomerInfoMapperKt.map(customerInfo));
+                Map<String, Object> customerInfoMap = CustomerInfoMapperKt.map(customerInfo);
+                runOnUiThread(() -> channel.invokeMethod(CUSTOMER_INFO_UPDATED, customerInfoMap));
             }
         });
     }
@@ -616,12 +621,16 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setLogHandler(final Result result) {
         CommonKt.setLogHandler(logData -> {
-            if (channel != null && this.activity != null) {
-                this.activity.runOnUiThread(() -> channel.invokeMethod(LOG_HANDLER_EVENT, logData));
+            if (channel != null) {
+                runOnUiThread(() -> channel.invokeMethod(LOG_HANDLER_EVENT, logData));
             }
             return null;
         });
         result.success(null);
+    }
+
+    private void runOnUiThread(Runnable runnable) {
+        handler.post(runnable);
     }
 
     @NotNull
