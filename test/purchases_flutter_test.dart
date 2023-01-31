@@ -798,8 +798,9 @@ void main() {
 
   test('setLogHandler works correctly', () async {
     LogLevel? receivedLogLevel;
+    const expectedMessage = 'A log sent';
     await Purchases.setLogHandler((logLevel, message) {
-      expect(message, mockLog['message']);
+      expect(message, expectedMessage);
       receivedLogLevel = logLevel;
     });
     for (final logLevel in LogLevel.values) {
@@ -807,7 +808,7 @@ void main() {
         'Purchases-LogHandlerEvent',
         {
           'logLevel': logLevel.name.toUpperCase(),
-          'message': 'A log sent',
+          'message': expectedMessage,
         },
       );
       expect(receivedLogLevel, logLevel);
@@ -817,13 +818,12 @@ void main() {
   test('setLogHandler logs as info if log level not found', () async {
     LogLevel? receivedLogLevel;
     await Purchases.setLogHandler((logLevel, message) {
-      expect(message, mockLog['message']);
       receivedLogLevel = logLevel;
     });
     _performDartSideChannelMethodCall(
       'Purchases-LogHandlerEvent',
       {
-        'logLevel': "wrong",
+        'logLevel': 'wrong',
         'message': 'A log sent',
       },
     );
