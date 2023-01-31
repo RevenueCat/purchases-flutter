@@ -785,7 +785,7 @@ class Purchases {
   /// If you wish to receive Debug level messages, see [setLogLevel].
   ///
   /// [logHandler] It will get called for each log event.
-  /// Implement this function to redirect the log to your own logging system
+  /// Use this function to redirect the log to your own logging system
   static Future<void> setLogHandler(LogHandler logHandler) async {
     _logHandler = logHandler;
     return await _channel.invokeMethod('setLogHandler');
