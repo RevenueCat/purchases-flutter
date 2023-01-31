@@ -41,11 +41,6 @@ void main() {
     'nonSubscriptionTransactions': []
   };
 
-  final mockLog = {
-    'logLevel': 'DEBUG',
-    'message': 'A log sent',
-  };
-
   setUp(() {
     channel.setMockMethodCallHandler((call) async {
       log.add(call);
@@ -801,7 +796,7 @@ void main() {
     ]);
   });
 
-  test('setupPurchases with amazon', () async {
+  test('setLogHandler works correctly', () async {
     LogLevel? receivedLogLevel;
     await Purchases.setLogHandler((logLevel, message) {
       expect(message, mockLog['message']);
@@ -817,5 +812,21 @@ void main() {
       );
       expect(receivedLogLevel, logLevel);
     }
+  });
+
+  test('setLogHandler logs as info if log level not found', () async {
+    LogLevel? receivedLogLevel;
+    await Purchases.setLogHandler((logLevel, message) {
+      expect(message, mockLog['message']);
+      receivedLogLevel = logLevel;
+    });
+    _performDartSideChannelMethodCall(
+      'Purchases-LogHandlerEvent',
+      {
+        'logLevel': "wrong",
+        'message': 'A log sent',
+      },
+    );
+    expect(receivedLogLevel, LogLevel.info);
   });
 }
