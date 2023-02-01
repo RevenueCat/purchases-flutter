@@ -557,10 +557,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark Delegate Methods
 
 - (void)purchases:(RCPurchases *)purchases receivedUpdatedCustomerInfo:(RCCustomerInfo *)customerInfo {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.channel invokeMethod:PurchasesCustomerInfoUpdatedEvent
-                         arguments:customerInfo.dictionary];
-    });
+    [self.channel invokeMethod:PurchasesCustomerInfoUpdatedEvent
+                     arguments:customerInfo.dictionary];
 }
 
 - (void)      purchases:(RCPurchases *)purchases
@@ -572,12 +570,10 @@ readyForPromotedProduct:(RCStoreProduct *)product
 
     [self.startPurchaseBlocks addObject:startPurchase];
     NSInteger position = [self.startPurchaseBlocks count] - 1;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.channel invokeMethod:PurchasesReadyForPromotedProductPurchaseEvent
-                         arguments:@{@"callbackID": @(position),
-                                     @"productID": product.productIdentifier
-                                   }];
-    });
+    [self.channel invokeMethod:PurchasesReadyForPromotedProductPurchaseEvent
+                     arguments:@{@"callbackID": @(position),
+                                 @"productID": product.productIdentifier
+                               }];
 }
 
 #pragma mark -
