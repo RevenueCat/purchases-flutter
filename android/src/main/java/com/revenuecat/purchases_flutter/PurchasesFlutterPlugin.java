@@ -2,6 +2,8 @@ package com.revenuecat.purchases_flutter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -41,6 +43,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
     private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
+    protected static final String LOG_HANDLER_EVENT = "Purchases-LogHandlerEvent";
 
     // Only set registrar for v1 embedder.
     @SuppressWarnings("deprecation")
@@ -49,6 +52,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Nullable private Context applicationContext;
     @Nullable private MethodChannel channel;
     @Nullable private Activity activity;
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
     private static final String PLUGIN_VERSION = "4.9.0-SNAPSHOT";
@@ -312,6 +317,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "close":
                 close(result);
+                break;
+            case "setLogHandler":
+                setLogHandler(result);
                 break;
             default:
                 result.notImplemented();
@@ -608,6 +616,20 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             // there's no instance so all good
         }
         result.success(null);
+    }
+
+    private void setLogHandler(final Result result) {
+        CommonKt.setLogHandler(logData -> {
+            if (channel != null) {
+                runOnUiThread(() -> channel.invokeMethod(LOG_HANDLER_EVENT, logData));
+            }
+            return null;
+        });
+        result.success(null);
+    }
+
+    private void runOnUiThread(Runnable runnable) {
+        handler.post(runnable);
     }
 
     @NotNull

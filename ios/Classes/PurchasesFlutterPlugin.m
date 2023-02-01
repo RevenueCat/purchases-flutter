@@ -20,6 +20,7 @@ typedef void (^RCStartPurchaseBlock)(RCPurchaseCompletedBlock);
 
 NSString *PurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
 NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPromotedProductPurchase";
+NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
 
 @implementation PurchasesFlutterPlugin
 
@@ -202,6 +203,8 @@ NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPr
                                     result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
+    } else if ([@"setLogHandler" isEqualToString:call.method]) {
+        [self setLogHandlerWithResult:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -537,6 +540,16 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)closeWithResult:(FlutterResult)result {
+    result(nil);
+}
+
+- (void)setLogHandlerWithResult:(FlutterResult)result {
+    [RCCommonFunctionality setLogHanderOnLogReceived:^(NSDictionary<NSString *,NSString *> * _Nonnull logDetails) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.channel invokeMethod:PurchasesLogHandlerEvent
+                             arguments:logDetails];
+        });
+    }];
     result(nil);
 }
 
