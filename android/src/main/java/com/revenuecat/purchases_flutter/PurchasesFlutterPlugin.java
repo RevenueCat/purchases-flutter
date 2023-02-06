@@ -406,7 +406,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 getActivity(),
                 productIdentifier,
                 oldSKU,
-                prorationMode,
+                null, // TODOBC5: map proration mode to purchases android enum
                 type,
                 getOnResult(result)
         );
@@ -422,7 +422,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 packageIdentifier,
                 offeringIdentifier,
                 oldSKU,
-                prorationMode,
+                null, // TODOBC5: map proration mode to purchases android enum
                 getOnResult(result)
         );
     }

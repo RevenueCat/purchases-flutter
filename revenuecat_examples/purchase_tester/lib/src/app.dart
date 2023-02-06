@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
+import './constant.dart';
 import '../store_config.dart';
 
 class PurchaseTester extends StatelessWidget {
@@ -88,7 +89,8 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      final isPro = _customerInfo.entitlements.active.containsKey('pro_cat');
+      final isPro =
+          _customerInfo.entitlements.active.containsKey(entitlementKey);
       if (isPro) {
         return const CatsScreen();
       } else {
@@ -174,7 +176,8 @@ class _PurchaseButton extends StatelessWidget {
         onPressed: () async {
           try {
             final customerInfo = await Purchases.purchasePackage(package);
-            final isPro = customerInfo.entitlements.all['pro_cat'].isActive;
+            final isPro =
+                customerInfo.entitlements.active.containsKey(entitlementKey);
             if (isPro) {
               return const CatsScreen();
             }
@@ -203,28 +206,26 @@ class CatsScreen extends StatelessWidget {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Cats Screen')),
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('User is pro'),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    final customerInfo = await Purchases.getCustomerInfo();
-                    final refundStatus = await Purchases
-                        .beginRefundRequestForEntitlement(
-                          customerInfo.entitlements.active['pro_cat']
-                        );
-                    print('Refund request successful with status: $refundStatus');
-                  } catch (e) {
-                    print('Refund request exception: $e');
-                  }
-                  return const InitialScreen();
-                },
-                child: const Text('Begin refund for pro_cat entitlement'),
-              ),
-            ],
-          )
-        ),
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('User is pro'),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  final customerInfo = await Purchases.getCustomerInfo();
+                  final refundStatus =
+                      await Purchases.beginRefundRequestForEntitlement(
+                          customerInfo.entitlements.active[entitlementKey]);
+                  print('Refund request successful with status: $refundStatus');
+                } catch (e) {
+                  print('Refund request exception: $e');
+                }
+                return const InitialScreen();
+              },
+              child: const Text('Begin refund for pro entitlement'),
+            ),
+          ],
+        )),
       );
 }
