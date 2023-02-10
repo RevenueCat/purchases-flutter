@@ -829,4 +829,48 @@ void main() {
     );
     expect(receivedLogLevel, LogLevel.info);
   });
+
+  test('syncObserverModeAmazonPurchase calls channel correctly', () async {
+    await Purchases.syncObserverModeAmazonPurchase(
+      'productID_test',
+      'receiptID_test',
+      'amazonUserID_test',
+      'isoCurrencyCode_test',
+      3.4,
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'syncObserverModeAmazonPurchase',
+        arguments: {
+          'productID': 'productID_test',
+          'receiptID': 'receiptID_test',
+          'amazonUserID': 'amazonUserID_test',
+          'isoCurrencyCode': 'isoCurrencyCode_test',
+          'price': 3.4,
+        },
+      )
+    ]);
+  });
+
+  test('syncObserverModeAmazonPurchase calls channel correctly with null price and isoCurrencyCode', () async {
+    await Purchases.syncObserverModeAmazonPurchase(
+      'productID_test',
+      'receiptID_test',
+      'amazonUserID_test',
+      null,
+      null,
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'syncObserverModeAmazonPurchase',
+        arguments: {
+          'productID': 'productID_test',
+          'receiptID': 'receiptID_test',
+          'amazonUserID': 'amazonUserID_test',
+          'isoCurrencyCode': null,
+          'price': null,
+        },
+      )
+    ]);
+  });
 }

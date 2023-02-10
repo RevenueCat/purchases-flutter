@@ -415,4 +415,11 @@ class _PurchasesFlutterApiTest {
       entitlement
     );
   }
+
+  void _checkSyncObserverModeAmazonPurchase() async {
+    Future<void> future = Purchases.syncObserverModeAmazonPurchase(
+        "productID", "receiptID", "amazonUserID", "isoCurrencyCode", 3.4);
+    future = Purchases.syncObserverModeAmazonPurchase(
+        "productID", "receiptID", "amazonUserID", null, null);
+  }
 }

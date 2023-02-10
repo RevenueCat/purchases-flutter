@@ -321,6 +321,15 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setLogHandler":
                 setLogHandler(result);
                 break;
+            case "syncObserverModeAmazonPurchase":
+                String productID = call.argument("productID");
+                String receiptID = call.argument("receiptID");
+                String amazonUserID = call.argument("amazonUserID");
+                String isoCurrencyCode = call.argument("isoCurrencyCode");
+                Double price = call.argument("price");
+                syncObserverModeAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
+                        price, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -446,6 +455,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setDebugLogsEnabled(boolean enabled, final Result result) {
         CommonKt.setDebugLogsEnabled(enabled);
+        result.success(null);
+    }
+
+    private void syncObserverModeAmazonPurchase(String productID, String receiptID,
+                                                String amazonUserID, String isoCurrencyCode,
+                                                Double price, final Result result) {
+        Purchases.getSharedInstance().syncObserverModeAmazonPurchase(productID, receiptID,
+                amazonUserID, isoCurrencyCode, price);
         result.success(null);
     }
 

@@ -205,6 +205,9 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self closeWithResult:result];
     } else if ([@"setLogHandler" isEqualToString:call.method]) {
         [self setLogHandlerWithResult:result];
+    } else if ([@"syncObserverModeAmazonPurchase" isEqualToString:call.method]) {
+        // NOOP
+        result(nil);
     } else {
         result(FlutterMethodNotImplemented);
     }
