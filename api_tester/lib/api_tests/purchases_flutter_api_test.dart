@@ -123,8 +123,7 @@ class _PurchasesFlutterApiTest {
 
   void _checkSetLogLevel() {
     LogLevel logLevel = LogLevel.debug;
-    Future<void> setLogLevelFuture =
-        Purchases.setLogLevel(logLevel);
+    Future<void> setLogLevelFuture = Purchases.setLogLevel(logLevel);
   }
 
   void _checkLogLevels(LogLevel level) {
@@ -139,9 +138,8 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkLogHandler(LogHandler logHandler) {
-    Future<void> setLogHandler = Purchases.setLogHandler((LogLevel logLevel, String message) {
-
-    });
+    Future<void> setLogHandler =
+        Purchases.setLogHandler((LogLevel logLevel, String message) {});
     Purchases.setLogHandler(logHandler);
   }
 
@@ -392,27 +390,36 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkRefundRequestStatus(RefundRequestStatus status) {
-    switch(status) {
+    switch (status) {
       case RefundRequestStatus.success:
       case RefundRequestStatus.userCancelled:
       case RefundRequestStatus.error:
         break;
     }
     int statusCode = 0;
-    RefundRequestStatus processedStatus = RefundRequestStatusExtension.from(statusCode);
+    RefundRequestStatus processedStatus =
+        RefundRequestStatusExtension.from(statusCode);
   }
 
   void _checkBeginRefundRequestForActiveEntitlement() async {
-    RefundRequestStatus status = await Purchases.beginRefundRequestForActiveEntitlement();
+    RefundRequestStatus status =
+        await Purchases.beginRefundRequestForActiveEntitlement();
   }
 
   void _checkBeginRefundRequestForProduct(StoreProduct product) async {
-    RefundRequestStatus status = await Purchases.beginRefundRequestForProduct(product);
+    RefundRequestStatus status =
+        await Purchases.beginRefundRequestForProduct(product);
   }
 
-  void _checkBeginRefundRequestForEntitlement(EntitlementInfo entitlement) async {
-    RefundRequestStatus status = await Purchases.beginRefundRequestForEntitlement(
-      entitlement
-    );
+  void _checkBeginRefundRequestForEntitlement(
+      EntitlementInfo entitlement) async {
+    RefundRequestStatus status =
+        await Purchases.beginRefundRequestForEntitlement(entitlement);
+  }
+
+  void _checkSyncObserverModeAmazonPurchase(String productID, String receiptID,
+      String amazonUserID, String? isoCurrencyCode, double? price) async {
+    Future<void> future = Purchases.syncObserverModeAmazonPurchase(
+        productID, receiptID, amazonUserID, isoCurrencyCode, price);
   }
 }
