@@ -458,9 +458,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void syncObserverModeAmazonPurchase(String productID, String receiptID,
-                                                String amazonUserID, String isoCurrencyCode,
-                                                Double price, final Result result) {
+    private void syncObserverModeAmazonPurchase(String productID,
+                                                String receiptID,
+                                                String amazonUserID,
+                                                String isoCurrencyCode,
+                                                Double price,
+                                                final Result result) {
         Purchases.getSharedInstance().syncObserverModeAmazonPurchase(productID, receiptID,
                 amazonUserID, isoCurrencyCode, price);
         result.success(null);
