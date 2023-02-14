@@ -2,6 +2,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
+// ignore_for_file: deprecated_member_use
 class _StoreTransactionApiTest {
   void _checkFromJsonFactory(Map<String, dynamic> json) {
     StoreTransaction transaction = StoreTransaction.fromJson(json);
