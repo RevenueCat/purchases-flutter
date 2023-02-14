@@ -3,11 +3,19 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 
 void main() {
   Map<String, Object?> generateStoreTransactionJSON() => {
+        'transactionIdentifier': 'abd123cd',
         'revenueCatId': 'abd123cd',
-        'productId': 'consumable',
+        'productIdentifier': 'consumable',
         'purchaseDateMillis': 1.58759855E9,
         'purchaseDate': '2020-04-22T23:35:50.000Z'
       };
+
+  test('transactionIdentifier is correctly parsed', () {
+    final storeTransaction =
+        StoreTransaction.fromJson(generateStoreTransactionJSON());
+
+    expect(storeTransaction.transactionIdentifier, 'abd123cd');
+  });
 
   test('revenueCatIdentifier is correctly parsed', () {
     final storeTransaction =

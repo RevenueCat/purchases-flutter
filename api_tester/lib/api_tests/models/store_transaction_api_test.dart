@@ -18,6 +18,7 @@ class _StoreTransactionApiTest {
   }
 
   void _checkProperties(StoreTransaction transaction) {
+    String transactionIdentifier = transaction.transactionIdentifier;
     String revenueCatIdentifier = transaction.revenueCatIdentifier;
     String productIdentifier = transaction.productIdentifier;
     String purchaseDate = transaction.purchaseDate;
