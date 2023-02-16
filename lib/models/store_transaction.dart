@@ -23,18 +23,17 @@ class StoreTransaction with _$StoreTransaction {
     @JsonKey(name: 'purchaseDate') String purchaseDate,
   ) = _StoreTransaction;
 
-  /// Deprecated: Constructor has become private.
+  @Deprecated('Constructor has become private. Avoid using constructor')
   factory StoreTransaction(
     /// Deprecated: Use transactionIdentifier instead.
     @Deprecated('Use transactionIdentifier instead.')
-    @JsonKey(name: 'revenueCatId')
         String revenueCatIdentifier,
 
     /// Product Id associated with the transaction.
-    @JsonKey(name: 'productIdentifier') String productIdentifier,
+    String productIdentifier,
 
     /// Purchase date of the transaction in ISO 8601 format.
-    @JsonKey(name: 'purchaseDate') String purchaseDate,
+    String purchaseDate,
   ) =>
       StoreTransaction._create(
         revenueCatIdentifier,

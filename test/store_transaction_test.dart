@@ -10,6 +10,19 @@ void main() {
         'purchaseDate': '2020-04-22T23:35:50.000Z'
       };
 
+  test('constructor assigns correct values', () {
+    final storeTransaction = StoreTransaction(
+      'revenueCatIdentifier',
+      'productIdentifier',
+      'purchaseDate',
+    );
+
+    expect(storeTransaction.transactionIdentifier, 'revenueCatIdentifier');
+    expect(storeTransaction.revenueCatIdentifier, 'revenueCatIdentifier');
+    expect(storeTransaction.productIdentifier, 'productIdentifier');
+    expect(storeTransaction.purchaseDate, 'purchaseDate');
+  });
+
   test('transactionIdentifier is correctly parsed', () {
     final storeTransaction =
         StoreTransaction.fromJson(generateStoreTransactionJSON());
