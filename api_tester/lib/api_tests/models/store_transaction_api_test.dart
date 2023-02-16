@@ -12,11 +12,13 @@ class _StoreTransactionApiTest {
     Map<String, dynamic> json = transaction.toJson();
   }
 
-  void _checkConstructor(String transactionIdentifier, String revenueCatIdentifier, 
-      String productIdentifier, String purchaseDate) {
+  void _checkConstructor(
+      String transactionIdentifier,
+      String revenueCatIdentifier,
+      String productIdentifier,
+      String purchaseDate) {
     StoreTransaction transaction =
-        StoreTransaction(transactionIdentifier, revenueCatIdentifier, 
-            productIdentifier, purchaseDate);
+        StoreTransaction(revenueCatIdentifier, productIdentifier, purchaseDate);
   }
 
   void _checkProperties(StoreTransaction transaction) {

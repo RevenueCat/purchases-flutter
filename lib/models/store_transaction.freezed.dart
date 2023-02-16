@@ -197,7 +197,7 @@ class _$_StoreTransaction implements _StoreTransaction {
 
   @override
   String toString() {
-    return 'StoreTransaction(transactionIdentifier: $transactionIdentifier, revenueCatIdentifier: $revenueCatIdentifier, productIdentifier: $productIdentifier, purchaseDate: $purchaseDate)';
+    return 'StoreTransaction._create(transactionIdentifier: $transactionIdentifier, revenueCatIdentifier: $revenueCatIdentifier, productIdentifier: $productIdentifier, purchaseDate: $purchaseDate)';
   }
 
   @override
