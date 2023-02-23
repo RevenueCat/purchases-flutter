@@ -358,10 +358,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setUpdatedCustomerInfoListener() {
         Purchases.getSharedInstance().setUpdatedCustomerInfoListener(customerInfo -> {
-            if (channel != null) {
-                Map<String, Object> customerInfoMap = CustomerInfoMapperKt.map(customerInfo);
-                runOnUiThread(() -> channel.invokeMethod(CUSTOMER_INFO_UPDATED, customerInfoMap));
-            }
+            Map<String, Object> customerInfoMap = CustomerInfoMapperKt.map(customerInfo);
+            invokeChannelMethodOnUiThread(CUSTOMER_INFO_UPDATED, customerInfoMap);
         });
     }
 
@@ -641,9 +639,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setLogHandler(final Result result) {
         CommonKt.setLogHandler(logData -> {
-            if (channel != null) {
-                runOnUiThread(() -> channel.invokeMethod(LOG_HANDLER_EVENT, logData));
-            }
+            invokeChannelMethodOnUiThread(LOG_HANDLER_EVENT, logData);
             return null;
         });
         result.success(null);
@@ -670,6 +666,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void reject(ErrorContainer errorContainer, Result result) {
         result.error(String.valueOf(errorContainer.getCode()), errorContainer.getMessage(), errorContainer.getInfo());
+    }
+
+    private void invokeChannelMethodOnUiThread(String method, Object argumentsMap) {
+        runOnUiThread(() -> {
+            if (channel != null) {
+                channel.invokeMethod(method, argumentsMap);
+            }
+        });
     }
 
 }
