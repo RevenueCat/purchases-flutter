@@ -26,6 +26,19 @@ class PurchasesConfiguration {
   /// iOS-only, will be ignored for Android.
   /// Set this to FALSE to disable StoreKit2.
   /// Default is FALSE.
+  ///
+  /// RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
+  /// proven to be more performant than StoreKit 2.
+  /// We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
+  /// that you shouldn't need to care about.
+  /// Simply remove this method call to let RevenueCat decide for you which StoreKit implementation to use.
+  @Deprecated("""
+    RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
+    proven to be more performant than StoreKit 2.
+    We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
+    that you shouldn't need to care about.
+    Simply remove this method call to let RevenueCat decide for you which StoreKit implementation to use.
+  """)
   bool usesStoreKit2IfAvailable = false;
 
   /// Required to configure the plugin to be used in the Amazon Appstore.

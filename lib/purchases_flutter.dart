@@ -99,6 +99,13 @@ class Purchases {
   /// to be distributed in the Amazon Appstore
 
   /// [usesStoreKit2IfAvailable] iOS-only, will be ignored for Android.
+  /// RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
+  /// proven to be more performant than StoreKit 2.
+  ///
+  /// We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
+  /// that you shouldn't need to care about.
+  ///
+  /// Simply leave this parameter as default to let RevenueCat decide for you which StoreKit implementation to use.
   /// Set this to FALSE to disable StoreKit2.
   @Deprecated('Use PurchasesConfiguration')
   static Future<void> setup(
@@ -134,6 +141,7 @@ class Purchases {
           'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
           'useAmazon': purchasesConfiguration.store == Store.amazon,
           'usesStoreKit2IfAvailable':
+              // ignore: deprecated_member_use_from_same_package
               purchasesConfiguration.usesStoreKit2IfAvailable
         },
       );
