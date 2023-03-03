@@ -141,6 +141,7 @@ class Purchases {
           'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
           'useAmazon': purchasesConfiguration.store == Store.amazon,
           'usesStoreKit2IfAvailable':
+              // ignore: deprecated_member_use_from_same_package
               purchasesConfiguration.usesStoreKit2IfAvailable
         },
       );
