@@ -1,3 +1,10 @@
+## 4.10.4
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.13.5 (#631) via RevenueCat Git Bot (@RCGitBot)
+* Bump cocoapods from 1.11.3 to 1.12.0 (#628) via dependabot[bot] (@dependabot[bot])
+### Other Changes
+* Deprecate `usesStoreKit2IfAvailable` (#632) via Andy Boedo (@aboedo)
+
 ## 4.10.3
 ### Dependency Updates
 * Bump fastlane from 2.212.0 to 2.212.1 (#627) via dependabot[bot] (@dependabot[bot])
