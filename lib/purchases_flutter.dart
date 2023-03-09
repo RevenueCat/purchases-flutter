@@ -918,7 +918,12 @@ enum ProrationMode {
 
   /// Replacement takes effect when the old plan expires, and the new price will
   /// be charged at the same time.
-  deferred
+  deferred,
+
+  /// Replacement takes effect immediately, and the user is charged full price
+  /// of new plan and is given a full billing cycle of subscription,
+  /// plus remaining prorated time from the old plan.
+  immediateAndChargeFullPrice
 }
 
 /// Supported SKU types.

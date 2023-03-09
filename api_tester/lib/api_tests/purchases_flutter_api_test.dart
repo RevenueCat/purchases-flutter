@@ -333,6 +333,7 @@ class _PurchasesFlutterApiTest {
       case ProrationMode.immediateAndChargeProratedPrice:
       case ProrationMode.immediateWithoutProration:
       case ProrationMode.deferred:
+      case ProrationMode.immediateAndChargeFullPrice:
         break;
     }
   }
