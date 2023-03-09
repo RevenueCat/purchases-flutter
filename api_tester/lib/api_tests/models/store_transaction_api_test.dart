@@ -19,6 +19,13 @@ class _StoreTransactionApiTest {
       String purchaseDate) {
     StoreTransaction transaction =
         StoreTransaction(revenueCatIdentifier, productIdentifier, purchaseDate);
+    StoreTransaction transaction2 =
+        StoreTransaction.create(
+            transactionIdentifier,
+            revenueCatIdentifier,
+            productIdentifier,
+            purchaseDate
+        );
   }
 
   void _checkProperties(StoreTransaction transaction) {

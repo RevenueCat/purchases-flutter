@@ -9,7 +9,7 @@ part of 'store_transaction.dart';
 _$_StoreTransaction _$$_StoreTransactionFromJson(Map json) =>
     _$_StoreTransaction(
       json['transactionIdentifier'] as String,
-      json['revenueCatId'] as String,
+      _readRevenueCatIdentifier(json, 'revenueCatIdentifier') as String,
       json['productIdentifier'] as String,
       json['purchaseDate'] as String,
     );
@@ -17,7 +17,7 @@ _$_StoreTransaction _$$_StoreTransactionFromJson(Map json) =>
 Map<String, dynamic> _$$_StoreTransactionToJson(_$_StoreTransaction instance) =>
     <String, dynamic>{
       'transactionIdentifier': instance.transactionIdentifier,
-      'revenueCatId': instance.revenueCatIdentifier,
+      'revenueCatIdentifier': instance.revenueCatIdentifier,
       'productIdentifier': instance.productIdentifier,
       'purchaseDate': instance.purchaseDate,
     };
