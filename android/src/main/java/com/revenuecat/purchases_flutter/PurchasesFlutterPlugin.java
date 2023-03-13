@@ -141,10 +141,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean finishTransactions = call.argument("finishTransactions");
                 setFinishTransactions(finishTransactions, result);
                 break;
-            case "setAllowSharingStoreAccount":
-                Boolean allowSharing = call.argument("allowSharing");
-                setAllowSharingAppStoreAccount(allowSharing, result);
-                break;
             case "getOfferings":
                 getOfferings(result);
                 break;
@@ -179,10 +175,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "logOut":
                 logOut(result);
-                break;
-            case "setDebugLogsEnabled":
-                boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
-                setDebugLogsEnabled(enabled, result);
                 break;
             case "setLogLevel":
                 String level = (String) call.argument("level");
@@ -368,19 +360,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    @SuppressWarnings("deprecation")
-    private void setAllowSharingAppStoreAccount(@Nullable Boolean allowSharingAppStoreAccount, Result result) {
-        if (allowSharingAppStoreAccount != null) {
-            CommonKt.setAllowSharingAppStoreAccount(allowSharingAppStoreAccount);
-            result.success(null);
-        } else {
-            result.error(
-                    INVALID_ARGS_ERROR_CODE,
-                    "Missing allowSharing argument",
-                    null);
-        }
-    }
-
     private void getOfferings(final Result result) {
         CommonKt.getOfferings(getOnResult(result));
     }
@@ -442,11 +421,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void logIn(String appUserID, final Result result) {
         CommonKt.logIn(appUserID, getOnResult(result));
-    }
-
-    private void setDebugLogsEnabled(boolean enabled, final Result result) {
-        CommonKt.setDebugLogsEnabled(enabled);
-        result.success(null);
     }
 
     private void setLogLevel(String level, final Result result) {
