@@ -141,10 +141,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean finishTransactions = call.argument("finishTransactions");
                 setFinishTransactions(finishTransactions, result);
                 break;
-            case "setAllowSharingStoreAccount":
-                Boolean allowSharing = call.argument("allowSharing");
-                setAllowSharingAppStoreAccount(allowSharing, result);
-                break;
             case "getOfferings":
                 getOfferings(result);
                 break;
@@ -179,10 +175,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "logOut":
                 logOut(result);
-                break;
-            case "setDebugLogsEnabled":
-                boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
-                setDebugLogsEnabled(enabled, result);
                 break;
             case "setLogLevel":
                 String level = (String) call.argument("level");
@@ -371,19 +363,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             result.error(
                     INVALID_ARGS_ERROR_CODE,
                     "Missing finishTransactions argument",
-                    null);
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    private void setAllowSharingAppStoreAccount(@Nullable Boolean allowSharingAppStoreAccount, Result result) {
-        if (allowSharingAppStoreAccount != null) {
-            CommonKt.setAllowSharingAppStoreAccount(allowSharingAppStoreAccount);
-            result.success(null);
-        } else {
-            result.error(
-                    INVALID_ARGS_ERROR_CODE,
-                    "Missing allowSharing argument",
                     null);
         }
     }
