@@ -52,6 +52,9 @@ mixin _$StoreProduct {
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
   List<StoreProductDiscount>? get discounts =>
+      throw _privateConstructorUsedError; // Words
+  @JsonKey(name: 'subscriptionOptions', nullable: true)
+  List<SubscriptionOption>? get subscriptionOptions =>
       throw _privateConstructorUsedError;
 
   /// Subscription period, specified in ISO 8601 format. For example,
@@ -91,6 +94,8 @@ abstract class $StoreProductCopyWith<$Res> {
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'subscriptionOptions', nullable: true)
+          List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           String? subscriptionPeriod});
 
@@ -118,6 +123,7 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
+    Object? subscriptionOptions = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_value.copyWith(
@@ -153,6 +159,10 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
+      subscriptionOptions: freezed == subscriptionOptions
+          ? _value.subscriptionOptions
+          : subscriptionOptions // ignore: cast_nullable_to_non_nullable
+              as List<SubscriptionOption>?,
       subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
@@ -198,6 +208,8 @@ abstract class _$$_StoreProductCopyWith<$Res>
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'subscriptionOptions', nullable: true)
+          List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           String? subscriptionPeriod});
 
@@ -224,6 +236,7 @@ class __$$_StoreProductCopyWithImpl<$Res>
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
+    Object? subscriptionOptions = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_$_StoreProduct(
@@ -259,6 +272,10 @@ class __$$_StoreProductCopyWithImpl<$Res>
           ? _value._discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
+      subscriptionOptions: freezed == subscriptionOptions
+          ? _value._subscriptionOptions
+          : subscriptionOptions // ignore: cast_nullable_to_non_nullable
+              as List<SubscriptionOption>?,
       subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
@@ -287,9 +304,12 @@ class _$_StoreProduct implements _StoreProduct {
           this.introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'subscriptionOptions', nullable: true)
+          final List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           this.subscriptionPeriod})
-      : _discounts = discounts;
+      : _discounts = discounts,
+        _subscriptionOptions = subscriptionOptions;
 
   factory _$_StoreProduct.fromJson(Map<String, dynamic> json) =>
       _$$_StoreProductFromJson(json);
@@ -343,6 +363,20 @@ class _$_StoreProduct implements _StoreProduct {
     return EqualUnmodifiableListView(value);
   }
 
+// Words
+  final List<SubscriptionOption>? _subscriptionOptions;
+// Words
+  @override
+  @JsonKey(name: 'subscriptionOptions', nullable: true)
+  List<SubscriptionOption>? get subscriptionOptions {
+    final value = _subscriptionOptions;
+    if (value == null) return null;
+    if (_subscriptionOptions is EqualUnmodifiableListView)
+      return _subscriptionOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   /// Subscription period, specified in ISO 8601 format. For example,
   /// P1W equates to one week, P1M equates to one month,
   /// P3M equates to three months, P6M equates to six months,
@@ -354,7 +388,7 @@ class _$_StoreProduct implements _StoreProduct {
 
   @override
   String toString() {
-    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, subscriptionPeriod: $subscriptionPeriod)';
+    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, subscriptionOptions: $subscriptionOptions, subscriptionPeriod: $subscriptionPeriod)';
   }
 
   @override
@@ -376,6 +410,8 @@ class _$_StoreProduct implements _StoreProduct {
                 other.introductoryPrice == introductoryPrice) &&
             const DeepCollectionEquality()
                 .equals(other._discounts, _discounts) &&
+            const DeepCollectionEquality()
+                .equals(other._subscriptionOptions, _subscriptionOptions) &&
             (identical(other.subscriptionPeriod, subscriptionPeriod) ||
                 other.subscriptionPeriod == subscriptionPeriod));
   }
@@ -392,6 +428,7 @@ class _$_StoreProduct implements _StoreProduct {
       currencyCode,
       introductoryPrice,
       const DeepCollectionEquality().hash(_discounts),
+      const DeepCollectionEquality().hash(_subscriptionOptions),
       subscriptionPeriod);
 
   @JsonKey(ignore: true)
@@ -426,6 +463,8 @@ abstract class _StoreProduct implements StoreProduct {
           final IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'subscriptionOptions', nullable: true)
+          final List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           final String? subscriptionPeriod}) = _$_StoreProduct;
 
@@ -472,6 +511,9 @@ abstract class _StoreProduct implements StoreProduct {
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
   List<StoreProductDiscount>? get discounts;
+  @override // Words
+  @JsonKey(name: 'subscriptionOptions', nullable: true)
+  List<SubscriptionOption>? get subscriptionOptions;
   @override
 
   /// Subscription period, specified in ISO 8601 format. For example,

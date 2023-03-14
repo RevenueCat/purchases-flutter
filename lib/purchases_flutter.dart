@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'models/subscription_option_wrapper.dart';
 import 'object_wrappers.dart';
 
 export 'object_wrappers.dart';
@@ -302,6 +303,31 @@ class Purchases {
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index
+    });
+    return customerInfo;
+  }
+
+  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [packageToPurchase] The Package you wish to purchase
+  ///
+  /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
+  /// containing the oldSKU and the optional prorationMode.
+  static Future<CustomerInfo> purchaseSubscriptionOption(
+    SubscriptionOption subscriptionOption, {
+    UpgradeInfo? upgradeInfo,
+  }) async {
+    final prorationMode = upgradeInfo?.prorationMode;
+    final customerInfo =
+        await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
+      'productIdentifier': subscriptionOption.productId,
+      'optionIdentifier': subscriptionOption.id,
+      'oldSKU': upgradeInfo?.oldSKU,
+      'prorationMode': prorationMode?.index,
     });
     return customerInfo;
   }
@@ -794,7 +820,9 @@ class Purchases {
   static void handleLogHandlerEvent(MethodCall call) {
     final args = Map<String, dynamic>.from(call.arguments);
     final logLevelName = args['logLevel'];
-    final logLevel = LogLevel.values.firstWhere((e) => e.name.toUpperCase() == logLevelName, orElse: () => LogLevel.info);
+    final logLevel = LogLevel.values.firstWhere(
+        (e) => e.name.toUpperCase() == logLevelName,
+        orElse: () => LogLevel.info);
     final msg = args['message'];
     _logHandler?.call(logLevel, msg);
   }
@@ -960,13 +988,7 @@ enum RefundRequestStatus {
 }
 
 /// Log levels.
-enum LogLevel {
-  verbose,
-  debug,
-  info,
-  warn,
-  error
-}
+enum LogLevel { verbose, debug, info, warn, error }
 
 extension RefundRequestStatusExtension on RefundRequestStatus {
   static RefundRequestStatus from(int index) {
@@ -1009,5 +1031,4 @@ class PromotedPurchaseResult {
   });
 }
 
-class UnsupportedPlatformException implements Exception {
-}
+class UnsupportedPlatformException implements Exception {}

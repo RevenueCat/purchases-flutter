@@ -12,3 +12,4 @@ export 'models/store.dart';
 export 'models/store_product_discount.dart';
 export 'models/store_product_wrapper.dart';
 export 'models/store_transaction.dart';
+export 'models/subscription_option_wrapper.dart';
