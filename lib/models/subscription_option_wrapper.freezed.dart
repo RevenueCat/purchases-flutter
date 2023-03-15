@@ -26,10 +26,20 @@ mixin _$SubscriptionOption {
   String get storeProductId => throw _privateConstructorUsedError;
   @JsonKey(name: 'productId')
   String get productId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pricingPhases')
+  List<PricingPhase> get pricingPhases => throw _privateConstructorUsedError;
   @JsonKey(name: 'tags')
   List<String> get tags => throw _privateConstructorUsedError;
   @JsonKey(name: 'isBasePlan')
   bool get isBasePlan => throw _privateConstructorUsedError;
+  @JsonKey(name: 'billingPeriod', nullable: true)
+  Period? get billingPeriod => throw _privateConstructorUsedError;
+  @JsonKey(name: 'fullPricePhase', nullable: true)
+  PricingPhase? get fullPricePhase => throw _privateConstructorUsedError;
+  @JsonKey(name: 'freePhase', nullable: true)
+  PricingPhase? get freePhase => throw _privateConstructorUsedError;
+  @JsonKey(name: 'introPhase', nullable: true)
+  PricingPhase? get introPhase => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,11 +54,31 @@ abstract class $SubscriptionOptionCopyWith<$Res> {
       _$SubscriptionOptionCopyWithImpl<$Res, SubscriptionOption>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'storeProductId') String storeProductId,
-      @JsonKey(name: 'productId') String productId,
-      @JsonKey(name: 'tags') List<String> tags,
-      @JsonKey(name: 'isBasePlan') bool isBasePlan});
+      {@JsonKey(name: 'id')
+          String id,
+      @JsonKey(name: 'storeProductId')
+          String storeProductId,
+      @JsonKey(name: 'productId')
+          String productId,
+      @JsonKey(name: 'pricingPhases')
+          List<PricingPhase> pricingPhases,
+      @JsonKey(name: 'tags')
+          List<String> tags,
+      @JsonKey(name: 'isBasePlan')
+          bool isBasePlan,
+      @JsonKey(name: 'billingPeriod', nullable: true)
+          Period? billingPeriod,
+      @JsonKey(name: 'fullPricePhase', nullable: true)
+          PricingPhase? fullPricePhase,
+      @JsonKey(name: 'freePhase', nullable: true)
+          PricingPhase? freePhase,
+      @JsonKey(name: 'introPhase', nullable: true)
+          PricingPhase? introPhase});
+
+  $PeriodCopyWith<$Res>? get billingPeriod;
+  $PricingPhaseCopyWith<$Res>? get fullPricePhase;
+  $PricingPhaseCopyWith<$Res>? get freePhase;
+  $PricingPhaseCopyWith<$Res>? get introPhase;
 }
 
 /// @nodoc
@@ -67,8 +97,13 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     Object? id = null,
     Object? storeProductId = null,
     Object? productId = null,
+    Object? pricingPhases = null,
     Object? tags = null,
     Object? isBasePlan = null,
+    Object? billingPeriod = freezed,
+    Object? fullPricePhase = freezed,
+    Object? freePhase = freezed,
+    Object? introPhase = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -83,6 +118,10 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as String,
+      pricingPhases: null == pricingPhases
+          ? _value.pricingPhases
+          : pricingPhases // ignore: cast_nullable_to_non_nullable
+              as List<PricingPhase>,
       tags: null == tags
           ? _value.tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -91,7 +130,71 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
           ? _value.isBasePlan
           : isBasePlan // ignore: cast_nullable_to_non_nullable
               as bool,
+      billingPeriod: freezed == billingPeriod
+          ? _value.billingPeriod
+          : billingPeriod // ignore: cast_nullable_to_non_nullable
+              as Period?,
+      fullPricePhase: freezed == fullPricePhase
+          ? _value.fullPricePhase
+          : fullPricePhase // ignore: cast_nullable_to_non_nullable
+              as PricingPhase?,
+      freePhase: freezed == freePhase
+          ? _value.freePhase
+          : freePhase // ignore: cast_nullable_to_non_nullable
+              as PricingPhase?,
+      introPhase: freezed == introPhase
+          ? _value.introPhase
+          : introPhase // ignore: cast_nullable_to_non_nullable
+              as PricingPhase?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PeriodCopyWith<$Res>? get billingPeriod {
+    if (_value.billingPeriod == null) {
+      return null;
+    }
+
+    return $PeriodCopyWith<$Res>(_value.billingPeriod!, (value) {
+      return _then(_value.copyWith(billingPeriod: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PricingPhaseCopyWith<$Res>? get fullPricePhase {
+    if (_value.fullPricePhase == null) {
+      return null;
+    }
+
+    return $PricingPhaseCopyWith<$Res>(_value.fullPricePhase!, (value) {
+      return _then(_value.copyWith(fullPricePhase: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PricingPhaseCopyWith<$Res>? get freePhase {
+    if (_value.freePhase == null) {
+      return null;
+    }
+
+    return $PricingPhaseCopyWith<$Res>(_value.freePhase!, (value) {
+      return _then(_value.copyWith(freePhase: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PricingPhaseCopyWith<$Res>? get introPhase {
+    if (_value.introPhase == null) {
+      return null;
+    }
+
+    return $PricingPhaseCopyWith<$Res>(_value.introPhase!, (value) {
+      return _then(_value.copyWith(introPhase: value) as $Val);
+    });
   }
 }
 
@@ -104,11 +207,35 @@ abstract class _$$_SubscriptionOptionCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id') String id,
-      @JsonKey(name: 'storeProductId') String storeProductId,
-      @JsonKey(name: 'productId') String productId,
-      @JsonKey(name: 'tags') List<String> tags,
-      @JsonKey(name: 'isBasePlan') bool isBasePlan});
+      {@JsonKey(name: 'id')
+          String id,
+      @JsonKey(name: 'storeProductId')
+          String storeProductId,
+      @JsonKey(name: 'productId')
+          String productId,
+      @JsonKey(name: 'pricingPhases')
+          List<PricingPhase> pricingPhases,
+      @JsonKey(name: 'tags')
+          List<String> tags,
+      @JsonKey(name: 'isBasePlan')
+          bool isBasePlan,
+      @JsonKey(name: 'billingPeriod', nullable: true)
+          Period? billingPeriod,
+      @JsonKey(name: 'fullPricePhase', nullable: true)
+          PricingPhase? fullPricePhase,
+      @JsonKey(name: 'freePhase', nullable: true)
+          PricingPhase? freePhase,
+      @JsonKey(name: 'introPhase', nullable: true)
+          PricingPhase? introPhase});
+
+  @override
+  $PeriodCopyWith<$Res>? get billingPeriod;
+  @override
+  $PricingPhaseCopyWith<$Res>? get fullPricePhase;
+  @override
+  $PricingPhaseCopyWith<$Res>? get freePhase;
+  @override
+  $PricingPhaseCopyWith<$Res>? get introPhase;
 }
 
 /// @nodoc
@@ -125,8 +252,13 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
     Object? id = null,
     Object? storeProductId = null,
     Object? productId = null,
+    Object? pricingPhases = null,
     Object? tags = null,
     Object? isBasePlan = null,
+    Object? billingPeriod = freezed,
+    Object? fullPricePhase = freezed,
+    Object? freePhase = freezed,
+    Object? introPhase = freezed,
   }) {
     return _then(_$_SubscriptionOption(
       null == id
@@ -141,6 +273,10 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
           ? _value.productId
           : productId // ignore: cast_nullable_to_non_nullable
               as String,
+      null == pricingPhases
+          ? _value._pricingPhases
+          : pricingPhases // ignore: cast_nullable_to_non_nullable
+              as List<PricingPhase>,
       null == tags
           ? _value._tags
           : tags // ignore: cast_nullable_to_non_nullable
@@ -149,6 +285,22 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
           ? _value.isBasePlan
           : isBasePlan // ignore: cast_nullable_to_non_nullable
               as bool,
+      freezed == billingPeriod
+          ? _value.billingPeriod
+          : billingPeriod // ignore: cast_nullable_to_non_nullable
+              as Period?,
+      freezed == fullPricePhase
+          ? _value.fullPricePhase
+          : fullPricePhase // ignore: cast_nullable_to_non_nullable
+              as PricingPhase?,
+      freezed == freePhase
+          ? _value.freePhase
+          : freePhase // ignore: cast_nullable_to_non_nullable
+              as PricingPhase?,
+      freezed == introPhase
+          ? _value.introPhase
+          : introPhase // ignore: cast_nullable_to_non_nullable
+              as PricingPhase?,
     ));
   }
 }
@@ -160,9 +312,15 @@ class _$_SubscriptionOption implements _SubscriptionOption {
       @JsonKey(name: 'id') this.id,
       @JsonKey(name: 'storeProductId') this.storeProductId,
       @JsonKey(name: 'productId') this.productId,
+      @JsonKey(name: 'pricingPhases') final List<PricingPhase> pricingPhases,
       @JsonKey(name: 'tags') final List<String> tags,
-      @JsonKey(name: 'isBasePlan') this.isBasePlan)
-      : _tags = tags;
+      @JsonKey(name: 'isBasePlan') this.isBasePlan,
+      @JsonKey(name: 'billingPeriod', nullable: true) this.billingPeriod,
+      @JsonKey(name: 'fullPricePhase', nullable: true) this.fullPricePhase,
+      @JsonKey(name: 'freePhase', nullable: true) this.freePhase,
+      @JsonKey(name: 'introPhase', nullable: true) this.introPhase)
+      : _pricingPhases = pricingPhases,
+        _tags = tags;
 
   factory _$_SubscriptionOption.fromJson(Map<String, dynamic> json) =>
       _$$_SubscriptionOptionFromJson(json);
@@ -176,6 +334,15 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   @override
   @JsonKey(name: 'productId')
   final String productId;
+  final List<PricingPhase> _pricingPhases;
+  @override
+  @JsonKey(name: 'pricingPhases')
+  List<PricingPhase> get pricingPhases {
+    if (_pricingPhases is EqualUnmodifiableListView) return _pricingPhases;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_pricingPhases);
+  }
+
   final List<String> _tags;
   @override
   @JsonKey(name: 'tags')
@@ -188,10 +355,22 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   @override
   @JsonKey(name: 'isBasePlan')
   final bool isBasePlan;
+  @override
+  @JsonKey(name: 'billingPeriod', nullable: true)
+  final Period? billingPeriod;
+  @override
+  @JsonKey(name: 'fullPricePhase', nullable: true)
+  final PricingPhase? fullPricePhase;
+  @override
+  @JsonKey(name: 'freePhase', nullable: true)
+  final PricingPhase? freePhase;
+  @override
+  @JsonKey(name: 'introPhase', nullable: true)
+  final PricingPhase? introPhase;
 
   @override
   String toString() {
-    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, tags: $tags, isBasePlan: $isBasePlan)';
+    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase)';
   }
 
   @override
@@ -204,15 +383,35 @@ class _$_SubscriptionOption implements _SubscriptionOption {
                 other.storeProductId == storeProductId) &&
             (identical(other.productId, productId) ||
                 other.productId == productId) &&
+            const DeepCollectionEquality()
+                .equals(other._pricingPhases, _pricingPhases) &&
             const DeepCollectionEquality().equals(other._tags, _tags) &&
             (identical(other.isBasePlan, isBasePlan) ||
-                other.isBasePlan == isBasePlan));
+                other.isBasePlan == isBasePlan) &&
+            (identical(other.billingPeriod, billingPeriod) ||
+                other.billingPeriod == billingPeriod) &&
+            (identical(other.fullPricePhase, fullPricePhase) ||
+                other.fullPricePhase == fullPricePhase) &&
+            (identical(other.freePhase, freePhase) ||
+                other.freePhase == freePhase) &&
+            (identical(other.introPhase, introPhase) ||
+                other.introPhase == introPhase));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, storeProductId, productId,
-      const DeepCollectionEquality().hash(_tags), isBasePlan);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      storeProductId,
+      productId,
+      const DeepCollectionEquality().hash(_pricingPhases),
+      const DeepCollectionEquality().hash(_tags),
+      isBasePlan,
+      billingPeriod,
+      fullPricePhase,
+      freePhase,
+      introPhase);
 
   @JsonKey(ignore: true)
   @override
@@ -231,12 +430,26 @@ class _$_SubscriptionOption implements _SubscriptionOption {
 
 abstract class _SubscriptionOption implements SubscriptionOption {
   const factory _SubscriptionOption(
-          @JsonKey(name: 'id') final String id,
-          @JsonKey(name: 'storeProductId') final String storeProductId,
-          @JsonKey(name: 'productId') final String productId,
-          @JsonKey(name: 'tags') final List<String> tags,
-          @JsonKey(name: 'isBasePlan') final bool isBasePlan) =
-      _$_SubscriptionOption;
+      @JsonKey(name: 'id')
+          final String id,
+      @JsonKey(name: 'storeProductId')
+          final String storeProductId,
+      @JsonKey(name: 'productId')
+          final String productId,
+      @JsonKey(name: 'pricingPhases')
+          final List<PricingPhase> pricingPhases,
+      @JsonKey(name: 'tags')
+          final List<String> tags,
+      @JsonKey(name: 'isBasePlan')
+          final bool isBasePlan,
+      @JsonKey(name: 'billingPeriod', nullable: true)
+          final Period? billingPeriod,
+      @JsonKey(name: 'fullPricePhase', nullable: true)
+          final PricingPhase? fullPricePhase,
+      @JsonKey(name: 'freePhase', nullable: true)
+          final PricingPhase? freePhase,
+      @JsonKey(name: 'introPhase', nullable: true)
+          final PricingPhase? introPhase) = _$_SubscriptionOption;
 
   factory _SubscriptionOption.fromJson(Map<String, dynamic> json) =
       _$_SubscriptionOption.fromJson;
@@ -251,11 +464,26 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   @JsonKey(name: 'productId')
   String get productId;
   @override
+  @JsonKey(name: 'pricingPhases')
+  List<PricingPhase> get pricingPhases;
+  @override
   @JsonKey(name: 'tags')
   List<String> get tags;
   @override
   @JsonKey(name: 'isBasePlan')
   bool get isBasePlan;
+  @override
+  @JsonKey(name: 'billingPeriod', nullable: true)
+  Period? get billingPeriod;
+  @override
+  @JsonKey(name: 'fullPricePhase', nullable: true)
+  PricingPhase? get fullPricePhase;
+  @override
+  @JsonKey(name: 'freePhase', nullable: true)
+  PricingPhase? get freePhase;
+  @override
+  @JsonKey(name: 'introPhase', nullable: true)
+  PricingPhase? get introPhase;
   @override
   @JsonKey(ignore: true)
   _$$_SubscriptionOptionCopyWith<_$_SubscriptionOption> get copyWith =>

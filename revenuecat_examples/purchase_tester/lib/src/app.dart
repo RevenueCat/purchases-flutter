@@ -140,20 +140,42 @@ class _UpsellScreenState extends State<UpsellScreen> {
         final monthly = offering.monthly;
         final lifetime = offering.lifetime;
 
-        if (monthly != null && lifetime != null) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('Upsell Screen')),
-            body: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  _PurchaseButton(package: monthly),
-                  _PurchaseButton(package: lifetime)
-                ],
-              ),
+        var myProductList = offering.availablePackages
+            .map((e) => {e.storeProduct.subscriptionOptions ?? []})
+            .expand((i) => i)
+            .toList()
+            .expand((i) => i)
+            .toList();
+
+        var widgets = myProductList
+            .map((e) => {_PurchaseSubscriptionOptionButton(option: e)})
+            .expand((i) => i)
+            .toList();
+
+        return Scaffold(
+          appBar: AppBar(title: const Text('Upsell Screen')),
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: widgets,
             ),
-          );
-        }
+          ),
+        );
+
+        // if (monthly != null && lifetime != null) {
+        //   return Scaffold(
+        //     appBar: AppBar(title: const Text('Upsell Screen')),
+        //     body: Center(
+        //       child: Column(
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: <Widget>[
+        //           _PurchaseButton(package: monthly),
+        //           _PurchaseButton(package: lifetime)
+        //         ],
+        //       ),
+        //     ),
+        //   );
+        // }
       }
     }
     return Scaffold(
@@ -195,6 +217,41 @@ class _PurchaseButton extends StatelessWidget {
           return const InitialScreen();
         },
         child: Text('Buy - (${package.storeProduct.priceString})'),
+      );
+}
+
+class _PurchaseSubscriptionOptionButton extends StatelessWidget {
+  final SubscriptionOption option;
+
+  // ignore: public_member_api_docs
+  const _PurchaseSubscriptionOptionButton({Key key, @required this.option})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => ElevatedButton(
+        onPressed: () async {
+          try {
+            final customerInfo =
+                await Purchases.purchaseSubscriptionOption(option);
+            final isPro =
+                customerInfo.entitlements.active.containsKey(entitlementKey);
+            if (isPro) {
+              return const CatsScreen();
+            }
+          } on PlatformException catch (e) {
+            final errorCode = PurchasesErrorHelper.getErrorCode(e);
+            if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+              print('User cancelled');
+            } else if (errorCode ==
+                PurchasesErrorCode.purchaseNotAllowedError) {
+              print('User not allowed to purchase');
+            } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
+              print('Payment is pending');
+            }
+          }
+          return const InitialScreen();
+        },
+        child: Text('Buy - (${option.id} ${option.productId})'),
       );
 }
 
