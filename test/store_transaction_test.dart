@@ -18,6 +18,7 @@ void main() {
     );
 
     expect(storeTransaction.transactionIdentifier, 'transactionIdentifier');
+    // ignore: deprecated_member_use_from_same_package
     expect(storeTransaction.revenueCatIdentifier, 'revenueCatIdentifier');
     expect(storeTransaction.productIdentifier, 'productIdentifier');
     expect(storeTransaction.purchaseDate, 'purchaseDate');
@@ -34,6 +35,7 @@ void main() {
     final storeTransaction =
         StoreTransaction.fromJson(generateStoreTransactionJSON());
 
+    // ignore: deprecated_member_use_from_same_package
     expect(storeTransaction.revenueCatIdentifier, 'abd123cd');
   });
 
