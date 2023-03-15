@@ -7,17 +7,47 @@ part 'store_transaction.g.dart';
 
 /// Represents a purchase transaction
 class StoreTransaction with _$StoreTransaction {
-  const factory StoreTransaction(
+  /// Experimental. This factory method is subject to changes without
+  /// a major release.
+  const factory StoreTransaction.create(
     /// RevenueCat Id associated to the transaction.
-    @JsonKey(name: 'revenueCatId') String revenueCatIdentifier,
+    @JsonKey(name: 'transactionIdentifier') String transactionIdentifier,
+
+    /// Deprecated: Use transactionIdentifier instead.
+    @Deprecated('Use transactionIdentifier instead.')
+    @JsonKey(readValue: _readRevenueCatIdentifier)
+        String revenueCatIdentifier,
 
     /// Product Id associated with the transaction.
-    @JsonKey(name: 'productId') String productIdentifier,
+    @JsonKey(name: 'productIdentifier') String productIdentifier,
 
     /// Purchase date of the transaction in ISO 8601 format.
     @JsonKey(name: 'purchaseDate') String purchaseDate,
   ) = _StoreTransaction;
 
+  @Deprecated('Constructor has become experimental. Keeping old constructor '
+      'for backwards compatibility.')
+  factory StoreTransaction(
+    /// Deprecated: Use transactionIdentifier instead.
+    @Deprecated('Use transactionIdentifier instead.')
+        String revenueCatIdentifier,
+
+    /// Product Id associated with the transaction.
+    String productIdentifier,
+
+    /// Purchase date of the transaction in ISO 8601 format.
+    String purchaseDate,
+  ) =>
+      StoreTransaction.create(
+        revenueCatIdentifier,
+        revenueCatIdentifier,
+        productIdentifier,
+        purchaseDate,
+      );
+
   factory StoreTransaction.fromJson(Map<String, dynamic> json) =>
       _$StoreTransactionFromJson(json);
 }
+
+Object? _readRevenueCatIdentifier(Map json, String key) =>
+    json['transactionIdentifier'];
