@@ -137,18 +137,23 @@ class _UpsellScreenState extends State<UpsellScreen> {
     if (_offerings != null) {
       final offering = _offerings.current;
       if (offering != null) {
-        final monthly = offering.monthly;
-        final lifetime = offering.lifetime;
+        List<Widget> buttonThings = offering.availablePackages
+            .map((package) {
+              List<Widget> buttons = [
+                _PurchaseButton(package: package),
+              ];
 
-        var myProductList = offering.availablePackages
-            .map((e) => {e.storeProduct.subscriptionOptions ?? []})
-            .expand((i) => i)
-            .toList()
-            .expand((i) => i)
-            .toList();
+              List<Widget> optionButtons =
+                  (package.storeProduct.subscriptionOptions?.map((e) {
+                            return _PurchaseSubscriptionOptionButton(option: e);
+                          }) ??
+                          [])
+                      .toList();
 
-        var widgets = myProductList
-            .map((e) => {_PurchaseSubscriptionOptionButton(option: e)})
+              buttons.addAll(optionButtons);
+
+              return buttons;
+            })
             .expand((i) => i)
             .toList();
 
@@ -157,25 +162,10 @@ class _UpsellScreenState extends State<UpsellScreen> {
           body: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              children: widgets,
+              children: buttonThings,
             ),
           ),
         );
-
-        // if (monthly != null && lifetime != null) {
-        //   return Scaffold(
-        //     appBar: AppBar(title: const Text('Upsell Screen')),
-        //     body: Center(
-        //       child: Column(
-        //         mainAxisSize: MainAxisSize.min,
-        //         children: <Widget>[
-        //           _PurchaseButton(package: monthly),
-        //           _PurchaseButton(package: lifetime)
-        //         ],
-        //       ),
-        //     ),
-        //   );
-        // }
       }
     }
     return Scaffold(
@@ -216,7 +206,8 @@ class _PurchaseButton extends StatelessWidget {
           }
           return const InitialScreen();
         },
-        child: Text('Buy - (${package.storeProduct.priceString})'),
+        child: Text(
+            'Buy Package: ${package.storeProduct.subscriptionPeriod ?? package.storeProduct.title}\n${package.storeProduct.priceString}'),
       );
 }
 
@@ -251,7 +242,10 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
           }
           return const InitialScreen();
         },
-        child: Text('Buy - (${option.id} ${option.productId})'),
+        child:
+            Text('Buy Option: - (${option.id}\n${option.pricingPhases.map((e) {
+          return '${e.price.formatted} for ${e.billingPeriod.value} ${e.billingPeriod.unit}';
+        }).join(' -> ')})'),
       );
 }
 
