@@ -52,7 +52,10 @@ mixin _$StoreProduct {
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
   List<StoreProductDiscount>? get discounts =>
-      throw _privateConstructorUsedError; // Words
+      throw _privateConstructorUsedError; // Default subscription option for a product. Google Play only.
+  @JsonKey(name: 'defaultOption', nullable: true)
+  SubscriptionOption? get defaultOption =>
+      throw _privateConstructorUsedError; // Collection of subscription options for a product. Google Play only.
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions =>
       throw _privateConstructorUsedError;
@@ -94,12 +97,15 @@ abstract class $StoreProductCopyWith<$Res> {
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'defaultOption', nullable: true)
+          SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           String? subscriptionPeriod});
 
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
+  $SubscriptionOptionCopyWith<$Res>? get defaultOption;
 }
 
 /// @nodoc
@@ -123,6 +129,7 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
+    Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
@@ -159,6 +166,10 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
+      defaultOption: freezed == defaultOption
+          ? _value.defaultOption
+          : defaultOption // ignore: cast_nullable_to_non_nullable
+              as SubscriptionOption?,
       subscriptionOptions: freezed == subscriptionOptions
           ? _value.subscriptionOptions
           : subscriptionOptions // ignore: cast_nullable_to_non_nullable
@@ -179,6 +190,18 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
 
     return $IntroductoryPriceCopyWith<$Res>(_value.introductoryPrice!, (value) {
       return _then(_value.copyWith(introductoryPrice: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SubscriptionOptionCopyWith<$Res>? get defaultOption {
+    if (_value.defaultOption == null) {
+      return null;
+    }
+
+    return $SubscriptionOptionCopyWith<$Res>(_value.defaultOption!, (value) {
+      return _then(_value.copyWith(defaultOption: value) as $Val);
     });
   }
 }
@@ -208,6 +231,8 @@ abstract class _$$_StoreProductCopyWith<$Res>
           IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'defaultOption', nullable: true)
+          SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
@@ -215,6 +240,8 @@ abstract class _$$_StoreProductCopyWith<$Res>
 
   @override
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
+  @override
+  $SubscriptionOptionCopyWith<$Res>? get defaultOption;
 }
 
 /// @nodoc
@@ -236,6 +263,7 @@ class __$$_StoreProductCopyWithImpl<$Res>
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
+    Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
@@ -272,6 +300,10 @@ class __$$_StoreProductCopyWithImpl<$Res>
           ? _value._discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
+      defaultOption: freezed == defaultOption
+          ? _value.defaultOption
+          : defaultOption // ignore: cast_nullable_to_non_nullable
+              as SubscriptionOption?,
       subscriptionOptions: freezed == subscriptionOptions
           ? _value._subscriptionOptions
           : subscriptionOptions // ignore: cast_nullable_to_non_nullable
@@ -304,6 +336,8 @@ class _$_StoreProduct implements _StoreProduct {
           this.introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'defaultOption', nullable: true)
+          this.defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           final List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
@@ -363,9 +397,13 @@ class _$_StoreProduct implements _StoreProduct {
     return EqualUnmodifiableListView(value);
   }
 
-// Words
+// Default subscription option for a product. Google Play only.
+  @override
+  @JsonKey(name: 'defaultOption', nullable: true)
+  final SubscriptionOption? defaultOption;
+// Collection of subscription options for a product. Google Play only.
   final List<SubscriptionOption>? _subscriptionOptions;
-// Words
+// Collection of subscription options for a product. Google Play only.
   @override
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions {
@@ -388,7 +426,7 @@ class _$_StoreProduct implements _StoreProduct {
 
   @override
   String toString() {
-    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, subscriptionOptions: $subscriptionOptions, subscriptionPeriod: $subscriptionPeriod)';
+    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, subscriptionPeriod: $subscriptionPeriod)';
   }
 
   @override
@@ -410,6 +448,8 @@ class _$_StoreProduct implements _StoreProduct {
                 other.introductoryPrice == introductoryPrice) &&
             const DeepCollectionEquality()
                 .equals(other._discounts, _discounts) &&
+            (identical(other.defaultOption, defaultOption) ||
+                other.defaultOption == defaultOption) &&
             const DeepCollectionEquality()
                 .equals(other._subscriptionOptions, _subscriptionOptions) &&
             (identical(other.subscriptionPeriod, subscriptionPeriod) ||
@@ -428,6 +468,7 @@ class _$_StoreProduct implements _StoreProduct {
       currencyCode,
       introductoryPrice,
       const DeepCollectionEquality().hash(_discounts),
+      defaultOption,
       const DeepCollectionEquality().hash(_subscriptionOptions),
       subscriptionPeriod);
 
@@ -463,6 +504,8 @@ abstract class _StoreProduct implements StoreProduct {
           final IntroductoryPrice? introductoryPrice,
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts,
+      @JsonKey(name: 'defaultOption', nullable: true)
+          final SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           final List<SubscriptionOption>? subscriptionOptions,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
@@ -511,7 +554,10 @@ abstract class _StoreProduct implements StoreProduct {
   /// Collection of discount offers for a product. Null for Android.
   @JsonKey(name: 'discounts', nullable: true)
   List<StoreProductDiscount>? get discounts;
-  @override // Words
+  @override // Default subscription option for a product. Google Play only.
+  @JsonKey(name: 'defaultOption', nullable: true)
+  SubscriptionOption? get defaultOption;
+  @override // Collection of subscription options for a product. Google Play only.
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions;
   @override

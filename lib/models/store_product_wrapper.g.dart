@@ -21,6 +21,10 @@ _$_StoreProduct _$$_StoreProductFromJson(Map json) => _$_StoreProduct(
           ?.map((e) => StoreProductDiscount.fromJson(
               Map<String, dynamic>.from(e as Map)))
           .toList(),
+      defaultOption: json['defaultOption'] == null
+          ? null
+          : SubscriptionOption.fromJson(
+              Map<String, dynamic>.from(json['defaultOption'] as Map)),
       subscriptionOptions: (json['subscriptionOptions'] as List<dynamic>?)
           ?.map((e) =>
               SubscriptionOption.fromJson(Map<String, dynamic>.from(e as Map)))
@@ -38,6 +42,7 @@ Map<String, dynamic> _$$_StoreProductToJson(_$_StoreProduct instance) =>
       'currencyCode': instance.currencyCode,
       'introPrice': instance.introductoryPrice?.toJson(),
       'discounts': instance.discounts?.map((e) => e.toJson()).toList(),
+      'defaultOption': instance.defaultOption?.toJson(),
       'subscriptionOptions':
           instance.subscriptionOptions?.map((e) => e.toJson()).toList(),
       'subscriptionPeriod': instance.subscriptionPeriod,

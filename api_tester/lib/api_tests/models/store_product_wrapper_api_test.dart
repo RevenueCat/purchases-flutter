@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:purchases_flutter/object_wrappers.dart';
 
 // ignore_for_file: unused_element
@@ -39,6 +41,8 @@ class _StoreProductApiTest {
     String currencyCode = product.currencyCode;
     IntroductoryPrice? introductoryPrice = product.introductoryPrice;
     List<StoreProductDiscount>? discounts = product.discounts;
+    SubscriptionOption? defaultOption = product.defaultOption;
+    List<SubscriptionOption>? subscriptionOptions = product.subscriptionOptions;
     String? subscriptionPeriod = product.subscriptionPeriod;
   }
 }

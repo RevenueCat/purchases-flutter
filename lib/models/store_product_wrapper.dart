@@ -38,7 +38,11 @@ class StoreProduct with _$StoreProduct {
     @JsonKey(name: 'discounts', nullable: true)
         List<StoreProductDiscount>? discounts,
 
-    // Words
+    // Default subscription option for a product. Google Play only.
+    @JsonKey(name: 'defaultOption', nullable: true)
+        SubscriptionOption? defaultOption,
+
+    // Collection of subscription options for a product. Google Play only.
     @JsonKey(name: 'subscriptionOptions', nullable: true)
         List<SubscriptionOption>? subscriptionOptions,
 
