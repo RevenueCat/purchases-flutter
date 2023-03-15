@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'models/subscription_option_wrapper.dart';
 import 'object_wrappers.dart';
 
 export 'object_wrappers.dart';
@@ -821,8 +820,9 @@ class Purchases {
     final args = Map<String, dynamic>.from(call.arguments);
     final logLevelName = args['logLevel'];
     final logLevel = LogLevel.values.firstWhere(
-        (e) => e.name.toUpperCase() == logLevelName,
-        orElse: () => LogLevel.info);
+      (e) => e.name.toUpperCase() == logLevelName,
+      orElse: () => LogLevel.info,
+    );
     final msg = args['message'];
     _logHandler?.call(logLevel, msg);
   }
