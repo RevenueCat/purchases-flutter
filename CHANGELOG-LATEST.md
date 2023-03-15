@@ -1,5 +1,7 @@
+### New Features
+* add `immediateAndChargeFullPrice` proration mode (#639) via Andy Boedo (@aboedo)
 ### Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.13.5 (#631) via RevenueCat Git Bot (@RCGitBot)
-* Bump cocoapods from 1.11.3 to 1.12.0 (#628) via dependabot[bot] (@dependabot[bot])
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.14.0 (#640) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 5.8.2](https://github.com/RevenueCat/purchases-android/releases/tag/5.8.2)
 ### Other Changes
-* Deprecate `usesStoreKit2IfAvailable` (#632) via Andy Boedo (@aboedo)
+* Deprecate revenueCatId in favor of transactionIdentifier (#612) via Toni Rico (@tonidero)
