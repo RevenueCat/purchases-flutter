@@ -20,8 +20,11 @@ Period _$PeriodFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Period {
+  /// The number of period units
   @JsonKey(name: 'periodUnit')
   String get unit => throw _privateConstructorUsedError;
+
+  /// The increment of time that a subscription period is specified in
   @JsonKey(name: 'periodNumberOfUnits')
   int get value => throw _privateConstructorUsedError;
 
@@ -115,9 +118,12 @@ class _$_Period implements _Period {
   factory _$_Period.fromJson(Map<String, dynamic> json) =>
       _$$_PeriodFromJson(json);
 
+  /// The number of period units
   @override
   @JsonKey(name: 'periodUnit')
   final String unit;
+
+  /// The increment of time that a subscription period is specified in
   @override
   @JsonKey(name: 'periodNumberOfUnits')
   final int value;
@@ -161,9 +167,13 @@ abstract class _Period implements Period {
   factory _Period.fromJson(Map<String, dynamic> json) = _$_Period.fromJson;
 
   @override
+
+  /// The number of period units
   @JsonKey(name: 'periodUnit')
   String get unit;
   @override
+
+  /// The increment of time that a subscription period is specified in
   @JsonKey(name: 'periodNumberOfUnits')
   int get value;
   @override

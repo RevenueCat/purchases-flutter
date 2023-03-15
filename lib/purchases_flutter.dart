@@ -306,6 +306,8 @@ class Purchases {
     return customerInfo;
   }
 
+  /// Google Play only.
+  ///
   /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is

@@ -20,12 +20,20 @@ PricingPhase _$PricingPhaseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PricingPhase {
+  /// Billing period for which the PricingPhase applies
   @JsonKey(name: 'billingPeriod')
   Period get billingPeriod => throw _privateConstructorUsedError;
+
+  /// Recurrence mode of the PricingPhase
   @JsonKey(name: 'recurrenceMode', nullable: true)
   int? get recurrenceMode => throw _privateConstructorUsedError;
+
+  /// Number of cycles for which the pricing phase applies.
+  /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
   @JsonKey(name: 'billingCycleCount', nullable: true)
   int? get billingCycleCount => throw _privateConstructorUsedError;
+
+  /// Price of the PricingPhase
   @JsonKey(name: 'price')
   Price get price => throw _privateConstructorUsedError;
 
@@ -187,15 +195,23 @@ class _$_PricingPhase implements _PricingPhase {
   factory _$_PricingPhase.fromJson(Map<String, dynamic> json) =>
       _$$_PricingPhaseFromJson(json);
 
+  /// Billing period for which the PricingPhase applies
   @override
   @JsonKey(name: 'billingPeriod')
   final Period billingPeriod;
+
+  /// Recurrence mode of the PricingPhase
   @override
   @JsonKey(name: 'recurrenceMode', nullable: true)
   final int? recurrenceMode;
+
+  /// Number of cycles for which the pricing phase applies.
+  /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
   @override
   @JsonKey(name: 'billingCycleCount', nullable: true)
   final int? billingCycleCount;
+
+  /// Price of the PricingPhase
   @override
   @JsonKey(name: 'price')
   final Price price;
@@ -253,15 +269,24 @@ abstract class _PricingPhase implements PricingPhase {
       _$_PricingPhase.fromJson;
 
   @override
+
+  /// Billing period for which the PricingPhase applies
   @JsonKey(name: 'billingPeriod')
   Period get billingPeriod;
   @override
+
+  /// Recurrence mode of the PricingPhase
   @JsonKey(name: 'recurrenceMode', nullable: true)
   int? get recurrenceMode;
   @override
+
+  /// Number of cycles for which the pricing phase applies.
+  /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
   @JsonKey(name: 'billingCycleCount', nullable: true)
   int? get billingCycleCount;
   @override
+
+  /// Price of the PricingPhase
   @JsonKey(name: 'price')
   Price get price;
   @override
