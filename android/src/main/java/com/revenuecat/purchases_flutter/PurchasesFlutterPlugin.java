@@ -19,6 +19,7 @@ import com.revenuecat.purchases.hybridcommon.OnResultAny;
 import com.revenuecat.purchases.hybridcommon.OnResultList;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
 import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
+import com.revenuecat.purchases.models.GoogleProrationMode;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -141,6 +142,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean finishTransactions = call.argument("finishTransactions");
                 setFinishTransactions(finishTransactions, result);
                 break;
+           case "setAllowSharingStoreAccount":
+                Boolean allowSharing = call.argument("allowSharing");
+                setAllowSharingAppStoreAccount(allowSharing, result);
+                break;
             case "getOfferings":
                 getOfferings(result);
                 break;
@@ -151,17 +156,19 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "purchaseProduct":
                 String productIdentifier = call.argument("productIdentifier");
-                String oldSKU = call.argument("oldSKU");
-                Integer prorationMode = call.argument("prorationMode");
+                String oldSKU = call.argument("oldSKU"); // TODO: Rename
+                Integer prorationMode = call.argument("prorationMode"); // TODO: Rename
+                Boolean isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
                 type = call.argument("type");
-                purchaseProduct(productIdentifier, oldSKU, prorationMode, type, result);
+                purchaseProduct(productIdentifier, type, oldSKU, prorationMode, isPersonalizedPrice, result);
                 break;
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
                 String offeringIdentifier = call.argument("offeringIdentifier");
-                oldSKU = call.argument("oldSKU");
-                prorationMode = call.argument("prorationMode");
-                purchasePackage(packageIdentifier, offeringIdentifier, oldSKU, prorationMode, result);
+                oldSKU = call.argument("oldSKU"); // TODO: Rename
+                prorationMode = call.argument("prorationMode"); // TODO: Rename
+                isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
+                purchasePackage(packageIdentifier, offeringIdentifier, oldSKU, prorationMode, isPersonalizedPrice, result);
                 break;
             case "getAppUserID":
                 getAppUserID(result);
@@ -175,6 +182,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "logOut":
                 logOut(result);
+                break;
+            case "setDebugLogsEnabled":
+                boolean enabled = call.argument("enabled") != null && (boolean) call.argument("enabled");
+                setDebugLogsEnabled(enabled, result);
                 break;
             case "setLogLevel":
                 String level = (String) call.argument("level");
@@ -360,6 +371,19 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
+    @SuppressWarnings("deprecation")
+    private void setAllowSharingAppStoreAccount(@Nullable Boolean allowSharingAppStoreAccount, Result result) {
+        if (allowSharingAppStoreAccount != null) {
+            CommonKt.setAllowSharingAppStoreAccount(allowSharingAppStoreAccount);
+            result.success(null);
+        } else {
+            result.error(
+                    INVALID_ARGS_ERROR_CODE,
+                    "Missing allowSharing argument",
+                    null);
+        }
+    }
+
     private void getOfferings(final Result result) {
         CommonKt.getOfferings(getOnResult(result));
     }
@@ -378,30 +402,48 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         });
     }
 
-    private void purchaseProduct(final String productIdentifier, final String oldSKU,
-                                 @Nullable final Integer prorationMode, final String type,
+    private void purchaseProduct(final String productIdentifier,
+                                 final String googleOldProductId,
+                                 final String type,
+                                 @Nullable final Integer googleProrationMode,
+                                 @Nullable final Boolean googleIsPersonalizedPrice,
                                  final Result result) {
+        // TODO: Convert this somehow
+        GoogleProrationMode googleProrationModeEnum = null;
+        if (googleProrationMode != null) {
+            googleProrationModeEnum = GoogleProrationMode.IMMEDIATE_WITHOUT_PRORATION;
+        }
+
         CommonKt.purchaseProduct(
                 getActivity(),
                 productIdentifier,
-                oldSKU,
-                null, // TODOBC5: map proration mode to purchases android enum
                 type,
+                googleOldProductId,
+                googleProrationModeEnum,
+                googleIsPersonalizedPrice,
                 getOnResult(result)
         );
     }
 
     private void purchasePackage(final String packageIdentifier,
                                  final String offeringIdentifier,
-                                 @Nullable final String oldSKU,
-                                 @Nullable final Integer prorationMode,
+                                 final String googleOldProductId,
+                                 @Nullable final Integer googleProrationMode,
+                                 @Nullable final Boolean googleIsPersonalizedPrice,
                                  final Result result) {
+        // TODO: Convert this somehow
+        GoogleProrationMode googleProrationModeEnum = null;
+        if (googleProrationMode != null) {
+            googleProrationModeEnum = GoogleProrationMode.IMMEDIATE_WITHOUT_PRORATION;
+        }
+
         CommonKt.purchasePackage(
                 getActivity(),
                 packageIdentifier,
                 offeringIdentifier,
-                oldSKU,
-                null, // TODOBC5: map proration mode to purchases android enum
+                googleOldProductId,
+                googleProrationModeEnum,
+                googleIsPersonalizedPrice,
                 getOnResult(result)
         );
     }
@@ -421,6 +463,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void logIn(String appUserID, final Result result) {
         CommonKt.logIn(appUserID, getOnResult(result));
+    }
+
+    private void setDebugLogsEnabled(boolean enabled, final Result result) {
+        CommonKt.setDebugLogsEnabled(enabled);
+        result.success(null);
     }
 
     private void setLogLevel(String level, final Result result) {
