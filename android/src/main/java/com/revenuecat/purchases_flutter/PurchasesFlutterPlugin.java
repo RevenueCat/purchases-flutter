@@ -142,7 +142,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean finishTransactions = call.argument("finishTransactions");
                 setFinishTransactions(finishTransactions, result);
                 break;
-           case "setAllowSharingStoreAccount":
+            case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
                 setAllowSharingAppStoreAccount(allowSharing, result);
                 break;
