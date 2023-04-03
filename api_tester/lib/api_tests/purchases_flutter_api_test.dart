@@ -88,9 +88,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkPurchaseSubscriptionOption(
-      SubscriptionOption subscriptionOption) async {
-    UpgradeInfo? upgradeInfo;
-    PurchaseType purchaseType = PurchaseType.subs;
+      SubscriptionOption subscriptionOption, UpgradeInfo? upgradeInfo) async {
     CustomerInfo customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         upgradeInfo: upgradeInfo);
