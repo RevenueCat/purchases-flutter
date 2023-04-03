@@ -1,5 +1,12 @@
 ## v5 API Changes
 
+This latest release updates the Android SDK dependency from v5 to [v6](https://github.com/RevenueCat/purchases-android/releases/tag/6.0.0) to use BillingClient 5. This version of BillingClient brings an entire new subscription model which has resulted in large changes across the entire SDK.
+
+### Migration Guides
+- See [Android Native - 5.x to 6.x Migration](https://www.revenuecat.com/docs/android-native-5x-to-6x-migration) for a
+  more thorough explanation of the new Google subscription model announced with BillingClient 5 and how to take
+  advantage of it in Flutter v5. This guide includes tips on product setup with the new model.
+
 ### Classes
 
 | New                        |
@@ -18,7 +25,7 @@
 
 #### Free Trial and Introductory Offers
 
-`StoreProduct` can now have multiple free trials and introductory offers on Google PLay. There is a `defaultOption` property
+`StoreProduct` can now have multiple free trials and introductory offers on Google Play. There is a `defaultOption` property
 on `StoreProduct` that will select the offer with the longest free trial period or the cheapest introductory offer.
 
 If more control is needed, the free trial, intro offer, and other `SubscriptionOption`s can

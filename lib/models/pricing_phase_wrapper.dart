@@ -15,7 +15,8 @@ class PricingPhase with _$PricingPhase {
     @JsonKey(name: 'billingPeriod') Period billingPeriod,
 
     /// Recurrence mode of the PricingPhase
-    @JsonKey(name: 'recurrenceMode', nullable: true) int? recurrenceMode,
+    @JsonKey(name: 'recurrenceMode', nullable: true)
+        RecurrenceMode? recurrenceMode,
 
     /// Number of cycles for which the pricing phase applies.
     /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
@@ -27,4 +28,15 @@ class PricingPhase with _$PricingPhase {
 
   factory PricingPhase.fromJson(Map<String, dynamic> json) =>
       _$PricingPhaseFromJson(json);
+}
+
+enum RecurrenceMode {
+  @JsonValue(1)
+  infiniteRecurring,
+  @JsonValue(2)
+  finiteRecurring,
+  @JsonValue(3)
+  nonRecurring,
+  @JsonValue(null)
+  unknown,
 }

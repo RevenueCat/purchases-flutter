@@ -20,12 +20,12 @@ Period _$PeriodFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Period {
-  /// The number of period units
-  @JsonKey(name: 'periodUnit')
-  String get unit => throw _privateConstructorUsedError;
+  /// The number of period units: DAY, WEEK, MONTH, YEAR, UNKNOWN
+  @JsonKey(name: 'unit')
+  Unit get unit => throw _privateConstructorUsedError;
 
   /// The increment of time that a subscription period is specified in
-  @JsonKey(name: 'periodNumberOfUnits')
+  @JsonKey(name: 'value')
   int get value => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,8 +39,7 @@ abstract class $PeriodCopyWith<$Res> {
       _$PeriodCopyWithImpl<$Res, Period>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'periodUnit') String unit,
-      @JsonKey(name: 'periodNumberOfUnits') int value});
+      {@JsonKey(name: 'unit') Unit unit, @JsonKey(name: 'value') int value});
 }
 
 /// @nodoc
@@ -63,7 +62,7 @@ class _$PeriodCopyWithImpl<$Res, $Val extends Period>
       unit: null == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Unit,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -79,8 +78,7 @@ abstract class _$$_PeriodCopyWith<$Res> implements $PeriodCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'periodUnit') String unit,
-      @JsonKey(name: 'periodNumberOfUnits') int value});
+      {@JsonKey(name: 'unit') Unit unit, @JsonKey(name: 'value') int value});
 }
 
 /// @nodoc
@@ -100,7 +98,7 @@ class __$$_PeriodCopyWithImpl<$Res>
       null == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Unit,
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -112,20 +110,20 @@ class __$$_PeriodCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Period implements _Period {
-  const _$_Period(@JsonKey(name: 'periodUnit') this.unit,
-      @JsonKey(name: 'periodNumberOfUnits') this.value);
+  const _$_Period(
+      @JsonKey(name: 'unit') this.unit, @JsonKey(name: 'value') this.value);
 
   factory _$_Period.fromJson(Map<String, dynamic> json) =>
       _$$_PeriodFromJson(json);
 
-  /// The number of period units
+  /// The number of period units: DAY, WEEK, MONTH, YEAR, UNKNOWN
   @override
-  @JsonKey(name: 'periodUnit')
-  final String unit;
+  @JsonKey(name: 'unit')
+  final Unit unit;
 
   /// The increment of time that a subscription period is specified in
   @override
-  @JsonKey(name: 'periodNumberOfUnits')
+  @JsonKey(name: 'value')
   final int value;
 
   @override
@@ -161,20 +159,20 @@ class _$_Period implements _Period {
 }
 
 abstract class _Period implements Period {
-  const factory _Period(@JsonKey(name: 'periodUnit') final String unit,
-      @JsonKey(name: 'periodNumberOfUnits') final int value) = _$_Period;
+  const factory _Period(@JsonKey(name: 'unit') final Unit unit,
+      @JsonKey(name: 'value') final int value) = _$_Period;
 
   factory _Period.fromJson(Map<String, dynamic> json) = _$_Period.fromJson;
 
   @override
 
-  /// The number of period units
-  @JsonKey(name: 'periodUnit')
-  String get unit;
+  /// The number of period units: DAY, WEEK, MONTH, YEAR, UNKNOWN
+  @JsonKey(name: 'unit')
+  Unit get unit;
   @override
 
   /// The increment of time that a subscription period is specified in
-  @JsonKey(name: 'periodNumberOfUnits')
+  @JsonKey(name: 'value')
   int get value;
   @override
   @JsonKey(ignore: true)
