@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:purchases_flutter/object_wrappers.dart';
 
 // ignore_for_file: unused_element
