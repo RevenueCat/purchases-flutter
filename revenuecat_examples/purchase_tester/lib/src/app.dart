@@ -89,8 +89,7 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      final isPro =
-          _customerInfo.entitlements.active.containsKey(entitlementKey);
+      final isPro = _customerInfo.entitlements.active.isNotEmpty;
       if (isPro) {
         return const CatsScreen();
       } else {
@@ -188,8 +187,7 @@ class _PurchaseButton extends StatelessWidget {
         onPressed: () async {
           try {
             final customerInfo = await Purchases.purchasePackage(package);
-            final isPro =
-                customerInfo.entitlements.active.containsKey(entitlementKey);
+            final isPro = customerInfo.entitlements.active.isNotEmpty;
             if (isPro) {
               return const CatsScreen();
             }
@@ -224,8 +222,7 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
           try {
             final customerInfo =
                 await Purchases.purchaseSubscriptionOption(option);
-            final isPro =
-                customerInfo.entitlements.active.containsKey(entitlementKey);
+            final isPro = customerInfo.entitlements.active.isNotEmpty;
             if (isPro) {
               return const CatsScreen();
             }
@@ -267,7 +264,7 @@ class CatsScreen extends StatelessWidget {
                   final customerInfo = await Purchases.getCustomerInfo();
                   final refundStatus =
                       await Purchases.beginRefundRequestForEntitlement(
-                          customerInfo.entitlements.active[entitlementKey]);
+                          customerInfo.entitlements.active.values.first);
                   print('Refund request successful with status: $refundStatus');
                 } catch (e) {
                   print('Refund request exception: $e');
