@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -91,7 +92,7 @@ class _MyAppState extends State<InitialScreen> {
     } else {
       final isPro = _customerInfo.entitlements.active.isNotEmpty;
       if (isPro) {
-        return const CatsScreen();
+        return CatsScreen();
       } else {
         return const UpsellScreen();
       }
@@ -189,7 +190,7 @@ class _PurchaseButton extends StatelessWidget {
             final customerInfo = await Purchases.purchasePackage(package);
             final isPro = customerInfo.entitlements.active.isNotEmpty;
             if (isPro) {
-              return const CatsScreen();
+              return CatsScreen();
             }
           } on PlatformException catch (e) {
             final errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -224,7 +225,7 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
                 await Purchases.purchaseSubscriptionOption(option);
             final isPro = customerInfo.entitlements.active.isNotEmpty;
             if (isPro) {
-              return const CatsScreen();
+              return CatsScreen();
             }
           } on PlatformException catch (e) {
             final errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -247,8 +248,35 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
 }
 
 // ignore: public_member_api_docs
-class CatsScreen extends StatelessWidget {
-  const CatsScreen({Key key}) : super(key: key);
+
+class CatsScreen extends StatefulWidget {
+  @override
+  _CatsScreenState createState() => _CatsScreenState();
+}
+
+class _CatsScreenState extends State<CatsScreen> {
+  String _customerInfoString = 'Fetching customer info...';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchCustomerInfo();
+  }
+
+  void _fetchCustomerInfo() async {
+    try {
+      final customerInfo = await Purchases.getCustomerInfo();
+      final prettyCustomerInfo =
+          JsonEncoder.withIndent('  ').convert(customerInfo.toJson());
+      setState(() {
+        _customerInfoString = prettyCustomerInfo;
+      });
+    } catch (e) {
+      setState(() {
+        _customerInfoString = 'Failed to fetch customer info: $e';
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -257,7 +285,18 @@ class CatsScreen extends StatelessWidget {
             child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('User is pro'),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    _customerInfoString,
+                    style: TextStyle(fontSize: 12),
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+              ),
+            ),
             ElevatedButton(
               onPressed: () async {
                 try {
