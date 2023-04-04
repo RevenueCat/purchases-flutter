@@ -170,6 +170,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
                 purchasePackage(packageIdentifier, offeringIdentifier, oldSKU, prorationMode, isPersonalizedPrice, result);
                 break;
+            case "purchaseSubscriptionOption":
+                productIdentifier = call.argument("productIdentifier");
+                String optionIdentifier = call.argument("optionIdentifier");
+                oldSKU = call.argument("oldSKU"); // TODO: Rename
+                prorationMode = call.argument("prorationMode"); // TODO: Rename
+                isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
+                purchaseSubscriptionOption(productIdentifier, optionIdentifier, oldSKU, prorationMode, isPersonalizedPrice, result);
+                break;
             case "getAppUserID":
                 getAppUserID(result);
                 break;
@@ -415,18 +423,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                                  @Nullable final Integer googleProrationMode,
                                  @Nullable final Boolean googleIsPersonalizedPrice,
                                  final Result result) {
-        // TODO: Convert this somehow
-        GoogleProrationMode googleProrationModeEnum = null;
-        if (googleProrationMode != null) {
-            googleProrationModeEnum = GoogleProrationMode.IMMEDIATE_WITHOUT_PRORATION;
-        }
-
         CommonKt.purchaseProduct(
                 getActivity(),
                 productIdentifier,
                 type,
+                null,
                 googleOldProductId,
-                googleProrationModeEnum,
+                googleProrationMode,
                 googleIsPersonalizedPrice,
                 getOnResult(result)
         );
@@ -438,23 +441,33 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                                  @Nullable final Integer googleProrationMode,
                                  @Nullable final Boolean googleIsPersonalizedPrice,
                                  final Result result) {
-        // TODO: Convert this somehow
-        GoogleProrationMode googleProrationModeEnum = null;
-        if (googleProrationMode != null) {
-            googleProrationModeEnum = GoogleProrationMode.IMMEDIATE_WITHOUT_PRORATION;
-        }
-
         CommonKt.purchasePackage(
                 getActivity(),
                 packageIdentifier,
                 offeringIdentifier,
                 googleOldProductId,
-                googleProrationModeEnum,
+                googleProrationMode,
                 googleIsPersonalizedPrice,
                 getOnResult(result)
         );
     }
 
+    private void purchaseSubscriptionOption(final String productIdentifier,
+                                            final String optionIdentifier,
+                                            final String googleOldProductId,
+                                            @Nullable final Integer googleProrationMode,
+                                            @Nullable final Boolean googleIsPersonalizedPrice,
+                                            final Result result) {
+        CommonKt.purchaseSubscriptionOption(
+                getActivity(),
+                productIdentifier,
+                optionIdentifier,
+                googleOldProductId,
+                googleProrationMode,
+                googleIsPersonalizedPrice,
+                getOnResult(result)
+        );
+    }
 
     private void getAppUserID(final Result result) {
         result.success(CommonKt.getAppUserID());

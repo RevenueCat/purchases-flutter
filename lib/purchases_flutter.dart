@@ -275,17 +275,26 @@ class Purchases {
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
+  ///
+  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
     UpgradeInfo? upgradeInfo,
     PurchaseType type = PurchaseType.subs,
+    bool? isPersonalizedPrice,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
-      'type': describeEnum(type)
+      'type': describeEnum(type),
+      'isPersonalizedPrice': isPersonalizedPrice,
     });
     return customerInfo;
   }
@@ -300,16 +309,65 @@ class Purchases {
   ///
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
+  ///
+  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
   static Future<CustomerInfo> purchasePackage(
     Package packageToPurchase, {
     UpgradeInfo? upgradeInfo,
+    bool? isPersonalizedPrice,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode?.index
+      'prorationMode': prorationMode?.index,
+      'isPersonalizedPrice': isPersonalizedPrice,
+    });
+    return customerInfo;
+  }
+
+  /// Google Play only.
+  ///
+  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [packageToPurchase] The Package you wish to purchase
+  ///
+  /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
+  /// containing the oldSKU and the optional prorationMode.
+  ///
+  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
+  static Future<CustomerInfo> purchaseSubscriptionOption(
+    SubscriptionOption subscriptionOption, {
+    UpgradeInfo? upgradeInfo,
+    bool? isPersonalizedPrice,
+  }) async {
+    if (defaultTargetPlatform != TargetPlatform.android) {
+      throw UnsupportedPlatformException();
+    }
+
+    final prorationMode = upgradeInfo?.prorationMode;
+    final customerInfo =
+        await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
+      'productIdentifier': subscriptionOption.productId,
+      'optionIdentifier': subscriptionOption.id,
+      'oldSKU': upgradeInfo?.oldSKU,
+      'prorationMode': prorationMode?.index,
+      'isPersonalizedPrice': isPersonalizedPrice,
     });
     return customerInfo;
   }
@@ -802,7 +860,10 @@ class Purchases {
   static void handleLogHandlerEvent(MethodCall call) {
     final args = Map<String, dynamic>.from(call.arguments);
     final logLevelName = args['logLevel'];
-    final logLevel = LogLevel.values.firstWhere((e) => e.name.toUpperCase() == logLevelName, orElse: () => LogLevel.info);
+    final logLevel = LogLevel.values.firstWhere(
+      (e) => e.name.toUpperCase() == logLevelName,
+      orElse: () => LogLevel.info,
+    );
     final msg = args['message'];
     _logHandler?.call(logLevel, msg);
   }
@@ -1001,13 +1062,7 @@ enum RefundRequestStatus {
 }
 
 /// Log levels.
-enum LogLevel {
-  verbose,
-  debug,
-  info,
-  warn,
-  error
-}
+enum LogLevel { verbose, debug, info, warn, error }
 
 extension RefundRequestStatusExtension on RefundRequestStatus {
   static RefundRequestStatus from(int index) {
@@ -1050,5 +1105,4 @@ class PromotedPurchaseResult {
   });
 }
 
-class UnsupportedPlatformException implements Exception {
-}
+class UnsupportedPlatformException implements Exception {}

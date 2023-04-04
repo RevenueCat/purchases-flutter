@@ -91,11 +91,11 @@ class _MyAppState extends State<InitialScreen> {
     } else {
       final isPro =
           _customerInfo.entitlements.active.containsKey(entitlementKey);
-      if (isPro) {
-        return const CatsScreen();
-      } else {
-        return const UpsellScreen();
-      }
+      // if (isPro) {
+      //   return const CatsScreen();
+      // } else {
+      return const UpsellScreen();
+      // }
     }
   }
 }
@@ -137,23 +137,35 @@ class _UpsellScreenState extends State<UpsellScreen> {
     if (_offerings != null) {
       final offering = _offerings.current;
       if (offering != null) {
-        final monthly = offering.monthly;
-        final lifetime = offering.lifetime;
+        List<Widget> buttonThings = offering.availablePackages
+            .map((package) {
+              List<Widget> buttons = [
+                _PurchaseButton(package: package),
+              ];
 
-        if (monthly != null && lifetime != null) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('Upsell Screen')),
-            body: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  _PurchaseButton(package: monthly),
-                  _PurchaseButton(package: lifetime)
-                ],
-              ),
+              List<Widget> optionButtons =
+                  (package.storeProduct.subscriptionOptions?.map((e) {
+                            return _PurchaseSubscriptionOptionButton(option: e);
+                          }) ??
+                          [])
+                      .toList();
+
+              buttons.addAll(optionButtons);
+
+              return buttons;
+            })
+            .expand((i) => i)
+            .toList();
+
+        return Scaffold(
+          appBar: AppBar(title: const Text('Upsell Screen')),
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: buttonThings,
             ),
-          );
-        }
+          ),
+        );
       }
     }
     return Scaffold(
@@ -194,7 +206,46 @@ class _PurchaseButton extends StatelessWidget {
           }
           return const InitialScreen();
         },
-        child: Text('Buy - (${package.storeProduct.priceString})'),
+        child: Text(
+            'Buy Package: ${package.storeProduct.subscriptionPeriod ?? package.storeProduct.title}\n${package.storeProduct.priceString}'),
+      );
+}
+
+class _PurchaseSubscriptionOptionButton extends StatelessWidget {
+  final SubscriptionOption option;
+
+  // ignore: public_member_api_docs
+  const _PurchaseSubscriptionOptionButton({Key key, @required this.option})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => ElevatedButton(
+        onPressed: () async {
+          try {
+            final customerInfo =
+                await Purchases.purchaseSubscriptionOption(option);
+            final isPro =
+                customerInfo.entitlements.active.containsKey(entitlementKey);
+            if (isPro) {
+              return const CatsScreen();
+            }
+          } on PlatformException catch (e) {
+            final errorCode = PurchasesErrorHelper.getErrorCode(e);
+            if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+              print('User cancelled');
+            } else if (errorCode ==
+                PurchasesErrorCode.purchaseNotAllowedError) {
+              print('User not allowed to purchase');
+            } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
+              print('Payment is pending');
+            }
+          }
+          return const InitialScreen();
+        },
+        child:
+            Text('Buy Option: - (${option.id}\n${option.pricingPhases.map((e) {
+          return '${e.price.formatted} for ${e.billingPeriod.value} ${e.billingPeriod.unit}';
+        }).join(' -> ')})'),
       );
 }
 

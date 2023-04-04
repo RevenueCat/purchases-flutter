@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -576,6 +577,77 @@ void main() {
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
+  });
+
+  test('purchaseSubscriptionOption calls successfully on Android', () async {
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+
+      response = {
+        'productIdentifier': 'gold',
+        'customerInfo': mockCustomerInfoResponse
+      };
+      const phase = PricingPhase(
+        Period(Unit.month, 1),
+        RecurrenceMode.infiniteRecurring,
+        1,
+        Price('4.99', 4990000, 'USD'),
+      );
+      const mockSubscriptionOption = SubscriptionOption(
+        'monthly',
+        'gold:monthly',
+        'gold',
+        [phase],
+        [],
+        true,
+        Period(Unit.month, 1),
+        phase,
+        null,
+        null,
+      );
+      final purchasePackageResult =
+          await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
+      expect(
+        purchasePackageResult,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test('purchaseSubscriptionOption throws error on iOS', () async {
+    var catchCalled = false;
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+      const phase = PricingPhase(
+        Period(Unit.month, 1),
+        RecurrenceMode.infiniteRecurring,
+        1,
+        Price('4.99', 4990000, 'USD'),
+      );
+      const mockSubscriptionOption = SubscriptionOption(
+        'monthly',
+        'gold:monthly',
+        'gold',
+        [phase],
+        [],
+        true,
+        Period(Unit.month, 1),
+        phase,
+        null,
+        null,
+      );
+      final purchasePackageResult =
+          await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
+
+      fail('an exception should have been thrown');
+    } on UnsupportedPlatformException catch (e) {
+      catchCalled = true;
+    }
+
+    expect(catchCalled, true);
   });
 
   test('setupPurchases with amazon', () async {

@@ -39,6 +39,8 @@ class _StoreProductApiTest {
     String currencyCode = product.currencyCode;
     IntroductoryPrice? introductoryPrice = product.introductoryPrice;
     List<StoreProductDiscount>? discounts = product.discounts;
+    SubscriptionOption? defaultOption = product.defaultOption;
+    List<SubscriptionOption>? subscriptionOptions = product.subscriptionOptions;
     String? subscriptionPeriod = product.subscriptionPeriod;
   }
 }

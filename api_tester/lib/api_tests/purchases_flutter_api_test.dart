@@ -76,15 +76,40 @@ class _PurchasesFlutterApiTest {
     CustomerInfo customerInfo = await Purchases.purchaseProduct(
         productIdentifier,
         upgradeInfo: upgradeInfo,
-        type: purchaseType);
+        isPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        upgradeInfo: upgradeInfo, type: purchaseType);
     customerInfo = await Purchases.purchaseProduct(productIdentifier,
         upgradeInfo: upgradeInfo);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        isPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier);
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
     CustomerInfo customerInfo =
         await Purchases.purchasePackage(package, upgradeInfo: upgradeInfo);
+    customerInfo = await Purchases.purchasePackage(package,
+        upgradeInfo: upgradeInfo, isPersonalizedPrice: true);
+    customerInfo =
+        await Purchases.purchasePackage(package, isPersonalizedPrice: true);
+  }
+
+  void _checkPurchaseSubscriptionOption(
+      SubscriptionOption subscriptionOption, UpgradeInfo? upgradeInfo) async {
+    CustomerInfo customerInfo = await Purchases.purchaseSubscriptionOption(
+        subscriptionOption,
+        upgradeInfo: upgradeInfo);
+    customerInfo = await Purchases.purchaseSubscriptionOption(
+        subscriptionOption,
+        upgradeInfo: upgradeInfo,
+        isPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseSubscriptionOption(
+        subscriptionOption,
+        isPersonalizedPrice: true);
+    customerInfo =
+        await Purchases.purchaseSubscriptionOption(subscriptionOption);
   }
 
   void _checkPurchaseDiscountedProduct(
