@@ -14,7 +14,9 @@ This latest release updates the Android SDK dependency from v5 to [v6](https://g
 | `SubscriptionOption`       |
 | `PricingPhase`             |
 | `Period`                   |
-| `Price`                    ||
+| `Price`                    |
+| `RecurrenceMode`           |
+| `Unit`                     |
 
 ### StoreProduct changes
 
