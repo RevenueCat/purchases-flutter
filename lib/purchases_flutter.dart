@@ -271,13 +271,15 @@ class Purchases {
     String productIdentifier, {
     UpgradeInfo? upgradeInfo,
     PurchaseType type = PurchaseType.subs,
+    bool? isPersonalizedPrice,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
-      'type': describeEnum(type)
+      'type': describeEnum(type),
+      'isPersonalizedPrice': isPersonalizedPrice,
     });
     return customerInfo;
   }
@@ -295,13 +297,15 @@ class Purchases {
   static Future<CustomerInfo> purchasePackage(
     Package packageToPurchase, {
     UpgradeInfo? upgradeInfo,
+    bool? isPersonalizedPrice,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'oldSKU': upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode?.index
+      'prorationMode': prorationMode?.index,
+      'isPersonalizedPrice': isPersonalizedPrice,
     });
     return customerInfo;
   }
@@ -321,6 +325,7 @@ class Purchases {
   static Future<CustomerInfo> purchaseSubscriptionOption(
     SubscriptionOption subscriptionOption, {
     UpgradeInfo? upgradeInfo,
+    bool? isPersonalizedPrice,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo =
@@ -329,6 +334,7 @@ class Purchases {
       'optionIdentifier': subscriptionOption.id,
       'oldSKU': upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
+      'isPersonalizedPrice': isPersonalizedPrice,
     });
     return customerInfo;
   }
