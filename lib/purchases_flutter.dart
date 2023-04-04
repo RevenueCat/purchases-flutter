@@ -327,6 +327,10 @@ class Purchases {
     UpgradeInfo? upgradeInfo,
     bool? isPersonalizedPrice,
   }) async {
+    if (defaultTargetPlatform != TargetPlatform.android) {
+      throw UnsupportedPlatformException();
+    }
+
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo =
         await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
