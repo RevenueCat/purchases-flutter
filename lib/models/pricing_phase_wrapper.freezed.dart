@@ -21,15 +21,15 @@ PricingPhase _$PricingPhaseFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PricingPhase {
   /// Billing period for which the PricingPhase applies
-  @JsonKey(name: 'billingPeriod')
-  Period get billingPeriod => throw _privateConstructorUsedError;
+  @JsonKey(name: 'billingPeriod', nullable: true)
+  Period? get billingPeriod => throw _privateConstructorUsedError;
 
   /// Recurrence mode of the PricingPhase
   @JsonKey(name: 'recurrenceMode', nullable: true)
   RecurrenceMode? get recurrenceMode => throw _privateConstructorUsedError;
 
   /// Number of cycles for which the pricing phase applies.
-  /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
+  /// Null for infiniteRecurring or finiteRecurring recurrence modes.
   @JsonKey(name: 'billingCycleCount', nullable: true)
   int? get billingCycleCount => throw _privateConstructorUsedError;
 
@@ -50,8 +50,8 @@ abstract class $PricingPhaseCopyWith<$Res> {
       _$PricingPhaseCopyWithImpl<$Res, PricingPhase>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'billingPeriod')
-          Period billingPeriod,
+      {@JsonKey(name: 'billingPeriod', nullable: true)
+          Period? billingPeriod,
       @JsonKey(name: 'recurrenceMode', nullable: true)
           RecurrenceMode? recurrenceMode,
       @JsonKey(name: 'billingCycleCount', nullable: true)
@@ -59,7 +59,7 @@ abstract class $PricingPhaseCopyWith<$Res> {
       @JsonKey(name: 'price')
           Price price});
 
-  $PeriodCopyWith<$Res> get billingPeriod;
+  $PeriodCopyWith<$Res>? get billingPeriod;
   $PriceCopyWith<$Res> get price;
 }
 
@@ -76,16 +76,16 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? billingPeriod = null,
+    Object? billingPeriod = freezed,
     Object? recurrenceMode = freezed,
     Object? billingCycleCount = freezed,
     Object? price = null,
   }) {
     return _then(_value.copyWith(
-      billingPeriod: null == billingPeriod
+      billingPeriod: freezed == billingPeriod
           ? _value.billingPeriod
           : billingPeriod // ignore: cast_nullable_to_non_nullable
-              as Period,
+              as Period?,
       recurrenceMode: freezed == recurrenceMode
           ? _value.recurrenceMode
           : recurrenceMode // ignore: cast_nullable_to_non_nullable
@@ -103,8 +103,12 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
 
   @override
   @pragma('vm:prefer-inline')
-  $PeriodCopyWith<$Res> get billingPeriod {
-    return $PeriodCopyWith<$Res>(_value.billingPeriod, (value) {
+  $PeriodCopyWith<$Res>? get billingPeriod {
+    if (_value.billingPeriod == null) {
+      return null;
+    }
+
+    return $PeriodCopyWith<$Res>(_value.billingPeriod!, (value) {
       return _then(_value.copyWith(billingPeriod: value) as $Val);
     });
   }
@@ -127,8 +131,8 @@ abstract class _$$_PricingPhaseCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'billingPeriod')
-          Period billingPeriod,
+      {@JsonKey(name: 'billingPeriod', nullable: true)
+          Period? billingPeriod,
       @JsonKey(name: 'recurrenceMode', nullable: true)
           RecurrenceMode? recurrenceMode,
       @JsonKey(name: 'billingCycleCount', nullable: true)
@@ -137,7 +141,7 @@ abstract class _$$_PricingPhaseCopyWith<$Res>
           Price price});
 
   @override
-  $PeriodCopyWith<$Res> get billingPeriod;
+  $PeriodCopyWith<$Res>? get billingPeriod;
   @override
   $PriceCopyWith<$Res> get price;
 }
@@ -153,16 +157,16 @@ class __$$_PricingPhaseCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? billingPeriod = null,
+    Object? billingPeriod = freezed,
     Object? recurrenceMode = freezed,
     Object? billingCycleCount = freezed,
     Object? price = null,
   }) {
     return _then(_$_PricingPhase(
-      null == billingPeriod
+      freezed == billingPeriod
           ? _value.billingPeriod
           : billingPeriod // ignore: cast_nullable_to_non_nullable
-              as Period,
+              as Period?,
       freezed == recurrenceMode
           ? _value.recurrenceMode
           : recurrenceMode // ignore: cast_nullable_to_non_nullable
@@ -183,7 +187,7 @@ class __$$_PricingPhaseCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PricingPhase implements _PricingPhase {
   const _$_PricingPhase(
-      @JsonKey(name: 'billingPeriod')
+      @JsonKey(name: 'billingPeriod', nullable: true)
           this.billingPeriod,
       @JsonKey(name: 'recurrenceMode', nullable: true)
           this.recurrenceMode,
@@ -197,8 +201,8 @@ class _$_PricingPhase implements _PricingPhase {
 
   /// Billing period for which the PricingPhase applies
   @override
-  @JsonKey(name: 'billingPeriod')
-  final Period billingPeriod;
+  @JsonKey(name: 'billingPeriod', nullable: true)
+  final Period? billingPeriod;
 
   /// Recurrence mode of the PricingPhase
   @override
@@ -206,7 +210,7 @@ class _$_PricingPhase implements _PricingPhase {
   final RecurrenceMode? recurrenceMode;
 
   /// Number of cycles for which the pricing phase applies.
-  /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
+  /// Null for infiniteRecurring or finiteRecurring recurrence modes.
   @override
   @JsonKey(name: 'billingCycleCount', nullable: true)
   final int? billingCycleCount;
@@ -256,8 +260,8 @@ class _$_PricingPhase implements _PricingPhase {
 
 abstract class _PricingPhase implements PricingPhase {
   const factory _PricingPhase(
-      @JsonKey(name: 'billingPeriod')
-          final Period billingPeriod,
+      @JsonKey(name: 'billingPeriod', nullable: true)
+          final Period? billingPeriod,
       @JsonKey(name: 'recurrenceMode', nullable: true)
           final RecurrenceMode? recurrenceMode,
       @JsonKey(name: 'billingCycleCount', nullable: true)
@@ -271,8 +275,8 @@ abstract class _PricingPhase implements PricingPhase {
   @override
 
   /// Billing period for which the PricingPhase applies
-  @JsonKey(name: 'billingPeriod')
-  Period get billingPeriod;
+  @JsonKey(name: 'billingPeriod', nullable: true)
+  Period? get billingPeriod;
   @override
 
   /// Recurrence mode of the PricingPhase
@@ -281,7 +285,7 @@ abstract class _PricingPhase implements PricingPhase {
   @override
 
   /// Number of cycles for which the pricing phase applies.
-  /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
+  /// Null for infiniteRecurring or finiteRecurring recurrence modes.
   @JsonKey(name: 'billingCycleCount', nullable: true)
   int? get billingCycleCount;
   @override

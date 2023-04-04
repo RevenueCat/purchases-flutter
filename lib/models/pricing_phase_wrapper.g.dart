@@ -7,7 +7,10 @@ part of 'pricing_phase_wrapper.dart';
 // **************************************************************************
 
 _$_PricingPhase _$$_PricingPhaseFromJson(Map json) => _$_PricingPhase(
-      Period.fromJson(Map<String, dynamic>.from(json['billingPeriod'] as Map)),
+      json['billingPeriod'] == null
+          ? null
+          : Period.fromJson(
+              Map<String, dynamic>.from(json['billingPeriod'] as Map)),
       $enumDecodeNullable(_$RecurrenceModeEnumMap, json['recurrenceMode']),
       json['billingCycleCount'] as int?,
       Price.fromJson(Map<String, dynamic>.from(json['price'] as Map)),
@@ -15,7 +18,7 @@ _$_PricingPhase _$$_PricingPhaseFromJson(Map json) => _$_PricingPhase(
 
 Map<String, dynamic> _$$_PricingPhaseToJson(_$_PricingPhase instance) =>
     <String, dynamic>{
-      'billingPeriod': instance.billingPeriod.toJson(),
+      'billingPeriod': instance.billingPeriod?.toJson(),
       'recurrenceMode': _$RecurrenceModeEnumMap[instance.recurrenceMode],
       'billingCycleCount': instance.billingCycleCount,
       'price': instance.price.toJson(),

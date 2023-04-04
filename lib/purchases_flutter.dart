@@ -267,6 +267,13 @@ class Purchases {
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
+  ///
+  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
     UpgradeInfo? upgradeInfo,
@@ -294,6 +301,13 @@ class Purchases {
   ///
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
+  ///
+  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
   static Future<CustomerInfo> purchasePackage(
     Package packageToPurchase, {
     UpgradeInfo? upgradeInfo,
@@ -322,6 +336,13 @@ class Purchases {
   ///
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
+  ///
+  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
   static Future<CustomerInfo> purchaseSubscriptionOption(
     SubscriptionOption subscriptionOption, {
     UpgradeInfo? upgradeInfo,

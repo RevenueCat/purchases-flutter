@@ -108,6 +108,8 @@ class _PurchasesFlutterApiTest {
     customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         isPersonalizedPrice: true);
+    customerInfo =
+        await Purchases.purchaseSubscriptionOption(subscriptionOption);
   }
 
   void _checkPurchaseDiscountedProduct(

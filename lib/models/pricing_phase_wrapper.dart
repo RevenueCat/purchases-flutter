@@ -12,14 +12,14 @@ part 'pricing_phase_wrapper.g.dart';
 class PricingPhase with _$PricingPhase {
   const factory PricingPhase(
     /// Billing period for which the PricingPhase applies
-    @JsonKey(name: 'billingPeriod') Period billingPeriod,
+    @JsonKey(name: 'billingPeriod', nullable: true) Period? billingPeriod,
 
     /// Recurrence mode of the PricingPhase
     @JsonKey(name: 'recurrenceMode', nullable: true)
         RecurrenceMode? recurrenceMode,
 
     /// Number of cycles for which the pricing phase applies.
-    /// Null for INFINITE_RECURRING or NON_RECURRING recurrence modes.
+    /// Null for infiniteRecurring or finiteRecurring recurrence modes.
     @JsonKey(name: 'billingCycleCount', nullable: true) int? billingCycleCount,
 
     /// Price of the PricingPhase

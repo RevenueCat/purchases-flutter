@@ -20,7 +20,7 @@ Period _$PeriodFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Period {
-  /// The number of period units: DAY, WEEK, MONTH, YEAR, UNKNOWN
+  /// The number of period units: day, week, month, year, unknown
   @JsonKey(name: 'unit')
   Unit get unit => throw _privateConstructorUsedError;
 
@@ -116,7 +116,7 @@ class _$_Period implements _Period {
   factory _$_Period.fromJson(Map<String, dynamic> json) =>
       _$$_PeriodFromJson(json);
 
-  /// The number of period units: DAY, WEEK, MONTH, YEAR, UNKNOWN
+  /// The number of period units: day, week, month, year, unknown
   @override
   @JsonKey(name: 'unit')
   final Unit unit;
@@ -166,7 +166,7 @@ abstract class _Period implements Period {
 
   @override
 
-  /// The number of period units: DAY, WEEK, MONTH, YEAR, UNKNOWN
+  /// The number of period units: day, week, month, year, unknown
   @JsonKey(name: 'unit')
   Unit get unit;
   @override

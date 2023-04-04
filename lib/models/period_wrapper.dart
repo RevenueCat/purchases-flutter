@@ -8,7 +8,7 @@ part 'period_wrapper.g.dart';
 /// Contains all the details associated with a Period
 class Period with _$Period {
   const factory Period(
-    /// The number of period units: DAY, WEEK, MONTH, YEAR, UNKNOWN
+    /// The number of period units: day, week, month, year, unknown
     @JsonKey(name: 'unit') Unit unit,
 
     /// The increment of time that a subscription period is specified in
