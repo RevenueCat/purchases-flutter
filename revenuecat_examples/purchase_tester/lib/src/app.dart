@@ -91,11 +91,11 @@ class _MyAppState extends State<InitialScreen> {
     } else {
       final isPro =
           _customerInfo.entitlements.active.containsKey(entitlementKey);
-      if (isPro) {
-        return const CatsScreen();
-      } else {
-        return const UpsellScreen();
-      }
+      // if (isPro) {
+      //   return const CatsScreen();
+      // } else {
+      return const UpsellScreen();
+      // }
     }
   }
 }

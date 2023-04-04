@@ -22,7 +22,7 @@ class _PricingPhaseApiTest {
   }
 
   void _checkProperties(PricingPhase pricingPhase) {
-    Period billingPeriod = pricingPhase.billingPeriod;
+    Period? billingPeriod = pricingPhase.billingPeriod;
     RecurrenceMode? recurrenceMode = pricingPhase.recurrenceMode;
     int? billingCycleCount = pricingPhase.billingCycleCount;
     Price price = pricingPhase.price;
