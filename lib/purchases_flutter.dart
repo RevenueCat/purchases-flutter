@@ -288,12 +288,13 @@ class Purchases {
   /// for more info.
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
-    UpgradeInfo? upgradeInfo,
+    @Deprecated('Use ProductChangeInfo') UpgradeInfo? upgradeInfo,
     ProductChangeInfo? productChangeInfo,
     PurchaseType type = PurchaseType.subs,
     bool? isPersonalizedPrice,
   }) async {
-    final prorationMode = upgradeInfo?.prorationMode;
+    final prorationMode =
+        productChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'oldProductIdentifer':
@@ -328,11 +329,12 @@ class Purchases {
   /// for more info.
   static Future<CustomerInfo> purchasePackage(
     Package packageToPurchase, {
-    UpgradeInfo? upgradeInfo,
+    @Deprecated('Use ProductChangeInfo') UpgradeInfo? upgradeInfo,
     ProductChangeInfo? productChangeInfo,
     bool? isPersonalizedPrice,
   }) async {
-    final prorationMode = upgradeInfo?.prorationMode;
+    final prorationMode =
+        productChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
@@ -354,9 +356,6 @@ class Purchases {
   ///
   /// [packageToPurchase] The Package you wish to purchase
   ///
-  /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
-  /// containing the oldSKU and the optional prorationMode.
-  ///
   /// [productChangeInfo] Android only. Optional ProductChangeInfo you wish to
   /// change from containing the oldProductIdentifer and the
   /// optional prorationMode.
@@ -369,7 +368,6 @@ class Purchases {
   /// for more info.
   static Future<CustomerInfo> purchaseSubscriptionOption(
     SubscriptionOption subscriptionOption, {
-    UpgradeInfo? upgradeInfo,
     ProductChangeInfo? productChangeInfo,
     bool? isPersonalizedPrice,
   }) async {
@@ -377,13 +375,12 @@ class Purchases {
       throw UnsupportedPlatformException();
     }
 
-    final prorationMode = upgradeInfo?.prorationMode;
+    final prorationMode = productChangeInfo?.prorationMode;
     final customerInfo =
         await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
       'productIdentifier': subscriptionOption.productId,
       'optionIdentifier': subscriptionOption.id,
-      'oldProductIdentifer':
-          productChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
+      'oldProductIdentifer': productChangeInfo?.oldProductIdentifer,
       'prorationMode': prorationMode?.index,
       'isPersonalizedPrice': isPersonalizedPrice,
     });
@@ -986,6 +983,7 @@ class UpgradeInfo {
   ProrationMode? prorationMode;
 
   /// Constructs an UpgradeInfo
+  @Deprecated('Use ProductChangeInfo')
   UpgradeInfo(this.oldSKU, {this.prorationMode});
 }
 

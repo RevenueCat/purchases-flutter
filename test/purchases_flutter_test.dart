@@ -639,11 +639,10 @@ void main() {
         null,
         null,
       );
-      final purchasePackageResult =
-          await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
+      await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
 
       fail('an exception should have been thrown');
-    } on UnsupportedPlatformException catch (e) {
+    } on UnsupportedPlatformException catch (_) {
       catchCalled = true;
     }
 
@@ -924,7 +923,9 @@ void main() {
     ]);
   });
 
-  test('syncObserverModeAmazonPurchase calls channel correctly with null price and isoCurrencyCode', () async {
+  test(
+      'syncObserverModeAmazonPurchase calls channel correctly with null price and isoCurrencyCode',
+      () async {
     await Purchases.syncObserverModeAmazonPurchase(
       'productID_test',
       'receiptID_test',

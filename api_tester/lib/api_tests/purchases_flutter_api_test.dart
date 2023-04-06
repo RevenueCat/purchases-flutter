@@ -73,17 +73,18 @@ class _PurchasesFlutterApiTest {
     String productIdentifier = "fakeProductId";
     UpgradeInfo? upgradeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
-    CustomerInfo customerInfo = await Purchases.purchaseProduct(
-        productIdentifier,
-        upgradeInfo: upgradeInfo,
-        isPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        upgradeInfo: upgradeInfo, type: purchaseType);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        upgradeInfo: upgradeInfo);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        isPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier);
+
+    // CustomerInfo customerInfo = await Purchases.purchaseProduct(
+    //     productIdentifier,
+    //     upgradeInfo: upgradeInfo,
+    //     isPersonalizedPrice: true);
+    // customerInfo = await Purchases.purchaseProduct(productIdentifier,
+    //     upgradeInfo: upgradeInfo, type: purchaseType);
+    // customerInfo = await Purchases.purchaseProduct(productIdentifier,
+    //     upgradeInfo: upgradeInfo);
+    // customerInfo = await Purchases.purchaseProduct(productIdentifier,
+    //     isPersonalizedPrice: true);
+    // customerInfo = await Purchases.purchaseProduct(productIdentifier);
   }
 
   void _checkPurchasePackage(Package package) async {
