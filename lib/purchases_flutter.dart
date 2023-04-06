@@ -3,9 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'google_product_change.dart';
 import 'object_wrappers.dart';
+import 'upgrade_info.dart';
 
+export 'google_product_change.dart';
 export 'object_wrappers.dart';
+export 'upgrade_info.dart';
 
 /// Used to handle async updates from [Purchases].
 /// Should be implemented to receive updates when the [CustomerInfo] changes.
@@ -269,18 +273,18 @@ class Purchases {
   /// [productIdentifier] The product identifier of the product you want to
   /// purchase.
   ///
-  /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
+  /// [upgradeInfo] Android and Google Play only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
-  /// [productChangeInfo] Android only. Optional ProductChangeInfo you wish to
-  /// change from containing the oldProductIdentifer and the
+  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// change from containing the googleOldProductIdentifer and the
   /// optional prorationMode.
   ///
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
   ///
-  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
   /// customize for you" in the purchase dialog when true.
@@ -288,20 +292,20 @@ class Purchases {
   /// for more info.
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
-    @Deprecated('Use ProductChangeInfo') UpgradeInfo? upgradeInfo,
-    ProductChangeInfo? productChangeInfo,
+    @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
     PurchaseType type = PurchaseType.subs,
-    bool? isPersonalizedPrice,
+    GoogleProductChangeInfo? googleProductChangeInfo,
+    bool? googleIsPersonalizedPrice,
   }) async {
     final prorationMode =
-        productChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
+        googleProductChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
-      'oldProductIdentifer':
-          productChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode?.index,
       'type': describeEnum(type),
-      'isPersonalizedPrice': isPersonalizedPrice,
+      'googleOldProductIdentifer':
+          googleProductChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
+      'googleProrationMode': prorationMode?.index,
+      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
     return customerInfo;
   }
@@ -314,14 +318,14 @@ class Purchases {
   ///
   /// [packageToPurchase] The Package you wish to purchase
   ///
-  /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
+  /// [upgradeInfo] Android and Google Play only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
-  /// [productChangeInfo] Android only. Optional ProductChangeInfo you wish to
-  /// change from containing the oldProductIdentifer and the
+  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// change from containing the googleOldProductIdentifer and the
   /// optional prorationMode.
   ///
-  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
   /// customize for you" in the purchase dialog when true.
@@ -329,19 +333,19 @@ class Purchases {
   /// for more info.
   static Future<CustomerInfo> purchasePackage(
     Package packageToPurchase, {
-    @Deprecated('Use ProductChangeInfo') UpgradeInfo? upgradeInfo,
-    ProductChangeInfo? productChangeInfo,
-    bool? isPersonalizedPrice,
+    @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
+    GoogleProductChangeInfo? googleProductChangeInfo,
+    bool? googleIsPersonalizedPrice,
   }) async {
     final prorationMode =
-        productChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
+        googleProductChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'oldProductIdentifer':
-          productChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode?.index,
-      'isPersonalizedPrice': isPersonalizedPrice,
+      'googleOldProductIdentifer':
+          googleProductChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
+      'googleProrationMode': prorationMode?.index,
+      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
     return customerInfo;
   }
@@ -356,11 +360,11 @@ class Purchases {
   ///
   /// [packageToPurchase] The Package you wish to purchase
   ///
-  /// [productChangeInfo] Android only. Optional ProductChangeInfo you wish to
-  /// change from containing the oldProductIdentifer and the
+  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// change from containing the googleOldProductIdentifer and the
   /// optional prorationMode.
   ///
-  /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
+  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
   /// customize for you" in the purchase dialog when true.
@@ -368,21 +372,21 @@ class Purchases {
   /// for more info.
   static Future<CustomerInfo> purchaseSubscriptionOption(
     SubscriptionOption subscriptionOption, {
-    ProductChangeInfo? productChangeInfo,
-    bool? isPersonalizedPrice,
+    GoogleProductChangeInfo? googleProductChangeInfo,
+    bool? googleIsPersonalizedPrice,
   }) async {
     if (defaultTargetPlatform != TargetPlatform.android) {
       throw UnsupportedPlatformException();
     }
 
-    final prorationMode = productChangeInfo?.prorationMode;
+    final prorationMode = googleProductChangeInfo?.prorationMode;
     final customerInfo =
         await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
       'productIdentifier': subscriptionOption.productId,
       'optionIdentifier': subscriptionOption.id,
-      'oldProductIdentifer': productChangeInfo?.oldProductIdentifer,
-      'prorationMode': prorationMode?.index,
-      'isPersonalizedPrice': isPersonalizedPrice,
+      'googleOldProductIdentifer': googleProductChangeInfo?.oldProductIdentifer,
+      'googleProrationMode': prorationMode?.index,
+      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
     return customerInfo;
   }
@@ -959,64 +963,6 @@ class Purchases {
     final response = Map<String, dynamic>.from(result!);
     return response;
   }
-}
-
-class ProductChangeInfo {
-  /// The oldProductIdentifer to change from.
-  String oldProductIdentifer;
-
-  /// The [ProrationMode] to use when changing from the given oldProductIdentifer.
-  ProrationMode? prorationMode;
-
-  /// Constructs an ProductChangeInfo
-  ProductChangeInfo(this.oldProductIdentifer, {this.prorationMode});
-}
-
-/// This class holds the information used when upgrading from another sku.
-/// To be used with purchaseProduct and purchasePackage.
-@Deprecated('Use ProductChangeInfo')
-class UpgradeInfo {
-  /// The oldSKU to upgrade from.
-  String oldSKU;
-
-  /// The [ProrationMode] to use when upgrading the given oldSKU.
-  ProrationMode? prorationMode;
-
-  /// Constructs an UpgradeInfo
-  @Deprecated('Use ProductChangeInfo')
-  UpgradeInfo(this.oldSKU, {this.prorationMode});
-}
-
-/// Replace SKU's ProrationMode.
-enum ProrationMode {
-  /// The Upgrade or Downgrade policy is unknown.
-  @Deprecated('Use a supported ProrationMode')
-  unknownSubscriptionUpgradeDowngradePolicy,
-
-  /// Replacement takes effect immediately, and the remaining time will be
-  /// prorated and credited to the user. This is the current default behavior.
-  immediateWithTimeProration,
-
-  // LATER: Reenable when supported by Android V6
-  /// Replacement takes effect immediately, and the billing cycle remains the
-  /// same. The price for the remaining period will be charged. This option is
-  /// only available for subscription upgrade.
-  // immediateAndChargeProratedPrice,
-
-  /// Replacement takes effect immediately, and the new price will be charged on
-  /// next recurrence time. The billing cycle stays the same.
-  immediateWithoutProration,
-
-  // LATER: Reenable when supported by Android V6
-  /// Replacement takes effect when the old plan expires, and the new price will
-  /// be charged at the same time.
-  // deferred,
-
-  // LATER: Reenable when supported by Android V6
-  /// Replacement takes effect immediately, and the user is charged full price
-  /// of new plan and is given a full billing cycle of subscription,
-  /// plus remaining prorated time from the old plan.
-  // immediateAndChargeFullPrice
 }
 
 /// Supported SKU types.

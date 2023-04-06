@@ -156,27 +156,27 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "purchaseProduct":
                 String productIdentifier = call.argument("productIdentifier");
-                String oldProductIdentifer = call.argument("oldProductIdentifer");
-                Integer prorationMode = call.argument("prorationMode");
-                Boolean isPersonalizedPrice = call.argument("isPersonalizedPrice");
+                String googleOldProductIdentifer = call.argument("googleOldProductIdentifer");
+                Integer googleProrationMode = call.argument("googleProrationMode");
+                Boolean googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 type = call.argument("type");
-                purchaseProduct(productIdentifier, type, oldProductIdentifer, prorationMode, isPersonalizedPrice, result);
+                purchaseProduct(productIdentifier, type, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);
                 break;
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
                 String offeringIdentifier = call.argument("offeringIdentifier");
-                oldProductIdentifer = call.argument("oldProductIdentifer");
-                prorationMode = call.argument("prorationMode");
-                isPersonalizedPrice = call.argument("isPersonalizedPrice");
-                purchasePackage(packageIdentifier, offeringIdentifier, oldProductIdentifer, prorationMode, isPersonalizedPrice, result);
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifer");
+                googleProrationMode = call.argument("googleProrationMode");
+                googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
+                purchasePackage(packageIdentifier, offeringIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);
                 break;
             case "purchaseSubscriptionOption":
                 productIdentifier = call.argument("productIdentifier");
                 String optionIdentifier = call.argument("optionIdentifier");
-                oldProductIdentifer = call.argument("oldProductIdentifer");
-                prorationMode = call.argument("prorationMode");
-                isPersonalizedPrice = call.argument("isPersonalizedPrice");
-                purchaseSubscriptionOption(productIdentifier, optionIdentifier, oldProductIdentifer, prorationMode, isPersonalizedPrice, result);
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifer");
+                googleProrationMode = call.argument("googleProrationMode");
+                googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
+                purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);
                 break;
             case "getAppUserID":
                 getAppUserID(result);
