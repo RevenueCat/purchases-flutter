@@ -355,10 +355,10 @@ class _PurchasesFlutterApiTest {
     switch (prorationMode) {
       case ProrationMode.unknownSubscriptionUpgradeDowngradePolicy:
       case ProrationMode.immediateWithTimeProration:
-      case ProrationMode.immediateAndChargeProratedPrice:
+      // case ProrationMode.immediateAndChargeProratedPrice:
       case ProrationMode.immediateWithoutProration:
-      case ProrationMode.deferred:
-      case ProrationMode.immediateAndChargeFullPrice:
+        // case ProrationMode.deferred:
+        // case ProrationMode.immediateAndChargeFullPrice:
         break;
     }
   }

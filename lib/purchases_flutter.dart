@@ -272,6 +272,10 @@ class Purchases {
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
+  /// [productChangeInfo] Android only. Optional ProductChangeInfo you wish to
+  /// change from containing the oldProductIdentifer and the
+  /// optional prorationMode.
+  ///
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
@@ -285,13 +289,15 @@ class Purchases {
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
     UpgradeInfo? upgradeInfo,
+    ProductChangeInfo? productChangeInfo,
     PurchaseType type = PurchaseType.subs,
     bool? isPersonalizedPrice,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
-      'oldSKU': upgradeInfo?.oldSKU,
+      'oldProductIdentifer':
+          productChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
       'type': describeEnum(type),
       'isPersonalizedPrice': isPersonalizedPrice,
@@ -310,6 +316,10 @@ class Purchases {
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
+  /// [productChangeInfo] Android only. Optional ProductChangeInfo you wish to
+  /// change from containing the oldProductIdentifer and the
+  /// optional prorationMode.
+  ///
   /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
@@ -319,13 +329,15 @@ class Purchases {
   static Future<CustomerInfo> purchasePackage(
     Package packageToPurchase, {
     UpgradeInfo? upgradeInfo,
+    ProductChangeInfo? productChangeInfo,
     bool? isPersonalizedPrice,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'oldSKU': upgradeInfo?.oldSKU,
+      'oldProductIdentifer':
+          productChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
       'isPersonalizedPrice': isPersonalizedPrice,
     });
@@ -345,6 +357,10 @@ class Purchases {
   /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
+  /// [productChangeInfo] Android only. Optional ProductChangeInfo you wish to
+  /// change from containing the oldProductIdentifer and the
+  /// optional prorationMode.
+  ///
   /// [isPersonalizedPrice] Android only. Optional isPersonalizedPrice indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
@@ -354,6 +370,7 @@ class Purchases {
   static Future<CustomerInfo> purchaseSubscriptionOption(
     SubscriptionOption subscriptionOption, {
     UpgradeInfo? upgradeInfo,
+    ProductChangeInfo? productChangeInfo,
     bool? isPersonalizedPrice,
   }) async {
     if (defaultTargetPlatform != TargetPlatform.android) {
@@ -365,7 +382,8 @@ class Purchases {
         await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
       'productIdentifier': subscriptionOption.productId,
       'optionIdentifier': subscriptionOption.id,
-      'oldSKU': upgradeInfo?.oldSKU,
+      'oldProductIdentifer':
+          productChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
       'prorationMode': prorationMode?.index,
       'isPersonalizedPrice': isPersonalizedPrice,
     });
@@ -946,8 +964,20 @@ class Purchases {
   }
 }
 
+class ProductChangeInfo {
+  /// The oldProductIdentifer to change from.
+  String oldProductIdentifer;
+
+  /// The [ProrationMode] to use when changing from the given oldProductIdentifer.
+  ProrationMode? prorationMode;
+
+  /// Constructs an ProductChangeInfo
+  ProductChangeInfo(this.oldProductIdentifer, {this.prorationMode});
+}
+
 /// This class holds the information used when upgrading from another sku.
 /// To be used with purchaseProduct and purchasePackage.
+@Deprecated('Use ProductChangeInfo')
 class UpgradeInfo {
   /// The oldSKU to upgrade from.
   String oldSKU;
@@ -962,29 +992,33 @@ class UpgradeInfo {
 /// Replace SKU's ProrationMode.
 enum ProrationMode {
   /// The Upgrade or Downgrade policy is unknown.
+  @Deprecated('Use a supported ProrationMode')
   unknownSubscriptionUpgradeDowngradePolicy,
 
   /// Replacement takes effect immediately, and the remaining time will be
   /// prorated and credited to the user. This is the current default behavior.
   immediateWithTimeProration,
 
+  // LATER: Reenable when supported by Android V6
   /// Replacement takes effect immediately, and the billing cycle remains the
   /// same. The price for the remaining period will be charged. This option is
   /// only available for subscription upgrade.
-  immediateAndChargeProratedPrice,
+  // immediateAndChargeProratedPrice,
 
   /// Replacement takes effect immediately, and the new price will be charged on
   /// next recurrence time. The billing cycle stays the same.
   immediateWithoutProration,
 
+  // LATER: Reenable when supported by Android V6
   /// Replacement takes effect when the old plan expires, and the new price will
   /// be charged at the same time.
-  deferred,
+  // deferred,
 
+  // LATER: Reenable when supported by Android V6
   /// Replacement takes effect immediately, and the user is charged full price
   /// of new plan and is given a full billing cycle of subscription,
   /// plus remaining prorated time from the old plan.
-  immediateAndChargeFullPrice
+  // immediateAndChargeFullPrice
 }
 
 /// Supported SKU types.

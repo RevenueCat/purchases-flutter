@@ -156,27 +156,27 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "purchaseProduct":
                 String productIdentifier = call.argument("productIdentifier");
-                String oldSKU = call.argument("oldSKU"); // TODO: Rename
-                Integer prorationMode = call.argument("prorationMode"); // TODO: Rename
-                Boolean isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
+                String oldProductIdentifer = call.argument("oldProductIdentifer");
+                Integer prorationMode = call.argument("prorationMode");
+                Boolean isPersonalizedPrice = call.argument("isPersonalizedPrice");
                 type = call.argument("type");
-                purchaseProduct(productIdentifier, type, oldSKU, prorationMode, isPersonalizedPrice, result);
+                purchaseProduct(productIdentifier, type, oldProductIdentifer, prorationMode, isPersonalizedPrice, result);
                 break;
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
                 String offeringIdentifier = call.argument("offeringIdentifier");
-                oldSKU = call.argument("oldSKU"); // TODO: Rename
-                prorationMode = call.argument("prorationMode"); // TODO: Rename
-                isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
-                purchasePackage(packageIdentifier, offeringIdentifier, oldSKU, prorationMode, isPersonalizedPrice, result);
+                oldProductIdentifer = call.argument("oldProductIdentifer");
+                prorationMode = call.argument("prorationMode");
+                isPersonalizedPrice = call.argument("isPersonalizedPrice");
+                purchasePackage(packageIdentifier, offeringIdentifier, oldProductIdentifer, prorationMode, isPersonalizedPrice, result);
                 break;
             case "purchaseSubscriptionOption":
                 productIdentifier = call.argument("productIdentifier");
                 String optionIdentifier = call.argument("optionIdentifier");
-                oldSKU = call.argument("oldSKU"); // TODO: Rename
-                prorationMode = call.argument("prorationMode"); // TODO: Rename
-                isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
-                purchaseSubscriptionOption(productIdentifier, optionIdentifier, oldSKU, prorationMode, isPersonalizedPrice, result);
+                oldProductIdentifer = call.argument("oldProductIdentifer");
+                prorationMode = call.argument("prorationMode");
+                isPersonalizedPrice = call.argument("isPersonalizedPrice");
+                purchaseSubscriptionOption(productIdentifier, optionIdentifier, oldProductIdentifer, prorationMode, isPersonalizedPrice, result);
                 break;
             case "getAppUserID":
                 getAppUserID(result);
