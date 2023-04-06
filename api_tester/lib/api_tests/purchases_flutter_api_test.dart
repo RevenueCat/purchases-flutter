@@ -72,39 +72,44 @@ class _PurchasesFlutterApiTest {
   void _checkPurchaseProduct() async {
     String productIdentifier = "fakeProductId";
     UpgradeInfo? upgradeInfo;
+    ProductChangeInfo? productChangeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
-
-    // CustomerInfo customerInfo = await Purchases.purchaseProduct(
-    //     productIdentifier,
-    //     upgradeInfo: upgradeInfo,
-    //     isPersonalizedPrice: true);
-    // customerInfo = await Purchases.purchaseProduct(productIdentifier,
-    //     upgradeInfo: upgradeInfo, type: purchaseType);
-    // customerInfo = await Purchases.purchaseProduct(productIdentifier,
-    //     upgradeInfo: upgradeInfo);
-    // customerInfo = await Purchases.purchaseProduct(productIdentifier,
-    //     isPersonalizedPrice: true);
-    // customerInfo = await Purchases.purchaseProduct(productIdentifier);
+    CustomerInfo customerInfo = await Purchases.purchaseProduct(
+        productIdentifier,
+        upgradeInfo: upgradeInfo,
+        isPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        upgradeInfo: upgradeInfo, type: purchaseType);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        productChangeInfo: productChangeInfo);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        upgradeInfo: upgradeInfo);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        isPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier);
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
+    ProductChangeInfo? productChangeInfo;
     CustomerInfo customerInfo =
         await Purchases.purchasePackage(package, upgradeInfo: upgradeInfo);
+    customerInfo = await Purchases.purchasePackage(package,
+        productChangeInfo: productChangeInfo, isPersonalizedPrice: true);
     customerInfo = await Purchases.purchasePackage(package,
         upgradeInfo: upgradeInfo, isPersonalizedPrice: true);
     customerInfo =
         await Purchases.purchasePackage(package, isPersonalizedPrice: true);
   }
 
-  void _checkPurchaseSubscriptionOption(
-      SubscriptionOption subscriptionOption, UpgradeInfo? upgradeInfo) async {
+  void _checkPurchaseSubscriptionOption(SubscriptionOption subscriptionOption,
+      ProductChangeInfo? productChangeInfo) async {
     CustomerInfo customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
-        upgradeInfo: upgradeInfo);
+        productChangeInfo: productChangeInfo);
     customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
-        upgradeInfo: upgradeInfo,
+        productChangeInfo: productChangeInfo,
         isPersonalizedPrice: true);
     customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
