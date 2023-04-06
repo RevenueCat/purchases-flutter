@@ -302,8 +302,8 @@ class Purchases {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'type': describeEnum(type),
-      'googleOldProductIdentifer':
-          googleProductChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
+      'googleOldProductIdentifier':
+          googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode?.index,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
@@ -342,8 +342,8 @@ class Purchases {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'googleOldProductIdentifer':
-          googleProductChangeInfo?.oldProductIdentifer ?? upgradeInfo?.oldSKU,
+      'googleOldProductIdentifier':
+          googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode?.index,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
@@ -384,7 +384,8 @@ class Purchases {
         await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
       'productIdentifier': subscriptionOption.productId,
       'optionIdentifier': subscriptionOption.id,
-      'googleOldProductIdentifer': googleProductChangeInfo?.oldProductIdentifer,
+      'googleOldProductIdentifier':
+          googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode?.index,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });

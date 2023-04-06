@@ -358,14 +358,34 @@ class _PurchasesFlutterApiTest {
     ProrationMode? storedProrationMode = purchaseInfo.prorationMode;
   }
 
+  void _checkGoogleProductChangeInfoInfo() {
+    String oldProductIdentifier = "fakeOldProductIdentifier";
+    GoogleProrationMode? prorationMode;
+
+    GoogleProductChangeInfo purchaseInfo =
+        GoogleProductChangeInfo(oldProductIdentifier);
+    purchaseInfo = GoogleProductChangeInfo(oldProductIdentifier,
+        prorationMode: prorationMode);
+    String storedOldProductIdentifier = purchaseInfo.oldProductIdentifier;
+    GoogleProrationMode? storedProrationMode = purchaseInfo.prorationMode;
+  }
+
   void _checkProrationMode(ProrationMode prorationMode) {
     switch (prorationMode) {
       case ProrationMode.unknownSubscriptionUpgradeDowngradePolicy:
       case ProrationMode.immediateWithTimeProration:
-      // case ProrationMode.immediateAndChargeProratedPrice:
+      case ProrationMode.immediateAndChargeProratedPrice:
       case ProrationMode.immediateWithoutProration:
-        // case ProrationMode.deferred:
-        // case ProrationMode.immediateAndChargeFullPrice:
+      case ProrationMode.deferred:
+      case ProrationMode.immediateAndChargeFullPrice:
+        break;
+    }
+  }
+
+  void _checkGoogleProrationMode(GoogleProrationMode prorationMode) {
+    switch (prorationMode) {
+      case GoogleProrationMode.immediateWithTimeProration:
+      case GoogleProrationMode.immediateWithoutProration:
         break;
     }
   }

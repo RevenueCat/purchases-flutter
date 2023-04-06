@@ -156,7 +156,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "purchaseProduct":
                 String productIdentifier = call.argument("productIdentifier");
-                String googleOldProductIdentifer = call.argument("googleOldProductIdentifer");
+                String googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
                 Integer googleProrationMode = call.argument("googleProrationMode");
                 Boolean googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 type = call.argument("type");
@@ -165,7 +165,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
                 String offeringIdentifier = call.argument("offeringIdentifier");
-                googleOldProductIdentifer = call.argument("googleOldProductIdentifer");
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
                 googleProrationMode = call.argument("googleProrationMode");
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 purchasePackage(packageIdentifier, offeringIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);
@@ -173,7 +173,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "purchaseSubscriptionOption":
                 productIdentifier = call.argument("productIdentifier");
                 String optionIdentifier = call.argument("optionIdentifier");
-                googleOldProductIdentifer = call.argument("googleOldProductIdentifer");
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
                 googleProrationMode = call.argument("googleProrationMode");
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);

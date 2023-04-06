@@ -1,12 +1,12 @@
 class GoogleProductChangeInfo {
-  /// The oldProductIdentifer to change from.
-  String oldProductIdentifer;
+  /// The oldProductIdentifier to change from.
+  String oldProductIdentifier;
 
   /// The [GoogleProrationMode] to use when changing from the given oldProductIdentifer.
   GoogleProrationMode? prorationMode;
 
   /// Constructs an GoogleProductChangeInfo
-  GoogleProductChangeInfo(this.oldProductIdentifer, {this.prorationMode});
+  GoogleProductChangeInfo(this.oldProductIdentifier, {this.prorationMode});
 }
 
 /// GoogleProductChangeInfo's ProrationMode.
