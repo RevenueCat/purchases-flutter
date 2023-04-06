@@ -297,14 +297,14 @@ class Purchases {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
-    final prorationMode =
-        googleProductChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
+    final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
+        upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
       'type': describeEnum(type),
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
-      'googleProrationMode': prorationMode?.index,
+      'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
     return customerInfo;
@@ -337,14 +337,14 @@ class Purchases {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
-    final prorationMode =
-        googleProductChangeInfo?.prorationMode ?? upgradeInfo?.prorationMode;
+    final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
+        upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
-      'googleProrationMode': prorationMode?.index,
+      'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
     return customerInfo;
@@ -379,14 +379,15 @@ class Purchases {
       throw UnsupportedPlatformException();
     }
 
-    final prorationMode = googleProductChangeInfo?.prorationMode;
+    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+
     final customerInfo =
         await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
       'productIdentifier': subscriptionOption.productId,
       'optionIdentifier': subscriptionOption.id,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier,
-      'googleProrationMode': prorationMode?.index,
+      'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
     });
     return customerInfo;
