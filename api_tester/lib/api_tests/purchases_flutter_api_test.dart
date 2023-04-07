@@ -89,20 +89,17 @@ class _PurchasesFlutterApiTest {
     customerInfo = await Purchases.purchaseProduct(productIdentifier);
   }
 
-  void _checkPurchaseStoreProduct(StoreProduct storeProduct;) async {
+  void _checkPurchaseStoreProduct(StoreProduct storeProduct) async {
     GoogleProductChangeInfo? googleProductChangeInfo;
     CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
         storeProduct,
         googleProductChangeInfo: googleProductChangeInfo,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseStoreProduct(
-        storeProduct,
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseStoreProduct(
-        storeProduct,
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
         googleProductChangeInfo: googleProductChangeInfo);
-    customerInfo = await Purchases.purchaseStoreProduct(
-        storeProduct);
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct);
   }
 
   void _checkPurchasePackage(Package package) async {
