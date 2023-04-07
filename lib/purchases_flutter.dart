@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'object_wrappers.dart';
 
@@ -319,7 +320,9 @@ class Purchases {
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': storeProduct.identifier,
-      // 'type': describeEnum(store),
+      'type': storeProduct.productType != null
+          ? describeEnum(storeProduct.productType!)
+          : null,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
@@ -986,15 +989,6 @@ class Purchases {
     final response = Map<String, dynamic>.from(result!);
     return response;
   }
-}
-
-/// Supported SKU types.
-enum PurchaseType {
-  /// A type of SKU for in-app products.
-  inapp,
-
-  /// A type of SKU for subscriptions.
-  subs
 }
 
 /// Billing Feature types
