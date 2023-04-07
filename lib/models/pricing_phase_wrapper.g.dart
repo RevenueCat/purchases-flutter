@@ -14,6 +14,7 @@ _$_PricingPhase _$$_PricingPhaseFromJson(Map json) => _$_PricingPhase(
       $enumDecodeNullable(_$RecurrenceModeEnumMap, json['recurrenceMode']),
       json['billingCycleCount'] as int?,
       Price.fromJson(Map<String, dynamic>.from(json['price'] as Map)),
+      $enumDecodeNullable(_$OfferPaymentModeEnumMap, json['offerPaymentMode']),
     );
 
 Map<String, dynamic> _$$_PricingPhaseToJson(_$_PricingPhase instance) =>
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$_PricingPhaseToJson(_$_PricingPhase instance) =>
       'recurrenceMode': _$RecurrenceModeEnumMap[instance.recurrenceMode],
       'billingCycleCount': instance.billingCycleCount,
       'price': instance.price.toJson(),
+      'offerPaymentMode': _$OfferPaymentModeEnumMap[instance.offerPaymentMode],
     };
 
 const _$RecurrenceModeEnumMap = {
@@ -29,4 +31,10 @@ const _$RecurrenceModeEnumMap = {
   RecurrenceMode.finiteRecurring: 2,
   RecurrenceMode.nonRecurring: 3,
   RecurrenceMode.unknown: null,
+};
+
+const _$OfferPaymentModeEnumMap = {
+  OfferPaymentMode.freeTrial: 'FREE_TRIAL',
+  OfferPaymentMode.singlePayment: 'SINGLE_PAYMENT',
+  OfferPaymentMode.discountedRecurringPayment: 'DISCOUNTED_RECURRING_PAYMENT',
 };

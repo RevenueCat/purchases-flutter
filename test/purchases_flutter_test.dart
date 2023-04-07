@@ -778,6 +778,7 @@ void main() {
         RecurrenceMode.infiniteRecurring,
         1,
         Price('4.99', 4990000, 'USD'),
+        null,
       );
       const mockSubscriptionOption = SubscriptionOption(
         'monthly',
@@ -835,6 +836,7 @@ void main() {
         RecurrenceMode.infiniteRecurring,
         1,
         Price('4.99', 4990000, 'USD'),
+        null,
       );
       const mockSubscriptionOption = SubscriptionOption(
         'monthly',
@@ -894,6 +896,7 @@ void main() {
         RecurrenceMode.infiniteRecurring,
         1,
         Price('4.99', 4990000, 'USD'),
+        null,
       );
       const mockSubscriptionOption = SubscriptionOption(
         'monthly',

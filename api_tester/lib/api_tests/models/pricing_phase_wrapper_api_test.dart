@@ -16,9 +16,10 @@ class _PricingPhaseApiTest {
     RecurrenceMode? recurrenceMode,
     int? billingCycleCount,
     Price price,
+    OfferPaymentMode? offerPaymentMode,
   ) {
-    PricingPhase pricingPhase =
-        PricingPhase(billingPeriod, recurrenceMode, billingCycleCount, price);
+    PricingPhase pricingPhase = PricingPhase(billingPeriod, recurrenceMode,
+        billingCycleCount, price, offerPaymentMode);
   }
 
   void _checkProperties(PricingPhase pricingPhase) {
@@ -26,5 +27,6 @@ class _PricingPhaseApiTest {
     RecurrenceMode? recurrenceMode = pricingPhase.recurrenceMode;
     int? billingCycleCount = pricingPhase.billingCycleCount;
     Price price = pricingPhase.price;
+    OfferPaymentMode? offerPaymentMode = pricingPhase.offerPaymentMode;
   }
 }
