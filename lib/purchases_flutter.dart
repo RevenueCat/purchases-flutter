@@ -312,6 +312,24 @@ class Purchases {
     return customerInfo;
   }
 
+  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [storeProduct] The [StoreProduct]you want to purchase.
+  ///
+  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// change from containing the googleOldProductIdentifer and the
+  /// optional prorationMode.
+  ///
+  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
   static Future<CustomerInfo> purchaseStoreProduct(
     StoreProduct storeProduct, {
     GoogleProductChangeInfo? googleProductChangeInfo,
@@ -329,6 +347,7 @@ class Purchases {
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       'presentedOfferingIdentifier': storeProduct.presentedOfferingIdentifier,
     });
+
     return customerInfo;
   }
 
