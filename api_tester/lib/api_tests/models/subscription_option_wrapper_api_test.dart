@@ -21,7 +21,8 @@ class _SubscriptionOptionApiTest {
       Period? billingPeriod,
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
-      PricingPhase? introPhase) {
+      PricingPhase? introPhase,
+      String? presentedOfferingIdentifier) {
     SubscriptionOption subscriptionOption = SubscriptionOption(
         id,
         storeProductId,
@@ -32,7 +33,8 @@ class _SubscriptionOptionApiTest {
         billingPeriod,
         fullPricePhase,
         freePhase,
-        introPhase);
+        introPhase,
+        presentedOfferingIdentifier);
   }
 
   void _checkProperties(SubscriptionOption subscriptionOption) {
@@ -46,5 +48,7 @@ class _SubscriptionOptionApiTest {
     PricingPhase? fullPricePhase = subscriptionOption.fullPricePhase;
     PricingPhase? freePhase = subscriptionOption.freePhase;
     PricingPhase? introPhase = subscriptionOption.introPhase;
+    String? presentedOfferingIdentifier =
+        subscriptionOption.presentedOfferingIdentifier;
   }
 }
