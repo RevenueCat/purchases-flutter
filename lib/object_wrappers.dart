@@ -1,4 +1,5 @@
 export 'errors.dart';
+export 'google_product_change.dart';
 export 'models/customer_info_wrapper.dart';
 export 'models/entitlement_info_wrapper.dart';
 export 'models/entitlement_infos_wrapper.dart';
@@ -16,3 +17,4 @@ export 'models/store_product_discount.dart';
 export 'models/store_product_wrapper.dart';
 export 'models/store_transaction.dart';
 export 'models/subscription_option_wrapper.dart';
+export 'upgrade_info.dart';

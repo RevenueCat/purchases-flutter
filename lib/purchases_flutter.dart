@@ -3,13 +3,9 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'google_product_change.dart';
 import 'object_wrappers.dart';
-import 'upgrade_info.dart';
 
-export 'google_product_change.dart';
 export 'object_wrappers.dart';
-export 'upgrade_info.dart';
 
 /// Used to handle async updates from [Purchases].
 /// Should be implemented to receive updates when the [CustomerInfo] changes.
