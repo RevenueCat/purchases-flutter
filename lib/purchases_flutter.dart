@@ -272,13 +272,16 @@ class Purchases {
   /// [upgradeInfo] Android and Google Play only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
-  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
-  /// change from containing the googleOldProductIdentifer and the
-  /// optional prorationMode.
-  ///
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
+  ///
+  /// [presentedOfferingIdentifier] The offering identifier this product was
+  /// returned from. The presentedOfferingIdentifier can be found on a [StoreProduct].
+  ///
+  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// change from containing the googleOldProductIdentifer and the
+  /// optional prorationMode.
   ///
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
   /// personalized pricing on products available for purchase in the EU.
@@ -290,6 +293,7 @@ class Purchases {
     String productIdentifier, {
     @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
     PurchaseType type = PurchaseType.subs,
+    String? presentedOfferingIdentifier,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
@@ -302,6 +306,25 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'presentedOfferingIdentifier': presentedOfferingIdentifier,
+    });
+    return customerInfo;
+  }
+
+  static Future<CustomerInfo> purchaseStoreProduct(
+    StoreProduct storeProduct, {
+    GoogleProductChangeInfo? googleProductChangeInfo,
+    bool? googleIsPersonalizedPrice,
+  }) async {
+    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
+      'productIdentifier': storeProduct.identifier,
+      // 'type': describeEnum(store),
+      'googleOldProductIdentifier':
+          googleProductChangeInfo?.oldProductIdentifier,
+      'googleProrationMode': prorationMode,
+      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'presentedOfferingIdentifier': storeProduct.presentedOfferingIdentifier,
     });
     return customerInfo;
   }
@@ -385,6 +408,8 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'presentedOfferingIdentifier':
+          subscriptionOption.presentedOfferingIdentifier,
     });
     return customerInfo;
   }

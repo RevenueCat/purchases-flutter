@@ -29,7 +29,6 @@ class StoreProduct with _$StoreProduct {
 
     /// Currency code for price and original price.
     @JsonKey(name: 'currencyCode') String currencyCode, {
-
     /// Introductory price for product. Can be null.
     @JsonKey(name: 'introPrice', nullable: true)
         IntroductoryPrice? introductoryPrice,
@@ -45,6 +44,10 @@ class StoreProduct with _$StoreProduct {
     // Collection of subscription options for a product. Google Play only.
     @JsonKey(name: 'subscriptionOptions', nullable: true)
         List<SubscriptionOption>? subscriptionOptions,
+
+    // Offering identifier the store product was presented from
+    @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+        String? presentedOfferingIdentifier,
 
     /// Subscription period, specified in ISO 8601 format. For example,
     /// P1W equates to one week, P1M equates to one month,

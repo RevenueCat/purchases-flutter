@@ -33,6 +33,7 @@ _$_SubscriptionOption _$$_SubscriptionOptionFromJson(Map json) =>
           ? null
           : PricingPhase.fromJson(
               Map<String, dynamic>.from(json['introPhase'] as Map)),
+      json['presentedOfferingIdentifier'] as String?,
     );
 
 Map<String, dynamic> _$$_SubscriptionOptionToJson(
@@ -48,4 +49,5 @@ Map<String, dynamic> _$$_SubscriptionOptionToJson(
       'fullPricePhase': instance.fullPricePhase?.toJson(),
       'freePhase': instance.freePhase?.toJson(),
       'introPhase': instance.introPhase?.toJson(),
+      'presentedOfferingIdentifier': instance.presentedOfferingIdentifier,
     };

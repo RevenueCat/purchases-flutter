@@ -58,7 +58,9 @@ mixin _$StoreProduct {
       throw _privateConstructorUsedError; // Collection of subscription options for a product. Google Play only.
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions =>
-      throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // Offering identifier the store product was presented from
+  @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+  String? get presentedOfferingIdentifier => throw _privateConstructorUsedError;
 
   /// Subscription period, specified in ISO 8601 format. For example,
   /// P1W equates to one week, P1M equates to one month,
@@ -101,6 +103,8 @@ abstract class $StoreProductCopyWith<$Res> {
           SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           List<SubscriptionOption>? subscriptionOptions,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          String? presentedOfferingIdentifier,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           String? subscriptionPeriod});
 
@@ -131,6 +135,7 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     Object? discounts = freezed,
     Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
+    Object? presentedOfferingIdentifier = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_value.copyWith(
@@ -174,6 +179,10 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
           ? _value.subscriptionOptions
           : subscriptionOptions // ignore: cast_nullable_to_non_nullable
               as List<SubscriptionOption>?,
+      presentedOfferingIdentifier: freezed == presentedOfferingIdentifier
+          ? _value.presentedOfferingIdentifier
+          : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
       subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
@@ -235,6 +244,8 @@ abstract class _$$_StoreProductCopyWith<$Res>
           SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           List<SubscriptionOption>? subscriptionOptions,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          String? presentedOfferingIdentifier,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           String? subscriptionPeriod});
 
@@ -265,6 +276,7 @@ class __$$_StoreProductCopyWithImpl<$Res>
     Object? discounts = freezed,
     Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
+    Object? presentedOfferingIdentifier = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_$_StoreProduct(
@@ -308,6 +320,10 @@ class __$$_StoreProductCopyWithImpl<$Res>
           ? _value._subscriptionOptions
           : subscriptionOptions // ignore: cast_nullable_to_non_nullable
               as List<SubscriptionOption>?,
+      presentedOfferingIdentifier: freezed == presentedOfferingIdentifier
+          ? _value.presentedOfferingIdentifier
+          : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
       subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
@@ -340,6 +356,8 @@ class _$_StoreProduct implements _StoreProduct {
           this.defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           final List<SubscriptionOption>? subscriptionOptions,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          this.presentedOfferingIdentifier,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           this.subscriptionPeriod})
       : _discounts = discounts,
@@ -415,6 +433,11 @@ class _$_StoreProduct implements _StoreProduct {
     return EqualUnmodifiableListView(value);
   }
 
+// Offering identifier the store product was presented from
+  @override
+  @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+  final String? presentedOfferingIdentifier;
+
   /// Subscription period, specified in ISO 8601 format. For example,
   /// P1W equates to one week, P1M equates to one month,
   /// P3M equates to three months, P6M equates to six months,
@@ -426,7 +449,7 @@ class _$_StoreProduct implements _StoreProduct {
 
   @override
   String toString() {
-    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, subscriptionPeriod: $subscriptionPeriod)';
+    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, presentedOfferingIdentifier: $presentedOfferingIdentifier, subscriptionPeriod: $subscriptionPeriod)';
   }
 
   @override
@@ -452,6 +475,10 @@ class _$_StoreProduct implements _StoreProduct {
                 other.defaultOption == defaultOption) &&
             const DeepCollectionEquality()
                 .equals(other._subscriptionOptions, _subscriptionOptions) &&
+            (identical(other.presentedOfferingIdentifier,
+                    presentedOfferingIdentifier) ||
+                other.presentedOfferingIdentifier ==
+                    presentedOfferingIdentifier) &&
             (identical(other.subscriptionPeriod, subscriptionPeriod) ||
                 other.subscriptionPeriod == subscriptionPeriod));
   }
@@ -470,6 +497,7 @@ class _$_StoreProduct implements _StoreProduct {
       const DeepCollectionEquality().hash(_discounts),
       defaultOption,
       const DeepCollectionEquality().hash(_subscriptionOptions),
+      presentedOfferingIdentifier,
       subscriptionPeriod);
 
   @JsonKey(ignore: true)
@@ -508,6 +536,8 @@ abstract class _StoreProduct implements StoreProduct {
           final SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
           final List<SubscriptionOption>? subscriptionOptions,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          final String? presentedOfferingIdentifier,
       @JsonKey(name: 'subscriptionPeriod', nullable: true)
           final String? subscriptionPeriod}) = _$_StoreProduct;
 
@@ -560,6 +590,9 @@ abstract class _StoreProduct implements StoreProduct {
   @override // Collection of subscription options for a product. Google Play only.
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions;
+  @override // Offering identifier the store product was presented from
+  @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+  String? get presentedOfferingIdentifier;
   @override
 
   /// Subscription period, specified in ISO 8601 format. For example,
