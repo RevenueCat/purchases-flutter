@@ -836,6 +836,7 @@ void main() {
         199.99,
         '\$199.99',
         'USD',
+        presentedOfferingIdentifier: 'my-offer',
       );
       const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
@@ -851,6 +852,20 @@ void main() {
       expect(
         purchasePackageResult,
         CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProduct',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.lifetime',
+              'signedDiscountTimestamp': '123456',
+              'presentedOfferingIdentifier': 'my-offer',
+            },
+          )
+        ],
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());

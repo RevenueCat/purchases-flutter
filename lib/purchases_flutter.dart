@@ -480,7 +480,8 @@ class Purchases {
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
-      'signedDiscountTimestamp': promotionalOffer.timestamp.toString()
+      'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
+      'presentedOfferingIdentifier': product.presentedOfferingIdentifier,
     });
     return customerInfo;
   }
