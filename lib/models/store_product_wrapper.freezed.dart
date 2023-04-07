@@ -56,14 +56,19 @@ mixin _$StoreProduct {
 
   /// Product type. Null for iOS.
   @JsonKey(name: 'productCategory', nullable: true)
-  ProductType? get productType =>
-      throw _privateConstructorUsedError; // Default subscription option for a product. Google Play only.
+  ProductType? get productType => throw _privateConstructorUsedError;
+
+  /// Default subscription option for a product. Google Play only.
   @JsonKey(name: 'defaultOption', nullable: true)
-  SubscriptionOption? get defaultOption =>
-      throw _privateConstructorUsedError; // Collection of subscription options for a product. Google Play only.
+  SubscriptionOption? get defaultOption => throw _privateConstructorUsedError;
+
+  /// Collection of subscription options for a product. Google Play only.
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions =>
-      throw _privateConstructorUsedError; // Offering identifier the store product was presented from
+      throw _privateConstructorUsedError;
+
+  /// Offering identifier the store product was presented from
+  /// Null if not using offerings or if fetched directly from store via getProducts
   @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
   String? get presentedOfferingIdentifier => throw _privateConstructorUsedError;
 
@@ -440,13 +445,16 @@ class _$_StoreProduct implements _StoreProduct {
   @override
   @JsonKey(name: 'productCategory', nullable: true)
   final ProductType? productType;
-// Default subscription option for a product. Google Play only.
+
+  /// Default subscription option for a product. Google Play only.
   @override
   @JsonKey(name: 'defaultOption', nullable: true)
   final SubscriptionOption? defaultOption;
-// Collection of subscription options for a product. Google Play only.
+
+  /// Collection of subscription options for a product. Google Play only.
   final List<SubscriptionOption>? _subscriptionOptions;
-// Collection of subscription options for a product. Google Play only.
+
+  /// Collection of subscription options for a product. Google Play only.
   @override
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions {
@@ -458,7 +466,8 @@ class _$_StoreProduct implements _StoreProduct {
     return EqualUnmodifiableListView(value);
   }
 
-// Offering identifier the store product was presented from
+  /// Offering identifier the store product was presented from
+  /// Null if not using offerings or if fetched directly from store via getProducts
   @override
   @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
   final String? presentedOfferingIdentifier;
@@ -619,13 +628,20 @@ abstract class _StoreProduct implements StoreProduct {
   /// Product type. Null for iOS.
   @JsonKey(name: 'productCategory', nullable: true)
   ProductType? get productType;
-  @override // Default subscription option for a product. Google Play only.
+  @override
+
+  /// Default subscription option for a product. Google Play only.
   @JsonKey(name: 'defaultOption', nullable: true)
   SubscriptionOption? get defaultOption;
-  @override // Collection of subscription options for a product. Google Play only.
+  @override
+
+  /// Collection of subscription options for a product. Google Play only.
   @JsonKey(name: 'subscriptionOptions', nullable: true)
   List<SubscriptionOption>? get subscriptionOptions;
-  @override // Offering identifier the store product was presented from
+  @override
+
+  /// Offering identifier the store product was presented from
+  /// Null if not using offerings or if fetched directly from store via getProducts
   @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
   String? get presentedOfferingIdentifier;
   @override
