@@ -56,7 +56,7 @@ mixin _$StoreProduct {
 
   /// Product type. Null for iOS.
   @JsonKey(name: 'productCategory', nullable: true)
-  PurchaseType? get productType =>
+  ProductType? get productType =>
       throw _privateConstructorUsedError; // Default subscription option for a product. Google Play only.
   @JsonKey(name: 'defaultOption', nullable: true)
   SubscriptionOption? get defaultOption =>
@@ -105,7 +105,7 @@ abstract class $StoreProductCopyWith<$Res> {
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
       @JsonKey(name: 'productCategory', nullable: true)
-          PurchaseType? productType,
+          ProductType? productType,
       @JsonKey(name: 'defaultOption', nullable: true)
           SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
@@ -182,7 +182,7 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
       productType: freezed == productType
           ? _value.productType
           : productType // ignore: cast_nullable_to_non_nullable
-              as PurchaseType?,
+              as ProductType?,
       defaultOption: freezed == defaultOption
           ? _value.defaultOption
           : defaultOption // ignore: cast_nullable_to_non_nullable
@@ -253,7 +253,7 @@ abstract class _$$_StoreProductCopyWith<$Res>
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
       @JsonKey(name: 'productCategory', nullable: true)
-          PurchaseType? productType,
+          ProductType? productType,
       @JsonKey(name: 'defaultOption', nullable: true)
           SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
@@ -330,7 +330,7 @@ class __$$_StoreProductCopyWithImpl<$Res>
       productType: freezed == productType
           ? _value.productType
           : productType // ignore: cast_nullable_to_non_nullable
-              as PurchaseType?,
+              as ProductType?,
       defaultOption: freezed == defaultOption
           ? _value.defaultOption
           : defaultOption // ignore: cast_nullable_to_non_nullable
@@ -439,7 +439,7 @@ class _$_StoreProduct implements _StoreProduct {
   /// Product type. Null for iOS.
   @override
   @JsonKey(name: 'productCategory', nullable: true)
-  final PurchaseType? productType;
+  final ProductType? productType;
 // Default subscription option for a product. Google Play only.
   @override
   @JsonKey(name: 'defaultOption', nullable: true)
@@ -561,7 +561,7 @@ abstract class _StoreProduct implements StoreProduct {
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts,
       @JsonKey(name: 'productCategory', nullable: true)
-          final PurchaseType? productType,
+          final ProductType? productType,
       @JsonKey(name: 'defaultOption', nullable: true)
           final SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
@@ -618,7 +618,7 @@ abstract class _StoreProduct implements StoreProduct {
 
   /// Product type. Null for iOS.
   @JsonKey(name: 'productCategory', nullable: true)
-  PurchaseType? get productType;
+  ProductType? get productType;
   @override // Default subscription option for a product. Google Play only.
   @JsonKey(name: 'defaultOption', nullable: true)
   SubscriptionOption? get defaultOption;

@@ -22,7 +22,7 @@ _$_StoreProduct _$$_StoreProductFromJson(Map json) => _$_StoreProduct(
               Map<String, dynamic>.from(e as Map)))
           .toList(),
       productType:
-          $enumDecodeNullable(_$PurchaseTypeEnumMap, json['productCategory']),
+          $enumDecodeNullable(_$ProductTypeEnumMap, json['productCategory']),
       defaultOption: json['defaultOption'] == null
           ? null
           : SubscriptionOption.fromJson(
@@ -46,7 +46,7 @@ Map<String, dynamic> _$$_StoreProductToJson(_$_StoreProduct instance) =>
       'currencyCode': instance.currencyCode,
       'introPrice': instance.introductoryPrice?.toJson(),
       'discounts': instance.discounts?.map((e) => e.toJson()).toList(),
-      'productCategory': _$PurchaseTypeEnumMap[instance.productType],
+      'productCategory': _$ProductTypeEnumMap[instance.productType],
       'defaultOption': instance.defaultOption?.toJson(),
       'subscriptionOptions':
           instance.subscriptionOptions?.map((e) => e.toJson()).toList(),
@@ -54,7 +54,7 @@ Map<String, dynamic> _$$_StoreProductToJson(_$_StoreProduct instance) =>
       'subscriptionPeriod': instance.subscriptionPeriod,
     };
 
-const _$PurchaseTypeEnumMap = {
-  PurchaseType.inapp: 'NON_SUBSCRIPTION',
-  PurchaseType.subs: 'SUBSCRIPTION',
+const _$ProductTypeEnumMap = {
+  ProductType.inapp: 'NON_SUBSCRIPTION',
+  ProductType.subs: 'SUBSCRIPTION',
 };

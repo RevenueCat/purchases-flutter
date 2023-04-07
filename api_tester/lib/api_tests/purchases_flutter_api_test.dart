@@ -74,8 +74,14 @@ class _PurchasesFlutterApiTest {
     UpgradeInfo? upgradeInfo;
     GoogleProductChangeInfo? googleProductChangeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
+    ProductType productType = ProductType.subs;
     CustomerInfo customerInfo = await Purchases.purchaseProduct(
         productIdentifier,
+        type: purchaseType,
+        upgradeInfo: upgradeInfo,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        productType: productType,
         upgradeInfo: upgradeInfo,
         googleIsPersonalizedPrice: true);
     customerInfo = await Purchases.purchaseProduct(productIdentifier,
@@ -399,6 +405,14 @@ class _PurchasesFlutterApiTest {
     switch (prorationMode) {
       case GoogleProrationMode.immediateWithTimeProration:
       case GoogleProrationMode.immediateWithoutProration:
+        break;
+    }
+  }
+
+  void _checkProductType(ProductType type) {
+    switch (type) {
+      case ProductType.subs:
+      case ProductType.inapp:
         break;
     }
   }

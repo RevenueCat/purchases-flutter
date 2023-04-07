@@ -240,16 +240,30 @@ class Purchases {
   ///
   /// [productIdentifiers] Array of product identifiers
   ///
+  /// [productType] If the products are Android INAPPs, this needs to be
+  /// ProductType.INAPP otherwise the products won't be found.
+  /// ProductType.SUBS by default. This parameter only has effect in Android.
+  ///
   /// [type] If the products are Android INAPPs, this needs to be
   /// PurchaseType.INAPP otherwise the products won't be found.
-  /// PurchaseType.Subs by default. This parameter only has effect in Android.
+  /// PurchaseType.SUBS by default. This parameter only has effect in Android.
   static Future<List<StoreProduct>> getProducts(
     List<String> productIdentifiers, {
-    PurchaseType type = PurchaseType.subs,
+    ProductType productType = ProductType.subs,
+    @Deprecated('Use ProductType') PurchaseType type = PurchaseType.subs,
   }) async {
+    // Use deprecated PurchasesType if using something other than default
+    // Otherwise use new ProductType
+    String typeString;
+    if (type != PurchaseType.subs) {
+      typeString = describeEnum(type);
+    } else {
+      typeString = describeEnum(productType);
+    }
+
     final List<dynamic> result = await _channel.invokeMethod('getProductInfo', {
       'productIdentifiers': productIdentifiers,
-      'type': describeEnum(type),
+      'type': typeString,
     });
     return result
         .map<StoreProduct>(
@@ -292,16 +306,26 @@ class Purchases {
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
     @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
-    PurchaseType type = PurchaseType.subs,
+    ProductType productType = ProductType.subs,
+    @Deprecated('Use ProductType') PurchaseType type = PurchaseType.subs,
     String? presentedOfferingIdentifier,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
+    // Use deprecated PurchasesType if using something other than default
+    // Otherwise use new ProductType
+    String typeString;
+    if (type != PurchaseType.subs) {
+      typeString = describeEnum(type);
+    } else {
+      typeString = describeEnum(productType);
+    }
+
     final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
         upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
-      'type': describeEnum(type),
+      'type': typeString,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
