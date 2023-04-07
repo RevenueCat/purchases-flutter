@@ -606,8 +606,10 @@ void main() {
         '\$199.99',
         'USD',
       );
-      final purchasePackageResult =
-          await Purchases.purchaseProduct(mockStoreProduct.identifier);
+      final purchasePackageResult = await Purchases.purchaseProduct(
+        mockStoreProduct.identifier,
+        presentedOfferingIdentifier: 'my-offer',
+      );
       expect(
         purchasePackageResult,
         CustomerInfo.fromJson(mockCustomerInfoResponse),
@@ -623,7 +625,8 @@ void main() {
               'type': 'subs',
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
-              'googleIsPersonalizedPrice': null
+              'googleIsPersonalizedPrice': null,
+              'presentedOfferingIdentifier': 'my-offer',
             },
           )
         ],
@@ -674,6 +677,51 @@ void main() {
               'googleOldProductIdentifier': 'com.revenuecat.halftime',
               'googleProrationMode': 1,
               'googleIsPersonalizedPrice': true,
+              'presentedOfferingIdentifier': null,
+            },
+          )
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test('purchaseStoreProduct calls successfully', () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productType: PurchaseType.subs,
+        presentedOfferingIdentifier: 'my-offer',
+      );
+      final purchasePackageResult =
+          await Purchases.purchaseStoreProduct(mockStoreProduct);
+      expect(
+        purchasePackageResult,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProduct',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.lifetime',
+              'type': 'subs',
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'presentedOfferingIdentifier': 'my-offer',
             },
           )
         ],
@@ -742,6 +790,7 @@ void main() {
         phase,
         null,
         null,
+        'my-offer',
       );
       final purchasePackageResult =
           await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
@@ -760,7 +809,8 @@ void main() {
               'optionIdentifier': 'monthly',
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
-              'googleIsPersonalizedPrice': null
+              'googleIsPersonalizedPrice': null,
+              'presentedOfferingIdentifier': 'my-offer',
             },
           )
         ],
@@ -797,6 +847,7 @@ void main() {
         phase,
         null,
         null,
+        'my-offer',
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
         'silver',
@@ -823,6 +874,7 @@ void main() {
               'googleOldProductIdentifier': 'silver',
               'googleProrationMode': 3,
               'googleIsPersonalizedPrice': true,
+              'presentedOfferingIdentifier': 'my-offer',
             },
           )
         ],
@@ -852,6 +904,7 @@ void main() {
         true,
         Period(Unit.month, 1),
         phase,
+        null,
         null,
         null,
       );
