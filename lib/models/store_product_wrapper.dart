@@ -41,15 +41,16 @@ class StoreProduct with _$StoreProduct {
     /// Product type. Null for iOS.
     @JsonKey(name: 'productCategory', nullable: true) ProductType? productType,
 
-    // Default subscription option for a product. Google Play only.
+    /// Default subscription option for a product. Google Play only.
     @JsonKey(name: 'defaultOption', nullable: true)
         SubscriptionOption? defaultOption,
 
-    // Collection of subscription options for a product. Google Play only.
+    /// Collection of subscription options for a product. Google Play only.
     @JsonKey(name: 'subscriptionOptions', nullable: true)
         List<SubscriptionOption>? subscriptionOptions,
 
-    // Offering identifier the store product was presented from
+    /// Offering identifier the store product was presented from
+    /// Null if not using offerings or if fetched directly from store via getProducts
     @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
         String? presentedOfferingIdentifier,
 

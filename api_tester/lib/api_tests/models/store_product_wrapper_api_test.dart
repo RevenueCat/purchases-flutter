@@ -20,7 +20,7 @@ class _StoreProductApiTest {
       String currencyCode,
       IntroductoryPrice? introductoryPrice,
       List<StoreProductDiscount>? discounts,
-      PurchaseType? productType,
+      ProductType? productType,
       String? subscriptionPeriod,
       String? presentedOfferingIdentifier) {
     StoreProduct product = StoreProduct(
@@ -43,7 +43,7 @@ class _StoreProductApiTest {
     String currencyCode = product.currencyCode;
     IntroductoryPrice? introductoryPrice = product.introductoryPrice;
     List<StoreProductDiscount>? discounts = product.discounts;
-    PurchaseType? productType = product.productType;
+    ProductType? productType = product.productType;
     SubscriptionOption? defaultOption = product.defaultOption;
     List<SubscriptionOption>? subscriptionOptions = product.subscriptionOptions;
     String? subscriptionPeriod = product.subscriptionPeriod;

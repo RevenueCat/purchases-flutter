@@ -274,6 +274,9 @@ class Purchases {
         .toList();
   }
 
+  /// It is now recommended to use [Purchases.purchaseStoreProduct]
+  /// to make a purchase with a [StoreProduct] if you can.
+  ///
   /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
