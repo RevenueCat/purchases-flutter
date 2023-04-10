@@ -72,42 +72,68 @@ class _PurchasesFlutterApiTest {
   void _checkPurchaseProduct() async {
     String productIdentifier = "fakeProductId";
     UpgradeInfo? upgradeInfo;
+    GoogleProductChangeInfo? googleProductChangeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
+    ProductType productType = ProductType.subs;
     CustomerInfo customerInfo = await Purchases.purchaseProduct(
         productIdentifier,
+        type: purchaseType,
         upgradeInfo: upgradeInfo,
-        isPersonalizedPrice: true);
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        productType: productType,
+        upgradeInfo: upgradeInfo,
+        googleIsPersonalizedPrice: true);
     customerInfo = await Purchases.purchaseProduct(productIdentifier,
         upgradeInfo: upgradeInfo, type: purchaseType);
     customerInfo = await Purchases.purchaseProduct(productIdentifier,
+        googleProductChangeInfo: googleProductChangeInfo);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier,
         upgradeInfo: upgradeInfo);
     customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        isPersonalizedPrice: true);
+        googleIsPersonalizedPrice: true);
     customerInfo = await Purchases.purchaseProduct(productIdentifier);
+  }
+
+  void _checkPurchaseStoreProduct(StoreProduct storeProduct) async {
+    GoogleProductChangeInfo? googleProductChangeInfo;
+    CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
+        storeProduct,
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+        googleProductChangeInfo: googleProductChangeInfo);
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct);
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
+    GoogleProductChangeInfo? googleProductChangeInfo;
     CustomerInfo customerInfo =
         await Purchases.purchasePackage(package, upgradeInfo: upgradeInfo);
     customerInfo = await Purchases.purchasePackage(package,
-        upgradeInfo: upgradeInfo, isPersonalizedPrice: true);
-    customerInfo =
-        await Purchases.purchasePackage(package, isPersonalizedPrice: true);
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchasePackage(package,
+        upgradeInfo: upgradeInfo, googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchasePackage(package,
+        googleIsPersonalizedPrice: true);
   }
 
-  void _checkPurchaseSubscriptionOption(
-      SubscriptionOption subscriptionOption, UpgradeInfo? upgradeInfo) async {
+  void _checkPurchaseSubscriptionOption(SubscriptionOption subscriptionOption,
+      GoogleProductChangeInfo? googleProductChangeInfo) async {
     CustomerInfo customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
-        upgradeInfo: upgradeInfo);
+        googleProductChangeInfo: googleProductChangeInfo);
     customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
-        upgradeInfo: upgradeInfo,
-        isPersonalizedPrice: true);
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true);
     customerInfo = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
-        isPersonalizedPrice: true);
+        googleIsPersonalizedPrice: true);
     customerInfo =
         await Purchases.purchaseSubscriptionOption(subscriptionOption);
   }
@@ -351,6 +377,18 @@ class _PurchasesFlutterApiTest {
     ProrationMode? storedProrationMode = purchaseInfo.prorationMode;
   }
 
+  void _checkGoogleProductChangeInfoInfo() {
+    String oldProductIdentifier = "fakeOldProductIdentifier";
+    GoogleProrationMode? prorationMode;
+
+    GoogleProductChangeInfo purchaseInfo =
+        GoogleProductChangeInfo(oldProductIdentifier);
+    purchaseInfo = GoogleProductChangeInfo(oldProductIdentifier,
+        prorationMode: prorationMode);
+    String storedOldProductIdentifier = purchaseInfo.oldProductIdentifier;
+    GoogleProrationMode? storedProrationMode = purchaseInfo.prorationMode;
+  }
+
   void _checkProrationMode(ProrationMode prorationMode) {
     switch (prorationMode) {
       case ProrationMode.unknownSubscriptionUpgradeDowngradePolicy:
@@ -359,6 +397,22 @@ class _PurchasesFlutterApiTest {
       case ProrationMode.immediateWithoutProration:
       case ProrationMode.deferred:
       case ProrationMode.immediateAndChargeFullPrice:
+        break;
+    }
+  }
+
+  void _checkGoogleProrationMode(GoogleProrationMode prorationMode) {
+    switch (prorationMode) {
+      case GoogleProrationMode.immediateWithTimeProration:
+      case GoogleProrationMode.immediateWithoutProration:
+        break;
+    }
+  }
+
+  void _checkProductType(ProductType type) {
+    switch (type) {
+      case ProductType.subs:
+      case ProductType.inapp:
         break;
     }
   }

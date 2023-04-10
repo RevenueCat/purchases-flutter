@@ -24,6 +24,10 @@ class PricingPhase with _$PricingPhase {
 
     /// Price of the PricingPhase
     @JsonKey(name: 'price') Price price,
+
+    /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
+    @JsonKey(name: 'offerPaymentMode', nullable: true)
+        OfferPaymentMode? offerPaymentMode,
   ) = _PricingPhase;
 
   factory PricingPhase.fromJson(Map<String, dynamic> json) =>
@@ -39,4 +43,18 @@ enum RecurrenceMode {
   nonRecurring,
   @JsonValue(null)
   unknown,
+}
+
+enum OfferPaymentMode {
+  // Subscribers don't pay until the specified period ends
+  @JsonValue('FREE_TRIAL')
+  freeTrial,
+
+  // Subscribers pay up front for a specified period
+  @JsonValue('SINGLE_PAYMENT')
+  singlePayment,
+
+  // Subscribers pay a discounted amount for a specified number of periods
+  @JsonValue('DISCOUNTED_RECURRING_PAYMENT')
+  discountedRecurringPayment,
 }

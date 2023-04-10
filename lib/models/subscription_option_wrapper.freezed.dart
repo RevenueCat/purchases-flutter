@@ -68,7 +68,10 @@ mixin _$SubscriptionOption {
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
   @JsonKey(name: 'introPhase', nullable: true)
-  PricingPhase? get introPhase => throw _privateConstructorUsedError;
+  PricingPhase? get introPhase =>
+      throw _privateConstructorUsedError; // Offering identifier the subscriptioni option was presented from
+  @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+  String? get presentedOfferingIdentifier => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -102,7 +105,9 @@ abstract class $SubscriptionOptionCopyWith<$Res> {
       @JsonKey(name: 'freePhase', nullable: true)
           PricingPhase? freePhase,
       @JsonKey(name: 'introPhase', nullable: true)
-          PricingPhase? introPhase});
+          PricingPhase? introPhase,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          String? presentedOfferingIdentifier});
 
   $PeriodCopyWith<$Res>? get billingPeriod;
   $PricingPhaseCopyWith<$Res>? get fullPricePhase;
@@ -133,6 +138,7 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     Object? fullPricePhase = freezed,
     Object? freePhase = freezed,
     Object? introPhase = freezed,
+    Object? presentedOfferingIdentifier = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -175,6 +181,10 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
           ? _value.introPhase
           : introPhase // ignore: cast_nullable_to_non_nullable
               as PricingPhase?,
+      presentedOfferingIdentifier: freezed == presentedOfferingIdentifier
+          ? _value.presentedOfferingIdentifier
+          : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -255,7 +265,9 @@ abstract class _$$_SubscriptionOptionCopyWith<$Res>
       @JsonKey(name: 'freePhase', nullable: true)
           PricingPhase? freePhase,
       @JsonKey(name: 'introPhase', nullable: true)
-          PricingPhase? introPhase});
+          PricingPhase? introPhase,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          String? presentedOfferingIdentifier});
 
   @override
   $PeriodCopyWith<$Res>? get billingPeriod;
@@ -288,6 +300,7 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
     Object? fullPricePhase = freezed,
     Object? freePhase = freezed,
     Object? introPhase = freezed,
+    Object? presentedOfferingIdentifier = freezed,
   }) {
     return _then(_$_SubscriptionOption(
       null == id
@@ -330,6 +343,10 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
           ? _value.introPhase
           : introPhase // ignore: cast_nullable_to_non_nullable
               as PricingPhase?,
+      freezed == presentedOfferingIdentifier
+          ? _value.presentedOfferingIdentifier
+          : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -338,16 +355,28 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SubscriptionOption implements _SubscriptionOption {
   const _$_SubscriptionOption(
-      @JsonKey(name: 'id') this.id,
-      @JsonKey(name: 'storeProductId') this.storeProductId,
-      @JsonKey(name: 'productId') this.productId,
-      @JsonKey(name: 'pricingPhases') final List<PricingPhase> pricingPhases,
-      @JsonKey(name: 'tags') final List<String> tags,
-      @JsonKey(name: 'isBasePlan') this.isBasePlan,
-      @JsonKey(name: 'billingPeriod', nullable: true) this.billingPeriod,
-      @JsonKey(name: 'fullPricePhase', nullable: true) this.fullPricePhase,
-      @JsonKey(name: 'freePhase', nullable: true) this.freePhase,
-      @JsonKey(name: 'introPhase', nullable: true) this.introPhase)
+      @JsonKey(name: 'id')
+          this.id,
+      @JsonKey(name: 'storeProductId')
+          this.storeProductId,
+      @JsonKey(name: 'productId')
+          this.productId,
+      @JsonKey(name: 'pricingPhases')
+          final List<PricingPhase> pricingPhases,
+      @JsonKey(name: 'tags')
+          final List<String> tags,
+      @JsonKey(name: 'isBasePlan')
+          this.isBasePlan,
+      @JsonKey(name: 'billingPeriod', nullable: true)
+          this.billingPeriod,
+      @JsonKey(name: 'fullPricePhase', nullable: true)
+          this.fullPricePhase,
+      @JsonKey(name: 'freePhase', nullable: true)
+          this.freePhase,
+      @JsonKey(name: 'introPhase', nullable: true)
+          this.introPhase,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          this.presentedOfferingIdentifier)
       : _pricingPhases = pricingPhases,
         _tags = tags;
 
@@ -427,10 +456,14 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   @override
   @JsonKey(name: 'introPhase', nullable: true)
   final PricingPhase? introPhase;
+// Offering identifier the subscriptioni option was presented from
+  @override
+  @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+  final String? presentedOfferingIdentifier;
 
   @override
   String toString() {
-    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase)';
+    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase, presentedOfferingIdentifier: $presentedOfferingIdentifier)';
   }
 
   @override
@@ -455,7 +488,11 @@ class _$_SubscriptionOption implements _SubscriptionOption {
             (identical(other.freePhase, freePhase) ||
                 other.freePhase == freePhase) &&
             (identical(other.introPhase, introPhase) ||
-                other.introPhase == introPhase));
+                other.introPhase == introPhase) &&
+            (identical(other.presentedOfferingIdentifier,
+                    presentedOfferingIdentifier) ||
+                other.presentedOfferingIdentifier ==
+                    presentedOfferingIdentifier));
   }
 
   @JsonKey(ignore: true)
@@ -471,7 +508,8 @@ class _$_SubscriptionOption implements _SubscriptionOption {
       billingPeriod,
       fullPricePhase,
       freePhase,
-      introPhase);
+      introPhase,
+      presentedOfferingIdentifier);
 
   @JsonKey(ignore: true)
   @override
@@ -509,7 +547,9 @@ abstract class _SubscriptionOption implements SubscriptionOption {
       @JsonKey(name: 'freePhase', nullable: true)
           final PricingPhase? freePhase,
       @JsonKey(name: 'introPhase', nullable: true)
-          final PricingPhase? introPhase) = _$_SubscriptionOption;
+          final PricingPhase? introPhase,
+      @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+          final String? presentedOfferingIdentifier) = _$_SubscriptionOption;
 
   factory _SubscriptionOption.fromJson(Map<String, dynamic> json) =
       _$_SubscriptionOption.fromJson;
@@ -574,6 +614,9 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
   @JsonKey(name: 'introPhase', nullable: true)
   PricingPhase? get introPhase;
+  @override // Offering identifier the subscriptioni option was presented from
+  @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+  String? get presentedOfferingIdentifier;
   @override
   @JsonKey(ignore: true)
   _$$_SubscriptionOptionCopyWith<_$_SubscriptionOption> get copyWith =>

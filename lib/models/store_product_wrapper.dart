@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../product_type.dart';
 import 'introductory_price.dart';
 import 'store_product_discount.dart';
 import 'subscription_option_wrapper.dart';
@@ -29,7 +30,6 @@ class StoreProduct with _$StoreProduct {
 
     /// Currency code for price and original price.
     @JsonKey(name: 'currencyCode') String currencyCode, {
-
     /// Introductory price for product. Can be null.
     @JsonKey(name: 'introPrice', nullable: true)
         IntroductoryPrice? introductoryPrice,
@@ -38,13 +38,21 @@ class StoreProduct with _$StoreProduct {
     @JsonKey(name: 'discounts', nullable: true)
         List<StoreProductDiscount>? discounts,
 
-    // Default subscription option for a product. Google Play only.
+    /// Product type. Null for iOS.
+    @JsonKey(name: 'productCategory', nullable: true) ProductType? productType,
+
+    /// Default subscription option for a product. Google Play only.
     @JsonKey(name: 'defaultOption', nullable: true)
         SubscriptionOption? defaultOption,
 
-    // Collection of subscription options for a product. Google Play only.
+    /// Collection of subscription options for a product. Google Play only.
     @JsonKey(name: 'subscriptionOptions', nullable: true)
         List<SubscriptionOption>? subscriptionOptions,
+
+    /// Offering identifier the store product was presented from
+    /// Null if not using offerings or if fetched directly from store via getProducts
+    @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+        String? presentedOfferingIdentifier,
 
     /// Subscription period, specified in ISO 8601 format. For example,
     /// P1W equates to one week, P1M equates to one month,

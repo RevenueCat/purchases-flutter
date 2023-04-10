@@ -156,27 +156,29 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "purchaseProduct":
                 String productIdentifier = call.argument("productIdentifier");
-                String oldSKU = call.argument("oldSKU"); // TODO: Rename
-                Integer prorationMode = call.argument("prorationMode"); // TODO: Rename
-                Boolean isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
+                String googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
+                Integer googleProrationMode = call.argument("googleProrationMode");
+                Boolean googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 type = call.argument("type");
-                purchaseProduct(productIdentifier, type, oldSKU, prorationMode, isPersonalizedPrice, result);
+                String presentedOfferingIdentifier = call.argument("presentedOfferingIdentifier");
+                purchaseProduct(productIdentifier, type, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, presentedOfferingIdentifier, result);
                 break;
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
                 String offeringIdentifier = call.argument("offeringIdentifier");
-                oldSKU = call.argument("oldSKU"); // TODO: Rename
-                prorationMode = call.argument("prorationMode"); // TODO: Rename
-                isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
-                purchasePackage(packageIdentifier, offeringIdentifier, oldSKU, prorationMode, isPersonalizedPrice, result);
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
+                googleProrationMode = call.argument("googleProrationMode");
+                googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
+                purchasePackage(packageIdentifier, offeringIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);
                 break;
             case "purchaseSubscriptionOption":
                 productIdentifier = call.argument("productIdentifier");
                 String optionIdentifier = call.argument("optionIdentifier");
-                oldSKU = call.argument("oldSKU"); // TODO: Rename
-                prorationMode = call.argument("prorationMode"); // TODO: Rename
-                isPersonalizedPrice = call.argument("isPersonalizedPrice"); // TODO: Rename
-                purchaseSubscriptionOption(productIdentifier, optionIdentifier, oldSKU, prorationMode, isPersonalizedPrice, result);
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
+                googleProrationMode = call.argument("googleProrationMode");
+                googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
+                presentedOfferingIdentifier = call.argument("presentedOfferingIdentifier");
+                purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, presentedOfferingIdentifier, result);
                 break;
             case "getAppUserID":
                 getAppUserID(result);
@@ -418,10 +420,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void purchaseProduct(final String productIdentifier,
-                                 final String googleOldProductId,
                                  final String type,
+                                 final String googleOldProductId,
                                  @Nullable final Integer googleProrationMode,
                                  @Nullable final Boolean googleIsPersonalizedPrice,
+                                 @Nullable final String presentedOfferingIdentifier,
                                  final Result result) {
         CommonKt.purchaseProduct(
                 getActivity(),
@@ -431,6 +434,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleOldProductId,
                 googleProrationMode,
                 googleIsPersonalizedPrice,
+                presentedOfferingIdentifier,
                 getOnResult(result)
         );
     }
@@ -457,6 +461,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                                             final String googleOldProductId,
                                             @Nullable final Integer googleProrationMode,
                                             @Nullable final Boolean googleIsPersonalizedPrice,
+                                            @Nullable final String presentedOfferingIdentifier,
                                             final Result result) {
         CommonKt.purchaseSubscriptionOption(
                 getActivity(),
@@ -465,6 +470,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleOldProductId,
                 googleProrationMode,
                 googleIsPersonalizedPrice,
+                presentedOfferingIdentifier,
                 getOnResult(result)
         );
     }
