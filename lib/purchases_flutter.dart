@@ -240,16 +240,30 @@ class Purchases {
   ///
   /// [productIdentifiers] Array of product identifiers
   ///
+  /// [productType] If the products are Android INAPPs, this needs to be
+  /// ProductType.inapp otherwise the products won't be found.
+  /// ProductType.subs by default. This parameter only has effect in Android.
+  ///
   /// [type] If the products are Android INAPPs, this needs to be
-  /// PurchaseType.INAPP otherwise the products won't be found.
-  /// PurchaseType.Subs by default. This parameter only has effect in Android.
+  /// PurchaseType.inapp otherwise the products won't be found.
+  /// PurchaseType.subs by default. This parameter only has effect in Android.
   static Future<List<StoreProduct>> getProducts(
     List<String> productIdentifiers, {
-    PurchaseType type = PurchaseType.subs,
+    ProductType productType = ProductType.subs,
+    @Deprecated('Use ProductType') PurchaseType type = PurchaseType.subs,
   }) async {
+    // Use deprecated PurchasesType if using something other than default
+    // Otherwise use new ProductType
+    String typeString;
+    if (type != PurchaseType.subs) {
+      typeString = describeEnum(type);
+    } else {
+      typeString = describeEnum(productType);
+    }
+
     final List<dynamic> result = await _channel.invokeMethod('getProductInfo', {
       'productIdentifiers': productIdentifiers,
-      'type': describeEnum(type),
+      'type': typeString,
     });
     return result
         .map<StoreProduct>(
@@ -260,6 +274,9 @@ class Purchases {
         .toList();
   }
 
+  /// It is now recommended to use [Purchases.purchaseStoreProduct]
+  /// to make a purchase with a [StoreProduct] if you can.
+  ///
   /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
@@ -272,13 +289,16 @@ class Purchases {
   /// [upgradeInfo] Android and Google Play only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
-  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
-  /// change from containing the googleOldProductIdentifer and the
-  /// optional prorationMode.
-  ///
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
+  ///
+  /// [presentedOfferingIdentifier] The offering identifier this product was
+  /// returned from. The presentedOfferingIdentifier can be found on a [StoreProduct].
+  ///
+  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// change from containing the googleOldProductIdentifer and the
+  /// optional prorationMode.
   ///
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
   /// personalized pricing on products available for purchase in the EU.
@@ -286,23 +306,75 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
+  @Deprecated('Use purchaseStoreProduct')
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
     @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
-    PurchaseType type = PurchaseType.subs,
+    ProductType productType = ProductType.subs,
+    @Deprecated('Use ProductType') PurchaseType type = PurchaseType.subs,
+    String? presentedOfferingIdentifier,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
+    // Use deprecated PurchasesType if using something other than default
+    // Otherwise use new ProductType
+    String typeString;
+    if (type != PurchaseType.subs) {
+      typeString = describeEnum(type);
+    } else {
+      typeString = describeEnum(productType);
+    }
+
     final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
         upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
-      'type': describeEnum(type),
+      'type': typeString,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'presentedOfferingIdentifier': presentedOfferingIdentifier,
     });
+    return customerInfo;
+  }
+
+  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [storeProduct] The [StoreProduct] you want to purchase.
+  ///
+  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// change from containing the googleOldProductIdentifer and the
+  /// optional prorationMode.
+  ///
+  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
+  /// personalized pricing on products available for purchase in the EU.
+  /// For compliance with EU regulations. User will see "This price has been
+  /// customize for you" in the purchase dialog when true.
+  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
+  /// for more info.
+  static Future<CustomerInfo> purchaseStoreProduct(
+    StoreProduct storeProduct, {
+    GoogleProductChangeInfo? googleProductChangeInfo,
+    bool? googleIsPersonalizedPrice,
+  }) async {
+    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
+      'productIdentifier': storeProduct.identifier,
+      'type': storeProduct.productType != null
+          ? describeEnum(storeProduct.productType!)
+          : null,
+      'googleOldProductIdentifier':
+          googleProductChangeInfo?.oldProductIdentifier,
+      'googleProrationMode': prorationMode,
+      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'presentedOfferingIdentifier': storeProduct.presentedOfferingIdentifier,
+    });
+
     return customerInfo;
   }
 
@@ -385,6 +457,8 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'presentedOfferingIdentifier':
+          subscriptionOption.presentedOfferingIdentifier,
     });
     return customerInfo;
   }
@@ -407,7 +481,8 @@ class Purchases {
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
-      'signedDiscountTimestamp': promotionalOffer.timestamp.toString()
+      'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
+      'presentedOfferingIdentifier': product.presentedOfferingIdentifier,
     });
     return customerInfo;
   }
@@ -961,15 +1036,6 @@ class Purchases {
     final response = Map<String, dynamic>.from(result!);
     return response;
   }
-}
-
-/// Supported SKU types.
-enum PurchaseType {
-  /// A type of SKU for in-app products.
-  inapp,
-
-  /// A type of SKU for subscriptions.
-  subs
 }
 
 /// Billing Feature types

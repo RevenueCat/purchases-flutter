@@ -52,6 +52,10 @@ class SubscriptionOption with _$SubscriptionOption {
     /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
     /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
     @JsonKey(name: 'introPhase', nullable: true) PricingPhase? introPhase,
+
+    // Offering identifier the subscriptioni option was presented from
+    @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+        String? presentedOfferingIdentifier,
   ) = _SubscriptionOption;
 
   factory SubscriptionOption.fromJson(Map<String, dynamic> json) =>

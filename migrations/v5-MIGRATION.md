@@ -7,7 +7,9 @@ This latest release updates the Android SDK dependency from v5 to [v6](https://g
   more thorough explanation of the new Google subscription model announced with BillingClient 5 and how to take
   advantage of it in Flutter v5. This guide includes tips on product setup with the new model.
 
-### Classes
+### New API
+
+#### Classes
 
 | New                        |
 |----------------------------|
@@ -17,6 +19,16 @@ This latest release updates the Android SDK dependency from v5 to [v6](https://g
 | `Price`                    |
 | `RecurrenceMode`           |
 | `Unit`                     |
+| `GoogleProductChange`      |
+| `ProductType`              |
+
+#### Methods
+
+| New                                                                                 |
+|-------------------------------------------------------------------------------------|
+| `purchaseStoreProduct(StoreProduct, {GoogleProductChangeInfo?, bool?})`             |
+| `purchaseSubscriptionOption(SubscriptionOption, {GoogleProductChangeInfo?, bool?})` |
+
 
 ### StoreProduct changes
 
@@ -53,9 +65,21 @@ When passing a `Package` or `StoreProduct` to `purchase()`, the SDK will use the
 
 For more control, find the `SubscriptionOption` to purchase on a `StoreProduct`.
 
-| New                                                            |
-|----------------------------------------------------------------|
-| `purchaseSubscriptionOption(SubscriptionOption, UpgradeInfo?)` |
+
+### API Deprecations
+
+#### Classes
+
+| Deprecated       | Replaced With             |
+|------------------|---------------------------|
+| `UpgradeInfo`    | `GoogleProductChangeInfo` |
+| `PurchaseType`   | `ProductType`             |
+
+#### Methods
+
+| Deprecated                                                                                                   | Replaced With            |
+|--------------------------------------------------------------------------------------------------------------|--------------------------|
+| `purchaseProduct(String {UpgradeInfo?, ProductType, PurchaseType, String?, GoogleProductChangeInfo? bool?})` | `purchaseStoreProduct()` |
 
 ### Reporting undocumented issues:
 

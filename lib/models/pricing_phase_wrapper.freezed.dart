@@ -37,6 +37,10 @@ mixin _$PricingPhase {
   @JsonKey(name: 'price')
   Price get price => throw _privateConstructorUsedError;
 
+  /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
+  @JsonKey(name: 'offerPaymentMode', nullable: true)
+  OfferPaymentMode? get offerPaymentMode => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PricingPhaseCopyWith<PricingPhase> get copyWith =>
@@ -57,7 +61,9 @@ abstract class $PricingPhaseCopyWith<$Res> {
       @JsonKey(name: 'billingCycleCount', nullable: true)
           int? billingCycleCount,
       @JsonKey(name: 'price')
-          Price price});
+          Price price,
+      @JsonKey(name: 'offerPaymentMode', nullable: true)
+          OfferPaymentMode? offerPaymentMode});
 
   $PeriodCopyWith<$Res>? get billingPeriod;
   $PriceCopyWith<$Res> get price;
@@ -80,6 +86,7 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
     Object? recurrenceMode = freezed,
     Object? billingCycleCount = freezed,
     Object? price = null,
+    Object? offerPaymentMode = freezed,
   }) {
     return _then(_value.copyWith(
       billingPeriod: freezed == billingPeriod
@@ -98,6 +105,10 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as Price,
+      offerPaymentMode: freezed == offerPaymentMode
+          ? _value.offerPaymentMode
+          : offerPaymentMode // ignore: cast_nullable_to_non_nullable
+              as OfferPaymentMode?,
     ) as $Val);
   }
 
@@ -138,7 +149,9 @@ abstract class _$$_PricingPhaseCopyWith<$Res>
       @JsonKey(name: 'billingCycleCount', nullable: true)
           int? billingCycleCount,
       @JsonKey(name: 'price')
-          Price price});
+          Price price,
+      @JsonKey(name: 'offerPaymentMode', nullable: true)
+          OfferPaymentMode? offerPaymentMode});
 
   @override
   $PeriodCopyWith<$Res>? get billingPeriod;
@@ -161,6 +174,7 @@ class __$$_PricingPhaseCopyWithImpl<$Res>
     Object? recurrenceMode = freezed,
     Object? billingCycleCount = freezed,
     Object? price = null,
+    Object? offerPaymentMode = freezed,
   }) {
     return _then(_$_PricingPhase(
       freezed == billingPeriod
@@ -179,6 +193,10 @@ class __$$_PricingPhaseCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as Price,
+      freezed == offerPaymentMode
+          ? _value.offerPaymentMode
+          : offerPaymentMode // ignore: cast_nullable_to_non_nullable
+              as OfferPaymentMode?,
     ));
   }
 }
@@ -194,7 +212,9 @@ class _$_PricingPhase implements _PricingPhase {
       @JsonKey(name: 'billingCycleCount', nullable: true)
           this.billingCycleCount,
       @JsonKey(name: 'price')
-          this.price);
+          this.price,
+      @JsonKey(name: 'offerPaymentMode', nullable: true)
+          this.offerPaymentMode);
 
   factory _$_PricingPhase.fromJson(Map<String, dynamic> json) =>
       _$$_PricingPhaseFromJson(json);
@@ -220,9 +240,14 @@ class _$_PricingPhase implements _PricingPhase {
   @JsonKey(name: 'price')
   final Price price;
 
+  /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
+  @override
+  @JsonKey(name: 'offerPaymentMode', nullable: true)
+  final OfferPaymentMode? offerPaymentMode;
+
   @override
   String toString() {
-    return 'PricingPhase(billingPeriod: $billingPeriod, recurrenceMode: $recurrenceMode, billingCycleCount: $billingCycleCount, price: $price)';
+    return 'PricingPhase(billingPeriod: $billingPeriod, recurrenceMode: $recurrenceMode, billingCycleCount: $billingCycleCount, price: $price, offerPaymentMode: $offerPaymentMode)';
   }
 
   @override
@@ -236,13 +261,15 @@ class _$_PricingPhase implements _PricingPhase {
                 other.recurrenceMode == recurrenceMode) &&
             (identical(other.billingCycleCount, billingCycleCount) ||
                 other.billingCycleCount == billingCycleCount) &&
-            (identical(other.price, price) || other.price == price));
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.offerPaymentMode, offerPaymentMode) ||
+                other.offerPaymentMode == offerPaymentMode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, billingPeriod, recurrenceMode, billingCycleCount, price);
+  int get hashCode => Object.hash(runtimeType, billingPeriod, recurrenceMode,
+      billingCycleCount, price, offerPaymentMode);
 
   @JsonKey(ignore: true)
   @override
@@ -267,7 +294,9 @@ abstract class _PricingPhase implements PricingPhase {
       @JsonKey(name: 'billingCycleCount', nullable: true)
           final int? billingCycleCount,
       @JsonKey(name: 'price')
-          final Price price) = _$_PricingPhase;
+          final Price price,
+      @JsonKey(name: 'offerPaymentMode', nullable: true)
+          final OfferPaymentMode? offerPaymentMode) = _$_PricingPhase;
 
   factory _PricingPhase.fromJson(Map<String, dynamic> json) =
       _$_PricingPhase.fromJson;
@@ -293,6 +322,11 @@ abstract class _PricingPhase implements PricingPhase {
   /// Price of the PricingPhase
   @JsonKey(name: 'price')
   Price get price;
+  @override
+
+  /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
+  @JsonKey(name: 'offerPaymentMode', nullable: true)
+  OfferPaymentMode? get offerPaymentMode;
   @override
   @JsonKey(ignore: true)
   _$$_PricingPhaseCopyWith<_$_PricingPhase> get copyWith =>
