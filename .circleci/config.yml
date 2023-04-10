@@ -229,11 +229,6 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - install-and-create-sim:
-          install-simulator-name: iOS 16.4 Simulator
-          sim-device-type: iPhone-14
-          sim-device-runtime: iOS-16-4
-          sim-name: iPhone 14 (16.4)
       - macos/preboot-simulator:
           device: iPhone 14
           version: '16.4'
