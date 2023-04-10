@@ -241,12 +241,12 @@ class Purchases {
   /// [productIdentifiers] Array of product identifiers
   ///
   /// [productType] If the products are Android INAPPs, this needs to be
-  /// ProductType.INAPP otherwise the products won't be found.
-  /// ProductType.SUBS by default. This parameter only has effect in Android.
+  /// ProductType.inapp otherwise the products won't be found.
+  /// ProductType.subs by default. This parameter only has effect in Android.
   ///
   /// [type] If the products are Android INAPPs, this needs to be
-  /// PurchaseType.INAPP otherwise the products won't be found.
-  /// PurchaseType.SUBS by default. This parameter only has effect in Android.
+  /// PurchaseType.inapp otherwise the products won't be found.
+  /// PurchaseType.subs by default. This parameter only has effect in Android.
   static Future<List<StoreProduct>> getProducts(
     List<String> productIdentifiers, {
     ProductType productType = ProductType.subs,
@@ -306,6 +306,7 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
+  @Deprecated('Use purchaseStoreProduct')
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
     @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
@@ -344,7 +345,7 @@ class Purchases {
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
   /// the purchase.
   ///
-  /// [storeProduct] The [StoreProduct]you want to purchase.
+  /// [storeProduct] The [StoreProduct] you want to purchase.
   ///
   /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
   /// change from containing the googleOldProductIdentifer and the
