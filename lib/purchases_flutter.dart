@@ -426,13 +426,13 @@ class Purchases {
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
   /// the purchase.
   ///
-  /// [packageToPurchase] The Package you wish to purchase
+  /// [subscriptionOption] The [SubscriptionOption] you wish to purchase
   ///
-  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
+  /// [googleProductChangeInfo] Android and Google Play only. Optional [GoogleProductChangeInfo] you wish to
   /// change from containing the googleOldProductIdentifer and the
   /// optional prorationMode.
   ///
-  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
+  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional boolean indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
   /// customize for you" in the purchase dialog when true.
