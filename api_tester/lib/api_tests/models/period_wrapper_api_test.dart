@@ -14,12 +14,14 @@ class _PeriodApiTest {
   void _checkConstructor(
     Unit unit,
     int value,
+    String iso8601,
   ) {
-    Period period = Period(unit, value);
+    Period period = Period(unit, value, iso8601);
   }
 
   void _checkProperties(Period period) {
     Unit unit = period.unit;
     int value = period.value;
+    String iso8601 = period.iso8601;
   }
 }

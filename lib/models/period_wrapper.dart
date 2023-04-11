@@ -13,6 +13,9 @@ class Period with _$Period {
 
     /// The increment of time that a subscription period is specified in
     @JsonKey(name: 'value') int value,
+
+    /// The increment of time that a subscription period is specified in
+    @JsonKey(name: 'iso8601') String iso8601,
   ) = _Period;
 
   factory Period.fromJson(Map<String, dynamic> json) => _$PeriodFromJson(json);
