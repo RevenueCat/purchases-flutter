@@ -1,5 +1,5 @@
 ### Breaking Changes
-* Rename `UpgradeInfo` to `ProductChangeInfo` and hide unsupported `ProrationMode`s (#655) via Josh Holtz (@joshdholtz)
-* Apply `presentedOfferingID`, `offerPaymentMode`,add new `purchaseStoreProduct()`, deprecated `purchaseProduct()` (#656) via Josh Holtz (@joshdholtz)
+* Update to PurchasesHyridCommon 5.0.0-beta.6 (#666) via Josh Holtz (@joshdholtz)
 ### Other Changes
-* Update PHC version to 5.0.0-beta.4 for iOS and macOS via Mark Villacampa (@MarkVillacampa)
+* Fix docs for purchaseSubscriptionOption (#660) via Josh Holtz (@joshdholtz)
+* Update CircleCI Xcode version to 14.3.0 and update iOS runtime to 16.4 (#658) via Mark Villacampa (@MarkVillacampa)
