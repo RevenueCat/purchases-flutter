@@ -1,19 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'period_unit.dart';
+
 part 'introductory_price.freezed.dart';
 part 'introductory_price.g.dart';
-
-enum PeriodUnit {
-  @JsonValue('DAY')
-  day,
-  @JsonValue('WEEK')
-  week,
-  @JsonValue('MONTH')
-  month,
-  @JsonValue('YEAR')
-  year,
-  unknown
-}
 
 @freezed
 

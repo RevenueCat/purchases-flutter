@@ -783,7 +783,7 @@ void main() {
         'customerInfo': mockCustomerInfoResponse
       };
       const phase = PricingPhase(
-        Period(Unit.month, 1, 'P1M'),
+        Period(PeriodUnit.month, 1, 'P1M'),
         RecurrenceMode.infiniteRecurring,
         1,
         Price('4.99', 4990000, 'USD'),
@@ -796,7 +796,7 @@ void main() {
         [phase],
         [],
         true,
-        Period(Unit.month, 1, 'P1M'),
+        Period(PeriodUnit.month, 1, 'P1M'),
         phase,
         null,
         null,
@@ -841,7 +841,7 @@ void main() {
         'customerInfo': mockCustomerInfoResponse
       };
       const phase = PricingPhase(
-        Period(Unit.month, 1, 'P1M'),
+        Period(PeriodUnit.month, 1, 'P1M'),
         RecurrenceMode.infiniteRecurring,
         1,
         Price('4.99', 4990000, 'USD'),
@@ -854,7 +854,7 @@ void main() {
         [phase],
         [],
         true,
-        Period(Unit.month, 1, 'P1M'),
+        Period(PeriodUnit.month, 1, 'P1M'),
         phase,
         null,
         null,
@@ -901,7 +901,7 @@ void main() {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
       const phase = PricingPhase(
-        Period(Unit.month, 1, 'P1M'),
+        Period(PeriodUnit.month, 1, 'P1M'),
         RecurrenceMode.infiniteRecurring,
         1,
         Price('4.99', 4990000, 'USD'),
@@ -914,7 +914,7 @@ void main() {
         [phase],
         [],
         true,
-        Period(Unit.month, 1, 'P1M'),
+        Period(PeriodUnit.month, 1, 'P1M'),
         phase,
         null,
         null,
