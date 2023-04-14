@@ -91,11 +91,11 @@ class _MyAppState extends State<InitialScreen> {
     } else {
       final isPro =
           _customerInfo.entitlements.active.containsKey(entitlementKey);
-      if (isPro) {
-        return const CatsScreen();
-      } else {
-        return const UpsellScreen();
-      }
+      // if (isPro) {
+      //   return const CatsScreen();
+      // } else {
+      return const UpsellScreen();
+      // }
     }
   }
 }
@@ -141,6 +141,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
             .map((package) {
               List<Widget> buttons = [
                 _PurchaseButton(package: package),
+                _PurchaseStoreProductButton(storeProduct: package.storeProduct)
               ];
 
               List<Widget> optionButtons =
@@ -208,6 +209,42 @@ class _PurchaseButton extends StatelessWidget {
         },
         child: Text(
             'Buy Package: ${package.storeProduct.subscriptionPeriod ?? package.storeProduct.title}\n${package.storeProduct.priceString}'),
+      );
+}
+
+class _PurchaseStoreProductButton extends StatelessWidget {
+  final StoreProduct storeProduct;
+
+  // ignore: public_member_api_docs
+  const _PurchaseStoreProductButton({Key key, @required this.storeProduct})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => ElevatedButton(
+        onPressed: () async {
+          try {
+            final customerInfo =
+                await Purchases.purchaseStoreProduct(storeProduct);
+            final isPro =
+                customerInfo.entitlements.active.containsKey(entitlementKey);
+            if (isPro) {
+              return const CatsScreen();
+            }
+          } on PlatformException catch (e) {
+            final errorCode = PurchasesErrorHelper.getErrorCode(e);
+            if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+              print('User cancelled');
+            } else if (errorCode ==
+                PurchasesErrorCode.purchaseNotAllowedError) {
+              print('User not allowed to purchase');
+            } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
+              print('Payment is pending');
+            }
+          }
+          return const InitialScreen();
+        },
+        child: Text(
+            'Buy StoreProduct (${storeProduct.productCategory}): ${storeProduct.subscriptionPeriod ?? storeProduct.title}\n${storeProduct.priceString}'),
       );
 }
 
