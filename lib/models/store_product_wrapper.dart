@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../product_type.dart';
+import '../product_category.dart';
 import 'introductory_price.dart';
 import 'store_product_discount.dart';
 import 'subscription_option_wrapper.dart';
@@ -38,8 +38,9 @@ class StoreProduct with _$StoreProduct {
     @JsonKey(name: 'discounts', nullable: true)
         List<StoreProductDiscount>? discounts,
 
-    /// Product type. Null for iOS.
-    @JsonKey(name: 'productCategory', nullable: true) ProductType? productType,
+    /// Product category.
+    @JsonKey(name: 'productCategory', nullable: true)
+        ProductCategory? productCategory,
 
     /// Default subscription option for a product. Google Play only.
     @JsonKey(name: 'defaultOption', nullable: true)

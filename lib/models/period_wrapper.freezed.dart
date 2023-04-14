@@ -22,7 +22,7 @@ Period _$PeriodFromJson(Map<String, dynamic> json) {
 mixin _$Period {
   /// The number of period units: day, week, month, year, unknown
   @JsonKey(name: 'unit')
-  Unit get unit => throw _privateConstructorUsedError;
+  PeriodUnit get unit => throw _privateConstructorUsedError;
 
   /// The increment of time that a subscription period is specified in
   @JsonKey(name: 'value')
@@ -45,7 +45,7 @@ abstract class $PeriodCopyWith<$Res> {
       _$PeriodCopyWithImpl<$Res, Period>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'unit') Unit unit,
+      {@JsonKey(name: 'unit') PeriodUnit unit,
       @JsonKey(name: 'value') int value,
       @JsonKey(name: 'iso8601') String iso8601});
 }
@@ -71,7 +71,7 @@ class _$PeriodCopyWithImpl<$Res, $Val extends Period>
       unit: null == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
-              as Unit,
+              as PeriodUnit,
       value: null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -91,7 +91,7 @@ abstract class _$$_PeriodCopyWith<$Res> implements $PeriodCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'unit') Unit unit,
+      {@JsonKey(name: 'unit') PeriodUnit unit,
       @JsonKey(name: 'value') int value,
       @JsonKey(name: 'iso8601') String iso8601});
 }
@@ -114,7 +114,7 @@ class __$$_PeriodCopyWithImpl<$Res>
       null == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
-              as Unit,
+              as PeriodUnit,
       null == value
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
@@ -141,7 +141,7 @@ class _$_Period implements _Period {
   /// The number of period units: day, week, month, year, unknown
   @override
   @JsonKey(name: 'unit')
-  final Unit unit;
+  final PeriodUnit unit;
 
   /// The increment of time that a subscription period is specified in
   @override
@@ -190,7 +190,7 @@ class _$_Period implements _Period {
 
 abstract class _Period implements Period {
   const factory _Period(
-      @JsonKey(name: 'unit') final Unit unit,
+      @JsonKey(name: 'unit') final PeriodUnit unit,
       @JsonKey(name: 'value') final int value,
       @JsonKey(name: 'iso8601') final String iso8601) = _$_Period;
 
@@ -200,7 +200,7 @@ abstract class _Period implements Period {
 
   /// The number of period units: day, week, month, year, unknown
   @JsonKey(name: 'unit')
-  Unit get unit;
+  PeriodUnit get unit;
   @override
 
   /// The increment of time that a subscription period is specified in

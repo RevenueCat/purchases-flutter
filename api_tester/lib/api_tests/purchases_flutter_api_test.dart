@@ -74,24 +74,13 @@ class _PurchasesFlutterApiTest {
     UpgradeInfo? upgradeInfo;
     GoogleProductChangeInfo? googleProductChangeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
-    ProductType productType = ProductType.subs;
+    ProductCategory productType = ProductCategory.subscription;
     CustomerInfo customerInfo = await Purchases.purchaseProduct(
         productIdentifier,
         type: purchaseType,
-        upgradeInfo: upgradeInfo,
-        googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        productType: productType,
-        upgradeInfo: upgradeInfo,
-        googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        upgradeInfo: upgradeInfo, type: purchaseType);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        googleProductChangeInfo: googleProductChangeInfo);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
         upgradeInfo: upgradeInfo);
     customerInfo = await Purchases.purchaseProduct(productIdentifier,
-        googleIsPersonalizedPrice: true);
+        upgradeInfo: upgradeInfo);
     customerInfo = await Purchases.purchaseProduct(productIdentifier);
   }
 
@@ -409,10 +398,10 @@ class _PurchasesFlutterApiTest {
     }
   }
 
-  void _checkProductType(ProductType type) {
+  void _checkProductCategory(ProductCategory type) {
     switch (type) {
-      case ProductType.subs:
-      case ProductType.inapp:
+      case ProductCategory.subscription:
+      case ProductCategory.nonSubscription:
         break;
     }
   }

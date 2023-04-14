@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/models/introductory_price.dart';
+import 'package:purchases_flutter/models/period_unit.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -12,7 +12,7 @@ class _PeriodApiTest {
   }
 
   void _checkConstructor(
-    Unit unit,
+    PeriodUnit unit,
     int value,
     String iso8601,
   ) {
@@ -20,7 +20,7 @@ class _PeriodApiTest {
   }
 
   void _checkProperties(Period period) {
-    Unit unit = period.unit;
+    PeriodUnit unit = period.unit;
     int value = period.value;
     String iso8601 = period.iso8601;
   }
