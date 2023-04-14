@@ -38,7 +38,7 @@ class StoreProduct with _$StoreProduct {
     @JsonKey(name: 'discounts', nullable: true)
         List<StoreProductDiscount>? discounts,
 
-    /// Product type. Null for iOS.
+    /// Product category.
     @JsonKey(name: 'productCategory', nullable: true)
         ProductCategory? productCategory,
 

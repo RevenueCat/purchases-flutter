@@ -54,7 +54,7 @@ mixin _$StoreProduct {
   List<StoreProductDiscount>? get discounts =>
       throw _privateConstructorUsedError;
 
-  /// Product type. Null for iOS.
+  /// Product category.
   @JsonKey(name: 'productCategory', nullable: true)
   ProductCategory? get productCategory => throw _privateConstructorUsedError;
 
@@ -441,7 +441,7 @@ class _$_StoreProduct implements _StoreProduct {
     return EqualUnmodifiableListView(value);
   }
 
-  /// Product type. Null for iOS.
+  /// Product category.
   @override
   @JsonKey(name: 'productCategory', nullable: true)
   final ProductCategory? productCategory;
@@ -625,7 +625,7 @@ abstract class _StoreProduct implements StoreProduct {
   List<StoreProductDiscount>? get discounts;
   @override
 
-  /// Product type. Null for iOS.
+  /// Product category.
   @JsonKey(name: 'productCategory', nullable: true)
   ProductCategory? get productCategory;
   @override
