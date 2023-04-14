@@ -56,7 +56,7 @@ mixin _$StoreProduct {
 
   /// Product type. Null for iOS.
   @JsonKey(name: 'productCategory', nullable: true)
-  ProductType? get productType => throw _privateConstructorUsedError;
+  ProductCategory? get productCategory => throw _privateConstructorUsedError;
 
   /// Default subscription option for a product. Google Play only.
   @JsonKey(name: 'defaultOption', nullable: true)
@@ -110,7 +110,7 @@ abstract class $StoreProductCopyWith<$Res> {
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
       @JsonKey(name: 'productCategory', nullable: true)
-          ProductType? productType,
+          ProductCategory? productCategory,
       @JsonKey(name: 'defaultOption', nullable: true)
           SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
@@ -145,7 +145,7 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
-    Object? productType = freezed,
+    Object? productCategory = freezed,
     Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
     Object? presentedOfferingIdentifier = freezed,
@@ -184,10 +184,10 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
           ? _value.discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
-      productType: freezed == productType
-          ? _value.productType
-          : productType // ignore: cast_nullable_to_non_nullable
-              as ProductType?,
+      productCategory: freezed == productCategory
+          ? _value.productCategory
+          : productCategory // ignore: cast_nullable_to_non_nullable
+              as ProductCategory?,
       defaultOption: freezed == defaultOption
           ? _value.defaultOption
           : defaultOption // ignore: cast_nullable_to_non_nullable
@@ -258,7 +258,7 @@ abstract class _$$_StoreProductCopyWith<$Res>
       @JsonKey(name: 'discounts', nullable: true)
           List<StoreProductDiscount>? discounts,
       @JsonKey(name: 'productCategory', nullable: true)
-          ProductType? productType,
+          ProductCategory? productCategory,
       @JsonKey(name: 'defaultOption', nullable: true)
           SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
@@ -293,7 +293,7 @@ class __$$_StoreProductCopyWithImpl<$Res>
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
-    Object? productType = freezed,
+    Object? productCategory = freezed,
     Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
     Object? presentedOfferingIdentifier = freezed,
@@ -332,10 +332,10 @@ class __$$_StoreProductCopyWithImpl<$Res>
           ? _value._discounts
           : discounts // ignore: cast_nullable_to_non_nullable
               as List<StoreProductDiscount>?,
-      productType: freezed == productType
-          ? _value.productType
-          : productType // ignore: cast_nullable_to_non_nullable
-              as ProductType?,
+      productCategory: freezed == productCategory
+          ? _value.productCategory
+          : productCategory // ignore: cast_nullable_to_non_nullable
+              as ProductCategory?,
       defaultOption: freezed == defaultOption
           ? _value.defaultOption
           : defaultOption // ignore: cast_nullable_to_non_nullable
@@ -377,7 +377,7 @@ class _$_StoreProduct implements _StoreProduct {
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts,
       @JsonKey(name: 'productCategory', nullable: true)
-          this.productType,
+          this.productCategory,
       @JsonKey(name: 'defaultOption', nullable: true)
           this.defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
@@ -444,7 +444,7 @@ class _$_StoreProduct implements _StoreProduct {
   /// Product type. Null for iOS.
   @override
   @JsonKey(name: 'productCategory', nullable: true)
-  final ProductType? productType;
+  final ProductCategory? productCategory;
 
   /// Default subscription option for a product. Google Play only.
   @override
@@ -483,7 +483,7 @@ class _$_StoreProduct implements _StoreProduct {
 
   @override
   String toString() {
-    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, productType: $productType, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, presentedOfferingIdentifier: $presentedOfferingIdentifier, subscriptionPeriod: $subscriptionPeriod)';
+    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, productCategory: $productCategory, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, presentedOfferingIdentifier: $presentedOfferingIdentifier, subscriptionPeriod: $subscriptionPeriod)';
   }
 
   @override
@@ -505,8 +505,8 @@ class _$_StoreProduct implements _StoreProduct {
                 other.introductoryPrice == introductoryPrice) &&
             const DeepCollectionEquality()
                 .equals(other._discounts, _discounts) &&
-            (identical(other.productType, productType) ||
-                other.productType == productType) &&
+            (identical(other.productCategory, productCategory) ||
+                other.productCategory == productCategory) &&
             (identical(other.defaultOption, defaultOption) ||
                 other.defaultOption == defaultOption) &&
             const DeepCollectionEquality()
@@ -531,7 +531,7 @@ class _$_StoreProduct implements _StoreProduct {
       currencyCode,
       introductoryPrice,
       const DeepCollectionEquality().hash(_discounts),
-      productType,
+      productCategory,
       defaultOption,
       const DeepCollectionEquality().hash(_subscriptionOptions),
       presentedOfferingIdentifier,
@@ -570,7 +570,7 @@ abstract class _StoreProduct implements StoreProduct {
       @JsonKey(name: 'discounts', nullable: true)
           final List<StoreProductDiscount>? discounts,
       @JsonKey(name: 'productCategory', nullable: true)
-          final ProductType? productType,
+          final ProductCategory? productCategory,
       @JsonKey(name: 'defaultOption', nullable: true)
           final SubscriptionOption? defaultOption,
       @JsonKey(name: 'subscriptionOptions', nullable: true)
@@ -627,7 +627,7 @@ abstract class _StoreProduct implements StoreProduct {
 
   /// Product type. Null for iOS.
   @JsonKey(name: 'productCategory', nullable: true)
-  ProductType? get productType;
+  ProductCategory? get productCategory;
   @override
 
   /// Default subscription option for a product. Google Play only.

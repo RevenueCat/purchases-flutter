@@ -240,16 +240,17 @@ class Purchases {
   ///
   /// [productIdentifiers] Array of product identifiers
   ///
-  /// [productType] If the products are Android INAPPs, this needs to be
-  /// ProductType.inapp otherwise the products won't be found.
-  /// ProductType.subs by default. This parameter only has effect in Android.
+  /// [productCategory] If the products are Android INAPPs, this needs to be
+  /// ProductCategory.nonSubscription otherwise the products won't be found.
+  /// ProductCategory.subscription by default.
+  /// This parameter only has effect in Android.
   ///
   /// [type] If the products are Android INAPPs, this needs to be
   /// PurchaseType.inapp otherwise the products won't be found.
   /// PurchaseType.subs by default. This parameter only has effect in Android.
   static Future<List<StoreProduct>> getProducts(
     List<String> productIdentifiers, {
-    ProductType productType = ProductType.subs,
+    ProductCategory productCategory = ProductCategory.subscription,
     @Deprecated('Use ProductType') PurchaseType type = PurchaseType.subs,
   }) async {
     // Use deprecated PurchasesType if using something other than default
@@ -258,7 +259,7 @@ class Purchases {
     if (type != PurchaseType.subs) {
       typeString = describeEnum(type);
     } else {
-      typeString = describeEnum(productType);
+      typeString = describeEnum(productCategory);
     }
 
     final List<dynamic> result = await _channel.invokeMethod('getProductInfo', {
@@ -286,55 +287,26 @@ class Purchases {
   /// [productIdentifier] The product identifier of the product you want to
   /// purchase.
   ///
-  /// [upgradeInfo] Android and Google Play only. Optional UpgradeInfo you wish to upgrade from
+  /// [upgradeInfo] Android only. Optional UpgradeInfo you wish to upgrade from
   /// containing the oldSKU and the optional prorationMode.
   ///
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  ///
-  /// [presentedOfferingIdentifier] The offering identifier this product was
-  /// returned from. The presentedOfferingIdentifier can be found on a [StoreProduct].
-  ///
-  /// [googleProductChangeInfo] Android and Google Play only. Optional GoogleProductChangeInfo you wish to
-  /// change from containing the googleOldProductIdentifer and the
-  /// optional prorationMode.
-  ///
-  /// [googleIsPersonalizedPrice] Android and Google Play only. Optional isPersonalizedPrice indicates
-  /// personalized pricing on products available for purchase in the EU.
-  /// For compliance with EU regulations. User will see "This price has been
-  /// customize for you" in the purchase dialog when true.
-  /// See https://developer.android.com/google/play/billing/integrate#personalized-price
-  /// for more info.
   @Deprecated('Use purchaseStoreProduct')
   static Future<CustomerInfo> purchaseProduct(
     String productIdentifier, {
-    @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
-    ProductType productType = ProductType.subs,
-    @Deprecated('Use ProductType') PurchaseType type = PurchaseType.subs,
-    String? presentedOfferingIdentifier,
-    GoogleProductChangeInfo? googleProductChangeInfo,
-    bool? googleIsPersonalizedPrice,
+    UpgradeInfo? upgradeInfo,
+    PurchaseType type = PurchaseType.subs,
   }) async {
-    // Use deprecated PurchasesType if using something other than default
-    // Otherwise use new ProductType
-    String typeString;
-    if (type != PurchaseType.subs) {
-      typeString = describeEnum(type);
-    } else {
-      typeString = describeEnum(productType);
-    }
-
-    final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
-        upgradeInfo?.prorationMode?.index;
+    final prorationMode = upgradeInfo?.prorationMode;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': productIdentifier,
-      'type': typeString,
-      'googleOldProductIdentifier':
-          googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
-      'googleProrationMode': prorationMode,
-      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'presentedOfferingIdentifier': presentedOfferingIdentifier,
+      'type': describeEnum(type),
+      'googleOldProductIdentifier': upgradeInfo?.oldSKU,
+      'googleProrationMode': prorationMode?.index,
+      'googleIsPersonalizedPrice': null,
+      'presentedOfferingIdentifier': null,
     });
     return customerInfo;
   }
@@ -365,8 +337,8 @@ class Purchases {
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': storeProduct.identifier,
-      'type': storeProduct.productType != null
-          ? describeEnum(storeProduct.productType!)
+      'type': storeProduct.productCategory != null
+          ? describeEnum(storeProduct.productCategory!)
           : null,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier,

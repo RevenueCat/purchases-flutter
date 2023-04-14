@@ -17,5 +17,5 @@ export 'models/store_product_discount.dart';
 export 'models/store_product_wrapper.dart';
 export 'models/store_transaction.dart';
 export 'models/subscription_option_wrapper.dart';
-export 'product_type.dart';
+export 'product_category.dart';
 export 'upgrade_info.dart';
