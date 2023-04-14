@@ -13,6 +13,11 @@ class Period with _$Period {
 
     /// The increment of time that a subscription period is specified in
     @JsonKey(name: 'value') int value,
+
+    /// Specified in ISO 8601 format. For example, P1W equates to one week,
+    /// P1M equates to one month, P3M equates to three months, P6M equates to
+    /// six months, and P1Y equates to one year
+    @JsonKey(name: 'iso8601') String iso8601,
   ) = _Period;
 
   factory Period.fromJson(Map<String, dynamic> json) => _$PeriodFromJson(json);

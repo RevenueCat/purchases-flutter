@@ -28,6 +28,12 @@ mixin _$Period {
   @JsonKey(name: 'value')
   int get value => throw _privateConstructorUsedError;
 
+  /// Specified in ISO 8601 format. For example, P1W equates to one week,
+  /// P1M equates to one month, P3M equates to three months, P6M equates to
+  /// six months, and P1Y equates to one year
+  @JsonKey(name: 'iso8601')
+  String get iso8601 => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $PeriodCopyWith<Period> get copyWith => throw _privateConstructorUsedError;
@@ -39,7 +45,9 @@ abstract class $PeriodCopyWith<$Res> {
       _$PeriodCopyWithImpl<$Res, Period>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'unit') Unit unit, @JsonKey(name: 'value') int value});
+      {@JsonKey(name: 'unit') Unit unit,
+      @JsonKey(name: 'value') int value,
+      @JsonKey(name: 'iso8601') String iso8601});
 }
 
 /// @nodoc
@@ -57,6 +65,7 @@ class _$PeriodCopyWithImpl<$Res, $Val extends Period>
   $Res call({
     Object? unit = null,
     Object? value = null,
+    Object? iso8601 = null,
   }) {
     return _then(_value.copyWith(
       unit: null == unit
@@ -67,6 +76,10 @@ class _$PeriodCopyWithImpl<$Res, $Val extends Period>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as int,
+      iso8601: null == iso8601
+          ? _value.iso8601
+          : iso8601 // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -78,7 +91,9 @@ abstract class _$$_PeriodCopyWith<$Res> implements $PeriodCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'unit') Unit unit, @JsonKey(name: 'value') int value});
+      {@JsonKey(name: 'unit') Unit unit,
+      @JsonKey(name: 'value') int value,
+      @JsonKey(name: 'iso8601') String iso8601});
 }
 
 /// @nodoc
@@ -93,6 +108,7 @@ class __$$_PeriodCopyWithImpl<$Res>
   $Res call({
     Object? unit = null,
     Object? value = null,
+    Object? iso8601 = null,
   }) {
     return _then(_$_Period(
       null == unit
@@ -103,6 +119,10 @@ class __$$_PeriodCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as int,
+      null == iso8601
+          ? _value.iso8601
+          : iso8601 // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -111,7 +131,9 @@ class __$$_PeriodCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Period implements _Period {
   const _$_Period(
-      @JsonKey(name: 'unit') this.unit, @JsonKey(name: 'value') this.value);
+      @JsonKey(name: 'unit') this.unit,
+      @JsonKey(name: 'value') this.value,
+      @JsonKey(name: 'iso8601') this.iso8601);
 
   factory _$_Period.fromJson(Map<String, dynamic> json) =>
       _$$_PeriodFromJson(json);
@@ -126,9 +148,16 @@ class _$_Period implements _Period {
   @JsonKey(name: 'value')
   final int value;
 
+  /// Specified in ISO 8601 format. For example, P1W equates to one week,
+  /// P1M equates to one month, P3M equates to three months, P6M equates to
+  /// six months, and P1Y equates to one year
+  @override
+  @JsonKey(name: 'iso8601')
+  final String iso8601;
+
   @override
   String toString() {
-    return 'Period(unit: $unit, value: $value)';
+    return 'Period(unit: $unit, value: $value, iso8601: $iso8601)';
   }
 
   @override
@@ -137,12 +166,13 @@ class _$_Period implements _Period {
         (other.runtimeType == runtimeType &&
             other is _$_Period &&
             (identical(other.unit, unit) || other.unit == unit) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.iso8601, iso8601) || other.iso8601 == iso8601));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, unit, value);
+  int get hashCode => Object.hash(runtimeType, unit, value, iso8601);
 
   @JsonKey(ignore: true)
   @override
@@ -159,8 +189,10 @@ class _$_Period implements _Period {
 }
 
 abstract class _Period implements Period {
-  const factory _Period(@JsonKey(name: 'unit') final Unit unit,
-      @JsonKey(name: 'value') final int value) = _$_Period;
+  const factory _Period(
+      @JsonKey(name: 'unit') final Unit unit,
+      @JsonKey(name: 'value') final int value,
+      @JsonKey(name: 'iso8601') final String iso8601) = _$_Period;
 
   factory _Period.fromJson(Map<String, dynamic> json) = _$_Period.fromJson;
 
@@ -174,6 +206,13 @@ abstract class _Period implements Period {
   /// The increment of time that a subscription period is specified in
   @JsonKey(name: 'value')
   int get value;
+  @override
+
+  /// Specified in ISO 8601 format. For example, P1W equates to one week,
+  /// P1M equates to one month, P3M equates to three months, P6M equates to
+  /// six months, and P1Y equates to one year
+  @JsonKey(name: 'iso8601')
+  String get iso8601;
   @override
   @JsonKey(ignore: true)
   _$$_PeriodCopyWith<_$_Period> get copyWith =>
