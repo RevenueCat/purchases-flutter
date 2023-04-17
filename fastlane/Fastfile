@@ -20,10 +20,10 @@ require 'fileutils'
 files_with_version_number = {
     './.version' => ['{x}'],
     './pubspec.yaml' => ['version: {x}'],
-    './ios/purchases_flutter.podspec' => ["s.version          = '{x}'"],
-    './macos/purchases_flutter.podspec' => ["s.version          = '{x}'"],
+    './ios/purchases_flutter.podspec' => ['s.version          = \'{x}\''],
+    './macos/purchases_flutter.podspec' => ['s.version          = \'{x}\''],
     './ios/Classes/PurchasesFlutterPlugin.m' => ['return @"{x}"'],
-    './android/build.gradle' => ["version '{x}'"],
+    './android/build.gradle' => ['version \'{x}\''],
     './android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java' => ['PLUGIN_VERSION = "{x}"'],
 }
 
@@ -148,9 +148,9 @@ lane :update_hybrid_common do |options|
   UI.message("ℹ️  Current Purchases Hybrid Common version: #{current_phc_version}")
   UI.message("ℹ️  Setting Purchases Hybrid Common version: #{new_version_number}")
   files_to_update = {
-      'ios/purchases_flutter.podspec' => ["s.dependency 'PurchasesHybridCommon', '{x}'"],
-      'macos/purchases_flutter.podspec' => ["s.dependency 'PurchasesHybridCommon', '{x}'"],
-      'android/build.gradle' => ["ext.common_version = '{x}'"],
+      'ios/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'macos/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'android/build.gradle' => ['ext.common_version = \'{x}\''],
   }
 
   if dry_run
