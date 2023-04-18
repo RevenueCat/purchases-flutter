@@ -17,15 +17,16 @@ require 'yaml'
 require 'os'
 require 'fileutils'
 
-files_with_version_number = [
-  './.version',
-  './pubspec.yaml',
-  './ios/purchases_flutter.podspec',
-  './macos/purchases_flutter.podspec',
-  './ios/Classes/PurchasesFlutterPlugin.m',
-  './android/build.gradle',
-  './android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java'
-]
+files_with_version_number = {
+    './.version' => ['{x}'],
+    './pubspec.yaml' => ['version: {x}'],
+    './ios/purchases_flutter.podspec' => ['s.version          = \'{x}\''],
+    './macos/purchases_flutter.podspec' => ['s.version          = \'{x}\''],
+    './ios/Classes/PurchasesFlutterPlugin.m' => ['return @"{x}"'],
+    './android/build.gradle' => ['version \'{x}\''],
+    './android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java' => ['PLUGIN_VERSION = "{x}"'],
+}
+
 repo_name = 'purchases-flutter'
 changelog_latest_path = './CHANGELOG-LATEST.md'
 changelog_path = './CHANGELOG.md'
@@ -44,7 +45,7 @@ lane :bump do |options|
     changelog_latest_path: changelog_latest_path,
     changelog_path: changelog_path,
     files_to_update: files_with_version_number,
-    files_to_update_without_prerelease_modifiers: [],
+    files_to_update_without_prerelease_modifiers: {},
     repo_name: repo_name,
     github_rate_limit: options[:github_rate_limit],
     editor: options[:editor],
@@ -111,7 +112,7 @@ lane :prepare_next_version do |options|
     repo_name: repo_name,
     github_pr_token: ENV["GITHUB_PULL_REQUEST_API_TOKEN"],
     files_to_update: files_with_version_number,
-    files_to_update_without_prerelease_modifiers: []
+    files_to_update_without_prerelease_modifiers: {}
   )
 end
 
@@ -146,11 +147,11 @@ lane :update_hybrid_common do |options|
 
   UI.message("ℹ️  Current Purchases Hybrid Common version: #{current_phc_version}")
   UI.message("ℹ️  Setting Purchases Hybrid Common version: #{new_version_number}")
-  files_to_update = [
-    'ios/purchases_flutter.podspec',
-    'macos/purchases_flutter.podspec',
-    'android/build.gradle'
-  ]
+  files_to_update = {
+      'ios/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'macos/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'android/build.gradle' => ['ext.common_version = \'{x}\''],
+  }
 
   if dry_run
     UI.message('ℹ️  Nothing more to do, dry_run: true')
