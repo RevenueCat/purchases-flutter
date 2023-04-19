@@ -114,7 +114,7 @@ jobs:
   lint:
     description: "Run static analysis for Flutter"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - build-flutter-project
@@ -129,7 +129,7 @@ jobs:
   test:
     description: "Run tests for Flutter"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - build-flutter-project
@@ -140,7 +140,7 @@ jobs:
   api_test:
     description: "Run API tests for Flutter"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - revenuecat/install-gem-unix-dependencies:
@@ -152,7 +152,7 @@ jobs:
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - replace-api-key
@@ -243,7 +243,7 @@ jobs:
   freezed:
     description: "Check if Freezed files need to be added to repo"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - build-flutter-project
@@ -255,7 +255,7 @@ jobs:
   dry-run-release:
     description: "Check if Freezed files need to be added to repo"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - run:
@@ -297,7 +297,7 @@ jobs:
   make-release:
     description: "Publishes the new version to pub.dev and creates a github release"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - revenuecat/install-gem-unix-dependencies:
