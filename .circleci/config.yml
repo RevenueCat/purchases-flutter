@@ -225,7 +225,7 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 13.4.1
+      xcode: 14.3.0
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
