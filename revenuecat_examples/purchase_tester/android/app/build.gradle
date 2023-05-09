@@ -32,7 +32,7 @@ android {
     }
 
     namespace 'com.revenuecat.purchases_sample'
-    
+
     defaultConfig {
         applicationId "com.revenuecat.purchases_sample"
         minSdkVersion 16
