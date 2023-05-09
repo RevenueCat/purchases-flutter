@@ -29,6 +29,10 @@ android {
 
     namespace 'com.revenuecat.purchases_sample'
 
+    lint {
+        disable 'InvalidPackage'
+    }
+
     defaultConfig {
         applicationId "com.revenuecat.purchases_sample"
         minSdkVersion 16
@@ -52,9 +56,7 @@ android {
         }
     }
 
-    lint {
-        disable 'InvalidPackage'
-    }
+    
 }
 
 flutter {
