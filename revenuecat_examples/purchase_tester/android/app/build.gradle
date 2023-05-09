@@ -27,11 +27,12 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     compileSdkVersion 31
 
-    namespace 'com.revenuecat.purchases_sample'
-
     lint {
         disable 'InvalidPackage'
     }
+
+    namespace 'com.revenuecat.purchases_sample'
+
 
     defaultConfig {
         applicationId "com.revenuecat.purchases_sample"
