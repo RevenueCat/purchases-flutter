@@ -27,9 +27,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     compileSdkVersion 31
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
+    namespace 'com.revenuecat.purchases_sample'
 
     defaultConfig {
         applicationId "com.revenuecat.purchases_sample"
@@ -52,6 +50,10 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
+    }
+
+    lint {
+        disable 'InvalidPackage'
     }
 }
 
