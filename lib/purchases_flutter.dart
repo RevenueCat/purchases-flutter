@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'constants.dart';
 import 'object_wrappers.dart';
 
 export 'object_wrappers.dart';
@@ -55,7 +56,7 @@ class Purchases {
   static final _channel = const MethodChannel('purchases_flutter')
     ..setMethodCallHandler((call) async {
       switch (call.method) {
-        case 'Purchases-CustomerInfoUpdated':
+        case ChannelCallHandlerMethodNameConstants.purchasesCustomerInfoUpdated:
           final args = Map<String, dynamic>.from(call.arguments);
           final customerInfo = CustomerInfo.fromJson(args);
           _lastReceivedCustomerInfo = customerInfo;
@@ -63,7 +64,7 @@ class Purchases {
             listener(customerInfo);
           }
           break;
-        case 'Purchases-ReadyForPromotedProductPurchase':
+        case ChannelCallHandlerMethodNameConstants.purchasesReadyForPromotedProductPurchase:
           for (final listener in _readyForPromotedProductPurchaseListeners) {
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
@@ -74,7 +75,7 @@ class Purchases {
             );
           }
           break;
-        case 'Purchases-LogHandlerEvent':
+        case ChannelCallHandlerMethodNameConstants.purchasesLogHandlerEvent:
           handleLogHandlerEvent(call);
           break;
       }
@@ -133,14 +134,14 @@ class Purchases {
     PurchasesConfiguration purchasesConfiguration,
   ) =>
       _channel.invokeMethod(
-        'setupPurchases',
+        MethodNameConstants.setupPurchases,
         {
-          'apiKey': purchasesConfiguration.apiKey,
-          'appUserId': purchasesConfiguration.appUserID,
-          'observerMode': purchasesConfiguration.observerMode,
-          'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
-          'useAmazon': purchasesConfiguration.store == Store.amazon,
-          'usesStoreKit2IfAvailable':
+          MethodParamsNameConstants.apiKey: purchasesConfiguration.apiKey,
+          MethodParamsNameConstants.appUserId: purchasesConfiguration.appUserID,
+          MethodParamsNameConstants.observerMode: purchasesConfiguration.observerMode,
+          MethodParamsNameConstants.userDefaultsSuiteName: purchasesConfiguration.userDefaultsSuiteName,
+          MethodParamsNameConstants.useAmazon: purchasesConfiguration.store == Store.amazon,
+          MethodParamsNameConstants.usesStoreKit2IfAvailable:
               // ignore: deprecated_member_use_from_same_package
               purchasesConfiguration.usesStoreKit2IfAvailable
         },
@@ -152,9 +153,9 @@ class Purchases {
   ///
   static Future<void> setFinishTransactions(bool finishTransactions) =>
       _channel.invokeMethod(
-        'setFinishTransactions',
+        MethodNameConstants.setFinishTransactions,
         {
-          'finishTransactions': finishTransactions,
+          MethodParamsNameConstants.finishTransactions: finishTransactions,
         },
       );
 
@@ -168,9 +169,9 @@ class Purchases {
   @Deprecated('Configure behavior through the RevenueCat dashboard instead.')
   static Future<void> setAllowSharingStoreAccount(bool allowSharing) =>
       _channel.invokeMethod(
-        'setAllowSharingStoreAccount',
+        MethodNameConstants.setAllowSharingStoreAccount,
         {
-          'allowSharing': allowSharing,
+          MethodParamsNameConstants.allowSharing: allowSharing,
         },
       );
 
@@ -228,7 +229,7 @@ class Purchases {
   ///
   /// Time is money.
   static Future<Offerings> getOfferings() async {
-    final res = await _channel.invokeMethod('getOfferings');
+    final res = await _channel.invokeMethod(MethodNameConstants.getOfferings);
     return Offerings.fromJson(
       Map<String, dynamic>.from(res),
     );
@@ -247,9 +248,9 @@ class Purchases {
     List<String> productIdentifiers, {
     PurchaseType type = PurchaseType.subs,
   }) async {
-    final List<dynamic> result = await _channel.invokeMethod('getProductInfo', {
-      'productIdentifiers': productIdentifiers,
-      'type': describeEnum(type),
+    final List<dynamic> result = await _channel.invokeMethod(MethodNameConstants.getProductInfo, {
+      MethodParamsNameConstants.productIdentifiers: productIdentifiers,
+      MethodParamsNameConstants.type: describeEnum(type),
     });
     return result
         .map<StoreProduct>(
@@ -281,11 +282,11 @@ class Purchases {
     PurchaseType type = PurchaseType.subs,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
-      'productIdentifier': productIdentifier,
-      'oldSKU': upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode?.index,
-      'type': describeEnum(type)
+    final customerInfo = await _invokeReturningCustomerInfo(MethodNameConstants.purchaseProduct, {
+      MethodParamsNameConstants.productIdentifier: productIdentifier,
+      MethodParamsNameConstants.oldSKU: upgradeInfo?.oldSKU,
+      MethodParamsNameConstants.prorationMode: prorationMode?.index,
+      MethodParamsNameConstants.type: describeEnum(type)
     });
     return customerInfo;
   }
@@ -305,11 +306,11 @@ class Purchases {
     UpgradeInfo? upgradeInfo,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
-      'packageIdentifier': packageToPurchase.identifier,
-      'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'oldSKU': upgradeInfo?.oldSKU,
-      'prorationMode': prorationMode?.index
+    final customerInfo = await _invokeReturningCustomerInfo(MethodNameConstants.purchasePackage, {
+      MethodParamsNameConstants.packageIdentifier: packageToPurchase.identifier,
+      MethodParamsNameConstants.offeringIdentifier: packageToPurchase.offeringIdentifier,
+      MethodParamsNameConstants.oldSKU: upgradeInfo?.oldSKU,
+      MethodParamsNameConstants.prorationMode: prorationMode?.index
     });
     return customerInfo;
   }
@@ -330,9 +331,9 @@ class Purchases {
     StoreProduct product,
     PromotionalOffer promotionalOffer,
   ) async {
-    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
-      'productIdentifier': product.identifier,
-      'signedDiscountTimestamp': promotionalOffer.timestamp.toString()
+    final customerInfo = await _invokeReturningCustomerInfo(MethodNameConstants.purchaseProduct, {
+      MethodParamsNameConstants.productIdentifier: product.identifier,
+      MethodParamsNameConstants.signedDiscountTimestamp: promotionalOffer.timestamp.toString()
     });
     return customerInfo;
   }
@@ -353,10 +354,10 @@ class Purchases {
     Package packageToPurchase,
     PromotionalOffer promotionalOffer,
   ) async {
-    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
-      'packageIdentifier': packageToPurchase.identifier,
-      'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'signedDiscountTimestamp': promotionalOffer.timestamp.toString()
+    final customerInfo = await _invokeReturningCustomerInfo(MethodNameConstants.purchasePackage, {
+      MethodParamsNameConstants.packageIdentifier: packageToPurchase.identifier,
+      MethodParamsNameConstants.offeringIdentifier: packageToPurchase.offeringIdentifier,
+      MethodParamsNameConstants.signedDiscountTimestamp: promotionalOffer.timestamp.toString()
     });
     return customerInfo;
   }
@@ -367,13 +368,13 @@ class Purchases {
   /// Returns a [CustomerInfo] object, or throws a [PlatformException] if there
   /// was a problem restoring transactions.
   static Future<CustomerInfo> restorePurchases() async {
-    final result = await _channel.invokeMethod('restorePurchases');
+    final result = await _channel.invokeMethod(MethodNameConstants.restorePurchases);
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// Gets the current appUserID.
   static Future<String> get appUserID async =>
-      await _channel.invokeMethod('getAppUserID') as String;
+      await _channel.invokeMethod(MethodNameConstants.getAppUserID) as String;
 
   /// This function will logIn the current user with an appUserID.
   /// Typically this would be used after logging in a user to identify them without
@@ -386,7 +387,7 @@ class Purchases {
   /// [newAppUserID] The appUserID that should be linked to the currently user
   static Future<LogInResult> logIn(String appUserID) async {
     final result =
-        await _channel.invokeMethod('logIn', {'appUserID': appUserID});
+        await _channel.invokeMethod(MethodNameConstants.logIn, {MethodParamsNameConstants.appUserID: appUserID});
     final customerInfo = CustomerInfo.fromJson(
       Map<String, dynamic>.from(result['customerInfo']),
     );
@@ -402,37 +403,37 @@ class Purchases {
   /// was a problem restoring transactions or if the method is called while the
   /// current user is anonymous.
   static Future<CustomerInfo> logOut() async {
-    final result = await _channel.invokeMethod('logOut');
+    final result = await _channel.invokeMethod(MethodNameConstants.logOut);
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
   /// Enables/Disables debugs logs
   @Deprecated('Use setLogLevel')
   static Future<void> setDebugLogsEnabled(bool enabled) =>
-      _channel.invokeMethod('setDebugLogsEnabled', {'enabled': enabled});
+      _channel.invokeMethod(MethodNameConstants.setDebugLogsEnabled, {MethodParamsNameConstants.enabled: enabled});
 
   /// Configures log level
   /// Used to set the log level. Useful for debugging issues with the lovely team @RevenueCat.
   /// The default is {LOG_LEVEL.INFO} in release builds and {LOG_LEVEL.DEBUG} in debug builds.
   static Future<void> setLogLevel(LogLevel level) =>
-      _channel.invokeMethod('setLogLevel', {'level': level.name.toUpperCase()});
+      _channel.invokeMethod(MethodNameConstants.setLogLevel, {MethodParamsNameConstants.level: level.name.toUpperCase()});
 
   ///
   /// iOS only. Set this property to true *only* when testing the ask-to-buy / SCA purchases flow.
   /// More information: http://errors.rev.cat/ask-to-buy
   ///
   static Future<void> setSimulatesAskToBuyInSandbox(bool enabled) => _channel
-      .invokeMethod('setSimulatesAskToBuyInSandbox', {'enabled': enabled});
+      .invokeMethod(MethodNameConstants.setSimulatesAskToBuyInSandbox, {MethodParamsNameConstants.enabled: enabled});
 
   ///
   /// Set this property to your proxy URL before configuring Purchases *only* if you've received a proxy key value from your RevenueCat contact.
   ///
   static Future<void> setProxyURL(String url) =>
-      _channel.invokeMethod('setProxyURLString', {'proxyURLString': url});
+      _channel.invokeMethod(MethodNameConstants.setProxyURLString, {MethodParamsNameConstants.proxyURLString: url});
 
   /// Gets current customer info, which will normally be cached.
   static Future<CustomerInfo> getCustomerInfo() async {
-    final result = await _channel.invokeMethod('getCustomerInfo');
+    final result = await _channel.invokeMethod(MethodNameConstants.getCustomerInfo);
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
 
@@ -443,7 +444,7 @@ class Purchases {
   ///
   ///  This method should be called anytime a sync is needed, like after a
   ///  successful purchase.
-  static Future<void> syncPurchases() => _channel.invokeMethod('syncPurchases');
+  static Future<void> syncPurchases() => _channel.invokeMethod(MethodNameConstants.syncPurchases);
 
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default
@@ -451,22 +452,22 @@ class Purchases {
   static Future<void> setAutomaticAppleSearchAdsAttributionCollection(
     bool enabled,
   ) =>
-      _channel.invokeMethod('setAutomaticAppleSearchAdsAttributionCollection', {
-        'enabled': enabled,
+      _channel.invokeMethod(MethodNameConstants.setAutomaticAppleSearchAdsAttributionCollection, {
+        MethodParamsNameConstants.enabled: enabled,
       });
 
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default
   static Future<void> enableAdServicesAttributionTokenCollection() =>
-      _channel.invokeMethod('enableAdServicesAttributionTokenCollection');
+      _channel.invokeMethod(MethodNameConstants.enableAdServicesAttributionTokenCollection);
 
   /// If the [appUserID] has been generated by RevenueCat
   static Future<bool> get isAnonymous async =>
-      await _channel.invokeMethod('isAnonymous') as bool;
+      await _channel.invokeMethod(MethodNameConstants.isAnonymous) as bool;
 
   /// Returns true if RevenueCat has already been intialized through [configure].
   static Future<bool> get isConfigured async =>
-      await _channel.invokeMethod('isConfigured') as bool;
+      await _channel.invokeMethod(MethodNameConstants.isConfigured) as bool;
 
   /// iOS only. Computes whether or not a user is eligible for the introductory
   /// pricing period of a given product. You should use this method to determine
@@ -490,8 +491,8 @@ class Purchases {
     List<String> productIdentifiers,
   ) async {
     final eligibilityMap = await _channel
-        .invokeMethod('checkTrialOrIntroductoryPriceEligibility', {
-      'productIdentifiers': productIdentifiers,
+        .invokeMethod(MethodNameConstants.checkTrialOrIntroductoryPriceEligibility, {
+      MethodParamsNameConstants.productIdentifiers: productIdentifiers,
     });
     return Map<String, IntroEligibility>.from(
       eligibilityMap.map(
@@ -512,13 +513,13 @@ class Purchases {
   /// This is useful for cases where purchaser information might have been updated outside of the app, like if a
   /// promotional subscription is granted through the RevenueCat dashboard.
   static Future<void> invalidateCustomerInfoCache() =>
-      _channel.invokeMethod('invalidateCustomerInfoCache');
+      _channel.invokeMethod(MethodNameConstants.invalidateCustomerInfoCache);
 
   /// iOS only. Presents a code redemption sheet, useful for redeeming offer codes
   /// Refer to https://docs.revenuecat.com/docs/ios-subscription-offers#offer-codes for more information on how
   /// to configure and use offer codes
   static Future<void> presentCodeRedemptionSheet() =>
-      _channel.invokeMethod('presentCodeRedemptionSheet');
+      _channel.invokeMethod(MethodNameConstants.presentCodeRedemptionSheet);
 
   ///================================================================================
   /// Subscriber Attributes
@@ -533,66 +534,66 @@ class Purchases {
   ///
   /// [attributes] Map of attributes by key. Set the value as an empty string to delete an attribute.
   static Future<void> setAttributes(Map<String, String> attributes) =>
-      _channel.invokeMethod('setAttributes', {'attributes': attributes});
+      _channel.invokeMethod(MethodNameConstants.setAttributes, {MethodParamsNameConstants.attributes: attributes});
 
   /// Subscriber attribute associated with the email address for the user
   ///
   /// [email] Empty String or null will delete the subscriber attribute.
   static Future<void> setEmail(String email) =>
-      _channel.invokeMethod('setEmail', {'email': email});
+      _channel.invokeMethod(MethodNameConstants.setEmail, {MethodParamsNameConstants.email: email});
 
   /// Subscriber attribute associated with the phone number for the user
   ///
   /// [phoneNumber] Empty String or null will delete the subscriber attribute.
   static Future<void> setPhoneNumber(String phoneNumber) =>
-      _channel.invokeMethod('setPhoneNumber', {'phoneNumber': phoneNumber});
+      _channel.invokeMethod(MethodNameConstants.setPhoneNumber, {MethodParamsNameConstants.phoneNumber: phoneNumber});
 
   /// Subscriber attribute associated with the display name for the user
   ///
   /// [displayName] Empty String or null will delete the subscriber attribute.
   static Future<void> setDisplayName(String displayName) =>
-      _channel.invokeMethod('setDisplayName', {'displayName': displayName});
+      _channel.invokeMethod(MethodNameConstants.setDisplayName, {MethodParamsNameConstants.displayName: displayName});
 
   /// Subscriber attribute associated with the push token for the user
   ///
   /// [pushToken] Empty String or null will delete the subscriber attribute.
   static Future<void> setPushToken(String pushToken) =>
-      _channel.invokeMethod('setPushToken', {'pushToken': pushToken});
+      _channel.invokeMethod(MethodNameConstants.setPushToken, {MethodParamsNameConstants.pushToken: pushToken});
 
   /// Subscriber attribute associated with the Adjust Id for the user
   /// Required for the RevenueCat Adjust integration
   ///
   /// [adjustID] Empty String or null will delete the subscriber attribute.
   static Future<void> setAdjustID(String adjustID) =>
-      _channel.invokeMethod('setAdjustID', {'adjustID': adjustID});
+      _channel.invokeMethod(MethodNameConstants.setAdjustID, {MethodParamsNameConstants.adjustID: adjustID});
 
   /// Subscriber attribute associated with the Appsflyer Id for the user
   /// Required for the RevenueCat Appsflyer integration
   ///
   /// [appsflyerID] Empty String or null will delete the subscriber attribute.
   static Future<void> setAppsflyerID(String appsflyerID) =>
-      _channel.invokeMethod('setAppsflyerID', {'appsflyerID': appsflyerID});
+      _channel.invokeMethod(MethodNameConstants.setAppsflyerID, {MethodParamsNameConstants.appsflyerID: appsflyerID});
 
   /// Subscriber attribute associated with the Facebook SDK Anonymous Id for the user
   /// Recommended for the RevenueCat Facebook integration
   ///
   /// [fbAnonymousID] Empty String or null will delete the subscriber attribute.
   static Future<void> setFBAnonymousID(String fbAnonymousID) => _channel
-      .invokeMethod('setFBAnonymousID', {'fbAnonymousID': fbAnonymousID});
+      .invokeMethod(MethodNameConstants.setFBAnonymousID, {MethodParamsNameConstants.fbAnonymousID: fbAnonymousID});
 
   /// Subscriber attribute associated with the mParticle Id for the user
   /// Recommended for the RevenueCat mParticle integration
   ///
   /// [mparticleID] Empty String or null will delete the subscriber attribute.
   static Future<void> setMparticleID(String mparticleID) =>
-      _channel.invokeMethod('setMparticleID', {'mparticleID': mparticleID});
+      _channel.invokeMethod(MethodNameConstants.setMparticleID, {MethodParamsNameConstants.mparticleID: mparticleID});
 
   /// Subscriber attribute associated with the Clever Tap Id for the user
   /// Required for the RevenueCat CleverTap integration
   ///
   /// [cleverTapID] Empty String or null will delete the subscriber attribute.
   static Future<void> setCleverTapID(String cleverTapID) =>
-      _channel.invokeMethod('setCleverTapID', {'cleverTapID': cleverTapID});
+      _channel.invokeMethod(MethodNameConstants.setCleverTapID, {MethodParamsNameConstants.cleverTapID: cleverTapID});
 
   /// Subscriber attribute associated with the Mixpanel Distinct Id for the user
   /// Required for the RevenueCat MixPanel integration
@@ -600,8 +601,8 @@ class Purchases {
   /// [mixpanelDistinctID] Empty String or null will delete the subscriber attribute.
   static Future<void> setMixpanelDistinctID(String mixpanelDistinctID) =>
       _channel.invokeMethod(
-        'setMixpanelDistinctID',
-        {'mixpanelDistinctID': mixpanelDistinctID},
+        MethodNameConstants.setMixpanelDistinctID,
+        {MethodParamsNameConstants.mixpanelDistinctID: mixpanelDistinctID},
       );
 
   /// Subscriber attribute associated with the Firebase Instance Id for the user
@@ -610,8 +611,8 @@ class Purchases {
   /// [firebaseAppInstanceId] Empty String or null will delete the subscriber attribute.
   static Future<void> setFirebaseAppInstanceId(String firebaseAppInstanceId) =>
       _channel.invokeMethod(
-        'setFirebaseAppInstanceID',
-        {'firebaseAppInstanceID': firebaseAppInstanceId},
+        MethodNameConstants.setFirebaseAppInstanceID,
+        {MethodParamsNameConstants.firebaseAppInstanceID: firebaseAppInstanceId},
       );
 
   /// Subscriber attribute associated with the OneSignal Player Id for the user
@@ -619,7 +620,7 @@ class Purchases {
   ///
   /// [onesignalID] Empty String or null will delete the subscriber attribute.
   static Future<void> setOnesignalID(String onesignalID) =>
-      _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
+      _channel.invokeMethod(MethodNameConstants.setOnesignalID, {MethodParamsNameConstants.onesignalID: onesignalID});
 
   /// Subscriber attribute associated with the Airship Channel Id for the user
   /// Required for the RevenueCat Airship integration
@@ -627,8 +628,8 @@ class Purchases {
   /// [airshipChannelID] Empty String or null will delete the subscriber attribute.
   static Future<void> setAirshipChannelID(String airshipChannelID) async {
     await _channel.invokeMethod(
-      'setAirshipChannelID',
-      {'airshipChannelID': airshipChannelID},
+      MethodNameConstants.setAirshipChannelID,
+      {MethodParamsNameConstants.airshipChannelID: airshipChannelID},
     );
   }
 
@@ -636,44 +637,44 @@ class Purchases {
   ///
   /// [mediaSource] Empty String or null will delete the subscriber attribute.
   static Future<void> setMediaSource(String mediaSource) =>
-      _channel.invokeMethod('setMediaSource', {'mediaSource': mediaSource});
+      _channel.invokeMethod(MethodNameConstants.setMediaSource, {MethodParamsNameConstants.mediaSource: mediaSource});
 
   /// Subscriber attribute associated with the install campaign for the user
   ///
   /// [campaign] Empty String or null will delete the subscriber attribute.
   static Future<void> setCampaign(String campaign) =>
-      _channel.invokeMethod('setCampaign', {'campaign': campaign});
+      _channel.invokeMethod(MethodNameConstants.setCampaign, {MethodParamsNameConstants.campaign: campaign});
 
   /// Subscriber attribute associated with the install ad group for the user
   ///
   /// [adGroup] Empty String or null will delete the subscriber attribute.
   static Future<void> setAdGroup(String adGroup) =>
-      _channel.invokeMethod('setAdGroup', {'adGroup': adGroup});
+      _channel.invokeMethod(MethodNameConstants.setAdGroup, {MethodParamsNameConstants.adGroup: adGroup});
 
   ///
   /// Subscriber attribute associated with the install ad for the user
   ///
   /// [ad] Empty String or null will delete the subscriber attribute.
   static Future<void> setAd(String ad) =>
-      _channel.invokeMethod('setAd', {'ad': ad});
+      _channel.invokeMethod(MethodNameConstants.setAd, {MethodParamsNameConstants.ad: ad});
 
   /// Subscriber attribute associated with the install keyword for the user
   ///
   /// [keyword] Empty String or null will delete the subscriber attribute.
   static Future<void> setKeyword(String keyword) =>
-      _channel.invokeMethod('setKeyword', {'keyword': keyword});
+      _channel.invokeMethod(MethodNameConstants.setKeyword, {MethodParamsNameConstants.keyword: keyword});
 
   /// Subscriber attribute associated with the install ad creative for the user
   ///
   /// [creative] Empty String or null will delete the subscriber attribute.
   static Future<void> setCreative(String creative) =>
-      _channel.invokeMethod('setCreative', {'creative': creative});
+      _channel.invokeMethod(MethodNameConstants.setCreative, {MethodParamsNameConstants.creative: creative});
 
   /// Automatically collect subscriber attributes associated with the device identifiers
   /// $idfa, $idfv, $ip on iOS
   /// $gpsAdId, $androidId, $ip on Android
   static Future<void> collectDeviceIdentifiers() =>
-      _channel.invokeMethod('collectDeviceIdentifiers');
+      _channel.invokeMethod(MethodNameConstants.collectDeviceIdentifiers);
 
   /// Check if billing is supported for the current user (meaning IN-APP
   /// purchases are supported) and optionally, whether a list of specified
@@ -687,8 +688,8 @@ class Purchases {
     List<BillingFeature> features = const [],
   ]) async {
     final result = await _channel.invokeMethod(
-      'canMakePayments',
-      {'features': features.map((e) => e.index).toList()},
+      MethodNameConstants.canMakePayments,
+      {MethodParamsNameConstants.features: features.map((e) => e.index).toList()},
     ) as bool;
     return result;
   }
@@ -708,9 +709,9 @@ class Purchases {
     StoreProduct product,
     StoreProductDiscount discount,
   ) async {
-    final result = await _channel.invokeMethod('getPromotionalOffer', {
-      'productIdentifier': product.identifier,
-      'discountIdentifier': discount.identifier
+    final result = await _channel.invokeMethod(MethodNameConstants.getPromotionalOffer, {
+      MethodParamsNameConstants.productIdentifier: product.identifier,
+      MethodParamsNameConstants.discountIdentifier: discount.identifier
     });
     return PromotionalOffer.fromJson(Map<String, dynamic>.from(result));
   }
@@ -734,7 +735,7 @@ class Purchases {
   static Future<RefundRequestStatus>
       beginRefundRequestForActiveEntitlement() async {
     final statusCode = await _channel.invokeMethod(
-      'beginRefundRequestForActiveEntitlement',
+      MethodNameConstants.beginRefundRequestForActiveEntitlement,
     );
     if (statusCode == null) throw UnsupportedPlatformException();
     return RefundRequestStatusExtension.from(statusCode);
@@ -755,8 +756,8 @@ class Purchases {
     StoreProduct product,
   ) async {
     final statusCode = await _channel.invokeMethod(
-      'beginRefundRequestForProduct',
-      {'productIdentifier': product.identifier},
+      MethodNameConstants.beginRefundRequestForProduct,
+      {MethodParamsNameConstants.productIdentifier: product.identifier},
     );
     if (statusCode == null) throw UnsupportedPlatformException();
     return RefundRequestStatusExtension.from(statusCode);
@@ -777,8 +778,8 @@ class Purchases {
     EntitlementInfo entitlement,
   ) async {
     final statusCode = await _channel.invokeMethod(
-      'beginRefundRequestForEntitlement',
-      {'entitlementIdentifier': entitlement.identifier},
+      MethodNameConstants.beginRefundRequestForEntitlement,
+      {MethodParamsNameConstants.entitlementIdentifier: entitlement.identifier},
     );
     if (statusCode == null) throw UnsupportedPlatformException();
     return RefundRequestStatusExtension.from(statusCode);
@@ -786,7 +787,7 @@ class Purchases {
 
   /// Android only. Call close when you are done with this instance of Purchases to disconnect
   /// from the billing services and clean up resources
-  static Future<void> close() => _channel.invokeMethod('close');
+  static Future<void> close() => _channel.invokeMethod(MethodNameConstants.close);
 
   /// Set a custom log handler for redirecting logs to your own logging system.
   /// By default, this sends info, warning, and error messages.
@@ -796,7 +797,7 @@ class Purchases {
   /// Use this function to redirect the log to your own logging system
   static Future<void> setLogHandler(LogHandler logHandler) async {
     _logHandler = logHandler;
-    return await _channel.invokeMethod('setLogHandler');
+    return await _channel.invokeMethod(MethodNameConstants.setLogHandler);
   }
 
   static void handleLogHandlerEvent(MethodCall call) {
@@ -825,13 +826,13 @@ class Purchases {
     double? price,
   ) =>
       _channel.invokeMethod(
-        'syncObserverModeAmazonPurchase',
+        MethodNameConstants.syncObserverModeAmazonPurchase,
         {
-          'productID': productID,
-          'receiptID': receiptID,
-          'amazonUserID': amazonUserID,
-          'isoCurrencyCode': isoCurrencyCode,
-          'price': price,
+          MethodParamsNameConstants.productID: productID,
+          MethodParamsNameConstants.receiptID: receiptID,
+          MethodParamsNameConstants.amazonUserID: amazonUserID,
+          MethodParamsNameConstants.isoCurrencyCode: isoCurrencyCode,
+          MethodParamsNameConstants.price: price,
         },
       );
 
@@ -842,9 +843,9 @@ class Purchases {
     int callbackID,
   ) async {
     final result = await _channel.invokeMethod(
-      'startPromotedProductPurchase',
+      MethodNameConstants.startPromotedProductPurchase,
       {
-        'callbackID': callbackID,
+        MethodParamsNameConstants.callbackID: callbackID,
       },
     );
     final customerInfo = CustomerInfo.fromJson(
