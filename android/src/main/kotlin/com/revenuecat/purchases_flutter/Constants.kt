@@ -1,0 +1,112 @@
+package com.revenuecat.purchases_flutter
+
+internal object Constants {
+
+    object MethodNameConstants{
+        const val setupPurchases = "setupPurchases"
+        const val setFinishTransactions = "setFinishTransactions"
+        const val setAllowSharingStoreAccount = "setAllowSharingStoreAccount"
+        const val getOfferings = "getOfferings"
+        const val getProductInfo = "getProductInfo"
+        const val purchaseProduct = "purchaseProduct"
+        const val purchasePackage = "purchasePackage"
+        const val getAppUserID = "getAppUserID"
+        const val restorePurchases = "restorePurchases"
+        const val logIn = "logIn"
+        const val logOut = "logOut"
+        const val setDebugLogsEnabled = "setDebugLogsEnabled"
+        const val setLogLevel = "setLogLevel"
+        const val setProxyURLString = "setProxyURLString"
+        const val getCustomerInfo = "getCustomerInfo"
+        const val syncPurchases = "syncPurchases"
+        const val setAutomaticAppleSearchAdsAttributionCollection = "setAutomaticAppleSearchAdsAttributionCollection"
+        const val enableAdServicesAttributionTokenCollection = "enableAdServicesAttributionTokenCollection"
+        const val isAnonymous = "isAnonymous"
+        const val isConfigured = "isConfigured"
+        const val checkTrialOrIntroductoryPriceEligibility = "checkTrialOrIntroductoryPriceEligibility"
+        const val invalidateCustomerInfoCache = "invalidateCustomerInfoCache"
+        const val getPromotionalOffer = "getPromotionalOffer"
+        const val presentCodeRedemptionSheet = "presentCodeRedemptionSheet"
+        const val setSimulatesAskToBuyInSandbox = "setSimulatesAskToBuyInSandbox"
+        const val beginRefundRequestForActiveEntitlement = "beginRefundRequestForActiveEntitlement"
+        const val beginRefundRequestForProduct = "beginRefundRequestForProduct"
+        const val beginRefundRequestForEntitlement = "beginRefundRequestForEntitlement"
+        const val setAttributes = "setAttributes"
+        const val setEmail = "setEmail"
+        const val setPhoneNumber = "setPhoneNumber"
+        const val setDisplayName = "setDisplayName"
+        const val setPushToken = "setPushToken"
+        const val setAdjustID = "setAdjustID"
+        const val setAppsflyerID = "setAppsflyerID"
+        const val setFBAnonymousID = "setFBAnonymousID"
+        const val setMparticleID = "setMparticleID"
+        const val setCleverTapID = "setCleverTapID"
+        const val setMixpanelDistinctID = "setMixpanelDistinctID"
+        const val setFirebaseAppInstanceID = "setFirebaseAppInstanceID"
+        const val setOnesignalID = "setOnesignalID"
+        const val setAirshipChannelID = "setAirshipChannelID"
+        const val setMediaSource = "setMediaSource"
+        const val setCampaign = "setCampaign"
+        const val setAdGroup = "setAdGroup"
+        const val setAd = "setAd"
+        const val setKeyword = "setKeyword"
+        const val setCreative = "setCreative"
+        const val collectDeviceIdentifiers = "collectDeviceIdentifiers"
+        const val canMakePayments = "canMakePayments"
+        const val close = "close"
+        const val setLogHandler = "setLogHandler"
+        const val syncObserverModeAmazonPurchase = "syncObserverModeAmazonPurchase"
+    }
+
+    object MethodArgsNameConstants {
+        const val apiKey = "apiKey";
+        const val appUserId = "appUserId";
+        const val observerMode = "observerMode";
+        const val userDefaultsSuiteName = "userDefaultsSuiteName";
+        const val useAmazon = "useAmazon";
+        const val usesStoreKit2IfAvailable = "usesStoreKit2IfAvailable";
+        const val finishTransactions = "finishTransactions";
+        const val allowSharing = "allowSharing";
+        const val productIdentifiers = "productIdentifiers";
+        const val type = "type";
+        const val productIdentifier = "productIdentifier";
+        const val oldSKU = "oldSKU";
+        const val prorationMode = "prorationMode";
+        const val packageIdentifier = "packageIdentifier";
+        const val offeringIdentifier = "offeringIdentifier";
+        const val signedDiscountTimestamp = "signedDiscountTimestamp";
+        const val appUserID = "appUserID";
+        const val enabled = "enabled";
+        const val level = "level";
+        const val proxyURLString = "proxyURLString";
+        const val attributes = "attributes";
+        const val email = "email";
+        const val phoneNumber = "phoneNumber";
+        const val displayName = "displayName";
+        const val pushToken = "pushToken";
+        const val adjustID = "adjustID";
+        const val appsflyerID = "appsflyerID";
+        const val fbAnonymousID = "fbAnonymousID";
+        const val mparticleID = "mparticleID";
+        const val cleverTapID = "cleverTapID";
+        const val mixpanelDistinctID = "mixpanelDistinctID";
+        const val firebaseAppInstanceID = "firebaseAppInstanceID";
+        const val onesignalID = "onesignalID";
+        const val airshipChannelID = "airshipChannelID";
+        const val mediaSource = "mediaSource";
+        const val campaign = "campaign";
+        const val adGroup = "adGroup";
+        const val ad = "ad";
+        const val keyword = "keyword";
+        const val creative = "creative";
+        const val features = "features";
+        const val discountIdentifier = "discountIdentifier";
+        const val entitlementIdentifier = "entitlementIdentifier";
+        const val productID = "productID";
+        const val receiptID = "receiptID";
+        const val amazonUserID = "amazonUserID";
+        const val isoCurrencyCode = "isoCurrencyCode";
+        const val price = "price";
+        const val callbackID = "callbackID";
+    }
+}
