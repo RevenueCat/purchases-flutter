@@ -452,7 +452,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setDebugLogsEnabled(boolean enabled, final Result result) {
-        CommonKt.setDebugLogsEnabled(enabled);
+        String logLevel = enabled ? "DEBUG" : "INFO";
+        CommonKt.setLogLevel(logLevel);
         result.success(null);
     }
 
