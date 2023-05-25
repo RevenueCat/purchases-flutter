@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'package:magic_weather_flutter/src/components/top_bar.dart';
 import 'package:magic_weather_flutter/src/model/singletons_data.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:magic_weather_flutter/src/components/native_dialog.dart';
 import 'package:flutter/services.dart';
 
 class UserScreen extends StatefulWidget {
-  const UserScreen({Key key}) : super(key: key);
+  const UserScreen({Key? key}) : super(key: key);
 
   @override
   _UserScreenState createState() => _UserScreenState();
@@ -23,7 +23,7 @@ class _UserScreenState extends State<UserScreen> {
     setState(() {});
   }
 
-  _manageUser(String task, String newAppUserID) async {
+  _manageUser(String task, String? newAppUserID) async {
     setState(() {
       _isLoading = true;
     });
@@ -36,7 +36,7 @@ class _UserScreenState extends State<UserScreen> {
 
     try {
       if (task == "login") {
-        await Purchases.logIn(newAppUserID);
+        await Purchases.logIn(newAppUserID!);
       } else if (task == "logout") {
         await Purchases.logOut();
       } else if (task == "restore") {
@@ -48,7 +48,9 @@ class _UserScreenState extends State<UserScreen> {
       await showDialog(
           context: context,
           builder: (BuildContext context) => ShowDialogToDismiss(
-              title: "Error", content: e.message, buttonText: 'OK'));
+              title: "Error",
+              content: e.message ?? "Unknown error",
+              buttonText: 'OK'));
     }
 
     setState(() {
