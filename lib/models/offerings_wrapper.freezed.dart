@@ -25,7 +25,7 @@ mixin _$Offerings {
   Map<String, Offering> get all => throw _privateConstructorUsedError;
 
   /// Current offering configured in the RevenueCat dashboard.
-  @JsonKey(name: 'current', nullable: true)
+  @JsonKey(name: 'current')
   Offering? get current => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $OfferingsCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'all') Map<String, Offering> all,
-      @JsonKey(name: 'current', nullable: true) Offering? current});
+      @JsonKey(name: 'current') Offering? current});
 
   $OfferingCopyWith<$Res>? get current;
 }
@@ -96,7 +96,7 @@ abstract class _$$_OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: 'all') Map<String, Offering> all,
-      @JsonKey(name: 'current', nullable: true) Offering? current});
+      @JsonKey(name: 'current') Offering? current});
 
   @override
   $OfferingCopyWith<$Res>? get current;
@@ -133,7 +133,7 @@ class __$$_OfferingsCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Offerings extends _Offerings {
   const _$_Offerings(@JsonKey(name: 'all') final Map<String, Offering> all,
-      {@JsonKey(name: 'current', nullable: true) this.current})
+      {@JsonKey(name: 'current') this.current})
       : _all = all,
         super._();
 
@@ -154,7 +154,7 @@ class _$_Offerings extends _Offerings {
 
   /// Current offering configured in the RevenueCat dashboard.
   @override
-  @JsonKey(name: 'current', nullable: true)
+  @JsonKey(name: 'current')
   final Offering? current;
 
   @override
@@ -192,9 +192,8 @@ class _$_Offerings extends _Offerings {
 
 abstract class _Offerings extends Offerings {
   const factory _Offerings(
-          @JsonKey(name: 'all') final Map<String, Offering> all,
-          {@JsonKey(name: 'current', nullable: true) final Offering? current}) =
-      _$_Offerings;
+      @JsonKey(name: 'all') final Map<String, Offering> all,
+      {@JsonKey(name: 'current') final Offering? current}) = _$_Offerings;
   const _Offerings._() : super._();
 
   factory _Offerings.fromJson(Map<String, dynamic> json) =
@@ -208,7 +207,7 @@ abstract class _Offerings extends Offerings {
   @override
 
   /// Current offering configured in the RevenueCat dashboard.
-  @JsonKey(name: 'current', nullable: true)
+  @JsonKey(name: 'current')
   Offering? get current;
   @override
   @JsonKey(ignore: true)
