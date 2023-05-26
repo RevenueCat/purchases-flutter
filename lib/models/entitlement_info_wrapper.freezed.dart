@@ -67,21 +67,21 @@ mixin _$EntitlementInfo {
   /// The expiration date for the entitlement, can be null for lifetime access.
   /// If the [periodType] is [PeriodType.trial],
   /// this is the trial expiration date.
-  @JsonKey(name: 'expirationDate', nullable: true)
+  @JsonKey(name: 'expirationDate')
   String? get expirationDate => throw _privateConstructorUsedError;
 
   /// The date an unsubscribe was detected. Can be null if it's still
   /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the [isActive] property.
-  @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+  @JsonKey(name: 'unsubscribeDetectedAt')
   String? get unsubscribeDetectedAt => throw _privateConstructorUsedError;
 
   /// The date a billing issue was detected. Can be null if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the [isActive] property.
-  @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+  @JsonKey(name: 'billingIssueDetectedAt')
   String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -117,11 +117,11 @@ abstract class $EntitlementInfoCopyWith<$Res> {
           Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
           PeriodType periodType,
-      @JsonKey(name: 'expirationDate', nullable: true)
+      @JsonKey(name: 'expirationDate')
           String? expirationDate,
-      @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+      @JsonKey(name: 'unsubscribeDetectedAt')
           String? unsubscribeDetectedAt,
-      @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+      @JsonKey(name: 'billingIssueDetectedAt')
           String? billingIssueDetectedAt});
 }
 
@@ -238,11 +238,11 @@ abstract class _$$_EntitlementInfoCopyWith<$Res>
           Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
           PeriodType periodType,
-      @JsonKey(name: 'expirationDate', nullable: true)
+      @JsonKey(name: 'expirationDate')
           String? expirationDate,
-      @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+      @JsonKey(name: 'unsubscribeDetectedAt')
           String? unsubscribeDetectedAt,
-      @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+      @JsonKey(name: 'billingIssueDetectedAt')
           String? billingIssueDetectedAt});
 }
 
@@ -352,11 +352,11 @@ class _$_EntitlementInfo implements _EntitlementInfo {
           this.store = Store.unknownStore,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
           this.periodType = PeriodType.unknown,
-      @JsonKey(name: 'expirationDate', nullable: true)
+      @JsonKey(name: 'expirationDate')
           this.expirationDate,
-      @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+      @JsonKey(name: 'unsubscribeDetectedAt')
           this.unsubscribeDetectedAt,
-      @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+      @JsonKey(name: 'billingIssueDetectedAt')
           this.billingIssueDetectedAt});
 
   factory _$_EntitlementInfo.fromJson(Map<String, dynamic> json) =>
@@ -420,7 +420,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   /// If the [periodType] is [PeriodType.trial],
   /// this is the trial expiration date.
   @override
-  @JsonKey(name: 'expirationDate', nullable: true)
+  @JsonKey(name: 'expirationDate')
   final String? expirationDate;
 
   /// The date an unsubscribe was detected. Can be null if it's still
@@ -428,7 +428,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the [isActive] property.
   @override
-  @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+  @JsonKey(name: 'unsubscribeDetectedAt')
   final String? unsubscribeDetectedAt;
 
   /// The date a billing issue was detected. Can be null if there is no
@@ -436,7 +436,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the [isActive] property.
   @override
-  @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+  @JsonKey(name: 'billingIssueDetectedAt')
   final String? billingIssueDetectedAt;
 
   @override
@@ -530,11 +530,11 @@ abstract class _EntitlementInfo implements EntitlementInfo {
           final Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
           final PeriodType periodType,
-      @JsonKey(name: 'expirationDate', nullable: true)
+      @JsonKey(name: 'expirationDate')
           final String? expirationDate,
-      @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+      @JsonKey(name: 'unsubscribeDetectedAt')
           final String? unsubscribeDetectedAt,
-      @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+      @JsonKey(name: 'billingIssueDetectedAt')
           final String? billingIssueDetectedAt}) = _$_EntitlementInfo;
 
   factory _EntitlementInfo.fromJson(Map<String, dynamic> json) =
@@ -599,7 +599,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// The expiration date for the entitlement, can be null for lifetime access.
   /// If the [periodType] is [PeriodType.trial],
   /// this is the trial expiration date.
-  @JsonKey(name: 'expirationDate', nullable: true)
+  @JsonKey(name: 'expirationDate')
   String? get expirationDate;
   @override
 
@@ -607,7 +607,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the [isActive] property.
-  @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+  @JsonKey(name: 'unsubscribeDetectedAt')
   String? get unsubscribeDetectedAt;
   @override
 
@@ -615,7 +615,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the [isActive] property.
-  @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+  @JsonKey(name: 'billingIssueDetectedAt')
   String? get billingIssueDetectedAt;
   @override
   @JsonKey(ignore: true)

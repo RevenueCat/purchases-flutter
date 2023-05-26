@@ -16,7 +16,7 @@ class Offerings with _$Offerings {
     @JsonKey(name: 'all') Map<String, Offering> all, {
 
     /// Current offering configured in the RevenueCat dashboard.
-    @JsonKey(name: 'current', nullable: true) Offering? current,
+    @JsonKey(name: 'current') Offering? current,
   }) = _Offerings;
 
   /// Retrieves an specific offering by its identifier.
