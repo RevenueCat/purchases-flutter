@@ -23,26 +23,75 @@ class _UserScreenState extends State<UserScreen> {
     setState(() {});
   }
 
-  _manageUser(String task, String? newAppUserID) async {
+  _logIn(String newAppUserID) async {
     setState(() {
       _isLoading = true;
     });
 
     /*
       How to login and identify your users with the Purchases SDK.
-            
+
       Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
     */
 
     try {
-      if (task == "login") {
-        await Purchases.logIn(newAppUserID!);
-      } else if (task == "logout") {
-        await Purchases.logOut();
-      } else if (task == "restore") {
-        await Purchases.restorePurchases();
-      }
+      await Purchases.logIn(newAppUserID);
+      appData.appUserID = await Purchases.appUserID;
+    } on PlatformException catch (e) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) => ShowDialogToDismiss(
+              title: "Error",
+              content: e.message ?? "Unknown error",
+              buttonText: 'OK'));
+    }
 
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  _logOut() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    /*
+      How to login and identify your users with the Purchases SDK.
+
+      Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+    */
+
+    try {
+      await Purchases.logOut();
+      appData.appUserID = await Purchases.appUserID;
+    } on PlatformException catch (e) {
+      await showDialog(
+          context: context,
+          builder: (BuildContext context) => ShowDialogToDismiss(
+              title: "Error",
+              content: e.message ?? "Unknown error",
+              buttonText: 'OK'));
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  _restore() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    /*
+      How to login and identify your users with the Purchases SDK.
+
+      Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
+    */
+
+    try {
+      await Purchases.restorePurchases();
       appData.appUserID = await Purchases.appUserID;
     } on PlatformException catch (e) {
       await showDialog(
@@ -88,7 +137,7 @@ class _UserScreenState extends State<UserScreen> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      appData.appUserID ?? '',
+                      appData.appUserID,
                       textAlign: TextAlign.center,
                       style: kDescriptionTextStyle,
                     ),
@@ -136,7 +185,7 @@ class _UserScreenState extends State<UserScreen> {
                           keyboardType: TextInputType.text,
                           style: kDescriptionTextStyle,
                           onSubmitted: (value) {
-                            if (value != '') _manageUser('login', value);
+                            if (value != '') _logIn(value);
                           },
                           decoration: userInputDecoration),
                     ),
@@ -152,7 +201,7 @@ class _UserScreenState extends State<UserScreen> {
                             padding: const EdgeInsets.all(8.0),
                             child: TextButton(
                               onPressed: () {
-                                _manageUser('logout', null);
+                                _logOut();
                               },
                               child: Text(
                                 "Logout",
@@ -168,7 +217,7 @@ class _UserScreenState extends State<UserScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextButton(
                             onPressed: () {
-                              _manageUser('restore', null);
+                              _restore();
                             },
                             child: Text(
                               "Restore Purchases",
