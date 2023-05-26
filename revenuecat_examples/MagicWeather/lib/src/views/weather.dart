@@ -7,11 +7,11 @@ import 'package:magic_weather_flutter/src/model/singletons_data.dart';
 import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'package:magic_weather_flutter/src/model/weather_data.dart';
 import 'package:magic_weather_flutter/src/views/paywall.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 class WeatherScreen extends StatefulWidget {
-  const WeatherScreen({Key key}) : super(key: key);
+  const WeatherScreen({Key? key}) : super(key: key);
 
   @override
   _WeatherScreenState createState() => _WeatherScreenState();
@@ -32,21 +32,23 @@ class _WeatherScreenState extends State<WeatherScreen> {
     CustomerInfo customerInfo = await Purchases.getCustomerInfo();
 
     if (customerInfo.entitlements.all[entitlementID] != null &&
-        customerInfo.entitlements.all[entitlementID].isActive == true) {
+        customerInfo.entitlements.all[entitlementID]?.isActive == true) {
       appData.currentData = WeatherData.generateData();
 
       setState(() {
         _isLoading = false;
       });
     } else {
-      Offerings offerings;
+      Offerings? offerings;
       try {
         offerings = await Purchases.getOfferings();
       } on PlatformException catch (e) {
         await showDialog(
             context: context,
             builder: (BuildContext context) => ShowDialogToDismiss(
-                title: "Error", content: e.message, buttonText: 'OK'));
+                title: "Error",
+                content: e.message ?? "Unknown error",
+                buttonText: 'OK'));
       }
 
       setState(() {
@@ -70,7 +72,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setModalState) {
               return Paywall(
-                offering: offerings.current,
+                offering: offerings!.current!,
               );
             });
           },

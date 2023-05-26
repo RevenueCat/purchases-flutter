@@ -8,7 +8,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import '../store_config.dart';
 
 class PurchaseTester extends StatelessWidget {
-  const PurchaseTester({Key key}) : super(key: key);
+  const PurchaseTester({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +21,14 @@ class PurchaseTester extends StatelessWidget {
 
 // ignore: public_member_api_docs
 class InitialScreen extends StatefulWidget {
-  const InitialScreen({Key key}) : super(key: key);
+  const InitialScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<InitialScreen> {
-  CustomerInfo _customerInfo;
+  CustomerInfo? _customerInfo;
 
   @override
   void initState() {
@@ -88,7 +88,7 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      final isPro = _customerInfo.entitlements.active.containsKey('pro_cat');
+      final isPro = _customerInfo!.entitlements.active.containsKey('pro_cat');
       if (isPro) {
         return const CatsScreen();
       } else {
@@ -100,14 +100,14 @@ class _MyAppState extends State<InitialScreen> {
 
 // ignore: public_member_api_docs
 class UpsellScreen extends StatefulWidget {
-  const UpsellScreen({Key key}) : super(key: key);
+  const UpsellScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _UpsellScreenState();
 }
 
 class _UpsellScreenState extends State<UpsellScreen> {
-  Offerings _offerings;
+  Offerings? _offerings;
 
   @override
   void initState() {
@@ -116,7 +116,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
   }
 
   Future<void> fetchData() async {
-    Offerings offerings;
+    Offerings? offerings;
     try {
       offerings = await Purchases.getOfferings();
     } on PlatformException catch (e) {
@@ -133,7 +133,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
   @override
   Widget build(BuildContext context) {
     if (_offerings != null) {
-      final offering = _offerings.current;
+      final offering = _offerings!.current;
       if (offering != null) {
         final monthly = offering.monthly;
         final lifetime = offering.lifetime;
@@ -167,16 +167,20 @@ class _PurchaseButton extends StatelessWidget {
   final Package package;
 
   // ignore: public_member_api_docs
-  const _PurchaseButton({Key key, @required this.package}) : super(key: key);
+  const _PurchaseButton({Key? key, required this.package}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => ElevatedButton(
         onPressed: () async {
           try {
             final customerInfo = await Purchases.purchasePackage(package);
-            final isPro = customerInfo.entitlements.all['pro_cat'].isActive;
+            final isPro =
+                customerInfo.entitlements.all['pro_cat']?.isActive ?? false;
             if (isPro) {
-              return const CatsScreen();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CatsScreen()),
+              );
             }
           } on PlatformException catch (e) {
             final errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -189,7 +193,10 @@ class _PurchaseButton extends StatelessWidget {
               print('Payment is pending');
             }
           }
-          return const InitialScreen();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const InitialScreen()),
+          );
         },
         child: Text('Buy - (${package.storeProduct.priceString})'),
       );
@@ -197,7 +204,7 @@ class _PurchaseButton extends StatelessWidget {
 
 // ignore: public_member_api_docs
 class CatsScreen extends StatelessWidget {
-  const CatsScreen({Key key}) : super(key: key);
+  const CatsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -211,16 +218,25 @@ class CatsScreen extends StatelessWidget {
                 onPressed: () async {
                   try {
                     final customerInfo = await Purchases.getCustomerInfo();
-                    final refundStatus = await Purchases
-                        .beginRefundRequestForEntitlement(
-                          customerInfo.entitlements.active['pro_cat']
-                        );
-                    print('Refund request successful with status: $refundStatus');
+                    var entitlement = customerInfo.entitlements.active['pro_cat'];
+                    if (entitlement != null) {
+                      final refundStatus = await Purchases
+                          .beginRefundRequestForEntitlement(
+                          entitlement
+                      );
+                      print('Refund request successful with status: $refundStatus');
+                    } else {
+                      print('Entitlement is not active');
+                    }
                   } catch (e) {
                     print('Refund request exception: $e');
                   }
-                  return const InitialScreen();
-                },
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const InitialScreen()),
+                );
+              },
                 child: const Text('Begin refund for pro_cat entitlement'),
               ),
             ],

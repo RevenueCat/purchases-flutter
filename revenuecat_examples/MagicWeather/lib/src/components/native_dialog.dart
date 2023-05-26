@@ -8,7 +8,10 @@ class ShowDialogToDismiss extends StatelessWidget {
   final String buttonText;
 
   const ShowDialogToDismiss(
-      {Key key, this.title, this.buttonText, this.content})
+      {Key? key,
+      required this.title,
+      required this.buttonText,
+      required this.content})
       : super(key: key);
 
   @override

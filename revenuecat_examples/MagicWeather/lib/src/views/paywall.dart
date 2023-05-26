@@ -7,7 +7,7 @@ import 'package:magic_weather_flutter/src/model/styles.dart';
 class Paywall extends StatefulWidget {
   final Offering offering;
 
-  const Paywall({Key key, @required this.offering}) : super(key: key);
+  const Paywall({Key? key, required this.offering}) : super(key: key);
 
   @override
   _PaywallState createState() => _PaywallState();
@@ -54,8 +54,10 @@ class _PaywallState extends State<Paywall> {
                           CustomerInfo customerInfo =
                               await Purchases.purchasePackage(
                                   myProductList[index]);
-                          appData.entitlementIsActive = customerInfo
-                              .entitlements.all[entitlementID].isActive;
+                          EntitlementInfo? entitlement =
+                              customerInfo.entitlements.all[entitlementID];
+                          appData.entitlementIsActive =
+                              entitlement?.isActive ?? false;
                         } catch (e) {
                           print(e);
                         }

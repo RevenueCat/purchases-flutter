@@ -101,21 +101,21 @@ class EntitlementInfo with _$EntitlementInfo {
     /// The expiration date for the entitlement, can be null for lifetime access.
     /// If the [periodType] is [PeriodType.trial],
     /// this is the trial expiration date.
-    @JsonKey(name: 'expirationDate', nullable: true)
+    @JsonKey(name: 'expirationDate')
         String? expirationDate,
 
     /// The date an unsubscribe was detected. Can be null if it's still
     /// subscribed or product is not a subscription.
     /// @note: Entitlement may still be active even if user has unsubscribed.
     /// Check the [isActive] property.
-    @JsonKey(name: 'unsubscribeDetectedAt', nullable: true)
+    @JsonKey(name: 'unsubscribeDetectedAt')
         String? unsubscribeDetectedAt,
 
     /// The date a billing issue was detected. Can be null if there is no
     /// billing issue or an issue has been resolved.
     /// @note: Entitlement may still be active even if there is a billing issue.
     /// Check the [isActive] property.
-    @JsonKey(name: 'billingIssueDetectedAt', nullable: true)
+    @JsonKey(name: 'billingIssueDetectedAt')
         String? billingIssueDetectedAt,
   }) = _EntitlementInfo;
 
