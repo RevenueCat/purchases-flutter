@@ -30,11 +30,11 @@ class StoreProduct with _$StoreProduct {
     @JsonKey(name: 'currencyCode') String currencyCode, {
 
     /// Introductory price for product. Can be null.
-    @JsonKey(name: 'introPrice', nullable: true)
+    @JsonKey(name: 'introPrice')
         IntroductoryPrice? introductoryPrice,
 
     /// Collection of discount offers for a product. Null for Android.
-    @JsonKey(name: 'discounts', nullable: true)
+    @JsonKey(name: 'discounts')
         List<StoreProductDiscount>? discounts,
 
     /// Subscription period, specified in ISO 8601 format. For example,
@@ -42,7 +42,7 @@ class StoreProduct with _$StoreProduct {
     /// P3M equates to three months, P6M equates to six months,
     /// and P1Y equates to one year.
     /// Note: Not available for Amazon.
-    @JsonKey(name: 'subscriptionPeriod', nullable: true)
+    @JsonKey(name: 'subscriptionPeriod')
         String? subscriptionPeriod,
   }) = _StoreProduct;
 

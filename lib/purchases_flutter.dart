@@ -414,8 +414,10 @@ class Purchases {
   /// Configures log level
   /// Used to set the log level. Useful for debugging issues with the lovely team @RevenueCat.
   /// The default is {LOG_LEVEL.INFO} in release builds and {LOG_LEVEL.DEBUG} in debug builds.
-  static Future<void> setLogLevel(LogLevel level) =>
-      _channel.invokeMethod('setLogLevel', {'level': level.name.toUpperCase()});
+  static Future<void> setLogLevel(LogLevel level) => _channel.invokeMethod(
+        'setLogLevel',
+        {'level': describeEnum(level).toUpperCase()},
+      );
 
   ///
   /// iOS only. Set this property to true *only* when testing the ask-to-buy / SCA purchases flow.
@@ -802,7 +804,10 @@ class Purchases {
   static void handleLogHandlerEvent(MethodCall call) {
     final args = Map<String, dynamic>.from(call.arguments);
     final logLevelName = args['logLevel'];
-    final logLevel = LogLevel.values.firstWhere((e) => e.name.toUpperCase() == logLevelName, orElse: () => LogLevel.info);
+    final logLevel = LogLevel.values.firstWhere(
+      (e) => describeEnum(e).toUpperCase() == logLevelName,
+      orElse: () => LogLevel.info,
+    );
     final msg = args['message'];
     _logHandler?.call(logLevel, msg);
   }
