@@ -13,7 +13,7 @@ final GlobalKey<NavigatorState> firstTabNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> secondTabNavKey = GlobalKey<NavigatorState>();
 
 class AppContainer extends StatefulWidget {
-  const AppContainer({Key key}) : super(key: key);
+  const AppContainer({Key? key}) : super(key: key);
 
   @override
   AppContainerState createState() => AppContainerState();
@@ -55,10 +55,9 @@ class AppContainerState extends State<AppContainer> {
       appData.appUserID = await Purchases.appUserID;
 
       CustomerInfo customerInfo = await Purchases.getCustomerInfo();
-      (customerInfo.entitlements.all[entitlementID] != null &&
-              customerInfo.entitlements.all[entitlementID].isActive)
-          ? appData.entitlementIsActive = true
-          : appData.entitlementIsActive = false;
+      EntitlementInfo? entitlement =
+          customerInfo.entitlements.all[entitlementID];
+      appData.entitlementIsActive = entitlement?.isActive ?? false;
 
       setState(() {});
     });
@@ -92,10 +91,10 @@ class AppContainerState extends State<AppContainer> {
           if (currentIndex == index) {
             switch (index) {
               case 0:
-                firstTabNavKey.currentState.popUntil((r) => r.isFirst);
+                firstTabNavKey.currentState?.popUntil((r) => r.isFirst);
                 break;
               case 1:
-                secondTabNavKey.currentState.popUntil((r) => r.isFirst);
+                secondTabNavKey.currentState?.popUntil((r) => r.isFirst);
                 break;
             }
           }

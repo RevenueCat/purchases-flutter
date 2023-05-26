@@ -25,11 +25,11 @@ class WeatherData {
   Environment environment;
 
   WeatherData(
-      {this.emoji,
-      this.weatherColor,
-      this.temperature,
-      this.unit,
-      this.environment});
+      {required this.emoji,
+      required this.weatherColor,
+      required this.temperature,
+      required this.unit,
+      required this.environment});
 
   static WeatherData testCold = WeatherData(
       emoji: "🥶",

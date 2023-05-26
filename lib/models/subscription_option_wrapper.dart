@@ -36,25 +36,25 @@ class SubscriptionOption with _$SubscriptionOption {
     @JsonKey(name: 'isBasePlan') bool isBasePlan,
 
     /// The subscription period of fullPricePhase (after free and intro trials).
-    @JsonKey(name: 'billingPeriod', nullable: true) Period? billingPeriod,
+    @JsonKey(name: 'billingPeriod') Period? billingPeriod,
 
     /// The full price PricingPhase of the subscription.
     /// Looks for the last price phase of the SubscriptionOption.
-    @JsonKey(name: 'fullPricePhase', nullable: true)
+    @JsonKey(name: 'fullPricePhase')
         PricingPhase? fullPricePhase,
 
     /// The free trial PricingPhase of the subscription.
     /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is 0.
     /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-    @JsonKey(name: 'freePhase', nullable: true) PricingPhase? freePhase,
+    @JsonKey(name: 'freePhase') PricingPhase? freePhase,
 
     /// The intro trial PricingPhase of the subscription.
     /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
     /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-    @JsonKey(name: 'introPhase', nullable: true) PricingPhase? introPhase,
+    @JsonKey(name: 'introPhase') PricingPhase? introPhase,
 
     // Offering identifier the subscriptioni option was presented from
-    @JsonKey(name: 'presentedOfferingIdentifier', nullable: true)
+    @JsonKey(name: 'presentedOfferingIdentifier')
         String? presentedOfferingIdentifier,
   ) = _SubscriptionOption;
 
