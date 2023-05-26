@@ -133,6 +133,25 @@ commands:
           name: Create simulator
           command: xcrun simctl create '<< parameters.sim-name >>' com.apple.CoreSimulator.SimDeviceType.<< parameters.sim-device-type >> com.apple.CoreSimulator.SimRuntime.<< parameters.sim-device-runtime >>
 
+  install-sdkman:
+    description: Install SDKMAN
+    steps:
+      - run:
+          name: Installing SDKMAN
+          command: |
+            if curl -s "https://get.sdkman.io?rcupdate=false" | bash; then
+              echo -e '\nsource "/root/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
+              source $BASH_ENV
+            else
+              echo "Error installing SDKMAN, continuing with default Java" >&2
+            fi
+      - run:
+          name: Setup Java environment
+          command: |
+            if ! sdk env install; then
+              echo "Error installing Java SDK through SDKMAN, continuing with default Java" >&2
+            fi
+
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -166,6 +185,7 @@ jobs:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
+      - install-sdkman
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - run:
