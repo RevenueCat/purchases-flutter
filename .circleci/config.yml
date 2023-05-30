@@ -199,6 +199,7 @@ jobs:
     steps:
       - checkout
       - replace-api-key
+      - install-sdkman
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
