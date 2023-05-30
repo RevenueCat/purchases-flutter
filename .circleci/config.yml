@@ -109,7 +109,7 @@ commands:
       - run:
           name: Flutter doctor
           command: flutter doctor
-  
+
   install-and-create-sim:
     parameters:
       install-simulator-name:
@@ -246,18 +246,13 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 13.4.1
+      xcode: 14.3.1
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - install-and-create-sim:
-          install-simulator-name: iOS 15.4 Simulator
-          sim-device-type: iPhone-13
-          sim-device-runtime: iOS-15-4
-          sim-name: iPhone 13 (15.4)
       - macos/preboot-simulator:
-          device: iPhone 13
-          version: '15.4'
+          device: iPhone 14
+          version: '16.4'
       - setup-flutter
       - replace-api-key
       - build-flutter-project:
@@ -273,7 +268,7 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 13.4.1
+      xcode: 14.3.1
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
