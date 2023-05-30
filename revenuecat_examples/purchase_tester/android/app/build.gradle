@@ -67,9 +67,11 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation 'androidx.test:rules:1.5.0'
+    // Versions should match Flutter's integration_test package or there will be dependency resolution conflicts
+    // https://github.com/flutter/flutter/blob/master/packages/integration_test/android/build.gradle#L52-L55
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 }
 
 // Call passing parameter -PcommonPath="$HOME/Development/repos/purchases-hybrid-common/android"
