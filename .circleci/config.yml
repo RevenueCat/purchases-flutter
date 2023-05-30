@@ -367,6 +367,9 @@ workflows:
       - api_test
       - freezed
       - dry-run-release: *release-branches
+      - ios-integration-test
+      - macos-integration-test
+      - android-integration-test-build
   deploy:
     when:
       not:
