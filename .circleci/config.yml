@@ -272,7 +272,8 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - setup-flutter
+      - setup-flutter:
+          version: 3.3.10
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
