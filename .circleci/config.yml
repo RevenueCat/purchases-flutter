@@ -378,9 +378,9 @@ workflows:
       - hold:
           type: approval
           requires:
-            - run-firebase-tests
+            - android-integration-test-build
           <<: *release-branches-and-main
-      - tag-release-branch:
+      - run-firebase-tests:
           requires:
             - hold
           <<: *release-branches-and-main
