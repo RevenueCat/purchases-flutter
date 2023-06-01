@@ -7,11 +7,15 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  setUpAll(() => Purchases.setup('appl_KhXKryBEHUWEdShrggQyjyzHKHW', appUserId: 'test-user'));
+  setUpAll(() {
+    PurchasesConfiguration configuration = PurchasesConfiguration("appl_KhXKryBEHUWEdShrggQyjyzHKHW");
+    configuration.appUserID = "test-user";
+    Purchases.configure(configuration);
+  });
 
   testWidgets('Configures without crashing', (WidgetTester tester) async {
     try {
-      Purchases.appUserID;
+      assert(await Purchases.appUserID == "test-user", true);
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
@@ -20,7 +24,7 @@ void main() {
   testWidgets('Purchaser info fetched successfully',
       (WidgetTester tester) async {
     try {
-      await Purchases.getCustomerInfo();
+      assert((await Purchases.getCustomerInfo()).originalAppUserId == "test-user", true);
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
