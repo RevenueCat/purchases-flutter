@@ -173,9 +173,11 @@ jobs:
           project: revenuecat_examples/MagicWeather
       - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
+      - flutter-get-dependencies:
+          project: api_tester
       - run:
           name: Analyze code
-          command: flutter analyze lib
+          command: flutter analyze
 
   test:
     description: "Run tests for Flutter"
@@ -371,7 +373,7 @@ workflows:
       - test
       - api_test
       - freezed
-      - dry-run-release: *release-branches-and-main
+      - dry-run-release: *release-branches
       - ios-integration-test
       - macos-integration-test
       - android-integration-test-build
