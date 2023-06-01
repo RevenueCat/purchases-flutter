@@ -175,7 +175,7 @@ jobs:
           project: revenuecat_examples/purchase_tester
       - run:
           name: Analyze code
-          command: flutter analyze lib
+          command: flutter analyze
 
   test:
     description: "Run tests for Flutter"
@@ -371,7 +371,7 @@ workflows:
       - test
       - api_test
       - freezed
-      - dry-run-release
+      - dry-run-release: *release-branches
       - ios-integration-test
       - macos-integration-test
       - android-integration-test-build
