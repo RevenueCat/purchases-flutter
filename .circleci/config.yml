@@ -173,6 +173,8 @@ jobs:
           project: revenuecat_examples/MagicWeather
       - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
+      - flutter-get-dependencies:
+          project: api_tester
       - run:
           name: Analyze code
           command: flutter analyze
