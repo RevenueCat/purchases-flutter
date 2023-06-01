@@ -381,11 +381,9 @@ workflows:
           type: approval
           requires:
             - android-integration-test-build
-          <<: *release-branches-and-main
       - run-firebase-tests:
           requires:
             - hold
-          <<: *release-branches-and-main
 
   deploy:
     when:
