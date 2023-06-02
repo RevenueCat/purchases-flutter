@@ -221,7 +221,7 @@ class _PurchaseStoreProductButton extends StatelessWidget {
   final StoreProduct storeProduct;
 
   // ignore: public_member_api_docs
-  const _PurchaseStoreProductButton({Key key, @required this.storeProduct})
+  const _PurchaseStoreProductButton({Key? key, required this.storeProduct})
       : super(key: key);
 
   @override
@@ -233,7 +233,10 @@ class _PurchaseStoreProductButton extends StatelessWidget {
             final isPro =
                 customerInfo.entitlements.active.containsKey(entitlementKey);
             if (isPro) {
-              return const CatsScreen();
+             Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CatsScreen()),
+              );
             }
           } on PlatformException catch (e) {
             final errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -246,7 +249,10 @@ class _PurchaseStoreProductButton extends StatelessWidget {
               print('Payment is pending');
             }
           }
-          return const InitialScreen();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const InitialScreen()),
+          );
         },
         child: Text(
             'Buy StoreProduct (${storeProduct.productCategory}): ${storeProduct.subscriptionPeriod ?? storeProduct.title}\n${storeProduct.priceString}'),
@@ -257,7 +263,7 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
   final SubscriptionOption option;
 
   // ignore: public_member_api_docs
-  const _PurchaseSubscriptionOptionButton({Key key, @required this.option})
+  const _PurchaseSubscriptionOptionButton({Key? key, required this.option})
       : super(key: key);
 
   @override
@@ -269,7 +275,10 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
             final isPro =
                 customerInfo.entitlements.active.containsKey(entitlementKey);
             if (isPro) {
-              return const CatsScreen();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CatsScreen()),
+              );
             }
           } on PlatformException catch (e) {
             final errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -282,11 +291,14 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
               print('Payment is pending');
             }
           }
-          return const InitialScreen();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const InitialScreen()),
+          );
         },
         child:
             Text('Buy Option: - (${option.id}\n${option.pricingPhases.map((e) {
-          return '${e.price.formatted} for ${e.billingPeriod.value} ${e.billingPeriod.unit}';
+          return '${e.price.formatted} for ${e.billingPeriod?.value} ${e.billingPeriod?.unit}';
         }).join(' -> ')})'),
       );
 }
@@ -314,7 +326,7 @@ class CatsScreen extends StatelessWidget {
                 } catch (e) {
                   print('Refund request exception: $e');
                 }
-                                Navigator.pushReplacement(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const InitialScreen()),

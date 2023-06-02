@@ -394,6 +394,9 @@ class _PurchasesFlutterApiTest {
     switch (prorationMode) {
       case GoogleProrationMode.immediateWithTimeProration:
       case GoogleProrationMode.immediateWithoutProration:
+      case GoogleProrationMode.immediateAndChargeFullPrice:
+      case GoogleProrationMode.immediateAndChargeProratedPrice:
+      case GoogleProrationMode.deferred:
         break;
     }
   }
