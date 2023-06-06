@@ -19,6 +19,15 @@ aliases:
         ignore: /.*/
       branches:
         only: main
+  release-branches-and-main: &release-branches-and-main
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        only:
+          - main
+          - /^release\/.*/
+
 
 orbs:
   android: circleci/android@0.2.1
@@ -109,7 +118,7 @@ commands:
       - run:
           name: Flutter doctor
           command: flutter doctor
-  
+
   install-and-create-sim:
     parameters:
       install-simulator-name:
@@ -164,9 +173,11 @@ jobs:
           project: revenuecat_examples/MagicWeather
       - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
+      - flutter-get-dependencies:
+          project: api_tester
       - run:
           name: Analyze code
-          command: flutter analyze lib
+          command: flutter analyze
 
   test:
     description: "Run tests for Flutter"
@@ -199,6 +210,7 @@ jobs:
     steps:
       - checkout
       - replace-api-key
+      - install-sdkman
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
@@ -245,18 +257,13 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 13.4.1
+      xcode: 14.3.1
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - install-and-create-sim:
-          install-simulator-name: iOS 15.4 Simulator
-          sim-device-type: iPhone-13
-          sim-device-runtime: iOS-15-4
-          sim-name: iPhone 13 (15.4)
       - macos/preboot-simulator:
-          device: iPhone 13
-          version: '15.4'
+          device: iPhone 14
+          version: '16.4'
       - setup-flutter
       - replace-api-key
       - build-flutter-project:
@@ -272,12 +279,12 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 13.4.1
+      xcode: 14.3.1
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
       - setup-flutter:
-          version: '3.3.10'
+          version: 3.3.10
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -367,6 +374,19 @@ workflows:
       - api_test
       - freezed
       - dry-run-release: *release-branches
+      - ios-integration-test
+      - macos-integration-test
+      - android-integration-test-build
+      - hold:
+          type: approval
+          requires:
+            - android-integration-test-build
+          <<: *release-branches-and-main
+      - run-firebase-tests:
+          requires:
+            - hold
+          <<: *release-branches-and-main
+
   deploy:
     when:
       not:

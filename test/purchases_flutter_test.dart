@@ -13,7 +13,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 /// expects, then the parameters the SDK would send to Flutter on that call.
 void _performDartSideChannelMethodCall(String methodName, dynamic params) {
   final methodCall = MethodCall(methodName, params);
-  ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+  ServicesBinding.instance.channelBuffers.push(
     'purchases_flutter',
     const StandardMethodCodec().encodeMethodCall(methodCall),
     (ByteData? data) {},
@@ -42,14 +42,14 @@ void main() {
   };
 
   setUp(() {
-    channel.setMockMethodCallHandler((call) async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, (call) async {
       log.add(call);
       return response;
     });
   });
 
   tearDown(() {
-    channel.setMockMethodCallHandler(null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
     log.clear();
     response = null;
   });
@@ -93,7 +93,7 @@ void main() {
       'addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info',
       () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
-    channel.setMockMethodCallHandler(null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
     _performDartSideChannelMethodCall(
       'Purchases-CustomerInfoUpdated',
       mockCustomerInfoResponse,
@@ -116,7 +116,7 @@ void main() {
       'addCustomerInfoUpdateListener calls each listener immediately with latest customer info',
       () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
-    channel.setMockMethodCallHandler(null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
     _performDartSideChannelMethodCall(
       'Purchases-CustomerInfoUpdated',
       mockCustomerInfoResponse,
@@ -605,9 +605,9 @@ void main() {
 
   test('configure with amazon', () async {
     await Purchases.configure(
-      (AmazonConfiguration('api_key')
+      AmazonConfiguration('api_key')
         ..appUserID = 'cesar'
-        ..observerMode = true),
+        ..observerMode = true,
     );
     expect(
       log,
@@ -629,9 +629,9 @@ void main() {
 
   test('configure with base configuration', () async {
     await Purchases.configure(
-      (PurchasesConfiguration('api_key')
+      PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
-        ..observerMode = true),
+        ..observerMode = true,
     );
     expect(
       log,
@@ -653,10 +653,10 @@ void main() {
 
   test('configure with base configuration and using amazon', () async {
     await Purchases.configure(
-      (PurchasesConfiguration('api_key')
+      PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
         ..observerMode = true
-        ..store = Store.amazon),
+        ..store = Store.amazon,
     );
     expect(
       log,

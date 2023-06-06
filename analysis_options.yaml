@@ -19,7 +19,6 @@ linter:
     avoid_void_async: true
     cascade_invocations: true
     directives_ordering: true
-    invalid_annotation_target: false
     omit_local_variable_types: true
     prefer_const_constructors: true
     prefer_const_constructors_in_immutables: true
