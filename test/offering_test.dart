@@ -58,4 +58,49 @@ void main() {
     final offering = Offering.fromJson(offeringJSON);
     expect(offering.metadata, metadata);
   });
+
+  test('getMetadataString finds key with value', () {
+    const metadata = {
+      'int': 5,
+      'double': 5.5,
+      'boolean': true,
+      'string': 'five',
+      'array': ['five'],
+      'dictionary': {'string': 'five'}
+    };
+
+    final offeringJSON = generateOfferingJSON(metadata);
+    final offering = Offering.fromJson(offeringJSON);
+    expect(offering.getMetadataString('string', 'NOT THIS'), 'five');
+  });
+
+  test('getMetadataString uses default for non-existent key', () {
+    const metadata = {
+      'int': 5,
+      'double': 5.5,
+      'boolean': true,
+      'string': 'five',
+      'array': ['five'],
+      'dictionary': {'string': 'five'}
+    };
+
+    final offeringJSON = generateOfferingJSON(metadata);
+    final offering = Offering.fromJson(offeringJSON);
+    expect(offering.getMetadataString('pizza', 'cheese'), 'cheese');
+  });
+
+  test('getMetadataString uses default for key with value of non-string', () {
+    const metadata = {
+      'int': 5,
+      'double': 5.5,
+      'boolean': true,
+      'string': 'five',
+      'array': ['five'],
+      'dictionary': {'string': 'five'}
+    };
+
+    final offeringJSON = generateOfferingJSON(metadata);
+    final offering = Offering.fromJson(offeringJSON);
+    expect(offering.getMetadataString('int', 'ope'), 'ope');
+  });
 }
