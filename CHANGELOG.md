@@ -1,3 +1,10 @@
+## 5.0.0-rc.1
+### New Features
+* Adding metadata to offering (#716) via Josh Holtz (@joshdholtz)
+* [BC5] Add missing proration modes + fix analyzer issues (#708) via Mark Villacampa (@MarkVillacampa)
+### Other Changes
+* Update internal plugin via Josh Holtz (@joshdholtz)
+
 ## 5.0.0-beta.2
 ### Breaking Changes
 * Update to PurchasesHyridCommon 5.0.0-beta.6 (#666) via Josh Holtz (@joshdholtz)
