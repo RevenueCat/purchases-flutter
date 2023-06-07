@@ -57,7 +57,7 @@ class Offering with _$Offering {
 extension OfferingX on Offering {
   String getMetadataString(String key, String defaultValue) {
     final value = metadata[key];
-    if (value is String) {
+    if (value != null && value is String) {
       return value;
     }
     return defaultValue;

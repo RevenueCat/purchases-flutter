@@ -14,6 +14,7 @@ class _OfferingApiTest {
   void _checkConstructor(
       String identifier,
       String serverDescription,
+      Map<String, Object> metadata,
       List<Package> availablePackages,
       Package? lifetime,
       Package? annual,
@@ -23,8 +24,9 @@ class _OfferingApiTest {
       Package? monthly,
       Package? weekly) {
     Offering offering =
-        Offering(identifier, serverDescription, availablePackages);
-    offering = Offering(identifier, serverDescription, availablePackages,
+        Offering(identifier, serverDescription, metadata, availablePackages);
+    offering = Offering(
+        identifier, serverDescription, metadata, availablePackages,
         lifetime: lifetime,
         annual: annual,
         sixMonth: sixMonth,
