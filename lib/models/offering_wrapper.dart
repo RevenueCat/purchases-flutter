@@ -55,6 +55,13 @@ class Offering with _$Offering {
 }
 
 extension OfferingX on Offering {
+  /// Returns the [metadata] value associated to [key] for the expected [String] type
+  /// or [defaultValue] if not found, or it's not the expected [String] type.
+  ///
+  /// [key] The metadata key to lookup
+  ///
+  /// [defaultValue] The default value if a key isn't found or if not
+  /// the expected String type
   String getMetadataString(String key, String defaultValue) {
     final value = metadata[key];
     if (value != null && value is String) {
