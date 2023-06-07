@@ -46,6 +46,8 @@ class _OfferingApiTest {
     Package? twoMonth = offering.twoMonth;
     Package? monthly = offering.monthly;
     Package? weekly = offering.weekly;
+
+    String value = offering.getMetadataString('key', 'default value');
   }
 
   void _checkListOfPackagesExtension(List<Package> packages) {

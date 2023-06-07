@@ -54,6 +54,16 @@ class Offering with _$Offering {
       _$OfferingFromJson(json);
 }
 
+extension OfferingX on Offering {
+  String getMetadataString(String key, String defaultValue) {
+    final value = metadata[key];
+    if (value is String) {
+      return value;
+    }
+    return defaultValue;
+  }
+}
+
 // Extension needed because this was a deprecation from freezed 1.x that
 // was removed in 2.x. Freezed is no longer including package:collection
 extension PackageListX on List<Package> {
