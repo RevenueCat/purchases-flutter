@@ -28,6 +28,10 @@ mixin _$Offering {
   @JsonKey(name: 'serverDescription')
   String get serverDescription => throw _privateConstructorUsedError;
 
+  /// Offering metadata defined in RevenueCat dashboard.
+  @JsonKey(name: 'metadata')
+  Map<String, Object> get metadata => throw _privateConstructorUsedError;
+
   /// Array of [Package] objects available for purchase.
   @JsonKey(name: 'availablePackages')
   List<Package> get availablePackages => throw _privateConstructorUsedError;
@@ -74,6 +78,7 @@ abstract class $OfferingCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'serverDescription') String serverDescription,
+      @JsonKey(name: 'metadata') Map<String, Object> metadata,
       @JsonKey(name: 'availablePackages') List<Package> availablePackages,
       @JsonKey(name: 'lifetime') Package? lifetime,
       @JsonKey(name: 'annual') Package? annual,
@@ -107,6 +112,7 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   $Res call({
     Object? identifier = null,
     Object? serverDescription = null,
+    Object? metadata = null,
     Object? availablePackages = null,
     Object? lifetime = freezed,
     Object? annual = freezed,
@@ -125,6 +131,10 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
           ? _value.serverDescription
           : serverDescription // ignore: cast_nullable_to_non_nullable
               as String,
+      metadata: null == metadata
+          ? _value.metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, Object>,
       availablePackages: null == availablePackages
           ? _value.availablePackages
           : availablePackages // ignore: cast_nullable_to_non_nullable
@@ -255,6 +265,7 @@ abstract class _$$_OfferingCopyWith<$Res> implements $OfferingCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'identifier') String identifier,
       @JsonKey(name: 'serverDescription') String serverDescription,
+      @JsonKey(name: 'metadata') Map<String, Object> metadata,
       @JsonKey(name: 'availablePackages') List<Package> availablePackages,
       @JsonKey(name: 'lifetime') Package? lifetime,
       @JsonKey(name: 'annual') Package? annual,
@@ -293,6 +304,7 @@ class __$$_OfferingCopyWithImpl<$Res>
   $Res call({
     Object? identifier = null,
     Object? serverDescription = null,
+    Object? metadata = null,
     Object? availablePackages = null,
     Object? lifetime = freezed,
     Object? annual = freezed,
@@ -311,6 +323,10 @@ class __$$_OfferingCopyWithImpl<$Res>
           ? _value.serverDescription
           : serverDescription // ignore: cast_nullable_to_non_nullable
               as String,
+      null == metadata
+          ? _value._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, Object>,
       null == availablePackages
           ? _value._availablePackages
           : availablePackages // ignore: cast_nullable_to_non_nullable
@@ -353,6 +369,7 @@ class _$_Offering extends _Offering {
   const _$_Offering(
       @JsonKey(name: 'identifier') this.identifier,
       @JsonKey(name: 'serverDescription') this.serverDescription,
+      @JsonKey(name: 'metadata') final Map<String, Object> metadata,
       @JsonKey(name: 'availablePackages') final List<Package> availablePackages,
       {@JsonKey(name: 'lifetime') this.lifetime,
       @JsonKey(name: 'annual') this.annual,
@@ -361,7 +378,8 @@ class _$_Offering extends _Offering {
       @JsonKey(name: 'twoMonth') this.twoMonth,
       @JsonKey(name: 'monthly') this.monthly,
       @JsonKey(name: 'weekly') this.weekly})
-      : _availablePackages = availablePackages,
+      : _metadata = metadata,
+        _availablePackages = availablePackages,
         super._();
 
   factory _$_Offering.fromJson(Map<String, dynamic> json) =>
@@ -376,6 +394,18 @@ class _$_Offering extends _Offering {
   @override
   @JsonKey(name: 'serverDescription')
   final String serverDescription;
+
+  /// Offering metadata defined in RevenueCat dashboard.
+  final Map<String, Object> _metadata;
+
+  /// Offering metadata defined in RevenueCat dashboard.
+  @override
+  @JsonKey(name: 'metadata')
+  Map<String, Object> get metadata {
+    if (_metadata is EqualUnmodifiableMapView) return _metadata;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_metadata);
+  }
 
   /// Array of [Package] objects available for purchase.
   final List<Package> _availablePackages;
@@ -427,7 +457,7 @@ class _$_Offering extends _Offering {
 
   @override
   String toString() {
-    return 'Offering(identifier: $identifier, serverDescription: $serverDescription, availablePackages: $availablePackages, lifetime: $lifetime, annual: $annual, sixMonth: $sixMonth, threeMonth: $threeMonth, twoMonth: $twoMonth, monthly: $monthly, weekly: $weekly)';
+    return 'Offering(identifier: $identifier, serverDescription: $serverDescription, metadata: $metadata, availablePackages: $availablePackages, lifetime: $lifetime, annual: $annual, sixMonth: $sixMonth, threeMonth: $threeMonth, twoMonth: $twoMonth, monthly: $monthly, weekly: $weekly)';
   }
 
   @override
@@ -439,6 +469,7 @@ class _$_Offering extends _Offering {
                 other.identifier == identifier) &&
             (identical(other.serverDescription, serverDescription) ||
                 other.serverDescription == serverDescription) &&
+            const DeepCollectionEquality().equals(other._metadata, _metadata) &&
             const DeepCollectionEquality()
                 .equals(other._availablePackages, _availablePackages) &&
             (identical(other.lifetime, lifetime) ||
@@ -460,6 +491,7 @@ class _$_Offering extends _Offering {
       runtimeType,
       identifier,
       serverDescription,
+      const DeepCollectionEquality().hash(_metadata),
       const DeepCollectionEquality().hash(_availablePackages),
       lifetime,
       annual,
@@ -487,6 +519,7 @@ abstract class _Offering extends Offering {
   const factory _Offering(
       @JsonKey(name: 'identifier') final String identifier,
       @JsonKey(name: 'serverDescription') final String serverDescription,
+      @JsonKey(name: 'metadata') final Map<String, Object> metadata,
       @JsonKey(name: 'availablePackages') final List<Package> availablePackages,
       {@JsonKey(name: 'lifetime') final Package? lifetime,
       @JsonKey(name: 'annual') final Package? annual,
@@ -509,6 +542,11 @@ abstract class _Offering extends Offering {
   /// Offering description defined in RevenueCat dashboard.
   @JsonKey(name: 'serverDescription')
   String get serverDescription;
+  @override
+
+  /// Offering metadata defined in RevenueCat dashboard.
+  @JsonKey(name: 'metadata')
+  Map<String, Object> get metadata;
   @override
 
   /// Array of [Package] objects available for purchase.

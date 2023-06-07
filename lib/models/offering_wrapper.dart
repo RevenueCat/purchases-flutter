@@ -18,9 +18,11 @@ class Offering with _$Offering {
     /// Offering description defined in RevenueCat dashboard.
     @JsonKey(name: 'serverDescription') String serverDescription,
 
+    /// Offering metadata defined in RevenueCat dashboard.
+    @JsonKey(name: 'metadata') Map<String, Object> metadata,
+
     /// Array of [Package] objects available for purchase.
     @JsonKey(name: 'availablePackages') List<Package> availablePackages, {
-
     /// Lifetime package type configured in the RevenueCat dashboard, if available.
     @JsonKey(name: 'lifetime') Package? lifetime,
 
