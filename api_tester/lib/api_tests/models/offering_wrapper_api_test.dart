@@ -14,6 +14,7 @@ class _OfferingApiTest {
   void _checkConstructor(
       String identifier,
       String serverDescription,
+      Map<String, Object> metadata,
       List<Package> availablePackages,
       Package? lifetime,
       Package? annual,
@@ -23,8 +24,9 @@ class _OfferingApiTest {
       Package? monthly,
       Package? weekly) {
     Offering offering =
-        Offering(identifier, serverDescription, availablePackages);
-    offering = Offering(identifier, serverDescription, availablePackages,
+        Offering(identifier, serverDescription, metadata, availablePackages);
+    offering = Offering(
+        identifier, serverDescription, metadata, availablePackages,
         lifetime: lifetime,
         annual: annual,
         sixMonth: sixMonth,
@@ -37,6 +39,7 @@ class _OfferingApiTest {
   void _checkProperties(Offering offering) {
     String identifier = offering.identifier;
     String serverDescription = offering.serverDescription;
+    Map<String, Object> metadata = offering.metadata;
     List<Package> availablePackages = offering.availablePackages;
     Package? lifetime = offering.lifetime;
     Package? annual = offering.annual;
@@ -45,6 +48,8 @@ class _OfferingApiTest {
     Package? twoMonth = offering.twoMonth;
     Package? monthly = offering.monthly;
     Package? weekly = offering.weekly;
+
+    String value = offering.getMetadataString('key', 'default value');
   }
 
   void _checkListOfPackagesExtension(List<Package> packages) {
