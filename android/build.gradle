@@ -3,7 +3,7 @@ version '4.14.0-SNAPSHOT'
 
 buildscript {
     ext.kotlin_version = '1.7.21'
-    ext.common_version = '4.18.0'
+    ext.common_version = '5.0.0'
     repositories {
         google()
         mavenCentral()
