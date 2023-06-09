@@ -19,6 +19,7 @@ class _SubscriptionOptionApiTest {
       List<String> tags,
       bool isBasePlan,
       Period? billingPeriod,
+      bool isPrepaid,
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
@@ -31,6 +32,7 @@ class _SubscriptionOptionApiTest {
         tags,
         isBasePlan,
         billingPeriod,
+        isPrepaid,
         fullPricePhase,
         freePhase,
         introPhase,
@@ -45,6 +47,7 @@ class _SubscriptionOptionApiTest {
     List<String> tags = subscriptionOption.tags;
     bool isBasePlan = subscriptionOption.isBasePlan;
     Period? billingPeriod = subscriptionOption.billingPeriod;
+    bool isPrepaid = subscriptionOption.isPrepaid;
     PricingPhase? fullPricePhase = subscriptionOption.fullPricePhase;
     PricingPhase? freePhase = subscriptionOption.freePhase;
     PricingPhase? introPhase = subscriptionOption.introPhase;

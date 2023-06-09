@@ -43,14 +43,16 @@ void main() {
   };
 
   setUp(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, (call) async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) async {
       log.add(call);
       return response;
     });
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
     log.clear();
     response = null;
   });
@@ -94,7 +96,8 @@ void main() {
       'addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info',
       () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
     _performDartSideChannelMethodCall(
       'Purchases-CustomerInfoUpdated',
       mockCustomerInfoResponse,
@@ -117,7 +120,8 @@ void main() {
       'addCustomerInfoUpdateListener calls each listener immediately with latest customer info',
       () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
     _performDartSideChannelMethodCall(
       'Purchases-CustomerInfoUpdated',
       mockCustomerInfoResponse,
@@ -797,6 +801,7 @@ void main() {
         [],
         true,
         Period(PeriodUnit.month, 1, 'P1M'),
+        false,
         phase,
         null,
         null,
@@ -855,6 +860,7 @@ void main() {
         [],
         true,
         Period(PeriodUnit.month, 1, 'P1M'),
+        false,
         phase,
         null,
         null,
@@ -915,6 +921,7 @@ void main() {
         [],
         true,
         Period(PeriodUnit.month, 1, 'P1M'),
+        false,
         phase,
         null,
         null,

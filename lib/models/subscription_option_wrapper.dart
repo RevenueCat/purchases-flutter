@@ -28,20 +28,21 @@ class SubscriptionOption with _$SubscriptionOption {
     /// Pricing phases defining a user's payment plan for the product over time.
     @JsonKey(name: 'pricingPhases') List<PricingPhase> pricingPhases,
 
-    /// Tags defined on the base plan or offer. Empty for Amazon.
+    /// Tags defined on the base plan or offer.
     @JsonKey(name: 'tags') List<String> tags,
 
     /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-    /// Not applicable for Amazon subscriptions.
     @JsonKey(name: 'isBasePlan') bool isBasePlan,
 
     /// The subscription period of fullPricePhase (after free and intro trials).
     @JsonKey(name: 'billingPeriod') Period? billingPeriod,
 
+    /// True if the subscription is pre-paid.
+    @JsonKey(name: 'isPrepaid') bool isPrepaid,
+
     /// The full price PricingPhase of the subscription.
     /// Looks for the last price phase of the SubscriptionOption.
-    @JsonKey(name: 'fullPricePhase')
-        PricingPhase? fullPricePhase,
+    @JsonKey(name: 'fullPricePhase') PricingPhase? fullPricePhase,
 
     /// The free trial PricingPhase of the subscription.
     /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is 0.
@@ -55,7 +56,7 @@ class SubscriptionOption with _$SubscriptionOption {
 
     // Offering identifier the subscriptioni option was presented from
     @JsonKey(name: 'presentedOfferingIdentifier')
-        String? presentedOfferingIdentifier,
+    String? presentedOfferingIdentifier,
   ) = _SubscriptionOption;
 
   factory SubscriptionOption.fromJson(Map<String, dynamic> json) =>

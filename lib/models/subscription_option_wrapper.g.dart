@@ -21,6 +21,7 @@ _$_SubscriptionOption _$$_SubscriptionOptionFromJson(Map json) =>
           ? null
           : Period.fromJson(
               Map<String, dynamic>.from(json['billingPeriod'] as Map)),
+      json['isPrepaid'] as bool,
       json['fullPricePhase'] == null
           ? null
           : PricingPhase.fromJson(
@@ -46,6 +47,7 @@ Map<String, dynamic> _$$_SubscriptionOptionToJson(
       'tags': instance.tags,
       'isBasePlan': instance.isBasePlan,
       'billingPeriod': instance.billingPeriod?.toJson(),
+      'isPrepaid': instance.isPrepaid,
       'fullPricePhase': instance.fullPricePhase?.toJson(),
       'freePhase': instance.freePhase?.toJson(),
       'introPhase': instance.introPhase?.toJson(),
