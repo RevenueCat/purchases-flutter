@@ -1,11 +1,11 @@
-enum Store { appleStore, googlePlay, amazonAppstore }
+enum TesterStore { appleStore, googlePlay, amazonAppstore }
 
 class StoreConfig {
-  final Store store;
+  final TesterStore store;
   final String apiKey;
   static StoreConfig? _instance;
 
-  factory StoreConfig({required Store store, required String apiKey}) {
+  factory StoreConfig({required TesterStore store, required String apiKey}) {
     _instance ??= StoreConfig._internal(store, apiKey);
     return _instance!;
   }
@@ -16,9 +16,10 @@ class StoreConfig {
     return _instance!;
   }
 
-  static bool isForAppleStore() => instance.store == Store.appleStore;
+  static bool isForAppleStore() => instance.store == TesterStore.appleStore;
 
-  static bool isForGooglePlay() => instance.store == Store.googlePlay;
+  static bool isForGooglePlay() => instance.store == TesterStore.googlePlay;
 
-  static bool isForAmazonAppstore() => instance.store == Store.amazonAppstore;
+  static bool isForAmazonAppstore() =>
+      instance.store == TesterStore.amazonAppstore;
 }

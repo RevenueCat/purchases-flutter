@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 import './constant.dart';
-import '../store_config.dart';
 
 class PurchaseTester extends StatelessWidget {
   const PurchaseTester({Key? key}) : super(key: key);
@@ -38,18 +37,6 @@ class _MyAppState extends State<InitialScreen> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    await Purchases.setLogLevel(LogLevel.debug);
-
-    PurchasesConfiguration configuration;
-    if (StoreConfig.isForAmazonAppstore()) {
-      configuration = AmazonConfiguration(StoreConfig.instance.apiKey);
-    } else {
-      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
-    }
-    await Purchases.configure(configuration);
-
-    await Purchases.enableAdServicesAttributionTokenCollection();
-
     final customerInfo = await Purchases.getCustomerInfo();
 
     Purchases.addReadyForPromotedProductPurchaseListener(
@@ -291,10 +278,6 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
               print('Payment is pending');
             }
           }
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const InitialScreen()),
-          );
         },
         child:
             Text('Buy Option: - (${option.id}\n${option.pricingPhases.map((e) {
