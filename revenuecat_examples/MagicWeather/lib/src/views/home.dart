@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:magic_weather_flutter/src/constant.dart';
-import 'package:magic_weather_flutter/src/views/weather.dart';
-import 'package:magic_weather_flutter/src/views/user.dart';
-import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:magic_weather_flutter/src/model/singletons_data.dart';
 import 'package:magic_weather_flutter/src/model/styles.dart';
-
-import '../../store_config.dart';
+import 'package:magic_weather_flutter/src/views/user.dart';
+import 'package:magic_weather_flutter/src/views/weather.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 final GlobalKey<NavigatorState> firstTabNavKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> secondTabNavKey = GlobalKey<NavigatorState>();
@@ -29,26 +27,6 @@ class AppContainerState extends State<AppContainer> {
   }
 
   Future<void> initPlatformState() async {
-    // Enable debug logs before calling `configure`.
-    await Purchases.setLogLevel(LogLevel.debug);
-
-    /*
-    - appUserID is nil, so an anonymous ID will be generated automatically by the Purchases SDK. Read more about Identifying Users here: https://docs.revenuecat.com/docs/user-ids
-
-    - observerMode is false, so Purchases will automatically handle finishing transactions. Read more about Observer Mode here: https://docs.revenuecat.com/docs/observer-mode
-    */
-    PurchasesConfiguration configuration;
-    if (StoreConfig.isForAmazonAppstore()) {
-      configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    } else {
-      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
-        ..appUserID = null
-        ..observerMode = false;
-    }
-    await Purchases.configure(configuration);
-
     appData.appUserID = await Purchases.appUserID;
 
     Purchases.addCustomerInfoUpdateListener((customerInfo) async {
