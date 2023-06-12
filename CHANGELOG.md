@@ -14,8 +14,7 @@ This latest release updates the Android SDK dependency from v5 to [v6](https://g
 In v4, a Google Play Android `Package` or `StoreProduct` represented a single purchaseable entity, and free trials or intro
 offers would automatically be applied to the purchase if the user was eligible.
 
-Now, in Flutter v5, an Google Play Android `Package` or `StoreProduct` represents a duration of a subscription and contains all the ways to
-purchase that duration -- any offers and its base plan. Each of these purchase options are `SubscriptionOption`s.
+Now, in Flutter v5, an Google Play Android `Package` or `StoreProduct` represents a duration of a subscription and contains all the ways to purchase that duration -- any offers and its base plan. Each of these purchase options are `SubscriptionOption`s.
 When passing a `Package` to `purchasePackage()` or `StoreProduct` to `purchaseStoreProduct()`, the SDK will use the following logic to choose which
 `SubscriptionOption` to purchase:
 - Filters out offers with "rc-ignore-offer" tag
@@ -96,7 +95,7 @@ Observer mode is still supported in v5. Other than updating the SDK version, the
 * Update to PurchasesHyridCommon 5.0.0-beta.6 (#666) via Josh Holtz (@joshdholtz)
   * Renamed `ProductType` back to `ProductCategory`
   * `Period` now has `PeriodUnit` instead of `Unit`
-  * `purchaseProduct()` is still deprecated but reverted back to same signature as `4.x.x` 
+  * `purchaseProduct()` is still deprecated but reverted back to same signature as `4.x.x`
 ### Other Changes
 * Fix docs for purchaseSubscriptionOption (#660) via Josh Holtz (@joshdholtz)
 * Update CircleCI Xcode version to 14.3.0 and update iOS runtime to 16.4 (#658) via Mark Villacampa (@MarkVillacampa)
