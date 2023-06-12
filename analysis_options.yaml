@@ -3,6 +3,7 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   errors:
     invalid_annotation_target: ignore
+    deprecated_member_use_from_same_package: ignore
   exclude:
     - lib/models/*.freezed.dart
     - lib/models/*.g.dart
@@ -18,6 +19,7 @@ linter:
     avoid_unused_constructor_parameters: true
     avoid_void_async: true
     cascade_invocations: true
+    deprecated_consistency: true
     directives_ordering: true
     omit_local_variable_types: true
     prefer_const_constructors: true
@@ -32,6 +34,7 @@ linter:
     prefer_relative_imports: true
     prefer_single_quotes: true
     prefer_spread_collections: true
+    provide_deprecation_message: true
     require_trailing_commas: true
     unnecessary_brace_in_string_interps: true
     unnecessary_lambdas: true

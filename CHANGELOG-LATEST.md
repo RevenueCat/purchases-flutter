@@ -1,15 +1,41 @@
-### Bugfixes
-* Fix deprecation warning (#694) via Andy Boedo (@aboedo)
-### Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.18.0 (#709) via RevenueCat Git Bot (@RCGitBot)
-  * [iOS 4.21.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.21.0)
-  * [iOS 4.19.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.19.1)
-  * [iOS 4.20.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.20.0)
-  * [iOS 4.19.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.19.0)
-* Increases upper limit and removes minimum flutter version (#702) via Cesar de la Vega (@vegaro)
-* Bump fastlane from 2.212.2 to 2.213.0 (#696) via dependabot[bot] (@dependabot[bot])
-### Other Changes
-* Fix analyzer issues (#706) via Mark Villacampa (@MarkVillacampa)
-* Fix integration tests (#703) via Mark Villacampa (@MarkVillacampa)
-* Support Gradle 8+ (#698) via Cesar de la Vega (@vegaro)
-* Fix issues when running Flutter 3.10.2 (#699) via Cesar de la Vega (@vegaro)
+The first release candidate of **RevenueCat Purchases Flutter v5** is here!! 😻
+
+This latest release updates the Android SDK dependency from v5 to [v6](https://github.com/RevenueCat/purchases-android/releases/tag/6.0.0) to use BillingClient 5. This version of BillingClient brings an entire new subscription model which has resulted in large changes across the entire SDK.
+
+### Migration Guides
+- See [Android Native - 5.x to 6.x Migration](https://www.revenuecat.com/docs/android-native-5x-to-6x-migration) for a
+  more thorough explanation of the new Google subscription model announced with BillingClient 5 and how to take
+  advantage of it in V6. This guide includes tips on product setup with the new model.
+
+### New `SubscriptionOption` concept
+
+#### Purchasing
+In v4, a Google Play Android `Package` or `StoreProduct` represented a single purchaseable entity, and free trials or intro
+offers would automatically be applied to the purchase if the user was eligible.
+
+Now, in Flutter v5, an Google Play Android `Package` or `StoreProduct` represents a duration of a subscription and contains all the ways to
+purchase that duration -- any offers and its base plan. Each of these purchase options are `SubscriptionOption`s.
+When passing a `Package` to `purchasePackage()` or `StoreProduct` to `purchaseStoreProduct()`, the SDK will use the following logic to choose which
+`SubscriptionOption` to purchase:
+- Filters out offers with "rc-ignore-offer" tag
+- Uses `SubscriptionOption` with the longest free trial or cheapest first phase
+    - Only offers the user is eligible will be applied
+- Falls back to base plan
+
+For more control, purchase subscription options with the new `purchaseSubscriptionOption()` method.
+
+#### Models
+
+`StoreProduct` now has a few new properties use for Google Play Android:
+- `defaultOption`
+  - A subscription option that will automatically be applie when purchasing a `Package` or `StoreProduct`
+- `subscriptionOptions`
+  - A list of subscription options (could be null)
+
+### Observer Mode
+
+Observer mode is still supported in v5. Other than updating the SDK version, there are no changes required.
+
+### New Features
+* Adding metadata to offering (#716) via Josh Holtz (@joshdholtz)
+* Add missing proration modes + fix analyzer issues (#708) via Mark Villacampa (@MarkVillacampa)

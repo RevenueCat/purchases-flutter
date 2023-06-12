@@ -19,6 +19,7 @@ import com.revenuecat.purchases.hybridcommon.OnResultAny;
 import com.revenuecat.purchases.hybridcommon.OnResultList;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
 import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
+import com.revenuecat.purchases.models.GoogleProrationMode;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -56,7 +57,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "4.14.0-SNAPSHOT";
+    private static final String PLUGIN_VERSION = "5.0.0-rc.1";
 
     /**
      * Plugin registration.
@@ -155,17 +156,29 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "purchaseProduct":
                 String productIdentifier = call.argument("productIdentifier");
-                String oldSKU = call.argument("oldSKU");
-                Integer prorationMode = call.argument("prorationMode");
+                String googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
+                Integer googleProrationMode = call.argument("googleProrationMode");
+                Boolean googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 type = call.argument("type");
-                purchaseProduct(productIdentifier, oldSKU, prorationMode, type, result);
+                String presentedOfferingIdentifier = call.argument("presentedOfferingIdentifier");
+                purchaseProduct(productIdentifier, type, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, presentedOfferingIdentifier, result);
                 break;
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
                 String offeringIdentifier = call.argument("offeringIdentifier");
-                oldSKU = call.argument("oldSKU");
-                prorationMode = call.argument("prorationMode");
-                purchasePackage(packageIdentifier, offeringIdentifier, oldSKU, prorationMode, result);
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
+                googleProrationMode = call.argument("googleProrationMode");
+                googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
+                purchasePackage(packageIdentifier, offeringIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);
+                break;
+            case "purchaseSubscriptionOption":
+                productIdentifier = call.argument("productIdentifier");
+                String optionIdentifier = call.argument("optionIdentifier");
+                googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
+                googleProrationMode = call.argument("googleProrationMode");
+                googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
+                presentedOfferingIdentifier = call.argument("presentedOfferingIdentifier");
+                purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, presentedOfferingIdentifier, result);
                 break;
             case "getAppUserID":
                 getAppUserID(result);
@@ -406,34 +419,61 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         });
     }
 
-    private void purchaseProduct(final String productIdentifier, final String oldSKU,
-                                 @Nullable final Integer prorationMode, final String type,
+    private void purchaseProduct(final String productIdentifier,
+                                 final String type,
+                                 final String googleOldProductId,
+                                 @Nullable final Integer googleProrationMode,
+                                 @Nullable final Boolean googleIsPersonalizedPrice,
+                                 @Nullable final String presentedOfferingIdentifier,
                                  final Result result) {
         CommonKt.purchaseProduct(
                 getActivity(),
                 productIdentifier,
-                oldSKU,
-                prorationMode,
                 type,
+                null,
+                googleOldProductId,
+                googleProrationMode,
+                googleIsPersonalizedPrice,
+                presentedOfferingIdentifier,
                 getOnResult(result)
         );
     }
 
     private void purchasePackage(final String packageIdentifier,
                                  final String offeringIdentifier,
-                                 @Nullable final String oldSKU,
-                                 @Nullable final Integer prorationMode,
+                                 final String googleOldProductId,
+                                 @Nullable final Integer googleProrationMode,
+                                 @Nullable final Boolean googleIsPersonalizedPrice,
                                  final Result result) {
         CommonKt.purchasePackage(
                 getActivity(),
                 packageIdentifier,
                 offeringIdentifier,
-                oldSKU,
-                prorationMode,
+                googleOldProductId,
+                googleProrationMode,
+                googleIsPersonalizedPrice,
                 getOnResult(result)
         );
     }
 
+    private void purchaseSubscriptionOption(final String productIdentifier,
+                                            final String optionIdentifier,
+                                            final String googleOldProductId,
+                                            @Nullable final Integer googleProrationMode,
+                                            @Nullable final Boolean googleIsPersonalizedPrice,
+                                            @Nullable final String presentedOfferingIdentifier,
+                                            final Result result) {
+        CommonKt.purchaseSubscriptionOption(
+                getActivity(),
+                productIdentifier,
+                optionIdentifier,
+                googleOldProductId,
+                googleProrationMode,
+                googleIsPersonalizedPrice,
+                presentedOfferingIdentifier,
+                getOnResult(result)
+        );
+    }
 
     private void getAppUserID(final Result result) {
         result.success(CommonKt.getAppUserID());

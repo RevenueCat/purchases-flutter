@@ -1,7 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'introductory_price.dart';
+import 'product_category.dart';
 import 'store_product_discount.dart';
+import 'subscription_option_wrapper.dart';
 
 part 'store_product_wrapper.freezed.dart';
 part 'store_product_wrapper.g.dart';
@@ -28,22 +30,33 @@ class StoreProduct with _$StoreProduct {
 
     /// Currency code for price and original price.
     @JsonKey(name: 'currencyCode') String currencyCode, {
-
     /// Introductory price for product. Can be null.
-    @JsonKey(name: 'introPrice')
-        IntroductoryPrice? introductoryPrice,
+    @JsonKey(name: 'introPrice') IntroductoryPrice? introductoryPrice,
 
     /// Collection of discount offers for a product. Null for Android.
-    @JsonKey(name: 'discounts')
-        List<StoreProductDiscount>? discounts,
+    @JsonKey(name: 'discounts') List<StoreProductDiscount>? discounts,
+
+    /// Product category.
+    @JsonKey(name: 'productCategory') ProductCategory? productCategory,
+
+    /// Default subscription option for a product. Google Play only.
+    @JsonKey(name: 'defaultOption') SubscriptionOption? defaultOption,
+
+    /// Collection of subscription options for a product. Google Play only.
+    @JsonKey(name: 'subscriptionOptions')
+    List<SubscriptionOption>? subscriptionOptions,
+
+    /// Offering identifier the store product was presented from
+    /// Null if not using offerings or if fetched directly from store via getProducts
+    @JsonKey(name: 'presentedOfferingIdentifier')
+    String? presentedOfferingIdentifier,
 
     /// Subscription period, specified in ISO 8601 format. For example,
     /// P1W equates to one week, P1M equates to one month,
     /// P3M equates to three months, P6M equates to six months,
     /// and P1Y equates to one year.
     /// Note: Not available for Amazon.
-    @JsonKey(name: 'subscriptionPeriod')
-        String? subscriptionPeriod,
+    @JsonKey(name: 'subscriptionPeriod') String? subscriptionPeriod,
   }) = _StoreProduct;
 
   factory StoreProduct.fromJson(Map<String, dynamic> json) =>

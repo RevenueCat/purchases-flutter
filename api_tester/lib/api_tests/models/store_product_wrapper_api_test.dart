@@ -20,14 +20,18 @@ class _StoreProductApiTest {
       String currencyCode,
       IntroductoryPrice? introductoryPrice,
       List<StoreProductDiscount>? discounts,
-      String? subscriptionPeriod) {
+      ProductCategory? productCategory,
+      String? subscriptionPeriod,
+      String? presentedOfferingIdentifier) {
     StoreProduct product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode);
     product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode,
         introductoryPrice: introductoryPrice,
         discounts: discounts,
-        subscriptionPeriod: subscriptionPeriod);
+        productCategory: productCategory,
+        subscriptionPeriod: subscriptionPeriod,
+        presentedOfferingIdentifier: presentedOfferingIdentifier);
   }
 
   void _checkProperties(StoreProduct product) {
@@ -39,6 +43,10 @@ class _StoreProductApiTest {
     String currencyCode = product.currencyCode;
     IntroductoryPrice? introductoryPrice = product.introductoryPrice;
     List<StoreProductDiscount>? discounts = product.discounts;
+    ProductCategory? productType = product.productCategory;
+    SubscriptionOption? defaultOption = product.defaultOption;
+    List<SubscriptionOption>? subscriptionOptions = product.subscriptionOptions;
     String? subscriptionPeriod = product.subscriptionPeriod;
+    String? presentedOfferingIdentifier = product.presentedOfferingIdentifier;
   }
 }

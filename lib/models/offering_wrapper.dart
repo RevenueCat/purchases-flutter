@@ -18,9 +18,11 @@ class Offering with _$Offering {
     /// Offering description defined in RevenueCat dashboard.
     @JsonKey(name: 'serverDescription') String serverDescription,
 
+    /// Offering metadata defined in RevenueCat dashboard.
+    @JsonKey(name: 'metadata') Map<String, Object> metadata,
+
     /// Array of [Package] objects available for purchase.
     @JsonKey(name: 'availablePackages') List<Package> availablePackages, {
-
     /// Lifetime package type configured in the RevenueCat dashboard, if available.
     @JsonKey(name: 'lifetime') Package? lifetime,
 
@@ -50,6 +52,23 @@ class Offering with _$Offering {
 
   factory Offering.fromJson(Map<String, dynamic> json) =>
       _$OfferingFromJson(json);
+}
+
+extension OfferingX on Offering {
+  /// Returns the [metadata] value associated to [key] for the expected [String] type
+  /// or [defaultValue] if not found, or it's not the expected [String] type.
+  ///
+  /// [key] The metadata key to lookup
+  ///
+  /// [defaultValue] The default value if a key isn't found or if not
+  /// the expected String type
+  String getMetadataString(String key, String defaultValue) {
+    final value = metadata[key];
+    if (value != null && value is String) {
+      return value;
+    }
+    return defaultValue;
+  }
 }
 
 // Extension needed because this was a deprecation from freezed 1.x that
