@@ -40,18 +40,21 @@ mixin _$SubscriptionOption {
   @JsonKey(name: 'pricingPhases')
   List<PricingPhase> get pricingPhases => throw _privateConstructorUsedError;
 
-  /// Tags defined on the base plan or offer. Empty for Amazon.
+  /// Tags defined on the base plan or offer.
   @JsonKey(name: 'tags')
   List<String> get tags => throw _privateConstructorUsedError;
 
   /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-  /// Not applicable for Amazon subscriptions.
   @JsonKey(name: 'isBasePlan')
   bool get isBasePlan => throw _privateConstructorUsedError;
 
   /// The subscription period of fullPricePhase (after free and intro trials).
   @JsonKey(name: 'billingPeriod')
   Period? get billingPeriod => throw _privateConstructorUsedError;
+
+  /// True if the subscription is pre-paid.
+  @JsonKey(name: 'isPrepaid')
+  bool get isPrepaid => throw _privateConstructorUsedError;
 
   /// The full price PricingPhase of the subscription.
   /// Looks for the last price phase of the SubscriptionOption.
@@ -100,6 +103,8 @@ abstract class $SubscriptionOptionCopyWith<$Res> {
           bool isBasePlan,
       @JsonKey(name: 'billingPeriod')
           Period? billingPeriod,
+      @JsonKey(name: 'isPrepaid')
+          bool isPrepaid,
       @JsonKey(name: 'fullPricePhase')
           PricingPhase? fullPricePhase,
       @JsonKey(name: 'freePhase')
@@ -135,6 +140,7 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     Object? tags = null,
     Object? isBasePlan = null,
     Object? billingPeriod = freezed,
+    Object? isPrepaid = null,
     Object? fullPricePhase = freezed,
     Object? freePhase = freezed,
     Object? introPhase = freezed,
@@ -169,6 +175,10 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
           ? _value.billingPeriod
           : billingPeriod // ignore: cast_nullable_to_non_nullable
               as Period?,
+      isPrepaid: null == isPrepaid
+          ? _value.isPrepaid
+          : isPrepaid // ignore: cast_nullable_to_non_nullable
+              as bool,
       fullPricePhase: freezed == fullPricePhase
           ? _value.fullPricePhase
           : fullPricePhase // ignore: cast_nullable_to_non_nullable
@@ -260,6 +270,8 @@ abstract class _$$_SubscriptionOptionCopyWith<$Res>
           bool isBasePlan,
       @JsonKey(name: 'billingPeriod')
           Period? billingPeriod,
+      @JsonKey(name: 'isPrepaid')
+          bool isPrepaid,
       @JsonKey(name: 'fullPricePhase')
           PricingPhase? fullPricePhase,
       @JsonKey(name: 'freePhase')
@@ -297,6 +309,7 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
     Object? tags = null,
     Object? isBasePlan = null,
     Object? billingPeriod = freezed,
+    Object? isPrepaid = null,
     Object? fullPricePhase = freezed,
     Object? freePhase = freezed,
     Object? introPhase = freezed,
@@ -331,6 +344,10 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
           ? _value.billingPeriod
           : billingPeriod // ignore: cast_nullable_to_non_nullable
               as Period?,
+      null == isPrepaid
+          ? _value.isPrepaid
+          : isPrepaid // ignore: cast_nullable_to_non_nullable
+              as bool,
       freezed == fullPricePhase
           ? _value.fullPricePhase
           : fullPricePhase // ignore: cast_nullable_to_non_nullable
@@ -369,6 +386,8 @@ class _$_SubscriptionOption implements _SubscriptionOption {
           this.isBasePlan,
       @JsonKey(name: 'billingPeriod')
           this.billingPeriod,
+      @JsonKey(name: 'isPrepaid')
+          this.isPrepaid,
       @JsonKey(name: 'fullPricePhase')
           this.fullPricePhase,
       @JsonKey(name: 'freePhase')
@@ -414,10 +433,10 @@ class _$_SubscriptionOption implements _SubscriptionOption {
     return EqualUnmodifiableListView(_pricingPhases);
   }
 
-  /// Tags defined on the base plan or offer. Empty for Amazon.
+  /// Tags defined on the base plan or offer.
   final List<String> _tags;
 
-  /// Tags defined on the base plan or offer. Empty for Amazon.
+  /// Tags defined on the base plan or offer.
   @override
   @JsonKey(name: 'tags')
   List<String> get tags {
@@ -427,7 +446,6 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   }
 
   /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-  /// Not applicable for Amazon subscriptions.
   @override
   @JsonKey(name: 'isBasePlan')
   final bool isBasePlan;
@@ -436,6 +454,11 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   @override
   @JsonKey(name: 'billingPeriod')
   final Period? billingPeriod;
+
+  /// True if the subscription is pre-paid.
+  @override
+  @JsonKey(name: 'isPrepaid')
+  final bool isPrepaid;
 
   /// The full price PricingPhase of the subscription.
   /// Looks for the last price phase of the SubscriptionOption.
@@ -463,7 +486,7 @@ class _$_SubscriptionOption implements _SubscriptionOption {
 
   @override
   String toString() {
-    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase, presentedOfferingIdentifier: $presentedOfferingIdentifier)';
+    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, isPrepaid: $isPrepaid, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase, presentedOfferingIdentifier: $presentedOfferingIdentifier)';
   }
 
   @override
@@ -483,6 +506,8 @@ class _$_SubscriptionOption implements _SubscriptionOption {
                 other.isBasePlan == isBasePlan) &&
             (identical(other.billingPeriod, billingPeriod) ||
                 other.billingPeriod == billingPeriod) &&
+            (identical(other.isPrepaid, isPrepaid) ||
+                other.isPrepaid == isPrepaid) &&
             (identical(other.fullPricePhase, fullPricePhase) ||
                 other.fullPricePhase == fullPricePhase) &&
             (identical(other.freePhase, freePhase) ||
@@ -506,6 +531,7 @@ class _$_SubscriptionOption implements _SubscriptionOption {
       const DeepCollectionEquality().hash(_tags),
       isBasePlan,
       billingPeriod,
+      isPrepaid,
       fullPricePhase,
       freePhase,
       introPhase,
@@ -542,6 +568,8 @@ abstract class _SubscriptionOption implements SubscriptionOption {
           final bool isBasePlan,
       @JsonKey(name: 'billingPeriod')
           final Period? billingPeriod,
+      @JsonKey(name: 'isPrepaid')
+          final bool isPrepaid,
       @JsonKey(name: 'fullPricePhase')
           final PricingPhase? fullPricePhase,
       @JsonKey(name: 'freePhase')
@@ -580,13 +608,12 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   List<PricingPhase> get pricingPhases;
   @override
 
-  /// Tags defined on the base plan or offer. Empty for Amazon.
+  /// Tags defined on the base plan or offer.
   @JsonKey(name: 'tags')
   List<String> get tags;
   @override
 
   /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-  /// Not applicable for Amazon subscriptions.
   @JsonKey(name: 'isBasePlan')
   bool get isBasePlan;
   @override
@@ -594,6 +621,11 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   /// The subscription period of fullPricePhase (after free and intro trials).
   @JsonKey(name: 'billingPeriod')
   Period? get billingPeriod;
+  @override
+
+  /// True if the subscription is pre-paid.
+  @JsonKey(name: 'isPrepaid')
+  bool get isPrepaid;
   @override
 
   /// The full price PricingPhase of the subscription.
