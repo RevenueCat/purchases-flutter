@@ -10,14 +10,14 @@ import 'src/app.dart';
 void main() async {
   if (Platform.isIOS || Platform.isMacOS) {
     StoreConfig(
-      store: TesterStore.appleStore,
+      store: Store.appStore,
       apiKey: appleApiKey,
     );
   } else if (Platform.isAndroid) {
     // Run the app passing --dart-define=AMAZON=true
     const useAmazon = bool.fromEnvironment("amazon");
     StoreConfig(
-      store: useAmazon ? TesterStore.amazonAppstore : TesterStore.googlePlay,
+      store: useAmazon ? Store.amazon : Store.playStore,
       apiKey: useAmazon ? amazonApiKey : googleApiKey,
     );
   }
