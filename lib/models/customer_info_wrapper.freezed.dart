@@ -21,53 +21,42 @@ CustomerInfo _$CustomerInfoFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CustomerInfo {
   /// Entitlements attached to this customer info
-  @JsonKey(name: 'entitlements')
   EntitlementInfos get entitlements => throw _privateConstructorUsedError;
 
   /// Map of skus to purchase dates
-  @JsonKey(name: 'allPurchaseDates')
   Map<String, String> get allPurchaseDates =>
       throw _privateConstructorUsedError;
 
   /// Set of active subscription skus
-  @JsonKey(name: 'activeSubscriptions')
   List<String> get activeSubscriptions => throw _privateConstructorUsedError;
 
   /// Set of purchased skus, active and inactive
-  @JsonKey(name: 'allPurchasedProductIdentifiers')
   List<String> get allPurchasedProductIdentifiers =>
       throw _privateConstructorUsedError;
 
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
-  @JsonKey(name: 'nonSubscriptionTransactions')
   List<StoreTransaction> get nonSubscriptionTransactions =>
       throw _privateConstructorUsedError;
 
   /// The date this user was first seen in RevenueCat.
-  @JsonKey(name: 'firstSeen')
   String get firstSeen => throw _privateConstructorUsedError;
 
   /// The original App User Id recorded for this user.
-  @JsonKey(name: 'originalAppUserId')
   String get originalAppUserId => throw _privateConstructorUsedError;
 
   /// Map of skus to expiration dates
-  @JsonKey(name: 'allExpirationDates')
   Map<String, String?> get allExpirationDates =>
       throw _privateConstructorUsedError;
 
   /// Date when this info was requested
-  @JsonKey(name: 'requestDate')
   String get requestDate => throw _privateConstructorUsedError;
 
   /// The latest expiration date of all purchased skus
-  @JsonKey(name: 'latestExpirationDate')
   String? get latestExpirationDate => throw _privateConstructorUsedError;
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
-  @JsonKey(name: 'originalPurchaseDate')
   String? get originalPurchaseDate => throw _privateConstructorUsedError;
 
   /// Returns the version number for the version of the application when the
@@ -77,14 +66,12 @@ mixin _$CustomerInfo {
   /// This corresponds to the value of CFBundleVersion (in iOS) in the
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
-  @JsonKey(name: 'originalApplicationVersion')
   String? get originalApplicationVersion => throw _privateConstructorUsedError;
 
   /// URL to manage the active subscription of the user. If this user has an active iOS
   /// subscription, this will point to the App Store, if the user has an active Play Store subscription
   /// it will point there. If there are no active subscriptions it will be null.
   /// If there are multiple for different platforms, it will point to the device store.
-  @JsonKey(name: 'managementURL')
   String? get managementURL => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -100,32 +87,19 @@ abstract class $CustomerInfoCopyWith<$Res> {
       _$CustomerInfoCopyWithImpl<$Res, CustomerInfo>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'entitlements')
-          EntitlementInfos entitlements,
-      @JsonKey(name: 'allPurchaseDates')
-          Map<String, String> allPurchaseDates,
-      @JsonKey(name: 'activeSubscriptions')
-          List<String> activeSubscriptions,
-      @JsonKey(name: 'allPurchasedProductIdentifiers')
-          List<String> allPurchasedProductIdentifiers,
-      @JsonKey(name: 'nonSubscriptionTransactions')
-          List<StoreTransaction> nonSubscriptionTransactions,
-      @JsonKey(name: 'firstSeen')
-          String firstSeen,
-      @JsonKey(name: 'originalAppUserId')
-          String originalAppUserId,
-      @JsonKey(name: 'allExpirationDates')
-          Map<String, String?> allExpirationDates,
-      @JsonKey(name: 'requestDate')
-          String requestDate,
-      @JsonKey(name: 'latestExpirationDate')
-          String? latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate')
-          String? originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion')
-          String? originalApplicationVersion,
-      @JsonKey(name: 'managementURL')
-          String? managementURL});
+      {EntitlementInfos entitlements,
+      Map<String, String> allPurchaseDates,
+      List<String> activeSubscriptions,
+      List<String> allPurchasedProductIdentifiers,
+      List<StoreTransaction> nonSubscriptionTransactions,
+      String firstSeen,
+      String originalAppUserId,
+      Map<String, String?> allExpirationDates,
+      String requestDate,
+      String? latestExpirationDate,
+      String? originalPurchaseDate,
+      String? originalApplicationVersion,
+      String? managementURL});
 
   $EntitlementInfosCopyWith<$Res> get entitlements;
 }
@@ -231,32 +205,19 @@ abstract class _$$_CustomerInfoCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'entitlements')
-          EntitlementInfos entitlements,
-      @JsonKey(name: 'allPurchaseDates')
-          Map<String, String> allPurchaseDates,
-      @JsonKey(name: 'activeSubscriptions')
-          List<String> activeSubscriptions,
-      @JsonKey(name: 'allPurchasedProductIdentifiers')
-          List<String> allPurchasedProductIdentifiers,
-      @JsonKey(name: 'nonSubscriptionTransactions')
-          List<StoreTransaction> nonSubscriptionTransactions,
-      @JsonKey(name: 'firstSeen')
-          String firstSeen,
-      @JsonKey(name: 'originalAppUserId')
-          String originalAppUserId,
-      @JsonKey(name: 'allExpirationDates')
-          Map<String, String?> allExpirationDates,
-      @JsonKey(name: 'requestDate')
-          String requestDate,
-      @JsonKey(name: 'latestExpirationDate')
-          String? latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate')
-          String? originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion')
-          String? originalApplicationVersion,
-      @JsonKey(name: 'managementURL')
-          String? managementURL});
+      {EntitlementInfos entitlements,
+      Map<String, String> allPurchaseDates,
+      List<String> activeSubscriptions,
+      List<String> allPurchasedProductIdentifiers,
+      List<StoreTransaction> nonSubscriptionTransactions,
+      String firstSeen,
+      String originalAppUserId,
+      Map<String, String?> allExpirationDates,
+      String requestDate,
+      String? latestExpirationDate,
+      String? originalPurchaseDate,
+      String? originalApplicationVersion,
+      String? managementURL});
 
   @override
   $EntitlementInfosCopyWith<$Res> get entitlements;
@@ -348,32 +309,19 @@ class __$$_CustomerInfoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CustomerInfo implements _CustomerInfo {
   const _$_CustomerInfo(
-      @JsonKey(name: 'entitlements')
-          this.entitlements,
-      @JsonKey(name: 'allPurchaseDates')
-          final Map<String, String> allPurchaseDates,
-      @JsonKey(name: 'activeSubscriptions')
-          final List<String> activeSubscriptions,
-      @JsonKey(name: 'allPurchasedProductIdentifiers')
-          final List<String> allPurchasedProductIdentifiers,
-      @JsonKey(name: 'nonSubscriptionTransactions')
-          final List<StoreTransaction> nonSubscriptionTransactions,
-      @JsonKey(name: 'firstSeen')
-          this.firstSeen,
-      @JsonKey(name: 'originalAppUserId')
-          this.originalAppUserId,
-      @JsonKey(name: 'allExpirationDates')
-          final Map<String, String?> allExpirationDates,
-      @JsonKey(name: 'requestDate')
-          this.requestDate,
-      {@JsonKey(name: 'latestExpirationDate')
-          this.latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate')
-          this.originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion')
-          this.originalApplicationVersion,
-      @JsonKey(name: 'managementURL')
-          this.managementURL})
+      this.entitlements,
+      final Map<String, String> allPurchaseDates,
+      final List<String> activeSubscriptions,
+      final List<String> allPurchasedProductIdentifiers,
+      final List<StoreTransaction> nonSubscriptionTransactions,
+      this.firstSeen,
+      this.originalAppUserId,
+      final Map<String, String?> allExpirationDates,
+      this.requestDate,
+      {this.latestExpirationDate,
+      this.originalPurchaseDate,
+      this.originalApplicationVersion,
+      this.managementURL})
       : _allPurchaseDates = allPurchaseDates,
         _activeSubscriptions = activeSubscriptions,
         _allPurchasedProductIdentifiers = allPurchasedProductIdentifiers,
@@ -385,7 +333,6 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// Entitlements attached to this customer info
   @override
-  @JsonKey(name: 'entitlements')
   final EntitlementInfos entitlements;
 
   /// Map of skus to purchase dates
@@ -393,7 +340,6 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// Map of skus to purchase dates
   @override
-  @JsonKey(name: 'allPurchaseDates')
   Map<String, String> get allPurchaseDates {
     if (_allPurchaseDates is EqualUnmodifiableMapView) return _allPurchaseDates;
     // ignore: implicit_dynamic_type
@@ -405,7 +351,6 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// Set of active subscription skus
   @override
-  @JsonKey(name: 'activeSubscriptions')
   List<String> get activeSubscriptions {
     if (_activeSubscriptions is EqualUnmodifiableListView)
       return _activeSubscriptions;
@@ -418,7 +363,6 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// Set of purchased skus, active and inactive
   @override
-  @JsonKey(name: 'allPurchasedProductIdentifiers')
   List<String> get allPurchasedProductIdentifiers {
     if (_allPurchasedProductIdentifiers is EqualUnmodifiableListView)
       return _allPurchasedProductIdentifiers;
@@ -433,7 +377,6 @@ class _$_CustomerInfo implements _CustomerInfo {
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
   @override
-  @JsonKey(name: 'nonSubscriptionTransactions')
   List<StoreTransaction> get nonSubscriptionTransactions {
     if (_nonSubscriptionTransactions is EqualUnmodifiableListView)
       return _nonSubscriptionTransactions;
@@ -443,12 +386,10 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// The date this user was first seen in RevenueCat.
   @override
-  @JsonKey(name: 'firstSeen')
   final String firstSeen;
 
   /// The original App User Id recorded for this user.
   @override
-  @JsonKey(name: 'originalAppUserId')
   final String originalAppUserId;
 
   /// Map of skus to expiration dates
@@ -456,7 +397,6 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// Map of skus to expiration dates
   @override
-  @JsonKey(name: 'allExpirationDates')
   Map<String, String?> get allExpirationDates {
     if (_allExpirationDates is EqualUnmodifiableMapView)
       return _allExpirationDates;
@@ -466,18 +406,15 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// Date when this info was requested
   @override
-  @JsonKey(name: 'requestDate')
   final String requestDate;
 
   /// The latest expiration date of all purchased skus
   @override
-  @JsonKey(name: 'latestExpirationDate')
   final String? latestExpirationDate;
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
   @override
-  @JsonKey(name: 'originalPurchaseDate')
   final String? originalPurchaseDate;
 
   /// Returns the version number for the version of the application when the
@@ -488,7 +425,6 @@ class _$_CustomerInfo implements _CustomerInfo {
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
   @override
-  @JsonKey(name: 'originalApplicationVersion')
   final String? originalApplicationVersion;
 
   /// URL to manage the active subscription of the user. If this user has an active iOS
@@ -496,7 +432,6 @@ class _$_CustomerInfo implements _CustomerInfo {
   /// it will point there. If there are no active subscriptions it will be null.
   /// If there are multiple for different platforms, it will point to the device store.
   @override
-  @JsonKey(name: 'managementURL')
   final String? managementURL;
 
   @override
@@ -575,32 +510,19 @@ class _$_CustomerInfo implements _CustomerInfo {
 
 abstract class _CustomerInfo implements CustomerInfo {
   const factory _CustomerInfo(
-      @JsonKey(name: 'entitlements')
-          final EntitlementInfos entitlements,
-      @JsonKey(name: 'allPurchaseDates')
-          final Map<String, String> allPurchaseDates,
-      @JsonKey(name: 'activeSubscriptions')
-          final List<String> activeSubscriptions,
-      @JsonKey(name: 'allPurchasedProductIdentifiers')
-          final List<String> allPurchasedProductIdentifiers,
-      @JsonKey(name: 'nonSubscriptionTransactions')
-          final List<StoreTransaction> nonSubscriptionTransactions,
-      @JsonKey(name: 'firstSeen')
-          final String firstSeen,
-      @JsonKey(name: 'originalAppUserId')
-          final String originalAppUserId,
-      @JsonKey(name: 'allExpirationDates')
-          final Map<String, String?> allExpirationDates,
-      @JsonKey(name: 'requestDate')
-          final String requestDate,
-      {@JsonKey(name: 'latestExpirationDate')
-          final String? latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate')
-          final String? originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion')
-          final String? originalApplicationVersion,
-      @JsonKey(name: 'managementURL')
-          final String? managementURL}) = _$_CustomerInfo;
+      final EntitlementInfos entitlements,
+      final Map<String, String> allPurchaseDates,
+      final List<String> activeSubscriptions,
+      final List<String> allPurchasedProductIdentifiers,
+      final List<StoreTransaction> nonSubscriptionTransactions,
+      final String firstSeen,
+      final String originalAppUserId,
+      final Map<String, String?> allExpirationDates,
+      final String requestDate,
+      {final String? latestExpirationDate,
+      final String? originalPurchaseDate,
+      final String? originalApplicationVersion,
+      final String? managementURL}) = _$_CustomerInfo;
 
   factory _CustomerInfo.fromJson(Map<String, dynamic> json) =
       _$_CustomerInfo.fromJson;
@@ -608,59 +530,48 @@ abstract class _CustomerInfo implements CustomerInfo {
   @override
 
   /// Entitlements attached to this customer info
-  @JsonKey(name: 'entitlements')
   EntitlementInfos get entitlements;
   @override
 
   /// Map of skus to purchase dates
-  @JsonKey(name: 'allPurchaseDates')
   Map<String, String> get allPurchaseDates;
   @override
 
   /// Set of active subscription skus
-  @JsonKey(name: 'activeSubscriptions')
   List<String> get activeSubscriptions;
   @override
 
   /// Set of purchased skus, active and inactive
-  @JsonKey(name: 'allPurchasedProductIdentifiers')
   List<String> get allPurchasedProductIdentifiers;
   @override
 
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
-  @JsonKey(name: 'nonSubscriptionTransactions')
   List<StoreTransaction> get nonSubscriptionTransactions;
   @override
 
   /// The date this user was first seen in RevenueCat.
-  @JsonKey(name: 'firstSeen')
   String get firstSeen;
   @override
 
   /// The original App User Id recorded for this user.
-  @JsonKey(name: 'originalAppUserId')
   String get originalAppUserId;
   @override
 
   /// Map of skus to expiration dates
-  @JsonKey(name: 'allExpirationDates')
   Map<String, String?> get allExpirationDates;
   @override
 
   /// Date when this info was requested
-  @JsonKey(name: 'requestDate')
   String get requestDate;
   @override
 
   /// The latest expiration date of all purchased skus
-  @JsonKey(name: 'latestExpirationDate')
   String? get latestExpirationDate;
   @override
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
-  @JsonKey(name: 'originalPurchaseDate')
   String? get originalPurchaseDate;
   @override
 
@@ -671,7 +582,6 @@ abstract class _CustomerInfo implements CustomerInfo {
   /// This corresponds to the value of CFBundleVersion (in iOS) in the
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
-  @JsonKey(name: 'originalApplicationVersion')
   String? get originalApplicationVersion;
   @override
 
@@ -679,7 +589,6 @@ abstract class _CustomerInfo implements CustomerInfo {
   /// subscription, this will point to the App Store, if the user has an active Play Store subscription
   /// it will point there. If there are no active subscriptions it will be null.
   /// If there are multiple for different platforms, it will point to the device store.
-  @JsonKey(name: 'managementURL')
   String? get managementURL;
   @override
   @JsonKey(ignore: true)

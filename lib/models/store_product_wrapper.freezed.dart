@@ -21,55 +21,45 @@ StoreProduct _$StoreProductFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$StoreProduct {
   /// Product Id.
-  @JsonKey(name: 'identifier')
   String get identifier => throw _privateConstructorUsedError;
 
   /// Description of the product.
-  @JsonKey(name: 'description')
   String get description => throw _privateConstructorUsedError;
 
   /// Title of the product.
-  @JsonKey(name: 'title')
   String get title => throw _privateConstructorUsedError;
 
   /// Price of the product in the local currency.
-  @JsonKey(name: 'price')
   double get price => throw _privateConstructorUsedError;
 
   /// Formatted price of the item, including its currency sign.
-  @JsonKey(name: 'priceString')
   String get priceString => throw _privateConstructorUsedError;
 
   /// Currency code for price and original price.
-  @JsonKey(name: 'currencyCode')
   String get currencyCode => throw _privateConstructorUsedError;
 
   /// Introductory price for product. Can be null.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'introPrice')
   IntroductoryPrice? get introductoryPrice =>
       throw _privateConstructorUsedError;
 
   /// Collection of discount offers for a product. Null for Android.
-  @JsonKey(name: 'discounts')
   List<StoreProductDiscount>? get discounts =>
       throw _privateConstructorUsedError;
 
   /// Product category.
-  @JsonKey(name: 'productCategory')
   ProductCategory? get productCategory => throw _privateConstructorUsedError;
 
   /// Default subscription option for a product. Google Play only.
-  @JsonKey(name: 'defaultOption')
   SubscriptionOption? get defaultOption => throw _privateConstructorUsedError;
 
   /// Collection of subscription options for a product. Google Play only.
-  @JsonKey(name: 'subscriptionOptions')
   List<SubscriptionOption>? get subscriptionOptions =>
       throw _privateConstructorUsedError;
 
   /// Offering identifier the store product was presented from
   /// Null if not using offerings or if fetched directly from store via getProducts
-  @JsonKey(name: 'presentedOfferingIdentifier')
   String? get presentedOfferingIdentifier => throw _privateConstructorUsedError;
 
   /// Subscription period, specified in ISO 8601 format. For example,
@@ -77,7 +67,6 @@ mixin _$StoreProduct {
   /// P3M equates to three months, P6M equates to six months,
   /// and P1Y equates to one year.
   /// Note: Not available for Amazon.
-  @JsonKey(name: 'subscriptionPeriod')
   String? get subscriptionPeriod => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -93,32 +82,19 @@ abstract class $StoreProductCopyWith<$Res> {
       _$StoreProductCopyWithImpl<$Res, StoreProduct>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'identifier')
-          String identifier,
-      @JsonKey(name: 'description')
-          String description,
-      @JsonKey(name: 'title')
-          String title,
-      @JsonKey(name: 'price')
-          double price,
-      @JsonKey(name: 'priceString')
-          String priceString,
-      @JsonKey(name: 'currencyCode')
-          String currencyCode,
-      @JsonKey(name: 'introPrice')
-          IntroductoryPrice? introductoryPrice,
-      @JsonKey(name: 'discounts')
-          List<StoreProductDiscount>? discounts,
-      @JsonKey(name: 'productCategory')
-          ProductCategory? productCategory,
-      @JsonKey(name: 'defaultOption')
-          SubscriptionOption? defaultOption,
-      @JsonKey(name: 'subscriptionOptions')
-          List<SubscriptionOption>? subscriptionOptions,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          String? presentedOfferingIdentifier,
-      @JsonKey(name: 'subscriptionPeriod')
-          String? subscriptionPeriod});
+      {String identifier,
+      String description,
+      String title,
+      double price,
+      String priceString,
+      String currencyCode,
+      @JsonKey(name: 'introPrice') IntroductoryPrice? introductoryPrice,
+      List<StoreProductDiscount>? discounts,
+      ProductCategory? productCategory,
+      SubscriptionOption? defaultOption,
+      List<SubscriptionOption>? subscriptionOptions,
+      String? presentedOfferingIdentifier,
+      String? subscriptionPeriod});
 
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
   $SubscriptionOptionCopyWith<$Res>? get defaultOption;
@@ -241,32 +217,19 @@ abstract class _$$_StoreProductCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'identifier')
-          String identifier,
-      @JsonKey(name: 'description')
-          String description,
-      @JsonKey(name: 'title')
-          String title,
-      @JsonKey(name: 'price')
-          double price,
-      @JsonKey(name: 'priceString')
-          String priceString,
-      @JsonKey(name: 'currencyCode')
-          String currencyCode,
-      @JsonKey(name: 'introPrice')
-          IntroductoryPrice? introductoryPrice,
-      @JsonKey(name: 'discounts')
-          List<StoreProductDiscount>? discounts,
-      @JsonKey(name: 'productCategory')
-          ProductCategory? productCategory,
-      @JsonKey(name: 'defaultOption')
-          SubscriptionOption? defaultOption,
-      @JsonKey(name: 'subscriptionOptions')
-          List<SubscriptionOption>? subscriptionOptions,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          String? presentedOfferingIdentifier,
-      @JsonKey(name: 'subscriptionPeriod')
-          String? subscriptionPeriod});
+      {String identifier,
+      String description,
+      String title,
+      double price,
+      String priceString,
+      String currencyCode,
+      @JsonKey(name: 'introPrice') IntroductoryPrice? introductoryPrice,
+      List<StoreProductDiscount>? discounts,
+      ProductCategory? productCategory,
+      SubscriptionOption? defaultOption,
+      List<SubscriptionOption>? subscriptionOptions,
+      String? presentedOfferingIdentifier,
+      String? subscriptionPeriod});
 
   @override
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
@@ -359,33 +322,15 @@ class __$$_StoreProductCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_StoreProduct implements _StoreProduct {
-  const _$_StoreProduct(
-      @JsonKey(name: 'identifier')
-          this.identifier,
-      @JsonKey(name: 'description')
-          this.description,
-      @JsonKey(name: 'title')
-          this.title,
-      @JsonKey(name: 'price')
-          this.price,
-      @JsonKey(name: 'priceString')
-          this.priceString,
-      @JsonKey(name: 'currencyCode')
-          this.currencyCode,
-      {@JsonKey(name: 'introPrice')
-          this.introductoryPrice,
-      @JsonKey(name: 'discounts')
-          final List<StoreProductDiscount>? discounts,
-      @JsonKey(name: 'productCategory')
-          this.productCategory,
-      @JsonKey(name: 'defaultOption')
-          this.defaultOption,
-      @JsonKey(name: 'subscriptionOptions')
-          final List<SubscriptionOption>? subscriptionOptions,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          this.presentedOfferingIdentifier,
-      @JsonKey(name: 'subscriptionPeriod')
-          this.subscriptionPeriod})
+  const _$_StoreProduct(this.identifier, this.description, this.title,
+      this.price, this.priceString, this.currencyCode,
+      {@JsonKey(name: 'introPrice') this.introductoryPrice,
+      final List<StoreProductDiscount>? discounts,
+      this.productCategory,
+      this.defaultOption,
+      final List<SubscriptionOption>? subscriptionOptions,
+      this.presentedOfferingIdentifier,
+      this.subscriptionPeriod})
       : _discounts = discounts,
         _subscriptionOptions = subscriptionOptions;
 
@@ -394,35 +339,30 @@ class _$_StoreProduct implements _StoreProduct {
 
   /// Product Id.
   @override
-  @JsonKey(name: 'identifier')
   final String identifier;
 
   /// Description of the product.
   @override
-  @JsonKey(name: 'description')
   final String description;
 
   /// Title of the product.
   @override
-  @JsonKey(name: 'title')
   final String title;
 
   /// Price of the product in the local currency.
   @override
-  @JsonKey(name: 'price')
   final double price;
 
   /// Formatted price of the item, including its currency sign.
   @override
-  @JsonKey(name: 'priceString')
   final String priceString;
 
   /// Currency code for price and original price.
   @override
-  @JsonKey(name: 'currencyCode')
   final String currencyCode;
 
   /// Introductory price for product. Can be null.
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'introPrice')
   final IntroductoryPrice? introductoryPrice;
@@ -432,7 +372,6 @@ class _$_StoreProduct implements _StoreProduct {
 
   /// Collection of discount offers for a product. Null for Android.
   @override
-  @JsonKey(name: 'discounts')
   List<StoreProductDiscount>? get discounts {
     final value = _discounts;
     if (value == null) return null;
@@ -443,12 +382,10 @@ class _$_StoreProduct implements _StoreProduct {
 
   /// Product category.
   @override
-  @JsonKey(name: 'productCategory')
   final ProductCategory? productCategory;
 
   /// Default subscription option for a product. Google Play only.
   @override
-  @JsonKey(name: 'defaultOption')
   final SubscriptionOption? defaultOption;
 
   /// Collection of subscription options for a product. Google Play only.
@@ -456,7 +393,6 @@ class _$_StoreProduct implements _StoreProduct {
 
   /// Collection of subscription options for a product. Google Play only.
   @override
-  @JsonKey(name: 'subscriptionOptions')
   List<SubscriptionOption>? get subscriptionOptions {
     final value = _subscriptionOptions;
     if (value == null) return null;
@@ -469,7 +405,6 @@ class _$_StoreProduct implements _StoreProduct {
   /// Offering identifier the store product was presented from
   /// Null if not using offerings or if fetched directly from store via getProducts
   @override
-  @JsonKey(name: 'presentedOfferingIdentifier')
   final String? presentedOfferingIdentifier;
 
   /// Subscription period, specified in ISO 8601 format. For example,
@@ -478,7 +413,6 @@ class _$_StoreProduct implements _StoreProduct {
   /// and P1Y equates to one year.
   /// Note: Not available for Amazon.
   @override
-  @JsonKey(name: 'subscriptionPeriod')
   final String? subscriptionPeriod;
 
   @override
@@ -553,32 +487,19 @@ class _$_StoreProduct implements _StoreProduct {
 
 abstract class _StoreProduct implements StoreProduct {
   const factory _StoreProduct(
-      @JsonKey(name: 'identifier')
-          final String identifier,
-      @JsonKey(name: 'description')
-          final String description,
-      @JsonKey(name: 'title')
-          final String title,
-      @JsonKey(name: 'price')
-          final double price,
-      @JsonKey(name: 'priceString')
-          final String priceString,
-      @JsonKey(name: 'currencyCode')
-          final String currencyCode,
-      {@JsonKey(name: 'introPrice')
-          final IntroductoryPrice? introductoryPrice,
-      @JsonKey(name: 'discounts')
-          final List<StoreProductDiscount>? discounts,
-      @JsonKey(name: 'productCategory')
-          final ProductCategory? productCategory,
-      @JsonKey(name: 'defaultOption')
-          final SubscriptionOption? defaultOption,
-      @JsonKey(name: 'subscriptionOptions')
-          final List<SubscriptionOption>? subscriptionOptions,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          final String? presentedOfferingIdentifier,
-      @JsonKey(name: 'subscriptionPeriod')
-          final String? subscriptionPeriod}) = _$_StoreProduct;
+      final String identifier,
+      final String description,
+      final String title,
+      final double price,
+      final String priceString,
+      final String currencyCode,
+      {@JsonKey(name: 'introPrice') final IntroductoryPrice? introductoryPrice,
+      final List<StoreProductDiscount>? discounts,
+      final ProductCategory? productCategory,
+      final SubscriptionOption? defaultOption,
+      final List<SubscriptionOption>? subscriptionOptions,
+      final String? presentedOfferingIdentifier,
+      final String? subscriptionPeriod}) = _$_StoreProduct;
 
   factory _StoreProduct.fromJson(Map<String, dynamic> json) =
       _$_StoreProduct.fromJson;
@@ -586,63 +507,53 @@ abstract class _StoreProduct implements StoreProduct {
   @override
 
   /// Product Id.
-  @JsonKey(name: 'identifier')
   String get identifier;
   @override
 
   /// Description of the product.
-  @JsonKey(name: 'description')
   String get description;
   @override
 
   /// Title of the product.
-  @JsonKey(name: 'title')
   String get title;
   @override
 
   /// Price of the product in the local currency.
-  @JsonKey(name: 'price')
   double get price;
   @override
 
   /// Formatted price of the item, including its currency sign.
-  @JsonKey(name: 'priceString')
   String get priceString;
   @override
 
   /// Currency code for price and original price.
-  @JsonKey(name: 'currencyCode')
   String get currencyCode;
   @override
 
   /// Introductory price for product. Can be null.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'introPrice')
   IntroductoryPrice? get introductoryPrice;
   @override
 
   /// Collection of discount offers for a product. Null for Android.
-  @JsonKey(name: 'discounts')
   List<StoreProductDiscount>? get discounts;
   @override
 
   /// Product category.
-  @JsonKey(name: 'productCategory')
   ProductCategory? get productCategory;
   @override
 
   /// Default subscription option for a product. Google Play only.
-  @JsonKey(name: 'defaultOption')
   SubscriptionOption? get defaultOption;
   @override
 
   /// Collection of subscription options for a product. Google Play only.
-  @JsonKey(name: 'subscriptionOptions')
   List<SubscriptionOption>? get subscriptionOptions;
   @override
 
   /// Offering identifier the store product was presented from
   /// Null if not using offerings or if fetched directly from store via getProducts
-  @JsonKey(name: 'presentedOfferingIdentifier')
   String? get presentedOfferingIdentifier;
   @override
 
@@ -651,7 +562,6 @@ abstract class _StoreProduct implements StoreProduct {
   /// P3M equates to three months, P6M equates to six months,
   /// and P1Y equates to one year.
   /// Note: Not available for Amazon.
-  @JsonKey(name: 'subscriptionPeriod')
   String? get subscriptionPeriod;
   @override
   @JsonKey(ignore: true)
