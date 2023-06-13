@@ -34,6 +34,7 @@ enum OwnershipType {
   familyShared,
 
   /// The purchase has no or an unknown ownership type.
+  @JsonValue('UNKNOWN')
   unknown
 }
 
@@ -43,39 +44,33 @@ enum OwnershipType {
 class EntitlementInfo with _$EntitlementInfo {
   const factory EntitlementInfo(
     /// The entitlement identifier configured in the RevenueCat dashboard
-    @JsonKey(name: 'identifier')
-        String identifier,
+    String identifier,
 
     /// True if the user has access to this entitlement
-    @JsonKey(name: 'isActive')
-        bool isActive,
+    bool isActive,
 
     /// True if the underlying subscription is set to renew at the end of
     /// the billing period (expirationDate).
-    @JsonKey(name: 'willRenew')
-        bool willRenew,
+    bool willRenew,
 
     /// The latest purchase or renewal date for the entitlement.
-    @JsonKey(name: 'latestPurchaseDate')
-        String latestPurchaseDate,
+    String latestPurchaseDate,
 
     /// The first date this entitlement was purchased
-    @JsonKey(name: 'originalPurchaseDate')
-        String originalPurchaseDate,
+    String originalPurchaseDate,
 
     /// The product identifier that unlocked this entitlement
-    @JsonKey(name: 'productIdentifier')
-        String productIdentifier,
+    String productIdentifier,
 
     /// False if this entitlement is unlocked via a production purchase
-    @JsonKey(name: 'isSandbox')
-        bool isSandbox, {
+    bool isSandbox, {
 
     /// Use this property to determine whether a purchase was made by the current
     /// user or shared to them by a family member. This can be useful for
     /// onboarding users who have had an entitlement shared with them, but might
     /// not be entirely aware of the benefits they now have.
     @Default(OwnershipType.unknown)
+    // ignore: invalid_annotation_target
     @JsonKey(
       name: 'ownershipType',
       unknownEnumValue: OwnershipType.unknown,
@@ -84,6 +79,7 @@ class EntitlementInfo with _$EntitlementInfo {
 
     /// The store where this entitlement was unlocked from
     @Default(Store.unknownStore)
+    // ignore: invalid_annotation_target
     @JsonKey(
       name: 'store',
       unknownEnumValue: Store.unknownStore,
@@ -92,6 +88,7 @@ class EntitlementInfo with _$EntitlementInfo {
 
     /// The last period type this entitlement was in
     @Default(PeriodType.unknown)
+    // ignore: invalid_annotation_target
     @JsonKey(
       name: 'periodType',
       unknownEnumValue: PeriodType.unknown,
@@ -101,22 +98,19 @@ class EntitlementInfo with _$EntitlementInfo {
     /// The expiration date for the entitlement, can be null for lifetime access.
     /// If the [periodType] is [PeriodType.trial],
     /// this is the trial expiration date.
-    @JsonKey(name: 'expirationDate')
-        String? expirationDate,
+    String? expirationDate,
 
     /// The date an unsubscribe was detected. Can be null if it's still
     /// subscribed or product is not a subscription.
     /// @note: Entitlement may still be active even if user has unsubscribed.
     /// Check the [isActive] property.
-    @JsonKey(name: 'unsubscribeDetectedAt')
-        String? unsubscribeDetectedAt,
+    String? unsubscribeDetectedAt,
 
     /// The date a billing issue was detected. Can be null if there is no
     /// billing issue or an issue has been resolved.
     /// @note: Entitlement may still be active even if there is a billing issue.
     /// Check the [isActive] property.
-    @JsonKey(name: 'billingIssueDetectedAt')
-        String? billingIssueDetectedAt,
+    String? billingIssueDetectedAt,
   }) = _EntitlementInfo;
 
   factory EntitlementInfo.fromJson(Map<String, dynamic> json) =>

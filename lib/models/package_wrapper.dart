@@ -53,10 +53,10 @@ class Package with _$Package {
   const factory Package(
     /// Unique identifier for this package. Can be one a predefined package type
     /// or a custom one.
-    @JsonKey(name: 'identifier')
-        String identifier,
+    String identifier,
 
     /// Package type for the product. Will be one of [PackageType].
+    // ignore: invalid_annotation_target
     @JsonKey(
       name: 'packageType',
       unknownEnumValue: PackageType.unknown,
@@ -64,12 +64,12 @@ class Package with _$Package {
         PackageType packageType,
 
     /// StoreProduct assigned to this package.
+    // ignore: invalid_annotation_target
     @JsonKey(name: 'product')
         StoreProduct storeProduct,
 
     /// Offering this package belongs to.
-    @JsonKey(name: 'offeringIdentifier')
-        String offeringIdentifier,
+    String offeringIdentifier,
   ) = _Package;
 
   factory Package.fromJson(Map<String, dynamic> json) =>

@@ -1,9 +1,8 @@
-include: package:flutter_lints/flutter.yaml
+include:
+  - package:flutter_lints/flutter.yaml
+  - package:lints/recommended.yaml
 
 analyzer:
-  errors:
-    invalid_annotation_target: ignore
-    deprecated_member_use_from_same_package: ignore
   exclude:
     - lib/models/*.freezed.dart
     - lib/models/*.g.dart
