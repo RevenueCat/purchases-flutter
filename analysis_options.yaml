@@ -1,6 +1,4 @@
-include:
-  - package:flutter_lints/flutter.yaml
-  - package:lints/recommended.yaml
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
@@ -8,6 +6,7 @@ analyzer:
     - lib/models/*.g.dart
     - lib/models/**/*.freezed.dart
     - lib/models/**/*.g.dart
+    - api_tester/**
 
 linter:
   rules:
