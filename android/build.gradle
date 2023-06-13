@@ -1,16 +1,16 @@
 group 'com.revenuecat.purchases_flutter'
-version '4.12.0-SNAPSHOT'
+version '5.1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.6.21'
-    ext.common_version = '4.14.3'
+    ext.kotlin_version = '1.7.21'
+    ext.common_version = '5.0.0'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:8.0.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -27,6 +27,11 @@ apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 31
+
+    // Conditional for compatibility with AGP <4.2.
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.revenuecat.purchases_flutter'
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

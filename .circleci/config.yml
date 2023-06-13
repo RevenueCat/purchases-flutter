@@ -19,6 +19,15 @@ aliases:
         ignore: /.*/
       branches:
         only: main
+  release-branches-and-main: &release-branches-and-main
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        only:
+          - main
+          - /^release\/.*/
+
 
 orbs:
   android: circleci/android@0.2.1
@@ -109,7 +118,7 @@ commands:
       - run:
           name: Flutter doctor
           command: flutter doctor
-  
+
   install-and-create-sim:
     parameters:
       install-simulator-name:
@@ -133,11 +142,30 @@ commands:
           name: Create simulator
           command: xcrun simctl create '<< parameters.sim-name >>' com.apple.CoreSimulator.SimDeviceType.<< parameters.sim-device-type >> com.apple.CoreSimulator.SimRuntime.<< parameters.sim-device-runtime >>
 
+  install-sdkman:
+    description: Install SDKMAN
+    steps:
+      - run:
+          name: Installing SDKMAN
+          command: |
+            if curl -s "https://get.sdkman.io?rcupdate=false" | bash; then
+              echo -e '\nsource "/root/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
+              source $BASH_ENV
+            else
+              echo "Error installing SDKMAN, continuing with default Java" >&2
+            fi
+      - run:
+          name: Setup Java environment
+          command: |
+            if ! sdk env install; then
+              echo "Error installing Java SDK through SDKMAN, continuing with default Java" >&2
+            fi
+
 jobs:
   lint:
     description: "Run static analysis for Flutter"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - build-flutter-project
@@ -145,14 +173,16 @@ jobs:
           project: revenuecat_examples/MagicWeather
       - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
+      - flutter-get-dependencies:
+          project: api_tester
       - run:
           name: Analyze code
-          command: flutter analyze lib
+          command: flutter analyze
 
   test:
     description: "Run tests for Flutter"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - build-flutter-project
@@ -163,9 +193,10 @@ jobs:
   api_test:
     description: "Run API tests for Flutter"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
+      - install-sdkman
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - run:
@@ -175,10 +206,11 @@ jobs:
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - replace-api-key
+      - install-sdkman
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
@@ -225,18 +257,13 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 13.4.1
+      xcode: 14.3.1
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - install-and-create-sim:
-          install-simulator-name: iOS 15.4 Simulator
-          sim-device-type: iPhone-13
-          sim-device-runtime: iOS-15-4
-          sim-name: iPhone 13 (15.4)
       - macos/preboot-simulator:
-          device: iPhone 13
-          version: '15.4'
+          device: iPhone 14
+          version: '16.4'
       - setup-flutter
       - replace-api-key
       - build-flutter-project:
@@ -250,9 +277,9 @@ jobs:
 
   macos-integration-test:
     description: "Run integration tests for Flutter"
-    resource_class: macos.m1.large.gen1
+    resource_class: macos.x86.medium.gen2
     macos:
-      xcode: 14.2.0
+      xcode: 15.0.0
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
@@ -270,19 +297,17 @@ jobs:
   freezed:
     description: "Check if Freezed files need to be added to repo"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - build-flutter-project
       - swissknife/fail_if_dirty:
           print-modified-files: true
-      - store_artifacts:
-          path: pubspec.lock
 
   dry-run-release:
     description: "Check if Freezed files need to be added to repo"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - run:
@@ -324,7 +349,7 @@ jobs:
   make-release:
     description: "Publishes the new version to pub.dev and creates a github release"
     docker:
-      - image: cirrusci/flutter
+      - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
       - revenuecat/install-gem-unix-dependencies:
@@ -348,6 +373,19 @@ workflows:
       - api_test
       - freezed
       - dry-run-release: *release-branches
+      - ios-integration-test
+      - macos-integration-test
+      - android-integration-test-build
+      - hold:
+          type: approval
+          requires:
+            - android-integration-test-build
+          <<: *release-branches-and-main
+      - run-firebase-tests:
+          requires:
+            - hold
+          <<: *release-branches-and-main
+
   deploy:
     when:
       not:

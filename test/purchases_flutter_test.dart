@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -13,7 +14,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 /// expects, then the parameters the SDK would send to Flutter on that call.
 void _performDartSideChannelMethodCall(String methodName, dynamic params) {
   final methodCall = MethodCall(methodName, params);
-  ServicesBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+  ServicesBinding.instance.channelBuffers.push(
     'purchases_flutter',
     const StandardMethodCodec().encodeMethodCall(methodCall),
     (ByteData? data) {},
@@ -42,14 +43,16 @@ void main() {
   };
 
   setUp(() {
-    channel.setMockMethodCallHandler((call) async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) async {
       log.add(call);
       return response;
     });
   });
 
   tearDown(() {
-    channel.setMockMethodCallHandler(null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
     log.clear();
     response = null;
   });
@@ -93,7 +96,8 @@ void main() {
       'addCustomerInfoUpdateListener calls each listener immediately if it has an existing customer info',
       () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
-    channel.setMockMethodCallHandler(null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
     _performDartSideChannelMethodCall(
       'Purchases-CustomerInfoUpdated',
       mockCustomerInfoResponse,
@@ -116,7 +120,8 @@ void main() {
       'addCustomerInfoUpdateListener calls each listener immediately with latest customer info',
       () async {
     /// Making sure we don't mock the MethodChannel before mocking native to Flutter calls.
-    channel.setMockMethodCallHandler(null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
     _performDartSideChannelMethodCall(
       'Purchases-CustomerInfoUpdated',
       mockCustomerInfoResponse,
@@ -474,6 +479,78 @@ void main() {
         purchasePackageResult,
         CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchasePackage',
+            arguments: <String, dynamic>{
+              'packageIdentifier': '\$rc_lifetime',
+              'offeringIdentifier': 'main',
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null
+            },
+          )
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test(
+      'purchasePackage with GoogleProductChangeInfo and googleIsPersonalizedPrice calls successfully',
+      () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+      );
+      const mockPackage = Package(
+        '\$rc_lifetime',
+        PackageType.lifetime,
+        mockStoreProduct,
+        'main',
+      );
+      final googleProductChangeInfo = GoogleProductChangeInfo(
+        'com.revenuecat.weekly',
+        prorationMode: GoogleProrationMode.immediateWithTimeProration,
+      );
+      final purchasePackageResult = await Purchases.purchasePackage(
+        mockPackage,
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true,
+      );
+      expect(
+        purchasePackageResult,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchasePackage',
+            arguments: <String, dynamic>{
+              'packageIdentifier': '\$rc_lifetime',
+              'offeringIdentifier': 'main',
+              'googleOldProductIdentifier': 'com.revenuecat.weekly',
+              'googleProrationMode': 1,
+              'googleIsPersonalizedPrice': true
+            },
+          )
+        ],
+      );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
@@ -533,11 +610,119 @@ void main() {
         '\$199.99',
         'USD',
       );
-      final purchasePackageResult =
-          await Purchases.purchaseProduct(mockStoreProduct.identifier);
+      final purchasePackageResult = await Purchases.purchaseProduct(
+        mockStoreProduct.identifier,
+      );
       expect(
         purchasePackageResult,
         CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProduct',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.lifetime',
+              'type': 'subs',
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'presentedOfferingIdentifier': null,
+            },
+          )
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test(
+      'purchaseProduct with the deprecated PurchaseType.inapp calls successfully',
+      () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+      );
+      final purchasePackageResult = await Purchases.purchaseProduct(
+        mockStoreProduct.identifier,
+        type: PurchaseType.inapp,
+      );
+      expect(
+        purchasePackageResult,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProduct',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.lifetime',
+              'type': 'inapp',
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'presentedOfferingIdentifier': null,
+            },
+          )
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test('purchaseStoreProduct calls successfully', () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productCategory: ProductCategory.subscription,
+        presentedOfferingIdentifier: 'my-offer',
+      );
+      final purchasePackageResult =
+          await Purchases.purchaseStoreProduct(mockStoreProduct);
+      expect(
+        purchasePackageResult,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProduct',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.lifetime',
+              'type': 'subscription',
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'presentedOfferingIdentifier': 'my-offer',
+            },
+          )
+        ],
       );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
@@ -557,6 +742,7 @@ void main() {
         199.99,
         '\$199.99',
         'USD',
+        presentedOfferingIdentifier: 'my-offer',
       );
       const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
@@ -573,9 +759,182 @@ void main() {
         purchasePackageResult,
         CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProduct',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.lifetime',
+              'signedDiscountTimestamp': '123456',
+              'presentedOfferingIdentifier': 'my-offer',
+            },
+          )
+        ],
+      );
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }
+  });
+
+  test('purchaseSubscriptionOption calls successfully on Android', () async {
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+
+      response = {
+        'productIdentifier': 'gold:monthly',
+        'customerInfo': mockCustomerInfoResponse
+      };
+      const phase = PricingPhase(
+        Period(PeriodUnit.month, 1, 'P1M'),
+        RecurrenceMode.infiniteRecurring,
+        1,
+        Price('4.99', 4990000, 'USD'),
+        null,
+      );
+      const mockSubscriptionOption = SubscriptionOption(
+        'monthly',
+        'gold:monthly',
+        'gold',
+        [phase],
+        [],
+        true,
+        Period(PeriodUnit.month, 1, 'P1M'),
+        false,
+        phase,
+        null,
+        null,
+        'my-offer',
+      );
+      final purchasePackageResult =
+          await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
+      expect(
+        purchasePackageResult,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseSubscriptionOption',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'gold',
+              'optionIdentifier': 'monthly',
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'presentedOfferingIdentifier': 'my-offer',
+            },
+          )
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test(
+      'purchaseSubscriptionOption with GoogleProductChangeInfo and googleIsPersonalizedPrice calls successfully on Android',
+      () async {
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+
+      response = {
+        'productIdentifier': 'gold:monthly',
+        'customerInfo': mockCustomerInfoResponse
+      };
+      const phase = PricingPhase(
+        Period(PeriodUnit.month, 1, 'P1M'),
+        RecurrenceMode.infiniteRecurring,
+        1,
+        Price('4.99', 4990000, 'USD'),
+        null,
+      );
+      const mockSubscriptionOption = SubscriptionOption(
+        'monthly',
+        'gold:monthly',
+        'gold',
+        [phase],
+        [],
+        true,
+        Period(PeriodUnit.month, 1, 'P1M'),
+        false,
+        phase,
+        null,
+        null,
+        'my-offer',
+      );
+      final googleProductChangeInfo = GoogleProductChangeInfo(
+        'silver',
+        prorationMode: GoogleProrationMode.immediateWithoutProration,
+      );
+      final purchasePackageResult = await Purchases.purchaseSubscriptionOption(
+        mockSubscriptionOption,
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true,
+      );
+      expect(
+        purchasePackageResult,
+        CustomerInfo.fromJson(mockCustomerInfoResponse),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseSubscriptionOption',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'gold',
+              'optionIdentifier': 'monthly',
+              'googleOldProductIdentifier': 'silver',
+              'googleProrationMode': 3,
+              'googleIsPersonalizedPrice': true,
+              'presentedOfferingIdentifier': 'my-offer',
+            },
+          )
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception ' + e.toString());
+    }
+  });
+
+  test('purchaseSubscriptionOption throws error on iOS', () async {
+    var catchCalled = false;
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+      const phase = PricingPhase(
+        Period(PeriodUnit.month, 1, 'P1M'),
+        RecurrenceMode.infiniteRecurring,
+        1,
+        Price('4.99', 4990000, 'USD'),
+        null,
+      );
+      const mockSubscriptionOption = SubscriptionOption(
+        'monthly',
+        'gold:monthly',
+        'gold',
+        [phase],
+        [],
+        true,
+        Period(PeriodUnit.month, 1, 'P1M'),
+        false,
+        phase,
+        null,
+        null,
+        null,
+      );
+      await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
+
+      fail('an exception should have been thrown');
+    } on UnsupportedPlatformException catch (_) {
+      catchCalled = true;
+    }
+
+    expect(catchCalled, true);
   });
 
   test('setupPurchases with amazon', () async {
@@ -605,9 +964,9 @@ void main() {
 
   test('configure with amazon', () async {
     await Purchases.configure(
-      (AmazonConfiguration('api_key')
+      AmazonConfiguration('api_key')
         ..appUserID = 'cesar'
-        ..observerMode = true),
+        ..observerMode = true,
     );
     expect(
       log,
@@ -629,9 +988,9 @@ void main() {
 
   test('configure with base configuration', () async {
     await Purchases.configure(
-      (PurchasesConfiguration('api_key')
+      PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
-        ..observerMode = true),
+        ..observerMode = true,
     );
     expect(
       log,
@@ -653,10 +1012,10 @@ void main() {
 
   test('configure with base configuration and using amazon', () async {
     await Purchases.configure(
-      (PurchasesConfiguration('api_key')
+      PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
         ..observerMode = true
-        ..store = Store.amazon),
+        ..store = Store.amazon,
     );
     expect(
       log,
@@ -852,7 +1211,9 @@ void main() {
     ]);
   });
 
-  test('syncObserverModeAmazonPurchase calls channel correctly with null price and isoCurrencyCode', () async {
+  test(
+      'syncObserverModeAmazonPurchase calls channel correctly with null price and isoCurrencyCode',
+      () async {
     await Purchases.syncObserverModeAmazonPurchase(
       'productID_test',
       'receiptID_test',

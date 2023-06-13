@@ -43,12 +43,12 @@ class CustomerInfo with _$CustomerInfo {
     @JsonKey(name: 'requestDate') String requestDate, {
 
     /// The latest expiration date of all purchased skus
-    @JsonKey(name: 'latestExpirationDate', nullable: true)
+    @JsonKey(name: 'latestExpirationDate')
         String? latestExpirationDate,
 
     /// Returns the purchase date for the version of the application when the user bought the app.
     /// Use this for grandfathering users when migrating to subscriptions.
-    @JsonKey(name: 'originalPurchaseDate', nullable: true)
+    @JsonKey(name: 'originalPurchaseDate')
         String? originalPurchaseDate,
 
     /// Returns the version number for the version of the application when the
@@ -58,7 +58,7 @@ class CustomerInfo with _$CustomerInfo {
     /// This corresponds to the value of CFBundleVersion (in iOS) in the
     /// Info.plist file when the purchase was originally made. This is always null
     /// in Android
-    @JsonKey(name: 'originalApplicationVersion', nullable: true)
+    @JsonKey(name: 'originalApplicationVersion')
         String? originalApplicationVersion,
 
     /// URL to manage the active subscription of the user. If this user has an active iOS

@@ -11,11 +11,11 @@ class TopBar extends StatelessWidget {
   final Widget child;
 
   const TopBar({
-    Key key,
-    this.text,
-    this.style,
-    this.uniqueHeroTag,
-    this.child,
+    Key? key,
+    required this.text,
+    required this.style,
+    required this.uniqueHeroTag,
+    required this.child,
   }) : super(key: key);
 
   @override

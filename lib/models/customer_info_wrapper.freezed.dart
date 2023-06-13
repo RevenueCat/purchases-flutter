@@ -62,12 +62,12 @@ mixin _$CustomerInfo {
   String get requestDate => throw _privateConstructorUsedError;
 
   /// The latest expiration date of all purchased skus
-  @JsonKey(name: 'latestExpirationDate', nullable: true)
+  @JsonKey(name: 'latestExpirationDate')
   String? get latestExpirationDate => throw _privateConstructorUsedError;
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
-  @JsonKey(name: 'originalPurchaseDate', nullable: true)
+  @JsonKey(name: 'originalPurchaseDate')
   String? get originalPurchaseDate => throw _privateConstructorUsedError;
 
   /// Returns the version number for the version of the application when the
@@ -77,7 +77,7 @@ mixin _$CustomerInfo {
   /// This corresponds to the value of CFBundleVersion (in iOS) in the
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
-  @JsonKey(name: 'originalApplicationVersion', nullable: true)
+  @JsonKey(name: 'originalApplicationVersion')
   String? get originalApplicationVersion => throw _privateConstructorUsedError;
 
   /// URL to manage the active subscription of the user. If this user has an active iOS
@@ -118,11 +118,11 @@ abstract class $CustomerInfoCopyWith<$Res> {
           Map<String, String?> allExpirationDates,
       @JsonKey(name: 'requestDate')
           String requestDate,
-      @JsonKey(name: 'latestExpirationDate', nullable: true)
+      @JsonKey(name: 'latestExpirationDate')
           String? latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate', nullable: true)
+      @JsonKey(name: 'originalPurchaseDate')
           String? originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion', nullable: true)
+      @JsonKey(name: 'originalApplicationVersion')
           String? originalApplicationVersion,
       @JsonKey(name: 'managementURL')
           String? managementURL});
@@ -249,11 +249,11 @@ abstract class _$$_CustomerInfoCopyWith<$Res>
           Map<String, String?> allExpirationDates,
       @JsonKey(name: 'requestDate')
           String requestDate,
-      @JsonKey(name: 'latestExpirationDate', nullable: true)
+      @JsonKey(name: 'latestExpirationDate')
           String? latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate', nullable: true)
+      @JsonKey(name: 'originalPurchaseDate')
           String? originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion', nullable: true)
+      @JsonKey(name: 'originalApplicationVersion')
           String? originalApplicationVersion,
       @JsonKey(name: 'managementURL')
           String? managementURL});
@@ -366,11 +366,11 @@ class _$_CustomerInfo implements _CustomerInfo {
           final Map<String, String?> allExpirationDates,
       @JsonKey(name: 'requestDate')
           this.requestDate,
-      {@JsonKey(name: 'latestExpirationDate', nullable: true)
+      {@JsonKey(name: 'latestExpirationDate')
           this.latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate', nullable: true)
+      @JsonKey(name: 'originalPurchaseDate')
           this.originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion', nullable: true)
+      @JsonKey(name: 'originalApplicationVersion')
           this.originalApplicationVersion,
       @JsonKey(name: 'managementURL')
           this.managementURL})
@@ -471,13 +471,13 @@ class _$_CustomerInfo implements _CustomerInfo {
 
   /// The latest expiration date of all purchased skus
   @override
-  @JsonKey(name: 'latestExpirationDate', nullable: true)
+  @JsonKey(name: 'latestExpirationDate')
   final String? latestExpirationDate;
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
   @override
-  @JsonKey(name: 'originalPurchaseDate', nullable: true)
+  @JsonKey(name: 'originalPurchaseDate')
   final String? originalPurchaseDate;
 
   /// Returns the version number for the version of the application when the
@@ -488,7 +488,7 @@ class _$_CustomerInfo implements _CustomerInfo {
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
   @override
-  @JsonKey(name: 'originalApplicationVersion', nullable: true)
+  @JsonKey(name: 'originalApplicationVersion')
   final String? originalApplicationVersion;
 
   /// URL to manage the active subscription of the user. If this user has an active iOS
@@ -593,11 +593,11 @@ abstract class _CustomerInfo implements CustomerInfo {
           final Map<String, String?> allExpirationDates,
       @JsonKey(name: 'requestDate')
           final String requestDate,
-      {@JsonKey(name: 'latestExpirationDate', nullable: true)
+      {@JsonKey(name: 'latestExpirationDate')
           final String? latestExpirationDate,
-      @JsonKey(name: 'originalPurchaseDate', nullable: true)
+      @JsonKey(name: 'originalPurchaseDate')
           final String? originalPurchaseDate,
-      @JsonKey(name: 'originalApplicationVersion', nullable: true)
+      @JsonKey(name: 'originalApplicationVersion')
           final String? originalApplicationVersion,
       @JsonKey(name: 'managementURL')
           final String? managementURL}) = _$_CustomerInfo;
@@ -654,13 +654,13 @@ abstract class _CustomerInfo implements CustomerInfo {
   @override
 
   /// The latest expiration date of all purchased skus
-  @JsonKey(name: 'latestExpirationDate', nullable: true)
+  @JsonKey(name: 'latestExpirationDate')
   String? get latestExpirationDate;
   @override
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
-  @JsonKey(name: 'originalPurchaseDate', nullable: true)
+  @JsonKey(name: 'originalPurchaseDate')
   String? get originalPurchaseDate;
   @override
 
@@ -671,7 +671,7 @@ abstract class _CustomerInfo implements CustomerInfo {
   /// This corresponds to the value of CFBundleVersion (in iOS) in the
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
-  @JsonKey(name: 'originalApplicationVersion', nullable: true)
+  @JsonKey(name: 'originalApplicationVersion')
   String? get originalApplicationVersion;
   @override
 

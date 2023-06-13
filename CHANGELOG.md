@@ -1,3 +1,75 @@
+## 5.0.0
+**RevenueCat Purchases Flutter v5** is here!! 😻
+
+This latest release updates the Android SDK dependency from v5 to [v6](https://github.com/RevenueCat/purchases-android/releases/tag/6.0.0) to use BillingClient 5. This version of BillingClient brings an entire new subscription model which has resulted in large changes across the entire SDK.
+
+### Migration Guides
+- See [Android Native - 5.x to 6.x Migration](https://www.revenuecat.com/docs/android-native-5x-to-6x-migration) for a
+  more thorough explanation of the new Google subscription model announced with BillingClient 5 and how to take
+  advantage of it in V6. This guide includes tips on product setup with the new model.
+
+### New `SubscriptionOption` concept
+
+#### Purchasing
+In v4, a Google Play Android `Package` or `StoreProduct` represented a single purchaseable entity, and free trials or intro
+offers would automatically be applied to the purchase if the user was eligible.
+
+Now, in Flutter v5, an Google Play Android `Package` or `StoreProduct` represents a duration of a subscription and contains all the ways to purchase that duration -- any offers and its base plan. Each of these purchase options are `SubscriptionOption`s.
+When passing a `Package` to `purchasePackage()` or `StoreProduct` to `purchaseStoreProduct()`, the SDK will use the following logic to choose which
+`SubscriptionOption` to purchase:
+- Filters out offers with "rc-ignore-offer" tag
+- Uses `SubscriptionOption` with the longest free trial or cheapest first phase
+    - Only offers the user is eligible will be applied
+- Falls back to base plan
+
+For more control, purchase subscription options with the new `purchaseSubscriptionOption()` method.
+
+#### Models
+
+`StoreProduct` now has a few new properties use for Google Play Android:
+- `defaultOption`
+  - A subscription option that will automatically be applie when purchasing a `Package` or `StoreProduct`
+- `subscriptionOptions`
+  - A list of subscription options (could be null)
+
+### Observer Mode
+
+Observer mode is still supported in v5. Other than updating the SDK version, there are no changes required.
+
+### Offline Entitlements
+
+✨ With this new feature, even if our main and backup servers are down, the SDK can continue to process purchases. This is enabled transparently to the user, and when the servers come back online, the SDK automatically syncs the information so it can be visible in the dashboard.
+
+### Offering Metadata
+
+✨ Metadata allows attaching arbitrary information as key/value pairs to your Offering to control how to display your products inside your app. The metadata you configure in an Offering is available from the RevenueCat SDK. For example, you could use it to remotely configure strings on your paywall, or even URLs of images shown on the paywall.
+
+See the [metadata documentation](https://www.revenuecat.com/docs/offering-metadata) for more info!
+
+## 4.13.0
+### Bugfixes
+* Fix deprecation warning (#694) via Andy Boedo (@aboedo)
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.18.0 (#709) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 4.21.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.21.0)
+  * [iOS 4.19.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.19.1)
+  * [iOS 4.20.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.20.0)
+  * [iOS 4.19.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.19.0)
+* Increases upper limit and removes minimum flutter version (#702) via Cesar de la Vega (@vegaro)
+* Bump fastlane from 2.212.2 to 2.213.0 (#696) via dependabot[bot] (@dependabot[bot])
+### Other Changes
+* Fix analyzer issues (#706) via Mark Villacampa (@MarkVillacampa)
+* Fix integration tests (#703) via Mark Villacampa (@MarkVillacampa)
+* Support Gradle 8+ (#698) via Cesar de la Vega (@vegaro)
+* Fix issues when running Flutter 3.10.2 (#699) via Cesar de la Vega (@vegaro)
+
+## 4.12.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.15.0 (#680) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 4.18.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.18.0)
+* Bump cocoapods from 1.12.0 to 1.12.1 (#672) via dependabot[bot] (@dependabot[bot])
+* Bump danger from 9.2.0 to 9.3.0 (#678) via dependabot[bot] (@dependabot[bot])
+
 ## 4.11.3
 ### Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 4.14.3 (#674) via RevenueCat Git Bot (@RCGitBot)

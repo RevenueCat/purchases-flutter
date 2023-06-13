@@ -1,14 +1,13 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import '../store_config.dart';
+import './constant.dart';
 
 class PurchaseTester extends StatelessWidget {
-  const PurchaseTester({Key key}) : super(key: key);
+  const PurchaseTester({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +20,14 @@ class PurchaseTester extends StatelessWidget {
 
 // ignore: public_member_api_docs
 class InitialScreen extends StatefulWidget {
-  const InitialScreen({Key key}) : super(key: key);
+  const InitialScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<InitialScreen> {
-  CustomerInfo _customerInfo;
+  CustomerInfo? _customerInfo;
 
   @override
   void initState() {
@@ -38,18 +37,6 @@ class _MyAppState extends State<InitialScreen> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    await Purchases.setLogLevel(LogLevel.debug);
-
-    PurchasesConfiguration configuration;
-    if (StoreConfig.isForAmazonAppstore()) {
-      configuration = AmazonConfiguration(StoreConfig.instance.apiKey);
-    } else {
-      configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
-    }
-    await Purchases.configure(configuration);
-
-    await Purchases.enableAdServicesAttributionTokenCollection();
-
     final customerInfo = await Purchases.getCustomerInfo();
 
     Purchases.addReadyForPromotedProductPurchaseListener(
@@ -88,7 +75,8 @@ class _MyAppState extends State<InitialScreen> {
         ),
       );
     } else {
-      final isPro = _customerInfo.entitlements.active.containsKey('pro_cat');
+      final isPro =
+          _customerInfo!.entitlements.active.containsKey(entitlementKey);
       if (isPro) {
         return const CatsScreen();
       } else {
@@ -100,14 +88,14 @@ class _MyAppState extends State<InitialScreen> {
 
 // ignore: public_member_api_docs
 class UpsellScreen extends StatefulWidget {
-  const UpsellScreen({Key key}) : super(key: key);
+  const UpsellScreen({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _UpsellScreenState();
 }
 
 class _UpsellScreenState extends State<UpsellScreen> {
-  Offerings _offerings;
+  Offerings? _offerings;
 
   @override
   void initState() {
@@ -116,7 +104,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
   }
 
   Future<void> fetchData() async {
-    Offerings offerings;
+    Offerings? offerings;
     try {
       offerings = await Purchases.getOfferings();
     } on PlatformException catch (e) {
@@ -133,25 +121,38 @@ class _UpsellScreenState extends State<UpsellScreen> {
   @override
   Widget build(BuildContext context) {
     if (_offerings != null) {
-      final offering = _offerings.current;
+      final offering = _offerings!.current;
       if (offering != null) {
-        final monthly = offering.monthly;
-        final lifetime = offering.lifetime;
+        List<Widget> buttonThings = offering.availablePackages
+            .map((package) {
+              List<Widget> buttons = [
+                _PurchaseButton(package: package),
+                _PurchaseStoreProductButton(storeProduct: package.storeProduct)
+              ];
 
-        if (monthly != null && lifetime != null) {
-          return Scaffold(
-            appBar: AppBar(title: const Text('Upsell Screen')),
-            body: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  _PurchaseButton(package: monthly),
-                  _PurchaseButton(package: lifetime)
-                ],
-              ),
+              List<Widget> optionButtons =
+                  (package.storeProduct.subscriptionOptions?.map((e) {
+                            return _PurchaseSubscriptionOptionButton(option: e);
+                          }) ??
+                          [])
+                      .toList();
+
+              buttons.addAll(optionButtons);
+
+              return buttons;
+            })
+            .expand((i) => i)
+            .toList();
+
+        return Scaffold(
+          appBar: AppBar(title: const Text('Upsell Screen')),
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: buttonThings,
             ),
-          );
-        }
+          ),
+        );
       }
     }
     return Scaffold(
@@ -167,16 +168,20 @@ class _PurchaseButton extends StatelessWidget {
   final Package package;
 
   // ignore: public_member_api_docs
-  const _PurchaseButton({Key key, @required this.package}) : super(key: key);
+  const _PurchaseButton({Key? key, required this.package}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => ElevatedButton(
         onPressed: () async {
           try {
             final customerInfo = await Purchases.purchasePackage(package);
-            final isPro = customerInfo.entitlements.all['pro_cat'].isActive;
+            final isPro =
+                customerInfo.entitlements.active.containsKey(entitlementKey);
             if (isPro) {
-              return const CatsScreen();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CatsScreen()),
+              );
             }
           } on PlatformException catch (e) {
             final errorCode = PurchasesErrorHelper.getErrorCode(e);
@@ -189,42 +194,130 @@ class _PurchaseButton extends StatelessWidget {
               print('Payment is pending');
             }
           }
-          return const InitialScreen();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const InitialScreen()),
+          );
         },
-        child: Text('Buy - (${package.storeProduct.priceString})'),
+        child: Text(
+            'Buy Package: ${package.storeProduct.subscriptionPeriod ?? package.storeProduct.title}\n${package.storeProduct.priceString}'),
+      );
+}
+
+class _PurchaseStoreProductButton extends StatelessWidget {
+  final StoreProduct storeProduct;
+
+  // ignore: public_member_api_docs
+  const _PurchaseStoreProductButton({Key? key, required this.storeProduct})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => ElevatedButton(
+        onPressed: () async {
+          try {
+            final customerInfo =
+                await Purchases.purchaseStoreProduct(storeProduct);
+            final isPro =
+                customerInfo.entitlements.active.containsKey(entitlementKey);
+            if (isPro) {
+             Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CatsScreen()),
+              );
+            }
+          } on PlatformException catch (e) {
+            final errorCode = PurchasesErrorHelper.getErrorCode(e);
+            if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+              print('User cancelled');
+            } else if (errorCode ==
+                PurchasesErrorCode.purchaseNotAllowedError) {
+              print('User not allowed to purchase');
+            } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
+              print('Payment is pending');
+            }
+          }
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const InitialScreen()),
+          );
+        },
+        child: Text(
+            'Buy StoreProduct (${storeProduct.productCategory}): ${storeProduct.subscriptionPeriod ?? storeProduct.title}\n${storeProduct.priceString}'),
+      );
+}
+
+class _PurchaseSubscriptionOptionButton extends StatelessWidget {
+  final SubscriptionOption option;
+
+  // ignore: public_member_api_docs
+  const _PurchaseSubscriptionOptionButton({Key? key, required this.option})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => ElevatedButton(
+        onPressed: () async {
+          try {
+            final customerInfo =
+                await Purchases.purchaseSubscriptionOption(option);
+            final isPro =
+                customerInfo.entitlements.active.containsKey(entitlementKey);
+            if (isPro) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CatsScreen()),
+              );
+            }
+          } on PlatformException catch (e) {
+            final errorCode = PurchasesErrorHelper.getErrorCode(e);
+            if (errorCode == PurchasesErrorCode.purchaseCancelledError) {
+              print('User cancelled');
+            } else if (errorCode ==
+                PurchasesErrorCode.purchaseNotAllowedError) {
+              print('User not allowed to purchase');
+            } else if (errorCode == PurchasesErrorCode.paymentPendingError) {
+              print('Payment is pending');
+            }
+          }
+        },
+        child:
+            Text('Buy Option: - (${option.id}\n${option.pricingPhases.map((e) {
+          return '${e.price.formatted} for ${e.billingPeriod?.value} ${e.billingPeriod?.unit}';
+        }).join(' -> ')})'),
       );
 }
 
 // ignore: public_member_api_docs
 class CatsScreen extends StatelessWidget {
-  const CatsScreen({Key key}) : super(key: key);
+  const CatsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(title: const Text('Cats Screen')),
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text('User is pro'),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    final customerInfo = await Purchases.getCustomerInfo();
-                    final refundStatus = await Purchases
-                        .beginRefundRequestForEntitlement(
-                          customerInfo.entitlements.active['pro_cat']
-                        );
-                    print('Refund request successful with status: $refundStatus');
-                  } catch (e) {
-                    print('Refund request exception: $e');
-                  }
-                  return const InitialScreen();
-                },
-                child: const Text('Begin refund for pro_cat entitlement'),
-              ),
-            ],
-          )
-        ),
+            child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('User is pro'),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  final customerInfo = await Purchases.getCustomerInfo();
+                  final refundStatus =
+                      await Purchases.beginRefundRequestForEntitlement(
+                          customerInfo.entitlements.active[entitlementKey]!);
+                  print('Refund request successful with status: $refundStatus');
+                } catch (e) {
+                  print('Refund request exception: $e');
+                }
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const InitialScreen()),
+                );
+              },
+              child: const Text('Begin refund for pro entitlement'),
+            ),
+          ],
+        )),
       );
 }

@@ -72,19 +72,59 @@ class _PurchasesFlutterApiTest {
   void _checkPurchaseProduct() async {
     String productIdentifier = "fakeProductId";
     UpgradeInfo? upgradeInfo;
+    GoogleProductChangeInfo? googleProductChangeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
+    ProductCategory productType = ProductCategory.subscription;
     CustomerInfo customerInfo = await Purchases.purchaseProduct(
         productIdentifier,
-        upgradeInfo: upgradeInfo,
-        type: purchaseType);
+        type: purchaseType,
+        upgradeInfo: upgradeInfo);
     customerInfo = await Purchases.purchaseProduct(productIdentifier,
         upgradeInfo: upgradeInfo);
+    customerInfo = await Purchases.purchaseProduct(productIdentifier);
+  }
+
+  void _checkPurchaseStoreProduct(StoreProduct storeProduct) async {
+    GoogleProductChangeInfo? googleProductChangeInfo;
+    CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
+        storeProduct,
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+        googleProductChangeInfo: googleProductChangeInfo);
+    customerInfo = await Purchases.purchaseStoreProduct(storeProduct);
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
+    GoogleProductChangeInfo? googleProductChangeInfo;
     CustomerInfo customerInfo =
         await Purchases.purchasePackage(package, upgradeInfo: upgradeInfo);
+    customerInfo = await Purchases.purchasePackage(package,
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchasePackage(package,
+        upgradeInfo: upgradeInfo, googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchasePackage(package,
+        googleIsPersonalizedPrice: true);
+  }
+
+  void _checkPurchaseSubscriptionOption(SubscriptionOption subscriptionOption,
+      GoogleProductChangeInfo? googleProductChangeInfo) async {
+    CustomerInfo customerInfo = await Purchases.purchaseSubscriptionOption(
+        subscriptionOption,
+        googleProductChangeInfo: googleProductChangeInfo);
+    customerInfo = await Purchases.purchaseSubscriptionOption(
+        subscriptionOption,
+        googleProductChangeInfo: googleProductChangeInfo,
+        googleIsPersonalizedPrice: true);
+    customerInfo = await Purchases.purchaseSubscriptionOption(
+        subscriptionOption,
+        googleIsPersonalizedPrice: true);
+    customerInfo =
+        await Purchases.purchaseSubscriptionOption(subscriptionOption);
   }
 
   void _checkPurchaseDiscountedProduct(
@@ -326,6 +366,18 @@ class _PurchasesFlutterApiTest {
     ProrationMode? storedProrationMode = purchaseInfo.prorationMode;
   }
 
+  void _checkGoogleProductChangeInfoInfo() {
+    String oldProductIdentifier = "fakeOldProductIdentifier";
+    GoogleProrationMode? prorationMode;
+
+    GoogleProductChangeInfo purchaseInfo =
+        GoogleProductChangeInfo(oldProductIdentifier);
+    purchaseInfo = GoogleProductChangeInfo(oldProductIdentifier,
+        prorationMode: prorationMode);
+    String storedOldProductIdentifier = purchaseInfo.oldProductIdentifier;
+    GoogleProrationMode? storedProrationMode = purchaseInfo.prorationMode;
+  }
+
   void _checkProrationMode(ProrationMode prorationMode) {
     switch (prorationMode) {
       case ProrationMode.unknownSubscriptionUpgradeDowngradePolicy:
@@ -334,6 +386,25 @@ class _PurchasesFlutterApiTest {
       case ProrationMode.immediateWithoutProration:
       case ProrationMode.deferred:
       case ProrationMode.immediateAndChargeFullPrice:
+        break;
+    }
+  }
+
+  void _checkGoogleProrationMode(GoogleProrationMode prorationMode) {
+    switch (prorationMode) {
+      case GoogleProrationMode.immediateWithTimeProration:
+      case GoogleProrationMode.immediateWithoutProration:
+      case GoogleProrationMode.immediateAndChargeFullPrice:
+      case GoogleProrationMode.immediateAndChargeProratedPrice:
+      case GoogleProrationMode.deferred:
+        break;
+    }
+  }
+
+  void _checkProductCategory(ProductCategory type) {
+    switch (type) {
+      case ProductCategory.subscription:
+      case ProductCategory.nonSubscription:
         break;
     }
   }

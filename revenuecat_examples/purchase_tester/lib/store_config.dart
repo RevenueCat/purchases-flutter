@@ -1,26 +1,26 @@
-import 'package:flutter/foundation.dart';
-
-enum Store { appleStore, googlePlay, amazonAppstore }
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class StoreConfig {
   final Store store;
   final String apiKey;
-  static StoreConfig _instance;
+  static StoreConfig? _instance;
 
-  factory StoreConfig({@required Store store, @required String apiKey}) {
+  factory StoreConfig({required Store store, required String apiKey}) {
     _instance ??= StoreConfig._internal(store, apiKey);
-    return _instance;
+    return _instance!;
   }
 
   StoreConfig._internal(this.store, this.apiKey);
 
   static StoreConfig get instance {
-    return _instance;
+    return _instance!;
   }
 
-  static bool isForAppleStore() => _instance.store == Store.appleStore;
+  static bool isForAppleStore() => instance.store == Store.appStore
+      || instance.store == Store.macAppStore;
 
-  static bool isForGooglePlay() => _instance.store == Store.googlePlay;
+  static bool isForGooglePlay() => instance.store == Store.playStore;
 
-  static bool isForAmazonAppstore() => _instance.store == Store.amazonAppstore;
+  static bool isForAmazonAppstore() =>
+      instance.store == Store.amazon;
 }
