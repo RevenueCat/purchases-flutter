@@ -1,4 +1,4 @@
-enum Store { appleStore, googlePlay, amazonAppstore }
+import 'package:purchases_flutter/purchases_flutter.dart';
 
 class StoreConfig {
   final Store store;
@@ -16,9 +16,11 @@ class StoreConfig {
     return _instance!;
   }
 
-  static bool isForAppleStore() => instance.store == Store.appleStore;
+  static bool isForAppleStore() => instance.store == Store.appStore
+      || instance.store == Store.macAppStore;
 
-  static bool isForGooglePlay() => instance.store == Store.googlePlay;
+  static bool isForGooglePlay() => instance.store == Store.playStore;
 
-  static bool isForAmazonAppstore() => instance.store == Store.amazonAppstore;
+  static bool isForAmazonAppstore() =>
+      instance.store == Store.amazon;
 }
