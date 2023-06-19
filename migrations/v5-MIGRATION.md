@@ -46,7 +46,7 @@ be found through `subscriptionOptions` on `StoreProduct`:
 
 ```dart
 final basePlan = storeProduct.subscriptionOptions?.firstWhere((option) => option.isBasePlan);
-final defaultOffer = storeProduct.defaultOffer
+final defaultOffer = storeProduct.defaultOption
 final freeOffer = storeProduct.subscriptionOptions?.firstWhere((option) => option.freePhase != null);
 final trialOffer = storeProduct.subscriptionOptions?.firstWhere((option) => option.introPhase != null);
 ```
