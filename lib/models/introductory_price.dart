@@ -23,7 +23,7 @@ class IntroductoryPrice with _$IntroductoryPrice {
 
     /// Number of subscription billing periods for which the
     /// user will be given the introductory price, such as 3.
-     int cycles,
+    int cycles,
 
     /// Unit for the billing period of the introductory price, can be DAY, WEEK,
     /// MONTH or YEAR.
