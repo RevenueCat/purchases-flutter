@@ -12,22 +12,20 @@ part 'pricing_phase_wrapper.g.dart';
 class PricingPhase with _$PricingPhase {
   const factory PricingPhase(
     /// Billing period for which the PricingPhase applies
-    @JsonKey(name: 'billingPeriod') Period? billingPeriod,
+    Period? billingPeriod,
 
     /// Recurrence mode of the PricingPhase
-    @JsonKey(name: 'recurrenceMode')
-        RecurrenceMode? recurrenceMode,
+    RecurrenceMode? recurrenceMode,
 
     /// Number of cycles for which the pricing phase applies.
     /// Null for infiniteRecurring or finiteRecurring recurrence modes.
-    @JsonKey(name: 'billingCycleCount') int? billingCycleCount,
+    int? billingCycleCount,
 
     /// Price of the PricingPhase
-    @JsonKey(name: 'price') Price price,
+    Price price,
 
     /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
-    @JsonKey(name: 'offerPaymentMode')
-        OfferPaymentMode? offerPaymentMode,
+    OfferPaymentMode? offerPaymentMode,
   ) = _PricingPhase;
 
   factory PricingPhase.fromJson(Map<String, dynamic> json) =>

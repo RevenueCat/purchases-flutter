@@ -22,19 +22,19 @@ Package _$PackageFromJson(Map<String, dynamic> json) {
 mixin _$Package {
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
-  @JsonKey(name: 'identifier')
   String get identifier => throw _privateConstructorUsedError;
 
   /// Package type for the product. Will be one of [PackageType].
+// ignore: invalid_annotation_target
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
   PackageType get packageType => throw _privateConstructorUsedError;
 
   /// StoreProduct assigned to this package.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'product')
   StoreProduct get storeProduct => throw _privateConstructorUsedError;
 
   /// Offering this package belongs to.
-  @JsonKey(name: 'offeringIdentifier')
   String get offeringIdentifier => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,14 +48,12 @@ abstract class $PackageCopyWith<$Res> {
       _$PackageCopyWithImpl<$Res, Package>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'identifier')
-          String identifier,
+      {String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
           StoreProduct storeProduct,
-      @JsonKey(name: 'offeringIdentifier')
-          String offeringIdentifier});
+      String offeringIdentifier});
 
   $StoreProductCopyWith<$Res> get storeProduct;
 }
@@ -115,14 +113,12 @@ abstract class _$$_PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'identifier')
-          String identifier,
+      {String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           PackageType packageType,
       @JsonKey(name: 'product')
           StoreProduct storeProduct,
-      @JsonKey(name: 'offeringIdentifier')
-          String offeringIdentifier});
+      String offeringIdentifier});
 
   @override
   $StoreProductCopyWith<$Res> get storeProduct;
@@ -168,14 +164,12 @@ class __$$_PackageCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Package implements _Package {
   const _$_Package(
-      @JsonKey(name: 'identifier')
-          this.identifier,
+      this.identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           this.packageType,
       @JsonKey(name: 'product')
           this.storeProduct,
-      @JsonKey(name: 'offeringIdentifier')
-          this.offeringIdentifier);
+      this.offeringIdentifier);
 
   factory _$_Package.fromJson(Map<String, dynamic> json) =>
       _$$_PackageFromJson(json);
@@ -183,22 +177,22 @@ class _$_Package implements _Package {
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
   @override
-  @JsonKey(name: 'identifier')
   final String identifier;
 
   /// Package type for the product. Will be one of [PackageType].
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
   final PackageType packageType;
 
   /// StoreProduct assigned to this package.
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'product')
   final StoreProduct storeProduct;
 
   /// Offering this package belongs to.
   @override
-  @JsonKey(name: 'offeringIdentifier')
   final String offeringIdentifier;
 
   @override
@@ -242,14 +236,12 @@ class _$_Package implements _Package {
 
 abstract class _Package implements Package {
   const factory _Package(
-      @JsonKey(name: 'identifier')
-          final String identifier,
+      final String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
           final PackageType packageType,
       @JsonKey(name: 'product')
           final StoreProduct storeProduct,
-      @JsonKey(name: 'offeringIdentifier')
-          final String offeringIdentifier) = _$_Package;
+      final String offeringIdentifier) = _$_Package;
 
   factory _Package.fromJson(Map<String, dynamic> json) = _$_Package.fromJson;
 
@@ -257,22 +249,22 @@ abstract class _Package implements Package {
 
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
-  @JsonKey(name: 'identifier')
   String get identifier;
   @override
 
   /// Package type for the product. Will be one of [PackageType].
+// ignore: invalid_annotation_target
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
   PackageType get packageType;
   @override
 
   /// StoreProduct assigned to this package.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'product')
   StoreProduct get storeProduct;
   @override
 
   /// Offering this package belongs to.
-  @JsonKey(name: 'offeringIdentifier')
   String get offeringIdentifier;
   @override
   @JsonKey(ignore: true)

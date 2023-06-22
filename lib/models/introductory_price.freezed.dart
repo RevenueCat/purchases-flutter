@@ -21,31 +21,27 @@ IntroductoryPrice _$IntroductoryPriceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$IntroductoryPrice {
   /// Introductory price of a subscription in the local currency.
-  @JsonKey(name: 'price')
   double get price => throw _privateConstructorUsedError;
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
-  @JsonKey(name: 'priceString')
   String get priceString => throw _privateConstructorUsedError;
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
-  @JsonKey(name: 'period')
   String get period => throw _privateConstructorUsedError;
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
-  @JsonKey(name: 'cycles')
   int get cycles => throw _privateConstructorUsedError;
 
   /// Unit for the billing period of the introductory price, can be DAY, WEEK,
   /// MONTH or YEAR.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
   PeriodUnit get periodUnit => throw _privateConstructorUsedError;
 
   /// Number of units for the billing period of the introductory price.
-  @JsonKey(name: 'periodNumberOfUnits')
   int get periodNumberOfUnits => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,18 +57,13 @@ abstract class $IntroductoryPriceCopyWith<$Res> {
       _$IntroductoryPriceCopyWithImpl<$Res, IntroductoryPrice>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'price')
-          double price,
-      @JsonKey(name: 'priceString')
-          String priceString,
-      @JsonKey(name: 'period')
-          String period,
-      @JsonKey(name: 'cycles')
-          int cycles,
+      {double price,
+      String priceString,
+      String period,
+      int cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
           PeriodUnit periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits')
-          int periodNumberOfUnits});
+      int periodNumberOfUnits});
 }
 
 /// @nodoc
@@ -133,18 +124,13 @@ abstract class _$$_IntroductoryPriceCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'price')
-          double price,
-      @JsonKey(name: 'priceString')
-          String priceString,
-      @JsonKey(name: 'period')
-          String period,
-      @JsonKey(name: 'cycles')
-          int cycles,
+      {double price,
+      String priceString,
+      String period,
+      int cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
           PeriodUnit periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits')
-          int periodNumberOfUnits});
+      int periodNumberOfUnits});
 }
 
 /// @nodoc
@@ -198,54 +184,45 @@ class __$$_IntroductoryPriceCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_IntroductoryPrice implements _IntroductoryPrice {
   const _$_IntroductoryPrice(
-      @JsonKey(name: 'price')
-          this.price,
-      @JsonKey(name: 'priceString')
-          this.priceString,
-      @JsonKey(name: 'period')
-          this.period,
-      @JsonKey(name: 'cycles')
-          this.cycles,
+      this.price,
+      this.priceString,
+      this.period,
+      this.cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
           this.periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits')
-          this.periodNumberOfUnits);
+      this.periodNumberOfUnits);
 
   factory _$_IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
       _$$_IntroductoryPriceFromJson(json);
 
   /// Introductory price of a subscription in the local currency.
   @override
-  @JsonKey(name: 'price')
   final double price;
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
   @override
-  @JsonKey(name: 'priceString')
   final String priceString;
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
   @override
-  @JsonKey(name: 'period')
   final String period;
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
   @override
-  @JsonKey(name: 'cycles')
   final int cycles;
 
   /// Unit for the billing period of the introductory price, can be DAY, WEEK,
   /// MONTH or YEAR.
+// ignore: invalid_annotation_target
   @override
   @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
   final PeriodUnit periodUnit;
 
   /// Number of units for the billing period of the introductory price.
   @override
-  @JsonKey(name: 'periodNumberOfUnits')
   final int periodNumberOfUnits;
 
   @override
@@ -291,18 +268,13 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
 
 abstract class _IntroductoryPrice implements IntroductoryPrice {
   const factory _IntroductoryPrice(
-      @JsonKey(name: 'price')
-          final double price,
-      @JsonKey(name: 'priceString')
-          final String priceString,
-      @JsonKey(name: 'period')
-          final String period,
-      @JsonKey(name: 'cycles')
-          final int cycles,
+      final double price,
+      final String priceString,
+      final String period,
+      final int cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
           final PeriodUnit periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits')
-          final int periodNumberOfUnits) = _$_IntroductoryPrice;
+      final int periodNumberOfUnits) = _$_IntroductoryPrice;
 
   factory _IntroductoryPrice.fromJson(Map<String, dynamic> json) =
       _$_IntroductoryPrice.fromJson;
@@ -310,36 +282,32 @@ abstract class _IntroductoryPrice implements IntroductoryPrice {
   @override
 
   /// Introductory price of a subscription in the local currency.
-  @JsonKey(name: 'price')
   double get price;
   @override
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
-  @JsonKey(name: 'priceString')
   String get priceString;
   @override
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
-  @JsonKey(name: 'period')
   String get period;
   @override
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
-  @JsonKey(name: 'cycles')
   int get cycles;
   @override
 
   /// Unit for the billing period of the introductory price, can be DAY, WEEK,
   /// MONTH or YEAR.
+// ignore: invalid_annotation_target
   @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
   PeriodUnit get periodUnit;
   @override
 
   /// Number of units for the billing period of the introductory price.
-  @JsonKey(name: 'periodNumberOfUnits')
   int get periodNumberOfUnits;
   @override
   @JsonKey(ignore: true)

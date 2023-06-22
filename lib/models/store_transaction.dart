@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'store_transaction.freezed.dart';
 part 'store_transaction.g.dart';
 
+// ignore_for_file: deprecated_member_use_from_same_package
 @freezed
 
 /// Represents a purchase transaction
@@ -11,18 +12,19 @@ class StoreTransaction with _$StoreTransaction {
   /// a major release.
   const factory StoreTransaction.create(
     /// RevenueCat Id associated to the transaction.
-    @JsonKey(name: 'transactionIdentifier') String transactionIdentifier,
+    String transactionIdentifier,
 
     /// Deprecated: Use transactionIdentifier instead.
     @Deprecated('Use transactionIdentifier instead.')
+    // ignore: invalid_annotation_target
     @JsonKey(readValue: _readRevenueCatIdentifier)
         String revenueCatIdentifier,
 
     /// Product Id associated with the transaction.
-    @JsonKey(name: 'productIdentifier') String productIdentifier,
+    String productIdentifier,
 
     /// Purchase date of the transaction in ISO 8601 format.
-    @JsonKey(name: 'purchaseDate') String purchaseDate,
+    String purchaseDate,
   ) = _StoreTransaction;
 
   @Deprecated('Constructor has become experimental. Keeping old constructor '

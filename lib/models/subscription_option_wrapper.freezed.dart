@@ -23,57 +23,45 @@ mixin _$SubscriptionOption {
   /// Identifier of the subscription option
   /// If this SubscriptionOption represents a base plan, this will be the basePlanId.
   /// If it represents an offer, it will be {basePlanId}:{offerId}
-  @JsonKey(name: 'id')
   String get id => throw _privateConstructorUsedError;
 
   /// Identifier of the StoreProduct associated with this SubscriptionOption
   /// This will be {subId}:{basePlanId}
-  @JsonKey(name: 'storeProductId')
   String get storeProductId => throw _privateConstructorUsedError;
 
   /// Identifer of the subscription associated with this SubsriptionOption
   /// This will be {subId}
-  @JsonKey(name: 'productId')
   String get productId => throw _privateConstructorUsedError;
 
   /// Pricing phases defining a user's payment plan for the product over time.
-  @JsonKey(name: 'pricingPhases')
   List<PricingPhase> get pricingPhases => throw _privateConstructorUsedError;
 
   /// Tags defined on the base plan or offer.
-  @JsonKey(name: 'tags')
   List<String> get tags => throw _privateConstructorUsedError;
 
   /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-  @JsonKey(name: 'isBasePlan')
   bool get isBasePlan => throw _privateConstructorUsedError;
 
   /// The subscription period of fullPricePhase (after free and intro trials).
-  @JsonKey(name: 'billingPeriod')
   Period? get billingPeriod => throw _privateConstructorUsedError;
 
   /// True if the subscription is pre-paid.
-  @JsonKey(name: 'isPrepaid')
   bool get isPrepaid => throw _privateConstructorUsedError;
 
   /// The full price PricingPhase of the subscription.
   /// Looks for the last price phase of the SubscriptionOption.
-  @JsonKey(name: 'fullPricePhase')
   PricingPhase? get fullPricePhase => throw _privateConstructorUsedError;
 
   /// The free trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-  @JsonKey(name: 'freePhase')
   PricingPhase? get freePhase => throw _privateConstructorUsedError;
 
   /// The intro trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-  @JsonKey(name: 'introPhase')
   PricingPhase? get introPhase =>
       throw _privateConstructorUsedError; // Offering identifier the subscriptioni option was presented from
-  @JsonKey(name: 'presentedOfferingIdentifier')
   String? get presentedOfferingIdentifier => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -89,30 +77,18 @@ abstract class $SubscriptionOptionCopyWith<$Res> {
       _$SubscriptionOptionCopyWithImpl<$Res, SubscriptionOption>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'id')
-          String id,
-      @JsonKey(name: 'storeProductId')
-          String storeProductId,
-      @JsonKey(name: 'productId')
-          String productId,
-      @JsonKey(name: 'pricingPhases')
-          List<PricingPhase> pricingPhases,
-      @JsonKey(name: 'tags')
-          List<String> tags,
-      @JsonKey(name: 'isBasePlan')
-          bool isBasePlan,
-      @JsonKey(name: 'billingPeriod')
-          Period? billingPeriod,
-      @JsonKey(name: 'isPrepaid')
-          bool isPrepaid,
-      @JsonKey(name: 'fullPricePhase')
-          PricingPhase? fullPricePhase,
-      @JsonKey(name: 'freePhase')
-          PricingPhase? freePhase,
-      @JsonKey(name: 'introPhase')
-          PricingPhase? introPhase,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          String? presentedOfferingIdentifier});
+      {String id,
+      String storeProductId,
+      String productId,
+      List<PricingPhase> pricingPhases,
+      List<String> tags,
+      bool isBasePlan,
+      Period? billingPeriod,
+      bool isPrepaid,
+      PricingPhase? fullPricePhase,
+      PricingPhase? freePhase,
+      PricingPhase? introPhase,
+      String? presentedOfferingIdentifier});
 
   $PeriodCopyWith<$Res>? get billingPeriod;
   $PricingPhaseCopyWith<$Res>? get fullPricePhase;
@@ -256,30 +232,18 @@ abstract class _$$_SubscriptionOptionCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'id')
-          String id,
-      @JsonKey(name: 'storeProductId')
-          String storeProductId,
-      @JsonKey(name: 'productId')
-          String productId,
-      @JsonKey(name: 'pricingPhases')
-          List<PricingPhase> pricingPhases,
-      @JsonKey(name: 'tags')
-          List<String> tags,
-      @JsonKey(name: 'isBasePlan')
-          bool isBasePlan,
-      @JsonKey(name: 'billingPeriod')
-          Period? billingPeriod,
-      @JsonKey(name: 'isPrepaid')
-          bool isPrepaid,
-      @JsonKey(name: 'fullPricePhase')
-          PricingPhase? fullPricePhase,
-      @JsonKey(name: 'freePhase')
-          PricingPhase? freePhase,
-      @JsonKey(name: 'introPhase')
-          PricingPhase? introPhase,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          String? presentedOfferingIdentifier});
+      {String id,
+      String storeProductId,
+      String productId,
+      List<PricingPhase> pricingPhases,
+      List<String> tags,
+      bool isBasePlan,
+      Period? billingPeriod,
+      bool isPrepaid,
+      PricingPhase? fullPricePhase,
+      PricingPhase? freePhase,
+      PricingPhase? introPhase,
+      String? presentedOfferingIdentifier});
 
   @override
   $PeriodCopyWith<$Res>? get billingPeriod;
@@ -372,30 +336,18 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SubscriptionOption implements _SubscriptionOption {
   const _$_SubscriptionOption(
-      @JsonKey(name: 'id')
-          this.id,
-      @JsonKey(name: 'storeProductId')
-          this.storeProductId,
-      @JsonKey(name: 'productId')
-          this.productId,
-      @JsonKey(name: 'pricingPhases')
-          final List<PricingPhase> pricingPhases,
-      @JsonKey(name: 'tags')
-          final List<String> tags,
-      @JsonKey(name: 'isBasePlan')
-          this.isBasePlan,
-      @JsonKey(name: 'billingPeriod')
-          this.billingPeriod,
-      @JsonKey(name: 'isPrepaid')
-          this.isPrepaid,
-      @JsonKey(name: 'fullPricePhase')
-          this.fullPricePhase,
-      @JsonKey(name: 'freePhase')
-          this.freePhase,
-      @JsonKey(name: 'introPhase')
-          this.introPhase,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          this.presentedOfferingIdentifier)
+      this.id,
+      this.storeProductId,
+      this.productId,
+      final List<PricingPhase> pricingPhases,
+      final List<String> tags,
+      this.isBasePlan,
+      this.billingPeriod,
+      this.isPrepaid,
+      this.fullPricePhase,
+      this.freePhase,
+      this.introPhase,
+      this.presentedOfferingIdentifier)
       : _pricingPhases = pricingPhases,
         _tags = tags;
 
@@ -406,19 +358,16 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   /// If this SubscriptionOption represents a base plan, this will be the basePlanId.
   /// If it represents an offer, it will be {basePlanId}:{offerId}
   @override
-  @JsonKey(name: 'id')
   final String id;
 
   /// Identifier of the StoreProduct associated with this SubscriptionOption
   /// This will be {subId}:{basePlanId}
   @override
-  @JsonKey(name: 'storeProductId')
   final String storeProductId;
 
   /// Identifer of the subscription associated with this SubsriptionOption
   /// This will be {subId}
   @override
-  @JsonKey(name: 'productId')
   final String productId;
 
   /// Pricing phases defining a user's payment plan for the product over time.
@@ -426,7 +375,6 @@ class _$_SubscriptionOption implements _SubscriptionOption {
 
   /// Pricing phases defining a user's payment plan for the product over time.
   @override
-  @JsonKey(name: 'pricingPhases')
   List<PricingPhase> get pricingPhases {
     if (_pricingPhases is EqualUnmodifiableListView) return _pricingPhases;
     // ignore: implicit_dynamic_type
@@ -438,7 +386,6 @@ class _$_SubscriptionOption implements _SubscriptionOption {
 
   /// Tags defined on the base plan or offer.
   @override
-  @JsonKey(name: 'tags')
   List<String> get tags {
     if (_tags is EqualUnmodifiableListView) return _tags;
     // ignore: implicit_dynamic_type
@@ -447,41 +394,34 @@ class _$_SubscriptionOption implements _SubscriptionOption {
 
   /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
   @override
-  @JsonKey(name: 'isBasePlan')
   final bool isBasePlan;
 
   /// The subscription period of fullPricePhase (after free and intro trials).
   @override
-  @JsonKey(name: 'billingPeriod')
   final Period? billingPeriod;
 
   /// True if the subscription is pre-paid.
   @override
-  @JsonKey(name: 'isPrepaid')
   final bool isPrepaid;
 
   /// The full price PricingPhase of the subscription.
   /// Looks for the last price phase of the SubscriptionOption.
   @override
-  @JsonKey(name: 'fullPricePhase')
   final PricingPhase? fullPricePhase;
 
   /// The free trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
   @override
-  @JsonKey(name: 'freePhase')
   final PricingPhase? freePhase;
 
   /// The intro trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
   @override
-  @JsonKey(name: 'introPhase')
   final PricingPhase? introPhase;
 // Offering identifier the subscriptioni option was presented from
   @override
-  @JsonKey(name: 'presentedOfferingIdentifier')
   final String? presentedOfferingIdentifier;
 
   @override
@@ -554,30 +494,18 @@ class _$_SubscriptionOption implements _SubscriptionOption {
 
 abstract class _SubscriptionOption implements SubscriptionOption {
   const factory _SubscriptionOption(
-      @JsonKey(name: 'id')
-          final String id,
-      @JsonKey(name: 'storeProductId')
-          final String storeProductId,
-      @JsonKey(name: 'productId')
-          final String productId,
-      @JsonKey(name: 'pricingPhases')
-          final List<PricingPhase> pricingPhases,
-      @JsonKey(name: 'tags')
-          final List<String> tags,
-      @JsonKey(name: 'isBasePlan')
-          final bool isBasePlan,
-      @JsonKey(name: 'billingPeriod')
-          final Period? billingPeriod,
-      @JsonKey(name: 'isPrepaid')
-          final bool isPrepaid,
-      @JsonKey(name: 'fullPricePhase')
-          final PricingPhase? fullPricePhase,
-      @JsonKey(name: 'freePhase')
-          final PricingPhase? freePhase,
-      @JsonKey(name: 'introPhase')
-          final PricingPhase? introPhase,
-      @JsonKey(name: 'presentedOfferingIdentifier')
-          final String? presentedOfferingIdentifier) = _$_SubscriptionOption;
+      final String id,
+      final String storeProductId,
+      final String productId,
+      final List<PricingPhase> pricingPhases,
+      final List<String> tags,
+      final bool isBasePlan,
+      final Period? billingPeriod,
+      final bool isPrepaid,
+      final PricingPhase? fullPricePhase,
+      final PricingPhase? freePhase,
+      final PricingPhase? introPhase,
+      final String? presentedOfferingIdentifier) = _$_SubscriptionOption;
 
   factory _SubscriptionOption.fromJson(Map<String, dynamic> json) =
       _$_SubscriptionOption.fromJson;
@@ -587,67 +515,55 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   /// Identifier of the subscription option
   /// If this SubscriptionOption represents a base plan, this will be the basePlanId.
   /// If it represents an offer, it will be {basePlanId}:{offerId}
-  @JsonKey(name: 'id')
   String get id;
   @override
 
   /// Identifier of the StoreProduct associated with this SubscriptionOption
   /// This will be {subId}:{basePlanId}
-  @JsonKey(name: 'storeProductId')
   String get storeProductId;
   @override
 
   /// Identifer of the subscription associated with this SubsriptionOption
   /// This will be {subId}
-  @JsonKey(name: 'productId')
   String get productId;
   @override
 
   /// Pricing phases defining a user's payment plan for the product over time.
-  @JsonKey(name: 'pricingPhases')
   List<PricingPhase> get pricingPhases;
   @override
 
   /// Tags defined on the base plan or offer.
-  @JsonKey(name: 'tags')
   List<String> get tags;
   @override
 
   /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-  @JsonKey(name: 'isBasePlan')
   bool get isBasePlan;
   @override
 
   /// The subscription period of fullPricePhase (after free and intro trials).
-  @JsonKey(name: 'billingPeriod')
   Period? get billingPeriod;
   @override
 
   /// True if the subscription is pre-paid.
-  @JsonKey(name: 'isPrepaid')
   bool get isPrepaid;
   @override
 
   /// The full price PricingPhase of the subscription.
   /// Looks for the last price phase of the SubscriptionOption.
-  @JsonKey(name: 'fullPricePhase')
   PricingPhase? get fullPricePhase;
   @override
 
   /// The free trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-  @JsonKey(name: 'freePhase')
   PricingPhase? get freePhase;
   @override
 
   /// The intro trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-  @JsonKey(name: 'introPhase')
   PricingPhase? get introPhase;
   @override // Offering identifier the subscriptioni option was presented from
-  @JsonKey(name: 'presentedOfferingIdentifier')
   String? get presentedOfferingIdentifier;
   @override
   @JsonKey(ignore: true)

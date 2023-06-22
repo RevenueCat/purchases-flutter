@@ -21,31 +21,24 @@ StoreProductDiscount _$StoreProductDiscountFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$StoreProductDiscount {
   /// Identifier of the discount.
-  @JsonKey(name: 'identifier')
   String get identifier => throw _privateConstructorUsedError;
 
   /// Identifier of the discount.
-  @JsonKey(name: 'price')
   double get price => throw _privateConstructorUsedError;
 
   /// Formatted price, including its currency sign, such as €3.99.
-  @JsonKey(name: 'priceString')
   String get priceString => throw _privateConstructorUsedError;
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
-  @JsonKey(name: 'cycles')
   int get cycles => throw _privateConstructorUsedError;
 
   /// Billing period of the discount, specified in ISO 8601 format.
-  @JsonKey(name: 'period')
   String get period => throw _privateConstructorUsedError;
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
-  @JsonKey(name: 'periodUnit')
   String get periodUnit => throw _privateConstructorUsedError;
 
   /// Number of units for the billing period of the discount.
-  @JsonKey(name: 'periodNumberOfUnits')
   int get periodNumberOfUnits => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -61,13 +54,13 @@ abstract class $StoreProductDiscountCopyWith<$Res> {
       _$StoreProductDiscountCopyWithImpl<$Res, StoreProductDiscount>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'identifier') String identifier,
-      @JsonKey(name: 'price') double price,
-      @JsonKey(name: 'priceString') String priceString,
-      @JsonKey(name: 'cycles') int cycles,
-      @JsonKey(name: 'period') String period,
-      @JsonKey(name: 'periodUnit') String periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits});
+      {String identifier,
+      double price,
+      String priceString,
+      int cycles,
+      String period,
+      String periodUnit,
+      int periodNumberOfUnits});
 }
 
 /// @nodoc
@@ -134,13 +127,13 @@ abstract class _$$_StoreProductDiscountCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'identifier') String identifier,
-      @JsonKey(name: 'price') double price,
-      @JsonKey(name: 'priceString') String priceString,
-      @JsonKey(name: 'cycles') int cycles,
-      @JsonKey(name: 'period') String period,
-      @JsonKey(name: 'periodUnit') String periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits') int periodNumberOfUnits});
+      {String identifier,
+      double price,
+      String priceString,
+      int cycles,
+      String period,
+      String periodUnit,
+      int periodNumberOfUnits});
 }
 
 /// @nodoc
@@ -198,51 +191,38 @@ class __$$_StoreProductDiscountCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_StoreProductDiscount implements _StoreProductDiscount {
-  const _$_StoreProductDiscount(
-      @JsonKey(name: 'identifier') this.identifier,
-      @JsonKey(name: 'price') this.price,
-      @JsonKey(name: 'priceString') this.priceString,
-      @JsonKey(name: 'cycles') this.cycles,
-      @JsonKey(name: 'period') this.period,
-      @JsonKey(name: 'periodUnit') this.periodUnit,
-      @JsonKey(name: 'periodNumberOfUnits') this.periodNumberOfUnits);
+  const _$_StoreProductDiscount(this.identifier, this.price, this.priceString,
+      this.cycles, this.period, this.periodUnit, this.periodNumberOfUnits);
 
   factory _$_StoreProductDiscount.fromJson(Map<String, dynamic> json) =>
       _$$_StoreProductDiscountFromJson(json);
 
   /// Identifier of the discount.
   @override
-  @JsonKey(name: 'identifier')
   final String identifier;
 
   /// Identifier of the discount.
   @override
-  @JsonKey(name: 'price')
   final double price;
 
   /// Formatted price, including its currency sign, such as €3.99.
   @override
-  @JsonKey(name: 'priceString')
   final String priceString;
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
   @override
-  @JsonKey(name: 'cycles')
   final int cycles;
 
   /// Billing period of the discount, specified in ISO 8601 format.
   @override
-  @JsonKey(name: 'period')
   final String period;
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
   @override
-  @JsonKey(name: 'periodUnit')
   final String periodUnit;
 
   /// Number of units for the billing period of the discount.
   @override
-  @JsonKey(name: 'periodNumberOfUnits')
   final int periodNumberOfUnits;
 
   @override
@@ -290,14 +270,13 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
 
 abstract class _StoreProductDiscount implements StoreProductDiscount {
   const factory _StoreProductDiscount(
-          @JsonKey(name: 'identifier') final String identifier,
-          @JsonKey(name: 'price') final double price,
-          @JsonKey(name: 'priceString') final String priceString,
-          @JsonKey(name: 'cycles') final int cycles,
-          @JsonKey(name: 'period') final String period,
-          @JsonKey(name: 'periodUnit') final String periodUnit,
-          @JsonKey(name: 'periodNumberOfUnits') final int periodNumberOfUnits) =
-      _$_StoreProductDiscount;
+      final String identifier,
+      final double price,
+      final String priceString,
+      final int cycles,
+      final String period,
+      final String periodUnit,
+      final int periodNumberOfUnits) = _$_StoreProductDiscount;
 
   factory _StoreProductDiscount.fromJson(Map<String, dynamic> json) =
       _$_StoreProductDiscount.fromJson;
@@ -305,37 +284,30 @@ abstract class _StoreProductDiscount implements StoreProductDiscount {
   @override
 
   /// Identifier of the discount.
-  @JsonKey(name: 'identifier')
   String get identifier;
   @override
 
   /// Identifier of the discount.
-  @JsonKey(name: 'price')
   double get price;
   @override
 
   /// Formatted price, including its currency sign, such as €3.99.
-  @JsonKey(name: 'priceString')
   String get priceString;
   @override
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
-  @JsonKey(name: 'cycles')
   int get cycles;
   @override
 
   /// Billing period of the discount, specified in ISO 8601 format.
-  @JsonKey(name: 'period')
   String get period;
   @override
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
-  @JsonKey(name: 'periodUnit')
   String get periodUnit;
   @override
 
   /// Number of units for the billing period of the discount.
-  @JsonKey(name: 'periodNumberOfUnits')
   int get periodNumberOfUnits;
   @override
   @JsonKey(ignore: true)
