@@ -1,7 +1,4 @@
 ### Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.2.0 (#735) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 6.5.1](https://github.com/RevenueCat/purchases-android/releases/tag/6.5.1)
-  * [iOS 4.23.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.23.0)
-  * [iOS 4.22.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.22.1)
-### Other Changes
-* Fix flutter static analysis in pub.dev (#726) via Toni Rico (@tonidero)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.2.2 (#740) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 6.5.2](https://github.com/RevenueCat/purchases-android/releases/tag/6.5.2)
+  * [iOS 4.23.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.23.1)
