@@ -57,7 +57,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "5.3.0-SNAPSHOT";
+    private static final String PLUGIN_VERSION = "5.2.3";
 
     /**
      * Plugin registration.
