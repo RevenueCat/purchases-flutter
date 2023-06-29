@@ -50,6 +50,9 @@ class PurchasesConfiguration {
   /// Required to configure the plugin to be used in the Amazon Appstore.
   /// Values different to [Store.amazon] don't have any effect.
   Store? store;
+
+  // TODO: document
+  EntitlementVerificationMode entitlementVerificationMode = EntitlementVerificationMode.disabled;
 }
 
 /// A [PurchasesConfiguration] convenience object that

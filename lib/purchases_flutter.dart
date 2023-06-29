@@ -144,6 +144,7 @@ class Purchases {
               // ignore: deprecated_member_use_from_same_package
               purchasesConfiguration.usesStoreKit2IfAvailable,
           'shouldShowInAppMessagesAutomatically': purchasesConfiguration.shouldShowInAppMessagesAutomatically,
+          'entitlementVerificationMode': purchasesConfiguration.entitlementVerificationMode.toString()
         },
       );
 
