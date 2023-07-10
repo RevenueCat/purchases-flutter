@@ -1,14 +1,14 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
-  errors:
-    invalid_annotation_target: ignore
-    deprecated_member_use_from_same_package: ignore
+  # Do not disable errors here. pub.dev ignores the lint error configuration here
+  # when analyzing the code, causing issues to appear in the pub.dev analysis.
   exclude:
     - lib/models/*.freezed.dart
     - lib/models/*.g.dart
     - lib/models/**/*.freezed.dart
     - lib/models/**/*.g.dart
+    - api_tester/**
 
 linter:
   rules:

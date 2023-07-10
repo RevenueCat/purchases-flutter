@@ -242,7 +242,7 @@ void main() {
       );
       expect(logInResult.created, mockCreated);
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -255,7 +255,7 @@ void main() {
         CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -496,7 +496,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -552,7 +552,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -592,7 +592,7 @@ void main() {
         CustomerInfo.fromJson(mockCustomerInfoResponse),
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -635,7 +635,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -681,7 +681,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -725,7 +725,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -774,7 +774,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -831,7 +831,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 
@@ -897,7 +897,7 @@ void main() {
         ],
       );
     } on PlatformException catch (e) {
-      fail('there was an exception ' + e.toString());
+      fail('there was an exception $e');
     }
   });
 

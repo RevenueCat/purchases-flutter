@@ -21,14 +21,12 @@ Price _$PriceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Price {
   /// Formatted price of the item, including its currency sign. For example $3.00
-  @JsonKey(name: 'formatted')
   String get formatted => throw _privateConstructorUsedError;
 
   /// Price in micro-units, where 1,000,000 micro-units equal one unit of the currency.
   ///
   /// For example, if price is "€7.99", price_amount_micros is 7,990,000. This value represents
   /// the localized, rounded price for a particular currency.
-  @JsonKey(name: 'amountMicros')
   int get amountMicros => throw _privateConstructorUsedError;
 
   /// Returns ISO 4217 currency code for price and original price.
@@ -36,7 +34,6 @@ mixin _$Price {
   /// For example, if price is specified in British pounds sterling, price_currency_code is "GBP".
   ///
   /// If currency code cannot be determined, currency symbol is returned.
-  @JsonKey(name: 'currencyCode')
   String get currencyCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,10 +46,7 @@ abstract class $PriceCopyWith<$Res> {
   factory $PriceCopyWith(Price value, $Res Function(Price) then) =
       _$PriceCopyWithImpl<$Res, Price>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'formatted') String formatted,
-      @JsonKey(name: 'amountMicros') int amountMicros,
-      @JsonKey(name: 'currencyCode') String currencyCode});
+  $Res call({String formatted, int amountMicros, String currencyCode});
 }
 
 /// @nodoc
@@ -95,10 +89,7 @@ abstract class _$$_PriceCopyWith<$Res> implements $PriceCopyWith<$Res> {
       __$$_PriceCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'formatted') String formatted,
-      @JsonKey(name: 'amountMicros') int amountMicros,
-      @JsonKey(name: 'currencyCode') String currencyCode});
+  $Res call({String formatted, int amountMicros, String currencyCode});
 }
 
 /// @nodoc
@@ -134,17 +125,13 @@ class __$$_PriceCopyWithImpl<$Res> extends _$PriceCopyWithImpl<$Res, _$_Price>
 /// @nodoc
 @JsonSerializable()
 class _$_Price implements _Price {
-  const _$_Price(
-      @JsonKey(name: 'formatted') this.formatted,
-      @JsonKey(name: 'amountMicros') this.amountMicros,
-      @JsonKey(name: 'currencyCode') this.currencyCode);
+  const _$_Price(this.formatted, this.amountMicros, this.currencyCode);
 
   factory _$_Price.fromJson(Map<String, dynamic> json) =>
       _$$_PriceFromJson(json);
 
   /// Formatted price of the item, including its currency sign. For example $3.00
   @override
-  @JsonKey(name: 'formatted')
   final String formatted;
 
   /// Price in micro-units, where 1,000,000 micro-units equal one unit of the currency.
@@ -152,7 +139,6 @@ class _$_Price implements _Price {
   /// For example, if price is "€7.99", price_amount_micros is 7,990,000. This value represents
   /// the localized, rounded price for a particular currency.
   @override
-  @JsonKey(name: 'amountMicros')
   final int amountMicros;
 
   /// Returns ISO 4217 currency code for price and original price.
@@ -161,7 +147,6 @@ class _$_Price implements _Price {
   ///
   /// If currency code cannot be determined, currency symbol is returned.
   @override
-  @JsonKey(name: 'currencyCode')
   final String currencyCode;
 
   @override
@@ -202,17 +187,14 @@ class _$_Price implements _Price {
 }
 
 abstract class _Price implements Price {
-  const factory _Price(
-      @JsonKey(name: 'formatted') final String formatted,
-      @JsonKey(name: 'amountMicros') final int amountMicros,
-      @JsonKey(name: 'currencyCode') final String currencyCode) = _$_Price;
+  const factory _Price(final String formatted, final int amountMicros,
+      final String currencyCode) = _$_Price;
 
   factory _Price.fromJson(Map<String, dynamic> json) = _$_Price.fromJson;
 
   @override
 
   /// Formatted price of the item, including its currency sign. For example $3.00
-  @JsonKey(name: 'formatted')
   String get formatted;
   @override
 
@@ -220,7 +202,6 @@ abstract class _Price implements Price {
   ///
   /// For example, if price is "€7.99", price_amount_micros is 7,990,000. This value represents
   /// the localized, rounded price for a particular currency.
-  @JsonKey(name: 'amountMicros')
   int get amountMicros;
   @override
 
@@ -229,7 +210,6 @@ abstract class _Price implements Price {
   /// For example, if price is specified in British pounds sterling, price_currency_code is "GBP".
   ///
   /// If currency code cannot be determined, currency symbol is returned.
-  @JsonKey(name: 'currencyCode')
   String get currencyCode;
   @override
   @JsonKey(ignore: true)

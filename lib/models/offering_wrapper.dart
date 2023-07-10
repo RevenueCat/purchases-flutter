@@ -13,36 +13,36 @@ class Offering with _$Offering {
   const Offering._(); // Added constructor
   const factory Offering(
     /// Unique identifier defined in RevenueCat dashboard.
-    @JsonKey(name: 'identifier') String identifier,
+    String identifier,
 
     /// Offering description defined in RevenueCat dashboard.
-    @JsonKey(name: 'serverDescription') String serverDescription,
+    String serverDescription,
 
     /// Offering metadata defined in RevenueCat dashboard.
-    @JsonKey(name: 'metadata') Map<String, Object> metadata,
+    Map<String, Object> metadata,
 
     /// Array of [Package] objects available for purchase.
-    @JsonKey(name: 'availablePackages') List<Package> availablePackages, {
+    List<Package> availablePackages, {
     /// Lifetime package type configured in the RevenueCat dashboard, if available.
-    @JsonKey(name: 'lifetime') Package? lifetime,
+    Package? lifetime,
 
     /// Annual package type configured in the RevenueCat dashboard, if available.
-    @JsonKey(name: 'annual') Package? annual,
+    Package? annual,
 
     /// Six month package type configured in the RevenueCat dashboard, if available.
-    @JsonKey(name: 'sixMonth') Package? sixMonth,
+    Package? sixMonth,
 
     /// Three month package type configured in the RevenueCat dashboard, if available.
-    @JsonKey(name: 'threeMonth') Package? threeMonth,
+    Package? threeMonth,
 
     /// Two month package type configured in the RevenueCat dashboard, if available.
-    @JsonKey(name: 'twoMonth') Package? twoMonth,
+    Package? twoMonth,
 
     /// Monthly package type configured in the RevenueCat dashboard, if available.
-    @JsonKey(name: 'monthly') Package? monthly,
+    Package? monthly,
 
     /// Weekly package type configured in the RevenueCat dashboard, if available.
-    @JsonKey(name: 'weekly') Package? weekly,
+    Package? weekly,
   }) = _Offering;
 
   /// Retrieves a specific package by identifier, use this to access custom

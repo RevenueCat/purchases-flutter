@@ -49,7 +49,7 @@ Map<String, dynamic> _$$_EntitlementInfoToJson(_$_EntitlementInfo instance) =>
 const _$OwnershipTypeEnumMap = {
   OwnershipType.purchased: 'PURCHASED',
   OwnershipType.familyShared: 'FAMILY_SHARED',
-  OwnershipType.unknown: 'unknown',
+  OwnershipType.unknown: 'UNKNOWN',
 };
 
 const _$StoreEnumMap = {

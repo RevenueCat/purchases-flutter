@@ -21,11 +21,9 @@ Offerings _$OfferingsFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Offerings {
   /// Map of all Offerings [Offering] objects keyed by their identifier.
-  @JsonKey(name: 'all')
   Map<String, Offering> get all => throw _privateConstructorUsedError;
 
   /// Current offering configured in the RevenueCat dashboard.
-  @JsonKey(name: 'current')
   Offering? get current => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,9 +37,7 @@ abstract class $OfferingsCopyWith<$Res> {
   factory $OfferingsCopyWith(Offerings value, $Res Function(Offerings) then) =
       _$OfferingsCopyWithImpl<$Res, Offerings>;
   @useResult
-  $Res call(
-      {@JsonKey(name: 'all') Map<String, Offering> all,
-      @JsonKey(name: 'current') Offering? current});
+  $Res call({Map<String, Offering> all, Offering? current});
 
   $OfferingCopyWith<$Res>? get current;
 }
@@ -94,9 +90,7 @@ abstract class _$$_OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
       __$$_OfferingsCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: 'all') Map<String, Offering> all,
-      @JsonKey(name: 'current') Offering? current});
+  $Res call({Map<String, Offering> all, Offering? current});
 
   @override
   $OfferingCopyWith<$Res>? get current;
@@ -132,8 +126,7 @@ class __$$_OfferingsCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Offerings extends _Offerings {
-  const _$_Offerings(@JsonKey(name: 'all') final Map<String, Offering> all,
-      {@JsonKey(name: 'current') this.current})
+  const _$_Offerings(final Map<String, Offering> all, {this.current})
       : _all = all,
         super._();
 
@@ -145,7 +138,6 @@ class _$_Offerings extends _Offerings {
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
   @override
-  @JsonKey(name: 'all')
   Map<String, Offering> get all {
     if (_all is EqualUnmodifiableMapView) return _all;
     // ignore: implicit_dynamic_type
@@ -154,7 +146,6 @@ class _$_Offerings extends _Offerings {
 
   /// Current offering configured in the RevenueCat dashboard.
   @override
-  @JsonKey(name: 'current')
   final Offering? current;
 
   @override
@@ -191,9 +182,8 @@ class _$_Offerings extends _Offerings {
 }
 
 abstract class _Offerings extends Offerings {
-  const factory _Offerings(
-      @JsonKey(name: 'all') final Map<String, Offering> all,
-      {@JsonKey(name: 'current') final Offering? current}) = _$_Offerings;
+  const factory _Offerings(final Map<String, Offering> all,
+      {final Offering? current}) = _$_Offerings;
   const _Offerings._() : super._();
 
   factory _Offerings.fromJson(Map<String, dynamic> json) =
@@ -202,12 +192,10 @@ abstract class _Offerings extends Offerings {
   @override
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
-  @JsonKey(name: 'all')
   Map<String, Offering> get all;
   @override
 
   /// Current offering configured in the RevenueCat dashboard.
-  @JsonKey(name: 'current')
   Offering? get current;
   @override
   @JsonKey(ignore: true)

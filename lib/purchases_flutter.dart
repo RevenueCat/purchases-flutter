@@ -256,6 +256,7 @@ class Purchases {
     // Use deprecated PurchasesType if using something other than default
     // Otherwise use new ProductType
     String typeString;
+    // ignore: deprecated_member_use_from_same_package
     if (type != PurchaseType.subs) {
       typeString = describeEnum(type);
     } else {

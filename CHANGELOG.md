@@ -1,3 +1,38 @@
+## 5.2.3
+### Bugfixes
+* Adds package back to AndroidManifest.xml (#749) via Cesar de la Vega (@vegaro)
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.2.4 (#750) via RevenueCat Git Bot (@RCGitBot)
+
+## 5.2.2
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.2.3 (#744) via RevenueCat Git Bot (@RCGitBot)
+
+## 5.2.1
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.2.2 (#740) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 6.5.2](https://github.com/RevenueCat/purchases-android/releases/tag/6.5.2)
+  * [iOS 4.23.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.23.1)
+
+## 5.2.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.2.0 (#735) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 6.5.1](https://github.com/RevenueCat/purchases-android/releases/tag/6.5.1)
+  * [iOS 4.23.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.23.0)
+  * [iOS 4.22.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.22.1)
+### Other Changes
+* Fix flutter static analysis in pub.dev (#726) via Toni Rico (@tonidero)
+
+## 5.1.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.1.0 (#730) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 6.5.0](https://github.com/RevenueCat/purchases-android/releases/tag/6.5.0)
+  * [iOS 4.22.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.22.0)
+  * [iOS 4.21.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.21.1)
+### Other Changes
+* [EXTERNAL] v5-MIGRATION.md: replace defaultOffer w/ defaultOption (#728) (#729) via Toni Rico (@tonidero)
+* Fix purchase tester reconfiguring the SDK (#722) via Toni Rico (@tonidero)
+
 ## 5.0.0
 **RevenueCat Purchases Flutter v5** is here!! 😻
 
