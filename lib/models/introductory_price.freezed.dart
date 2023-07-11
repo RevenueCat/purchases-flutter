@@ -62,7 +62,7 @@ abstract class $IntroductoryPriceCopyWith<$Res> {
       String period,
       int cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-          PeriodUnit periodUnit,
+      PeriodUnit periodUnit,
       int periodNumberOfUnits});
 }
 
@@ -129,7 +129,7 @@ abstract class _$$_IntroductoryPriceCopyWith<$Res>
       String period,
       int cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-          PeriodUnit periodUnit,
+      PeriodUnit periodUnit,
       int periodNumberOfUnits});
 }
 
@@ -189,7 +189,7 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
       this.period,
       this.cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-          this.periodUnit,
+      this.periodUnit,
       this.periodNumberOfUnits);
 
   factory _$_IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
@@ -273,7 +273,7 @@ abstract class _IntroductoryPrice implements IntroductoryPrice {
       final String period,
       final int cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-          final PeriodUnit periodUnit,
+      final PeriodUnit periodUnit,
       final int periodNumberOfUnits) = _$_IntroductoryPrice;
 
   factory _IntroductoryPrice.fromJson(Map<String, dynamic> json) =

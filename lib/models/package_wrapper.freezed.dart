@@ -50,9 +50,8 @@ abstract class $PackageCopyWith<$Res> {
   $Res call(
       {String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-          PackageType packageType,
-      @JsonKey(name: 'product')
-          StoreProduct storeProduct,
+      PackageType packageType,
+      @JsonKey(name: 'product') StoreProduct storeProduct,
       String offeringIdentifier});
 
   $StoreProductCopyWith<$Res> get storeProduct;
@@ -115,9 +114,8 @@ abstract class _$$_PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
   $Res call(
       {String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-          PackageType packageType,
-      @JsonKey(name: 'product')
-          StoreProduct storeProduct,
+      PackageType packageType,
+      @JsonKey(name: 'product') StoreProduct storeProduct,
       String offeringIdentifier});
 
   @override
@@ -166,9 +164,8 @@ class _$_Package implements _Package {
   const _$_Package(
       this.identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-          this.packageType,
-      @JsonKey(name: 'product')
-          this.storeProduct,
+      this.packageType,
+      @JsonKey(name: 'product') this.storeProduct,
       this.offeringIdentifier);
 
   factory _$_Package.fromJson(Map<String, dynamic> json) =>
@@ -238,9 +235,8 @@ abstract class _Package implements Package {
   const factory _Package(
       final String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-          final PackageType packageType,
-      @JsonKey(name: 'product')
-          final StoreProduct storeProduct,
+      final PackageType packageType,
+      @JsonKey(name: 'product') final StoreProduct storeProduct,
       final String offeringIdentifier) = _$_Package;
 
   factory _Package.fromJson(Map<String, dynamic> json) = _$_Package.fromJson;
