@@ -39,7 +39,7 @@ mixin _$StoreTransaction {
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
             @JsonKey(readValue: _readRevenueCatIdentifier)
-                String revenueCatIdentifier,
+            String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)
         create,
@@ -51,7 +51,7 @@ mixin _$StoreTransaction {
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
             @JsonKey(readValue: _readRevenueCatIdentifier)
-                String revenueCatIdentifier,
+            String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
         create,
@@ -63,7 +63,7 @@ mixin _$StoreTransaction {
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
             @JsonKey(readValue: _readRevenueCatIdentifier)
-                String revenueCatIdentifier,
+            String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
         create,
@@ -102,7 +102,7 @@ abstract class $StoreTransactionCopyWith<$Res> {
       {String transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
       @JsonKey(readValue: _readRevenueCatIdentifier)
-          String revenueCatIdentifier,
+      String revenueCatIdentifier,
       String productIdentifier,
       String purchaseDate});
 }
@@ -158,7 +158,7 @@ abstract class _$$_StoreTransactionCopyWith<$Res>
       {String transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
       @JsonKey(readValue: _readRevenueCatIdentifier)
-          String revenueCatIdentifier,
+      String revenueCatIdentifier,
       String productIdentifier,
       String purchaseDate});
 }
@@ -207,7 +207,7 @@ class _$_StoreTransaction implements _StoreTransaction {
       this.transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
       @JsonKey(readValue: _readRevenueCatIdentifier)
-          this.revenueCatIdentifier,
+      this.revenueCatIdentifier,
       this.productIdentifier,
       this.purchaseDate);
 
@@ -270,7 +270,7 @@ class _$_StoreTransaction implements _StoreTransaction {
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
             @JsonKey(readValue: _readRevenueCatIdentifier)
-                String revenueCatIdentifier,
+            String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)
         create,
@@ -286,7 +286,7 @@ class _$_StoreTransaction implements _StoreTransaction {
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
             @JsonKey(readValue: _readRevenueCatIdentifier)
-                String revenueCatIdentifier,
+            String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
         create,
@@ -302,7 +302,7 @@ class _$_StoreTransaction implements _StoreTransaction {
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
             @JsonKey(readValue: _readRevenueCatIdentifier)
-                String revenueCatIdentifier,
+            String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
         create,
@@ -356,7 +356,7 @@ abstract class _StoreTransaction implements StoreTransaction {
       final String transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
       @JsonKey(readValue: _readRevenueCatIdentifier)
-          final String revenueCatIdentifier,
+      final String revenueCatIdentifier,
       final String productIdentifier,
       final String purchaseDate) = _$_StoreTransaction;
 
