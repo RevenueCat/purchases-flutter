@@ -1,3 +1,11 @@
+## 5.3.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.3.0 (#759) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 4.24.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.24.1)
+  * [iOS 4.24.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.24.0)
+### Other Changes
+* Update freezed generated classes after freezed update (#760) via Toni Rico (@tonidero)
+
 ## 5.2.3
 ### Bugfixes
 * Adds package back to AndroidManifest.xml (#749) via Cesar de la Vega (@vegaro)
