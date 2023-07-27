@@ -24,8 +24,8 @@ aliases:
       tags:
         ignore: /.*/
       branches:
-        ignore: /^release\/.*/
-        ignore: main
+        - ignore: /^release\/.*/
+        - ignore: main
 
 orbs:
   android: circleci/android@0.2.1
