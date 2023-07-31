@@ -19,15 +19,14 @@ aliases:
         ignore: /.*/
       branches:
         only: main
-  release-branches-and-main: &release-branches-and-main
+  except-main-and-release: &except-main-and-release
     filters:
       tags:
         ignore: /.*/
       branches:
-        only:
-          - main
+        ignore:
           - /^release\/.*/
-
+          - main
 
 orbs:
   android: circleci/android@0.2.1
@@ -380,11 +379,11 @@ workflows:
           type: approval
           requires:
             - android-integration-test-build
-          <<: *release-branches-and-main
+          <<: *except-main-and-release
       - run-firebase-tests:
           requires:
             - hold
-          <<: *release-branches-and-main
+          <<: *except-main-and-release
 
   deploy:
     when:

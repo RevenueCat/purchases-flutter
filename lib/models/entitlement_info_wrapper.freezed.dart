@@ -95,11 +95,10 @@ abstract class $EntitlementInfoCopyWith<$Res> {
       String productIdentifier,
       bool isSandbox,
       @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-          OwnershipType ownershipType,
-      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-          Store store,
+      OwnershipType ownershipType,
+      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore) Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-          PeriodType periodType,
+      PeriodType periodType,
       String? expirationDate,
       String? unsubscribeDetectedAt,
       String? billingIssueDetectedAt});
@@ -206,11 +205,10 @@ abstract class _$$_EntitlementInfoCopyWith<$Res>
       String productIdentifier,
       bool isSandbox,
       @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-          OwnershipType ownershipType,
-      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-          Store store,
+      OwnershipType ownershipType,
+      @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore) Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-          PeriodType periodType,
+      PeriodType periodType,
       String? expirationDate,
       String? unsubscribeDetectedAt,
       String? billingIssueDetectedAt});
@@ -310,11 +308,11 @@ class _$_EntitlementInfo implements _EntitlementInfo {
       this.productIdentifier,
       this.isSandbox,
       {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-          this.ownershipType = OwnershipType.unknown,
+      this.ownershipType = OwnershipType.unknown,
       @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-          this.store = Store.unknownStore,
+      this.store = Store.unknownStore,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-          this.periodType = PeriodType.unknown,
+      this.periodType = PeriodType.unknown,
       this.expirationDate,
       this.unsubscribeDetectedAt,
       this.billingIssueDetectedAt});
@@ -468,11 +466,11 @@ abstract class _EntitlementInfo implements EntitlementInfo {
       final String productIdentifier,
       final bool isSandbox,
       {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
-          final OwnershipType ownershipType,
+      final OwnershipType ownershipType,
       @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
-          final Store store,
+      final Store store,
       @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
-          final PeriodType periodType,
+      final PeriodType periodType,
       final String? expirationDate,
       final String? unsubscribeDetectedAt,
       final String? billingIssueDetectedAt}) = _$_EntitlementInfo;
