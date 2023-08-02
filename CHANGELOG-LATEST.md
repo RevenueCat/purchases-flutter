@@ -1,12 +1,6 @@
 ### Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.4.1 (#769) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 6.7.0](https://github.com/RevenueCat/purchases-android/releases/tag/6.7.0)
-  * [Android 6.6.0](https://github.com/RevenueCat/purchases-android/releases/tag/6.6.0)
-  * [iOS 4.25.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.25.1)
-  * [iOS 4.25.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.25.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.4.0 (#765) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 6.7.0](https://github.com/RevenueCat/purchases-android/releases/tag/6.7.0)
-  * [Android 6.6.0](https://github.com/RevenueCat/purchases-android/releases/tag/6.6.0)
-  * [iOS 4.25.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.25.1)
-  * [iOS 4.25.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.25.0)
-* Bump fastlane from 2.213.0 to 2.214.0 (#764) via dependabot[bot] (@dependabot[bot])
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 5.5.0 (#774) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 6.8.0](https://github.com/RevenueCat/purchases-android/releases/tag/6.8.0)
+  * [iOS 4.25.2](https://github.com/RevenueCat/purchases-ios/releases/tag/4.25.2)
+### Other Changes
+* [CI] Optionally run firebase tests only on non-main, non-release branches (#772) via Mark Villacampa (@MarkVillacampa)
