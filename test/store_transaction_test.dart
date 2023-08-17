@@ -6,7 +6,7 @@ void main() {
         'transactionIdentifier': 'abd123cd',
         'productIdentifier': 'consumable',
         'purchaseDateMillis': 1.58759855E9,
-        'purchaseDate': '2020-04-22T23:35:50.000Z'
+        'purchaseDate': '2020-04-22T23:35:50.000Z',
       };
 
   test('constructor assigns correct values', () {

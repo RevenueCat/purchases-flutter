@@ -39,7 +39,7 @@ void main() {
     'requestDate': '2021-04-09T14:48:00.000Z',
     'allPurchaseDates': {},
     'originalApplicationVersion': '1.2.3',
-    'nonSubscriptionTransactions': []
+    'nonSubscriptionTransactions': [],
   };
 
   setUp(() {
@@ -74,9 +74,9 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': false,
-            'usesStoreKit2IfAvailable': false
+            'usesStoreKit2IfAvailable': false,
           },
-        )
+        ),
       ],
     );
   });
@@ -162,7 +162,7 @@ void main() {
           'period': 'P1W',
           'cycles': 1,
           'periodUnit': 'DAY',
-          'periodNumberOfUnits': 7
+          'periodNumberOfUnits': 7,
         },
         'discounts': null,
       }
@@ -177,7 +177,7 @@ void main() {
 
     expect(receivedCanMakePayments, response);
     expect(log, <Matcher>[
-      isMethodCall('canMakePayments', arguments: {'features': []})
+      isMethodCall('canMakePayments', arguments: {'features': []}),
     ]);
   });
 
@@ -187,7 +187,7 @@ void main() {
 
     expect(receivedCanMakePayments, response);
     expect(log, <Matcher>[
-      isMethodCall('canMakePayments', arguments: {'features': []})
+      isMethodCall('canMakePayments', arguments: {'features': []}),
     ]);
   });
 
@@ -201,9 +201,9 @@ void main() {
       isMethodCall(
         'canMakePayments',
         arguments: {
-          'features': [0]
+          'features': [0],
         },
-      )
+      ),
     ]);
   });
 
@@ -214,7 +214,7 @@ void main() {
       BillingFeature.priceChangeConfirmation,
       BillingFeature.subscriptionsOnVr,
       BillingFeature.subscriptionsUpdate,
-      BillingFeature.inAppItemsOnVr
+      BillingFeature.inAppItemsOnVr,
     ]);
 
     expect(receivedCanMakePayments, response);
@@ -222,9 +222,9 @@ void main() {
       isMethodCall(
         'canMakePayments',
         arguments: {
-          'features': [0, 4, 3, 1, 2]
+          'features': [0, 4, 3, 1, 2],
         },
-      )
+      ),
     ]);
   });
 
@@ -233,7 +233,7 @@ void main() {
       final mockCreated = randomGenerator.nextBool();
       response = {
         'created': mockCreated,
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       final logInResult = await Purchases.logIn('appUserID');
       expect(
@@ -457,7 +457,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -490,9 +490,9 @@ void main() {
               'offeringIdentifier': 'main',
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
-              'googleIsPersonalizedPrice': null
+              'googleIsPersonalizedPrice': null,
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -506,7 +506,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -546,9 +546,9 @@ void main() {
               'offeringIdentifier': 'main',
               'googleOldProductIdentifier': 'com.revenuecat.weekly',
               'googleProrationMode': 1,
-              'googleIsPersonalizedPrice': true
+              'googleIsPersonalizedPrice': true,
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -560,7 +560,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -600,7 +600,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -631,7 +631,7 @@ void main() {
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': null,
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -645,7 +645,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -677,7 +677,7 @@ void main() {
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': null,
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -689,7 +689,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -721,7 +721,7 @@ void main() {
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': 'my-offer',
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -733,7 +733,7 @@ void main() {
     try {
       response = {
         'productIdentifier': 'product.identifier',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -770,7 +770,7 @@ void main() {
               'signedDiscountTimestamp': '123456',
               'presentedOfferingIdentifier': 'my-offer',
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -784,7 +784,7 @@ void main() {
 
       response = {
         'productIdentifier': 'gold:monthly',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const phase = PricingPhase(
         Period(PeriodUnit.month, 1, 'P1M'),
@@ -827,7 +827,7 @@ void main() {
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': 'my-offer',
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -843,7 +843,7 @@ void main() {
 
       response = {
         'productIdentifier': 'gold:monthly',
-        'customerInfo': mockCustomerInfoResponse
+        'customerInfo': mockCustomerInfoResponse,
       };
       const phase = PricingPhase(
         Period(PeriodUnit.month, 1, 'P1M'),
@@ -893,7 +893,7 @@ void main() {
               'googleIsPersonalizedPrice': true,
               'presentedOfferingIdentifier': 'my-offer',
             },
-          )
+          ),
         ],
       );
     } on PlatformException catch (e) {
@@ -955,9 +955,9 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false
+            'usesStoreKit2IfAvailable': false,
           },
-        )
+        ),
       ],
     );
   });
@@ -979,9 +979,9 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false
+            'usesStoreKit2IfAvailable': false,
           },
-        )
+        ),
       ],
     );
   });
@@ -1003,9 +1003,9 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': false,
-            'usesStoreKit2IfAvailable': false
+            'usesStoreKit2IfAvailable': false,
           },
-        )
+        ),
       ],
     );
   });
@@ -1028,9 +1028,9 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false
+            'usesStoreKit2IfAvailable': false,
           },
-        )
+        ),
       ],
     );
   });
@@ -1047,7 +1047,7 @@ void main() {
       isMethodCall(
         'beginRefundRequestForActiveEntitlement',
         arguments: null,
-      )
+      ),
     ]);
   });
 
@@ -1063,7 +1063,7 @@ void main() {
       isMethodCall(
         'beginRefundRequestForActiveEntitlement',
         arguments: null,
-      )
+      ),
     ]);
   });
 
@@ -1079,7 +1079,7 @@ void main() {
       isMethodCall(
         'beginRefundRequestForActiveEntitlement',
         arguments: null,
-      )
+      ),
     ]);
   });
 
@@ -1115,7 +1115,7 @@ void main() {
       isMethodCall(
         'beginRefundRequestForProduct',
         arguments: {'productIdentifier': 'com.revenuecat.lifetime'},
-      )
+      ),
     ]);
   });
 
@@ -1139,7 +1139,7 @@ void main() {
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
       'billingIssueDetectedAtMillis': null,
-      'store': Store.appStore
+      'store': Store.appStore,
     };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
@@ -1151,7 +1151,7 @@ void main() {
       isMethodCall(
         'beginRefundRequestForEntitlement',
         arguments: {'entitlementIdentifier': 'almost_pro'},
-      )
+      ),
     ]);
   });
 
@@ -1207,7 +1207,7 @@ void main() {
           'isoCurrencyCode': 'isoCurrencyCode_test',
           'price': 3.4,
         },
-      )
+      ),
     ]);
   });
 
@@ -1231,7 +1231,7 @@ void main() {
           'isoCurrencyCode': null,
           'price': null,
         },
-      )
+      ),
     ]);
   });
 }

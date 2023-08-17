@@ -142,7 +142,7 @@ class Purchases {
           'useAmazon': purchasesConfiguration.store == Store.amazon,
           'usesStoreKit2IfAvailable':
               // ignore: deprecated_member_use_from_same_package
-              purchasesConfiguration.usesStoreKit2IfAvailable
+              purchasesConfiguration.usesStoreKit2IfAvailable,
         },
       );
 
@@ -479,7 +479,7 @@ class Purchases {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'offeringIdentifier': packageToPurchase.offeringIdentifier,
-      'signedDiscountTimestamp': promotionalOffer.timestamp.toString()
+      'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
     });
     return customerInfo;
   }
@@ -835,7 +835,7 @@ class Purchases {
   ) async {
     final result = await _channel.invokeMethod('getPromotionalOffer', {
       'productIdentifier': product.identifier,
-      'discountIdentifier': discount.identifier
+      'discountIdentifier': discount.identifier,
     });
     return PromotionalOffer.fromJson(Map<String, dynamic>.from(result));
   }

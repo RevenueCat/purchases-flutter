@@ -26,7 +26,7 @@ void main() {
   test('checkTrialOrIntroductoryPriceEligibility returns eligibility map',
       () async {
     response = {
-      productName: {'status': 0, 'description': 'Unknown status'}
+      productName: {'status': 0, 'description': 'Unknown status'},
     };
     final list = await Purchases.checkTrialOrIntroductoryPriceEligibility(
       [productName],
@@ -36,7 +36,7 @@ void main() {
 
   test('introEligibilityStatusUnknown is returned', () async {
     response = {
-      productName: {'status': 0, 'description': 'Unknown status'}
+      productName: {'status': 0, 'description': 'Unknown status'},
     };
     final list = await Purchases.checkTrialOrIntroductoryPriceEligibility(
       [productName],
@@ -51,8 +51,8 @@ void main() {
     response = {
       productName: {
         'status': 1,
-        'description': 'Not eligible for trial or introductory price.'
-      }
+        'description': 'Not eligible for trial or introductory price.',
+      },
     };
     final list = await Purchases.checkTrialOrIntroductoryPriceEligibility(
       [productName],
@@ -67,8 +67,8 @@ void main() {
     response = {
       productName: {
         'status': 2,
-        'description': 'Eligible for trial or introductory price.'
-      }
+        'description': 'Eligible for trial or introductory price.',
+      },
     };
     final list = await Purchases.checkTrialOrIntroductoryPriceEligibility(
       [productName],
@@ -83,8 +83,8 @@ void main() {
     response = {
       productName: {
         'status': 3,
-        'description': 'Product does not have trial or introductory price.'
-      }
+        'description': 'Product does not have trial or introductory price.',
+      },
     };
     final list = await Purchases.checkTrialOrIntroductoryPriceEligibility(
       [productName],
