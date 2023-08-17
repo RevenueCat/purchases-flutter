@@ -51,7 +51,7 @@ void main() {
       'boolean': true,
       'string': 'five',
       'array': ['five'],
-      'dictionary': {'string': 'five'}
+      'dictionary': {'string': 'five'},
     };
 
     final offeringJSON = generateOfferingJSON(metadata);
@@ -66,7 +66,7 @@ void main() {
       'boolean': true,
       'string': 'five',
       'array': ['five'],
-      'dictionary': {'string': 'five'}
+      'dictionary': {'string': 'five'},
     };
 
     final offeringJSON = generateOfferingJSON(metadata);
@@ -81,7 +81,7 @@ void main() {
       'boolean': true,
       'string': 'five',
       'array': ['five'],
-      'dictionary': {'string': 'five'}
+      'dictionary': {'string': 'five'},
     };
 
     final offeringJSON = generateOfferingJSON(metadata);
@@ -96,7 +96,7 @@ void main() {
       'boolean': true,
       'string': 'five',
       'array': ['five'],
-      'dictionary': {'string': 'five'}
+      'dictionary': {'string': 'five'},
     };
 
     final offeringJSON = generateOfferingJSON(metadata);

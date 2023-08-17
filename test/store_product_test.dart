@@ -17,7 +17,7 @@ void main() {
           'period': 'P1W',
           'cycles': 1,
           'periodUnit': 'DAY',
-          'periodNumberOfUnits': 7
+          'periodNumberOfUnits': 7,
         },
         'discounts': [
           {
@@ -27,7 +27,7 @@ void main() {
             'period': 'P1M',
             'identifier': 'promo_cat_2',
             'priceString': '\$29.99',
-            'periodUnit': 'MONTH'
+            'periodUnit': 'MONTH',
           },
           {
             'period': 'P1M',
@@ -36,10 +36,10 @@ void main() {
             'periodNumberOfUnits': 1,
             'cycles': 1,
             'periodUnit': 'MONTH',
-            'priceString': '\$0.00'
+            'priceString': '\$0.00',
           }
         ],
-        'productCategory': 'SUBSCRIPTION'
+        'productCategory': 'SUBSCRIPTION',
       };
 
   test('StoreProduct maps correctly', () async {

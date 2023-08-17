@@ -20,7 +20,7 @@ void main() {
         'unsubscribeDetectedAtMillis': null,
         'billingIssueDetectedAt': null,
         'billingIssueDetectedAtMillis': null,
-        'store': store
+        'store': store,
       };
 
   test('unknown period if missing from json', () {
@@ -40,7 +40,7 @@ void main() {
       'unsubscribeDetectedAt': null,
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
-      'billingIssueDetectedAtMillis': null
+      'billingIssueDetectedAtMillis': null,
     };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
@@ -64,7 +64,7 @@ void main() {
       'unsubscribeDetectedAt': null,
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
-      'billingIssueDetectedAtMillis': null
+      'billingIssueDetectedAtMillis': null,
     };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
@@ -124,7 +124,7 @@ void main() {
       'unsubscribeDetectedAt': null,
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
-      'billingIssueDetectedAtMillis': null
+      'billingIssueDetectedAtMillis': null,
     };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
@@ -148,7 +148,7 @@ void main() {
       'unsubscribeDetectedAt': null,
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
-      'billingIssueDetectedAtMillis': null
+      'billingIssueDetectedAtMillis': null,
     };
     entitlementInfoJson['ownershipType'] = 'PURCHASED';
     var entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
