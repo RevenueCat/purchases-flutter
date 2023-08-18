@@ -272,7 +272,7 @@ jobs:
           command: |
             cd revenuecat_examples/purchase_tester
             flutter drive --target=integration_test/app_test.dart \
-            --driver=test_driver/integration_test.dart
+            --driver=test_driver/integration_test.dart --enable-impeller
 
   macos-integration-test:
     description: "Run integration tests for Flutter"
@@ -282,8 +282,7 @@ jobs:
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - setup-flutter:
-          version: 3.3.10
+      - setup-flutter
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
