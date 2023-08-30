@@ -562,7 +562,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)purchases:(RCPurchases *)purchases receivedUpdatedCustomerInfo:(RCCustomerInfo *)customerInfo {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.channel invokeMethod:PurchasesCustomerInfoUpdatedEvent
-                         arguments:customerInfo.dictionary];
+                         arguments:[RCCommonFunctionality encodeCustomerInfo:customerInfo]];
     });
 }
 
