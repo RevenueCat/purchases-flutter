@@ -1,3 +1,10 @@
+## 5.6.5
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 6.1.2 (#802) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 6.9.4](https://github.com/RevenueCat/purchases-android/releases/tag/6.9.4)
+  * [iOS 4.25.9](https://github.com/RevenueCat/purchases-ios/releases/tag/4.25.9)
+  * [iOS 4.25.8](https://github.com/RevenueCat/purchases-ios/releases/tag/4.25.8)
+
 ## 5.6.4
 ### Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 6.1.0 (#797) via RevenueCat Git Bot (@RCGitBot)
