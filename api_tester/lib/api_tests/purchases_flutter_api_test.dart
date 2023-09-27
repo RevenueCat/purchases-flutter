@@ -384,7 +384,6 @@ class _PurchasesFlutterApiTest {
       case ProrationMode.immediateWithTimeProration:
       case ProrationMode.immediateAndChargeProratedPrice:
       case ProrationMode.immediateWithoutProration:
-      case ProrationMode.deferred:
       case ProrationMode.immediateAndChargeFullPrice:
         break;
     }
@@ -396,7 +395,6 @@ class _PurchasesFlutterApiTest {
       case GoogleProrationMode.immediateWithoutProration:
       case GoogleProrationMode.immediateAndChargeFullPrice:
       case GoogleProrationMode.immediateAndChargeProratedPrice:
-      case GoogleProrationMode.deferred:
         break;
     }
   }
