@@ -189,11 +189,11 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
 }
 
 /// @nodoc
-abstract class _$$_EntitlementInfoCopyWith<$Res>
+abstract class _$$EntitlementInfoImplCopyWith<$Res>
     implements $EntitlementInfoCopyWith<$Res> {
-  factory _$$_EntitlementInfoCopyWith(
-          _$_EntitlementInfo value, $Res Function(_$_EntitlementInfo) then) =
-      __$$_EntitlementInfoCopyWithImpl<$Res>;
+  factory _$$EntitlementInfoImplCopyWith(_$EntitlementInfoImpl value,
+          $Res Function(_$EntitlementInfoImpl) then) =
+      __$$EntitlementInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -215,11 +215,11 @@ abstract class _$$_EntitlementInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_EntitlementInfoCopyWithImpl<$Res>
-    extends _$EntitlementInfoCopyWithImpl<$Res, _$_EntitlementInfo>
-    implements _$$_EntitlementInfoCopyWith<$Res> {
-  __$$_EntitlementInfoCopyWithImpl(
-      _$_EntitlementInfo _value, $Res Function(_$_EntitlementInfo) _then)
+class __$$EntitlementInfoImplCopyWithImpl<$Res>
+    extends _$EntitlementInfoCopyWithImpl<$Res, _$EntitlementInfoImpl>
+    implements _$$EntitlementInfoImplCopyWith<$Res> {
+  __$$EntitlementInfoImplCopyWithImpl(
+      _$EntitlementInfoImpl _value, $Res Function(_$EntitlementInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -239,7 +239,7 @@ class __$$_EntitlementInfoCopyWithImpl<$Res>
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
   }) {
-    return _then(_$_EntitlementInfo(
+    return _then(_$EntitlementInfoImpl(
       null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -298,8 +298,8 @@ class __$$_EntitlementInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_EntitlementInfo implements _EntitlementInfo {
-  const _$_EntitlementInfo(
+class _$EntitlementInfoImpl implements _EntitlementInfo {
+  const _$EntitlementInfoImpl(
       this.identifier,
       this.isActive,
       this.willRenew,
@@ -317,8 +317,8 @@ class _$_EntitlementInfo implements _EntitlementInfo {
       this.unsubscribeDetectedAt,
       this.billingIssueDetectedAt});
 
-  factory _$_EntitlementInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_EntitlementInfoFromJson(json);
+  factory _$EntitlementInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EntitlementInfoImplFromJson(json);
 
   /// The entitlement identifier configured in the RevenueCat dashboard
   @override
@@ -396,7 +396,7 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EntitlementInfo &&
+            other is _$EntitlementInfoImpl &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.isActive, isActive) ||
@@ -445,12 +445,13 @@ class _$_EntitlementInfo implements _EntitlementInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EntitlementInfoCopyWith<_$_EntitlementInfo> get copyWith =>
-      __$$_EntitlementInfoCopyWithImpl<_$_EntitlementInfo>(this, _$identity);
+  _$$EntitlementInfoImplCopyWith<_$EntitlementInfoImpl> get copyWith =>
+      __$$EntitlementInfoImplCopyWithImpl<_$EntitlementInfoImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EntitlementInfoToJson(
+    return _$$EntitlementInfoImplToJson(
       this,
     );
   }
@@ -473,10 +474,10 @@ abstract class _EntitlementInfo implements EntitlementInfo {
       final PeriodType periodType,
       final String? expirationDate,
       final String? unsubscribeDetectedAt,
-      final String? billingIssueDetectedAt}) = _$_EntitlementInfo;
+      final String? billingIssueDetectedAt}) = _$EntitlementInfoImpl;
 
   factory _EntitlementInfo.fromJson(Map<String, dynamic> json) =
-      _$_EntitlementInfo.fromJson;
+      _$EntitlementInfoImpl.fromJson;
 
   @override
 
@@ -547,6 +548,6 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   String? get billingIssueDetectedAt;
   @override
   @JsonKey(ignore: true)
-  _$$_EntitlementInfoCopyWith<_$_EntitlementInfo> get copyWith =>
+  _$$EntitlementInfoImplCopyWith<_$EntitlementInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

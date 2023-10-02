@@ -6,8 +6,8 @@ part of 'promotional_offer.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PromotionalOffer _$$_PromotionalOfferFromJson(Map json) =>
-    _$_PromotionalOffer(
+_$PromotionalOfferImpl _$$PromotionalOfferImplFromJson(Map json) =>
+    _$PromotionalOfferImpl(
       json['identifier'] as String,
       json['keyIdentifier'] as String,
       json['nonce'] as String,
@@ -15,7 +15,8 @@ _$_PromotionalOffer _$$_PromotionalOfferFromJson(Map json) =>
       json['timestamp'] as int,
     );
 
-Map<String, dynamic> _$$_PromotionalOfferToJson(_$_PromotionalOffer instance) =>
+Map<String, dynamic> _$$PromotionalOfferImplToJson(
+        _$PromotionalOfferImpl instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'keyIdentifier': instance.keyIdentifier,

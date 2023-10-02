@@ -84,18 +84,21 @@ class _$PriceCopyWithImpl<$Res, $Val extends Price>
 }
 
 /// @nodoc
-abstract class _$$_PriceCopyWith<$Res> implements $PriceCopyWith<$Res> {
-  factory _$$_PriceCopyWith(_$_Price value, $Res Function(_$_Price) then) =
-      __$$_PriceCopyWithImpl<$Res>;
+abstract class _$$PriceImplCopyWith<$Res> implements $PriceCopyWith<$Res> {
+  factory _$$PriceImplCopyWith(
+          _$PriceImpl value, $Res Function(_$PriceImpl) then) =
+      __$$PriceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String formatted, int amountMicros, String currencyCode});
 }
 
 /// @nodoc
-class __$$_PriceCopyWithImpl<$Res> extends _$PriceCopyWithImpl<$Res, _$_Price>
-    implements _$$_PriceCopyWith<$Res> {
-  __$$_PriceCopyWithImpl(_$_Price _value, $Res Function(_$_Price) _then)
+class __$$PriceImplCopyWithImpl<$Res>
+    extends _$PriceCopyWithImpl<$Res, _$PriceImpl>
+    implements _$$PriceImplCopyWith<$Res> {
+  __$$PriceImplCopyWithImpl(
+      _$PriceImpl _value, $Res Function(_$PriceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -105,7 +108,7 @@ class __$$_PriceCopyWithImpl<$Res> extends _$PriceCopyWithImpl<$Res, _$_Price>
     Object? amountMicros = null,
     Object? currencyCode = null,
   }) {
-    return _then(_$_Price(
+    return _then(_$PriceImpl(
       null == formatted
           ? _value.formatted
           : formatted // ignore: cast_nullable_to_non_nullable
@@ -124,11 +127,11 @@ class __$$_PriceCopyWithImpl<$Res> extends _$PriceCopyWithImpl<$Res, _$_Price>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Price implements _Price {
-  const _$_Price(this.formatted, this.amountMicros, this.currencyCode);
+class _$PriceImpl implements _Price {
+  const _$PriceImpl(this.formatted, this.amountMicros, this.currencyCode);
 
-  factory _$_Price.fromJson(Map<String, dynamic> json) =>
-      _$$_PriceFromJson(json);
+  factory _$PriceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PriceImplFromJson(json);
 
   /// Formatted price of the item, including its currency sign. For example $3.00
   @override
@@ -158,7 +161,7 @@ class _$_Price implements _Price {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Price &&
+            other is _$PriceImpl &&
             (identical(other.formatted, formatted) ||
                 other.formatted == formatted) &&
             (identical(other.amountMicros, amountMicros) ||
@@ -175,12 +178,12 @@ class _$_Price implements _Price {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PriceCopyWith<_$_Price> get copyWith =>
-      __$$_PriceCopyWithImpl<_$_Price>(this, _$identity);
+  _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>
+      __$$PriceImplCopyWithImpl<_$PriceImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PriceToJson(
+    return _$$PriceImplToJson(
       this,
     );
   }
@@ -188,9 +191,9 @@ class _$_Price implements _Price {
 
 abstract class _Price implements Price {
   const factory _Price(final String formatted, final int amountMicros,
-      final String currencyCode) = _$_Price;
+      final String currencyCode) = _$PriceImpl;
 
-  factory _Price.fromJson(Map<String, dynamic> json) = _$_Price.fromJson;
+  factory _Price.fromJson(Map<String, dynamic> json) = _$PriceImpl.fromJson;
 
   @override
 
@@ -213,6 +216,6 @@ abstract class _Price implements Price {
   String get currencyCode;
   @override
   @JsonKey(ignore: true)
-  _$$_PriceCopyWith<_$_Price> get copyWith =>
+  _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

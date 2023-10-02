@@ -101,11 +101,11 @@ class _$PromotionalOfferCopyWithImpl<$Res, $Val extends PromotionalOffer>
 }
 
 /// @nodoc
-abstract class _$$_PromotionalOfferCopyWith<$Res>
+abstract class _$$PromotionalOfferImplCopyWith<$Res>
     implements $PromotionalOfferCopyWith<$Res> {
-  factory _$$_PromotionalOfferCopyWith(
-          _$_PromotionalOffer value, $Res Function(_$_PromotionalOffer) then) =
-      __$$_PromotionalOfferCopyWithImpl<$Res>;
+  factory _$$PromotionalOfferImplCopyWith(_$PromotionalOfferImpl value,
+          $Res Function(_$PromotionalOfferImpl) then) =
+      __$$PromotionalOfferImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -117,11 +117,11 @@ abstract class _$$_PromotionalOfferCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PromotionalOfferCopyWithImpl<$Res>
-    extends _$PromotionalOfferCopyWithImpl<$Res, _$_PromotionalOffer>
-    implements _$$_PromotionalOfferCopyWith<$Res> {
-  __$$_PromotionalOfferCopyWithImpl(
-      _$_PromotionalOffer _value, $Res Function(_$_PromotionalOffer) _then)
+class __$$PromotionalOfferImplCopyWithImpl<$Res>
+    extends _$PromotionalOfferCopyWithImpl<$Res, _$PromotionalOfferImpl>
+    implements _$$PromotionalOfferImplCopyWith<$Res> {
+  __$$PromotionalOfferImplCopyWithImpl(_$PromotionalOfferImpl _value,
+      $Res Function(_$PromotionalOfferImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -133,7 +133,7 @@ class __$$_PromotionalOfferCopyWithImpl<$Res>
     Object? signature = null,
     Object? timestamp = null,
   }) {
-    return _then(_$_PromotionalOffer(
+    return _then(_$PromotionalOfferImpl(
       null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -160,12 +160,12 @@ class __$$_PromotionalOfferCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PromotionalOffer implements _PromotionalOffer {
-  const _$_PromotionalOffer(this.identifier, this.keyIdentifier, this.nonce,
+class _$PromotionalOfferImpl implements _PromotionalOffer {
+  const _$PromotionalOfferImpl(this.identifier, this.keyIdentifier, this.nonce,
       this.signature, this.timestamp);
 
-  factory _$_PromotionalOffer.fromJson(Map<String, dynamic> json) =>
-      _$$_PromotionalOfferFromJson(json);
+  factory _$PromotionalOfferImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PromotionalOfferImplFromJson(json);
 
   /// Identifier agreed upon with the App Store for a discount of your choosing.
   @override
@@ -197,7 +197,7 @@ class _$_PromotionalOffer implements _PromotionalOffer {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PromotionalOffer &&
+            other is _$PromotionalOfferImpl &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.keyIdentifier, keyIdentifier) ||
@@ -217,12 +217,13 @@ class _$_PromotionalOffer implements _PromotionalOffer {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PromotionalOfferCopyWith<_$_PromotionalOffer> get copyWith =>
-      __$$_PromotionalOfferCopyWithImpl<_$_PromotionalOffer>(this, _$identity);
+  _$$PromotionalOfferImplCopyWith<_$PromotionalOfferImpl> get copyWith =>
+      __$$PromotionalOfferImplCopyWithImpl<_$PromotionalOfferImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PromotionalOfferToJson(
+    return _$$PromotionalOfferImplToJson(
       this,
     );
   }
@@ -234,10 +235,10 @@ abstract class _PromotionalOffer implements PromotionalOffer {
       final String keyIdentifier,
       final String nonce,
       final String signature,
-      final int timestamp) = _$_PromotionalOffer;
+      final int timestamp) = _$PromotionalOfferImpl;
 
   factory _PromotionalOffer.fromJson(Map<String, dynamic> json) =
-      _$_PromotionalOffer.fromJson;
+      _$PromotionalOfferImpl.fromJson;
 
   @override
 
@@ -262,6 +263,6 @@ abstract class _PromotionalOffer implements PromotionalOffer {
   int get timestamp;
   @override
   @JsonKey(ignore: true)
-  _$$_PromotionalOfferCopyWith<_$_PromotionalOffer> get copyWith =>
+  _$$PromotionalOfferImplCopyWith<_$PromotionalOfferImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

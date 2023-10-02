@@ -79,19 +79,21 @@ class _$PeriodCopyWithImpl<$Res, $Val extends Period>
 }
 
 /// @nodoc
-abstract class _$$_PeriodCopyWith<$Res> implements $PeriodCopyWith<$Res> {
-  factory _$$_PeriodCopyWith(_$_Period value, $Res Function(_$_Period) then) =
-      __$$_PeriodCopyWithImpl<$Res>;
+abstract class _$$PeriodImplCopyWith<$Res> implements $PeriodCopyWith<$Res> {
+  factory _$$PeriodImplCopyWith(
+          _$PeriodImpl value, $Res Function(_$PeriodImpl) then) =
+      __$$PeriodImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({PeriodUnit unit, int value, String iso8601});
 }
 
 /// @nodoc
-class __$$_PeriodCopyWithImpl<$Res>
-    extends _$PeriodCopyWithImpl<$Res, _$_Period>
-    implements _$$_PeriodCopyWith<$Res> {
-  __$$_PeriodCopyWithImpl(_$_Period _value, $Res Function(_$_Period) _then)
+class __$$PeriodImplCopyWithImpl<$Res>
+    extends _$PeriodCopyWithImpl<$Res, _$PeriodImpl>
+    implements _$$PeriodImplCopyWith<$Res> {
+  __$$PeriodImplCopyWithImpl(
+      _$PeriodImpl _value, $Res Function(_$PeriodImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -101,7 +103,7 @@ class __$$_PeriodCopyWithImpl<$Res>
     Object? value = null,
     Object? iso8601 = null,
   }) {
-    return _then(_$_Period(
+    return _then(_$PeriodImpl(
       null == unit
           ? _value.unit
           : unit // ignore: cast_nullable_to_non_nullable
@@ -120,11 +122,11 @@ class __$$_PeriodCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Period implements _Period {
-  const _$_Period(this.unit, this.value, this.iso8601);
+class _$PeriodImpl implements _Period {
+  const _$PeriodImpl(this.unit, this.value, this.iso8601);
 
-  factory _$_Period.fromJson(Map<String, dynamic> json) =>
-      _$$_PeriodFromJson(json);
+  factory _$PeriodImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PeriodImplFromJson(json);
 
   /// The number of period units: day, week, month, year, unknown
   @override
@@ -149,7 +151,7 @@ class _$_Period implements _Period {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Period &&
+            other is _$PeriodImpl &&
             (identical(other.unit, unit) || other.unit == unit) &&
             (identical(other.value, value) || other.value == value) &&
             (identical(other.iso8601, iso8601) || other.iso8601 == iso8601));
@@ -162,12 +164,12 @@ class _$_Period implements _Period {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PeriodCopyWith<_$_Period> get copyWith =>
-      __$$_PeriodCopyWithImpl<_$_Period>(this, _$identity);
+  _$$PeriodImplCopyWith<_$PeriodImpl> get copyWith =>
+      __$$PeriodImplCopyWithImpl<_$PeriodImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PeriodToJson(
+    return _$$PeriodImplToJson(
       this,
     );
   }
@@ -175,9 +177,10 @@ class _$_Period implements _Period {
 
 abstract class _Period implements Period {
   const factory _Period(
-      final PeriodUnit unit, final int value, final String iso8601) = _$_Period;
+          final PeriodUnit unit, final int value, final String iso8601) =
+      _$PeriodImpl;
 
-  factory _Period.fromJson(Map<String, dynamic> json) = _$_Period.fromJson;
+  factory _Period.fromJson(Map<String, dynamic> json) = _$PeriodImpl.fromJson;
 
   @override
 
@@ -195,6 +198,6 @@ abstract class _Period implements Period {
   String get iso8601;
   @override
   @JsonKey(ignore: true)
-  _$$_PeriodCopyWith<_$_Period> get copyWith =>
+  _$$PeriodImplCopyWith<_$PeriodImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

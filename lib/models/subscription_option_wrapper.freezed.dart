@@ -224,11 +224,11 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
 }
 
 /// @nodoc
-abstract class _$$_SubscriptionOptionCopyWith<$Res>
+abstract class _$$SubscriptionOptionImplCopyWith<$Res>
     implements $SubscriptionOptionCopyWith<$Res> {
-  factory _$$_SubscriptionOptionCopyWith(_$_SubscriptionOption value,
-          $Res Function(_$_SubscriptionOption) then) =
-      __$$_SubscriptionOptionCopyWithImpl<$Res>;
+  factory _$$SubscriptionOptionImplCopyWith(_$SubscriptionOptionImpl value,
+          $Res Function(_$SubscriptionOptionImpl) then) =
+      __$$SubscriptionOptionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -256,11 +256,11 @@ abstract class _$$_SubscriptionOptionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SubscriptionOptionCopyWithImpl<$Res>
-    extends _$SubscriptionOptionCopyWithImpl<$Res, _$_SubscriptionOption>
-    implements _$$_SubscriptionOptionCopyWith<$Res> {
-  __$$_SubscriptionOptionCopyWithImpl(
-      _$_SubscriptionOption _value, $Res Function(_$_SubscriptionOption) _then)
+class __$$SubscriptionOptionImplCopyWithImpl<$Res>
+    extends _$SubscriptionOptionCopyWithImpl<$Res, _$SubscriptionOptionImpl>
+    implements _$$SubscriptionOptionImplCopyWith<$Res> {
+  __$$SubscriptionOptionImplCopyWithImpl(_$SubscriptionOptionImpl _value,
+      $Res Function(_$SubscriptionOptionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -279,7 +279,7 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
     Object? introPhase = freezed,
     Object? presentedOfferingIdentifier = freezed,
   }) {
-    return _then(_$_SubscriptionOption(
+    return _then(_$SubscriptionOptionImpl(
       null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -334,8 +334,8 @@ class __$$_SubscriptionOptionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SubscriptionOption implements _SubscriptionOption {
-  const _$_SubscriptionOption(
+class _$SubscriptionOptionImpl implements _SubscriptionOption {
+  const _$SubscriptionOptionImpl(
       this.id,
       this.storeProductId,
       this.productId,
@@ -351,8 +351,8 @@ class _$_SubscriptionOption implements _SubscriptionOption {
       : _pricingPhases = pricingPhases,
         _tags = tags;
 
-  factory _$_SubscriptionOption.fromJson(Map<String, dynamic> json) =>
-      _$$_SubscriptionOptionFromJson(json);
+  factory _$SubscriptionOptionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SubscriptionOptionImplFromJson(json);
 
   /// Identifier of the subscription option
   /// If this SubscriptionOption represents a base plan, this will be the basePlanId.
@@ -433,7 +433,7 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SubscriptionOption &&
+            other is _$SubscriptionOptionImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.storeProductId, storeProductId) ||
                 other.storeProductId == storeProductId) &&
@@ -480,13 +480,13 @@ class _$_SubscriptionOption implements _SubscriptionOption {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SubscriptionOptionCopyWith<_$_SubscriptionOption> get copyWith =>
-      __$$_SubscriptionOptionCopyWithImpl<_$_SubscriptionOption>(
+  _$$SubscriptionOptionImplCopyWith<_$SubscriptionOptionImpl> get copyWith =>
+      __$$SubscriptionOptionImplCopyWithImpl<_$SubscriptionOptionImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SubscriptionOptionToJson(
+    return _$$SubscriptionOptionImplToJson(
       this,
     );
   }
@@ -505,10 +505,10 @@ abstract class _SubscriptionOption implements SubscriptionOption {
       final PricingPhase? fullPricePhase,
       final PricingPhase? freePhase,
       final PricingPhase? introPhase,
-      final String? presentedOfferingIdentifier) = _$_SubscriptionOption;
+      final String? presentedOfferingIdentifier) = _$SubscriptionOptionImpl;
 
   factory _SubscriptionOption.fromJson(Map<String, dynamic> json) =
-      _$_SubscriptionOption.fromJson;
+      _$SubscriptionOptionImpl.fromJson;
 
   @override
 
@@ -567,6 +567,6 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   String? get presentedOfferingIdentifier;
   @override
   @JsonKey(ignore: true)
-  _$$_SubscriptionOptionCopyWith<_$_SubscriptionOption> get copyWith =>
+  _$$SubscriptionOptionImplCopyWith<_$SubscriptionOptionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -119,11 +119,11 @@ class _$StoreProductDiscountCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_StoreProductDiscountCopyWith<$Res>
+abstract class _$$StoreProductDiscountImplCopyWith<$Res>
     implements $StoreProductDiscountCopyWith<$Res> {
-  factory _$$_StoreProductDiscountCopyWith(_$_StoreProductDiscount value,
-          $Res Function(_$_StoreProductDiscount) then) =
-      __$$_StoreProductDiscountCopyWithImpl<$Res>;
+  factory _$$StoreProductDiscountImplCopyWith(_$StoreProductDiscountImpl value,
+          $Res Function(_$StoreProductDiscountImpl) then) =
+      __$$StoreProductDiscountImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -137,11 +137,11 @@ abstract class _$$_StoreProductDiscountCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StoreProductDiscountCopyWithImpl<$Res>
-    extends _$StoreProductDiscountCopyWithImpl<$Res, _$_StoreProductDiscount>
-    implements _$$_StoreProductDiscountCopyWith<$Res> {
-  __$$_StoreProductDiscountCopyWithImpl(_$_StoreProductDiscount _value,
-      $Res Function(_$_StoreProductDiscount) _then)
+class __$$StoreProductDiscountImplCopyWithImpl<$Res>
+    extends _$StoreProductDiscountCopyWithImpl<$Res, _$StoreProductDiscountImpl>
+    implements _$$StoreProductDiscountImplCopyWith<$Res> {
+  __$$StoreProductDiscountImplCopyWithImpl(_$StoreProductDiscountImpl _value,
+      $Res Function(_$StoreProductDiscountImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -155,7 +155,7 @@ class __$$_StoreProductDiscountCopyWithImpl<$Res>
     Object? periodUnit = null,
     Object? periodNumberOfUnits = null,
   }) {
-    return _then(_$_StoreProductDiscount(
+    return _then(_$StoreProductDiscountImpl(
       null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -190,12 +190,18 @@ class __$$_StoreProductDiscountCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_StoreProductDiscount implements _StoreProductDiscount {
-  const _$_StoreProductDiscount(this.identifier, this.price, this.priceString,
-      this.cycles, this.period, this.periodUnit, this.periodNumberOfUnits);
+class _$StoreProductDiscountImpl implements _StoreProductDiscount {
+  const _$StoreProductDiscountImpl(
+      this.identifier,
+      this.price,
+      this.priceString,
+      this.cycles,
+      this.period,
+      this.periodUnit,
+      this.periodNumberOfUnits);
 
-  factory _$_StoreProductDiscount.fromJson(Map<String, dynamic> json) =>
-      _$$_StoreProductDiscountFromJson(json);
+  factory _$StoreProductDiscountImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StoreProductDiscountImplFromJson(json);
 
   /// Identifier of the discount.
   @override
@@ -234,7 +240,7 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StoreProductDiscount &&
+            other is _$StoreProductDiscountImpl &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.price, price) || other.price == price) &&
@@ -256,13 +262,14 @@ class _$_StoreProductDiscount implements _StoreProductDiscount {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StoreProductDiscountCopyWith<_$_StoreProductDiscount> get copyWith =>
-      __$$_StoreProductDiscountCopyWithImpl<_$_StoreProductDiscount>(
-          this, _$identity);
+  _$$StoreProductDiscountImplCopyWith<_$StoreProductDiscountImpl>
+      get copyWith =>
+          __$$StoreProductDiscountImplCopyWithImpl<_$StoreProductDiscountImpl>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StoreProductDiscountToJson(
+    return _$$StoreProductDiscountImplToJson(
       this,
     );
   }
@@ -276,10 +283,10 @@ abstract class _StoreProductDiscount implements StoreProductDiscount {
       final int cycles,
       final String period,
       final String periodUnit,
-      final int periodNumberOfUnits) = _$_StoreProductDiscount;
+      final int periodNumberOfUnits) = _$StoreProductDiscountImpl;
 
   factory _StoreProductDiscount.fromJson(Map<String, dynamic> json) =
-      _$_StoreProductDiscount.fromJson;
+      _$StoreProductDiscountImpl.fromJson;
 
   @override
 
@@ -311,6 +318,6 @@ abstract class _StoreProductDiscount implements StoreProductDiscount {
   int get periodNumberOfUnits;
   @override
   @JsonKey(ignore: true)
-  _$$_StoreProductDiscountCopyWith<_$_StoreProductDiscount> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$StoreProductDiscountImplCopyWith<_$StoreProductDiscountImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

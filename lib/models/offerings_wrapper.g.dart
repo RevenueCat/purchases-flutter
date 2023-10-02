@@ -6,7 +6,7 @@ part of 'offerings_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Offerings _$$_OfferingsFromJson(Map json) => _$_Offerings(
+_$OfferingsImpl _$$OfferingsImplFromJson(Map json) => _$OfferingsImpl(
       (json['all'] as Map).map(
         (k, e) => MapEntry(k as String,
             Offering.fromJson(Map<String, dynamic>.from(e as Map))),
@@ -17,7 +17,7 @@ _$_Offerings _$$_OfferingsFromJson(Map json) => _$_Offerings(
               Map<String, dynamic>.from(json['current'] as Map)),
     );
 
-Map<String, dynamic> _$$_OfferingsToJson(_$_Offerings instance) =>
+Map<String, dynamic> _$$OfferingsImplToJson(_$OfferingsImpl instance) =>
     <String, dynamic>{
       'all': instance.all.map((k, e) => MapEntry(k, e.toJson())),
       'current': instance.current?.toJson(),

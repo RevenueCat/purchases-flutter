@@ -6,7 +6,7 @@ part of 'customer_info_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_CustomerInfo _$$_CustomerInfoFromJson(Map json) => _$_CustomerInfo(
+_$CustomerInfoImpl _$$CustomerInfoImplFromJson(Map json) => _$CustomerInfoImpl(
       EntitlementInfos.fromJson(
           Map<String, dynamic>.from(json['entitlements'] as Map)),
       Map<String, String>.from(json['allPurchaseDates'] as Map),
@@ -30,7 +30,7 @@ _$_CustomerInfo _$$_CustomerInfoFromJson(Map json) => _$_CustomerInfo(
       managementURL: json['managementURL'] as String?,
     );
 
-Map<String, dynamic> _$$_CustomerInfoToJson(_$_CustomerInfo instance) =>
+Map<String, dynamic> _$$CustomerInfoImplToJson(_$CustomerInfoImpl instance) =>
     <String, dynamic>{
       'entitlements': instance.entitlements.toJson(),
       'allPurchaseDates': instance.allPurchaseDates,

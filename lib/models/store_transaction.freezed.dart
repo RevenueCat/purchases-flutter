@@ -147,11 +147,11 @@ class _$StoreTransactionCopyWithImpl<$Res, $Val extends StoreTransaction>
 }
 
 /// @nodoc
-abstract class _$$_StoreTransactionCopyWith<$Res>
+abstract class _$$StoreTransactionImplCopyWith<$Res>
     implements $StoreTransactionCopyWith<$Res> {
-  factory _$$_StoreTransactionCopyWith(
-          _$_StoreTransaction value, $Res Function(_$_StoreTransaction) then) =
-      __$$_StoreTransactionCopyWithImpl<$Res>;
+  factory _$$StoreTransactionImplCopyWith(_$StoreTransactionImpl value,
+          $Res Function(_$StoreTransactionImpl) then) =
+      __$$StoreTransactionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -164,11 +164,11 @@ abstract class _$$_StoreTransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StoreTransactionCopyWithImpl<$Res>
-    extends _$StoreTransactionCopyWithImpl<$Res, _$_StoreTransaction>
-    implements _$$_StoreTransactionCopyWith<$Res> {
-  __$$_StoreTransactionCopyWithImpl(
-      _$_StoreTransaction _value, $Res Function(_$_StoreTransaction) _then)
+class __$$StoreTransactionImplCopyWithImpl<$Res>
+    extends _$StoreTransactionCopyWithImpl<$Res, _$StoreTransactionImpl>
+    implements _$$StoreTransactionImplCopyWith<$Res> {
+  __$$StoreTransactionImplCopyWithImpl(_$StoreTransactionImpl _value,
+      $Res Function(_$StoreTransactionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -179,7 +179,7 @@ class __$$_StoreTransactionCopyWithImpl<$Res>
     Object? productIdentifier = null,
     Object? purchaseDate = null,
   }) {
-    return _then(_$_StoreTransaction(
+    return _then(_$StoreTransactionImpl(
       null == transactionIdentifier
           ? _value.transactionIdentifier
           : transactionIdentifier // ignore: cast_nullable_to_non_nullable
@@ -202,8 +202,8 @@ class __$$_StoreTransactionCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_StoreTransaction implements _StoreTransaction {
-  const _$_StoreTransaction(
+class _$StoreTransactionImpl implements _StoreTransaction {
+  const _$StoreTransactionImpl(
       this.transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
       @JsonKey(readValue: _readRevenueCatIdentifier)
@@ -211,8 +211,8 @@ class _$_StoreTransaction implements _StoreTransaction {
       this.productIdentifier,
       this.purchaseDate);
 
-  factory _$_StoreTransaction.fromJson(Map<String, dynamic> json) =>
-      _$$_StoreTransactionFromJson(json);
+  factory _$StoreTransactionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StoreTransactionImplFromJson(json);
 
   /// RevenueCat Id associated to the transaction.
   @override
@@ -241,7 +241,7 @@ class _$_StoreTransaction implements _StoreTransaction {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StoreTransaction &&
+            other is _$StoreTransactionImpl &&
             (identical(other.transactionIdentifier, transactionIdentifier) ||
                 other.transactionIdentifier == transactionIdentifier) &&
             (identical(other.revenueCatIdentifier, revenueCatIdentifier) ||
@@ -260,8 +260,9 @@ class _$_StoreTransaction implements _StoreTransaction {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StoreTransactionCopyWith<_$_StoreTransaction> get copyWith =>
-      __$$_StoreTransactionCopyWithImpl<_$_StoreTransaction>(this, _$identity);
+  _$$StoreTransactionImplCopyWith<_$StoreTransactionImpl> get copyWith =>
+      __$$StoreTransactionImplCopyWithImpl<_$StoreTransactionImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -345,7 +346,7 @@ class _$_StoreTransaction implements _StoreTransaction {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StoreTransactionToJson(
+    return _$$StoreTransactionImplToJson(
       this,
     );
   }
@@ -358,10 +359,10 @@ abstract class _StoreTransaction implements StoreTransaction {
       @JsonKey(readValue: _readRevenueCatIdentifier)
       final String revenueCatIdentifier,
       final String productIdentifier,
-      final String purchaseDate) = _$_StoreTransaction;
+      final String purchaseDate) = _$StoreTransactionImpl;
 
   factory _StoreTransaction.fromJson(Map<String, dynamic> json) =
-      _$_StoreTransaction.fromJson;
+      _$StoreTransactionImpl.fromJson;
 
   @override
 
@@ -383,6 +384,6 @@ abstract class _StoreTransaction implements StoreTransaction {
   String get purchaseDate;
   @override
   @JsonKey(ignore: true)
-  _$$_StoreTransactionCopyWith<_$_StoreTransaction> get copyWith =>
+  _$$StoreTransactionImplCopyWith<_$StoreTransactionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

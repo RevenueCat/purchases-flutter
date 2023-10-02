@@ -197,11 +197,11 @@ class _$CustomerInfoCopyWithImpl<$Res, $Val extends CustomerInfo>
 }
 
 /// @nodoc
-abstract class _$$_CustomerInfoCopyWith<$Res>
+abstract class _$$CustomerInfoImplCopyWith<$Res>
     implements $CustomerInfoCopyWith<$Res> {
-  factory _$$_CustomerInfoCopyWith(
-          _$_CustomerInfo value, $Res Function(_$_CustomerInfo) then) =
-      __$$_CustomerInfoCopyWithImpl<$Res>;
+  factory _$$CustomerInfoImplCopyWith(
+          _$CustomerInfoImpl value, $Res Function(_$CustomerInfoImpl) then) =
+      __$$CustomerInfoImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -224,11 +224,11 @@ abstract class _$$_CustomerInfoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_CustomerInfoCopyWithImpl<$Res>
-    extends _$CustomerInfoCopyWithImpl<$Res, _$_CustomerInfo>
-    implements _$$_CustomerInfoCopyWith<$Res> {
-  __$$_CustomerInfoCopyWithImpl(
-      _$_CustomerInfo _value, $Res Function(_$_CustomerInfo) _then)
+class __$$CustomerInfoImplCopyWithImpl<$Res>
+    extends _$CustomerInfoCopyWithImpl<$Res, _$CustomerInfoImpl>
+    implements _$$CustomerInfoImplCopyWith<$Res> {
+  __$$CustomerInfoImplCopyWithImpl(
+      _$CustomerInfoImpl _value, $Res Function(_$CustomerInfoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -248,7 +248,7 @@ class __$$_CustomerInfoCopyWithImpl<$Res>
     Object? originalApplicationVersion = freezed,
     Object? managementURL = freezed,
   }) {
-    return _then(_$_CustomerInfo(
+    return _then(_$CustomerInfoImpl(
       null == entitlements
           ? _value.entitlements
           : entitlements // ignore: cast_nullable_to_non_nullable
@@ -307,8 +307,8 @@ class __$$_CustomerInfoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_CustomerInfo implements _CustomerInfo {
-  const _$_CustomerInfo(
+class _$CustomerInfoImpl implements _CustomerInfo {
+  const _$CustomerInfoImpl(
       this.entitlements,
       final Map<String, String> allPurchaseDates,
       final List<String> activeSubscriptions,
@@ -328,8 +328,8 @@ class _$_CustomerInfo implements _CustomerInfo {
         _nonSubscriptionTransactions = nonSubscriptionTransactions,
         _allExpirationDates = allExpirationDates;
 
-  factory _$_CustomerInfo.fromJson(Map<String, dynamic> json) =>
-      _$$_CustomerInfoFromJson(json);
+  factory _$CustomerInfoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CustomerInfoImplFromJson(json);
 
   /// Entitlements attached to this customer info
   @override
@@ -443,7 +443,7 @@ class _$_CustomerInfo implements _CustomerInfo {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_CustomerInfo &&
+            other is _$CustomerInfoImpl &&
             (identical(other.entitlements, entitlements) ||
                 other.entitlements == entitlements) &&
             const DeepCollectionEquality()
@@ -497,12 +497,12 @@ class _$_CustomerInfo implements _CustomerInfo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_CustomerInfoCopyWith<_$_CustomerInfo> get copyWith =>
-      __$$_CustomerInfoCopyWithImpl<_$_CustomerInfo>(this, _$identity);
+  _$$CustomerInfoImplCopyWith<_$CustomerInfoImpl> get copyWith =>
+      __$$CustomerInfoImplCopyWithImpl<_$CustomerInfoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CustomerInfoToJson(
+    return _$$CustomerInfoImplToJson(
       this,
     );
   }
@@ -522,10 +522,10 @@ abstract class _CustomerInfo implements CustomerInfo {
       {final String? latestExpirationDate,
       final String? originalPurchaseDate,
       final String? originalApplicationVersion,
-      final String? managementURL}) = _$_CustomerInfo;
+      final String? managementURL}) = _$CustomerInfoImpl;
 
   factory _CustomerInfo.fromJson(Map<String, dynamic> json) =
-      _$_CustomerInfo.fromJson;
+      _$CustomerInfoImpl.fromJson;
 
   @override
 
@@ -592,6 +592,6 @@ abstract class _CustomerInfo implements CustomerInfo {
   String? get managementURL;
   @override
   @JsonKey(ignore: true)
-  _$$_CustomerInfoCopyWith<_$_CustomerInfo> get copyWith =>
+  _$$CustomerInfoImplCopyWith<_$CustomerInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

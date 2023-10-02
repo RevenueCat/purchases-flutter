@@ -116,11 +116,11 @@ class _$IntroductoryPriceCopyWithImpl<$Res, $Val extends IntroductoryPrice>
 }
 
 /// @nodoc
-abstract class _$$_IntroductoryPriceCopyWith<$Res>
+abstract class _$$IntroductoryPriceImplCopyWith<$Res>
     implements $IntroductoryPriceCopyWith<$Res> {
-  factory _$$_IntroductoryPriceCopyWith(_$_IntroductoryPrice value,
-          $Res Function(_$_IntroductoryPrice) then) =
-      __$$_IntroductoryPriceCopyWithImpl<$Res>;
+  factory _$$IntroductoryPriceImplCopyWith(_$IntroductoryPriceImpl value,
+          $Res Function(_$IntroductoryPriceImpl) then) =
+      __$$IntroductoryPriceImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -134,11 +134,11 @@ abstract class _$$_IntroductoryPriceCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_IntroductoryPriceCopyWithImpl<$Res>
-    extends _$IntroductoryPriceCopyWithImpl<$Res, _$_IntroductoryPrice>
-    implements _$$_IntroductoryPriceCopyWith<$Res> {
-  __$$_IntroductoryPriceCopyWithImpl(
-      _$_IntroductoryPrice _value, $Res Function(_$_IntroductoryPrice) _then)
+class __$$IntroductoryPriceImplCopyWithImpl<$Res>
+    extends _$IntroductoryPriceCopyWithImpl<$Res, _$IntroductoryPriceImpl>
+    implements _$$IntroductoryPriceImplCopyWith<$Res> {
+  __$$IntroductoryPriceImplCopyWithImpl(_$IntroductoryPriceImpl _value,
+      $Res Function(_$IntroductoryPriceImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -151,7 +151,7 @@ class __$$_IntroductoryPriceCopyWithImpl<$Res>
     Object? periodUnit = null,
     Object? periodNumberOfUnits = null,
   }) {
-    return _then(_$_IntroductoryPrice(
+    return _then(_$IntroductoryPriceImpl(
       null == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -182,8 +182,8 @@ class __$$_IntroductoryPriceCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_IntroductoryPrice implements _IntroductoryPrice {
-  const _$_IntroductoryPrice(
+class _$IntroductoryPriceImpl implements _IntroductoryPrice {
+  const _$IntroductoryPriceImpl(
       this.price,
       this.priceString,
       this.period,
@@ -192,8 +192,8 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
       this.periodUnit,
       this.periodNumberOfUnits);
 
-  factory _$_IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
-      _$$_IntroductoryPriceFromJson(json);
+  factory _$IntroductoryPriceImpl.fromJson(Map<String, dynamic> json) =>
+      _$$IntroductoryPriceImplFromJson(json);
 
   /// Introductory price of a subscription in the local currency.
   @override
@@ -234,7 +234,7 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_IntroductoryPrice &&
+            other is _$IntroductoryPriceImpl &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.priceString, priceString) ||
                 other.priceString == priceString) &&
@@ -254,13 +254,13 @@ class _$_IntroductoryPrice implements _IntroductoryPrice {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_IntroductoryPriceCopyWith<_$_IntroductoryPrice> get copyWith =>
-      __$$_IntroductoryPriceCopyWithImpl<_$_IntroductoryPrice>(
+  _$$IntroductoryPriceImplCopyWith<_$IntroductoryPriceImpl> get copyWith =>
+      __$$IntroductoryPriceImplCopyWithImpl<_$IntroductoryPriceImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_IntroductoryPriceToJson(
+    return _$$IntroductoryPriceImplToJson(
       this,
     );
   }
@@ -274,10 +274,10 @@ abstract class _IntroductoryPrice implements IntroductoryPrice {
       final int cycles,
       @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
       final PeriodUnit periodUnit,
-      final int periodNumberOfUnits) = _$_IntroductoryPrice;
+      final int periodNumberOfUnits) = _$IntroductoryPriceImpl;
 
   factory _IntroductoryPrice.fromJson(Map<String, dynamic> json) =
-      _$_IntroductoryPrice.fromJson;
+      _$IntroductoryPriceImpl.fromJson;
 
   @override
 
@@ -311,6 +311,6 @@ abstract class _IntroductoryPrice implements IntroductoryPrice {
   int get periodNumberOfUnits;
   @override
   @JsonKey(ignore: true)
-  _$$_IntroductoryPriceCopyWith<_$_IntroductoryPrice> get copyWith =>
+  _$$IntroductoryPriceImplCopyWith<_$IntroductoryPriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

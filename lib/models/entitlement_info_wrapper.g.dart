@@ -6,7 +6,8 @@ part of 'entitlement_info_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_EntitlementInfo _$$_EntitlementInfoFromJson(Map json) => _$_EntitlementInfo(
+_$EntitlementInfoImpl _$$EntitlementInfoImplFromJson(Map json) =>
+    _$EntitlementInfoImpl(
       json['identifier'] as String,
       json['isActive'] as bool,
       json['willRenew'] as bool,
@@ -29,7 +30,8 @@ _$_EntitlementInfo _$$_EntitlementInfoFromJson(Map json) => _$_EntitlementInfo(
       billingIssueDetectedAt: json['billingIssueDetectedAt'] as String?,
     );
 
-Map<String, dynamic> _$$_EntitlementInfoToJson(_$_EntitlementInfo instance) =>
+Map<String, dynamic> _$$EntitlementInfoImplToJson(
+        _$EntitlementInfoImpl instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'isActive': instance.isActive,

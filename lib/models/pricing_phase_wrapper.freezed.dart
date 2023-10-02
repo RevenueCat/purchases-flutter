@@ -124,11 +124,11 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
 }
 
 /// @nodoc
-abstract class _$$_PricingPhaseCopyWith<$Res>
+abstract class _$$PricingPhaseImplCopyWith<$Res>
     implements $PricingPhaseCopyWith<$Res> {
-  factory _$$_PricingPhaseCopyWith(
-          _$_PricingPhase value, $Res Function(_$_PricingPhase) then) =
-      __$$_PricingPhaseCopyWithImpl<$Res>;
+  factory _$$PricingPhaseImplCopyWith(
+          _$PricingPhaseImpl value, $Res Function(_$PricingPhaseImpl) then) =
+      __$$PricingPhaseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -145,11 +145,11 @@ abstract class _$$_PricingPhaseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PricingPhaseCopyWithImpl<$Res>
-    extends _$PricingPhaseCopyWithImpl<$Res, _$_PricingPhase>
-    implements _$$_PricingPhaseCopyWith<$Res> {
-  __$$_PricingPhaseCopyWithImpl(
-      _$_PricingPhase _value, $Res Function(_$_PricingPhase) _then)
+class __$$PricingPhaseImplCopyWithImpl<$Res>
+    extends _$PricingPhaseCopyWithImpl<$Res, _$PricingPhaseImpl>
+    implements _$$PricingPhaseImplCopyWith<$Res> {
+  __$$PricingPhaseImplCopyWithImpl(
+      _$PricingPhaseImpl _value, $Res Function(_$PricingPhaseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -161,7 +161,7 @@ class __$$_PricingPhaseCopyWithImpl<$Res>
     Object? price = null,
     Object? offerPaymentMode = freezed,
   }) {
-    return _then(_$_PricingPhase(
+    return _then(_$PricingPhaseImpl(
       freezed == billingPeriod
           ? _value.billingPeriod
           : billingPeriod // ignore: cast_nullable_to_non_nullable
@@ -188,12 +188,12 @@ class __$$_PricingPhaseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PricingPhase implements _PricingPhase {
-  const _$_PricingPhase(this.billingPeriod, this.recurrenceMode,
+class _$PricingPhaseImpl implements _PricingPhase {
+  const _$PricingPhaseImpl(this.billingPeriod, this.recurrenceMode,
       this.billingCycleCount, this.price, this.offerPaymentMode);
 
-  factory _$_PricingPhase.fromJson(Map<String, dynamic> json) =>
-      _$$_PricingPhaseFromJson(json);
+  factory _$PricingPhaseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PricingPhaseImplFromJson(json);
 
   /// Billing period for which the PricingPhase applies
   @override
@@ -225,7 +225,7 @@ class _$_PricingPhase implements _PricingPhase {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PricingPhase &&
+            other is _$PricingPhaseImpl &&
             (identical(other.billingPeriod, billingPeriod) ||
                 other.billingPeriod == billingPeriod) &&
             (identical(other.recurrenceMode, recurrenceMode) ||
@@ -245,12 +245,12 @@ class _$_PricingPhase implements _PricingPhase {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PricingPhaseCopyWith<_$_PricingPhase> get copyWith =>
-      __$$_PricingPhaseCopyWithImpl<_$_PricingPhase>(this, _$identity);
+  _$$PricingPhaseImplCopyWith<_$PricingPhaseImpl> get copyWith =>
+      __$$PricingPhaseImplCopyWithImpl<_$PricingPhaseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PricingPhaseToJson(
+    return _$$PricingPhaseImplToJson(
       this,
     );
   }
@@ -262,10 +262,10 @@ abstract class _PricingPhase implements PricingPhase {
       final RecurrenceMode? recurrenceMode,
       final int? billingCycleCount,
       final Price price,
-      final OfferPaymentMode? offerPaymentMode) = _$_PricingPhase;
+      final OfferPaymentMode? offerPaymentMode) = _$PricingPhaseImpl;
 
   factory _PricingPhase.fromJson(Map<String, dynamic> json) =
-      _$_PricingPhase.fromJson;
+      _$PricingPhaseImpl.fromJson;
 
   @override
 
@@ -290,6 +290,6 @@ abstract class _PricingPhase implements PricingPhase {
   OfferPaymentMode? get offerPaymentMode;
   @override
   @JsonKey(ignore: true)
-  _$$_PricingPhaseCopyWith<_$_PricingPhase> get copyWith =>
+  _$$PricingPhaseImplCopyWith<_$PricingPhaseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

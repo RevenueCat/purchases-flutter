@@ -105,10 +105,10 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
 }
 
 /// @nodoc
-abstract class _$$_PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
-  factory _$$_PackageCopyWith(
-          _$_Package value, $Res Function(_$_Package) then) =
-      __$$_PackageCopyWithImpl<$Res>;
+abstract class _$$PackageImplCopyWith<$Res> implements $PackageCopyWith<$Res> {
+  factory _$$PackageImplCopyWith(
+          _$PackageImpl value, $Res Function(_$PackageImpl) then) =
+      __$$PackageImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -123,10 +123,11 @@ abstract class _$$_PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PackageCopyWithImpl<$Res>
-    extends _$PackageCopyWithImpl<$Res, _$_Package>
-    implements _$$_PackageCopyWith<$Res> {
-  __$$_PackageCopyWithImpl(_$_Package _value, $Res Function(_$_Package) _then)
+class __$$PackageImplCopyWithImpl<$Res>
+    extends _$PackageCopyWithImpl<$Res, _$PackageImpl>
+    implements _$$PackageImplCopyWith<$Res> {
+  __$$PackageImplCopyWithImpl(
+      _$PackageImpl _value, $Res Function(_$PackageImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -137,7 +138,7 @@ class __$$_PackageCopyWithImpl<$Res>
     Object? storeProduct = null,
     Object? offeringIdentifier = null,
   }) {
-    return _then(_$_Package(
+    return _then(_$PackageImpl(
       null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -160,16 +161,16 @@ class __$$_PackageCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Package implements _Package {
-  const _$_Package(
+class _$PackageImpl implements _Package {
+  const _$PackageImpl(
       this.identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       this.packageType,
       @JsonKey(name: 'product') this.storeProduct,
       this.offeringIdentifier);
 
-  factory _$_Package.fromJson(Map<String, dynamic> json) =>
-      _$$_PackageFromJson(json);
+  factory _$PackageImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PackageImplFromJson(json);
 
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
@@ -201,7 +202,7 @@ class _$_Package implements _Package {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Package &&
+            other is _$PackageImpl &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.packageType, packageType) ||
@@ -220,12 +221,12 @@ class _$_Package implements _Package {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PackageCopyWith<_$_Package> get copyWith =>
-      __$$_PackageCopyWithImpl<_$_Package>(this, _$identity);
+  _$$PackageImplCopyWith<_$PackageImpl> get copyWith =>
+      __$$PackageImplCopyWithImpl<_$PackageImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PackageToJson(
+    return _$$PackageImplToJson(
       this,
     );
   }
@@ -237,9 +238,9 @@ abstract class _Package implements Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       final PackageType packageType,
       @JsonKey(name: 'product') final StoreProduct storeProduct,
-      final String offeringIdentifier) = _$_Package;
+      final String offeringIdentifier) = _$PackageImpl;
 
-  factory _Package.fromJson(Map<String, dynamic> json) = _$_Package.fromJson;
+  factory _Package.fromJson(Map<String, dynamic> json) = _$PackageImpl.fromJson;
 
   @override
 
@@ -264,6 +265,6 @@ abstract class _Package implements Package {
   String get offeringIdentifier;
   @override
   @JsonKey(ignore: true)
-  _$$_PackageCopyWith<_$_Package> get copyWith =>
+  _$$PackageImplCopyWith<_$PackageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
