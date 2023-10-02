@@ -84,10 +84,11 @@ class _$OfferingsCopyWithImpl<$Res, $Val extends Offerings>
 }
 
 /// @nodoc
-abstract class _$$_OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
-  factory _$$_OfferingsCopyWith(
-          _$_Offerings value, $Res Function(_$_Offerings) then) =
-      __$$_OfferingsCopyWithImpl<$Res>;
+abstract class _$$OfferingsImplCopyWith<$Res>
+    implements $OfferingsCopyWith<$Res> {
+  factory _$$OfferingsImplCopyWith(
+          _$OfferingsImpl value, $Res Function(_$OfferingsImpl) then) =
+      __$$OfferingsImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Map<String, Offering> all, Offering? current});
@@ -97,11 +98,11 @@ abstract class _$$_OfferingsCopyWith<$Res> implements $OfferingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_OfferingsCopyWithImpl<$Res>
-    extends _$OfferingsCopyWithImpl<$Res, _$_Offerings>
-    implements _$$_OfferingsCopyWith<$Res> {
-  __$$_OfferingsCopyWithImpl(
-      _$_Offerings _value, $Res Function(_$_Offerings) _then)
+class __$$OfferingsImplCopyWithImpl<$Res>
+    extends _$OfferingsCopyWithImpl<$Res, _$OfferingsImpl>
+    implements _$$OfferingsImplCopyWith<$Res> {
+  __$$OfferingsImplCopyWithImpl(
+      _$OfferingsImpl _value, $Res Function(_$OfferingsImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -110,7 +111,7 @@ class __$$_OfferingsCopyWithImpl<$Res>
     Object? all = null,
     Object? current = freezed,
   }) {
-    return _then(_$_Offerings(
+    return _then(_$OfferingsImpl(
       null == all
           ? _value._all
           : all // ignore: cast_nullable_to_non_nullable
@@ -125,13 +126,13 @@ class __$$_OfferingsCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Offerings extends _Offerings {
-  const _$_Offerings(final Map<String, Offering> all, {this.current})
+class _$OfferingsImpl extends _Offerings {
+  const _$OfferingsImpl(final Map<String, Offering> all, {this.current})
       : _all = all,
         super._();
 
-  factory _$_Offerings.fromJson(Map<String, dynamic> json) =>
-      _$$_OfferingsFromJson(json);
+  factory _$OfferingsImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OfferingsImplFromJson(json);
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
   final Map<String, Offering> _all;
@@ -157,7 +158,7 @@ class _$_Offerings extends _Offerings {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Offerings &&
+            other is _$OfferingsImpl &&
             const DeepCollectionEquality().equals(other._all, _all) &&
             (identical(other.current, current) || other.current == current));
   }
@@ -170,12 +171,12 @@ class _$_Offerings extends _Offerings {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OfferingsCopyWith<_$_Offerings> get copyWith =>
-      __$$_OfferingsCopyWithImpl<_$_Offerings>(this, _$identity);
+  _$$OfferingsImplCopyWith<_$OfferingsImpl> get copyWith =>
+      __$$OfferingsImplCopyWithImpl<_$OfferingsImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OfferingsToJson(
+    return _$$OfferingsImplToJson(
       this,
     );
   }
@@ -183,11 +184,11 @@ class _$_Offerings extends _Offerings {
 
 abstract class _Offerings extends Offerings {
   const factory _Offerings(final Map<String, Offering> all,
-      {final Offering? current}) = _$_Offerings;
+      {final Offering? current}) = _$OfferingsImpl;
   const _Offerings._() : super._();
 
   factory _Offerings.fromJson(Map<String, dynamic> json) =
-      _$_Offerings.fromJson;
+      _$OfferingsImpl.fromJson;
 
   @override
 
@@ -199,6 +200,6 @@ abstract class _Offerings extends Offerings {
   Offering? get current;
   @override
   @JsonKey(ignore: true)
-  _$$_OfferingsCopyWith<_$_Offerings> get copyWith =>
+  _$$OfferingsImplCopyWith<_$OfferingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

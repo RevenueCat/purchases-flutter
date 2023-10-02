@@ -6,7 +6,7 @@ part of 'store_product_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StoreProduct _$$_StoreProductFromJson(Map json) => _$_StoreProduct(
+_$StoreProductImpl _$$StoreProductImplFromJson(Map json) => _$StoreProductImpl(
       json['identifier'] as String,
       json['description'] as String,
       json['title'] as String,
@@ -36,7 +36,7 @@ _$_StoreProduct _$$_StoreProductFromJson(Map json) => _$_StoreProduct(
       subscriptionPeriod: json['subscriptionPeriod'] as String?,
     );
 
-Map<String, dynamic> _$$_StoreProductToJson(_$_StoreProduct instance) =>
+Map<String, dynamic> _$$StoreProductImplToJson(_$StoreProductImpl instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'description': instance.description,

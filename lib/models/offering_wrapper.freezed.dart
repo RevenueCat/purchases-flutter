@@ -245,10 +245,11 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
 }
 
 /// @nodoc
-abstract class _$$_OfferingCopyWith<$Res> implements $OfferingCopyWith<$Res> {
-  factory _$$_OfferingCopyWith(
-          _$_Offering value, $Res Function(_$_Offering) then) =
-      __$$_OfferingCopyWithImpl<$Res>;
+abstract class _$$OfferingImplCopyWith<$Res>
+    implements $OfferingCopyWith<$Res> {
+  factory _$$OfferingImplCopyWith(
+          _$OfferingImpl value, $Res Function(_$OfferingImpl) then) =
+      __$$OfferingImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -281,11 +282,11 @@ abstract class _$$_OfferingCopyWith<$Res> implements $OfferingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_OfferingCopyWithImpl<$Res>
-    extends _$OfferingCopyWithImpl<$Res, _$_Offering>
-    implements _$$_OfferingCopyWith<$Res> {
-  __$$_OfferingCopyWithImpl(
-      _$_Offering _value, $Res Function(_$_Offering) _then)
+class __$$OfferingImplCopyWithImpl<$Res>
+    extends _$OfferingCopyWithImpl<$Res, _$OfferingImpl>
+    implements _$$OfferingImplCopyWith<$Res> {
+  __$$OfferingImplCopyWithImpl(
+      _$OfferingImpl _value, $Res Function(_$OfferingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -303,7 +304,7 @@ class __$$_OfferingCopyWithImpl<$Res>
     Object? monthly = freezed,
     Object? weekly = freezed,
   }) {
-    return _then(_$_Offering(
+    return _then(_$OfferingImpl(
       null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -354,8 +355,8 @@ class __$$_OfferingCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_Offering extends _Offering {
-  const _$_Offering(this.identifier, this.serverDescription,
+class _$OfferingImpl extends _Offering {
+  const _$OfferingImpl(this.identifier, this.serverDescription,
       final Map<String, Object> metadata, final List<Package> availablePackages,
       {this.lifetime,
       this.annual,
@@ -368,8 +369,8 @@ class _$_Offering extends _Offering {
         _availablePackages = availablePackages,
         super._();
 
-  factory _$_Offering.fromJson(Map<String, dynamic> json) =>
-      _$$_OfferingFromJson(json);
+  factory _$OfferingImpl.fromJson(Map<String, dynamic> json) =>
+      _$$OfferingImplFromJson(json);
 
   /// Unique identifier defined in RevenueCat dashboard.
   @override
@@ -439,7 +440,7 @@ class _$_Offering extends _Offering {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Offering &&
+            other is _$OfferingImpl &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.serverDescription, serverDescription) ||
@@ -479,12 +480,12 @@ class _$_Offering extends _Offering {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_OfferingCopyWith<_$_Offering> get copyWith =>
-      __$$_OfferingCopyWithImpl<_$_Offering>(this, _$identity);
+  _$$OfferingImplCopyWith<_$OfferingImpl> get copyWith =>
+      __$$OfferingImplCopyWithImpl<_$OfferingImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OfferingToJson(
+    return _$$OfferingImplToJson(
       this,
     );
   }
@@ -502,10 +503,11 @@ abstract class _Offering extends Offering {
       final Package? threeMonth,
       final Package? twoMonth,
       final Package? monthly,
-      final Package? weekly}) = _$_Offering;
+      final Package? weekly}) = _$OfferingImpl;
   const _Offering._() : super._();
 
-  factory _Offering.fromJson(Map<String, dynamic> json) = _$_Offering.fromJson;
+  factory _Offering.fromJson(Map<String, dynamic> json) =
+      _$OfferingImpl.fromJson;
 
   @override
 
@@ -553,6 +555,6 @@ abstract class _Offering extends Offering {
   Package? get weekly;
   @override
   @JsonKey(ignore: true)
-  _$$_OfferingCopyWith<_$_Offering> get copyWith =>
+  _$$OfferingImplCopyWith<_$OfferingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

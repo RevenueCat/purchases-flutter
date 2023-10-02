@@ -6,8 +6,8 @@ part of 'subscription_option_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SubscriptionOption _$$_SubscriptionOptionFromJson(Map json) =>
-    _$_SubscriptionOption(
+_$SubscriptionOptionImpl _$$SubscriptionOptionImplFromJson(Map json) =>
+    _$SubscriptionOptionImpl(
       json['id'] as String,
       json['storeProductId'] as String,
       json['productId'] as String,
@@ -37,8 +37,8 @@ _$_SubscriptionOption _$$_SubscriptionOptionFromJson(Map json) =>
       json['presentedOfferingIdentifier'] as String?,
     );
 
-Map<String, dynamic> _$$_SubscriptionOptionToJson(
-        _$_SubscriptionOption instance) =>
+Map<String, dynamic> _$$SubscriptionOptionImplToJson(
+        _$SubscriptionOptionImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'storeProductId': instance.storeProductId,

@@ -209,11 +209,11 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
 }
 
 /// @nodoc
-abstract class _$$_StoreProductCopyWith<$Res>
+abstract class _$$StoreProductImplCopyWith<$Res>
     implements $StoreProductCopyWith<$Res> {
-  factory _$$_StoreProductCopyWith(
-          _$_StoreProduct value, $Res Function(_$_StoreProduct) then) =
-      __$$_StoreProductCopyWithImpl<$Res>;
+  factory _$$StoreProductImplCopyWith(
+          _$StoreProductImpl value, $Res Function(_$StoreProductImpl) then) =
+      __$$StoreProductImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -238,11 +238,11 @@ abstract class _$$_StoreProductCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_StoreProductCopyWithImpl<$Res>
-    extends _$StoreProductCopyWithImpl<$Res, _$_StoreProduct>
-    implements _$$_StoreProductCopyWith<$Res> {
-  __$$_StoreProductCopyWithImpl(
-      _$_StoreProduct _value, $Res Function(_$_StoreProduct) _then)
+class __$$StoreProductImplCopyWithImpl<$Res>
+    extends _$StoreProductCopyWithImpl<$Res, _$StoreProductImpl>
+    implements _$$StoreProductImplCopyWith<$Res> {
+  __$$StoreProductImplCopyWithImpl(
+      _$StoreProductImpl _value, $Res Function(_$StoreProductImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -262,7 +262,7 @@ class __$$_StoreProductCopyWithImpl<$Res>
     Object? presentedOfferingIdentifier = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
-    return _then(_$_StoreProduct(
+    return _then(_$StoreProductImpl(
       null == identifier
           ? _value.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
@@ -321,8 +321,8 @@ class __$$_StoreProductCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_StoreProduct implements _StoreProduct {
-  const _$_StoreProduct(this.identifier, this.description, this.title,
+class _$StoreProductImpl implements _StoreProduct {
+  const _$StoreProductImpl(this.identifier, this.description, this.title,
       this.price, this.priceString, this.currencyCode,
       {@JsonKey(name: 'introPrice') this.introductoryPrice,
       final List<StoreProductDiscount>? discounts,
@@ -334,8 +334,8 @@ class _$_StoreProduct implements _StoreProduct {
       : _discounts = discounts,
         _subscriptionOptions = subscriptionOptions;
 
-  factory _$_StoreProduct.fromJson(Map<String, dynamic> json) =>
-      _$$_StoreProductFromJson(json);
+  factory _$StoreProductImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StoreProductImplFromJson(json);
 
   /// Product Id.
   @override
@@ -424,7 +424,7 @@ class _$_StoreProduct implements _StoreProduct {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StoreProduct &&
+            other is _$StoreProductImpl &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.description, description) ||
@@ -474,12 +474,12 @@ class _$_StoreProduct implements _StoreProduct {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_StoreProductCopyWith<_$_StoreProduct> get copyWith =>
-      __$$_StoreProductCopyWithImpl<_$_StoreProduct>(this, _$identity);
+  _$$StoreProductImplCopyWith<_$StoreProductImpl> get copyWith =>
+      __$$StoreProductImplCopyWithImpl<_$StoreProductImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StoreProductToJson(
+    return _$$StoreProductImplToJson(
       this,
     );
   }
@@ -499,10 +499,10 @@ abstract class _StoreProduct implements StoreProduct {
       final SubscriptionOption? defaultOption,
       final List<SubscriptionOption>? subscriptionOptions,
       final String? presentedOfferingIdentifier,
-      final String? subscriptionPeriod}) = _$_StoreProduct;
+      final String? subscriptionPeriod}) = _$StoreProductImpl;
 
   factory _StoreProduct.fromJson(Map<String, dynamic> json) =
-      _$_StoreProduct.fromJson;
+      _$StoreProductImpl.fromJson;
 
   @override
 
@@ -565,6 +565,6 @@ abstract class _StoreProduct implements StoreProduct {
   String? get subscriptionPeriod;
   @override
   @JsonKey(ignore: true)
-  _$$_StoreProductCopyWith<_$_StoreProduct> get copyWith =>
+  _$$StoreProductImplCopyWith<_$StoreProductImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

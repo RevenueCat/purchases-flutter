@@ -74,11 +74,11 @@ class _$EntitlementInfosCopyWithImpl<$Res, $Val extends EntitlementInfos>
 }
 
 /// @nodoc
-abstract class _$$_EntitlementInfosCopyWith<$Res>
+abstract class _$$EntitlementInfosImplCopyWith<$Res>
     implements $EntitlementInfosCopyWith<$Res> {
-  factory _$$_EntitlementInfosCopyWith(
-          _$_EntitlementInfos value, $Res Function(_$_EntitlementInfos) then) =
-      __$$_EntitlementInfosCopyWithImpl<$Res>;
+  factory _$$EntitlementInfosImplCopyWith(_$EntitlementInfosImpl value,
+          $Res Function(_$EntitlementInfosImpl) then) =
+      __$$EntitlementInfosImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -86,11 +86,11 @@ abstract class _$$_EntitlementInfosCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_EntitlementInfosCopyWithImpl<$Res>
-    extends _$EntitlementInfosCopyWithImpl<$Res, _$_EntitlementInfos>
-    implements _$$_EntitlementInfosCopyWith<$Res> {
-  __$$_EntitlementInfosCopyWithImpl(
-      _$_EntitlementInfos _value, $Res Function(_$_EntitlementInfos) _then)
+class __$$EntitlementInfosImplCopyWithImpl<$Res>
+    extends _$EntitlementInfosCopyWithImpl<$Res, _$EntitlementInfosImpl>
+    implements _$$EntitlementInfosImplCopyWith<$Res> {
+  __$$EntitlementInfosImplCopyWithImpl(_$EntitlementInfosImpl _value,
+      $Res Function(_$EntitlementInfosImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -99,7 +99,7 @@ class __$$_EntitlementInfosCopyWithImpl<$Res>
     Object? all = null,
     Object? active = null,
   }) {
-    return _then(_$_EntitlementInfos(
+    return _then(_$EntitlementInfosImpl(
       null == all
           ? _value._all
           : all // ignore: cast_nullable_to_non_nullable
@@ -114,14 +114,14 @@ class __$$_EntitlementInfosCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_EntitlementInfos implements _EntitlementInfos {
-  const _$_EntitlementInfos(final Map<String, EntitlementInfo> all,
+class _$EntitlementInfosImpl implements _EntitlementInfos {
+  const _$EntitlementInfosImpl(final Map<String, EntitlementInfo> all,
       final Map<String, EntitlementInfo> active)
       : _all = all,
         _active = active;
 
-  factory _$_EntitlementInfos.fromJson(Map<String, dynamic> json) =>
-      _$$_EntitlementInfosFromJson(json);
+  factory _$EntitlementInfosImpl.fromJson(Map<String, dynamic> json) =>
+      _$$EntitlementInfosImplFromJson(json);
 
   /// Map of all EntitlementInfo (`EntitlementInfo`) objects (active and inactive)
   /// keyed by entitlement identifier.
@@ -158,7 +158,7 @@ class _$_EntitlementInfos implements _EntitlementInfos {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EntitlementInfos &&
+            other is _$EntitlementInfosImpl &&
             const DeepCollectionEquality().equals(other._all, _all) &&
             const DeepCollectionEquality().equals(other._active, _active));
   }
@@ -173,12 +173,13 @@ class _$_EntitlementInfos implements _EntitlementInfos {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_EntitlementInfosCopyWith<_$_EntitlementInfos> get copyWith =>
-      __$$_EntitlementInfosCopyWithImpl<_$_EntitlementInfos>(this, _$identity);
+  _$$EntitlementInfosImplCopyWith<_$EntitlementInfosImpl> get copyWith =>
+      __$$EntitlementInfosImplCopyWithImpl<_$EntitlementInfosImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_EntitlementInfosToJson(
+    return _$$EntitlementInfosImplToJson(
       this,
     );
   }
@@ -186,10 +187,10 @@ class _$_EntitlementInfos implements _EntitlementInfos {
 
 abstract class _EntitlementInfos implements EntitlementInfos {
   const factory _EntitlementInfos(final Map<String, EntitlementInfo> all,
-      final Map<String, EntitlementInfo> active) = _$_EntitlementInfos;
+      final Map<String, EntitlementInfo> active) = _$EntitlementInfosImpl;
 
   factory _EntitlementInfos.fromJson(Map<String, dynamic> json) =
-      _$_EntitlementInfos.fromJson;
+      _$EntitlementInfosImpl.fromJson;
 
   @override
 
@@ -203,6 +204,6 @@ abstract class _EntitlementInfos implements EntitlementInfos {
   Map<String, EntitlementInfo> get active;
   @override
   @JsonKey(ignore: true)
-  _$$_EntitlementInfosCopyWith<_$_EntitlementInfos> get copyWith =>
+  _$$EntitlementInfosImplCopyWith<_$EntitlementInfosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

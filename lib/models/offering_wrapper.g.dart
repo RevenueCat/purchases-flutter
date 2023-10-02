@@ -6,7 +6,7 @@ part of 'offering_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_Offering _$$_OfferingFromJson(Map json) => _$_Offering(
+_$OfferingImpl _$$OfferingImplFromJson(Map json) => _$OfferingImpl(
       json['identifier'] as String,
       json['serverDescription'] as String,
       (json['metadata'] as Map).map(
@@ -42,7 +42,7 @@ _$_Offering _$$_OfferingFromJson(Map json) => _$_Offering(
           : Package.fromJson(Map<String, dynamic>.from(json['weekly'] as Map)),
     );
 
-Map<String, dynamic> _$$_OfferingToJson(_$_Offering instance) =>
+Map<String, dynamic> _$$OfferingImplToJson(_$OfferingImpl instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'serverDescription': instance.serverDescription,

@@ -6,15 +6,16 @@ part of 'store_transaction.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_StoreTransaction _$$_StoreTransactionFromJson(Map json) =>
-    _$_StoreTransaction(
+_$StoreTransactionImpl _$$StoreTransactionImplFromJson(Map json) =>
+    _$StoreTransactionImpl(
       json['transactionIdentifier'] as String,
       _readRevenueCatIdentifier(json, 'revenueCatIdentifier') as String,
       json['productIdentifier'] as String,
       json['purchaseDate'] as String,
     );
 
-Map<String, dynamic> _$$_StoreTransactionToJson(_$_StoreTransaction instance) =>
+Map<String, dynamic> _$$StoreTransactionImplToJson(
+        _$StoreTransactionImpl instance) =>
     <String, dynamic>{
       'transactionIdentifier': instance.transactionIdentifier,
       'revenueCatIdentifier': instance.revenueCatIdentifier,
