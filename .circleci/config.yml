@@ -376,15 +376,7 @@ workflows:
       - ios-integration-test
       - macos-integration-test
       - android-integration-test-build
-      - hold:
-          type: approval
-          requires:
-            - android-integration-test-build
-          <<: *except-main-and-release
-      - run-firebase-tests:
-          requires:
-            - hold
-          <<: *except-main-and-release
+      - run-firebase-tests
 
   deploy:
     when:
