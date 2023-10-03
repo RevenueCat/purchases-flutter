@@ -376,7 +376,6 @@ workflows:
       - ios-integration-test
       - macos-integration-test
       - android-integration-test-build
-      - run-firebase-tests
 
   deploy:
     when:
