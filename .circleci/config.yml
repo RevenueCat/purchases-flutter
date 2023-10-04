@@ -19,14 +19,6 @@ aliases:
         ignore: /.*/
       branches:
         only: main
-  except-main-and-release: &except-main-and-release
-    filters:
-      tags:
-        ignore: /.*/
-      branches:
-        ignore:
-          - /^release\/.*/
-          - main
 
 orbs:
   android: circleci/android@0.2.1
