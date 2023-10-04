@@ -233,7 +233,8 @@ usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
                                      usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
-                                            dangerousSettings:nil];
+                                            dangerousSettings:nil
+                         shouldShowInAppMessagesAutomatically:YES];
     purchases.delegate = self;
 
     result(nil);
