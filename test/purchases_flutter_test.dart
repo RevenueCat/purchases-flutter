@@ -75,6 +75,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': false,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -956,6 +957,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': true,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -980,6 +982,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': true,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -1004,6 +1007,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': false,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -1029,6 +1033,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': true,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -1230,6 +1235,36 @@ void main() {
           'amazonUserID': 'amazonUserID_test',
           'isoCurrencyCode': null,
           'price': null,
+        },
+      ),
+    ]);
+  });
+
+  test(
+      'showStoreMessages works correctly when passing arguments',
+      () async {
+    await Purchases.showStoreMessages(
+      types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic},
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'showStoreMessages',
+        arguments: {
+          'types': [0,1,2],
+        },
+      ),
+    ]);
+  });
+
+  test(
+      'showStoreMessages works correctly when not passing arguments',
+      () async {
+    await Purchases.showStoreMessages();
+    expect(log, <Matcher>[
+      isMethodCall(
+        'showStoreMessages',
+        arguments: {
+          'types': null
         },
       ),
     ]);

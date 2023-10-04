@@ -41,6 +41,12 @@ class PurchasesConfiguration {
   """)
   bool usesStoreKit2IfAvailable = false;
 
+  /// Whether we should show store in-app messages automatically. Both Google Play and the App Store provide in-app
+  /// messages for some situations like billing issues. By default, those messages will be shown automatically.
+  /// This allows to disable that behavior, so you can display those messages at your convenience. For more information,
+  /// check: https://rev.cat/storekit-message and https://rev.cat/googleplayinappmessaging
+  bool shouldShowInAppMessagesAutomatically = true;
+
   /// Required to configure the plugin to be used in the Amazon Appstore.
   /// Values different to [Store.amazon] don't have any effect.
   Store? store;
