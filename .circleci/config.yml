@@ -276,14 +276,13 @@ jobs:
 
   macos-integration-test:
     description: "Run integration tests for Flutter"
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 14.3.1
+      xcode: 15.0.0
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - setup-flutter:
-          version: 3.3.10
+      - setup-flutter
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
