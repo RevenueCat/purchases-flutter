@@ -563,11 +563,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
         }
     } else {
         NSLog(@"[Purchases] Warning: tried to show in-app messages, but it's only available on iOS 16.0 or greater.");
-        resolve(nil);
+        result(nil);
     }
     #else
     NSLog(@"[Purchases] Warning: tried to show in-app messages, but it's only supported on iOS.");
-    resolve(nil);
+    result(nil);
     #endif
 
 }
