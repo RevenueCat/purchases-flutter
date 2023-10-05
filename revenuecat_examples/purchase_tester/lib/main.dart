@@ -36,7 +36,6 @@ Future<void> _configureSDK() async {
   } else {
     configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
   }
-  configuration.shouldShowInAppMessagesAutomatically = false;
   await Purchases.configure(configuration);
 
   await Purchases.enableAdServicesAttributionTokenCollection();
