@@ -21,7 +21,6 @@ class _PurchasesFlutterApiTest {
 
   void _checkConfigure() {
     PurchasesConfiguration configuration = PurchasesConfiguration("fakeApiKey");
-    configuration.apiKey = "fakeApiKey"
     configuration.appUserID = "fakeUserId";
     configuration.observerMode = false;
     configuration.shouldShowInAppMessagesAutomatically = true;
