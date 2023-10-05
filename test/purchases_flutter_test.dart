@@ -1264,7 +1264,7 @@ void main() {
       isMethodCall(
         'showInAppMessages',
         arguments: {
-          'types': null
+          'types': null,
         },
       ),
     ]);
