@@ -48,12 +48,18 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
         BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
+		BOOL shouldShowInAppMessagesAutomatically = YES;
+        id object = arguments[@"shouldShowInAppMessagesAutomatically"];
+        if (object != [NSNull null] && object != nil) {
+            shouldShowInAppMessagesAutomatically = [object boolValue];
+        }
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
                 observerMode:observerMode
        userDefaultsSuiteName:userDefaultsSuiteName
     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+    shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -201,6 +207,9 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSNumber *callbackID = arguments[@"callbackID"];
         [self startPromotedProductPurchase:callbackID
                                     result:result];
+    } else if ([@"showInAppMessages" isEqualToString:call.method]) {
+        NSArray<NSNumber*>* types = arguments[@"types"];
+        [self showInAppMessages:types result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else if ([@"setLogHandler" isEqualToString:call.method]) {
@@ -218,6 +227,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
           observerMode:(BOOL)observerMode
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
 usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
+shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -234,7 +244,7 @@ usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
                                         platformFlavorVersion:self.platformFlavorVersion
                                      usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
                                             dangerousSettings:nil
-                         shouldShowInAppMessagesAutomatically:YES];
+                         shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically];
     purchases.delegate = self;
 
     result(nil);
@@ -541,6 +551,30 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     RCStartPurchaseBlock makePurchaseBlock = [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
     [RCCommonFunctionality makeDeferredPurchase:makePurchaseBlock
                                 completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)showInAppMessages:(NSArray<NSNumber*>*)rawValues result:(FlutterResult)result {
+    #if TARGET_OS_IPHONE
+    if (@available(iOS 16.0, *)) {
+        if (rawValues == nil) {
+            [RCCommonFunctionality showStoreMessagesCompletion:^{
+                result(nil);
+            }];
+        } else {
+            NSSet *types = [[NSSet alloc] initWithArray:rawValues];
+            [RCCommonFunctionality showStoreMessagesForTypes:types completion:^{
+                result(nil);
+            }];
+        }
+    } else {
+        NSLog(@"[Purchases] Warning: tried to show in-app messages, but it's only available on iOS 16.0 or greater.");
+        result(nil);
+    }
+    #else
+    NSLog(@"[Purchases] Warning: tried to show in-app messages, but it's only supported on iOS.");
+    result(nil);
+    #endif
+
 }
 
 - (void)closeWithResult:(FlutterResult)result {

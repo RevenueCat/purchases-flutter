@@ -317,6 +317,14 @@ class CatsScreen extends StatelessWidget {
               },
               child: const Text('Begin refund for pro entitlement'),
             ),
+            ElevatedButton(
+              onPressed: () async {
+                // In order to defer in-app messages so they're only shown when this button is pressed, you must configure
+                // the SDK with `configuration.shouldShowInAppMessagesAutomatically = false;`
+                Purchases.showInAppMessages(types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic});
+              },
+              child: const Text('Show In-App Messages'),
+            ),
           ],
         )),
       );

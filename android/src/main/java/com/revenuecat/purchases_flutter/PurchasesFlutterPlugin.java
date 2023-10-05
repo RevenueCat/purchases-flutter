@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.revenuecat.purchases.DangerousSettings;
 import com.revenuecat.purchases.Purchases;
 import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.Store;
@@ -20,6 +22,7 @@ import com.revenuecat.purchases.hybridcommon.OnResultList;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
 import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
 import com.revenuecat.purchases.models.GoogleProrationMode;
+import com.revenuecat.purchases.models.InAppMessageType;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -136,7 +139,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
                 //noinspection unused
                 Boolean usesStoreKit2IfAvailable = call.argument("usesStoreKit2IfAvailable"); // iOS-only, unused.
-                setupPurchases(apiKey, appUserId, observerMode, useAmazon, result);
+                Boolean shouldShowInAppMessagesAutomatically = call.argument("shouldShowInAppMessagesAutomatically");
+                setupPurchases(apiKey, appUserId, observerMode, useAmazon, shouldShowInAppMessagesAutomatically, result);
                 break;
             case "setFinishTransactions":
                 Boolean finishTransactions = call.argument("finishTransactions");
@@ -334,6 +338,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setLogHandler":
                 setLogHandler(result);
                 break;
+            case "showInAppMessages":
+                ArrayList<Integer> types = call.argument("types");
+                showInAppMessages(types, result);
+                break;
             case "syncObserverModeAmazonPurchase":
                 String productID = call.argument("productID");
                 String receiptID = call.argument("receiptID");
@@ -350,7 +358,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
-                                @Nullable Boolean useAmazon, final Result result) {
+                                @Nullable Boolean useAmazon, @Nullable Boolean shouldShowInAppMessagesAutomatically, final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
             Store store = Store.PLAY_STORE;
@@ -358,7 +366,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 store = Store.AMAZON;
             }
             CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode,
-                    platformInfo, store);
+                    platformInfo, store, new DangerousSettings(),shouldShowInAppMessagesAutomatically);
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {
@@ -683,6 +691,29 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             invokeChannelMethodOnUiThread(LOG_HANDLER_EVENT, logData);
             return null;
         });
+        result.success(null);
+    }
+
+    private void showInAppMessages(final ArrayList<Integer> messageTypes, final Result result) {
+        if (messageTypes == null) {
+            CommonKt.showInAppMessagesIfNeeded(activity);
+        } else {
+            ArrayList<InAppMessageType> messageTypesList = new ArrayList<>();
+            InAppMessageType[] inAppMessageTypes = InAppMessageType.values();
+            for (int i = 0; i < messageTypes.size(); i++) {
+                int messageTypeInt = messageTypes.get(i);
+                InAppMessageType messageType = null;
+                if (messageTypeInt < inAppMessageTypes.length) {
+                    messageType = inAppMessageTypes[messageTypeInt];
+                }
+                if (messageType != null) {
+                    messageTypesList.add(messageType);
+                } else {
+                    Log.e("RNPurchases", "Unsupported in-app message type: " + messageTypeInt);
+                }
+            }
+            CommonKt.showInAppMessagesIfNeeded(activity, messageTypesList);
+        }
         result.success(null);
     }
 

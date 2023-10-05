@@ -75,6 +75,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': false,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -956,6 +957,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': true,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -980,6 +982,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': true,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -1004,6 +1007,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': false,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -1029,6 +1033,7 @@ void main() {
             'userDefaultsSuiteName': null,
             'useAmazon': true,
             'usesStoreKit2IfAvailable': false,
+            'shouldShowInAppMessagesAutomatically': true,
           },
         ),
       ],
@@ -1230,6 +1235,36 @@ void main() {
           'amazonUserID': 'amazonUserID_test',
           'isoCurrencyCode': null,
           'price': null,
+        },
+      ),
+    ]);
+  });
+
+  test(
+      'showInAppMessages works correctly when passing arguments',
+      () async {
+    await Purchases.showInAppMessages(
+      types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic},
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'showInAppMessages',
+        arguments: {
+          'types': [0,1,2],
+        },
+      ),
+    ]);
+  });
+
+  test(
+      'showInAppMessages works correctly when not passing arguments',
+      () async {
+    await Purchases.showInAppMessages();
+    expect(log, <Matcher>[
+      isMethodCall(
+        'showInAppMessages',
+        arguments: {
+          'types': null,
         },
       ),
     ]);

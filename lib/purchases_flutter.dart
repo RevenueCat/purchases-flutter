@@ -143,6 +143,7 @@ class Purchases {
           'usesStoreKit2IfAvailable':
               // ignore: deprecated_member_use_from_same_package
               purchasesConfiguration.usesStoreKit2IfAvailable,
+          'shouldShowInAppMessagesAutomatically': purchasesConfiguration.shouldShowInAppMessagesAutomatically,
         },
       );
 
@@ -985,6 +986,21 @@ class Purchases {
     );
   }
 
+  /// Displays the specified store in-app message types to the user if there are any available to be shown.
+  /// - Important: This should only be used if you disabled these messages from showing automatically
+  /// during SDK configuration setting ``shouldShowInAppMessagesAutomatically`` to ``false``.
+  ///
+  /// @param [types] The types of messages to show.
+  static Future<void> showInAppMessages({
+    Set<InAppMessageType>? types,
+  }) =>
+      _channel.invokeMethod(
+        'showInAppMessages',
+        {
+          'types': types?.map((e) => e.index).toList(),
+        },
+      );
+
   static Future<CustomerInfo> _invokeReturningCustomerInfo(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
@@ -1076,6 +1092,22 @@ enum RefundRequestStatus {
 
   /// There was an error with the request. See message for more details.
   error
+}
+
+/// Enum for in-app message types.
+/// This can be used if you disable automatic in-app message from showing automatically.
+/// Then, you can pass what type of messages you want to show in the `showInAppMessages`
+/// method in Purchases.
+enum InAppMessageType {
+  /// In-app messages to indicate there has been a billing issue charging the user.
+  billingIssue,
+
+  /// iOS-only. This message will show if you increase the price of a subscription and
+  /// the user needs to opt-in to the increase.
+  priceIncreaseConsent,
+
+  /// iOS-only. StoreKit generic messages.
+  generic
 }
 
 /// Log levels.
