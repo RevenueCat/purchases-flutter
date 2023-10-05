@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -693,15 +694,25 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void showStoreMessages(final ArrayList<Integer> types, final Result result) {
-        if (types == null) {
+    private void showStoreMessages(final ArrayList<Integer> messageTypes, final Result result) {
+        if (messageTypes == null) {
             CommonKt.showInAppMessagesIfNeeded(activity);
         } else {
-            ArrayList<InAppMessageType> inAppMessageTypes = new ArrayList<>();
-            for (Integer type : types) {
-                inAppMessageTypes.add(InAppMessageType.values()[type]);
+            ArrayList<InAppMessageType> messageTypesList = new ArrayList<>();
+            InAppMessageType[] inAppMessageTypes = InAppMessageType.values();
+            for (int i = 0; i < messageTypes.size(); i++) {
+                int messageTypeInt = messageTypes.get(i);
+                InAppMessageType messageType = null;
+                if (messageTypeInt < inAppMessageTypes.length) {
+                    messageType = inAppMessageTypes[messageTypeInt];
+                }
+                if (messageType != null) {
+                    messageTypesList.add(messageType);
+                } else {
+                    Log.e("RNPurchases", "Invalid in-app message type: " + messageTypeInt);
+                }
             }
-            CommonKt.showInAppMessagesIfNeeded(activity, inAppMessageTypes);
+            CommonKt.showInAppMessagesIfNeeded(activity, messageTypesList);
         }
         result.success(null);
     }
