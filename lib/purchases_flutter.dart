@@ -988,14 +988,14 @@ class Purchases {
 
   /// Displays the specified store in-app message types to the user if there are any available to be shown.
   /// - Important: This should only be used if you disabled these messages from showing automatically
-  /// during SDK configuration setting ``showStoreMessagesAutomatically`` to ``false``.
+  /// during SDK configuration setting ``shouldShowInAppMessagesAutomatically`` to ``false``.
   ///
   /// @param [types] The types of messages to show.
-  static Future<void> showStoreMessages({
+  static Future<void> showInAppMessages({
     Set<InAppMessageType>? types,
   }) =>
       _channel.invokeMethod(
-        'showStoreMessages',
+        'showInAppMessages',
         {
           'types': types?.map((e) => e.index).toList(),
         },

@@ -338,9 +338,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setLogHandler":
                 setLogHandler(result);
                 break;
-            case "showStoreMessages":
+            case "showInAppMessages":
                 ArrayList<Integer> types = call.argument("types");
-                showStoreMessages(types, result);
+                showInAppMessages(types, result);
                 break;
             case "syncObserverModeAmazonPurchase":
                 String productID = call.argument("productID");
@@ -694,7 +694,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void showStoreMessages(final ArrayList<Integer> messageTypes, final Result result) {
+    private void showInAppMessages(final ArrayList<Integer> messageTypes, final Result result) {
         if (messageTypes == null) {
             CommonKt.showInAppMessagesIfNeeded(activity);
         } else {

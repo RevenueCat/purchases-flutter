@@ -203,9 +203,9 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSNumber *callbackID = arguments[@"callbackID"];
         [self startPromotedProductPurchase:callbackID
                                     result:result];
-    } else if ([@"showStoreMessages" isEqualToString:call.method]) {
+    } else if ([@"showInAppMessages" isEqualToString:call.method]) {
         NSSet<NSNumber*>* types = arguments[@"types"];
-        [self showStoreMessages:types result:result];
+        [self showInAppMessages:types result:result];
     } else if ([@"close" isEqualToString:call.method]) {
         [self closeWithResult:result];
     } else if ([@"setLogHandler" isEqualToString:call.method]) {
@@ -549,7 +549,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                 completionBlock:[self getResponseCompletionBlock:result]];
 }
 
-- (void)showStoreMessages:(NSSet<NSNumber*>*)rawValues result:(FlutterResult)result {
+- (void)showInAppMessages:(NSSet<NSNumber*>*)rawValues result:(FlutterResult)result {
     #if TARGET_OS_IPHONE
     if (@available(iOS 16.0, *)) {
         if (rawValues == nil) {

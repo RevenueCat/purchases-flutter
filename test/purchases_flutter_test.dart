@@ -1241,14 +1241,14 @@ void main() {
   });
 
   test(
-      'showStoreMessages works correctly when passing arguments',
+      'showInAppMessages works correctly when passing arguments',
       () async {
-    await Purchases.showStoreMessages(
+    await Purchases.showInAppMessages(
       types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic},
     );
     expect(log, <Matcher>[
       isMethodCall(
-        'showStoreMessages',
+        'showInAppMessages',
         arguments: {
           'types': [0,1,2],
         },
@@ -1257,12 +1257,12 @@ void main() {
   });
 
   test(
-      'showStoreMessages works correctly when not passing arguments',
+      'showInAppMessages works correctly when not passing arguments',
       () async {
-    await Purchases.showStoreMessages();
+    await Purchases.showInAppMessages();
     expect(log, <Matcher>[
       isMethodCall(
-        'showStoreMessages',
+        'showInAppMessages',
         arguments: {
           'types': null
         },
