@@ -319,7 +319,7 @@ class CatsScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                Purchases.showStoreMessages(types: {InAppMessageType.billingIssue});
+                Purchases.showStoreMessages(types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic});
               },
               child: const Text('Show In-App Messages'),
             ),
