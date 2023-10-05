@@ -709,7 +709,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 if (messageType != null) {
                     messageTypesList.add(messageType);
                 } else {
-                    Log.e("RNPurchases", "Invalid in-app message type: " + messageTypeInt);
+                    Log.e("RNPurchases", "Unsupported in-app message type: " + messageTypeInt);
                 }
             }
             CommonKt.showInAppMessagesIfNeeded(activity, messageTypesList);
