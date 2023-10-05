@@ -21,6 +21,13 @@ class _PurchasesFlutterApiTest {
 
   void _checkConfigure() {
     PurchasesConfiguration configuration = PurchasesConfiguration("fakeApiKey");
+    configuration.apiKey = "fakeApiKey"
+    configuration.appUserID = "fakeUserId";
+    configuration.observerMode = false;
+    configuration.shouldShowInAppMessagesAutomatically = true;
+    configuration.store = Store.amazon;
+    configuration.userDefaultsSuiteName = "fakeSuiteName";
+    configuration.usesStoreKit2IfAvailable = true;
     Future<void> callback = Purchases.configure(configuration);
   }
 
@@ -493,5 +500,10 @@ class _PurchasesFlutterApiTest {
       String amazonUserID, String? isoCurrencyCode, double? price) async {
     Future<void> future = Purchases.syncObserverModeAmazonPurchase(
         productID, receiptID, amazonUserID, isoCurrencyCode, price);
+  }
+
+  void _showInAppMessages() async {
+    Future<void> future = Purchases.showInAppMessages(types: {InAppMessageType.billingIssue,
+      InAppMessageType.priceIncreaseConsent, InAppMessageType.generic});
   }
 }
