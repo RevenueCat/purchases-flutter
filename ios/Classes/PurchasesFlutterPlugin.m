@@ -48,7 +48,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
         BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
-        BOOL shouldShowInAppMessagesAutomatically = [arguments[@"shouldShowInAppMessagesAutomatically"] boolValue];
+		BOOL shouldShowInAppMessagesAutomatically = YES;
+        id object = arguments[@"shouldShowInAppMessagesAutomatically"];
+        if (object != [NSNull null] && object != nil) {
+            shouldShowInAppMessagesAutomatically = [object boolValue];
+        }
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
