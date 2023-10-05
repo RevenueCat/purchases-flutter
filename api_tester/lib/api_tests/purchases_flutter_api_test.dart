@@ -445,6 +445,15 @@ class _PurchasesFlutterApiTest {
     }
   }
 
+  void _checkInAppMessageType(InAppMessageType messageType) {
+    switch (messageType) {
+      case InAppMessageType.billingIssue:
+      case InAppMessageType.priceIncreaseConsent:
+      case InAppMessageType.generic:
+        break;
+    }
+  }
+
   void _checkIntroEligibility() {
     Map<String, dynamic> json = Map.identity();
     IntroEligibility introEligibility = IntroEligibility.fromJson(json);
