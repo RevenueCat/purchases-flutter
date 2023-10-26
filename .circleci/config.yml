@@ -275,35 +275,15 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install cocoapods
+          name: Install Cocoapods
           command: |
-            # Manually install cocoapods until > 1.13.0 is released
-            # https://github.com/CocoaPods/CocoaPods/issues/12089
+            # This is needed because Flutter doesn't use 'bundle exec'
 
-            # Uninstall all CircleCI cocoapods versinos
+            # Uninstalling preinstalled CircleCI cocoapods
             gem uninstall -aIx cocoapods
 
-            # Create a temporary directory
-            mkdir -p ~/tmp_gem_install
-
-            # Change to the temporary directory
-            cd ~/tmp_gem_install
-
-            # Clone the Git repository
-            git clone https://github.com/CocoaPods/CocoaPods.git
-            git checkout 603eb91369b924b0f219193007ba0934d8bf1e96
-
-            # Change to the cloned repository directory
-            cd cocoapods
-
-            # Build the gem
-            gem build cocoapods.gemspec
-
-            # Install the gem in the temporary directory
-            gem install cocoapods-1.13.0.gem
-
-            # Verify it works
-            pod --version
+            # Need >= 1.14.0 to prevent ActiveSupport crash
+            gem install cocoapods -v '>= 1.14.0'
       - setup-flutter
       - replace-api-key
       - build-flutter-project:
