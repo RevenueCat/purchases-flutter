@@ -227,7 +227,7 @@ end
 
 def build_api_tester_apk
   Dir.chdir("../api_tester") do
-    sh("flutter", "build", "apk", "--debug")
+    sh("flutter", "build", "apk", "--debug", "--multidex")
   end
 end
 
