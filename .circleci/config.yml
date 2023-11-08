@@ -195,7 +195,7 @@ jobs:
       - run:
           working_directory: api_tester
           name: Run API tests
-          command: flutter build apk --debug --multidex
+          command: y | flutter build apk --debug --multidex
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
