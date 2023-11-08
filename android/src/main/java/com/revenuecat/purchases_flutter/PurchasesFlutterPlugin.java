@@ -1,5 +1,7 @@
 package com.revenuecat.purchases_flutter;
 
+import static com.revenuecat.purchases.hybridcommon.PaywallHelpersKt.presentPaywallFromFragment;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -8,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 import com.revenuecat.purchases.DangerousSettings;
 import com.revenuecat.purchases.Purchases;
@@ -43,7 +46,8 @@ import kotlin.UninitializedPropertyAccessException;
  * PurchasesFlutterPlugin
  */
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
-    private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
+    private static final String TAG = "PurchasesFlutter";
+    private static final String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
     private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
     protected static final String LOG_HANDLER_EVENT = "Purchases-LogHandlerEvent";
@@ -124,6 +128,17 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     public Activity getActivity() {
         return registrar != null ? registrar.activity() : activity;
+    }
+
+    private @Nullable PurchasesFlutterActivity getActivityFragment() {
+        final Activity activity = getActivity();
+
+        if (activity instanceof PurchasesFlutterActivity) {
+            return (PurchasesFlutterActivity) activity;
+        } else {
+            Log.e(TAG, "Paywalls require your activity to subclass FlutterFragmentActivity");
+            return null;
+        }
     }
 
     @Override
@@ -350,6 +365,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 syncObserverModeAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
                         price, result);
                 break;
+            case "presentPaywall":
+                presentPaywall(result, null);
+                break;
+            case "presentPaywallIfNeeded":
+                final String requiredEntitlementIdentifier = call.argument("requiredEntitlementIdentifier");
+                presentPaywall(result, requiredEntitlementIdentifier);
             default:
                 result.notImplemented();
                 break;
@@ -708,12 +729,19 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 if (messageType != null) {
                     messageTypesList.add(messageType);
                 } else {
-                    Log.e("RNPurchases", "Unsupported in-app message type: " + messageTypeInt);
+                    Log.e(TAG, "Unsupported in-app message type: " + messageTypeInt);
                 }
             }
             CommonKt.showInAppMessagesIfNeeded(activity, messageTypesList);
         }
         result.success(null);
+    }
+
+    private void presentPaywall(final Result result, final @Nullable String requiredEntitlementIdentifier) {
+        final PurchasesFlutterActivity fragment = getActivityFragment();
+        if (fragment != null) {
+            fragment.presentPaywall(result, requiredEntitlementIdentifier);
+        }
     }
 
     private void runOnUiThread(Runnable runnable) {

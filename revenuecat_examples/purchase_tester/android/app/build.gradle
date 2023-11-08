@@ -36,7 +36,8 @@ android {
 
     defaultConfig {
         applicationId "com.revenuecat.purchases_sample"
-        minSdkVersion flutter.minSdkVersion
+        // TODO: change
+        minSdkVersion 24
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

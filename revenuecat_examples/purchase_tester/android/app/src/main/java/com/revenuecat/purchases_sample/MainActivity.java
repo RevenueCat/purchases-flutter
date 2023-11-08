@@ -1,6 +1,6 @@
 package com.revenuecat.purchases_sample;
 
-import io.flutter.embedding.android.FlutterActivity;
+import com.revenuecat.purchases_flutter.PurchasesFlutterActivity;
 
-public class MainActivity extends FlutterActivity {
+public class MainActivity extends PurchasesFlutterActivity {
 }

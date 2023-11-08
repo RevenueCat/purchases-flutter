@@ -217,6 +217,10 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     } else if ([@"syncObserverModeAmazonPurchase" isEqualToString:call.method]) {
         // NOOP
         result(nil);
+    } else if ([@"presentPaywall" isEqualToString:call.method]) {
+        [self presentPaywallWithResult:result requiredEntitlementIdentifier:nil];
+    } else if ([@"presentPaywallIfNeeded" isEqualToString:call.method]) {
+        [self presentPaywallWithResult:result requiredEntitlementIdentifier:arguments[@"requiredEntitlementIdentifier"]];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -590,6 +594,28 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     }];
     result(nil);
 }
+
+#pragma mark -
+#pragma mark Paywalls
+
+- (void)presentPaywallWithResult:(FlutterResult)result requiredEntitlementIdentifier:(NSString * _Nullable)requiredEntitlementIdentifier {
+    #if TARGET_OS_IPHONE
+    if (@available(iOS 15.0, *)) {
+        if (requiredEntitlementIdentifier) {
+            [PaywallProxy presentPaywallIfNeededWithRequiredEntitlementIdentifier:requiredEntitlementIdentifier];
+        } else {
+            [PaywallProxy presentPaywall];
+        }
+    } else {
+        NSLog(@"[Purchases] Warning: tried to display paywall, but it's only available on iOS 15.0 or greater.");
+    }
+    #else
+    NSLog(@"[Purchases] Warning: tried to display paywall, but it's only available on iOS 15.0 or greater.");
+    #endif
+
+    result(nil);
+}
+
 
 #pragma mark -
 #pragma mark Delegate Methods
