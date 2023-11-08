@@ -190,6 +190,9 @@ jobs:
       - install-sdkman
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
+      - run:
+          name: Flutter doctor
+          command: flutter doctor -v
       - flutter-get-dependencies:
           project: api_tester
       - run:
