@@ -193,10 +193,6 @@ jobs:
       - flutter-get-dependencies:
           project: api_tester
       - run:
-          working_directory: api_tester
-          name: Run API tests
-          command: y | flutter build apk --debug --multidex
-      - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
 
