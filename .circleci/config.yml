@@ -190,11 +190,12 @@ jobs:
       - install-sdkman
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
-      - run:
-          name: Flutter doctor
-          command: flutter doctor -v
       - flutter-get-dependencies:
           project: api_tester
+      - run:
+          working_directory: api_tester
+          name: Run API tests
+          command: flutter build apk --debug --multidex
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
