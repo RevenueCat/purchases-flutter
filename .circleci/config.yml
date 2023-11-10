@@ -164,8 +164,8 @@ jobs:
     steps:
       - checkout
       - macos/preboot-simulator:
-          device: iPhone 11 Pro
-          version: '14.3'
+          device: iPhone 12 Pro
+          version: '15.0'
       - setup-flutter
       - replace-api-key
       - build-flutter-project:
