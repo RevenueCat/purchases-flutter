@@ -190,6 +190,8 @@ jobs:
       - install-sdkman
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
+      - flutter-get-dependencies:
+          project: api_tester
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests

@@ -936,6 +936,17 @@ class Purchases {
     _logHandler?.call(logLevel, msg);
   }
 
+  static Future<bool> presentPaywall() async =>
+      await _channel.invokeMethod('presentPaywall');
+
+  static Future<bool> presentPaywallIfNeeded(
+    String requiredEntitlementIdentifier,
+  ) async =>
+      await _channel.invokeMethod(
+        'presentPaywallIfNeeded',
+        {'requiredEntitlementIdentifier': requiredEntitlementIdentifier},
+      );
+
   /// This method will send a purchase to the RevenueCat backend. This function should only be called if you are
   /// in Amazon observer mode or performing a client side migration of your current users to RevenueCat.
   ///
