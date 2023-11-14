@@ -38,14 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".EmbeddingV1Activity"
-            android:exported="true"
-            android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
         <meta-data android:name="flutterEmbedding" android:value="2"/>
     </application>
 </manifest>
