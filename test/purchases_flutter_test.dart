@@ -1269,4 +1269,29 @@ void main() {
       ),
     ]);
   });
+
+  test('presentPaywall', () async {
+    response = Random().nextBool();
+    await Purchases.presentPaywall();
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywall',
+        arguments: null,
+      ),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded', () async {
+    response = Random().nextBool();
+    const entitlement = 'pro';
+    await Purchases.presentPaywallIfNeeded(entitlement);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': entitlement,
+        },
+      ),
+    ]);
+  });
 }

@@ -512,4 +512,9 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.showInAppMessages(types: {InAppMessageType.billingIssue,
       InAppMessageType.priceIncreaseConsent, InAppMessageType.generic});
   }
+
+  void _checkPaywalls() async {
+    Future<bool> future1 = Purchases.presentPaywall();
+    Future<bool> future2 = Purchases.presentPaywallIfNeeded("test");
+  }
 }
