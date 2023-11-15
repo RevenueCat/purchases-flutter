@@ -1,3 +1,28 @@
+## 6.3.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 7.3.3 (#864) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 7.2.3](https://github.com/RevenueCat/purchases-android/releases/tag/7.2.3)
+  * [Android 7.2.2](https://github.com/RevenueCat/purchases-android/releases/tag/7.2.2)
+  * [Android 7.2.1](https://github.com/RevenueCat/purchases-android/releases/tag/7.2.1)
+  * [Android 7.2.0](https://github.com/RevenueCat/purchases-android/releases/tag/7.2.0)
+  * [Android 7.1.1](https://github.com/RevenueCat/purchases-android/releases/tag/7.1.1)
+  * [Android 7.1.0](https://github.com/RevenueCat/purchases-android/releases/tag/7.1.0)
+  * [Android 7.1.0-beta.2](https://github.com/RevenueCat/purchases-android/releases/tag/7.1.0-beta.2)
+  * [Android 7.1.0-beta.1](https://github.com/RevenueCat/purchases-android/releases/tag/7.1.0-beta.1)
+  * [iOS 4.30.5](https://github.com/RevenueCat/purchases-ios/releases/tag/4.30.5)
+  * [iOS 4.30.4](https://github.com/RevenueCat/purchases-ios/releases/tag/4.30.4)
+  * [iOS 4.30.3](https://github.com/RevenueCat/purchases-ios/releases/tag/4.30.3)
+  * [iOS 4.30.2](https://github.com/RevenueCat/purchases-ios/releases/tag/4.30.2)
+  * [iOS 4.30.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.30.1)
+  * [iOS 4.30.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.30.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 7.3.2 (#859) via RevenueCat Git Bot (@RCGitBot)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 7.3.0 (#850) via RevenueCat Git Bot (@RCGitBot)
+### Other Changes
+* `Purchase Tester`: remove unused `Activity` (#860) via NachoSoto (@NachoSoto)
+* Remove `.common_version` (#861) via NachoSoto (@NachoSoto)
+* Add `3.10.1` to `VERSIONS` (#858) via NachoSoto (@NachoSoto)
+* Remove unused GoogleProrationMode import (#848) via Toni Rico (@tonidero)
+
 ## 6.2.0
 ### Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 7.2.0 (#844) via RevenueCat Git Bot (@RCGitBot)
