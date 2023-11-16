@@ -317,20 +317,6 @@ jobs:
           name: Dry Run Release
           command: flutter pub publish --dry-run
 
-  prepare-next-version:
-    description: "Creates a PR with the new snapshot version"
-    docker:
-      - image: cimg/ruby:3.1.2
-    steps:
-      - checkout
-      - revenuecat/install-gem-unix-dependencies:
-          cache-version: v1
-      - revenuecat/trust-github-key
-      - revenuecat/setup-git-credentials
-      - run:
-          name: Prepare next version
-          command: bundle exec fastlane prepare_next_version
-
   update-hybrid-common-versions:
     description: "Creates a PR updating purchases-hybrid-common to latest release"
     docker:
@@ -403,13 +389,6 @@ workflows:
             - hold
           <<: *release-branches
       - make-release: *release-tags
-  snapshot-bump:
-    when:
-      not:
-        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
-    jobs:
-      - prepare-next-version:
-          <<: *only-main-branch
   weekly-run-workflow:
     when:
       and:
