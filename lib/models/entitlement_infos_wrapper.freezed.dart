@@ -28,6 +28,10 @@ mixin _$EntitlementInfos {
   /// entitlement identifier.
   Map<String, EntitlementInfo> get active => throw _privateConstructorUsedError;
 
+  /// If entitlement verification was enabled, the result of that verification.
+  /// If not, `VerificationResult.NOT_REQUESTED`.
+  VerificationResult get verification => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $EntitlementInfosCopyWith<EntitlementInfos> get copyWith =>
@@ -41,7 +45,9 @@ abstract class $EntitlementInfosCopyWith<$Res> {
       _$EntitlementInfosCopyWithImpl<$Res, EntitlementInfos>;
   @useResult
   $Res call(
-      {Map<String, EntitlementInfo> all, Map<String, EntitlementInfo> active});
+      {Map<String, EntitlementInfo> all,
+      Map<String, EntitlementInfo> active,
+      VerificationResult verification});
 }
 
 /// @nodoc
@@ -59,6 +65,7 @@ class _$EntitlementInfosCopyWithImpl<$Res, $Val extends EntitlementInfos>
   $Res call({
     Object? all = null,
     Object? active = null,
+    Object? verification = null,
   }) {
     return _then(_value.copyWith(
       all: null == all
@@ -69,6 +76,10 @@ class _$EntitlementInfosCopyWithImpl<$Res, $Val extends EntitlementInfos>
           ? _value.active
           : active // ignore: cast_nullable_to_non_nullable
               as Map<String, EntitlementInfo>,
+      verification: null == verification
+          ? _value.verification
+          : verification // ignore: cast_nullable_to_non_nullable
+              as VerificationResult,
     ) as $Val);
   }
 }
@@ -82,7 +93,9 @@ abstract class _$$EntitlementInfosImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Map<String, EntitlementInfo> all, Map<String, EntitlementInfo> active});
+      {Map<String, EntitlementInfo> all,
+      Map<String, EntitlementInfo> active,
+      VerificationResult verification});
 }
 
 /// @nodoc
@@ -98,6 +111,7 @@ class __$$EntitlementInfosImplCopyWithImpl<$Res>
   $Res call({
     Object? all = null,
     Object? active = null,
+    Object? verification = null,
   }) {
     return _then(_$EntitlementInfosImpl(
       null == all
@@ -108,6 +122,10 @@ class __$$EntitlementInfosImplCopyWithImpl<$Res>
           ? _value._active
           : active // ignore: cast_nullable_to_non_nullable
               as Map<String, EntitlementInfo>,
+      null == verification
+          ? _value.verification
+          : verification // ignore: cast_nullable_to_non_nullable
+              as VerificationResult,
     ));
   }
 }
@@ -116,7 +134,7 @@ class __$$EntitlementInfosImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$EntitlementInfosImpl implements _EntitlementInfos {
   const _$EntitlementInfosImpl(final Map<String, EntitlementInfo> all,
-      final Map<String, EntitlementInfo> active)
+      final Map<String, EntitlementInfo> active, this.verification)
       : _all = all,
         _active = active;
 
@@ -149,9 +167,14 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
     return EqualUnmodifiableMapView(_active);
   }
 
+  /// If entitlement verification was enabled, the result of that verification.
+  /// If not, `VerificationResult.NOT_REQUESTED`.
+  @override
+  final VerificationResult verification;
+
   @override
   String toString() {
-    return 'EntitlementInfos(all: $all, active: $active)';
+    return 'EntitlementInfos(all: $all, active: $active, verification: $verification)';
   }
 
   @override
@@ -160,7 +183,9 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
         (other.runtimeType == runtimeType &&
             other is _$EntitlementInfosImpl &&
             const DeepCollectionEquality().equals(other._all, _all) &&
-            const DeepCollectionEquality().equals(other._active, _active));
+            const DeepCollectionEquality().equals(other._active, _active) &&
+            (identical(other.verification, verification) ||
+                other.verification == verification));
   }
 
   @JsonKey(ignore: true)
@@ -168,7 +193,8 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_all),
-      const DeepCollectionEquality().hash(_active));
+      const DeepCollectionEquality().hash(_active),
+      verification);
 
   @JsonKey(ignore: true)
   @override
@@ -186,8 +212,10 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
 }
 
 abstract class _EntitlementInfos implements EntitlementInfos {
-  const factory _EntitlementInfos(final Map<String, EntitlementInfo> all,
-      final Map<String, EntitlementInfo> active) = _$EntitlementInfosImpl;
+  const factory _EntitlementInfos(
+      final Map<String, EntitlementInfo> all,
+      final Map<String, EntitlementInfo> active,
+      final VerificationResult verification) = _$EntitlementInfosImpl;
 
   factory _EntitlementInfos.fromJson(Map<String, dynamic> json) =
       _$EntitlementInfosImpl.fromJson;
@@ -202,6 +230,11 @@ abstract class _EntitlementInfos implements EntitlementInfos {
   /// Map of active EntitlementInfo (`EntitlementInfo`) objects keyed by
   /// entitlement identifier.
   Map<String, EntitlementInfo> get active;
+  @override
+
+  /// If entitlement verification was enabled, the result of that verification.
+  /// If not, `VerificationResult.NOT_REQUESTED`.
+  VerificationResult get verification;
   @override
   @JsonKey(ignore: true)
   _$$EntitlementInfosImplCopyWith<_$EntitlementInfosImpl> get copyWith =>

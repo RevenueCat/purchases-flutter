@@ -21,3 +21,4 @@ export 'models/store_product_wrapper.dart';
 export 'models/store_transaction.dart';
 export 'models/subscription_option_wrapper.dart';
 export 'models/upgrade_info.dart';
+export 'models/verification_result.dart';

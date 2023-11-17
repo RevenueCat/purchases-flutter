@@ -1,9 +1,6 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 /// Enum of entitlement verification modes
 enum EntitlementVerificationMode {
   /// The SDK will not perform any entitlement verification.
-  @JsonValue('DISABLED')
   disabled,
 
   /// Enable entitlement verification.
@@ -14,10 +11,19 @@ enum EntitlementVerificationMode {
   ///
   /// This can be useful if you want to handle verification failures to display an error/warning to the user
   /// or to track this situation but still grant access.
-  @JsonValue('INFORMATIONAL')
   informational,
 
   // Disabled temporarily until ENFORCED is supported.
-  // @JsonValue('ENFORCED')
   // enforced
+}
+
+extension EntitlementVerificationModeExtension on EntitlementVerificationMode {
+  String get name {
+    switch (this) {
+      case EntitlementVerificationMode.disabled:
+        return 'DISABLED';
+      case EntitlementVerificationMode.informational:
+        return 'INFORMATIONAL';
+    }
+  }
 }

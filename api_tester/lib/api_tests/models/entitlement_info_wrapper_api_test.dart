@@ -76,5 +76,6 @@ class _EntitlementInfoApiTest {
     String? expirationDate = info.expirationDate;
     String? unsubscribeDetectedAt = info.unsubscribeDetectedAt;
     String? billingIssueDetectedAt = info.billingIssueDetectedAt;
+    VerificationResult verificationResult = info.verification;
   }
 }

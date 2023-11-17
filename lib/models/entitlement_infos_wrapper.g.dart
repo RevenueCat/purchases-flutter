@@ -16,6 +16,7 @@ _$EntitlementInfosImpl _$$EntitlementInfosImplFromJson(Map json) =>
         (k, e) => MapEntry(k as String,
             EntitlementInfo.fromJson(Map<String, dynamic>.from(e as Map))),
       ),
+      $enumDecode(_$VerificationResultEnumMap, json['verification']),
     );
 
 Map<String, dynamic> _$$EntitlementInfosImplToJson(
@@ -23,4 +24,12 @@ Map<String, dynamic> _$$EntitlementInfosImplToJson(
     <String, dynamic>{
       'all': instance.all.map((k, e) => MapEntry(k, e.toJson())),
       'active': instance.active.map((k, e) => MapEntry(k, e.toJson())),
+      'verification': _$VerificationResultEnumMap[instance.verification]!,
     };
+
+const _$VerificationResultEnumMap = {
+  VerificationResult.notRequested: 'NOT_REQUESTED',
+  VerificationResult.verified: 'VERIFIED',
+  VerificationResult.verifiedOnDevice: 'VERIFIED_ON_DEVICE',
+  VerificationResult.failed: 'FAILED',
+};

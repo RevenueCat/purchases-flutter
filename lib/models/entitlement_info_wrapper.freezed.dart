@@ -74,6 +74,10 @@ mixin _$EntitlementInfo {
   /// Check the [isActive] property.
   String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
 
+  /// If entitlement verification was enabled, the result of that verification.
+  /// If not, `VerificationResult.NOT_REQUESTED`.
+  VerificationResult get verification => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $EntitlementInfoCopyWith<EntitlementInfo> get copyWith =>
@@ -101,7 +105,8 @@ abstract class $EntitlementInfoCopyWith<$Res> {
       PeriodType periodType,
       String? expirationDate,
       String? unsubscribeDetectedAt,
-      String? billingIssueDetectedAt});
+      String? billingIssueDetectedAt,
+      VerificationResult verification});
 }
 
 /// @nodoc
@@ -130,6 +135,7 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
     Object? expirationDate = freezed,
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
+    Object? verification = null,
   }) {
     return _then(_value.copyWith(
       identifier: null == identifier
@@ -184,6 +190,10 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
           ? _value.billingIssueDetectedAt
           : billingIssueDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      verification: null == verification
+          ? _value.verification
+          : verification // ignore: cast_nullable_to_non_nullable
+              as VerificationResult,
     ) as $Val);
   }
 }
@@ -211,7 +221,8 @@ abstract class _$$EntitlementInfoImplCopyWith<$Res>
       PeriodType periodType,
       String? expirationDate,
       String? unsubscribeDetectedAt,
-      String? billingIssueDetectedAt});
+      String? billingIssueDetectedAt,
+      VerificationResult verification});
 }
 
 /// @nodoc
@@ -238,6 +249,7 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
     Object? expirationDate = freezed,
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
+    Object? verification = null,
   }) {
     return _then(_$EntitlementInfoImpl(
       null == identifier
@@ -292,6 +304,10 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
           ? _value.billingIssueDetectedAt
           : billingIssueDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      verification: null == verification
+          ? _value.verification
+          : verification // ignore: cast_nullable_to_non_nullable
+              as VerificationResult,
     ));
   }
 }
@@ -315,7 +331,8 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       this.periodType = PeriodType.unknown,
       this.expirationDate,
       this.unsubscribeDetectedAt,
-      this.billingIssueDetectedAt});
+      this.billingIssueDetectedAt,
+      this.verification = VerificationResult.notRequested});
 
   factory _$EntitlementInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$EntitlementInfoImplFromJson(json);
@@ -387,9 +404,15 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
   @override
   final String? billingIssueDetectedAt;
 
+  /// If entitlement verification was enabled, the result of that verification.
+  /// If not, `VerificationResult.NOT_REQUESTED`.
+  @override
+  @JsonKey()
+  final VerificationResult verification;
+
   @override
   String toString() {
-    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, isSandbox: $isSandbox, ownershipType: $ownershipType, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt)';
+    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, isSandbox: $isSandbox, ownershipType: $ownershipType, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt, verification: $verification)';
   }
 
   @override
@@ -421,7 +444,9 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
             (identical(other.unsubscribeDetectedAt, unsubscribeDetectedAt) ||
                 other.unsubscribeDetectedAt == unsubscribeDetectedAt) &&
             (identical(other.billingIssueDetectedAt, billingIssueDetectedAt) ||
-                other.billingIssueDetectedAt == billingIssueDetectedAt));
+                other.billingIssueDetectedAt == billingIssueDetectedAt) &&
+            (identical(other.verification, verification) ||
+                other.verification == verification));
   }
 
   @JsonKey(ignore: true)
@@ -440,7 +465,8 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       periodType,
       expirationDate,
       unsubscribeDetectedAt,
-      billingIssueDetectedAt);
+      billingIssueDetectedAt,
+      verification);
 
   @JsonKey(ignore: true)
   @override
@@ -474,7 +500,8 @@ abstract class _EntitlementInfo implements EntitlementInfo {
       final PeriodType periodType,
       final String? expirationDate,
       final String? unsubscribeDetectedAt,
-      final String? billingIssueDetectedAt}) = _$EntitlementInfoImpl;
+      final String? billingIssueDetectedAt,
+      final VerificationResult verification}) = _$EntitlementInfoImpl;
 
   factory _EntitlementInfo.fromJson(Map<String, dynamic> json) =
       _$EntitlementInfoImpl.fromJson;
@@ -546,6 +573,11 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the [isActive] property.
   String? get billingIssueDetectedAt;
+  @override
+
+  /// If entitlement verification was enabled, the result of that verification.
+  /// If not, `VerificationResult.NOT_REQUESTED`.
+  VerificationResult get verification;
   @override
   @JsonKey(ignore: true)
   _$$EntitlementInfoImplCopyWith<_$EntitlementInfoImpl> get copyWith =>
