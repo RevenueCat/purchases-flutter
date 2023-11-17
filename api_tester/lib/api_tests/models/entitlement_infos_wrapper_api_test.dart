@@ -12,8 +12,11 @@ class _EntitlementInfosApiTest {
   }
 
   void _checkConstructor(
-      Map<String, EntitlementInfo> all, Map<String, EntitlementInfo> active) {
-    EntitlementInfos entitlementInfos = EntitlementInfos(all, active);
+      Map<String, EntitlementInfo> all,
+      Map<String, EntitlementInfo> active,
+      VerificationResult verificationResult) {
+    EntitlementInfos entitlementInfos = EntitlementInfos(all, active,
+        verificationResult);
   }
 
   void _checkProperties(EntitlementInfos entitlementInfos) {
