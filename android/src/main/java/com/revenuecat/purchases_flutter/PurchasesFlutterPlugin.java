@@ -139,7 +139,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 //noinspection unused
                 Boolean usesStoreKit2IfAvailable = call.argument("usesStoreKit2IfAvailable"); // iOS-only, unused.
                 Boolean shouldShowInAppMessagesAutomatically = call.argument("shouldShowInAppMessagesAutomatically");
-                setupPurchases(apiKey, appUserId, observerMode, useAmazon, shouldShowInAppMessagesAutomatically, result);
+                String verificationMode = call.argument("entitlementVerificationMode");
+                setupPurchases(apiKey, appUserId, observerMode, useAmazon,
+                        shouldShowInAppMessagesAutomatically, verificationMode, result);
                 break;
             case "setFinishTransactions":
                 Boolean finishTransactions = call.argument("finishTransactions");
@@ -357,7 +359,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
-                                @Nullable Boolean useAmazon, @Nullable Boolean shouldShowInAppMessagesAutomatically, final Result result) {
+                                @Nullable Boolean useAmazon, @Nullable Boolean shouldShowInAppMessagesAutomatically,
+                                @Nullable String verificationMode, final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
             Store store = Store.PLAY_STORE;
@@ -365,7 +368,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 store = Store.AMAZON;
             }
             CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode,
-                    platformInfo, store, new DangerousSettings(),shouldShowInAppMessagesAutomatically);
+                    platformInfo, store, new DangerousSettings(),
+                    shouldShowInAppMessagesAutomatically, verificationMode);
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {

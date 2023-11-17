@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:purchases_flutter/models/entitlement_verification_mode.dart';
 import 'package:purchases_flutter_example/src/constant.dart';
 
 import 'store_config.dart';

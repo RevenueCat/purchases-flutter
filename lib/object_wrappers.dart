@@ -2,6 +2,7 @@ export 'errors.dart';
 export 'models/customer_info_wrapper.dart';
 export 'models/entitlement_info_wrapper.dart';
 export 'models/entitlement_infos_wrapper.dart';
+export 'models/entitlement_verification_mode.dart';
 export 'models/google_product_change.dart';
 export 'models/introductory_price.dart';
 export 'models/offering_wrapper.dart';

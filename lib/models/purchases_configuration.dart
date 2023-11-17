@@ -1,5 +1,4 @@
 import '../purchases_flutter.dart';
-import 'store.dart';
 
 /// Used when calling [configure] to configure the RevenueCat plugin
 class PurchasesConfiguration {
@@ -51,7 +50,8 @@ class PurchasesConfiguration {
   /// Values different to [Store.amazon] don't have any effect.
   Store? store;
 
-  // TODO: document
+  /// Verification strictness levels for [EntitlementInfo].
+  /// See https://www.revenuecat.com/docs/trusted-entitlements for more info.
   EntitlementVerificationMode entitlementVerificationMode = EntitlementVerificationMode.disabled;
 }
 
