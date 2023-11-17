@@ -245,7 +245,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
                                      usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
-                                  entitlementVerificationMode:""];
+                                             verificationMode:nil];
     purchases.delegate = self;
 
     result(nil);
