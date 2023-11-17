@@ -51,7 +51,7 @@ class PurchasesConfiguration {
   Store? store;
 
   /// Verification strictness levels for [EntitlementInfo].
-  /// See https://www.revenuecat.com/docs/trusted-entitlements for more info.
+  /// See https://rev.cat/trusted-entitlements for more info.
   EntitlementVerificationMode entitlementVerificationMode = EntitlementVerificationMode.disabled;
 }
 
