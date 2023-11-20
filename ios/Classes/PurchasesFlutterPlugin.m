@@ -61,6 +61,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
        userDefaultsSuiteName:userDefaultsSuiteName
     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
+            verificationMode:verificationMode
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
