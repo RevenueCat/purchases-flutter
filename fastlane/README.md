@@ -45,14 +45,6 @@ Create release
 
 Make github release
 
-### prepare_next_version
-
-```sh
-[bundle exec] fastlane prepare_next_version
-```
-
-Creates PR changing version to next minor adding a -SNAPSHOT suffix
-
 ### run_api_tests
 
 ```sh
