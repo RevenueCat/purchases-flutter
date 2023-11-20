@@ -16,7 +16,9 @@ _$EntitlementInfosImpl _$$EntitlementInfosImplFromJson(Map json) =>
         (k, e) => MapEntry(k as String,
             EntitlementInfo.fromJson(Map<String, dynamic>.from(e as Map))),
       ),
-      $enumDecode(_$VerificationResultEnumMap, json['verification']),
+      verification: $enumDecodeNullable(
+              _$VerificationResultEnumMap, json['verification']) ??
+          VerificationResult.notRequested,
     );
 
 Map<String, dynamic> _$$EntitlementInfosImplToJson(

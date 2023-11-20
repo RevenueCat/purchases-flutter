@@ -122,7 +122,7 @@ class __$$EntitlementInfosImplCopyWithImpl<$Res>
           ? _value._active
           : active // ignore: cast_nullable_to_non_nullable
               as Map<String, EntitlementInfo>,
-      null == verification
+      verification: null == verification
           ? _value.verification
           : verification // ignore: cast_nullable_to_non_nullable
               as VerificationResult,
@@ -134,7 +134,8 @@ class __$$EntitlementInfosImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$EntitlementInfosImpl implements _EntitlementInfos {
   const _$EntitlementInfosImpl(final Map<String, EntitlementInfo> all,
-      final Map<String, EntitlementInfo> active, this.verification)
+      final Map<String, EntitlementInfo> active,
+      {this.verification = VerificationResult.notRequested})
       : _all = all,
         _active = active;
 
@@ -170,6 +171,7 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
   /// If entitlement verification was enabled, the result of that verification.
   /// If not, `VerificationResult.NOT_REQUESTED`.
   @override
+  @JsonKey()
   final VerificationResult verification;
 
   @override
@@ -212,10 +214,9 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
 }
 
 abstract class _EntitlementInfos implements EntitlementInfos {
-  const factory _EntitlementInfos(
-      final Map<String, EntitlementInfo> all,
+  const factory _EntitlementInfos(final Map<String, EntitlementInfo> all,
       final Map<String, EntitlementInfo> active,
-      final VerificationResult verification) = _$EntitlementInfosImpl;
+      {final VerificationResult verification}) = _$EntitlementInfosImpl;
 
   factory _EntitlementInfos.fromJson(Map<String, dynamic> json) =
       _$EntitlementInfosImpl.fromJson;
