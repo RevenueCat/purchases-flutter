@@ -17,7 +17,7 @@ class _EntitlementInfosApiTest {
       VerificationResult verificationResult) {
     EntitlementInfos entitlementInfos = EntitlementInfos(all, active);
     EntitlementInfos entitlementInfos2 = EntitlementInfos(all, active,
-        verificationResult);
+        verification: verificationResult);
   }
 
   void _checkProperties(EntitlementInfos entitlementInfos) {
