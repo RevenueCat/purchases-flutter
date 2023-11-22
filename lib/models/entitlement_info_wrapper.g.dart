@@ -28,6 +28,9 @@ _$EntitlementInfoImpl _$$EntitlementInfoImplFromJson(Map json) =>
       expirationDate: json['expirationDate'] as String?,
       unsubscribeDetectedAt: json['unsubscribeDetectedAt'] as String?,
       billingIssueDetectedAt: json['billingIssueDetectedAt'] as String?,
+      verification: $enumDecodeNullable(
+              _$VerificationResultEnumMap, json['verification']) ??
+          VerificationResult.notRequested,
     );
 
 Map<String, dynamic> _$$EntitlementInfoImplToJson(
@@ -46,6 +49,7 @@ Map<String, dynamic> _$$EntitlementInfoImplToJson(
       'expirationDate': instance.expirationDate,
       'unsubscribeDetectedAt': instance.unsubscribeDetectedAt,
       'billingIssueDetectedAt': instance.billingIssueDetectedAt,
+      'verification': _$VerificationResultEnumMap[instance.verification]!,
     };
 
 const _$OwnershipTypeEnumMap = {
@@ -69,4 +73,11 @@ const _$PeriodTypeEnumMap = {
   PeriodType.normal: 'NORMAL',
   PeriodType.trial: 'TRIAL',
   PeriodType.unknown: 'unknown',
+};
+
+const _$VerificationResultEnumMap = {
+  VerificationResult.notRequested: 'NOT_REQUESTED',
+  VerificationResult.verified: 'VERIFIED',
+  VerificationResult.verifiedOnDevice: 'VERIFIED_ON_DEVICE',
+  VerificationResult.failed: 'FAILED',
 };

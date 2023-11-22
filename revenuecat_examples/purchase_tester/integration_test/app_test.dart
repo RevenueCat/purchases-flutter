@@ -13,6 +13,7 @@ void main() {
   setUpAll(() {
     PurchasesConfiguration configuration = PurchasesConfiguration("appl_KhXKryBEHUWEdShrggQyjyzHKHW");
     configuration.appUserID = uuid;
+    configuration.entitlementVerificationMode = EntitlementVerificationMode.informational;
     Purchases.configure(configuration);
   });
 

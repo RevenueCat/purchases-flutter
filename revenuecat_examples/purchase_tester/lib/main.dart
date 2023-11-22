@@ -36,6 +36,8 @@ Future<void> _configureSDK() async {
   } else {
     configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
   }
+
+  configuration.entitlementVerificationMode = EntitlementVerificationMode.informational;
   await Purchases.configure(configuration);
 
   await Purchases.enableAdServicesAttributionTokenCollection();

@@ -43,7 +43,8 @@ class _EntitlementInfoApiTest {
       PeriodType periodType,
       String? expirationDate,
       String? unsubscribeDetectedAt,
-      String? billingIssueDetectedAt) {
+      String? billingIssueDetectedAt,
+      VerificationResult verificationResult) {
     EntitlementInfo entitlementInfo = EntitlementInfo(
         identifier,
         isActive,
@@ -59,7 +60,8 @@ class _EntitlementInfoApiTest {
         periodType: periodType,
         expirationDate: expirationDate,
         unsubscribeDetectedAt: unsubscribeDetectedAt,
-        billingIssueDetectedAt: billingIssueDetectedAt);
+        billingIssueDetectedAt: billingIssueDetectedAt,
+        verification: verificationResult);
   }
 
   void _checkProperties(EntitlementInfo info) {
@@ -76,5 +78,6 @@ class _EntitlementInfoApiTest {
     String? expirationDate = info.expirationDate;
     String? unsubscribeDetectedAt = info.unsubscribeDetectedAt;
     String? billingIssueDetectedAt = info.billingIssueDetectedAt;
+    VerificationResult verificationResult = info.verification;
   }
 }
