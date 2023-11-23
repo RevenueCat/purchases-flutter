@@ -33,11 +33,15 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     self.channel = channel;
     self.registrar = registrar;
 
+    #if TARGET_OS_IPHONE
     if (@available(iOS 15.0, *)) {
         self.paywallProxy = [PaywallProxy new];
     } else {
         self.paywallProxy = nil;
     }
+    #else
+    self.paywallProxy = nil;
+    #endif
 
     return self;
 }
@@ -607,9 +611,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark -
 #pragma mark Paywalls
 
+#if TARGET_OS_IPHONE
 - (PaywallProxy *)paywalls API_AVAILABLE(ios(15.0)){
     return self.paywallProxy;
 }
+#endif
 
 - (void)presentPaywallWithResult:(FlutterResult)result requiredEntitlementIdentifier:(NSString * _Nullable)requiredEntitlementIdentifier {
     #if TARGET_OS_IPHONE
