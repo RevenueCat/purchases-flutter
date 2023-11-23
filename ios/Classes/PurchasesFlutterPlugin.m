@@ -16,6 +16,8 @@ typedef void (^RCStartPurchaseBlock)(RCPurchaseCompletedBlock);
 @property (nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
 @property (nonatomic, retain) NSMutableArray<RCStartPurchaseBlock> *startPurchaseBlocks;
 
+@property (nonatomic, strong) id paywallProxy;
+
 @end
 
 NSString *PurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
@@ -30,6 +32,13 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     NSAssert(self, @"super init cannot be nil");
     self.channel = channel;
     self.registrar = registrar;
+
+    if (@available(iOS 15.0, *)) {
+        self.paywallProxy = [PaywallProxy new];
+    } else {
+        self.paywallProxy = nil;
+    }
+
     return self;
 }
 
@@ -598,13 +607,17 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 #pragma mark -
 #pragma mark Paywalls
 
+- (PaywallProxy *)paywalls API_AVAILABLE(ios(15.0)){
+    return self.paywallProxy;
+}
+
 - (void)presentPaywallWithResult:(FlutterResult)result requiredEntitlementIdentifier:(NSString * _Nullable)requiredEntitlementIdentifier {
     #if TARGET_OS_IPHONE
     if (@available(iOS 15.0, *)) {
         if (requiredEntitlementIdentifier) {
-            [PaywallProxy presentPaywallIfNeededWithRequiredEntitlementIdentifier:requiredEntitlementIdentifier];
+            [self.paywalls presentPaywallIfNeededWithRequiredEntitlementIdentifier:requiredEntitlementIdentifier];
         } else {
-            [PaywallProxy presentPaywall];
+            [self.paywalls presentPaywall];
         }
     } else {
         NSLog(@"[Purchases] Warning: tried to display paywall, but it's only available on iOS 15.0 or greater.");
