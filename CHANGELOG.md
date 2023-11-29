@@ -1,3 +1,7 @@
+## 6.4.1
+### Dependency Updates
+* Bump cocoapods from 1.14.2 to 1.14.3 (#876) via dependabot[bot] (@dependabot[bot])
+
 ## 6.4.0
 ### New Features
 * `Trusted Entitlements`: add support for setting `EntitlementVerificationMode` and getting verification result in `EntitlementInfos` and `EntitlementInfo` (#753) via NachoSoto (@NachoSoto)
