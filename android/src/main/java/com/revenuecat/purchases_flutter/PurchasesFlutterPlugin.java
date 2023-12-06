@@ -741,6 +741,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         final PurchasesFlutterActivity fragment = getActivityFragment();
         if (fragment != null) {
             fragment.presentPaywall(result, requiredEntitlementIdentifier);
+        } else {
+            result.error(
+                String.valueOf(PurchasesErrorCode.UnknownError.getCode()),
+                "Make sure your MainActivity inherits from PurchasesFlutterActivity",
+                null
+            );
         }
     }
 
