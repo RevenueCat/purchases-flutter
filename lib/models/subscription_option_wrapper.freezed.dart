@@ -430,7 +430,7 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SubscriptionOptionImpl &&

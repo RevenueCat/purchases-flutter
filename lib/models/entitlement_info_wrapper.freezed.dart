@@ -393,7 +393,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EntitlementInfoImpl &&
