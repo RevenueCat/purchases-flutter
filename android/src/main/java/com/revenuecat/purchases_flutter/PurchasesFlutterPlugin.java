@@ -10,7 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
+import androidx.annotation.OptIn;
 
 import com.revenuecat.purchases.DangerousSettings;
 import com.revenuecat.purchases.Purchases;
@@ -22,9 +22,12 @@ import com.revenuecat.purchases.hybridcommon.ErrorContainer;
 import com.revenuecat.purchases.hybridcommon.OnResult;
 import com.revenuecat.purchases.hybridcommon.OnResultAny;
 import com.revenuecat.purchases.hybridcommon.OnResultList;
+import com.revenuecat.purchases.hybridcommon.PaywallResultListener;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
 import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
 import com.revenuecat.purchases.models.InAppMessageType;
+import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI;
+import com.revenuecat.purchases.ui.revenuecatui.activity.PaywallResult;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.flutter.embedding.android.FlutterFragmentActivity;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -130,11 +134,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         return registrar != null ? registrar.activity() : activity;
     }
 
-    private @Nullable PurchasesFlutterActivity getActivityFragment() {
+    private @Nullable FlutterFragmentActivity getActivityFragment() {
         final Activity activity = getActivity();
 
-        if (activity instanceof PurchasesFlutterActivity) {
-            return (PurchasesFlutterActivity) activity;
+        if (activity instanceof FlutterFragmentActivity) {
+            return (FlutterFragmentActivity) activity;
         } else {
             Log.e(TAG, "Paywalls require your activity to subclass FlutterFragmentActivity");
             return null;
@@ -738,10 +742,15 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
+    @OptIn(markerClass = ExperimentalPreviewRevenueCatUIPurchasesAPI.class)
     private void presentPaywall(final Result result, final @Nullable String requiredEntitlementIdentifier) {
-        final PurchasesFlutterActivity fragment = getActivityFragment();
+        final FlutterFragmentActivity fragment = getActivityFragment();
         if (fragment != null) {
-            fragment.presentPaywall(result, requiredEntitlementIdentifier);
+            presentPaywallFromFragment(
+                    fragment,
+                    requiredEntitlementIdentifier,
+                    paywallResult -> result.success(paywallResult instanceof PaywallResult.Purchased)
+            );
         } else {
             result.error(
                 String.valueOf(PurchasesErrorCode.UnknownError.getCode()),
