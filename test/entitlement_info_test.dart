@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/models/store.dart';
+import 'package:purchases_flutter/models/verification_result.dart';
 
 void main() {
   Map<String, Object?> generateEntitlementInfoJSON(String store) => {
@@ -21,6 +22,7 @@ void main() {
         'billingIssueDetectedAt': null,
         'billingIssueDetectedAtMillis': null,
         'store': store,
+        'verification': 'VERIFIED',
       };
 
   test('unknown period if missing from json', () {
@@ -41,6 +43,7 @@ void main() {
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
       'billingIssueDetectedAtMillis': null,
+      'verification': 'VERIFIED',
     };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
@@ -65,10 +68,35 @@ void main() {
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
       'billingIssueDetectedAtMillis': null,
+      'verification': 'VERIFIED',
     };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
     expect(entitlementInfo.store, Store.unknownStore);
+  });
+
+  test('not requested verification result if missing from json', () {
+    final entitlementInfoJson = {
+      'identifier': 'almost_pro',
+      'isActive': true,
+      'willRenew': true,
+      'periodType': 'NORMAL',
+      'latestPurchaseDateMillis': 1.58759855E9,
+      'latestPurchaseDate': '2020-04-22T23:35:50.000Z',
+      'originalPurchaseDateMillis': 1.591725245E9,
+      'originalPurchaseDate': '2020-06-09T17:54:05.000Z',
+      'expirationDateMillis': null,
+      'expirationDate': null,
+      'productIdentifier': 'consumable',
+      'isSandbox': true,
+      'unsubscribeDetectedAt': null,
+      'unsubscribeDetectedAtMillis': null,
+      'billingIssueDetectedAt': null,
+      'billingIssueDetectedAtMillis': null,
+    };
+    final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
+
+    expect(entitlementInfo.verification, VerificationResult.notRequested);
   });
 
   test('app store gets parsed if present in json', () {
@@ -125,6 +153,7 @@ void main() {
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
       'billingIssueDetectedAtMillis': null,
+      'verification': 'VERIFIED',
     };
     final entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 
@@ -149,6 +178,7 @@ void main() {
       'unsubscribeDetectedAtMillis': null,
       'billingIssueDetectedAt': null,
       'billingIssueDetectedAtMillis': null,
+      'verification': 'VERIFIED',
     };
     entitlementInfoJson['ownershipType'] = 'PURCHASED';
     var entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
