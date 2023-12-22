@@ -66,6 +66,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         if (object != [NSNull null] && object != nil) {
             shouldShowInAppMessagesAutomatically = [object boolValue];
         }
+        NSString * _Nullable verificationMode = arguments[@"entitlementVerificationMode"];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
@@ -73,6 +74,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
        userDefaultsSuiteName:userDefaultsSuiteName
     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
+            verificationMode:verificationMode
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -245,6 +247,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
 usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
+      verificationMode:(nullable NSString *)verificationMode
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -261,7 +264,8 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
                                         platformFlavorVersion:self.platformFlavorVersion
                                      usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
                                             dangerousSettings:nil
-                         shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically];
+                         shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
+                                             verificationMode:verificationMode];
     purchases.delegate = self;
 
     result(nil);
@@ -699,7 +703,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"6.4.0-SNAPSHOT";
+    return @"6.5.1";
 }
 
 @end

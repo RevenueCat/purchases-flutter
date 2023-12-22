@@ -106,17 +106,6 @@ lane :github_release do |options|
   )
 end
 
-desc "Creates PR changing version to next minor adding a -SNAPSHOT suffix"
-lane :prepare_next_version do |options|
-  create_next_snapshot_version(
-    current_version: current_version_number,
-    repo_name: repo_name,
-    github_pr_token: ENV["GITHUB_PULL_REQUEST_API_TOKEN"],
-    files_to_update: files_with_version_number,
-    files_to_update_without_prerelease_modifiers: {}
-  )
-end
-
 desc "Builds and analyzes the api_tester project to make sure APIs are expected"
 lane :run_api_tests do |options|
   check_api_tester_imports_up_to_date

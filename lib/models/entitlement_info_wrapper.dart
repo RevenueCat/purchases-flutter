@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'store.dart';
+import 'verification_result.dart';
 
 part 'entitlement_info_wrapper.freezed.dart';
 
@@ -111,6 +112,11 @@ class EntitlementInfo with _$EntitlementInfo {
     /// @note: Entitlement may still be active even if there is a billing issue.
     /// Check the [isActive] property.
     String? billingIssueDetectedAt,
+
+    /// If entitlement verification was enabled, the result of that verification.
+    /// If not, `VerificationResult.NOT_REQUESTED`.
+    @Default(VerificationResult.notRequested)
+    VerificationResult verification,
   }) = _EntitlementInfo;
 
   factory EntitlementInfo.fromJson(Map<String, dynamic> json) =>
