@@ -3,12 +3,12 @@
 *   📱 Initial support for cross-platform RevenueCat Paywalls 🐾 🧱  (#852) 
 
 #### Instructions:
+- For Android, you need to change your `MainActivity` to subclass `FlutterFragmentActivity` instead of `FlutterActivity`.
 - Update `purchases-flutter` in your `pubspec.yaml`:
 ```yaml
 dependencies:
   purchases_flutter: 6.6.0-beta.3
 ```
-- For Android, you need to change your `MainActivity` to subclass `FlutterFragmentActivity` instead of `FlutterActivity`.
 
 #### Usage:
 ```dart
