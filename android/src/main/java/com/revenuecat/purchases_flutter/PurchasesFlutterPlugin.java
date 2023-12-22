@@ -371,6 +371,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "presentPaywallIfNeeded":
                 final String requiredEntitlementIdentifier = call.argument("requiredEntitlementIdentifier");
                 presentPaywall(result, requiredEntitlementIdentifier);
+                break;
             default:
                 result.notImplemented();
                 break;
