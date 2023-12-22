@@ -753,7 +753,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         } else {
             result.error(
                 String.valueOf(PurchasesErrorCode.UnknownError.getCode()),
-                "Make sure your MainActivity inherits from PurchasesFlutterActivity",
+                "Make sure your MainActivity inherits from FlutterFragmentActivity",
                 null
             );
         }
