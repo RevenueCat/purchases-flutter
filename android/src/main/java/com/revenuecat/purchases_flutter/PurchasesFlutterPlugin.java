@@ -1,6 +1,6 @@
 package com.revenuecat.purchases_flutter;
 
-import static com.revenuecat.purchases.hybridcommon.PaywallHelpersKt.presentPaywallFromFragment;
+import static com.revenuecat.purchases.hybridcommon.ui.PaywallHelpersKt.presentPaywallFromFragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,7 +22,6 @@ import com.revenuecat.purchases.hybridcommon.ErrorContainer;
 import com.revenuecat.purchases.hybridcommon.OnResult;
 import com.revenuecat.purchases.hybridcommon.OnResultAny;
 import com.revenuecat.purchases.hybridcommon.OnResultList;
-import com.revenuecat.purchases.hybridcommon.PaywallResultListener;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
 import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
 import com.revenuecat.purchases.models.InAppMessageType;
