@@ -158,7 +158,7 @@ class _$PriceImpl implements _Price {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PriceImpl &&
