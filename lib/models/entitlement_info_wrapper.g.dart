@@ -14,6 +14,7 @@ _$EntitlementInfoImpl _$$EntitlementInfoImplFromJson(Map json) =>
       json['latestPurchaseDate'] as String,
       json['originalPurchaseDate'] as String,
       json['productIdentifier'] as String,
+      json['productPlanIdentifier'] as String?,
       json['isSandbox'] as bool,
       ownershipType: $enumDecodeNullable(
               _$OwnershipTypeEnumMap, json['ownershipType'],
@@ -42,6 +43,7 @@ Map<String, dynamic> _$$EntitlementInfoImplToJson(
       'latestPurchaseDate': instance.latestPurchaseDate,
       'originalPurchaseDate': instance.originalPurchaseDate,
       'productIdentifier': instance.productIdentifier,
+      'productPlanIdentifier': instance.productPlanIdentifier,
       'isSandbox': instance.isSandbox,
       'ownershipType': _$OwnershipTypeEnumMap[instance.ownershipType]!,
       'store': _$StoreEnumMap[instance.store]!,

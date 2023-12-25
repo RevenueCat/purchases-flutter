@@ -63,6 +63,9 @@ class EntitlementInfo with _$EntitlementInfo {
     /// The product identifier that unlocked this entitlement
     String productIdentifier,
 
+    /// The base plan identifier that unlocked this entitlement (Google only).
+    String? productPlanIdentifier,
+
     /// False if this entitlement is unlocked via a production purchase
     bool isSandbox, {
 

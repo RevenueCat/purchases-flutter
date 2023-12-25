@@ -39,6 +39,9 @@ mixin _$EntitlementInfo {
   /// The product identifier that unlocked this entitlement
   String get productIdentifier => throw _privateConstructorUsedError;
 
+  /// The base plan identifier that unlocked this entitlement (Google only).
+  String? get productPlanIdentifier => throw _privateConstructorUsedError;
+
   /// False if this entitlement is unlocked via a production purchase
   bool get isSandbox => throw _privateConstructorUsedError;
 
@@ -97,6 +100,7 @@ abstract class $EntitlementInfoCopyWith<$Res> {
       String latestPurchaseDate,
       String originalPurchaseDate,
       String productIdentifier,
+      String? productPlanIdentifier,
       bool isSandbox,
       @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       OwnershipType ownershipType,
@@ -128,6 +132,7 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
     Object? latestPurchaseDate = null,
     Object? originalPurchaseDate = null,
     Object? productIdentifier = null,
+    Object? productPlanIdentifier = freezed,
     Object? isSandbox = null,
     Object? ownershipType = null,
     Object? store = null,
@@ -162,6 +167,10 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
+      productPlanIdentifier: freezed == productPlanIdentifier
+          ? _value.productPlanIdentifier
+          : productPlanIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
       isSandbox: null == isSandbox
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
@@ -213,6 +222,7 @@ abstract class _$$EntitlementInfoImplCopyWith<$Res>
       String latestPurchaseDate,
       String originalPurchaseDate,
       String productIdentifier,
+      String? productPlanIdentifier,
       bool isSandbox,
       @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       OwnershipType ownershipType,
@@ -242,6 +252,7 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
     Object? latestPurchaseDate = null,
     Object? originalPurchaseDate = null,
     Object? productIdentifier = null,
+    Object? productPlanIdentifier = freezed,
     Object? isSandbox = null,
     Object? ownershipType = null,
     Object? store = null,
@@ -276,6 +287,10 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
+      freezed == productPlanIdentifier
+          ? _value.productPlanIdentifier
+          : productPlanIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
       null == isSandbox
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
@@ -322,6 +337,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       this.latestPurchaseDate,
       this.originalPurchaseDate,
       this.productIdentifier,
+      this.productPlanIdentifier,
       this.isSandbox,
       {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       this.ownershipType = OwnershipType.unknown,
@@ -361,6 +377,10 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
   /// The product identifier that unlocked this entitlement
   @override
   final String productIdentifier;
+
+  /// The base plan identifier that unlocked this entitlement (Google only).
+  @override
+  final String? productPlanIdentifier;
 
   /// False if this entitlement is unlocked via a production purchase
   @override
@@ -412,7 +432,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
 
   @override
   String toString() {
-    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, isSandbox: $isSandbox, ownershipType: $ownershipType, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt, verification: $verification)';
+    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, productPlanIdentifier: $productPlanIdentifier, isSandbox: $isSandbox, ownershipType: $ownershipType, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt, verification: $verification)';
   }
 
   @override
@@ -432,6 +452,8 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
                 other.originalPurchaseDate == originalPurchaseDate) &&
             (identical(other.productIdentifier, productIdentifier) ||
                 other.productIdentifier == productIdentifier) &&
+            (identical(other.productPlanIdentifier, productPlanIdentifier) ||
+                other.productPlanIdentifier == productPlanIdentifier) &&
             (identical(other.isSandbox, isSandbox) ||
                 other.isSandbox == isSandbox) &&
             (identical(other.ownershipType, ownershipType) ||
@@ -459,6 +481,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       latestPurchaseDate,
       originalPurchaseDate,
       productIdentifier,
+      productPlanIdentifier,
       isSandbox,
       ownershipType,
       store,
@@ -491,6 +514,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
       final String latestPurchaseDate,
       final String originalPurchaseDate,
       final String productIdentifier,
+      final String? productPlanIdentifier,
       final bool isSandbox,
       {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       final OwnershipType ownershipType,
@@ -531,6 +555,10 @@ abstract class _EntitlementInfo implements EntitlementInfo {
 
   /// The product identifier that unlocked this entitlement
   String get productIdentifier;
+  @override
+
+  /// The base plan identifier that unlocked this entitlement (Google only).
+  String? get productPlanIdentifier;
   @override
 
   /// False if this entitlement is unlocked via a production purchase
