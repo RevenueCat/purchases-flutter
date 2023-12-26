@@ -32,8 +32,26 @@ mixin _$StoreProduct {
   /// Price of the product in the local currency.
   double get price => throw _privateConstructorUsedError;
 
+  /// Price of the product per week in the local currency.
+  double? get pricePerWeek => throw _privateConstructorUsedError;
+
+  /// Price of the product per month in the local currency.
+  double? get pricePerMonth => throw _privateConstructorUsedError;
+
+  /// Price of the product per year in the local currency.
+  double? get pricePerYear => throw _privateConstructorUsedError;
+
   /// Formatted price of the item, including its currency sign.
   String get priceString => throw _privateConstructorUsedError;
+
+  /// Formatted price of this subscription product per week.
+  String? get pricePerWeekString => throw _privateConstructorUsedError;
+
+  /// Formatted price of this subscription product per month.
+  String? get pricePerMonthString => throw _privateConstructorUsedError;
+
+  /// Formatted price of this subscription product per year.
+  String? get pricePerYearString => throw _privateConstructorUsedError;
 
   /// Currency code for price and original price.
   String get currencyCode => throw _privateConstructorUsedError;
@@ -86,7 +104,13 @@ abstract class $StoreProductCopyWith<$Res> {
       String description,
       String title,
       double price,
+      double? pricePerWeek,
+      double? pricePerMonth,
+      double? pricePerYear,
       String priceString,
+      String? pricePerWeekString,
+      String? pricePerMonthString,
+      String? pricePerYearString,
       String currencyCode,
       @JsonKey(name: 'introPrice') IntroductoryPrice? introductoryPrice,
       List<StoreProductDiscount>? discounts,
@@ -117,7 +141,13 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     Object? description = null,
     Object? title = null,
     Object? price = null,
+    Object? pricePerWeek = freezed,
+    Object? pricePerMonth = freezed,
+    Object? pricePerYear = freezed,
     Object? priceString = null,
+    Object? pricePerWeekString = freezed,
+    Object? pricePerMonthString = freezed,
+    Object? pricePerYearString = freezed,
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
@@ -144,10 +174,34 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      pricePerWeek: freezed == pricePerWeek
+          ? _value.pricePerWeek
+          : pricePerWeek // ignore: cast_nullable_to_non_nullable
+              as double?,
+      pricePerMonth: freezed == pricePerMonth
+          ? _value.pricePerMonth
+          : pricePerMonth // ignore: cast_nullable_to_non_nullable
+              as double?,
+      pricePerYear: freezed == pricePerYear
+          ? _value.pricePerYear
+          : pricePerYear // ignore: cast_nullable_to_non_nullable
+              as double?,
       priceString: null == priceString
           ? _value.priceString
           : priceString // ignore: cast_nullable_to_non_nullable
               as String,
+      pricePerWeekString: freezed == pricePerWeekString
+          ? _value.pricePerWeekString
+          : pricePerWeekString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pricePerMonthString: freezed == pricePerMonthString
+          ? _value.pricePerMonthString
+          : pricePerMonthString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pricePerYearString: freezed == pricePerYearString
+          ? _value.pricePerYearString
+          : pricePerYearString // ignore: cast_nullable_to_non_nullable
+              as String?,
       currencyCode: null == currencyCode
           ? _value.currencyCode
           : currencyCode // ignore: cast_nullable_to_non_nullable
@@ -221,7 +275,13 @@ abstract class _$$StoreProductImplCopyWith<$Res>
       String description,
       String title,
       double price,
+      double? pricePerWeek,
+      double? pricePerMonth,
+      double? pricePerYear,
       String priceString,
+      String? pricePerWeekString,
+      String? pricePerMonthString,
+      String? pricePerYearString,
       String currencyCode,
       @JsonKey(name: 'introPrice') IntroductoryPrice? introductoryPrice,
       List<StoreProductDiscount>? discounts,
@@ -252,7 +312,13 @@ class __$$StoreProductImplCopyWithImpl<$Res>
     Object? description = null,
     Object? title = null,
     Object? price = null,
+    Object? pricePerWeek = freezed,
+    Object? pricePerMonth = freezed,
+    Object? pricePerYear = freezed,
     Object? priceString = null,
+    Object? pricePerWeekString = freezed,
+    Object? pricePerMonthString = freezed,
+    Object? pricePerYearString = freezed,
     Object? currencyCode = null,
     Object? introductoryPrice = freezed,
     Object? discounts = freezed,
@@ -279,10 +345,34 @@ class __$$StoreProductImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
+      freezed == pricePerWeek
+          ? _value.pricePerWeek
+          : pricePerWeek // ignore: cast_nullable_to_non_nullable
+              as double?,
+      freezed == pricePerMonth
+          ? _value.pricePerMonth
+          : pricePerMonth // ignore: cast_nullable_to_non_nullable
+              as double?,
+      freezed == pricePerYear
+          ? _value.pricePerYear
+          : pricePerYear // ignore: cast_nullable_to_non_nullable
+              as double?,
       null == priceString
           ? _value.priceString
           : priceString // ignore: cast_nullable_to_non_nullable
               as String,
+      freezed == pricePerWeekString
+          ? _value.pricePerWeekString
+          : pricePerWeekString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      freezed == pricePerMonthString
+          ? _value.pricePerMonthString
+          : pricePerMonthString // ignore: cast_nullable_to_non_nullable
+              as String?,
+      freezed == pricePerYearString
+          ? _value.pricePerYearString
+          : pricePerYearString // ignore: cast_nullable_to_non_nullable
+              as String?,
       null == currencyCode
           ? _value.currencyCode
           : currencyCode // ignore: cast_nullable_to_non_nullable
@@ -322,8 +412,19 @@ class __$$StoreProductImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StoreProductImpl implements _StoreProduct {
-  const _$StoreProductImpl(this.identifier, this.description, this.title,
-      this.price, this.priceString, this.currencyCode,
+  const _$StoreProductImpl(
+      this.identifier,
+      this.description,
+      this.title,
+      this.price,
+      this.pricePerWeek,
+      this.pricePerMonth,
+      this.pricePerYear,
+      this.priceString,
+      this.pricePerWeekString,
+      this.pricePerMonthString,
+      this.pricePerYearString,
+      this.currencyCode,
       {@JsonKey(name: 'introPrice') this.introductoryPrice,
       final List<StoreProductDiscount>? discounts,
       this.productCategory,
@@ -353,9 +454,33 @@ class _$StoreProductImpl implements _StoreProduct {
   @override
   final double price;
 
+  /// Price of the product per week in the local currency.
+  @override
+  final double? pricePerWeek;
+
+  /// Price of the product per month in the local currency.
+  @override
+  final double? pricePerMonth;
+
+  /// Price of the product per year in the local currency.
+  @override
+  final double? pricePerYear;
+
   /// Formatted price of the item, including its currency sign.
   @override
   final String priceString;
+
+  /// Formatted price of this subscription product per week.
+  @override
+  final String? pricePerWeekString;
+
+  /// Formatted price of this subscription product per month.
+  @override
+  final String? pricePerMonthString;
+
+  /// Formatted price of this subscription product per year.
+  @override
+  final String? pricePerYearString;
 
   /// Currency code for price and original price.
   @override
@@ -417,7 +542,7 @@ class _$StoreProductImpl implements _StoreProduct {
 
   @override
   String toString() {
-    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, productCategory: $productCategory, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, presentedOfferingIdentifier: $presentedOfferingIdentifier, subscriptionPeriod: $subscriptionPeriod)';
+    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, pricePerWeek: $pricePerWeek, pricePerMonth: $pricePerMonth, pricePerYear: $pricePerYear, priceString: $priceString, pricePerWeekString: $pricePerWeekString, pricePerMonthString: $pricePerMonthString, pricePerYearString: $pricePerYearString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, productCategory: $productCategory, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, presentedOfferingIdentifier: $presentedOfferingIdentifier, subscriptionPeriod: $subscriptionPeriod)';
   }
 
   @override
@@ -431,8 +556,20 @@ class _$StoreProductImpl implements _StoreProduct {
                 other.description == description) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.pricePerWeek, pricePerWeek) ||
+                other.pricePerWeek == pricePerWeek) &&
+            (identical(other.pricePerMonth, pricePerMonth) ||
+                other.pricePerMonth == pricePerMonth) &&
+            (identical(other.pricePerYear, pricePerYear) ||
+                other.pricePerYear == pricePerYear) &&
             (identical(other.priceString, priceString) ||
                 other.priceString == priceString) &&
+            (identical(other.pricePerWeekString, pricePerWeekString) ||
+                other.pricePerWeekString == pricePerWeekString) &&
+            (identical(other.pricePerMonthString, pricePerMonthString) ||
+                other.pricePerMonthString == pricePerMonthString) &&
+            (identical(other.pricePerYearString, pricePerYearString) ||
+                other.pricePerYearString == pricePerYearString) &&
             (identical(other.currencyCode, currencyCode) ||
                 other.currencyCode == currencyCode) &&
             (identical(other.introductoryPrice, introductoryPrice) ||
@@ -455,21 +592,28 @@ class _$StoreProductImpl implements _StoreProduct {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      identifier,
-      description,
-      title,
-      price,
-      priceString,
-      currencyCode,
-      introductoryPrice,
-      const DeepCollectionEquality().hash(_discounts),
-      productCategory,
-      defaultOption,
-      const DeepCollectionEquality().hash(_subscriptionOptions),
-      presentedOfferingIdentifier,
-      subscriptionPeriod);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        identifier,
+        description,
+        title,
+        price,
+        pricePerWeek,
+        pricePerMonth,
+        pricePerYear,
+        priceString,
+        pricePerWeekString,
+        pricePerMonthString,
+        pricePerYearString,
+        currencyCode,
+        introductoryPrice,
+        const DeepCollectionEquality().hash(_discounts),
+        productCategory,
+        defaultOption,
+        const DeepCollectionEquality().hash(_subscriptionOptions),
+        presentedOfferingIdentifier,
+        subscriptionPeriod
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -491,7 +635,13 @@ abstract class _StoreProduct implements StoreProduct {
       final String description,
       final String title,
       final double price,
+      final double? pricePerWeek,
+      final double? pricePerMonth,
+      final double? pricePerYear,
       final String priceString,
+      final String? pricePerWeekString,
+      final String? pricePerMonthString,
+      final String? pricePerYearString,
       final String currencyCode,
       {@JsonKey(name: 'introPrice') final IntroductoryPrice? introductoryPrice,
       final List<StoreProductDiscount>? discounts,
@@ -522,8 +672,32 @@ abstract class _StoreProduct implements StoreProduct {
   double get price;
   @override
 
+  /// Price of the product per week in the local currency.
+  double? get pricePerWeek;
+  @override
+
+  /// Price of the product per month in the local currency.
+  double? get pricePerMonth;
+  @override
+
+  /// Price of the product per year in the local currency.
+  double? get pricePerYear;
+  @override
+
   /// Formatted price of the item, including its currency sign.
   String get priceString;
+  @override
+
+  /// Formatted price of this subscription product per week.
+  String? get pricePerWeekString;
+  @override
+
+  /// Formatted price of this subscription product per month.
+  String? get pricePerMonthString;
+  @override
+
+  /// Formatted price of this subscription product per year.
+  String? get pricePerYearString;
   @override
 
   /// Currency code for price and original price.

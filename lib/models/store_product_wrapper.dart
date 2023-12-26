@@ -25,12 +25,29 @@ class StoreProduct with _$StoreProduct {
     /// Price of the product in the local currency.
     double price,
 
+    /// Price of the product per week in the local currency.
+    double? pricePerWeek,
+
+    /// Price of the product per month in the local currency.
+    double? pricePerMonth,
+
+    /// Price of the product per year in the local currency.
+    double? pricePerYear,
+
     /// Formatted price of the item, including its currency sign.
     String priceString,
 
+    /// Formatted price of this subscription product per week.
+    String? pricePerWeekString,
+
+    /// Formatted price of this subscription product per month.
+    String? pricePerMonthString,
+
+    /// Formatted price of this subscription product per year.
+    String? pricePerYearString,
+
     /// Currency code for price and original price.
     String currencyCode, {
-
     /// Introductory price for product. Can be null.
     // ignore: invalid_annotation_target
     @JsonKey(name: 'introPrice') IntroductoryPrice? introductoryPrice,
