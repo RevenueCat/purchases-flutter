@@ -514,7 +514,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkPaywalls() async {
-    Future<bool> future1 = Purchases.presentPaywall();
-    Future<bool> future2 = Purchases.presentPaywallIfNeeded("test");
+    Future<void> future1 = Purchases.presentPaywall();
+    Future<void> future2 = Purchases.presentPaywallIfNeeded("test");
   }
 }
