@@ -935,10 +935,15 @@ class Purchases {
     _logHandler?.call(logLevel, msg);
   }
 
-  static Future<bool> presentPaywall() async =>
+  /// Presents the paywall as an activity on android or a modal in iOS.
+  static Future<void> presentPaywall() async =>
       await _channel.invokeMethod('presentPaywall');
 
-  static Future<bool> presentPaywallIfNeeded(
+  /// Presents the paywall as an activity on android or a modal in iOS as long
+  /// as the user does not have the given entitlement identifier active.
+  ///
+  /// @param [requiredEntitlementIdentifier] Entitlement identifier to check if the user has access to before presenting the paywall.
+  static Future<void> presentPaywallIfNeeded(
     String requiredEntitlementIdentifier,
   ) async =>
       await _channel.invokeMethod(

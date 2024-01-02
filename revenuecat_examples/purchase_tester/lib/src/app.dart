@@ -146,13 +146,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
 
         buttonThings.add(ElevatedButton(
           onPressed: () async {
-            bool result = await Purchases.presentPaywall();
-
-            if (result) {
-              print("Purchase completed");
-            } else {
-              print("Purchase failed");
-            }
+            await Purchases.presentPaywall();
           },
           child: const Text('Present paywall'),
         ));
