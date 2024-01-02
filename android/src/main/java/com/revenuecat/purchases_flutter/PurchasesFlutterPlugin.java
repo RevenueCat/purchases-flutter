@@ -751,9 +751,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         if (fragment != null) {
             presentPaywallFromFragment(
                     fragment,
-                    requiredEntitlementIdentifier,
-                    paywallResult -> result.success(paywallResult instanceof PaywallResult.Purchased)
+                    requiredEntitlementIdentifier
             );
+            result.success(null);
         } else {
             result.error(
                 String.valueOf(PurchasesErrorCode.UnknownError.getCode()),
