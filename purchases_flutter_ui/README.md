@@ -1,15 +1,31 @@
-# purchases_flutter_ui
+<p align="center">
+  <img src="https://uploads-ssl.webflow.com/5e2613cf294dc30503dcefb7/5e752025f8c3a31d56a51408_logo_red%20(1).svg" width="350" alt="RevenueCat"/>
+<br>
 
-Flutter plugin that integrates RevenueCat Paywalls
+[![pub package](https://img.shields.io/pub/v/purchases_flutter_ui.svg)](https://pub.dartlang.org/packages/purchases_flutter_ui)
+
+## purchases_flutter_ui
+
+*purchases_flutter_ui* allows to use [RevenueCat](https://www.revenuecat.com/)'s paywalls in your Flutter application. Check our [main SDK](https://pub.dev/packages/purchases_flutter) for more information and our [paywalls documentation](https://www.revenuecat.com/docs/paywalls)
+
+## Installation
+To use this plugin, add `purchases_flutter` and `purchases_flutter_ui` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
+
+Then, you can present your paywall like:
+```dart
+await RevenueCatUI.presentPaywall();
+```
+
+or, if you want to present it conditionally based on a user's entitlements:
+```dart
+await RevenueCatUI.presentPaywallIfNeeded("requiredEntitlementId");
+```
+
+### Requirements
+*purchases_flutter_ui* requires XCode 13.3.1+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.
+
+## SDK Reference
+Our full SDK reference [can be found here](https://pub.dev/documentation/purchases_flutter_ui/latest/).
 
 ## Getting Started
-
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+For more detailed information, you can view our complete documentation at [docs.revenuecat.com](https://docs.revenuecat.com/docs/flutter).
