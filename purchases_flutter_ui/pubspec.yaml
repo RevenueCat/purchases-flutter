@@ -1,9 +1,13 @@
 name: purchases_flutter_ui
 description: "Flutter plugin that integrates RevenueCat Paywalls"
-version: 0.0.1
-homepage:
+version: 6.6.0-beta.3
+homepage: https://www.revenuecat.com/
+repository: https://github.com/RevenueCat/purchases-flutter
+issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
+documentation: https://docs.revenuecat.com/docs
 
 environment:
+  # TODO: Check constraints are ok
   sdk: '>=3.2.3 <4.0.0'
   flutter: '>=3.3.0'
 
