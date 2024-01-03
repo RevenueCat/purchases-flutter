@@ -3,7 +3,6 @@ import FlutterMacOS
 #else
 import Flutter
 #endif
-import UIKit
 import PurchasesHybridCommon
 import Foundation
 
