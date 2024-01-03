@@ -25,6 +25,10 @@ files_with_version_number = {
     './ios/Classes/PurchasesFlutterPlugin.m' => ['return @"{x}"'],
     './android/build.gradle' => ['version \'{x}\''],
     './android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java' => ['PLUGIN_VERSION = "{x}"'],
+    './purchases_flutter_ui/pubspec.yaml' => ['version: {x}'],
+    './purchases_flutter_ui/ios/purchases_flutter.podspec' => ['s.version          = \'{x}\''],
+    './purchases_flutter_ui/macos/purchases_flutter.podspec' => ['s.version          = \'{x}\''],
+    './purchases_flutter_ui/android/build.gradle' => ['version \'{x}\''],
 }
 
 repo_name = 'purchases-flutter'
@@ -88,9 +92,15 @@ lane :release do |options|
   Dir.chdir('..') do
     sh('flutter', 'pub', 'publish', '--dry-run')
   end
+  Dir.chdir('../purchases_flutter_ui') do
+    sh('flutter', 'pub', 'publish', '--dry-run')
+  end
     github_release(version: current_version_number)
     setup_credentials_file
   Dir.chdir('..') do
+    sh('flutter', 'pub', 'publish', '--force')
+  end
+  Dir.chdir('../purchases_flutter_ui') do
     sh('flutter', 'pub', 'publish', '--force')
   end
 end
@@ -141,6 +151,9 @@ lane :update_hybrid_common do |options|
       'ios/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
       'macos/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
       'android/build.gradle' => ['ext.common_version = \'{x}\''],
+      'purchases_flutter_ui/ios/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'purchases_flutter_ui/macos/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'purchases_flutter_ui/android/build.gradle' => ['ext.common_version = \'{x}\''],
   }
 
   if dry_run
