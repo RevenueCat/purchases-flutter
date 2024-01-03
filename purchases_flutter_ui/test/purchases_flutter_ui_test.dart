@@ -5,7 +5,7 @@ import 'package:purchases_flutter_ui/purchases_flutter_ui.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  const MethodChannel channel = MethodChannel('purchases_flutter_ui');
+  const channel = MethodChannel('purchases_flutter_ui');
   final log = <MethodCall>[];
   dynamic response;
 
