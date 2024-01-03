@@ -11,13 +11,20 @@ public class PurchasesFlutterUiPlugin: NSObject, FlutterPlugin {
     private static let BAD_ARGS_ERROR_CODE = "BAD_ARGS"
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "purchases_flutter_ui", binaryMessenger: registrar.messenger())
+
+        #if os(macOS)
+        let messenger = registrar.messenger
+        #else
+        let messenger = registrar.messenger()
+        #endif
+        let channel = FlutterMethodChannel(name: "purchases_flutter_ui", binaryMessenger: messenger)
         let instance = PurchasesFlutterUiPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
     private var _paywallProxy: Any?
 
+    #if os(iOS)
     @available(iOS 15.0, *)
     private var paywallProxy: PaywallProxy {
         get {
@@ -29,6 +36,7 @@ public class PurchasesFlutterUiPlugin: NSObject, FlutterPlugin {
             self._paywallProxy = newValue
         }
     }
+    #endif
 
     override init() {
         #if os(iOS)
