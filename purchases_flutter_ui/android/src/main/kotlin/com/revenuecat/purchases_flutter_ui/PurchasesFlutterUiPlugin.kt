@@ -16,7 +16,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 class PurchasesFlutterUiPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
-    private val TAG = "PurchasesFlutter"
+    private val TAG = "PurchasesFlutterUI"
 
     private var activity: Activity? = null
 
