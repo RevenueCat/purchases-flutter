@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:purchases_flutter_ui/revenue_cat_ui.dart';
+import 'package:purchases_flutter_ui/purchases_flutter_ui.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
