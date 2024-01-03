@@ -1,7 +1,5 @@
 package com.revenuecat.purchases_flutter;
 
-import static com.revenuecat.purchases.hybridcommon.ui.PaywallHelpersKt.presentPaywallFromFragment;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
@@ -25,8 +23,6 @@ import com.revenuecat.purchases.hybridcommon.OnResultList;
 import com.revenuecat.purchases.hybridcommon.SubscriberAttributesKt;
 import com.revenuecat.purchases.hybridcommon.mappers.CustomerInfoMapperKt;
 import com.revenuecat.purchases.models.InAppMessageType;
-import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI;
-import com.revenuecat.purchases.ui.revenuecatui.activity.PaywallResult;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -131,17 +127,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     public Activity getActivity() {
         return registrar != null ? registrar.activity() : activity;
-    }
-
-    private @Nullable FlutterFragmentActivity getActivityFragment() {
-        final Activity activity = getActivity();
-
-        if (activity instanceof FlutterFragmentActivity) {
-            return (FlutterFragmentActivity) activity;
-        } else {
-            Log.e(TAG, "Paywalls require your activity to subclass FlutterFragmentActivity");
-            return null;
-        }
     }
 
     @Override
@@ -369,13 +354,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Double price = call.argument("price");
                 syncObserverModeAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
                         price, result);
-                break;
-            case "presentPaywall":
-                presentPaywall(result, null);
-                break;
-            case "presentPaywallIfNeeded":
-                final String requiredEntitlementIdentifier = call.argument("requiredEntitlementIdentifier");
-                presentPaywall(result, requiredEntitlementIdentifier);
                 break;
             default:
                 result.notImplemented();
@@ -743,24 +721,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             CommonKt.showInAppMessagesIfNeeded(activity, messageTypesList);
         }
         result.success(null);
-    }
-
-    @OptIn(markerClass = ExperimentalPreviewRevenueCatUIPurchasesAPI.class)
-    private void presentPaywall(final Result result, final @Nullable String requiredEntitlementIdentifier) {
-        final FlutterFragmentActivity fragment = getActivityFragment();
-        if (fragment != null) {
-            presentPaywallFromFragment(
-                    fragment,
-                    requiredEntitlementIdentifier
-            );
-            result.success(null);
-        } else {
-            result.error(
-                String.valueOf(PurchasesErrorCode.UnknownError.getCode()),
-                "Make sure your MainActivity inherits from FlutterFragmentActivity",
-                null
-            );
-        }
     }
 
     private void runOnUiThread(Runnable runnable) {

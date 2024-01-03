@@ -935,22 +935,6 @@ class Purchases {
     _logHandler?.call(logLevel, msg);
   }
 
-  /// Presents the paywall as an activity on android or a modal in iOS.
-  static Future<void> presentPaywall() async =>
-      await _channel.invokeMethod('presentPaywall');
-
-  /// Presents the paywall as an activity on android or a modal in iOS as long
-  /// as the user does not have the given entitlement identifier active.
-  ///
-  /// @param [requiredEntitlementIdentifier] Entitlement identifier to check if the user has access to before presenting the paywall.
-  static Future<void> presentPaywallIfNeeded(
-    String requiredEntitlementIdentifier,
-  ) async =>
-      await _channel.invokeMethod(
-        'presentPaywallIfNeeded',
-        {'requiredEntitlementIdentifier': requiredEntitlementIdentifier},
-      );
-
   /// This method will send a purchase to the RevenueCat backend. This function should only be called if you are
   /// in Amazon observer mode or performing a client side migration of your current users to RevenueCat.
   ///
