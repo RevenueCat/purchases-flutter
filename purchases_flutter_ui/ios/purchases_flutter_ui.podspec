@@ -9,9 +9,9 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 Flutter plugin that integrates RevenueCat Paywalls
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'http://revenuecat.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'RevenueCat' => 'support@revenuecat.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
