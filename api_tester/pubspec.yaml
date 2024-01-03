@@ -44,6 +44,8 @@ dev_dependencies:
 
   purchases_flutter:
     path: ../
+  purchases_flutter_ui:
+    path: ../purchases_flutter_ui
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
