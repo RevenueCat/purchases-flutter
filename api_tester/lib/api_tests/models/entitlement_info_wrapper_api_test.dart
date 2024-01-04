@@ -44,6 +44,7 @@ class _EntitlementInfoApiTest {
       String? expirationDate,
       String? unsubscribeDetectedAt,
       String? billingIssueDetectedAt,
+      String? productPlanIdentifier,
       VerificationResult verificationResult) {
     EntitlementInfo entitlementInfo = EntitlementInfo(
         identifier,
@@ -61,6 +62,7 @@ class _EntitlementInfoApiTest {
         expirationDate: expirationDate,
         unsubscribeDetectedAt: unsubscribeDetectedAt,
         billingIssueDetectedAt: billingIssueDetectedAt,
+        productPlanIdentifier: productPlanIdentifier,
         verification: verificationResult);
   }
 
@@ -78,6 +80,7 @@ class _EntitlementInfoApiTest {
     String? expirationDate = info.expirationDate;
     String? unsubscribeDetectedAt = info.unsubscribeDetectedAt;
     String? billingIssueDetectedAt = info.billingIssueDetectedAt;
+    String? productPlanIdentifier = info.productPlanIdentifier;
     VerificationResult verificationResult = info.verification;
   }
 }

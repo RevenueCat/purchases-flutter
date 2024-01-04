@@ -14,7 +14,6 @@ _$EntitlementInfoImpl _$$EntitlementInfoImplFromJson(Map json) =>
       json['latestPurchaseDate'] as String,
       json['originalPurchaseDate'] as String,
       json['productIdentifier'] as String,
-      json['productPlanIdentifier'] as String?,
       json['isSandbox'] as bool,
       ownershipType: $enumDecodeNullable(
               _$OwnershipTypeEnumMap, json['ownershipType'],
@@ -29,6 +28,7 @@ _$EntitlementInfoImpl _$$EntitlementInfoImplFromJson(Map json) =>
       expirationDate: json['expirationDate'] as String?,
       unsubscribeDetectedAt: json['unsubscribeDetectedAt'] as String?,
       billingIssueDetectedAt: json['billingIssueDetectedAt'] as String?,
+      productPlanIdentifier: json['productPlanIdentifier'] as String?,
       verification: $enumDecodeNullable(
               _$VerificationResultEnumMap, json['verification']) ??
           VerificationResult.notRequested,
@@ -43,7 +43,6 @@ Map<String, dynamic> _$$EntitlementInfoImplToJson(
       'latestPurchaseDate': instance.latestPurchaseDate,
       'originalPurchaseDate': instance.originalPurchaseDate,
       'productIdentifier': instance.productIdentifier,
-      'productPlanIdentifier': instance.productPlanIdentifier,
       'isSandbox': instance.isSandbox,
       'ownershipType': _$OwnershipTypeEnumMap[instance.ownershipType]!,
       'store': _$StoreEnumMap[instance.store]!,
@@ -51,6 +50,7 @@ Map<String, dynamic> _$$EntitlementInfoImplToJson(
       'expirationDate': instance.expirationDate,
       'unsubscribeDetectedAt': instance.unsubscribeDetectedAt,
       'billingIssueDetectedAt': instance.billingIssueDetectedAt,
+      'productPlanIdentifier': instance.productPlanIdentifier,
       'verification': _$VerificationResultEnumMap[instance.verification]!,
     };
 

@@ -39,9 +39,6 @@ mixin _$EntitlementInfo {
   /// The product identifier that unlocked this entitlement
   String get productIdentifier => throw _privateConstructorUsedError;
 
-  /// The base plan identifier that unlocked this entitlement (Google only).
-  String? get productPlanIdentifier => throw _privateConstructorUsedError;
-
   /// False if this entitlement is unlocked via a production purchase
   bool get isSandbox => throw _privateConstructorUsedError;
 
@@ -77,6 +74,9 @@ mixin _$EntitlementInfo {
   /// Check the [isActive] property.
   String? get billingIssueDetectedAt => throw _privateConstructorUsedError;
 
+  /// The base plan identifier that unlocked this entitlement (Google only).
+  String? get productPlanIdentifier => throw _privateConstructorUsedError;
+
   /// If entitlement verification was enabled, the result of that verification.
   /// If not, `VerificationResult.NOT_REQUESTED`.
   VerificationResult get verification => throw _privateConstructorUsedError;
@@ -100,7 +100,6 @@ abstract class $EntitlementInfoCopyWith<$Res> {
       String latestPurchaseDate,
       String originalPurchaseDate,
       String productIdentifier,
-      String? productPlanIdentifier,
       bool isSandbox,
       @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       OwnershipType ownershipType,
@@ -110,6 +109,7 @@ abstract class $EntitlementInfoCopyWith<$Res> {
       String? expirationDate,
       String? unsubscribeDetectedAt,
       String? billingIssueDetectedAt,
+      String? productPlanIdentifier,
       VerificationResult verification});
 }
 
@@ -132,7 +132,6 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
     Object? latestPurchaseDate = null,
     Object? originalPurchaseDate = null,
     Object? productIdentifier = null,
-    Object? productPlanIdentifier = freezed,
     Object? isSandbox = null,
     Object? ownershipType = null,
     Object? store = null,
@@ -140,6 +139,7 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
     Object? expirationDate = freezed,
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
+    Object? productPlanIdentifier = freezed,
     Object? verification = null,
   }) {
     return _then(_value.copyWith(
@@ -167,10 +167,6 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      productPlanIdentifier: freezed == productPlanIdentifier
-          ? _value.productPlanIdentifier
-          : productPlanIdentifier // ignore: cast_nullable_to_non_nullable
-              as String?,
       isSandbox: null == isSandbox
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
@@ -199,6 +195,10 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
           ? _value.billingIssueDetectedAt
           : billingIssueDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      productPlanIdentifier: freezed == productPlanIdentifier
+          ? _value.productPlanIdentifier
+          : productPlanIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
       verification: null == verification
           ? _value.verification
           : verification // ignore: cast_nullable_to_non_nullable
@@ -222,7 +222,6 @@ abstract class _$$EntitlementInfoImplCopyWith<$Res>
       String latestPurchaseDate,
       String originalPurchaseDate,
       String productIdentifier,
-      String? productPlanIdentifier,
       bool isSandbox,
       @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       OwnershipType ownershipType,
@@ -232,6 +231,7 @@ abstract class _$$EntitlementInfoImplCopyWith<$Res>
       String? expirationDate,
       String? unsubscribeDetectedAt,
       String? billingIssueDetectedAt,
+      String? productPlanIdentifier,
       VerificationResult verification});
 }
 
@@ -252,7 +252,6 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
     Object? latestPurchaseDate = null,
     Object? originalPurchaseDate = null,
     Object? productIdentifier = null,
-    Object? productPlanIdentifier = freezed,
     Object? isSandbox = null,
     Object? ownershipType = null,
     Object? store = null,
@@ -260,6 +259,7 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
     Object? expirationDate = freezed,
     Object? unsubscribeDetectedAt = freezed,
     Object? billingIssueDetectedAt = freezed,
+    Object? productPlanIdentifier = freezed,
     Object? verification = null,
   }) {
     return _then(_$EntitlementInfoImpl(
@@ -287,10 +287,6 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
           ? _value.productIdentifier
           : productIdentifier // ignore: cast_nullable_to_non_nullable
               as String,
-      freezed == productPlanIdentifier
-          ? _value.productPlanIdentifier
-          : productPlanIdentifier // ignore: cast_nullable_to_non_nullable
-              as String?,
       null == isSandbox
           ? _value.isSandbox
           : isSandbox // ignore: cast_nullable_to_non_nullable
@@ -319,6 +315,10 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
           ? _value.billingIssueDetectedAt
           : billingIssueDetectedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      productPlanIdentifier: freezed == productPlanIdentifier
+          ? _value.productPlanIdentifier
+          : productPlanIdentifier // ignore: cast_nullable_to_non_nullable
+              as String?,
       verification: null == verification
           ? _value.verification
           : verification // ignore: cast_nullable_to_non_nullable
@@ -337,7 +337,6 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       this.latestPurchaseDate,
       this.originalPurchaseDate,
       this.productIdentifier,
-      this.productPlanIdentifier,
       this.isSandbox,
       {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       this.ownershipType = OwnershipType.unknown,
@@ -348,6 +347,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       this.expirationDate,
       this.unsubscribeDetectedAt,
       this.billingIssueDetectedAt,
+      this.productPlanIdentifier,
       this.verification = VerificationResult.notRequested});
 
   factory _$EntitlementInfoImpl.fromJson(Map<String, dynamic> json) =>
@@ -377,10 +377,6 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
   /// The product identifier that unlocked this entitlement
   @override
   final String productIdentifier;
-
-  /// The base plan identifier that unlocked this entitlement (Google only).
-  @override
-  final String? productPlanIdentifier;
 
   /// False if this entitlement is unlocked via a production purchase
   @override
@@ -424,6 +420,10 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
   @override
   final String? billingIssueDetectedAt;
 
+  /// The base plan identifier that unlocked this entitlement (Google only).
+  @override
+  final String? productPlanIdentifier;
+
   /// If entitlement verification was enabled, the result of that verification.
   /// If not, `VerificationResult.NOT_REQUESTED`.
   @override
@@ -432,7 +432,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
 
   @override
   String toString() {
-    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, productPlanIdentifier: $productPlanIdentifier, isSandbox: $isSandbox, ownershipType: $ownershipType, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt, verification: $verification)';
+    return 'EntitlementInfo(identifier: $identifier, isActive: $isActive, willRenew: $willRenew, latestPurchaseDate: $latestPurchaseDate, originalPurchaseDate: $originalPurchaseDate, productIdentifier: $productIdentifier, isSandbox: $isSandbox, ownershipType: $ownershipType, store: $store, periodType: $periodType, expirationDate: $expirationDate, unsubscribeDetectedAt: $unsubscribeDetectedAt, billingIssueDetectedAt: $billingIssueDetectedAt, productPlanIdentifier: $productPlanIdentifier, verification: $verification)';
   }
 
   @override
@@ -452,8 +452,6 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
                 other.originalPurchaseDate == originalPurchaseDate) &&
             (identical(other.productIdentifier, productIdentifier) ||
                 other.productIdentifier == productIdentifier) &&
-            (identical(other.productPlanIdentifier, productPlanIdentifier) ||
-                other.productPlanIdentifier == productPlanIdentifier) &&
             (identical(other.isSandbox, isSandbox) ||
                 other.isSandbox == isSandbox) &&
             (identical(other.ownershipType, ownershipType) ||
@@ -467,6 +465,8 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
                 other.unsubscribeDetectedAt == unsubscribeDetectedAt) &&
             (identical(other.billingIssueDetectedAt, billingIssueDetectedAt) ||
                 other.billingIssueDetectedAt == billingIssueDetectedAt) &&
+            (identical(other.productPlanIdentifier, productPlanIdentifier) ||
+                other.productPlanIdentifier == productPlanIdentifier) &&
             (identical(other.verification, verification) ||
                 other.verification == verification));
   }
@@ -481,7 +481,6 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       latestPurchaseDate,
       originalPurchaseDate,
       productIdentifier,
-      productPlanIdentifier,
       isSandbox,
       ownershipType,
       store,
@@ -489,6 +488,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       expirationDate,
       unsubscribeDetectedAt,
       billingIssueDetectedAt,
+      productPlanIdentifier,
       verification);
 
   @JsonKey(ignore: true)
@@ -514,7 +514,6 @@ abstract class _EntitlementInfo implements EntitlementInfo {
       final String latestPurchaseDate,
       final String originalPurchaseDate,
       final String productIdentifier,
-      final String? productPlanIdentifier,
       final bool isSandbox,
       {@JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
       final OwnershipType ownershipType,
@@ -525,6 +524,7 @@ abstract class _EntitlementInfo implements EntitlementInfo {
       final String? expirationDate,
       final String? unsubscribeDetectedAt,
       final String? billingIssueDetectedAt,
+      final String? productPlanIdentifier,
       final VerificationResult verification}) = _$EntitlementInfoImpl;
 
   factory _EntitlementInfo.fromJson(Map<String, dynamic> json) =
@@ -555,10 +555,6 @@ abstract class _EntitlementInfo implements EntitlementInfo {
 
   /// The product identifier that unlocked this entitlement
   String get productIdentifier;
-  @override
-
-  /// The base plan identifier that unlocked this entitlement (Google only).
-  String? get productPlanIdentifier;
   @override
 
   /// False if this entitlement is unlocked via a production purchase
@@ -601,6 +597,10 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the [isActive] property.
   String? get billingIssueDetectedAt;
+  @override
+
+  /// The base plan identifier that unlocked this entitlement (Google only).
+  String? get productPlanIdentifier;
   @override
 
   /// If entitlement verification was enabled, the result of that verification.

@@ -63,9 +63,6 @@ class EntitlementInfo with _$EntitlementInfo {
     /// The product identifier that unlocked this entitlement
     String productIdentifier,
 
-    /// The base plan identifier that unlocked this entitlement (Google only).
-    String? productPlanIdentifier,
-
     /// False if this entitlement is unlocked via a production purchase
     bool isSandbox, {
 
@@ -115,6 +112,9 @@ class EntitlementInfo with _$EntitlementInfo {
     /// @note: Entitlement may still be active even if there is a billing issue.
     /// Check the [isActive] property.
     String? billingIssueDetectedAt,
+
+    /// The base plan identifier that unlocked this entitlement (Google only).
+    String? productPlanIdentifier,
 
     /// If entitlement verification was enabled, the result of that verification.
     /// If not, `VerificationResult.NOT_REQUESTED`.
