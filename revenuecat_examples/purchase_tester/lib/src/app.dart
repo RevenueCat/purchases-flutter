@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter_ui/purchases_flutter_ui.dart';
 
 import './constant.dart';
 
@@ -146,7 +147,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
 
         buttonThings.add(ElevatedButton(
           onPressed: () async {
-            await Purchases.presentPaywall();
+            await RevenueCatUI.presentPaywall();
           },
           child: const Text('Present paywall'),
         ));

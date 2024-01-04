@@ -25,6 +25,10 @@ files_with_version_number = {
     './ios/Classes/PurchasesFlutterPlugin.m' => ['return @"{x}"'],
     './android/build.gradle' => ['version \'{x}\''],
     './android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java' => ['PLUGIN_VERSION = "{x}"'],
+    './purchases_flutter_ui/pubspec.yaml' => ['version: {x}'],
+    './purchases_flutter_ui/ios/purchases_flutter_ui.podspec' => ['s.version          = \'{x}\''],
+    './purchases_flutter_ui/macos/purchases_flutter_ui.podspec' => ['s.version          = \'{x}\''],
+    './purchases_flutter_ui/android/build.gradle' => ['version \'{x}\''],
 }
 
 repo_name = 'purchases-flutter'
@@ -85,14 +89,33 @@ end
 
 desc "Create release"
 lane :release do |options|
+  # Remove purchases_flutter_ui so it's not included in the release of the main SDK
+  # Can't use .pubignore because it causes files to not be found when trying to
+  # deploy purchases_flutter_ui
+  sh('rm', '-rf', 'purchases_flutter_ui')
   Dir.chdir('..') do
     sh('flutter', 'pub', 'publish', '--dry-run')
   end
-    github_release(version: current_version_number)
-    setup_credentials_file
+  setup_credentials_file
   Dir.chdir('..') do
     sh('flutter', 'pub', 'publish', '--force')
   end
+end
+
+desc "Create purchases_flutter_ui release"
+lane :release_purchases_flutter_ui do |options|
+  Dir.chdir('../purchases_flutter_ui') do
+    sh('flutter', 'pub', 'publish', '--dry-run')
+  end
+  setup_credentials_file
+  Dir.chdir('../purchases_flutter_ui') do
+    sh('flutter', 'pub', 'publish', '--force')
+  end
+end
+
+desc "Make github release with current version number"
+lane :github_release_current_version do |options|
+  github_release(version: current_version_number)
 end
 
 desc "Make github release"
@@ -141,6 +164,9 @@ lane :update_hybrid_common do |options|
       'ios/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
       'macos/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
       'android/build.gradle' => ['ext.common_version = \'{x}\''],
+      'purchases_flutter_ui/ios/purchases_flutter_ui.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'purchases_flutter_ui/macos/purchases_flutter_ui.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'purchases_flutter_ui/android/build.gradle' => ['ext.common_version = \'{x}\''],
   }
 
   if dry_run

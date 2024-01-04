@@ -37,6 +37,22 @@ Automatically bumps version, edit changelog, and create pull request
 
 Create release
 
+### release_purchases_flutter_ui
+
+```sh
+[bundle exec] fastlane release_purchases_flutter_ui
+```
+
+Create purchases_flutter_ui release
+
+### github_release_current_version
+
+```sh
+[bundle exec] fastlane github_release_current_version
+```
+
+Make github release with current version number
+
 ### github_release
 
 ```sh

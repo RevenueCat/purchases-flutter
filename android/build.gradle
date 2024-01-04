@@ -66,6 +66,4 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.revenuecat.purchases:purchases-hybrid-common:$common_version"
-    // TODO: Separate into different library
-    implementation "com.revenuecat.purchases:purchases-hybrid-common-ui:$common_version"
 }

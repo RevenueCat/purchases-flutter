@@ -1,0 +1,26 @@
+revenuecat_examples
+scripts
+migrations
+fastlane
+api_tester
+codegen.sh
+Dangerfile
+Gemfile
+Gemfile.lock
+pubspec.lock
+
+# Imported from .gitignore
+vendor
+.bundle
+flutter
+**/Podfile.lock
+*.bck
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+**/android/key.properties
+*.jks

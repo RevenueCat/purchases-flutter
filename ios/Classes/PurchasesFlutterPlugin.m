@@ -16,8 +16,6 @@ typedef void (^RCStartPurchaseBlock)(RCPurchaseCompletedBlock);
 @property (nonatomic, retain) NSObject <FlutterPluginRegistrar> *registrar;
 @property (nonatomic, retain) NSMutableArray<RCStartPurchaseBlock> *startPurchaseBlocks;
 
-@property (nonatomic, strong) id paywallProxy;
-
 @end
 
 NSString *PurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
@@ -32,16 +30,6 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     NSAssert(self, @"super init cannot be nil");
     self.channel = channel;
     self.registrar = registrar;
-
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 15.0, *)) {
-        self.paywallProxy = [PaywallProxy new];
-    } else {
-        self.paywallProxy = nil;
-    }
-    #else
-    self.paywallProxy = nil;
-    #endif
 
     return self;
 }
@@ -232,10 +220,6 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     } else if ([@"syncObserverModeAmazonPurchase" isEqualToString:call.method]) {
         // NOOP
         result(nil);
-    } else if ([@"presentPaywall" isEqualToString:call.method]) {
-        [self presentPaywallWithResult:result requiredEntitlementIdentifier:nil];
-    } else if ([@"presentPaywallIfNeeded" isEqualToString:call.method]) {
-        [self presentPaywallWithResult:result requiredEntitlementIdentifier:arguments[@"requiredEntitlementIdentifier"]];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -611,34 +595,6 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     }];
     result(nil);
 }
-
-#pragma mark -
-#pragma mark Paywalls
-
-#if TARGET_OS_IPHONE
-- (PaywallProxy *)paywalls API_AVAILABLE(ios(15.0)){
-    return self.paywallProxy;
-}
-#endif
-
-- (void)presentPaywallWithResult:(FlutterResult)result requiredEntitlementIdentifier:(NSString * _Nullable)requiredEntitlementIdentifier {
-    #if TARGET_OS_IPHONE
-    if (@available(iOS 15.0, *)) {
-        if (requiredEntitlementIdentifier) {
-            [self.paywalls presentPaywallIfNeededWithRequiredEntitlementIdentifier:requiredEntitlementIdentifier];
-        } else {
-            [self.paywalls presentPaywall];
-        }
-    } else {
-        NSLog(@"[Purchases] Warning: tried to display paywall, but it's only available on iOS 15.0 or greater.");
-    }
-    #else
-    NSLog(@"[Purchases] Warning: tried to display paywall, but it's only available on iOS 15.0 or greater.");
-    #endif
-
-    result(nil);
-}
-
 
 #pragma mark -
 #pragma mark Delegate Methods
