@@ -6,7 +6,7 @@ import Flutter
 import PurchasesHybridCommon
 import Foundation
 
-public class PurchasesFlutterUiPlugin: NSObject, FlutterPlugin {
+public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
     private static let BAD_ARGS_ERROR_CODE = "BAD_ARGS"
 
@@ -17,8 +17,8 @@ public class PurchasesFlutterUiPlugin: NSObject, FlutterPlugin {
         #else
         let messenger = registrar.messenger()
         #endif
-        let channel = FlutterMethodChannel(name: "purchases_flutter_ui", binaryMessenger: messenger)
-        let instance = PurchasesFlutterUiPlugin()
+        let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
+        let instance = PurchasesUiFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -53,13 +53,13 @@ public class PurchasesFlutterUiPlugin: NSObject, FlutterPlugin {
             self.presentPaywall(result, requiredEntitlementIdentifier: nil)
         case "presentPaywallIfNeeded":
             guard let args = call.arguments as? Dictionary<String, Any> else {
-                result(FlutterError(code: PurchasesFlutterUiPlugin.BAD_ARGS_ERROR_CODE,
+                result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
                                     message: "Invalid arguments type",
                                     details: nil))
                 return
             }
             guard let requiredEntitlementIdentifier = args["requiredEntitlementIdentifier"] as? String? else {
-                result(FlutterError(code: PurchasesFlutterUiPlugin.BAD_ARGS_ERROR_CODE,
+                result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
                                     message: "Missing requiredEntitlementIdentifier in presentPaywallIfNeeded",
                                     details: nil))
                 return

@@ -1,4 +1,4 @@
-import 'package:purchases_flutter_ui/purchases_flutter_ui.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:purchases_flutter_ui/purchases_flutter_ui.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import './constant.dart';
 

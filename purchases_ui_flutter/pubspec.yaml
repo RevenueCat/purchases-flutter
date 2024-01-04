@@ -1,4 +1,4 @@
-name: purchases_flutter_ui
+name: purchases_ui_flutter
 description: "Flutter plugin that integrates RevenueCat Paywalls"
 version: 6.6.0-beta.3
 homepage: https://www.revenuecat.com/
@@ -39,12 +39,12 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.revenuecat.purchases_flutter_ui
-        pluginClass: PurchasesFlutterUiPlugin
+        package: com.revenuecat.purchases_ui_flutter
+        pluginClass: PurchasesUiFlutterPlugin
       ios:
-        pluginClass: PurchasesFlutterUiPlugin
+        pluginClass: PurchasesUiFlutterPlugin
       macos:
-        pluginClass: PurchasesFlutterUiPlugin
+        pluginClass: PurchasesUiFlutterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

@@ -19,7 +19,7 @@ await Purchases.presentPaywallIfNeeded("pro");
 
 - Currently only full screen paywalls are supported
 - There is no way to detect paywall events other than using `addCustomerInfoUpdateListener`
-- Android's `minSdkVersion` is temporarily increased from `19` to `24` to support paywalls. This will be reverted in a future release as we split `purchases_flutter` and `purchases_flutter_ui`
+- Android's `minSdkVersion` is temporarily increased from `19` to `24` to support paywalls. This will be reverted in a future release as we split `purchases_flutter` and `purchases_ui_flutter`
 
 ### Breaking changes from previous beta
 
