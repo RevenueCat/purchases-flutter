@@ -6,9 +6,9 @@ import FlutterMacOS
 import Foundation
 
 import purchases_flutter
-import purchases_flutter_ui
+import purchases_ui_flutter
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   PurchasesFlutterPlugin.register(with: registry.registrar(forPlugin: "PurchasesFlutterPlugin"))
-  PurchasesFlutterUiPlugin.register(with: registry.registrar(forPlugin: "PurchasesFlutterUiPlugin"))
+  PurchasesUiFlutterPlugin.register(with: registry.registrar(forPlugin: "PurchasesUiFlutterPlugin"))
 }

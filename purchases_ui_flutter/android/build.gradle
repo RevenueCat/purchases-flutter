@@ -1,4 +1,4 @@
-group 'com.revenuecat.purchases_flutter_ui'
+group 'com.revenuecat.purchases_ui_flutter'
 version '6.6.0-beta.3'
 
 buildscript {
@@ -27,7 +27,7 @@ apply plugin: 'kotlin-android'
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace 'com.revenuecat.purchases_flutter_ui'
+        namespace 'com.revenuecat.purchases_ui_flutter'
     }
 
     compileOptions {

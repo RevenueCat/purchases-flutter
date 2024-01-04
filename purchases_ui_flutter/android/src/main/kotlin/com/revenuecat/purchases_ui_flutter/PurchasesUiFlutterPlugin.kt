@@ -1,4 +1,4 @@
-package com.revenuecat.purchases_flutter_ui
+package com.revenuecat.purchases_ui_flutter
 
 import android.app.Activity
 import android.util.Log
@@ -15,15 +15,15 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-class PurchasesFlutterUiPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
-    private val TAG = "PurchasesFlutterUI"
+class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
+    private val TAG = "PurchasesUIFlutter"
 
     private var activity: Activity? = null
 
     private lateinit var channel : MethodChannel
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "purchases_flutter_ui")
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "purchases_ui_flutter")
         channel.setMethodCallHandler(this)
     }
 

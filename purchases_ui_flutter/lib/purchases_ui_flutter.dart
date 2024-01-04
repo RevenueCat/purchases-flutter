@@ -2,7 +2,7 @@
 import 'package:flutter/services.dart';
 
 class RevenueCatUI {
-  static const _methodChannel = MethodChannel('purchases_flutter_ui');
+  static const _methodChannel = MethodChannel('purchases_ui_flutter');
 
   /// Presents the paywall as an activity on android or a modal in iOS.
   static Future<void> presentPaywall() async =>
