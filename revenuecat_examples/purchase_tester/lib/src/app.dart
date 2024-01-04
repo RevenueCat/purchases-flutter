@@ -144,12 +144,27 @@ class _UpsellScreenState extends State<UpsellScreen> {
             .expand((i) => i)
             .toList();
 
-        return Scaffold(
-          appBar: AppBar(title: const Text('Upsell Screen')),
-          body: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: buttonThings,
+        return Container(
+          color: Colors.white,
+          child: SafeArea(
+            child: Scaffold(
+              appBar: AppBar(
+                  title:
+                      Text('Buy products in offering: ${offering.identifier}')),
+              body: SingleChildScrollView(
+                child: Center(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: buttonThings.length,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(height: 10),
+                    itemBuilder: (BuildContext context, int index) {
+                      return buttonThings[index];
+                    },
+                  ),
+                ),
+              ),
             ),
           ),
         );
@@ -199,8 +214,17 @@ class _PurchaseButton extends StatelessWidget {
             MaterialPageRoute(builder: (context) => const InitialScreen()),
           );
         },
-        child: Text(
-            'Buy Package: ${package.storeProduct.subscriptionPeriod ?? package.storeProduct.title}\n${package.storeProduct.priceString}'),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SizedBox(
+            width: double.infinity,
+            child: Text(
+              'Buy Package: ${package.storeProduct.subscriptionPeriod ?? package.storeProduct.title}'
+              '\n${package.storeProduct.identifier}'
+              '\n${package.storeProduct.price}',
+            ),
+          ),
+        ),
       );
 }
 
@@ -220,7 +244,7 @@ class _PurchaseStoreProductButton extends StatelessWidget {
             final isPro =
                 customerInfo.entitlements.active.containsKey(entitlementKey);
             if (isPro) {
-             Navigator.pushReplacement(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const CatsScreen()),
               );
@@ -321,7 +345,11 @@ class CatsScreen extends StatelessWidget {
               onPressed: () async {
                 // In order to defer in-app messages so they're only shown when this button is pressed, you must configure
                 // the SDK with `configuration.shouldShowInAppMessagesAutomatically = false;`
-                Purchases.showInAppMessages(types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic});
+                Purchases.showInAppMessages(types: {
+                  InAppMessageType.billingIssue,
+                  InAppMessageType.priceIncreaseConsent,
+                  InAppMessageType.generic
+                });
               },
               child: const Text('Show In-App Messages'),
             ),
