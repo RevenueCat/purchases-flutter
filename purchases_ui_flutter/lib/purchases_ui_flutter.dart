@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 
 class RevenueCatUI {
@@ -12,7 +11,9 @@ class RevenueCatUI {
   /// as the user does not have the given entitlement identifier active.
   ///
   /// @param [requiredEntitlementIdentifier] Entitlement identifier to check if the user has access to before presenting the paywall.
-  static Future<void> presentPaywallIfNeeded(String requiredEntitlementIdentifier) async =>
+  static Future<void> presentPaywallIfNeeded(
+    String requiredEntitlementIdentifier,
+  ) async =>
       await _methodChannel.invokeMethod(
         'presentPaywallIfNeeded',
         {'requiredEntitlementIdentifier': requiredEntitlementIdentifier},
