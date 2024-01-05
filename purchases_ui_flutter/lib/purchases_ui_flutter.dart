@@ -12,7 +12,8 @@ class RevenueCatUI {
   ///
   /// @param [requiredEntitlementIdentifier] Entitlement identifier to check if the user has access to before presenting the paywall.
   static Future<void> presentPaywallIfNeeded(
-          String requiredEntitlementIdentifier) async =>
+    String requiredEntitlementIdentifier,
+  ) async =>
       await _methodChannel.invokeMethod(
         'presentPaywallIfNeeded',
         {'requiredEntitlementIdentifier': requiredEntitlementIdentifier},

@@ -34,8 +34,10 @@ void main() {
   test('presentPaywallIfNeeded', () async {
     await RevenueCatUI.presentPaywallIfNeeded('entitlement');
     expect(log, <Matcher>[
-      isMethodCall('presentPaywallIfNeeded',
-          arguments: {'requiredEntitlementIdentifier': 'entitlement'}),
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {'requiredEntitlementIdentifier': 'entitlement'},
+      ),
     ]);
   });
 }
