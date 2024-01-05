@@ -147,7 +147,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
 
         buttonThings.add(ElevatedButton(
           onPressed: () async {
-            await RevenueCatUI.presentPaywall();
+            final paywallResult = await RevenueCatUI.presentPaywall();
+            print('Paywall result: $paywallResult');
           },
           child: const Text('Present paywall'),
         ));
