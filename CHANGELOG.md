@@ -3,7 +3,7 @@
 *   📱 Initial support for cross-platform RevenueCat Paywalls 🐾 🧱  (#852) 
 
 #### Instructions:
-- For Android, you need to change your `MainActivity` to subclass `FlutterFragmentActivity` instead of `FlutterActivity`.
+- For Android, you need to change your `MainActivity` to subclass `FlutterFragmentActivity` instead of `FlutterActivity`. Also, the min sdk version of the new package is 24. Please make sure your app's android/build.gradle minSdkVersion has that or a higher version.
 - Add `purchases-ui-flutter` in your `pubspec.yaml`:
 ```yaml
 dependencies:
