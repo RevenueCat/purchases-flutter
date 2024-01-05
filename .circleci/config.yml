@@ -432,6 +432,7 @@ workflows:
           requires:
             - make-release
             - make-release-purchases-flutter-ui
+          <<: *release-tags
   weekly-run-workflow:
     when:
       and:
