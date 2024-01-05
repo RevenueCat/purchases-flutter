@@ -659,7 +659,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"6.6.0-beta.3";
+    return @"6.15.0-beta.4";
 }
 
 @end
