@@ -74,9 +74,14 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         #if os(iOS)
         if #available(iOS 15.0, *) {
             if let requiredEntitlementIdentifier {
-                self.paywallProxy.presentPaywallIfNeeded(requiredEntitlementIdentifier: requiredEntitlementIdentifier)
+                self.paywallProxy.presentPaywallIfNeeded(requiredEntitlementIdentifier:
+                                                            requiredEntitlementIdentifier) { paywallResultString in
+                    result(paywallResultString)
+                }
             } else {
-                self.paywallProxy.presentPaywall()
+                self.paywallProxy.presentPaywall { paywallResultString in
+                    result(paywallResultString)
+                }
             }
         } else {
             NSLog("Presenting paywall requires iOS 15+")
@@ -84,7 +89,6 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         #else
         NSLog("Presenting paywall requires iOS")
         #endif
-        result(nil)
     }
 
 }
