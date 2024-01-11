@@ -66,8 +66,12 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
             presentPaywallFromFragment(
                 activity,
                 requiredEntitlementIdentifier,
+                paywallResultListener = object : PaywallResultListener {
+                    override fun onPaywallResult(paywallResult: String) {
+                        result.success(paywallResult)
+                    }
+                }
             )
-            result.success(null)
         } else {
             result.error(PurchasesErrorCode.UnknownError.code.toString(),
                 "Make sure your MainActivity inherits from FlutterFragmentActivity",

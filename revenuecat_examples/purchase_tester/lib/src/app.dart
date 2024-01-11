@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -147,7 +148,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
 
         buttonThings.add(ElevatedButton(
           onPressed: () async {
-            await RevenueCatUI.presentPaywall();
+            final paywallResult = await RevenueCatUI.presentPaywall();
+            log('Paywall result: $paywallResult');
           },
           child: const Text('Present paywall'),
         ));

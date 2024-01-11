@@ -25,6 +25,7 @@ void main() {
   });
 
   test('presentPaywall', () async {
+    response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywall();
     expect(log, <Matcher>[
       isMethodCall('presentPaywall', arguments: null),
@@ -32,6 +33,7 @@ void main() {
   });
 
   test('presentPaywallIfNeeded', () async {
+    response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywallIfNeeded('entitlement');
     expect(log, <Matcher>[
       isMethodCall(
@@ -39,5 +41,23 @@ void main() {
         arguments: {'requiredEntitlementIdentifier': 'entitlement'},
       ),
     ]);
+  });
+
+  test('presentPaywall parses response correctly', () async {
+    response = 'NOT_PRESENTED';
+    var paywallResult = await RevenueCatUI.presentPaywall();
+    expect(paywallResult, PaywallResult.notPresented);
+    response = 'CANCELLED';
+    paywallResult = await RevenueCatUI.presentPaywall();
+    expect(paywallResult, PaywallResult.cancelled);
+    response = 'ERROR';
+    paywallResult = await RevenueCatUI.presentPaywall();
+    expect(paywallResult, PaywallResult.error);
+    response = 'PURCHASED';
+    paywallResult = await RevenueCatUI.presentPaywall();
+    expect(paywallResult, PaywallResult.purchased);
+    response = 'RESTORED';
+    paywallResult = await RevenueCatUI.presentPaywall();
+    expect(paywallResult, PaywallResult.restored);
   });
 }
