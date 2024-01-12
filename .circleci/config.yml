@@ -166,9 +166,14 @@ jobs:
           project: revenuecat_examples/purchase_tester
       - flutter-get-dependencies:
           project: api_tester
+      - flutter-get-dependencies:
+          project: purchases_ui_flutter
       - run:
           name: Analyze code
           command: flutter analyze
+      - run:
+          name: Analyze code for purchases_ui_flutter
+          command: cd purchases_ui_flutter && flutter analyze
 
   test:
     description: "Run tests for Flutter"
@@ -180,6 +185,9 @@ jobs:
       - run:
           name: Run tests
           command: flutter test
+      - run:
+          name: Run tests for purchases_ui_flutter
+          command: cd purchases_ui_flutter && flutter test
 
   api_test:
     description: "Run API tests for Flutter"
@@ -316,6 +324,9 @@ jobs:
       - run:
           name: Dry Run Release
           command: flutter pub publish --dry-run
+      - run:
+          name: Dry Run Release for purchases_ui_flutter
+          command: cd purchases_ui_flutter && flutter pub publish --dry-run
 
   update-hybrid-common-versions:
     description: "Creates a PR updating purchases-hybrid-common to latest release"
@@ -335,8 +346,9 @@ jobs:
             version:<< pipeline.parameters.version >> \
             open_pr:true \
             automatic_release:<< pipeline.parameters.automatic >>
+
   make-release:
-    description: "Publishes the new version to pub.dev and creates a github release"
+    description: "Publishes a new version of purchases-flutter to pub.dev and creates a github release"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
@@ -347,6 +359,32 @@ jobs:
       - run:
           name: release
           command: bundle exec fastlane release
+
+  make-release-purchases-flutter-ui:
+    description: "Publishes a new version of purchases-flutter-ui to pub.dev and creates a github release"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - run:
+          name: release
+          command: bundle exec fastlane release_purchases_ui_flutter
+
+  github_release:
+    description: "Creates a github release with the current version"
+    docker:
+      - image: cimg/ruby:3.1.2
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - run:
+          name: release
+          command: bundle exec fastlane github_release_current_version
 
 workflows:
   danger:
@@ -389,6 +427,12 @@ workflows:
             - hold
           <<: *release-branches
       - make-release: *release-tags
+      - make-release-purchases-flutter-ui: *release-tags
+      - github_release:
+          requires:
+            - make-release
+            - make-release-purchases-flutter-ui
+          <<: *release-tags
   weekly-run-workflow:
     when:
       and:

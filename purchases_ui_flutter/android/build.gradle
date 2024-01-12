@@ -1,0 +1,54 @@
+group 'com.revenuecat.purchases_ui_flutter'
+version '6.6.0'
+
+buildscript {
+    ext.kotlin_version = '1.9.20'
+    ext.common_version = '8.10.1'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.revenuecat.purchases_ui_flutter'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 24
+        compileSdk 33
+    }
+
+    dependencies {
+        implementation "com.revenuecat.purchases:purchases-hybrid-common-ui:$common_version"
+    }
+}

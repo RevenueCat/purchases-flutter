@@ -22,3 +22,4 @@ import 'package:api_tester/api_tests/models/store_product_wrapper_api_test.dart'
 import 'package:api_tester/api_tests/models/store_transaction_api_test.dart';
 import 'package:api_tester/api_tests/models/subscription_option_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/purchases_flutter_api_test.dart';
+import 'package:api_tester/api_tests/purchases_ui_flutter_api_test.dart';

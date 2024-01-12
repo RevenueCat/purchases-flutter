@@ -30,6 +30,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     NSAssert(self, @"super init cannot be nil");
     self.channel = channel;
     self.registrar = registrar;
+
     return self;
 }
 
