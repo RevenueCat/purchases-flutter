@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import './constant.dart';
 
@@ -143,6 +145,14 @@ class _UpsellScreenState extends State<UpsellScreen> {
             })
             .expand((i) => i)
             .toList();
+
+        buttonThings.add(ElevatedButton(
+          onPressed: () async {
+            final paywallResult = await RevenueCatUI.presentPaywall();
+            log('Paywall result: $paywallResult');
+          },
+          child: const Text('Present paywall'),
+        ));
 
         return Scaffold(
           appBar: AppBar(title: const Text('Upsell Screen')),

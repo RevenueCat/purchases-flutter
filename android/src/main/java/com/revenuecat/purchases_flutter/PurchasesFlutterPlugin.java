@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.OptIn;
 
 import com.revenuecat.purchases.DangerousSettings;
 import com.revenuecat.purchases.Purchases;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import io.flutter.embedding.android.FlutterFragmentActivity;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -43,7 +45,8 @@ import kotlin.UninitializedPropertyAccessException;
  * PurchasesFlutterPlugin
  */
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
-    private String INVALID_ARGS_ERROR_CODE = "invalidArgs";
+    private static final String TAG = "PurchasesFlutter";
+    private static final String INVALID_ARGS_ERROR_CODE = "invalidArgs";
 
     private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
     protected static final String LOG_HANDLER_EVENT = "Purchases-LogHandlerEvent";
@@ -712,7 +715,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 if (messageType != null) {
                     messageTypesList.add(messageType);
                 } else {
-                    Log.e("RNPurchases", "Unsupported in-app message type: " + messageTypeInt);
+                    Log.e(TAG, "Unsupported in-app message type: " + messageTypeInt);
                 }
             }
             CommonKt.showInAppMessagesIfNeeded(activity, messageTypesList);
