@@ -22,7 +22,7 @@ await RevenueCatUI.presentPaywallIfNeeded("requiredEntitlementId");
 ```
 
 ### Requirements
-*purchases_ui_flutter* requires XCode 13.3.1+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.
+*purchases_ui_flutter* requires XCode 14.0+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.
 
 ## SDK Reference
 Our full SDK reference [can be found here](https://pub.dev/documentation/purchases_ui_flutter/latest/).
