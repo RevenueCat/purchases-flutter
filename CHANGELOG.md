@@ -1,3 +1,8 @@
+## 6.16.1
+### Dependency Updates
+* Updates purchases-hybrid-common to 8.11.1 (#940) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 7.3.5](https://github.com/RevenueCat/purchases-android/releases/tag/7.3.5)
+
 ## 6.16.0
 ### Dependency Updates
 * Updates purchases-hybrid-common to 8.11.0 (#937) via RevenueCat Git Bot (@RCGitBot)
