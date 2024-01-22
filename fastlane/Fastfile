@@ -164,8 +164,14 @@ lane :update_hybrid_common do |options|
       'ios/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
       'macos/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
       'android/build.gradle' => ['ext.common_version = \'{x}\''],
-      'purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
-      'purchases_ui_flutter/macos/purchases_ui_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => [
+        's.dependency \'PurchasesHybridCommon\', \'{x}\'',
+        's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
+      ],
+      'purchases_ui_flutter/macos/purchases_ui_flutter.podspec' => [
+        's.dependency \'PurchasesHybridCommon\', \'{x}\'', 
+        's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
+      ],
       'purchases_ui_flutter/android/build.gradle' => ['ext.common_version = \'{x}\''],
   }
 
