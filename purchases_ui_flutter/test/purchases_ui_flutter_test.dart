@@ -36,7 +36,9 @@ void main() {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywall();
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: null),
+      isMethodCall('presentPaywall', arguments: {
+        'offeringIdentifier': null,
+      }),
     ]);
   });
 
@@ -57,15 +59,20 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'presentPaywallIfNeeded',
-        arguments: {'requiredEntitlementIdentifier': 'entitlement'},
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': null,
+        },
       ),
     ]);
   });
 
   test('presentPaywallIfNeeded with offering identifier', () async {
     response = 'NOT_PRESENTED';
-    await RevenueCatUI.presentPaywallIfNeeded('entitlement',
-        offering: offering);
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      offering: offering,
+    );
 
     expect(log, <Matcher>[
       isMethodCall(
