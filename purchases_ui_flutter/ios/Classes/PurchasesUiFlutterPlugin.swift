@@ -90,9 +90,19 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         #if os(iOS)
         if #available(iOS 15.0, *) {
             if let requiredEntitlementIdentifier {
-                self.paywallProxy.presentPaywallIfNeeded(requiredEntitlementIdentifier:
-                                                            requiredEntitlementIdentifier,
-                                                         paywallResultHandler: result)
+                if let offeringIdentifier {
+                    self.paywallProxy.presentPaywallIfNeeded(
+                        requiredEntitlementIdentifier: requiredEntitlementIdentifier,
+                        offeringIdentifier: offeringIdentifier,
+                        displayCloseButton: false,
+                        paywallResultHandler: result
+                    )
+                } else {
+                    self.paywallProxy.presentPaywallIfNeeded(
+                        requiredEntitlementIdentifier: requiredEntitlementIdentifier,
+                        paywallResultHandler: result
+                    )
+                }
             } else {
                 if let offeringIdentifier {
                     self.paywallProxy.presentPaywall(
