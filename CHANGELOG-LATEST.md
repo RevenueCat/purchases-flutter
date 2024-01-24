@@ -1,3 +1,5 @@
+### RevenueCatUI
+* `Paywalls`: separate `PurchasesHybridCommonUI` (#943) via NachoSoto (@NachoSoto)
 ### Dependency Updates
-* Updates purchases-hybrid-common to 8.11.1 (#940) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 7.3.5](https://github.com/RevenueCat/purchases-android/releases/tag/7.3.5)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 8.12.0 (#944) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 4.32.1](https://github.com/RevenueCat/purchases-ios/releases/tag/4.32.1)
