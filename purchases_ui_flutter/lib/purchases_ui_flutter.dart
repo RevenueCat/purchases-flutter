@@ -1,4 +1,6 @@
 import 'package:flutter/services.dart';
+import 'package:purchases_flutter/models/offering_wrapper.dart';
+
 import 'paywall_result.dart';
 
 export 'paywall_result.dart';
@@ -8,8 +10,13 @@ class RevenueCatUI {
 
   /// Presents the paywall as an activity on android or a modal in iOS.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
-  static Future<PaywallResult> presentPaywall() async {
-    final result = await _methodChannel.invokeMethod('presentPaywall');
+  /// @param [offering] If set, will present the paywall associated to the given Offering.
+  static Future<PaywallResult> presentPaywall({
+    Offering? offering,
+  }) async {
+    final result = await _methodChannel.invokeMethod('presentPaywall', {
+      'offeringIdentifier': offering?.identifier,
+    });
     return _parseStringToResult(result);
   }
 
@@ -19,10 +26,17 @@ class RevenueCatUI {
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
   ///
   /// @param [requiredEntitlementIdentifier] Entitlement identifier to check if the user has access to before presenting the paywall.
-  static Future<PaywallResult> presentPaywallIfNeeded(String requiredEntitlementIdentifier) async {
+  /// @param [offering] If set, will present the paywall associated to the given Offering.
+  static Future<PaywallResult> presentPaywallIfNeeded(
+    String requiredEntitlementIdentifier, {
+    Offering? offering,
+  }) async {
     final result = await _methodChannel.invokeMethod(
       'presentPaywallIfNeeded',
-      {'requiredEntitlementIdentifier': requiredEntitlementIdentifier},
+      {
+        'requiredEntitlementIdentifier': requiredEntitlementIdentifier,
+        'offeringIdentifier': offering?.identifier,
+      },
     );
     return _parseStringToResult(result);
   }
