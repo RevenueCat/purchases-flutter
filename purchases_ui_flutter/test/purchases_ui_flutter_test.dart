@@ -49,7 +49,26 @@ void main() {
 
     expect(log, <Matcher>[
       isMethodCall('presentPaywall', arguments: {
-        'offeringIdentifier': offering.identifier,
+          'offeringIdentifier': offering.identifier,
+          'displayCloseButton': false,
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywall with all parameters', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      offering: offering,
+      displayCloseButton: true,
+    );
+
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': offering.identifier,
+          'displayCloseButton': true,
         },
       ),
     ]);
@@ -64,6 +83,7 @@ void main() {
         arguments: {
           'requiredEntitlementIdentifier': 'entitlement',
           'offeringIdentifier': null,
+          'displayCloseButton': false,
         },
       ),
     ]);
@@ -82,6 +102,27 @@ void main() {
         arguments: {
           'requiredEntitlementIdentifier': 'entitlement',
           'offeringIdentifier': offering.identifier,
+          'displayCloseButton': false,
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded with all parameters', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      offering: offering,
+      displayCloseButton: true,
+    );
+
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': offering.identifier,
+          'displayCloseButton': true,
         },
       ),
     ]);
