@@ -38,7 +38,8 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall('presentPaywall', arguments: {
         'offeringIdentifier': null,
-      }),
+        },
+      ),
     ]);
   });
 
@@ -49,7 +50,8 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall('presentPaywall', arguments: {
         'offeringIdentifier': offering.identifier,
-      }),
+        },
+      ),
     ]);
   });
 
