@@ -3,7 +3,8 @@ import FlutterMacOS
 #else
 import Flutter
 #endif
-import PurchasesHybridCommon
+
+import PurchasesHybridCommonUI
 import Foundation
 
 public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
