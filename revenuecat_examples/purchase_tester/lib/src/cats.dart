@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-import 'app.dart';
 import 'constant.dart';
+import 'initial.dart';
 
 class CatsScreen extends StatelessWidget {
   const CatsScreen({Key? key}) : super(key: key);
