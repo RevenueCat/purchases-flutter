@@ -34,15 +34,18 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
             "presentPaywall" -> presentPaywall(
                 result = result,
                 requiredEntitlementIdentifier = null,
-                offeringIdentifier = call.argument("offeringIdentifier")
+                offeringIdentifier = call.argument("offeringIdentifier"),
+                displayCloseButton = call.argument("displayCloseButton"),
             )
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
                 val offeringIdentifier: String? = call.argument("offeringIdentifier")
+                val displayCloseButton: Boolean? = call.argument("displayCloseButton")
                 presentPaywall(
                     result = result,
                     requiredEntitlementIdentifier = requiredEntitlementIdentifier,
-                    offeringIdentifier = offeringIdentifier
+                    offeringIdentifier = offeringIdentifier,
+                    displayCloseButton = displayCloseButton,
                 )
             }
             else -> {
@@ -71,7 +74,12 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
         activity = null
     }
 
-    private fun presentPaywall(result: Result, requiredEntitlementIdentifier: String?, offeringIdentifier: String?) {
+    private fun presentPaywall(
+        result: Result,
+        requiredEntitlementIdentifier: String?,
+        offeringIdentifier: String?,
+        displayCloseButton: Boolean?
+    ) {
         val activity = getActivityFragment()
         if (activity != null) {
            presentPaywallFromFragment(
@@ -80,6 +88,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
                    paywallSource = offeringIdentifier?.let { PaywallSource.OfferingIdentifier(it) }
                        ?: PaywallSource.DefaultOffering,
                    requiredEntitlementIdentifier = requiredEntitlementIdentifier,
+                   shouldDisplayDismissButton = displayCloseButton,
                    paywallResultListener = object : PaywallResultListener {
                        override fun onPaywallResult(paywallResult: String) {
                            result.success(paywallResult)

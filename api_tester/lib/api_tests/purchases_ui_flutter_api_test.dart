@@ -7,9 +7,18 @@ class _PurchasesFlutterApiTest {
   void _checkPresentPaywall(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall();
     Future<PaywallResult> f2 = RevenueCatUI.presentPaywall(offering: offering);
-    Future<PaywallResult> f3 = RevenueCatUI.presentPaywallIfNeeded("test");
-    Future<PaywallResult> f4 =
+    Future<PaywallResult> f3 =
+        RevenueCatUI.presentPaywall(displayCloseButton: true);
+    Future<PaywallResult> f4 = RevenueCatUI.presentPaywall(
+        offering: offering, displayCloseButton: true);
+
+    Future<PaywallResult> f5 = RevenueCatUI.presentPaywallIfNeeded("test");
+    Future<PaywallResult> f6 =
+        RevenueCatUI.presentPaywallIfNeeded("test", displayCloseButton: true);
+    Future<PaywallResult> f7 =
         RevenueCatUI.presentPaywallIfNeeded("test", offering: offering);
+    Future<PaywallResult> f8 = RevenueCatUI.presentPaywallIfNeeded("test",
+        offering: offering, displayCloseButton: true);
   }
 
   void _checkPaywallResult(PaywallResult result) {
