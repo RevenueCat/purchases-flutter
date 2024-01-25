@@ -51,7 +51,13 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "presentPaywall":
-            self.presentPaywall(result, requiredEntitlementIdentifier: nil)
+            let args = call.arguments as? Dictionary<String, Any> ?? [:]
+
+            self.presentPaywall(
+                result,
+                requiredEntitlementIdentifier: nil,
+                offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String
+            )
         case "presentPaywallIfNeeded":
             guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
@@ -59,29 +65,53 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                                     details: nil))
                 return
             }
-            guard let requiredEntitlementIdentifier = args["requiredEntitlementIdentifier"] as? String? else {
+            guard let requiredEntitlementIdentifier = args[Parameter.requiredEntitlementIdentifier.rawValue] as? String? else {
                 result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
                                     message: "Missing requiredEntitlementIdentifier in presentPaywallIfNeeded",
                                     details: nil))
                 return
             }
-            self.presentPaywall(result, requiredEntitlementIdentifier: requiredEntitlementIdentifier)
+
+            self.presentPaywall(
+                result,
+                requiredEntitlementIdentifier: requiredEntitlementIdentifier,
+                offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String
+            )
         default:
             result(FlutterMethodNotImplemented)
         }
     }
 
-    private func presentPaywall(_ result: @escaping FlutterResult, requiredEntitlementIdentifier: String?) {
+    private func presentPaywall(
+        _ result: @escaping FlutterResult,
+        requiredEntitlementIdentifier: String?,
+        offeringIdentifier: String?
+    ) {
         #if os(iOS)
         if #available(iOS 15.0, *) {
             if let requiredEntitlementIdentifier {
-                self.paywallProxy.presentPaywallIfNeeded(requiredEntitlementIdentifier:
-                                                            requiredEntitlementIdentifier) { paywallResultString in
-                    result(paywallResultString)
+                if let offeringIdentifier {
+                    self.paywallProxy.presentPaywallIfNeeded(
+                        requiredEntitlementIdentifier: requiredEntitlementIdentifier,
+                        offeringIdentifier: offeringIdentifier,
+                        displayCloseButton: false,
+                        paywallResultHandler: result
+                    )
+                } else {
+                    self.paywallProxy.presentPaywallIfNeeded(
+                        requiredEntitlementIdentifier: requiredEntitlementIdentifier,
+                        paywallResultHandler: result
+                    )
                 }
             } else {
-                self.paywallProxy.presentPaywall { paywallResultString in
-                    result(paywallResultString)
+                if let offeringIdentifier {
+                    self.paywallProxy.presentPaywall(
+                        offeringIdentifier: offeringIdentifier,
+                        displayCloseButton: false,
+                        paywallResultHandler: result
+                    )
+                } else {
+                    self.paywallProxy.presentPaywall(paywallResultHandler: result)
                 }
             }
         } else {
@@ -90,6 +120,15 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         #else
         NSLog("Presenting paywall requires iOS")
         #endif
+    }
+
+}
+
+private extension PurchasesUiFlutterPlugin {
+
+    enum Parameter: String {
+        case requiredEntitlementIdentifier
+        case offeringIdentifier
     }
 
 }

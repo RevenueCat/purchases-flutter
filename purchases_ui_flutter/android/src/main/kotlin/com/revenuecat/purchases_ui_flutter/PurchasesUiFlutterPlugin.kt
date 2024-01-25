@@ -4,6 +4,8 @@ import android.app.Activity
 import android.util.Log
 import com.revenuecat.purchases.PurchasesErrorCode
 import com.revenuecat.purchases.hybridcommon.ui.PaywallResultListener
+import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
+import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
 import com.revenuecat.purchases.hybridcommon.ui.presentPaywallFromFragment
 import com.revenuecat.purchases.ui.revenuecatui.activity.PaywallResult
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -29,10 +31,19 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
-            "presentPaywall" -> presentPaywall(result, null)
+            "presentPaywall" -> presentPaywall(
+                result = result,
+                requiredEntitlementIdentifier = null,
+                offeringIdentifier = call.argument("offeringIdentifier")
+            )
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
-                presentPaywall(result, requiredEntitlementIdentifier)
+                val offeringIdentifier: String? = call.argument("offeringIdentifier")
+                presentPaywall(
+                    result = result,
+                    requiredEntitlementIdentifier = requiredEntitlementIdentifier,
+                    offeringIdentifier = offeringIdentifier
+                )
             }
             else -> {
                 result.notImplemented()
@@ -60,18 +71,22 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
         activity = null
     }
 
-    private fun presentPaywall(result: Result, requiredEntitlementIdentifier: String?) {
+    private fun presentPaywall(result: Result, requiredEntitlementIdentifier: String?, offeringIdentifier: String?) {
         val activity = getActivityFragment()
         if (activity != null) {
-            presentPaywallFromFragment(
-                activity,
-                requiredEntitlementIdentifier,
-                paywallResultListener = object : PaywallResultListener {
-                    override fun onPaywallResult(paywallResult: String) {
-                        result.success(paywallResult)
-                    }
-                }
-            )
+           presentPaywallFromFragment(
+               activity,
+               PresentPaywallOptions(
+                   paywallSource = offeringIdentifier?.let { PaywallSource.OfferingIdentifier(it) }
+                       ?: PaywallSource.DefaultOffering,
+                   requiredEntitlementIdentifier = requiredEntitlementIdentifier,
+                   paywallResultListener = object : PaywallResultListener {
+                       override fun onPaywallResult(paywallResult: String) {
+                           result.success(paywallResult)
+                       }
+                   }
+               )
+           )
         } else {
             result.error(PurchasesErrorCode.UnknownError.code.toString(),
                 "Make sure your MainActivity inherits from FlutterFragmentActivity",

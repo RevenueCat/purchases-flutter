@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 void main() {
@@ -8,6 +9,13 @@ void main() {
   const channel = MethodChannel('purchases_ui_flutter');
   final log = <MethodCall>[];
   dynamic response;
+
+  const offering = Offering(
+    'identifier',
+    'serverDescription',
+    {},
+    [],
+  );
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -28,7 +36,22 @@ void main() {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywall();
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: null),
+      isMethodCall('presentPaywall', arguments: {
+        'offeringIdentifier': null,
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywall with offering identifier', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(offering: offering);
+
+    expect(log, <Matcher>[
+      isMethodCall('presentPaywall', arguments: {
+        'offeringIdentifier': offering.identifier,
+        },
+      ),
     ]);
   });
 
@@ -38,7 +61,28 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'presentPaywallIfNeeded',
-        arguments: {'requiredEntitlementIdentifier': 'entitlement'},
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': null,
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded with offering identifier', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      offering: offering,
+    );
+
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': offering.identifier,
+        },
       ),
     ]);
   });

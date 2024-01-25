@@ -42,6 +42,10 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
 
+# See https://dart.dev/tools/pub/dependencies#dependency-overrides
+# `purchases_ui_flutter` depends on `purchases_flutter`.
+# This allows overriding both to use the local copy.
+dependency_overrides:
   purchases_flutter:
     path: ../
   purchases_ui_flutter:

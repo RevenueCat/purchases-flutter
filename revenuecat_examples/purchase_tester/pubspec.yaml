@@ -18,16 +18,20 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  purchases_flutter:
-    path: ../../
-  purchases_ui_flutter:
-    path: ../../purchases_ui_flutter
-
   flutter_driver:
     sdk: flutter
   build_runner: ^2.1.7
   integration_test:
     sdk: flutter
+
+# See https://dart.dev/tools/pub/dependencies#dependency-overrides
+# `purchases_ui_flutter` depends on `purchases_flutter`.
+# This allows overriding both to use the local copy.
+dependency_overrides:
+  purchases_flutter:
+    path: ../../
+  purchases_ui_flutter:
+    path: ../../purchases_ui_flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
