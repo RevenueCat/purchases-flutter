@@ -18,7 +18,7 @@ class RevenueCatUI {
   }) async {
     final result = await _methodChannel.invokeMethod('presentPaywall', {
       'offeringIdentifier': offering?.identifier,
-      'displayCloseButton': displayCloseButton
+      'displayCloseButton': displayCloseButton,
     });
     return _parseStringToResult(result);
   }
