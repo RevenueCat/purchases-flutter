@@ -427,7 +427,10 @@ workflows:
             - hold
           <<: *release-branches
       - make-release: *release-tags
-      - make-release-purchases-flutter-ui: *release-tags
+      - make-release-purchases-flutter-ui:
+          requires:
+            - make-release
+          <<: *release-tags
       - github_release:
           requires:
             - make-release
