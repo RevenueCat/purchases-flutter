@@ -7,8 +7,8 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'constant.dart';
-import 'app.dart';
 import 'cats.dart';
+import 'initial.dart';
 
 class UpsellScreen extends StatefulWidget {
   const UpsellScreen({Key? key}) : super(key: key);
