@@ -7,7 +7,8 @@ import io.flutter.plugin.platform.PlatformViewFactory
 
 class PaywallViewFactory : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
     override fun create(context: Context, viewId: Int, args: Any?): PlatformView {
-        val creationParams = args as Map<String?, Any?>?
+        @Suppress("UNCHECKED_CAST")
+        val creationParams = args as? Map<String?, Any?>? ?: emptyMap()
         return PaywallView(context, viewId, creationParams)
     }
 }

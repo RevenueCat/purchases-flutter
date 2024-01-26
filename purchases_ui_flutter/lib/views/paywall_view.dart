@@ -5,15 +5,22 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:purchases_flutter/models/offering_wrapper.dart';
 
 class PaywallView extends StatelessWidget {
-  const PaywallView({Key? key}) : super(key: key);
+  final Offering? offering;
+
+  const PaywallView({Key? key, this.offering})
+      : super(key: key);
 
   static const String viewType = 'com.revenuecat.purchasesui/PaywallView';
 
   @override
   Widget build(BuildContext context) {
-    const creationParams = <String, dynamic>{};
+
+    final creationParams = <String, dynamic>{
+      'offeringIdentifier': offering?.identifier,
+    };
 
     return Platform.isAndroid
         ? PlatformViewLink(

@@ -1,6 +1,7 @@
 package com.revenuecat.purchases_ui_flutter.views
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.View
 import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI
 import io.flutter.plugin.platform.PlatformView
@@ -8,8 +9,9 @@ import com.revenuecat.purchases.ui.revenuecatui.views.PaywallView as NativePaywa
 
 @OptIn(ExperimentalPreviewRevenueCatUIPurchasesAPI::class)
 internal class PaywallView(
-    context: Context, id: Int,
-    creationParams: Map<String?, Any?>?
+    context: Context,
+    id: Int,
+    creationParams: Map<String?, Any?>
 ) : PlatformView {
 
     private val nativePaywallView: NativePaywallView
@@ -21,6 +23,9 @@ internal class PaywallView(
     override fun dispose() {}
 
     init {
-        nativePaywallView = NativePaywallView(context)
+        val offeringIdentifier = creationParams["offeringIdentifier"] as String?
+        nativePaywallView = NativePaywallView(context,)
+        // TODO add to constructor
+        nativePaywallView.setOfferingId(offeringIdentifier)
     }
 }
