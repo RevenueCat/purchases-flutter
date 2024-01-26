@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter_example/src/paywall.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'constant.dart';
@@ -103,6 +104,15 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       log('Paywall result: $paywallResult');
                     },
                     child: const Text('Present paywall if needed ("$entitlementKey")'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                      );
+                    },
+                    child: const Text('Show paywall view'),
                   )
                 ]))),
       ),
