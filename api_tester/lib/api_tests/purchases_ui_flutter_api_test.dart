@@ -31,4 +31,23 @@ class _PurchasesFlutterApiTest {
         break;
     }
   }
+
+  Widget _checkPaywallView() {
+    return const Scaffold(
+      body: Center(
+        child: PaywallView(),
+      ),
+    );
+  }
+
+  Widget _checkPaywallView(Offering offering) {
+    return const Scaffold(
+      body: Center(
+        child: PaywallView(
+          offering: offering,
+        ),
+      ),
+    );
+  }
+
 }

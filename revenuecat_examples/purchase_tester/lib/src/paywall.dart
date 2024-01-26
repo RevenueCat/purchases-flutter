@@ -1,16 +1,14 @@
 import 'dart:async';
 
-import 'package:purchases_ui_flutter/views/paywall_view.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'constant.dart';
-import 'cats.dart';
-import 'upsell.dart';
 
 // ignore: public_member_api_docs
 class PaywallScreen extends StatefulWidget {
-  const PaywallScreen({Key? key}) : super(key: key);
+  final Offering? offering;
+
+  const PaywallScreen({Key? key, this.offering}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PaywallScreenState();
@@ -25,9 +23,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: PaywallView(),
+    return Scaffold(
+      body: SafeArea( // Wrap your body content with SafeArea
+        child: Center(
+          child: PaywallView(offering: widget.offering,),
+        ),
       ),
     );
   }

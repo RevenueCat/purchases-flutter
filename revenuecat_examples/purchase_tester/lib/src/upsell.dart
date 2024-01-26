@@ -4,12 +4,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:purchases_flutter_example/src/paywall.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'constant.dart';
 import 'cats.dart';
 import 'initial.dart';
+import 'paywall.dart';
 
 class UpsellScreen extends StatefulWidget {
   const UpsellScreen({Key? key}) : super(key: key);
@@ -107,9 +107,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const PaywallScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => PaywallScreen(
+                                  offering: offering,
+                                )),
                       );
                     },
                     child: const Text('Show paywall view'),
