@@ -43,7 +43,8 @@ class PaywallView extends StatelessWidget {
               },
             )
                   ..addOnPlatformViewCreatedListener(
-                      params.onPlatformViewCreated)
+                      params.onPlatformViewCreated,
+                  )
                   ..create(),
           )
         : const Text('TODO iOS PaywallView');
