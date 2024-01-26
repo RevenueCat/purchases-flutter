@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
@@ -40,8 +41,8 @@ class _PurchasesFlutterApiTest {
     );
   }
 
-  Widget _checkPaywallView(Offering offering) {
-    return const Scaffold(
+  Widget _checkPaywallViewWithOffering(Offering offering) {
+    return Scaffold(
       body: Center(
         child: PaywallView(
           offering: offering,
