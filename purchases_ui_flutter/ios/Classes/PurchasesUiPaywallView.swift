@@ -46,7 +46,6 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                 super.init()
                 return
             }
-            paywallView.clipsToBounds = true
             _view = paywallView
         } else {
             print("Error: attempted to present paywalls on unsupported iOS version.")
