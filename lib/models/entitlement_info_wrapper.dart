@@ -113,6 +113,9 @@ class EntitlementInfo with _$EntitlementInfo {
     /// Check the [isActive] property.
     String? billingIssueDetectedAt,
 
+    /// The base plan identifier that unlocked this entitlement (Google only).
+    String? productPlanIdentifier,
+
     /// If entitlement verification was enabled, the result of that verification.
     /// If not, `VerificationResult.NOT_REQUESTED`.
     @Default(VerificationResult.notRequested)

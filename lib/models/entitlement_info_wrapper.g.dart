@@ -28,6 +28,7 @@ _$EntitlementInfoImpl _$$EntitlementInfoImplFromJson(Map json) =>
       expirationDate: json['expirationDate'] as String?,
       unsubscribeDetectedAt: json['unsubscribeDetectedAt'] as String?,
       billingIssueDetectedAt: json['billingIssueDetectedAt'] as String?,
+      productPlanIdentifier: json['productPlanIdentifier'] as String?,
       verification: $enumDecodeNullable(
               _$VerificationResultEnumMap, json['verification']) ??
           VerificationResult.notRequested,
@@ -49,6 +50,7 @@ Map<String, dynamic> _$$EntitlementInfoImplToJson(
       'expirationDate': instance.expirationDate,
       'unsubscribeDetectedAt': instance.unsubscribeDetectedAt,
       'billingIssueDetectedAt': instance.billingIssueDetectedAt,
+      'productPlanIdentifier': instance.productPlanIdentifier,
       'verification': _$VerificationResultEnumMap[instance.verification]!,
     };
 
