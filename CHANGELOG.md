@@ -1,3 +1,17 @@
+## 6.19.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 9.3.0 (#958) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 7.4.1](https://github.com/RevenueCat/purchases-android/releases/tag/7.4.1)
+  * [iOS 4.33.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.33.0)
+  * [iOS 4.32.4](https://github.com/RevenueCat/purchases-ios/releases/tag/4.32.4)
+  * [iOS 4.32.3](https://github.com/RevenueCat/purchases-ios/releases/tag/4.32.3)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 9.2.1 (#957) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 7.4.1](https://github.com/RevenueCat/purchases-android/releases/tag/7.4.1)
+  * [iOS 4.33.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.33.0)
+  * [iOS 4.32.4](https://github.com/RevenueCat/purchases-ios/releases/tag/4.32.4)
+  * [iOS 4.32.3](https://github.com/RevenueCat/purchases-ios/releases/tag/4.32.3)
+* Bump cocoapods from 1.14.3 to 1.15.0 (#956) via dependabot[bot] (@dependabot[bot])
+
 ## 6.18.0
 ### RevenueCatUI
 * `Paywalls`: `displayCloseButton` parameter (#948) via NachoSoto (@NachoSoto)
