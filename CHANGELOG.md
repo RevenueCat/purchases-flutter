@@ -1,3 +1,7 @@
+## 5.8.1
+### Dependency Updates
+* Bump PHC 6.3.1 (#965) via Toni Rico (@tonidero)
+
 ## 5.8.0
 ### Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 6.3.0 (#823) via RevenueCat Git Bot (@RCGitBot)
