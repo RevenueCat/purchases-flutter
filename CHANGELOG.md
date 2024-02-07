@@ -222,6 +222,11 @@ Purchases.configure(configuration);
   * [iOS 4.27.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.27.0)
   * [iOS 4.26.2](https://github.com/RevenueCat/purchases-ios/releases/tag/4.26.2)
 
+## 5.8.1
+### Dependency Updates
+* Updates purchases-hybrid-common to 6.3.1 (#965)
+  * [Android 6.9.6](https://github.com/RevenueCat/purchases-android/releases/tag/6.9.6)
+
 ## 5.8.0
 ### Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 6.3.0 (#823) via RevenueCat Git Bot (@RCGitBot)
