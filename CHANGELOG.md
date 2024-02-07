@@ -1,3 +1,9 @@
+## 6.20.1
+### Dependency Updates
+* Bump cocoapods from 1.15.1 to 1.15.2 (#975) via dependabot[bot] (@dependabot[bot])
+### Other Changes
+* Update CHANGELOG to include 5.8.1 release notes (#973) via Toni Rico (@tonidero)
+
 ## 6.20.0
 ### New Features
 * [EXTERNAL] Adds productPlanIdentifier parameter to EntitlementInfo (#910) via @splangi (#960) via Cesar de la Vega (@vegaro)
