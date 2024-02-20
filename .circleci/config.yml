@@ -151,6 +151,20 @@ commands:
             if ! sdk env install; then
               echo "Error installing Java SDK through SDKMAN, continuing with default Java" >&2
             fi
+  
+  install-correct-cocoapods:
+    description: Install correct cocoapods version
+    steps:
+      - run:
+          name: Install Cocoapods
+          command: |
+            # This is needed because Flutter doesn't use 'bundle exec'
+
+            # Uninstalling preinstalled CircleCI cocoapods
+            gem uninstall -aIx cocoapods
+
+            # Need >= 1.14.0 to prevent ActiveSupport crash
+            gem install cocoapods -v '>= 1.14.0'
 
 jobs:
   lint:
@@ -256,12 +270,13 @@ jobs:
 
   ios-integration-test:
     description: "Run integration tests for Flutter"
-    resource_class: macos.x86.medium.gen2
+    resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 14.3.1
+      xcode: 15.2
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
+      - install-correct-cocoapods
       - macos/preboot-simulator:
           device: iPhone 14
           version: '16.4'
@@ -280,20 +295,11 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.0.0
+      xcode: 15.2
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - run:
-          name: Install Cocoapods
-          command: |
-            # This is needed because Flutter doesn't use 'bundle exec'
-
-            # Uninstalling preinstalled CircleCI cocoapods
-            gem uninstall -aIx cocoapods
-
-            # Need >= 1.14.0 to prevent ActiveSupport crash
-            gem install cocoapods -v '>= 1.14.0'
+      - install-correct-cocoapods
       - setup-flutter
       - replace-api-key
       - build-flutter-project:
