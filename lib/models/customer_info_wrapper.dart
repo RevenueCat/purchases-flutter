@@ -15,7 +15,7 @@ class CustomerInfo with _$CustomerInfo {
     EntitlementInfos entitlements,
 
     /// Map of skus to purchase dates
-    Map<String, String> allPurchaseDates,
+    Map<String, String?> allPurchaseDates,
 
     /// Set of active subscription skus
     List<String> activeSubscriptions,

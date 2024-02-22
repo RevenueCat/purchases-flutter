@@ -53,7 +53,7 @@ class _CustomerInfoApiTest {
 
   void _checkProperties(CustomerInfo customerInfo) {
     EntitlementInfos entitlements = customerInfo.entitlements;
-    Map<String, String> allPurchaseDates = customerInfo.allPurchaseDates;
+    Map<String, String?> allPurchaseDates = customerInfo.allPurchaseDates;
     List<String> activeSubscriptions = customerInfo.activeSubscriptions;
     List<String> allPurchasedProductIdentifiers =
         customerInfo.allPurchasedProductIdentifiers;
