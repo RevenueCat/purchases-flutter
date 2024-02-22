@@ -9,7 +9,7 @@ part of 'customer_info_wrapper.dart';
 _$CustomerInfoImpl _$$CustomerInfoImplFromJson(Map json) => _$CustomerInfoImpl(
       EntitlementInfos.fromJson(
           Map<String, dynamic>.from(json['entitlements'] as Map)),
-      Map<String, String>.from(json['allPurchaseDates'] as Map),
+      Map<String, String?>.from(json['allPurchaseDates'] as Map),
       (json['activeSubscriptions'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),

@@ -24,7 +24,7 @@ mixin _$CustomerInfo {
   EntitlementInfos get entitlements => throw _privateConstructorUsedError;
 
   /// Map of skus to purchase dates
-  Map<String, String> get allPurchaseDates =>
+  Map<String, String?> get allPurchaseDates =>
       throw _privateConstructorUsedError;
 
   /// Set of active subscription skus
@@ -88,7 +88,7 @@ abstract class $CustomerInfoCopyWith<$Res> {
   @useResult
   $Res call(
       {EntitlementInfos entitlements,
-      Map<String, String> allPurchaseDates,
+      Map<String, String?> allPurchaseDates,
       List<String> activeSubscriptions,
       List<String> allPurchasedProductIdentifiers,
       List<StoreTransaction> nonSubscriptionTransactions,
@@ -139,7 +139,7 @@ class _$CustomerInfoCopyWithImpl<$Res, $Val extends CustomerInfo>
       allPurchaseDates: null == allPurchaseDates
           ? _value.allPurchaseDates
           : allPurchaseDates // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
+              as Map<String, String?>,
       activeSubscriptions: null == activeSubscriptions
           ? _value.activeSubscriptions
           : activeSubscriptions // ignore: cast_nullable_to_non_nullable
@@ -206,7 +206,7 @@ abstract class _$$CustomerInfoImplCopyWith<$Res>
   @useResult
   $Res call(
       {EntitlementInfos entitlements,
-      Map<String, String> allPurchaseDates,
+      Map<String, String?> allPurchaseDates,
       List<String> activeSubscriptions,
       List<String> allPurchasedProductIdentifiers,
       List<StoreTransaction> nonSubscriptionTransactions,
@@ -256,7 +256,7 @@ class __$$CustomerInfoImplCopyWithImpl<$Res>
       null == allPurchaseDates
           ? _value._allPurchaseDates
           : allPurchaseDates // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
+              as Map<String, String?>,
       null == activeSubscriptions
           ? _value._activeSubscriptions
           : activeSubscriptions // ignore: cast_nullable_to_non_nullable
@@ -310,7 +310,7 @@ class __$$CustomerInfoImplCopyWithImpl<$Res>
 class _$CustomerInfoImpl implements _CustomerInfo {
   const _$CustomerInfoImpl(
       this.entitlements,
-      final Map<String, String> allPurchaseDates,
+      final Map<String, String?> allPurchaseDates,
       final List<String> activeSubscriptions,
       final List<String> allPurchasedProductIdentifiers,
       final List<StoreTransaction> nonSubscriptionTransactions,
@@ -336,11 +336,11 @@ class _$CustomerInfoImpl implements _CustomerInfo {
   final EntitlementInfos entitlements;
 
   /// Map of skus to purchase dates
-  final Map<String, String> _allPurchaseDates;
+  final Map<String, String?> _allPurchaseDates;
 
   /// Map of skus to purchase dates
   @override
-  Map<String, String> get allPurchaseDates {
+  Map<String, String?> get allPurchaseDates {
     if (_allPurchaseDates is EqualUnmodifiableMapView) return _allPurchaseDates;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_allPurchaseDates);
@@ -511,7 +511,7 @@ class _$CustomerInfoImpl implements _CustomerInfo {
 abstract class _CustomerInfo implements CustomerInfo {
   const factory _CustomerInfo(
       final EntitlementInfos entitlements,
-      final Map<String, String> allPurchaseDates,
+      final Map<String, String?> allPurchaseDates,
       final List<String> activeSubscriptions,
       final List<String> allPurchasedProductIdentifiers,
       final List<StoreTransaction> nonSubscriptionTransactions,
@@ -534,7 +534,7 @@ abstract class _CustomerInfo implements CustomerInfo {
   @override
 
   /// Map of skus to purchase dates
-  Map<String, String> get allPurchaseDates;
+  Map<String, String?> get allPurchaseDates;
   @override
 
   /// Set of active subscription skus
