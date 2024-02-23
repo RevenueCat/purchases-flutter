@@ -33,7 +33,8 @@ class PaywallView extends StatelessWidget {
   );
 
   PlatformViewLink buildAndroidPlatformViewLink(
-          Map<String, dynamic> creationParams) =>
+      Map<String, dynamic> creationParams,
+  ) =>
       PlatformViewLink(
         viewType: viewType,
         surfaceFactory: (context, controller) => AndroidViewSurface(
