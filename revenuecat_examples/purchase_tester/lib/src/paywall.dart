@@ -23,9 +23,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
     return Scaffold(
       body: SafeArea( // Wrap your body content with SafeArea
         child: Center(
-          child: PaywallView(offering: widget.offering,),
+          child: PaywallView(
+            offering: widget.offering,
+            onPurchaseStarted: (Package rcPackage) {
+              print('Purchase started for package: ${rcPackage.identifier}');
+            },
+          ),
         ),
-      ),
+      )
     );
   }
 }

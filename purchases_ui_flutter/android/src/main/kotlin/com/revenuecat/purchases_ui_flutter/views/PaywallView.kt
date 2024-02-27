@@ -1,19 +1,28 @@
 package com.revenuecat.purchases_ui_flutter.views
 
+import android.util.Log
 import android.content.Context
-import android.util.AttributeSet
 import android.view.View
 import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI
+import io.flutter.plugin.common.BinaryMessenger
+import io.flutter.plugin.common.MethodCall
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.platform.PlatformView
+import com.revenuecat.purchases.Package
+import com.revenuecat.purchases.hybridcommon.ui.PaywallListenerWrapper
+import com.revenuecat.purchases.ui.revenuecatui.PaywallListener
 import com.revenuecat.purchases.ui.revenuecatui.views.PaywallView as NativePaywallView
 
 @OptIn(ExperimentalPreviewRevenueCatUIPurchasesAPI::class)
 internal class PaywallView(
     context: Context,
     id: Int,
+    messenger: BinaryMessenger,
     creationParams: Map<String?, Any?>
-) : PlatformView {
+) : PlatformView, MethodCallHandler {
 
+    private val methodChannel: MethodChannel
     private val nativePaywallView: NativePaywallView
 
     override fun getView(): View {
@@ -23,9 +32,38 @@ internal class PaywallView(
     override fun dispose() {}
 
     init {
+        methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/PaywallView/$id")
+        methodChannel.setMethodCallHandler(this)
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
         nativePaywallView = NativePaywallView(context,)
+        nativePaywallView.setPaywallListener(object : PaywallListenerWrapper() {
+            override fun onPurchaseStarted(rcPackage: Map<String, Any?>) {
+                methodChannel.invokeMethod("onPurchaseStarted", rcPackage)
+            }
+
+            override fun onPurchaseCompleted(customerInfo: Map<String, Any?>, storeTransaction: Map<String, Any?>) {
+                // TODO
+            }
+
+            override fun onPurchaseError(error: Map<String, Any?>) {
+                // TODO
+            }
+
+            override fun onRestoreCompleted(customerInfo: Map<String, Any?>) {
+                // TODO
+            }
+
+            override fun onRestoreError(error: Map<String, Any?>) {
+                // TODO
+            }
+        })
         // TODO add to constructor
         nativePaywallView.setOfferingId(offeringIdentifier)
+    }
+
+    override fun onMethodCall(methodCall: MethodCall, result: MethodChannel.Result) {
+        when (methodCall.method) {
+            else -> result.notImplemented()
+        }
     }
 }
