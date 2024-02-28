@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI
-import io.flutter.plugin.platform.PlatformView
 import com.revenuecat.purchases.ui.revenuecatui.views.PaywallView as NativePaywallView
+import io.flutter.plugin.platform.PlatformView
 
 @OptIn(ExperimentalPreviewRevenueCatUIPurchasesAPI::class)
 internal class PaywallView(

@@ -7,12 +7,16 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
+/// View that displays the paywall in full screen mode.
+///
+/// [offering] (Optional) The offering object to be displayed in the paywall.
+/// Obtained from [Purchases.getOfferings].
 class PaywallView extends StatelessWidget {
   final Offering? offering;
 
   const PaywallView({Key? key, this.offering}) : super(key: key);
 
-  static const String viewType = 'com.revenuecat.purchasesui/PaywallView';
+  static const String _viewType = 'com.revenuecat.purchasesui/PaywallView';
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +25,22 @@ class PaywallView extends StatelessWidget {
     };
 
     return Platform.isAndroid
-        ? buildAndroidPlatformViewLink(creationParams)
-        : buildUiKitView(creationParams);
+        ? _buildAndroidPlatformViewLink(creationParams)
+        : _buildUiKitView(creationParams);
   }
 
-  UiKitView buildUiKitView(Map<String, dynamic> creationParams) => UiKitView(
-      viewType: viewType,
+  UiKitView _buildUiKitView(Map<String, dynamic> creationParams) => UiKitView(
+      viewType: _viewType,
       layoutDirection: TextDirection.ltr,
       creationParams: creationParams,
       creationParamsCodec: const StandardMessageCodec(),
   );
 
-  PlatformViewLink buildAndroidPlatformViewLink(
+  PlatformViewLink _buildAndroidPlatformViewLink(
       Map<String, dynamic> creationParams,
   ) =>
       PlatformViewLink(
-        viewType: viewType,
+        viewType: _viewType,
         surfaceFactory: (context, controller) => AndroidViewSurface(
           controller: controller as AndroidViewController,
           gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
@@ -45,7 +49,7 @@ class PaywallView extends StatelessWidget {
         onCreatePlatformView: (params) =>
             PlatformViewsService.initSurfaceAndroidView(
           id: params.id,
-          viewType: viewType,
+          viewType: _viewType,
           layoutDirection: TextDirection.ltr,
           creationParams: creationParams,
           creationParamsCodec: const StandardMessageCodec(),
