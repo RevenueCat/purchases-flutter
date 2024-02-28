@@ -40,7 +40,13 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
     ) {
         if #available(iOS 15.0, *) {
             let paywallProxy = PaywallProxy()
-            guard let paywallView = paywallProxy.createPaywallView().view else {
+            let paywallViewController = paywallProxy.createPaywallView()
+            if let args = args as? [String: Any?] {
+                if let offeringId = args["offeringIdentifier"] as? String {
+                    paywallViewController.update(with: offeringId)
+                }
+            }
+            guard let paywallView = paywallViewController.view else {
                 print("Error: error getting PaywallView.")
                 _view = UIView()
                 super.init()
