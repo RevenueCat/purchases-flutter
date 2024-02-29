@@ -17,12 +17,12 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         let messenger = registrar.messenger
         #else
         let messenger = registrar.messenger()
+        let factory = PurchasesUiPaywallViewFactory(messenger: messenger)
+        registrar.register(factory, withId: "com.revenuecat.purchasesui/PaywallView")
         #endif
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
         let instance = PurchasesUiFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
-        let factory = PurchasesUiPaywallViewFactory(messenger: registrar.messenger())
-        registrar.register(factory, withId: "com.revenuecat.purchasesui/PaywallView")
     }
 
     private var _paywallProxy: Any?
