@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
@@ -31,4 +32,23 @@ class _PurchasesFlutterApiTest {
         break;
     }
   }
+
+  Widget _checkPaywallView() {
+    return const Scaffold(
+      body: Center(
+        child: PaywallView(),
+      ),
+    );
+  }
+
+  Widget _checkPaywallViewWithOffering(Offering offering) {
+    return Scaffold(
+      body: Center(
+        child: PaywallView(
+          offering: offering,
+        ),
+      ),
+    );
+  }
+
 }
