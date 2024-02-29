@@ -21,7 +21,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea( // Wrap your body content with SafeArea
+      body: SafeArea(
         child: Center(
           child: PaywallView(offering: widget.offering,),
         ),

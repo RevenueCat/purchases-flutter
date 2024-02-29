@@ -111,8 +111,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => PaywallScreen(
-                                  offering: offering,
-                                )),
+                              offering: offering,
+                            )),
                       );
                     },
                     child: const Text('Show paywall view'),
