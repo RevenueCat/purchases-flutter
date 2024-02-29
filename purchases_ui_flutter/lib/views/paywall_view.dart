@@ -7,7 +7,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
-/// View that displays the paywall in full screen mode. Only supported in iOS.
+/// View that displays the paywall in full screen mode.
+/// Not supported in macOS currently.
 ///
 /// [offering] (Optional) The offering object to be displayed in the paywall.
 /// Obtained from [Purchases.getOfferings].
