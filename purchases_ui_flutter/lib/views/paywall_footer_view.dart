@@ -31,7 +31,10 @@ class PaywallFooterView extends StatefulWidget {
 
 class _PaywallFooterViewState extends State<PaywallFooterView> {
 
-  var _height = 264.0; // Need to set it to a value > 0 so it's drawn
+  // Need to set it to a value > 0 so it's drawn. Setting it to a value that
+  // approximately reflects what the footer view height will be, so redrawing
+  // is not so noticeable. Need to improve this.
+  var _height = 264.0;
 
   @override
   void initState() {
@@ -46,10 +49,7 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
         left: 0,
         right: 0,
         bottom: _height - PaywallFooterView.roundedCornerRadius,
-        child: Padding(
-          padding: EdgeInsets.only(bottom: 0),
-          child: widget.content,
-        ),
+        child: widget.content,
       ),
       Positioned(
         bottom: 0,

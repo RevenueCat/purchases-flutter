@@ -35,30 +35,6 @@ internal class PaywallFooterView(
         methodChannel = MethodChannel(messenger, "purchases_ui_flutter/PaywallFooterView/${id}")
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
         nativePaywallFooterView = object : NativePaywallFooterView(context) {
-//
-//            var shouldRemeasure = true
-//
-//            override fun requestLayout() {
-//                super.requestLayout()
-//                if (shouldRemeasure) {
-////                    post(measureAndLayout)
-//                }
-//            }
-//
-//            private val measureAndLayout = Runnable {
-//                Log.e("TEST", "MEASURE AND LAYOUT")
-//                measure(
-//                    MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-//                    MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
-//                )
-//                layout(left, top, right, bottom)
-//            }
-//
-//            override fun onDetachedFromWindow() {
-//                super.onDetachedFromWindow()
-//                shouldRemeasure = false
-//            }
-
             public override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec)
                 var maxWidth = 0
