@@ -4,7 +4,7 @@ import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'paywall_result.dart';
 
 export 'paywall_result.dart';
-
+export 'views/paywall_footer_view.dart';
 export 'views/paywall_view.dart';
 
 class RevenueCatUI {

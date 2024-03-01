@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'constant.dart';
@@ -116,6 +117,18 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       );
                     },
                     child: const Text('Show paywall view'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaywallFooterScreen(
+                              offering: offering,
+                            )),
+                      );
+                    },
+                    child: const Text('Show paywall footer view'),
                   )
                 ]))),
       ),
