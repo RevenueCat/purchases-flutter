@@ -35,7 +35,7 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
   // Need to set it to a value > 0 so it's drawn. Setting it to a value that
   // approximately reflects what the footer view height will be, so redrawing
   // is not so noticeable. Need to improve this.
-  var _height = 10.0;
+  var _height = 264.0;
 
   @override
   void initState() {
