@@ -50,7 +50,7 @@ class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView, PaywallViewCo
                 }
             }
             guard let paywallFooterView = paywallFooterViewController.view else {
-                print("Error: error getting PaywallView.")
+                print("Error: error getting PaywallFooterView.")
                 _view = UIView()
                 super.init()
                 return
