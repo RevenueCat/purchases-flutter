@@ -42,6 +42,16 @@ class _InternalPaywallFooterViewState extends State<InternalPaywallFooterView> {
     layoutDirection: TextDirection.ltr,
     creationParams: creationParams,
     creationParamsCodec: const StandardMessageCodec(),
+    onPlatformViewCreated: (id) {
+      _channel = MethodChannel(
+        'purchases_ui_flutter/PaywallFooterView/$id',
+      );
+      _channel?.setMethodCallHandler((call) async {
+        if (call.method == 'onHeightChanged') {
+          widget.onHeightChanged(call.arguments as double);
+        }
+      });
+    },
   );
 
   PlatformViewLink _buildAndroidPlatformViewLink(

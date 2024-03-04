@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
@@ -33,7 +35,7 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
   // Need to set it to a value > 0 so it's drawn. Setting it to a value that
   // approximately reflects what the footer view height will be, so redrawing
   // is not so noticeable. Need to improve this.
-  var _height = 264.0;
+  var _height = 10.0;
 
   @override
   void initState() {
@@ -47,7 +49,11 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
         top: 0,
         left: 0,
         right: 0,
-        bottom: _height - _roundedCornerRadius,
+        // iOS is passing the size without including the top margin with the
+        // rounded corners, so we need to adjust the bottom position.
+        bottom: Platform.isAndroid
+            ? _height - _roundedCornerRadius
+            : _height,
         child: widget.contentCreator(_roundedCornerRadius),
       ),
       Positioned(
