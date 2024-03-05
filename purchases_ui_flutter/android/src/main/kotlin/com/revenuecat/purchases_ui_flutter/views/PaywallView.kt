@@ -25,7 +25,6 @@ internal class PaywallView(
     init {
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
         nativePaywallView = NativePaywallView(context,)
-        // TODO add to constructor
         nativePaywallView.setOfferingId(offeringIdentifier)
     }
 }
