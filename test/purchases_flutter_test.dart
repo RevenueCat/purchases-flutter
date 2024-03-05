@@ -1030,8 +1030,8 @@ void main() {
           'setupPurchases',
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
-            'appUserID': 'cesar',
-            'observerMode': true,
+            'appUserId': null,
+            'observerMode': false,
             'userDefaultsSuiteName': null,
             'useAmazon': false,
             'storeKitVersion': 'STOREKIT_1',
@@ -1046,7 +1046,7 @@ void main() {
   test('configure with StoreKit 2', () async {
     await Purchases.configure(
       PurchasesConfiguration('api_key')
-        ..storeKitVersion = StoreKitVersion.storeKit1,
+        ..storeKitVersion = StoreKitVersion.storeKit2,
     );
     expect(
       log,
@@ -1055,8 +1055,8 @@ void main() {
           'setupPurchases',
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
-            'appUserID': 'cesar',
-            'observerMode': true,
+            'appUserId': null,
+            'observerMode': false,
             'userDefaultsSuiteName': null,
             'useAmazon': false,
             'storeKitVersion': 'STOREKIT_2',
