@@ -1,5 +1,4 @@
 import '../purchases_flutter.dart';
-import 'storekit_version.dart';
 
 /// Used when calling [configure] to configure the RevenueCat plugin
 class PurchasesConfiguration {
