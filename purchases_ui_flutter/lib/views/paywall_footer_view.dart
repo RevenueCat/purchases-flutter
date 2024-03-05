@@ -9,20 +9,18 @@ import 'internal_paywall_footer_view.dart';
 /// [offering] (Optional) The offering object to be displayed in the paywall.
 /// Obtained from [Purchases.getOfferings].
 ///
-/// [content] The content to be displayed above the paywall. Make sure you
-/// apply a padding to the bottom of your content to avoid overlap. This padding
-/// can be obtained from [PaywallFooterView.roundedCornerRadius].
+/// [contentCreator] A function that creates the content to be displayed above
+/// the paywall. Make sure you apply the given padding to the bottom of your
+/// content to avoid overlap.
 class PaywallFooterView extends StatefulWidget {
-  /// The top corner radius of the footer view.
-  static const roundedCornerRadius = 20.0;
 
   final Offering? offering;
-  final Widget content;
+  final Widget Function(double bottomPadding) contentCreator;
 
   const PaywallFooterView({
     Key? key,
     this.offering,
-    required this.content,
+    required this.contentCreator,
   }) : super(key: key);
 
   @override
@@ -30,6 +28,7 @@ class PaywallFooterView extends StatefulWidget {
 }
 
 class _PaywallFooterViewState extends State<PaywallFooterView> {
+  static const _roundedCornerRadius = 20.0;
 
   // Need to set it to a value > 0 so it's drawn. Setting it to a value that
   // approximately reflects what the footer view height will be, so redrawing
@@ -48,8 +47,8 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
         top: 0,
         left: 0,
         right: 0,
-        bottom: _height - PaywallFooterView.roundedCornerRadius,
-        child: widget.content,
+        bottom: _height - _roundedCornerRadius,
+        child: widget.contentCreator(_roundedCornerRadius),
       ),
       Positioned(
         bottom: 0,

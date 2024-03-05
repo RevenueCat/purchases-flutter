@@ -25,10 +25,10 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
         child: Center(
           child: PaywallFooterView(
             offering: widget.offering,
-            content: Container(
+            contentCreator: (bottomPadding) => Container(
               color: Colors.blue.withAlpha(80),
               child: SingleChildScrollView(
-                padding: const EdgeInsets.only(bottom: PaywallFooterView.roundedCornerRadius),
+                padding: EdgeInsets.only(bottom: bottomPadding),
                 child: Column(
                   children: [
                     for (var i in Iterable<int>.generate(50).toList()) Text('Testing footer view $i')

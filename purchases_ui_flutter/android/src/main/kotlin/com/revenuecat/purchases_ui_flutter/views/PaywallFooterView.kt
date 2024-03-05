@@ -56,7 +56,6 @@ internal class PaywallFooterView(
             FrameLayout.LayoutParams.MATCH_PARENT,
             Gravity.BOTTOM
         )
-        // TODO add to constructor
         nativePaywallFooterView.setOfferingId(offeringIdentifier)
     }
 
