@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 
@@ -47,7 +49,11 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
         top: 0,
         left: 0,
         right: 0,
-        bottom: _height - _roundedCornerRadius,
+        // iOS is passing the size without including the top margin with the
+        // rounded corners, so we need to adjust the bottom position.
+        bottom: Platform.isAndroid
+            ? _height - _roundedCornerRadius
+            : _height,
         child: widget.contentCreator(_roundedCornerRadius),
       ),
       Positioned(
