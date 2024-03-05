@@ -48,7 +48,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
-        BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
+        NSString * _Nullable storeKitVersion = arguments[@"storeKitVersion"];
 		BOOL shouldShowInAppMessagesAutomatically = YES;
         id object = arguments[@"shouldShowInAppMessagesAutomatically"];
         if (object != [NSNull null] && object != nil) {
@@ -60,7 +60,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
                    appUserID:appUserID
                 observerMode:observerMode
        userDefaultsSuiteName:userDefaultsSuiteName
-    usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+            storeKitVersion:storeKitVersion
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
             verificationMode:verificationMode
                       result:result];
@@ -229,7 +229,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
-usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
+      storeKitVersion:(nullable NSString *)storeKitVersion
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
       verificationMode:(nullable NSString *)verificationMode
                 result:(FlutterResult)result {
@@ -246,7 +246,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
-                                     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+                                             storeKitVersion:storeKitVersion
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode];

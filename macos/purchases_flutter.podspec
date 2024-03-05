@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   s.source_files     = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'FlutterMacOS'
-  s.dependency 'PurchasesHybridCommon', '9.9.0'
-  s.platform = :osx, '10.12'
+  s.dependency 'PurchasesHybridCommon', '10.0.0-beta.1'
+  s.platform = :osx, '10.15'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
   s.static_framework = true
