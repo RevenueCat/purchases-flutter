@@ -1,4 +1,5 @@
 import '../purchases_flutter.dart';
+import 'storekit_version.dart';
 
 /// Used when calling [configure] to configure the RevenueCat plugin
 class PurchasesConfiguration {
@@ -31,14 +32,7 @@ class PurchasesConfiguration {
   /// We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
   /// that you shouldn't need to care about.
   /// Simply remove this method call to let RevenueCat decide for you which StoreKit implementation to use.
-  @Deprecated("""
-    RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
-    proven to be more performant than StoreKit 2.
-    We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
-    that you shouldn't need to care about.
-    Simply remove this method call to let RevenueCat decide for you which StoreKit implementation to use.
-  """)
-  bool usesStoreKit2IfAvailable = false;
+  StoreKitVersion storeKitVersion = StoreKitVersion.defaultVersion;
 
   /// Whether we should show store in-app messages automatically. Both Google Play and the App Store provide in-app
   /// messages for some situations like billing issues. By default, those messages will be shown automatically.

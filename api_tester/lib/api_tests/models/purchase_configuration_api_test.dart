@@ -21,9 +21,9 @@ class _PurchaseConfigurationApiTest {
     configuration.store = Store.playStore;
     // deprecated, but we still need to check that the API hasn't been removed.
     // ignore: deprecated_member_use
-    bool usesStoreKit2IfAvailable = configuration.usesStoreKit2IfAvailable;
+    StoreKitVersion storeKitVersion = configuration.storeKitVersion;
     // ignore: deprecated_member_use
-    configuration.usesStoreKit2IfAvailable = true;
+    configuration.storeKitVersion = StoreKitVersion.storeKit2;
   }
 
   void _checkAmazonConfigurationConstructor() {
