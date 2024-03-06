@@ -234,6 +234,12 @@ class _PurchasesFlutterApiTest {
         productIdentifiers);
   }
 
+  void _checkHandleObserverModeTransaction() async {
+    String productIdentifier = "product_id";
+    Future<void> future = Purchases.handleObserverModeTransaction(
+        productIdentifier);
+  }
+
   void _checkInvalidateCustomerInfoCache() {
     Future<void> future = Purchases.invalidateCustomerInfoCache();
   }
