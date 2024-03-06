@@ -1259,6 +1259,20 @@ void main() {
     expect(receivedLogLevel, LogLevel.info);
   });
 
+  test('handleObserverModeTransaction calls channel correctly', () async {
+    await Purchases.handleObserverModeTransaction(
+      'productID_test',
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'handleObserverModeTransaction',
+        arguments: {
+          'productIdentifier': 'productID_test',
+        },
+      ),
+    ]);
+  });
+
   test('syncObserverModeAmazonPurchase calls channel correctly', () async {
     await Purchases.syncObserverModeAmazonPurchase(
       'productID_test',

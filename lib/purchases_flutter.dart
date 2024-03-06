@@ -656,6 +656,25 @@ class Purchases {
     );
   }
 
+  /// iOS only. Always returns an error on iOS < 15.
+  ///
+  /// Use this method only if you already have your own IAP implementation using StoreKit 2 and want to use
+  /// RevenueCat's backend. If you are using StoreKit 1 for your implementation, you do not need this method.
+  ///
+  /// You only need to use this method with *new* purchases. Subscription updates are observed automatically.
+  ///
+  /// **IMPORTANT**:  This should only be used if you have enabled observer mode during SDK configuration.
+  ///
+  /// **WARNING**:  You need to finish the transaction yourself after calling this method.
+  ///
+  /// [productIdentifier] Product ID that was just purchased
+  static Future<void> handleObserverModeTransaction(
+    String productIdentifier,
+  ) async => await _channel
+        .invokeMethod('handleObserverModeTransaction', {
+      'productIdentifier': productIdentifier,
+    });
+
   /// Invalidates the cache for customer information.
   ///
   /// Most apps will not need to use this method; invalidating the cache can leave your app in an invalid state.
