@@ -15,6 +15,7 @@ export 'models/pricing_phase_wrapper.dart';
 export 'models/product_category.dart';
 export 'models/promotional_offer.dart';
 export 'models/purchases_configuration.dart';
+export 'models/purchases_error.dart';
 export 'models/store.dart';
 export 'models/store_product_discount.dart';
 export 'models/store_product_wrapper.dart';
