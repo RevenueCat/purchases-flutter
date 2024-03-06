@@ -19,10 +19,7 @@ class _PurchaseConfigurationApiTest {
     configuration.userDefaultsSuiteName = "fakeSuiteName";
     configuration.store = null;
     configuration.store = Store.playStore;
-    // deprecated, but we still need to check that the API hasn't been removed.
-    // ignore: deprecated_member_use
     StoreKitVersion storeKitVersion = configuration.storeKitVersion;
-    // ignore: deprecated_member_use
     configuration.storeKitVersion = StoreKitVersion.storeKit2;
   }
 
