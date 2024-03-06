@@ -23,14 +23,11 @@ class PurchasesConfiguration {
   String? userDefaultsSuiteName;
 
   /// iOS-only, will be ignored for Android.
-  /// Set this to FALSE to disable StoreKit2.
-  /// Default is FALSE.
+  /// Defaults to ``StoreKitVersion.defaultVersion`` which lets the SDK select
+  /// the most appropriate version of StoreKit. Currently defaults to StoreKit 2.
   ///
-  /// RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
-  /// proven to be more performant than StoreKit 2.
-  /// We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
-  /// that you shouldn't need to care about.
-  /// Simply remove this method call to let RevenueCat decide for you which StoreKit implementation to use.
+  /// - Note: StoreKit 2 is only available on iOS 15+. StoreKit 1 will be used for previous iOS versions
+  /// regardless of
   StoreKitVersion storeKitVersion = StoreKitVersion.defaultVersion;
 
   /// Whether we should show store in-app messages automatically. Both Google Play and the App Store provide in-app
