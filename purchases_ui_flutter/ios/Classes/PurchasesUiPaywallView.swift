@@ -16,11 +16,16 @@ class PurchasesUiPaywallViewFactory: NSObject, FlutterPlatformViewFactory {
         viewIdentifier viewId: Int64,
         arguments args: Any?
     ) -> FlutterPlatformView {
-        return PurchasesUiPaywallView(
+        if #available(iOS 15.0, *) {
+            return PurchasesUiPaywallView(
             frame: frame,
             viewIdentifier: viewId,
             arguments: args,
             binaryMessenger: messenger)
+        } else {
+            print("Error: attempted to present paywalls on unsupported iOS version.")
+            return UnsupportedPlatformView()
+        }
     }
 
     /// Implementing this method is only necessary when the `arguments` in `createWithFrame` is not `nil`.
@@ -29,39 +34,87 @@ class PurchasesUiPaywallViewFactory: NSObject, FlutterPlatformViewFactory {
     }
 }
 
+@available(iOS 15.0, *)
 class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
     private var _view: UIView
+    private var _paywallProxy: PaywallProxy?
+    private var _methodChannel: FlutterMethodChannel
+    // Need to keep the controller in memory otherwise while this view is alive otherwise the delegate is dealocated
+    private var _paywallViewController: PaywallViewController
 
     init(
         frame: CGRect,
         viewIdentifier viewId: Int64,
         arguments args: Any?,
-        binaryMessenger messenger: FlutterBinaryMessenger?
+        binaryMessenger messenger: FlutterBinaryMessenger
     ) {
-        if #available(iOS 15.0, *) {
-            let paywallProxy = PaywallProxy()
-            let paywallViewController = paywallProxy.createPaywallView()
-            if let args = args as? [String: Any?] {
-                if let offeringId = args["offeringIdentifier"] as? String {
-                    paywallViewController.update(with: offeringId)
-                }
+        _methodChannel = FlutterMethodChannel(name: "com.revenuecat.purchasesui/PaywallView/\(viewId)",
+                                              binaryMessenger: messenger)
+        let paywallProxy = PaywallProxy()
+        _paywallProxy = paywallProxy
+        _paywallViewController = paywallProxy.createPaywallView()
+        if let args = args as? [String: Any?] {
+            if let offeringId = args["offeringIdentifier"] as? String {
+                _paywallViewController.update(with: offeringId)
             }
-            guard let paywallView = paywallViewController.view else {
-                print("Error: error getting PaywallView.")
-                _view = UIView()
-                super.init()
-                return
-            }
-            _view = paywallView
-        } else {
-            print("Error: attempted to present paywalls on unsupported iOS version.")
-            _view = UIView()
         }
+        guard let paywallView = _paywallViewController.view else {
+            print("Error: error getting PaywallView.")
+            _view = UIView()
+            super.init()
+            return
+        }
+        _view = paywallView
+
         super.init()
+        _paywallProxy?.delegate = self;
+        setupMethodCallHandler()
     }
 
     func view() -> UIView {
         return _view
     }
 
+    private func setupMethodCallHandler() {
+        _methodChannel.setMethodCallHandler { [weak self] (call, result) in
+            guard self != nil else { return }
+            switch call.method {
+            // Handle different method calls here
+            default:
+                result(FlutterMethodNotImplemented)
+            }
+        }
+    }
+}
+
+@available(iOS 15.0, *)
+extension PurchasesUiPaywallView: PaywallViewControllerDelegateWrapper {
+    func paywallViewController(_ controller: PaywallViewController, 
+                               didStartPurchaseWith packageDictionary: [String : Any]) {
+        _methodChannel.invokeMethod("onPurchaseStarted", arguments: packageDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController, 
+                               didFinishPurchasingWith customerInfoDictionary: [String : Any],
+                               transaction transactionDictionary: [String : Any]?) {
+        _methodChannel.invokeMethod("onPurchaseCompleted", arguments: [
+            "customerInfo":customerInfoDictionary,
+            "storeTransaction":transactionDictionary
+        ])
+    }
+
+    func paywallViewController(_ controller: PaywallViewController, 
+                               didFailPurchasingWith errorDictionary: [String : Any]) {
+        _methodChannel.invokeMethod("onPurchaseError", arguments: errorDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController, 
+                               didFinishRestoringWith customerInfoDictionary: [String : Any]) {
+        _methodChannel.invokeMethod("onRestoreCompleted", arguments: customerInfoDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFailRestoringWith errorDictionary: [String : Any]) {
+        _methodChannel.invokeMethod("onRestoreError", arguments: errorDictionary)
+    }
 }
