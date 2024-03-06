@@ -12,7 +12,6 @@ class PaywallScreen extends StatefulWidget {
 }
 
 class _PaywallScreenState extends State<PaywallScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -21,11 +20,29 @@ class _PaywallScreenState extends State<PaywallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: PaywallView(offering: widget.offering,),
+        body: SafeArea(
+      child: Center(
+        child: PaywallView(
+          offering: widget.offering,
+          onPurchaseStarted: (Package rcPackage) {
+            print('Purchase started for package: ${rcPackage.identifier}');
+          },
+          onPurchaseCompleted:
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
+            print('Purchase completed for customerInfo:\n $customerInfo\n '
+                'and storeTransaction:\n $storeTransaction');
+          },
+          onPurchaseError: (PurchasesError error) {
+            print('Purchase error: $error');
+          },
+          onRestoreCompleted: (CustomerInfo customerInfo) {
+            print('Restore completed for customerInfo:\n $customerInfo');
+          },
+          onRestoreError: (PurchasesError error) {
+            print('Restore error: $error');
+          },
         ),
       ),
-    );
+    ));
   }
 }
