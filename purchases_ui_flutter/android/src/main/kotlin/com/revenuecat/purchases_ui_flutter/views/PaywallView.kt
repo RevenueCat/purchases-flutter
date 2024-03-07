@@ -60,6 +60,7 @@ internal class PaywallView(
         nativePaywallView.setOfferingId(offeringIdentifier)
     }
 
+    // We currently don't have any communication in this channel from dart to native, so this can be empty.
     override fun onMethodCall(methodCall: MethodCall, result: MethodChannel.Result) {
         when (methodCall.method) {
             else -> result.notImplemented()

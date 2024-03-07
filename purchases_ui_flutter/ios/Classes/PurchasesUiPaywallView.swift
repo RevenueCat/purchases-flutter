@@ -79,7 +79,8 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         _methodChannel.setMethodCallHandler { [weak self] (call, result) in
             guard self != nil else { return }
             switch call.method {
-            // Handle different method calls here
+            // We currently don't have any communication in this channel from dart to native,
+            // so this can be empty.
             default:
                 result(FlutterMethodNotImplemented)
             }
