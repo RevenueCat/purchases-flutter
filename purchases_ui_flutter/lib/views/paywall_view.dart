@@ -31,9 +31,7 @@ class PaywallView extends StatelessWidget {
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
 
-  MethodChannel? _listenerChannel;
-
-  PaywallView({
+  const PaywallView({
     Key? key,
     this.offering,
     this.onPurchaseStarted,
@@ -131,9 +129,11 @@ class PaywallView extends StatelessWidget {
   void _handleOnPurchaseCompleted(MethodCall call) {
     final arguments = Map<String, dynamic>.from(call.arguments);
     final customerInfo = CustomerInfo.fromJson(
-        Map<String, dynamic>.from(arguments['customerInfo']));
+      Map<String, dynamic>.from(arguments['customerInfo']),
+    );
     final storeTransaction = StoreTransaction.fromJson(
-        Map<String, dynamic>.from(arguments['storeTransaction']));
+      Map<String, dynamic>.from(arguments['storeTransaction']),
+    );
     onPurchaseCompleted?.call(customerInfo, storeTransaction);
   }
 
