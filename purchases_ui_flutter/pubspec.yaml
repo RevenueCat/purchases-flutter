@@ -11,13 +11,14 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
-  # We can't depend on exactly the same version
-  # because it won't be available when bumping the version
-  # until it's released.
-  purchases_flutter: ^6.0.0
+  purchases_flutter: ^6.22.0
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
+
+dependency_overrides:
+  purchases_flutter:
+    path: ../
 
 dev_dependencies:
   flutter_test:
