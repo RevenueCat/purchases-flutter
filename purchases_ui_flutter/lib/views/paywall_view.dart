@@ -93,9 +93,8 @@ class PaywallView extends StatelessWidget {
       );
 
   void _buildListenerChannel(int id) {
-    _listenerChannel =
-        MethodChannel('com.revenuecat.purchasesui/PaywallView/$id')
-          ..setMethodCallHandler(_handleMethodCall);
+    MethodChannel('com.revenuecat.purchasesui/PaywallView/$id')
+          .setMethodCallHandler(_handleMethodCall);
   }
 
   Future<void> _handleMethodCall(MethodCall call) async {
