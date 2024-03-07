@@ -16,6 +16,9 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
 
+# It's safe to publish like this. According to the docs (https://dart.dev/tools/pub/dependencies):
+# As a result, if you publish a package to pub.dev, keep in mind that your package's dependency
+# overrides are ignored by all users of your package."
 dependency_overrides:
   purchases_flutter:
     path: ../
