@@ -57,7 +57,6 @@ internal class PaywallView(
                 methodChannel.invokeMethod("onRestoreError", error)
             }
         })
-        // TODO add to constructor
         nativePaywallView.setOfferingId(offeringIdentifier)
     }
 
