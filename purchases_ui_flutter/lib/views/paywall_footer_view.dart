@@ -43,6 +43,7 @@ class PaywallFooterView extends StatefulWidget {
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
+  final Function()? onDismiss;
   final Widget Function(double bottomPadding) contentCreator;
 
   const PaywallFooterView({
@@ -53,6 +54,7 @@ class PaywallFooterView extends StatefulWidget {
     this.onPurchaseError,
     this.onRestoreCompleted,
     this.onRestoreError,
+    this.onDismiss,
     required this.contentCreator,
   }) : super(key: key);
 
@@ -97,6 +99,7 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
             onPurchaseError: widget.onPurchaseError,
             onRestoreCompleted: widget.onRestoreCompleted,
             onRestoreError: widget.onRestoreError,
+            onDismiss: widget.onDismiss,
             onHeightChanged: _updateHeight,
           ),
         ),

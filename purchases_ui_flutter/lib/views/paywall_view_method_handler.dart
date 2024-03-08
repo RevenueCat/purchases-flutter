@@ -12,6 +12,7 @@ class PaywallViewMethodHandler {
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
+  final Function()? onDismiss;
 
   const PaywallViewMethodHandler(
       this.onPurchaseStarted,
@@ -19,6 +20,7 @@ class PaywallViewMethodHandler {
       this.onPurchaseError,
       this.onRestoreCompleted,
       this.onRestoreError,
+      this.onDismiss,
   );
 
   Future<void> handleMethodCall(MethodCall call) async {
@@ -37,6 +39,9 @@ class PaywallViewMethodHandler {
         break;
       case 'onRestoreError':
         _handleOnRestoreError(call);
+        break;
+      case 'onDismiss':
+        onDismiss?.call();
         break;
       default:
         break;

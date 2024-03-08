@@ -57,6 +57,10 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
             if let offeringId = args["offeringIdentifier"] as? String {
                 _paywallViewController.update(with: offeringId)
             }
+            if let displayCloseButton = args["displayCloseButton"] as? Bool {
+                // TODO: Set displayCloseButton
+                // TODO: set onDismiss callback
+            }
         }
         guard let paywallView = _paywallViewController.view else {
             print("Error: error getting PaywallView.")

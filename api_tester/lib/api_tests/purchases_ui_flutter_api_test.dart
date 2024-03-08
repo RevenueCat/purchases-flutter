@@ -55,10 +55,15 @@ class _PurchasesFlutterApiTest {
     );
   }
 
-  Widget _checkPaywallViewWithListeners(Offering offering) {
+  Widget _checkPaywallViewWithListeners(
+      Offering offering,
+      bool displayCloseButton,
+  ) {
     return Scaffold(
       body: Center(
         child: PaywallView(
+          offering: offering,
+          displayCloseButton: displayCloseButton,
           onPurchaseStarted: (Package rcPackage) {
           },
           onPurchaseCompleted:
@@ -69,6 +74,8 @@ class _PurchasesFlutterApiTest {
           onRestoreCompleted: (CustomerInfo customerInfo) {
           },
           onRestoreError: (PurchasesError error) {
+          },
+          onDismiss: () {
           },
         ),
       ),
@@ -114,6 +121,8 @@ class _PurchasesFlutterApiTest {
           onRestoreCompleted: (CustomerInfo customerInfo) {
           },
           onRestoreError: (PurchasesError error) {
+          },
+          onDismiss: () {
           },
           contentCreator: (double bottomPadding) {
             return Container();

@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -19,6 +20,9 @@ import 'paywall_view_method_handler.dart';
 /// [offering] (Optional) The offering object to be displayed in the paywall.
 /// Obtained from [Purchases.getOfferings].
 ///
+/// [displayCloseButton] (Optional) Whether to display a close button in the
+/// paywall. Defaults to false.
+///
 /// [onPurchaseStarted] (Optional) Callback that gets called when a purchase
 /// is started.
 ///
@@ -34,23 +38,31 @@ import 'paywall_view_method_handler.dart';
 ///
 /// [onRestoreError] (Optional) Callback that gets called when a restore
 /// fails.
+///
+/// [onDismiss] (Optional) Callback that gets called when the paywall wants to
+/// dismiss. Currently, after a purchase is completed or when the close button
+/// is tapped.
 class PaywallView extends StatelessWidget {
   final Offering? offering;
+  final bool? displayCloseButton;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
       onPurchaseCompleted;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
+  final Function()? onDismiss;
 
   const PaywallView({
     Key? key,
     this.offering,
+    this.displayCloseButton,
     this.onPurchaseStarted,
     this.onPurchaseCompleted,
     this.onPurchaseError,
     this.onRestoreCompleted,
     this.onRestoreError,
+    this.onDismiss,
   }) : super(key: key);
 
   static const String _viewType = 'com.revenuecat.purchasesui/PaywallView';
@@ -59,6 +71,7 @@ class PaywallView extends StatelessWidget {
   Widget build(BuildContext context) {
     final creationParams = <String, dynamic>{
       'offeringIdentifier': offering?.identifier,
+      'displayCloseButton': displayCloseButton,
     };
 
     return Platform.isAndroid
@@ -111,6 +124,7 @@ class PaywallView extends StatelessWidget {
       onPurchaseError,
       onRestoreCompleted,
       onRestoreError,
+      onDismiss,
     );
     MethodChannel('com.revenuecat.purchasesui/PaywallView/$id')
           .setMethodCallHandler(handler.handleMethodCall);
