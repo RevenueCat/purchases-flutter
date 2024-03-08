@@ -15,8 +15,8 @@ Flutter plugin that integrates RevenueCat Paywalls
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'PurchasesHybridCommonUI', '9.9.0'
-  s.platform = :ios, '11.0'
+  s.dependency 'PurchasesHybridCommonUI', '10.0.0-beta.1'
+  s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

@@ -97,16 +97,10 @@ class Purchases {
   ///
   /// [useAmazon] Android only. Set this to true if you are building the app
   /// to be distributed in the Amazon Appstore
-
-  /// [usesStoreKit2IfAvailable] iOS-only, will be ignored for Android.
-  /// RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
-  /// proven to be more performant than StoreKit 2.
   ///
-  /// We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
-  /// that you shouldn't need to care about.
-  ///
-  /// Simply leave this parameter as default to let RevenueCat decide for you which StoreKit implementation to use.
-  /// Set this to FALSE to disable StoreKit2.
+  /// [storeKitVersion] iOS-only, will be ignored for Android.
+  /// Defaults to StoreKit 2. StoreKit 2 is only available on iOS 15+. StoreKit 1 will be used for previous iOS versions
+  /// regardless of this setting.
   @Deprecated('Use PurchasesConfiguration')
   static Future<void> setup(
     String apiKey, {
@@ -114,14 +108,14 @@ class Purchases {
     bool observerMode = false,
     String? userDefaultsSuiteName,
     bool useAmazon = false,
-    bool usesStoreKit2IfAvailable = false,
+    StoreKitVersion storeKitVersion = StoreKitVersion.defaultVersion,
   }) {
     final configuration = (PurchasesConfiguration(apiKey)
       ..appUserID = appUserId
       ..observerMode = observerMode
       ..userDefaultsSuiteName = userDefaultsSuiteName
       ..store = useAmazon ? Store.amazon : null
-      ..usesStoreKit2IfAvailable = usesStoreKit2IfAvailable);
+      ..storeKitVersion = storeKitVersion);
     _lastReceivedCustomerInfo = null;
     return configure(configuration);
   }
@@ -140,9 +134,7 @@ class Purchases {
           'observerMode': purchasesConfiguration.observerMode,
           'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
           'useAmazon': purchasesConfiguration.store == Store.amazon,
-          'usesStoreKit2IfAvailable':
-              // ignore: deprecated_member_use_from_same_package
-              purchasesConfiguration.usesStoreKit2IfAvailable,
+          'storeKitVersion': purchasesConfiguration.storeKitVersion.name,
           'shouldShowInAppMessagesAutomatically': purchasesConfiguration.shouldShowInAppMessagesAutomatically,
           'entitlementVerificationMode': purchasesConfiguration.entitlementVerificationMode.name,
         },
@@ -627,6 +619,25 @@ class Purchases {
       ),
     );
   }
+
+  /// iOS only. Always returns an error on iOS < 15.
+  ///
+  /// Use this method only if you already have your own IAP implementation using StoreKit 2 and want to use
+  /// RevenueCat's backend. If you are using StoreKit 1 for your implementation, you do not need this method.
+  ///
+  /// You only need to use this method with *new* purchases. Subscription updates are observed automatically.
+  ///
+  /// **IMPORTANT**:  This should only be used if you have enabled observer mode during SDK configuration.
+  ///
+  /// **WARNING**:  You need to finish the transaction yourself after calling this method.
+  ///
+  /// [productIdentifier] Product ID that was just purchased
+  static Future<void> handleObserverModeTransaction(
+    String productIdentifier,
+  ) async => await _channel
+        .invokeMethod('handleObserverModeTransaction', {
+      'productIdentifier': productIdentifier,
+    });
 
   /// Invalidates the cache for customer information.
   ///

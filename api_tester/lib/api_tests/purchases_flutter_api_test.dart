@@ -10,13 +10,13 @@ class _PurchasesFlutterApiTest {
     bool observerMode = false;
     String? userDefaultsSuiteName = "fakeSuiteName";
     bool useAmazon = false;
-    bool usesStoreKit2IfAvailable = true;
+    StoreKitVersion storeKitVersion = StoreKitVersion.defaultVersion;
     Future<void> callback = Purchases.setup(apiKey,
         appUserId: userId,
         observerMode: observerMode,
         userDefaultsSuiteName: userDefaultsSuiteName,
         useAmazon: useAmazon,
-        usesStoreKit2IfAvailable: usesStoreKit2IfAvailable);
+        storeKitVersion: storeKitVersion);
   }
 
   void _checkConfigure() {
@@ -26,7 +26,7 @@ class _PurchasesFlutterApiTest {
     configuration.shouldShowInAppMessagesAutomatically = true;
     configuration.store = Store.amazon;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
-    configuration.usesStoreKit2IfAvailable = true;
+    configuration.storeKitVersion = StoreKitVersion.defaultVersion;
     Future<void> callback = Purchases.configure(configuration);
   }
 
@@ -232,6 +232,12 @@ class _PurchasesFlutterApiTest {
     Map<String, IntroEligibility> result;
     result = await Purchases.checkTrialOrIntroductoryPriceEligibility(
         productIdentifiers);
+  }
+
+  void _checkHandleObserverModeTransaction() async {
+    String productIdentifier = "product_id";
+    Future<void> future = Purchases.handleObserverModeTransaction(
+        productIdentifier);
   }
 
   void _checkInvalidateCustomerInfoCache() {
@@ -447,6 +453,15 @@ class _PurchasesFlutterApiTest {
       case InAppMessageType.billingIssue:
       case InAppMessageType.priceIncreaseConsent:
       case InAppMessageType.generic:
+        break;
+    }
+  }
+
+  void _checkStoreKitVersion(StoreKitVersion storeKitVersion) {
+    switch (storeKitVersion) {
+      case StoreKitVersion.storeKit1:
+      case StoreKitVersion.storeKit2:
+      case StoreKitVersion.defaultVersion:
         break;
     }
   }

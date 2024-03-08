@@ -48,7 +48,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
-        BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
+        NSString * _Nullable storeKitVersion = arguments[@"storeKitVersion"];
 		BOOL shouldShowInAppMessagesAutomatically = YES;
         id object = arguments[@"shouldShowInAppMessagesAutomatically"];
         if (object != [NSNull null] && object != nil) {
@@ -60,7 +60,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
                    appUserID:appUserID
                 observerMode:observerMode
        userDefaultsSuiteName:userDefaultsSuiteName
-    usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+            storeKitVersion:storeKitVersion
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
             verificationMode:verificationMode
                       result:result];
@@ -111,6 +111,8 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self isConfiguredWithResult:result];
     } else if ([@"checkTrialOrIntroductoryPriceEligibility" isEqualToString:call.method]) {
         [self checkTrialOrIntroductoryPriceEligibility:arguments[@"productIdentifiers"] result:result];
+    } else if ([@"handleObserverModeTransaction" isEqualToString:call.method]) {
+        [self handleObserverModeTransactionForProductID:arguments[@"productIdentifier"] result:result];
     } else if ([@"invalidateCustomerInfoCache" isEqualToString:call.method]) {
         [self invalidateCustomerInfoCacheWithResult:result];
     } else if ([@"presentCodeRedemptionSheet" isEqualToString:call.method]) {
@@ -229,7 +231,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
              appUserID:(NSString *)appUserID
           observerMode:(BOOL)observerMode
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
-usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
+      storeKitVersion:(nullable NSString *)storeKitVersion
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
       verificationMode:(nullable NSString *)verificationMode
                 result:(FlutterResult)result {
@@ -246,7 +248,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
-                                     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+                                             storeKitVersion:storeKitVersion
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode];
@@ -377,6 +379,24 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                                     completionBlock:^(NSDictionary<NSString *, NSDictionary *> *_Nonnull responseDictionary) {
                                                         result([NSDictionary dictionaryWithDictionary:responseDictionary]);
                                                     }];
+}
+
+- (void)handleObserverModeTransactionForProductID:(NSString*)productId
+                                           result:(FlutterResult)result {
+    if (@available(iOS 15.0, macOS 12.0, *)) {
+        [RCCommonFunctionality handleObserverModeTransactionForProductID:productId
+                                                              completion:^(NSDictionary<NSString *,id> * _Nullable responseDictionary, RCErrorContainer * _Nullable error) {
+            if (error) {
+                [self rejectWithResult:result error:error];
+            } else {
+                result(nil);
+            }
+        }];
+    } else {
+        // Fallback on earlier versions
+        NSLog(@"[Purchases] Warning: tried to handle Observer Mode transaction, but it's only available on iOS 15.0 and macOS 12.0 or greater.");
+        result(nil);
+    }
 }
 
 - (void)invalidateCustomerInfoCacheWithResult:(FlutterResult)result {

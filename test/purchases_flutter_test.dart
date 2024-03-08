@@ -74,7 +74,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': false,
-            'usesStoreKit2IfAvailable': false,
+            'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
           },
@@ -957,7 +957,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false,
+            'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
           },
@@ -983,7 +983,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false,
+            'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
           },
@@ -1009,7 +1009,57 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': false,
-            'usesStoreKit2IfAvailable': false,
+            'storeKitVersion': 'DEFAULT',
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+          },
+        ),
+      ],
+    );
+  });
+
+  test('configure with StoreKit 1', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..storeKitVersion = StoreKitVersion.storeKit1,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': null,
+            'observerMode': false,
+            'userDefaultsSuiteName': null,
+            'useAmazon': false,
+            'storeKitVersion': 'STOREKIT_1',
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+          },
+        ),
+      ],
+    );
+  });
+
+  test('configure with StoreKit 2', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..storeKitVersion = StoreKitVersion.storeKit2,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': null,
+            'observerMode': false,
+            'userDefaultsSuiteName': null,
+            'useAmazon': false,
+            'storeKitVersion': 'STOREKIT_2',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
           },
@@ -1036,7 +1086,7 @@ void main() {
             'observerMode': true,
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false,
+            'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
           },
@@ -1197,6 +1247,20 @@ void main() {
       },
     );
     expect(receivedLogLevel, LogLevel.info);
+  });
+
+  test('handleObserverModeTransaction calls channel correctly', () async {
+    await Purchases.handleObserverModeTransaction(
+      'productID_test',
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'handleObserverModeTransaction',
+        arguments: {
+          'productIdentifier': 'productID_test',
+        },
+      ),
+    ]);
   });
 
   test('syncObserverModeAmazonPurchase calls channel correctly', () async {
