@@ -38,6 +38,7 @@ class PurchasesUiPaywallFooterViewFactory: NSObject, FlutterPlatformViewFactory 
 class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView {
     private let _view: UIView
     private var _paywallProxy: PaywallProxy?
+    // Need to keep the controller in memory while this view is alive otherwise the delegate is dealocated
     private var _paywallFooterViewController: PaywallFooterViewController
     private let channel: FlutterMethodChannel
 
@@ -47,7 +48,7 @@ class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView {
         arguments args: Any?,
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
-        channel = FlutterMethodChannel(name: "purchases_ui_flutter/PaywallFooterView/\(viewId)",
+        channel = FlutterMethodChannel(name: "com.revenuecat.purchasesui/PaywallFooterView/\(viewId)",
                                        binaryMessenger: messenger)
         let paywallProxy = PaywallProxy()
         _paywallProxy = paywallProxy
@@ -72,7 +73,6 @@ class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView {
     func view() -> UIView {
         return _view
     }
-
 }
 
 
@@ -84,4 +84,32 @@ extension PurchasesUiPaywallFooterView: PaywallViewControllerDelegateWrapper {
         channel.invokeMethod("onHeightChanged", arguments: newHeight)
     }
 
+    func paywallViewController(_ controller: PaywallViewController,
+                               didStartPurchaseWith packageDictionary: [String : Any]) {
+        channel.invokeMethod("onPurchaseStarted", arguments: packageDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFinishPurchasingWith customerInfoDictionary: [String : Any],
+                               transaction transactionDictionary: [String : Any]?) {
+        channel.invokeMethod("onPurchaseCompleted", arguments: [
+            "customerInfo":customerInfoDictionary,
+            "storeTransaction":transactionDictionary
+        ])
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFailPurchasingWith errorDictionary: [String : Any]) {
+        channel.invokeMethod("onPurchaseError", arguments: errorDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFinishRestoringWith customerInfoDictionary: [String : Any]) {
+        channel.invokeMethod("onRestoreCompleted", arguments: customerInfoDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFailRestoringWith errorDictionary: [String : Any]) {
+        channel.invokeMethod("onRestoreError", arguments: errorDictionary)
+    }
 }

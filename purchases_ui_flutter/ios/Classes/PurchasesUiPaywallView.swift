@@ -39,7 +39,7 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
     private var _view: UIView
     private var _paywallProxy: PaywallProxy?
     private var _methodChannel: FlutterMethodChannel
-    // Need to keep the controller in memory otherwise while this view is alive otherwise the delegate is dealocated
+    // Need to keep the controller in memory while this view is alive otherwise the delegate is dealocated
     private var _paywallViewController: PaywallViewController
 
     init(

@@ -1,7 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
+import 'package:purchases_flutter/models/package_wrapper.dart';
+import 'package:purchases_flutter/models/purchases_error.dart';
+import 'package:purchases_flutter/models/store_transaction.dart';
 
 import 'internal_paywall_footer_view.dart';
 
@@ -11,17 +15,44 @@ import 'internal_paywall_footer_view.dart';
 /// [offering] (Optional) The offering object to be displayed in the paywall.
 /// Obtained from [Purchases.getOfferings].
 ///
+/// [onPurchaseStarted] (Optional) Callback that gets called when a purchase
+/// is started.
+///
+/// [onPurchaseCompleted] (Optional) Callback that gets called when a purchase
+/// is completed.
+///
+/// [onPurchaseError] (Optional) Callback that gets called when a purchase
+/// fails.
+///
+/// [onRestoreCompleted] (Optional) Callback that gets called when a restore
+/// is completed. Note that this may get called even if no entitlements have
+/// been granted in case no relevant purchases were found.
+///
+/// [onRestoreError] (Optional) Callback that gets called when a restore
+/// fails.
+///
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
 class PaywallFooterView extends StatefulWidget {
 
   final Offering? offering;
+  final Function(Package rcPackage)? onPurchaseStarted;
+  final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
+  onPurchaseCompleted;
+  final Function(PurchasesError)? onPurchaseError;
+  final Function(CustomerInfo customerInfo)? onRestoreCompleted;
+  final Function(PurchasesError)? onRestoreError;
   final Widget Function(double bottomPadding) contentCreator;
 
   const PaywallFooterView({
     Key? key,
     this.offering,
+    this.onPurchaseStarted,
+    this.onPurchaseCompleted,
+    this.onPurchaseError,
+    this.onRestoreCompleted,
+    this.onRestoreError,
     required this.contentCreator,
   }) : super(key: key);
 
@@ -61,6 +92,11 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
           height: _height,
           child: InternalPaywallFooterView(
             offering: widget.offering,
+            onPurchaseStarted: widget.onPurchaseStarted,
+            onPurchaseCompleted: widget.onPurchaseCompleted,
+            onPurchaseError: widget.onPurchaseError,
+            onRestoreCompleted: widget.onRestoreCompleted,
+            onRestoreError: widget.onRestoreError,
             onHeightChanged: _updateHeight,
           ),
         ),

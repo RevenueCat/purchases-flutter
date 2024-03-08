@@ -11,6 +11,8 @@ import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
+import 'paywall_view_method_handler.dart';
+
 /// View that displays the paywall in full screen mode.
 /// Not supported in macOS currently.
 ///
@@ -22,6 +24,16 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 ///
 /// [onPurchaseCompleted] (Optional) Callback that gets called when a purchase
 /// is completed.
+///
+/// [onPurchaseError] (Optional) Callback that gets called when a purchase
+/// fails.
+///
+/// [onRestoreCompleted] (Optional) Callback that gets called when a restore
+/// is completed. Note that this may get called even if no entitlements have
+/// been granted in case no relevant purchases were found.
+///
+/// [onRestoreError] (Optional) Callback that gets called when a restore
+/// fails.
 class PaywallView extends StatelessWidget {
   final Offering? offering;
   final Function(Package rcPackage)? onPurchaseStarted;
@@ -93,64 +105,14 @@ class PaywallView extends StatelessWidget {
       );
 
   void _buildListenerChannel(int id) {
+    final handler = PaywallViewMethodHandler(
+      onPurchaseStarted,
+      onPurchaseCompleted,
+      onPurchaseError,
+      onRestoreCompleted,
+      onRestoreError,
+    );
     MethodChannel('com.revenuecat.purchasesui/PaywallView/$id')
-          .setMethodCallHandler(_handleMethodCall);
-  }
-
-  Future<void> _handleMethodCall(MethodCall call) async {
-    switch (call.method) {
-      case 'onPurchaseStarted':
-        _handleOnPurchaseStarted(call);
-        break;
-      case 'onPurchaseCompleted':
-        _handleOnPurchaseCompleted(call);
-        break;
-      case 'onPurchaseError':
-        _handleOnPurchaseError(call);
-        break;
-      case 'onRestoreCompleted':
-        _handleOnRestoreCompleted(call);
-        break;
-      case 'onRestoreError':
-        _handleOnRestoreError(call);
-        break;
-      default:
-        break;
-    }
-  }
-
-  void _handleOnPurchaseStarted(MethodCall call) {
-    final rcPackage =
-        Package.fromJson(Map<String, dynamic>.from(call.arguments));
-    onPurchaseStarted?.call(rcPackage);
-  }
-
-  void _handleOnPurchaseCompleted(MethodCall call) {
-    final arguments = Map<String, dynamic>.from(call.arguments);
-    final customerInfo = CustomerInfo.fromJson(
-      Map<String, dynamic>.from(arguments['customerInfo']),
-    );
-    final storeTransaction = StoreTransaction.fromJson(
-      Map<String, dynamic>.from(arguments['storeTransaction']),
-    );
-    onPurchaseCompleted?.call(customerInfo, storeTransaction);
-  }
-
-  void _handleOnPurchaseError(MethodCall call) {
-    final error =
-        PurchasesError.fromJson(Map<String, dynamic>.from(call.arguments));
-    onPurchaseError?.call(error);
-  }
-
-  void _handleOnRestoreCompleted(MethodCall call) {
-    final customerInfo =
-        CustomerInfo.fromJson(Map<String, dynamic>.from(call.arguments));
-    onRestoreCompleted?.call(customerInfo);
-  }
-
-  void _handleOnRestoreError(MethodCall call) {
-    final error =
-        PurchasesError.fromJson(Map<String, dynamic>.from(call.arguments));
-    onRestoreError?.call(error);
+          .setMethodCallHandler(handler.handleMethodCall);
   }
 }
