@@ -28,7 +28,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "com.revenuecat.purchasesui/PaywallView",
-            PaywallViewFactory()
+            PaywallViewFactory(flutterPluginBinding.binaryMessenger)
         )
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "com.revenuecat.purchasesui/PaywallFooterView",

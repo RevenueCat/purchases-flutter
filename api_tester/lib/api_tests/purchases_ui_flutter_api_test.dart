@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
+import 'package:purchases_flutter/models/package_wrapper.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/models/purchases_error.dart';
+import 'package:purchases_flutter/models/store_transaction.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
@@ -46,6 +50,26 @@ class _PurchasesFlutterApiTest {
       body: Center(
         child: PaywallView(
           offering: offering,
+        ),
+      ),
+    );
+  }
+
+  Widget _checkPaywallViewWithListeners(Offering offering) {
+    return Scaffold(
+      body: Center(
+        child: PaywallView(
+          onPurchaseStarted: (Package rcPackage) {
+          },
+          onPurchaseCompleted:
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
+          },
+          onPurchaseError: (PurchasesError error) {
+          },
+          onRestoreCompleted: (CustomerInfo customerInfo) {
+          },
+          onRestoreError: (PurchasesError error) {
+          },
         ),
       ),
     );
