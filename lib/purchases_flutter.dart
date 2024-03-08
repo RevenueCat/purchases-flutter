@@ -258,9 +258,9 @@ class Purchases {
     String typeString;
     // ignore: deprecated_member_use_from_same_package
     if (type != PurchaseType.subs) {
-      typeString = describeEnum(type);
+      typeString = type.name;
     } else {
-      typeString = describeEnum(productCategory);
+      typeString = productCategory.name;
     }
 
     final List<dynamic> result = await _channel.invokeMethod('getProductInfo', {
@@ -338,9 +338,7 @@ class Purchases {
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': storeProduct.identifier,
-      'type': storeProduct.productCategory != null
-          ? describeEnum(storeProduct.productCategory!)
-          : null,
+      'type': storeProduct.productCategory?.name,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
@@ -539,7 +537,7 @@ class Purchases {
   /// The default is {LOG_LEVEL.INFO} in release builds and {LOG_LEVEL.DEBUG} in debug builds.
   static Future<void> setLogLevel(LogLevel level) => _channel.invokeMethod(
         'setLogLevel',
-        {'level': describeEnum(level).toUpperCase()},
+        {'level': level.name.toUpperCase()},
       );
 
   ///
@@ -928,7 +926,7 @@ class Purchases {
     final args = Map<String, dynamic>.from(call.arguments);
     final logLevelName = args['logLevel'];
     final logLevel = LogLevel.values.firstWhere(
-      (e) => describeEnum(e).toUpperCase() == logLevelName,
+      (e) => e.name.toUpperCase() == logLevelName,
       orElse: () => LogLevel.info,
     );
     final msg = args['message'];
