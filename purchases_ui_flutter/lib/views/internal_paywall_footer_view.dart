@@ -13,7 +13,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 
 import 'paywall_view_method_handler.dart';
 
-class InternalPaywallFooterView extends StatefulWidget {
+class InternalPaywallFooterView extends StatelessWidget {
   final Offering? offering;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
@@ -37,27 +37,9 @@ class InternalPaywallFooterView extends StatefulWidget {
   static const String _viewType = 'com.revenuecat.purchasesui/PaywallFooterView';
 
   @override
-  State<InternalPaywallFooterView> createState() => _InternalPaywallFooterViewState(
-      PaywallViewMethodHandler(
-        onPurchaseStarted,
-        onPurchaseCompleted,
-        onPurchaseError,
-        onRestoreCompleted,
-        onRestoreError,
-      )
-  );
-}
-
-class _InternalPaywallFooterViewState extends State<InternalPaywallFooterView> {
-
-  final PaywallViewMethodHandler _handler;
-
-  _InternalPaywallFooterViewState(this._handler);
-
-  @override
   Widget build(BuildContext context) {
     final creationParams = <String, dynamic>{
-      'offeringIdentifier': widget.offering?.identifier,
+      'offeringIdentifier': offering?.identifier,
     };
 
     return Platform.isAndroid
@@ -66,7 +48,7 @@ class _InternalPaywallFooterViewState extends State<InternalPaywallFooterView> {
   }
 
   UiKitView _buildUiKitView(Map<String, dynamic> creationParams) => UiKitView(
-    viewType: InternalPaywallFooterView._viewType,
+    viewType: _viewType,
     layoutDirection: TextDirection.ltr,
     creationParams: creationParams,
     creationParamsCodec: const StandardMessageCodec(),
@@ -77,7 +59,7 @@ class _InternalPaywallFooterViewState extends State<InternalPaywallFooterView> {
       Map<String, dynamic> creationParams,
       ) =>
       PlatformViewLink(
-        viewType: InternalPaywallFooterView._viewType,
+        viewType: _viewType,
         surfaceFactory: (context, controller) => AndroidViewSurface(
           controller: controller as AndroidViewController,
           gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
@@ -85,7 +67,7 @@ class _InternalPaywallFooterViewState extends State<InternalPaywallFooterView> {
         ),
         onCreatePlatformView: (params) => PlatformViewsService.initSurfaceAndroidView(
             id: params.id,
-            viewType: InternalPaywallFooterView._viewType,
+            viewType: _viewType,
             layoutDirection: TextDirection.ltr,
             creationParams: creationParams,
             creationParamsCodec: const StandardMessageCodec(),
@@ -99,12 +81,19 @@ class _InternalPaywallFooterViewState extends State<InternalPaywallFooterView> {
       );
 
   void _buildListenerChannel(int id) {
+    final handler = PaywallViewMethodHandler(
+      onPurchaseStarted,
+      onPurchaseCompleted,
+      onPurchaseError,
+      onRestoreCompleted,
+      onRestoreError,
+    );
     MethodChannel('com.revenuecat.purchasesui/PaywallFooterView/$id')
         .setMethodCallHandler((call) async {
       if (call.method == 'onHeightChanged') {
-        widget.onHeightChanged(call.arguments as double);
+        onHeightChanged(call.arguments as double);
       } else {
-        _handler.handleMethodCall(call);
+        handler.handleMethodCall(call);
       }
     });
   }

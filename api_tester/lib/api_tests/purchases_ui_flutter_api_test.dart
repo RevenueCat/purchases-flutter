@@ -76,7 +76,7 @@ class _PurchasesFlutterApiTest {
   }
 
   Widget _checkPaywallFooterView() {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: PaywallFooterView(
           contentCreator: (double bottomPadding) {
