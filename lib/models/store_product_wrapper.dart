@@ -67,6 +67,6 @@ extension ExtendedStoreProduct on StoreProduct {
   /// Offering this package belongs to.
   /// Null if not using offerings or if fetched directly from store via getProducts
   @Deprecated('use presentedOfferingContext')
-  String? get offeringIdentifier =>
+  String? get presentedOfferingIdentifier =>
       presentedOfferingContext?.offeringIdentifier;
 }
