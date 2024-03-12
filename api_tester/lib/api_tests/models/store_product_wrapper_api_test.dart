@@ -22,7 +22,6 @@ class _StoreProductApiTest {
       List<StoreProductDiscount>? discounts,
       ProductCategory? productCategory,
       String? subscriptionPeriod,
-      String? presentedOfferingIdentifier,
       PresentedOfferingContext? presentedOfferingContext) {
     StoreProduct product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode);
@@ -32,7 +31,6 @@ class _StoreProductApiTest {
         discounts: discounts,
         productCategory: productCategory,
         subscriptionPeriod: subscriptionPeriod,
-        presentedOfferingIdentifier: presentedOfferingIdentifier,
         presentedOfferingContext: presentedOfferingContext);
   }
 

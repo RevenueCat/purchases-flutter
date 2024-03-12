@@ -23,7 +23,6 @@ class _SubscriptionOptionApiTest {
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
-      String? presentedOfferingIdentifier,
       PresentedOfferingContext? presentedOfferingContext) {
     SubscriptionOption subscriptionOption = SubscriptionOption(
         id,
@@ -37,7 +36,6 @@ class _SubscriptionOptionApiTest {
         fullPricePhase,
         freePhase,
         introPhase,
-        presentedOfferingIdentifier,
         presentedOfferingContext);
   }
 

@@ -30,10 +30,9 @@ class _PackageApiTest {
       String identifier,
       PackageType packageType,
       StoreProduct storeProduct,
-      String offeringIdentifier,
       PresentedOfferingContext presentedOfferingContext) {
-    Package package = Package(identifier, packageType, storeProduct,
-        offeringIdentifier, presentedOfferingContext);
+    Package package = Package(
+        identifier, packageType, storeProduct, presentedOfferingContext);
   }
 
   void _checkProperties(Package package) {
