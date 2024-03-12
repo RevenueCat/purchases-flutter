@@ -47,11 +47,6 @@ class StoreProduct with _$StoreProduct {
     /// Collection of subscription options for a product. Google Play only.
     List<SubscriptionOption>? subscriptionOptions,
 
-    /// Offering identifier the store product was presented from
-    /// Null if not using offerings or if fetched directly from store via getProducts
-    @Deprecated('use presentedOfferingContext')
-    String? presentedOfferingIdentifier,
-
     /// Offering context this package belongs to.
     /// Null if not using offerings or if fetched directly from store via getProducts
     PresentedOfferingContext? presentedOfferingContext,
@@ -66,4 +61,12 @@ class StoreProduct with _$StoreProduct {
 
   factory StoreProduct.fromJson(Map<String, dynamic> json) =>
       _$StoreProductFromJson(json);
+}
+
+extension ExtendedStoreProduct on StoreProduct {
+  /// Offering this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
+  @Deprecated('use presentedOfferingContext')
+  String? get offeringIdentifier =>
+      presentedOfferingContext?.offeringIdentifier;
 }

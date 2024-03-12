@@ -67,13 +67,16 @@ class Package with _$Package {
     // ignore: invalid_annotation_target
     @JsonKey(name: 'product') StoreProduct storeProduct,
 
-    /// Offering this package belongs to.
-    @Deprecated('use presentedOfferingContext') String offeringIdentifier,
-
     /// Offering context this package belongs to.
     PresentedOfferingContext presentedOfferingContext,
   ) = _Package;
 
   factory Package.fromJson(Map<String, dynamic> json) =>
       _$PackageFromJson(json);
+}
+
+extension ExtendedPackage on Package {
+  /// Offering this package belongs to.
+  @Deprecated('use presentedOfferingContext')
+  String get offeringIdentifier => presentedOfferingContext.offeringIdentifier;
 }

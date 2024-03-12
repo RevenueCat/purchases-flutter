@@ -55,10 +55,6 @@ class SubscriptionOption with _$SubscriptionOption {
     /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
     PricingPhase? introPhase,
 
-    // Offering identifier the subscriptioni option was presented from
-    @Deprecated('use presentedOfferingContext')
-    String? presentedOfferingIdentifier,
-
     /// Offering context this package belongs to.
     /// Null if not using offerings or if fetched directly from store via getProducts
     PresentedOfferingContext? presentedOfferingContext,
@@ -66,4 +62,12 @@ class SubscriptionOption with _$SubscriptionOption {
 
   factory SubscriptionOption.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionOptionFromJson(json);
+}
+
+extension ExtendedSubscriptionOption on SubscriptionOption {
+  /// Offering this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
+  @Deprecated('use presentedOfferingContext')
+  String? get offeringIdentifier =>
+      presentedOfferingContext?.offeringIdentifier;
 }

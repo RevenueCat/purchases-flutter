@@ -26,7 +26,9 @@ void main() {
               'presentedOfferingIdentifier': null,
               'subscriptionPeriod': null,
             },
-            'offeringIdentifier': 'theoffering',
+            'presentedOfferingContext': {
+              'offeringIdentifier': 'theoffering',
+            }
           }
         ],
         'lifetime': null,

@@ -473,7 +473,6 @@ void main() {
         '\$rc_lifetime',
         PackageType.lifetime,
         mockStoreProduct,
-        'main',
         PresentedOfferingContext('main', null, null),
       );
       final purchasePackageResult =
@@ -523,7 +522,6 @@ void main() {
         '\$rc_lifetime',
         PackageType.lifetime,
         mockStoreProduct,
-        'main',
         PresentedOfferingContext('main', null, null),
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
@@ -578,7 +576,6 @@ void main() {
         '\$rc_lifetime',
         PackageType.lifetime,
         mockStoreProduct,
-        'main',
         PresentedOfferingContext('main', null, null),
       );
       const mockPaymentDiscount = PromotionalOffer(
@@ -704,7 +701,8 @@ void main() {
         '\$199.99',
         'USD',
         productCategory: ProductCategory.subscription,
-        presentedOfferingIdentifier: 'my-offer',
+        presentedOfferingContext:
+            PresentedOfferingContext('my-offer', null, null),
       );
       final purchasePackageResult =
           await Purchases.purchaseStoreProduct(mockStoreProduct);
@@ -747,7 +745,8 @@ void main() {
         199.99,
         '\$199.99',
         'USD',
-        presentedOfferingIdentifier: 'my-offer',
+        presentedOfferingContext:
+            PresentedOfferingContext('my-offer', null, null),
       );
       const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
@@ -810,7 +809,6 @@ void main() {
         phase,
         null,
         null,
-        'my-offer',
         PresentedOfferingContext('my-offer', null, null),
       );
       final purchasePackageResult =
@@ -870,7 +868,6 @@ void main() {
         phase,
         null,
         null,
-        'my-offer',
         PresentedOfferingContext('my-offer', null, null),
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
@@ -930,7 +927,6 @@ void main() {
         Period(PeriodUnit.month, 1, 'P1M'),
         false,
         phase,
-        null,
         null,
         null,
         null,

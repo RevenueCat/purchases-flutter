@@ -347,7 +347,8 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'presentedOfferingContext': storeProduct.presentedOfferingContext,
+      'presentedOfferingIdentifier':
+          storeProduct.presentedOfferingContext?.offeringIdentifier,
     });
 
     return customerInfo;
@@ -384,7 +385,8 @@ class Purchases {
         upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'presentedOfferingContext': packageToPurchase.presentedOfferingContext,
+      'offeringIdentifier':
+          packageToPurchase.presentedOfferingContext.offeringIdentifier,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
@@ -432,7 +434,8 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'presentedOfferingContext': subscriptionOption.presentedOfferingContext,
+      'presentedOfferingIdentifier':
+          subscriptionOption.presentedOfferingContext?.offeringIdentifier,
     });
     return customerInfo;
   }
@@ -456,7 +459,8 @@ class Purchases {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
-      'presentedOfferingContext': product.presentedOfferingContext,
+      'presentedOfferingIdentifier':
+          product.presentedOfferingContext?.offeringIdentifier,
     });
     return customerInfo;
   }
@@ -479,7 +483,8 @@ class Purchases {
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'presentedOfferingContext': packageToPurchase.presentedOfferingContext,
+      'offeringContext':
+          packageToPurchase.presentedOfferingContext.offeringIdentifier,
       'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
     });
     return customerInfo;
