@@ -326,14 +326,16 @@ class ShowPromptButton extends StatefulWidget {
   final String title;
   final Function(String) onTextSubmitted;
 
-  ShowPromptButton({required this.title, required this.onTextSubmitted});
+  const ShowPromptButton(
+      {Key? key, required this.title, required this.onTextSubmitted})
+      : super(key: key);
 
   @override
   _ShowPromptButtonState createState() => _ShowPromptButtonState();
 }
 
 class _ShowPromptButtonState extends State<ShowPromptButton> {
-  TextEditingController _textFieldController = TextEditingController();
+  final TextEditingController _textFieldController = TextEditingController();
 
   void _showPrompt() {
     showDialog(
@@ -343,17 +345,17 @@ class _ShowPromptButtonState extends State<ShowPromptButton> {
           title: Text(widget.title),
           content: TextField(
             controller: _textFieldController,
-            decoration: InputDecoration(hintText: "Text here"),
+            decoration: const InputDecoration(hintText: "Text here"),
           ),
           actions: <Widget>[
             ElevatedButton(
-              child: Text('CANCEL'),
+              child: const Text('CANCEL'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             ElevatedButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 // Call the callback function with the text value
                 widget.onTextSubmitted(_textFieldController.text);
