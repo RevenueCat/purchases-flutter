@@ -238,6 +238,27 @@ class Purchases {
     );
   }
 
+  static Future<Offering?> getCurrentOfferingForPlacement(
+      String placementIdentifier) async {
+    final res = await _channel.invokeMethod('getCurrentOfferingForPlacement',
+        {'placementIdentifier': placementIdentifier});
+    if (res != null) {
+      return Offering.fromJson(
+        Map<String, dynamic>.from(res),
+      );
+    } else {
+      return null;
+    }
+  }
+
+  static Future<Offerings> syncAttributesAndOfferingsIfNeeded() async {
+    final res =
+        await _channel.invokeMethod('syncAttributesAndOfferingsIfNeeded');
+    return Offerings.fromJson(
+      Map<String, dynamic>.from(res),
+    );
+  }
+
   /// Fetch the product info. Returns a list of products or throws an error if
   /// the products are not properly configured in RevenueCat or if there is
   /// another error while retrieving them.

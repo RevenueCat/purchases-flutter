@@ -17,6 +17,7 @@ import com.revenuecat.purchases.Store;
 import com.revenuecat.purchases.common.PlatformInfo;
 import com.revenuecat.purchases.hybridcommon.CommonKt;
 import com.revenuecat.purchases.hybridcommon.ErrorContainer;
+import com.revenuecat.purchases.hybridcommon.OnNullableResult;
 import com.revenuecat.purchases.hybridcommon.OnResult;
 import com.revenuecat.purchases.hybridcommon.OnResultAny;
 import com.revenuecat.purchases.hybridcommon.OnResultList;
@@ -54,10 +55,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     // Only set registrar for v1 embedder.
     @SuppressWarnings("deprecation")
     private io.flutter.plugin.common.PluginRegistry.Registrar registrar;
-    // Only set activity for v2 embedder. Always access activity from getActivity() method.
-    @Nullable private Context applicationContext;
-    @Nullable private MethodChannel channel;
-    @Nullable private Activity activity;
+    // Only set activity for v2 embedder. Always access activity from getActivity()
+    // method.
+    @Nullable
+    private Context applicationContext;
+    @Nullable
+    private MethodChannel channel;
+    @Nullable
+    private Activity activity;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -137,9 +142,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String appUserId = call.argument("appUserId");
                 Boolean observerMode = call.argument("observerMode");
                 Boolean useAmazon = call.argument("useAmazon");
-                //noinspection unused
+                // noinspection unused
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
-                //noinspection unused
+                // noinspection unused
                 Boolean usesStoreKit2IfAvailable = call.argument("usesStoreKit2IfAvailable"); // iOS-only, unused.
                 Boolean shouldShowInAppMessagesAutomatically = call.argument("shouldShowInAppMessagesAutomatically");
                 String verificationMode = call.argument("entitlementVerificationMode");
@@ -157,6 +162,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getOfferings":
                 getOfferings(result);
                 break;
+            case "getCurrentOfferingForPlacement":
+                String placementIdentifier = call.argument("placementIdentifier");
+                getCurrentOfferingForPlacement(placementIdentifier, result);
+                break;
+            case "syncAttributesAndOfferingsIfNeeded":
+                syncAttributesAndOfferingsIfNeeded(result);
+                break;
             case "getProductInfo":
                 ArrayList<String> productIdentifiers = call.argument("productIdentifiers");
                 String type = call.argument("type");
@@ -169,7 +181,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 type = call.argument("type");
                 Map<String, Object> presentedOfferingContext = call.argument("presentedOfferingContext");
-                purchaseProduct(productIdentifier, type, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, presentedOfferingContext, result);
+                purchaseProduct(productIdentifier, type, googleOldProductIdentifer, googleProrationMode,
+                        googleIsPersonalizedPrice, presentedOfferingContext, result);
                 break;
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
@@ -177,7 +190,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleOldProductIdentifer = call.argument("googleOldProductIdentifier");
                 googleProrationMode = call.argument("googleProrationMode");
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
-                purchasePackage(packageIdentifier, presentedOfferingContext, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, result);
+                purchasePackage(packageIdentifier, presentedOfferingContext, googleOldProductIdentifer,
+                        googleProrationMode, googleIsPersonalizedPrice, result);
                 break;
             case "purchaseSubscriptionOption":
                 productIdentifier = call.argument("productIdentifier");
@@ -186,7 +200,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleProrationMode = call.argument("googleProrationMode");
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 presentedOfferingContext = call.argument("presentedOfferingContext");
-                purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer, googleProrationMode, googleIsPersonalizedPrice, presentedOfferingContext, result);
+                purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer,
+                        googleProrationMode, googleIsPersonalizedPrice, presentedOfferingContext, result);
                 break;
             case "getAppUserID":
                 getAppUserID(result);
@@ -362,8 +377,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
-                                @Nullable Boolean useAmazon, @Nullable Boolean shouldShowInAppMessagesAutomatically,
-                                @Nullable String verificationMode, final Result result) {
+            @Nullable Boolean useAmazon, @Nullable Boolean shouldShowInAppMessagesAutomatically,
+            @Nullable String verificationMode, final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
             Store store = Store.PLAY_STORE;
@@ -419,6 +434,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         CommonKt.getOfferings(getOnResult(result));
     }
 
+    private void getCurrentOfferingForPlacement(String placementIdentifier, final Result result) {
+        CommonKt.getCurrentOfferingForPlacement(placementIdentifier, getOnNullableResult(result));
+    }
+
+    private void syncAttributesAndOfferingsIfNeeded(final Result result) {
+        CommonKt.syncAttributesAndOfferingsIfNeeded(getOnResult(result));
+    }
+
     private void getProductInfo(ArrayList<String> productIDs, String type, final Result result) {
         CommonKt.getProductInfo(productIDs, type, new OnResultList() {
             @Override
@@ -434,12 +457,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void purchaseProduct(final String productIdentifier,
-                                 final String type,
-                                 final String googleOldProductId,
-                                 @Nullable final Integer googleProrationMode,
-                                 @Nullable final Boolean googleIsPersonalizedPrice,
-                                 @Nullable final Map<String, Object> presentedOfferingContext,
-                                 final Result result) {
+            final String type,
+            final String googleOldProductId,
+            @Nullable final Integer googleProrationMode,
+            @Nullable final Boolean googleIsPersonalizedPrice,
+            @Nullable final Map<String, Object> presentedOfferingContext,
+            final Result result) {
         CommonKt.purchaseProduct(
                 getActivity(),
                 productIdentifier,
@@ -449,16 +472,15 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleProrationMode,
                 googleIsPersonalizedPrice,
                 presentedOfferingContext,
-                getOnResult(result)
-        );
+                getOnResult(result));
     }
 
     private void purchasePackage(final String packageIdentifier,
-                                 final Map<String, Object> presentedOfferingContext,
-                                 final String googleOldProductId,
-                                 @Nullable final Integer googleProrationMode,
-                                 @Nullable final Boolean googleIsPersonalizedPrice,
-                                 final Result result) {
+            final Map<String, Object> presentedOfferingContext,
+            final String googleOldProductId,
+            @Nullable final Integer googleProrationMode,
+            @Nullable final Boolean googleIsPersonalizedPrice,
+            final Result result) {
         CommonKt.purchasePackage(
                 getActivity(),
                 packageIdentifier,
@@ -466,17 +488,16 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleOldProductId,
                 googleProrationMode,
                 googleIsPersonalizedPrice,
-                getOnResult(result)
-        );
+                getOnResult(result));
     }
 
     private void purchaseSubscriptionOption(final String productIdentifier,
-                                            final String optionIdentifier,
-                                            final String googleOldProductId,
-                                            @Nullable final Integer googleProrationMode,
-                                            @Nullable final Boolean googleIsPersonalizedPrice,
-                                            @Nullable final Map<String, Object> presentedOfferingContext,
-                                            final Result result) {
+            final String optionIdentifier,
+            final String googleOldProductId,
+            @Nullable final Integer googleProrationMode,
+            @Nullable final Boolean googleIsPersonalizedPrice,
+            @Nullable final Map<String, Object> presentedOfferingContext,
+            final Result result) {
         CommonKt.purchaseSubscriptionOption(
                 getActivity(),
                 productIdentifier,
@@ -485,8 +506,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleProrationMode,
                 googleIsPersonalizedPrice,
                 presentedOfferingContext,
-                getOnResult(result)
-        );
+                getOnResult(result));
     }
 
     private void getAppUserID(final Result result) {
@@ -512,11 +532,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void syncObserverModeAmazonPurchase(String productID,
-                                                String receiptID,
-                                                String amazonUserID,
-                                                String isoCurrencyCode,
-                                                Double price,
-                                                final Result result) {
+            String receiptID,
+            String amazonUserID,
+            String isoCurrencyCode,
+            Double price,
+            final Result result) {
         Purchases.getSharedInstance().syncObserverModeAmazonPurchase(productID, receiptID,
                 amazonUserID, isoCurrencyCode, price);
         result.success(null);
@@ -558,9 +578,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    //================================================================================
+    // ================================================================================
     // Subscriber Attributes
-    //================================================================================
+    // ================================================================================
 
     private void setAttributes(Map<String, String> map, final Result result) {
         SubscriberAttributesKt.setAttributes(map);
@@ -732,6 +752,21 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         return new OnResult() {
             @Override
             public void onReceived(Map<String, ?> map) {
+                result.success(map);
+            }
+
+            @Override
+            public void onError(ErrorContainer errorContainer) {
+                reject(errorContainer, result);
+            }
+        };
+    }
+
+    @NotNull
+    private OnNullableResult getOnNullableResult(final Result result) {
+        return new OnNullableResult() {
+            @Override
+            public void onReceived(@Nullable Map<String, ?> map) {
                 result.success(map);
             }
 

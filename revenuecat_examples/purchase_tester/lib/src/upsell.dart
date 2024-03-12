@@ -101,10 +101,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       final paywallResult =
-                          await RevenueCatUI.presentPaywallIfNeeded(entitlementKey);
+                          await RevenueCatUI.presentPaywallIfNeeded(
+                              entitlementKey);
                       log('Paywall result: $paywallResult');
                     },
-                    child: const Text('Present paywall if needed ("$entitlementKey")'),
+                    child: const Text(
+                        'Present paywall if needed ("$entitlementKey")'),
                   ),
                   ElevatedButton(
                     onPressed: () async {
@@ -112,8 +114,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => PaywallScreen(
-                              offering: offering,
-                            )),
+                                  offering: offering,
+                                )),
                       );
                     },
                     child: const Text('Show paywall view'),
@@ -124,15 +126,50 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => PaywallFooterScreen(
-                              offering: offering,
-                            )),
+                                  offering: offering,
+                                )),
                       );
                     },
                     child: const Text('Show paywall footer view'),
-                  )
+                  ),
+                  ShowPromptButton(
+                    title: "Present paywall by placement",
+                    onTextSubmitted: (placement) async {
+                      final offering =
+                          await Purchases.getCurrentOfferingForPlacement(
+                              placement);
+                      if (offering != null) {
+                        final paywallResult = await RevenueCatUI.presentPaywall(
+                            offering: offering);
+                        log('Paywall result: $paywallResult');
+                      } else {
+                        log('No offering to show');
+                      }
+                    },
+                  ),
                 ]))),
       ),
       ...packageCards,
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Purchase Methods"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      final offerings =
+                          await Purchases.syncAttributesAndOfferingsIfNeeded();
+                      setState(() {
+                        _offerings = offerings;
+                      });
+                    },
+                    child: const Text('Sync Attributes and Offerings'),
+                  ),
+                ]))),
+      ),
     ];
 
     return ListView(
@@ -283,4 +320,63 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
           ),
         ),
       );
+}
+
+class ShowPromptButton extends StatefulWidget {
+  final String title;
+  final Function(String) onTextSubmitted;
+
+  ShowPromptButton({required this.title, required this.onTextSubmitted});
+
+  @override
+  _ShowPromptButtonState createState() => _ShowPromptButtonState();
+}
+
+class _ShowPromptButtonState extends State<ShowPromptButton> {
+  TextEditingController _textFieldController = TextEditingController();
+
+  void _showPrompt() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(widget.title),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: InputDecoration(hintText: "Text here"),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: Text('OK'),
+              onPressed: () {
+                // Call the callback function with the text value
+                widget.onTextSubmitted(_textFieldController.text);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: _showPrompt,
+      child: Text(widget.title),
+    );
+  }
+
+  @override
+  void dispose() {
+    _textFieldController.dispose();
+    super.dispose();
+  }
 }

@@ -70,6 +70,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
     } else if ([@"getOfferings" isEqualToString:call.method]) {
         [self getOfferingsWithResult:result];
+    } else if ([@"getCurrentOfferingForPlacement" isEqualToString:call.method]) {
+        [self getCurrentOfferingForPlacement:arguments[@"placementIdentifier"]
+                                       result:result];
+    } else if ([@"syncAttributesAndOfferingsIfNeeded" isEqualToString:call.method]) {
+        [self syncAttributesAndOfferingsIfNeededWithResult:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
         [self getProductInfo:arguments[@"productIdentifiers"] result:result];
     } else if ([@"purchaseProduct" isEqualToString:call.method]) {
@@ -272,6 +277,16 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 
 - (void)getOfferingsWithResult:(FlutterResult)result {
     [RCCommonFunctionality getOfferingsWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)getCurrentOfferingForPlacement:(NSString *)placement
+                             result:(FlutterResult)result {
+    [RCCommonFunctionality getCurrentOfferingForPlacement:placement 
+                                          completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)syncAttributesAndOfferingsIfNeededWithResult:(FlutterResult)result {
+    [RCCommonFunctionality syncAttributesAndOfferingsIfNeededWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)getProductInfo:(NSArray *)products

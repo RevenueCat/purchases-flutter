@@ -66,6 +66,14 @@ class _PurchasesFlutterApiTest {
     Offerings offerings = await Purchases.getOfferings();
   }
 
+  void _checkGetCurrentOfferingForPlacement() async {
+    Offering offering = await Purchases.getCurrentOfferingForPlacement('');
+  }
+
+  void _checkSyncAttributesAndOfferingsIfNeeded() async {
+    Offerings offerings = await Purchases.syncAttributesAndOfferingsIfNeeded();
+  }
+
   void _checkGetProducts() async {
     List<String> productIdentifiers = List.empty();
     PurchaseType purchaseType = PurchaseType.subs;
@@ -509,7 +517,10 @@ class _PurchasesFlutterApiTest {
   }
 
   void _showInAppMessages() async {
-    Future<void> future = Purchases.showInAppMessages(types: {InAppMessageType.billingIssue,
-      InAppMessageType.priceIncreaseConsent, InAppMessageType.generic});
+    Future<void> future = Purchases.showInAppMessages(types: {
+      InAppMessageType.billingIssue,
+      InAppMessageType.priceIncreaseConsent,
+      InAppMessageType.generic
+    });
   }
 }
