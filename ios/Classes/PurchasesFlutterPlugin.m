@@ -78,7 +78,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
                        result:result];
     } else if ([@"purchasePackage" isEqualToString:call.method]) {
         [self purchasePackage:arguments[@"packageIdentifier"]
-                     offering:arguments[@"offeringIdentifier"]
+     presentedOfferingContext:arguments[@"presentedOfferingContext"]
       signedDiscountTimestamp:arguments[@"signedDiscountTimestamp"]
                        result:result];
     } else if ([@"getAppUserID" isEqualToString:call.method]) {
@@ -290,11 +290,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)purchasePackage:(NSString *)packageIdentifier
-               offering:(NSString *)offeringIdentifier
+presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
     [RCCommonFunctionality purchasePackage:packageIdentifier
-                                  offering:offeringIdentifier
+                  presentedOfferingContext: presentedOfferingContext
                    signedDiscountTimestamp:discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }

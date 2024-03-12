@@ -489,7 +489,11 @@ void main() {
             'purchasePackage',
             arguments: <String, dynamic>{
               'packageIdentifier': '\$rc_lifetime',
-              'offeringIdentifier': 'main',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
@@ -545,7 +549,11 @@ void main() {
             'purchasePackage',
             arguments: <String, dynamic>{
               'packageIdentifier': '\$rc_lifetime',
-              'offeringIdentifier': 'main',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
               'googleOldProductIdentifier': 'com.revenuecat.weekly',
               'googleProrationMode': 1,
               'googleIsPersonalizedPrice': true,

@@ -385,8 +385,8 @@ class Purchases {
         upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'offeringIdentifier':
-          packageToPurchase.presentedOfferingContext.offeringIdentifier,
+      'presentedOfferingContext':
+          packageToPurchase.presentedOfferingContext.toJson(),
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
