@@ -474,6 +474,7 @@ void main() {
         PackageType.lifetime,
         mockStoreProduct,
         'main',
+        PresentedOfferingContext('main', null, null),
       );
       final purchasePackageResult =
           await Purchases.purchasePackage(mockPackage);
@@ -523,6 +524,7 @@ void main() {
         PackageType.lifetime,
         mockStoreProduct,
         'main',
+        PresentedOfferingContext('main', null, null),
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
         'com.revenuecat.weekly',
@@ -577,6 +579,7 @@ void main() {
         PackageType.lifetime,
         mockStoreProduct,
         'main',
+        PresentedOfferingContext('main', null, null),
       );
       const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
@@ -808,6 +811,7 @@ void main() {
         null,
         null,
         'my-offer',
+        PresentedOfferingContext('my-offer', null, null),
       );
       final purchasePackageResult =
           await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
@@ -867,6 +871,7 @@ void main() {
         null,
         null,
         'my-offer',
+        PresentedOfferingContext('my-offer', null, null),
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
         'silver',
@@ -925,6 +930,7 @@ void main() {
         Period(PeriodUnit.month, 1, 'P1M'),
         false,
         phase,
+        null,
         null,
         null,
         null,
@@ -1245,24 +1251,25 @@ void main() {
     ]);
   });
 
-  test(
-      'showInAppMessages works correctly when passing arguments',
-      () async {
+  test('showInAppMessages works correctly when passing arguments', () async {
     await Purchases.showInAppMessages(
-      types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic},
+      types: {
+        InAppMessageType.billingIssue,
+        InAppMessageType.priceIncreaseConsent,
+        InAppMessageType.generic,
+      },
     );
     expect(log, <Matcher>[
       isMethodCall(
         'showInAppMessages',
         arguments: {
-          'types': [0,1,2],
+          'types': [0, 1, 2],
         },
       ),
     ]);
   });
 
-  test(
-      'showInAppMessages works correctly when not passing arguments',
+  test('showInAppMessages works correctly when not passing arguments',
       () async {
     await Purchases.showInAppMessages();
     expect(log, <Matcher>[

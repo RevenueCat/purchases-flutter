@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'period_unit.dart';
-
 part 'presented_offering_targeting_context_wrapper.freezed.dart';
 part 'presented_offering_targeting_context_wrapper.g.dart';
 
@@ -19,6 +17,7 @@ class PresentedOfferingTargetingContext
   ) = _PresentedOfferingTargetingContext;
 
   factory PresentedOfferingTargetingContext.fromJson(
-          Map<String, dynamic> json) =>
+    Map<String, dynamic> json,
+  ) =>
       _$PresentedOfferingTargetingContextFromJson(json);
 }

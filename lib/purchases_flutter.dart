@@ -143,8 +143,10 @@ class Purchases {
           'usesStoreKit2IfAvailable':
               // ignore: deprecated_member_use_from_same_package
               purchasesConfiguration.usesStoreKit2IfAvailable,
-          'shouldShowInAppMessagesAutomatically': purchasesConfiguration.shouldShowInAppMessagesAutomatically,
-          'entitlementVerificationMode': purchasesConfiguration.entitlementVerificationMode.name,
+          'shouldShowInAppMessagesAutomatically':
+              purchasesConfiguration.shouldShowInAppMessagesAutomatically,
+          'entitlementVerificationMode':
+              purchasesConfiguration.entitlementVerificationMode.name,
         },
       );
 
@@ -345,7 +347,7 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'presentedOfferingIdentifier': storeProduct.presentedOfferingIdentifier,
+      'presentedOfferingContext': storeProduct.presentedOfferingContext,
     });
 
     return customerInfo;
@@ -382,7 +384,7 @@ class Purchases {
         upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'offeringIdentifier': packageToPurchase.offeringIdentifier,
+      'presentedOfferingContext': packageToPurchase.presentedOfferingContext,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
@@ -430,8 +432,7 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'presentedOfferingIdentifier':
-          subscriptionOption.presentedOfferingIdentifier,
+      'presentedOfferingContext': subscriptionOption.presentedOfferingContext,
     });
     return customerInfo;
   }
@@ -455,7 +456,7 @@ class Purchases {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
-      'presentedOfferingIdentifier': product.presentedOfferingIdentifier,
+      'presentedOfferingContext': product.presentedOfferingContext,
     });
     return customerInfo;
   }
@@ -478,7 +479,7 @@ class Purchases {
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'offeringIdentifier': packageToPurchase.offeringIdentifier,
+      'presentedOfferingContext': packageToPurchase.presentedOfferingContext,
       'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
     });
     return customerInfo;
