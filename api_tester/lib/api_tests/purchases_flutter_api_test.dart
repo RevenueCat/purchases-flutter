@@ -67,7 +67,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkGetCurrentOfferingForPlacement() async {
-    Offering offering = await Purchases.getCurrentOfferingForPlacement('');
+    Offering? offering = await Purchases.getCurrentOfferingForPlacement('');
   }
 
   void _checkSyncAttributesAndOfferingsIfNeeded() async {

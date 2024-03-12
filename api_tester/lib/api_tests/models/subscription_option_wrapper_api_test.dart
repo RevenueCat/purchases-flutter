@@ -55,7 +55,7 @@ class _SubscriptionOptionApiTest {
     PricingPhase? introPhase = subscriptionOption.introPhase;
     String? presentedOfferingIdentifier =
         subscriptionOption.presentedOfferingIdentifier;
-    PresentedOfferingContext? presentedOfferingIdentifier =
+    PresentedOfferingContext? presentedOfferingContext =
         subscriptionOption.presentedOfferingContext;
   }
 }
