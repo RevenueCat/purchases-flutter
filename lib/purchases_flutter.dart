@@ -239,9 +239,12 @@ class Purchases {
   }
 
   static Future<Offering?> getCurrentOfferingForPlacement(
-      String placementIdentifier) async {
-    final res = await _channel.invokeMethod('getCurrentOfferingForPlacement',
-        {'placementIdentifier': placementIdentifier});
+    String placementIdentifier,
+  ) async {
+    final res = await _channel.invokeMethod(
+      'getCurrentOfferingForPlacement',
+      {'placementIdentifier': placementIdentifier},
+    );
     if (res != null) {
       return Offering.fromJson(
         Map<String, dynamic>.from(res),
