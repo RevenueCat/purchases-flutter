@@ -28,7 +28,7 @@ void main() {
             },
             'presentedOfferingContext': {
               'offeringIdentifier': 'theoffering',
-            }
+            },
           }
         ],
         'lifetime': null,
