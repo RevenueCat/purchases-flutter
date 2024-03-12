@@ -61,15 +61,17 @@ class Package with _$Package {
       name: 'packageType',
       unknownEnumValue: PackageType.unknown,
     )
-        PackageType packageType,
+    PackageType packageType,
 
     /// StoreProduct assigned to this package.
     // ignore: invalid_annotation_target
-    @JsonKey(name: 'product')
-        StoreProduct storeProduct,
+    @JsonKey(name: 'product') StoreProduct storeProduct,
 
     /// Offering this package belongs to.
-    String offeringIdentifier,
+    @Deprecated('use presentedOfferingContext') String offeringIdentifier,
+
+    /// Offering context this package belongs to.
+    PresentedOfferingContext presentedOfferingContext,
   ) = _Package;
 
   factory Package.fromJson(Map<String, dynamic> json) =>

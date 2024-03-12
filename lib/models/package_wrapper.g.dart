@@ -12,6 +12,8 @@ _$PackageImpl _$$PackageImplFromJson(Map json) => _$PackageImpl(
           unknownValue: PackageType.unknown),
       StoreProduct.fromJson(Map<String, dynamic>.from(json['product'] as Map)),
       json['offeringIdentifier'] as String,
+      PresentedOfferingContext.fromJson(
+          Map<String, dynamic>.from(json['presentedOfferingContext'] as Map)),
     );
 
 Map<String, dynamic> _$$PackageImplToJson(_$PackageImpl instance) =>
@@ -20,6 +22,7 @@ Map<String, dynamic> _$$PackageImplToJson(_$PackageImpl instance) =>
       'packageType': _$PackageTypeEnumMap[instance.packageType]!,
       'product': instance.storeProduct.toJson(),
       'offeringIdentifier': instance.offeringIdentifier,
+      'presentedOfferingContext': instance.presentedOfferingContext.toJson(),
     };
 
 const _$PackageTypeEnumMap = {

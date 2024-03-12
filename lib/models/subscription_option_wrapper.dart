@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'period_wrapper.dart';
+import 'presented_offering_context_wrapper.dart';
 import 'pricing_phase_wrapper.dart';
 
 part 'subscription_option_wrapper.freezed.dart';
@@ -55,7 +56,12 @@ class SubscriptionOption with _$SubscriptionOption {
     PricingPhase? introPhase,
 
     // Offering identifier the subscriptioni option was presented from
+    @Deprecated('use presentedOfferingContext')
     String? presentedOfferingIdentifier,
+
+    /// Offering context this package belongs to.
+    /// Null if not using offerings or if fetched directly from store via getProducts
+    PresentedOfferingContext? presentedOfferingContext,
   ) = _SubscriptionOption;
 
   factory SubscriptionOption.fromJson(Map<String, dynamic> json) =>

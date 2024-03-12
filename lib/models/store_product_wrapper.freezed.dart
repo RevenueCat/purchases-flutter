@@ -60,7 +60,13 @@ mixin _$StoreProduct {
 
   /// Offering identifier the store product was presented from
   /// Null if not using offerings or if fetched directly from store via getProducts
+  @Deprecated('use presentedOfferingContext')
   String? get presentedOfferingIdentifier => throw _privateConstructorUsedError;
+
+  /// Offering context this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
+  PresentedOfferingContext? get presentedOfferingContext =>
+      throw _privateConstructorUsedError;
 
   /// Subscription period, specified in ISO 8601 format. For example,
   /// P1W equates to one week, P1M equates to one month,
@@ -93,11 +99,14 @@ abstract class $StoreProductCopyWith<$Res> {
       ProductCategory? productCategory,
       SubscriptionOption? defaultOption,
       List<SubscriptionOption>? subscriptionOptions,
+      @Deprecated('use presentedOfferingContext')
       String? presentedOfferingIdentifier,
+      PresentedOfferingContext? presentedOfferingContext,
       String? subscriptionPeriod});
 
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
   $SubscriptionOptionCopyWith<$Res>? get defaultOption;
+  $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext;
 }
 
 /// @nodoc
@@ -125,6 +134,7 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
     Object? presentedOfferingIdentifier = freezed,
+    Object? presentedOfferingContext = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_value.copyWith(
@@ -176,6 +186,10 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
           ? _value.presentedOfferingIdentifier
           : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
               as String?,
+      presentedOfferingContext: freezed == presentedOfferingContext
+          ? _value.presentedOfferingContext
+          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
+              as PresentedOfferingContext?,
       subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
@@ -206,6 +220,19 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
       return _then(_value.copyWith(defaultOption: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext {
+    if (_value.presentedOfferingContext == null) {
+      return null;
+    }
+
+    return $PresentedOfferingContextCopyWith<$Res>(
+        _value.presentedOfferingContext!, (value) {
+      return _then(_value.copyWith(presentedOfferingContext: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -228,13 +255,17 @@ abstract class _$$StoreProductImplCopyWith<$Res>
       ProductCategory? productCategory,
       SubscriptionOption? defaultOption,
       List<SubscriptionOption>? subscriptionOptions,
+      @Deprecated('use presentedOfferingContext')
       String? presentedOfferingIdentifier,
+      PresentedOfferingContext? presentedOfferingContext,
       String? subscriptionPeriod});
 
   @override
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice;
   @override
   $SubscriptionOptionCopyWith<$Res>? get defaultOption;
+  @override
+  $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext;
 }
 
 /// @nodoc
@@ -260,6 +291,7 @@ class __$$StoreProductImplCopyWithImpl<$Res>
     Object? defaultOption = freezed,
     Object? subscriptionOptions = freezed,
     Object? presentedOfferingIdentifier = freezed,
+    Object? presentedOfferingContext = freezed,
     Object? subscriptionPeriod = freezed,
   }) {
     return _then(_$StoreProductImpl(
@@ -311,6 +343,10 @@ class __$$StoreProductImplCopyWithImpl<$Res>
           ? _value.presentedOfferingIdentifier
           : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
               as String?,
+      presentedOfferingContext: freezed == presentedOfferingContext
+          ? _value.presentedOfferingContext
+          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
+              as PresentedOfferingContext?,
       subscriptionPeriod: freezed == subscriptionPeriod
           ? _value.subscriptionPeriod
           : subscriptionPeriod // ignore: cast_nullable_to_non_nullable
@@ -329,7 +365,9 @@ class _$StoreProductImpl implements _StoreProduct {
       this.productCategory,
       this.defaultOption,
       final List<SubscriptionOption>? subscriptionOptions,
+      @Deprecated('use presentedOfferingContext')
       this.presentedOfferingIdentifier,
+      this.presentedOfferingContext,
       this.subscriptionPeriod})
       : _discounts = discounts,
         _subscriptionOptions = subscriptionOptions;
@@ -405,7 +443,13 @@ class _$StoreProductImpl implements _StoreProduct {
   /// Offering identifier the store product was presented from
   /// Null if not using offerings or if fetched directly from store via getProducts
   @override
+  @Deprecated('use presentedOfferingContext')
   final String? presentedOfferingIdentifier;
+
+  /// Offering context this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
+  @override
+  final PresentedOfferingContext? presentedOfferingContext;
 
   /// Subscription period, specified in ISO 8601 format. For example,
   /// P1W equates to one week, P1M equates to one month,
@@ -417,7 +461,7 @@ class _$StoreProductImpl implements _StoreProduct {
 
   @override
   String toString() {
-    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, productCategory: $productCategory, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, presentedOfferingIdentifier: $presentedOfferingIdentifier, subscriptionPeriod: $subscriptionPeriod)';
+    return 'StoreProduct(identifier: $identifier, description: $description, title: $title, price: $price, priceString: $priceString, currencyCode: $currencyCode, introductoryPrice: $introductoryPrice, discounts: $discounts, productCategory: $productCategory, defaultOption: $defaultOption, subscriptionOptions: $subscriptionOptions, presentedOfferingIdentifier: $presentedOfferingIdentifier, presentedOfferingContext: $presentedOfferingContext, subscriptionPeriod: $subscriptionPeriod)';
   }
 
   @override
@@ -449,6 +493,9 @@ class _$StoreProductImpl implements _StoreProduct {
                     presentedOfferingIdentifier) ||
                 other.presentedOfferingIdentifier ==
                     presentedOfferingIdentifier) &&
+            (identical(
+                    other.presentedOfferingContext, presentedOfferingContext) ||
+                other.presentedOfferingContext == presentedOfferingContext) &&
             (identical(other.subscriptionPeriod, subscriptionPeriod) ||
                 other.subscriptionPeriod == subscriptionPeriod));
   }
@@ -469,6 +516,7 @@ class _$StoreProductImpl implements _StoreProduct {
       defaultOption,
       const DeepCollectionEquality().hash(_subscriptionOptions),
       presentedOfferingIdentifier,
+      presentedOfferingContext,
       subscriptionPeriod);
 
   @JsonKey(ignore: true)
@@ -498,7 +546,9 @@ abstract class _StoreProduct implements StoreProduct {
       final ProductCategory? productCategory,
       final SubscriptionOption? defaultOption,
       final List<SubscriptionOption>? subscriptionOptions,
+      @Deprecated('use presentedOfferingContext')
       final String? presentedOfferingIdentifier,
+      final PresentedOfferingContext? presentedOfferingContext,
       final String? subscriptionPeriod}) = _$StoreProductImpl;
 
   factory _StoreProduct.fromJson(Map<String, dynamic> json) =
@@ -554,7 +604,13 @@ abstract class _StoreProduct implements StoreProduct {
 
   /// Offering identifier the store product was presented from
   /// Null if not using offerings or if fetched directly from store via getProducts
+  @Deprecated('use presentedOfferingContext')
   String? get presentedOfferingIdentifier;
+  @override
+
+  /// Offering context this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
+  PresentedOfferingContext? get presentedOfferingContext;
   @override
 
   /// Subscription period, specified in ISO 8601 format. For example,

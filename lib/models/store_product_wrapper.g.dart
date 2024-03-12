@@ -33,6 +33,10 @@ _$StoreProductImpl _$$StoreProductImplFromJson(Map json) => _$StoreProductImpl(
           .toList(),
       presentedOfferingIdentifier:
           json['presentedOfferingIdentifier'] as String?,
+      presentedOfferingContext: json['presentedOfferingContext'] == null
+          ? null
+          : PresentedOfferingContext.fromJson(Map<String, dynamic>.from(
+              json['presentedOfferingContext'] as Map)),
       subscriptionPeriod: json['subscriptionPeriod'] as String?,
     );
 
@@ -51,6 +55,7 @@ Map<String, dynamic> _$$StoreProductImplToJson(_$StoreProductImpl instance) =>
       'subscriptionOptions':
           instance.subscriptionOptions?.map((e) => e.toJson()).toList(),
       'presentedOfferingIdentifier': instance.presentedOfferingIdentifier,
+      'presentedOfferingContext': instance.presentedOfferingContext?.toJson(),
       'subscriptionPeriod': instance.subscriptionPeriod,
     };
 

@@ -26,10 +26,14 @@ class _PackageApiTest {
     Map<String, dynamic> json = package.toJson();
   }
 
-  void _checkConstructor(String identifier, PackageType packageType,
-      StoreProduct storeProduct, String offeringIdentifier) {
-    Package package =
-        Package(identifier, packageType, storeProduct, offeringIdentifier);
+  void _checkConstructor(
+      String identifier,
+      PackageType packageType,
+      StoreProduct storeProduct,
+      String offeringIdentifier,
+      PresentedOfferingContext presentedOfferingContext) {
+    Package package = Package(identifier, packageType, storeProduct,
+        offeringIdentifier, presentedOfferingContext);
   }
 
   void _checkProperties(Package package) {
@@ -37,5 +41,7 @@ class _PackageApiTest {
     PackageType packageType = package.packageType;
     StoreProduct storeProduct = package.storeProduct;
     String offeringIdentifier = package.offeringIdentifier;
+    PresentedOfferingContext presentedOfferingContext =
+        package.presentedOfferingContext;
   }
 }

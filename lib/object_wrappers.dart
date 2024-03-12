@@ -10,6 +10,8 @@ export 'models/offerings_wrapper.dart';
 export 'models/package_wrapper.dart';
 export 'models/period_unit.dart';
 export 'models/period_wrapper.dart';
+export 'models/presented_offering_context_wrapper.dart';
+export 'models/presented_offering_targeting_context_wrapper.dart';
 export 'models/price_wrapper.dart';
 export 'models/pricing_phase_wrapper.dart';
 export 'models/product_category.dart';

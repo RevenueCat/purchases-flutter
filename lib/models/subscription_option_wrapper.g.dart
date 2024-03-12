@@ -35,6 +35,10 @@ _$SubscriptionOptionImpl _$$SubscriptionOptionImplFromJson(Map json) =>
           : PricingPhase.fromJson(
               Map<String, dynamic>.from(json['introPhase'] as Map)),
       json['presentedOfferingIdentifier'] as String?,
+      json['presentedOfferingContext'] == null
+          ? null
+          : PresentedOfferingContext.fromJson(Map<String, dynamic>.from(
+              json['presentedOfferingContext'] as Map)),
     );
 
 Map<String, dynamic> _$$SubscriptionOptionImplToJson(
@@ -52,4 +56,5 @@ Map<String, dynamic> _$$SubscriptionOptionImplToJson(
       'freePhase': instance.freePhase?.toJson(),
       'introPhase': instance.introPhase?.toJson(),
       'presentedOfferingIdentifier': instance.presentedOfferingIdentifier,
+      'presentedOfferingContext': instance.presentedOfferingContext?.toJson(),
     };

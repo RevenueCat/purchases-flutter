@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'introductory_price.dart';
+import 'presented_offering_context_wrapper.dart';
 import 'product_category.dart';
 import 'store_product_discount.dart';
 import 'subscription_option_wrapper.dart';
@@ -30,7 +31,6 @@ class StoreProduct with _$StoreProduct {
 
     /// Currency code for price and original price.
     String currencyCode, {
-
     /// Introductory price for product. Can be null.
     // ignore: invalid_annotation_target
     @JsonKey(name: 'introPrice') IntroductoryPrice? introductoryPrice,
@@ -49,7 +49,12 @@ class StoreProduct with _$StoreProduct {
 
     /// Offering identifier the store product was presented from
     /// Null if not using offerings or if fetched directly from store via getProducts
+    @Deprecated('use presentedOfferingContext')
     String? presentedOfferingIdentifier,
+
+    /// Offering context this package belongs to.
+    /// Null if not using offerings or if fetched directly from store via getProducts
+    PresentedOfferingContext? presentedOfferingContext,
 
     /// Subscription period, specified in ISO 8601 format. For example,
     /// P1W equates to one week, P1M equates to one month,
