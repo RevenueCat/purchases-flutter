@@ -58,8 +58,7 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                 _paywallViewController.update(with: offeringId)
             }
             if let displayCloseButton = args["displayCloseButton"] as? Bool {
-                // TODO: Set displayCloseButton
-                // TODO: set onDismiss callback
+                _paywallViewController.update(with: displayCloseButton)
             }
         }
         guard let paywallView = _paywallViewController.view else {
@@ -121,5 +120,9 @@ extension PurchasesUiPaywallView: PaywallViewControllerDelegateWrapper {
     func paywallViewController(_ controller: PaywallViewController,
                                didFailRestoringWith errorDictionary: [String : Any]) {
         _methodChannel.invokeMethod("onRestoreError", arguments: errorDictionary)
+    }
+
+    func paywallViewControllerRequestedDismissal(_ controller: PaywallViewController) {
+        _methodChannel.invokeMethod("onDismiss", arguments: nil)
     }
 }
