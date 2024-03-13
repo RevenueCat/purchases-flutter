@@ -34,8 +34,9 @@ mixin _$Package {
   @JsonKey(name: 'product')
   StoreProduct get storeProduct => throw _privateConstructorUsedError;
 
-  /// Offering this package belongs to.
-  String get offeringIdentifier => throw _privateConstructorUsedError;
+  /// Offering context this package belongs to.
+  PresentedOfferingContext get presentedOfferingContext =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -52,9 +53,10 @@ abstract class $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       PackageType packageType,
       @JsonKey(name: 'product') StoreProduct storeProduct,
-      String offeringIdentifier});
+      PresentedOfferingContext presentedOfferingContext});
 
   $StoreProductCopyWith<$Res> get storeProduct;
+  $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext;
 }
 
 /// @nodoc
@@ -73,7 +75,7 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
     Object? identifier = null,
     Object? packageType = null,
     Object? storeProduct = null,
-    Object? offeringIdentifier = null,
+    Object? presentedOfferingContext = null,
   }) {
     return _then(_value.copyWith(
       identifier: null == identifier
@@ -88,10 +90,10 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
           ? _value.storeProduct
           : storeProduct // ignore: cast_nullable_to_non_nullable
               as StoreProduct,
-      offeringIdentifier: null == offeringIdentifier
-          ? _value.offeringIdentifier
-          : offeringIdentifier // ignore: cast_nullable_to_non_nullable
-              as String,
+      presentedOfferingContext: null == presentedOfferingContext
+          ? _value.presentedOfferingContext
+          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
+              as PresentedOfferingContext,
     ) as $Val);
   }
 
@@ -100,6 +102,15 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
   $StoreProductCopyWith<$Res> get storeProduct {
     return $StoreProductCopyWith<$Res>(_value.storeProduct, (value) {
       return _then(_value.copyWith(storeProduct: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext {
+    return $PresentedOfferingContextCopyWith<$Res>(
+        _value.presentedOfferingContext, (value) {
+      return _then(_value.copyWith(presentedOfferingContext: value) as $Val);
     });
   }
 }
@@ -116,10 +127,12 @@ abstract class _$$PackageImplCopyWith<$Res> implements $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       PackageType packageType,
       @JsonKey(name: 'product') StoreProduct storeProduct,
-      String offeringIdentifier});
+      PresentedOfferingContext presentedOfferingContext});
 
   @override
   $StoreProductCopyWith<$Res> get storeProduct;
+  @override
+  $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext;
 }
 
 /// @nodoc
@@ -136,7 +149,7 @@ class __$$PackageImplCopyWithImpl<$Res>
     Object? identifier = null,
     Object? packageType = null,
     Object? storeProduct = null,
-    Object? offeringIdentifier = null,
+    Object? presentedOfferingContext = null,
   }) {
     return _then(_$PackageImpl(
       null == identifier
@@ -151,10 +164,10 @@ class __$$PackageImplCopyWithImpl<$Res>
           ? _value.storeProduct
           : storeProduct // ignore: cast_nullable_to_non_nullable
               as StoreProduct,
-      null == offeringIdentifier
-          ? _value.offeringIdentifier
-          : offeringIdentifier // ignore: cast_nullable_to_non_nullable
-              as String,
+      null == presentedOfferingContext
+          ? _value.presentedOfferingContext
+          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
+              as PresentedOfferingContext,
     ));
   }
 }
@@ -167,7 +180,7 @@ class _$PackageImpl implements _Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       this.packageType,
       @JsonKey(name: 'product') this.storeProduct,
-      this.offeringIdentifier);
+      this.presentedOfferingContext);
 
   factory _$PackageImpl.fromJson(Map<String, dynamic> json) =>
       _$$PackageImplFromJson(json);
@@ -189,13 +202,13 @@ class _$PackageImpl implements _Package {
   @JsonKey(name: 'product')
   final StoreProduct storeProduct;
 
-  /// Offering this package belongs to.
+  /// Offering context this package belongs to.
   @override
-  final String offeringIdentifier;
+  final PresentedOfferingContext presentedOfferingContext;
 
   @override
   String toString() {
-    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, offeringIdentifier: $offeringIdentifier)';
+    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, presentedOfferingContext: $presentedOfferingContext)';
   }
 
   @override
@@ -209,14 +222,15 @@ class _$PackageImpl implements _Package {
                 other.packageType == packageType) &&
             (identical(other.storeProduct, storeProduct) ||
                 other.storeProduct == storeProduct) &&
-            (identical(other.offeringIdentifier, offeringIdentifier) ||
-                other.offeringIdentifier == offeringIdentifier));
+            (identical(
+                    other.presentedOfferingContext, presentedOfferingContext) ||
+                other.presentedOfferingContext == presentedOfferingContext));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, identifier, packageType, storeProduct, offeringIdentifier);
+  int get hashCode => Object.hash(runtimeType, identifier, packageType,
+      storeProduct, presentedOfferingContext);
 
   @JsonKey(ignore: true)
   @override
@@ -238,7 +252,7 @@ abstract class _Package implements Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       final PackageType packageType,
       @JsonKey(name: 'product') final StoreProduct storeProduct,
-      final String offeringIdentifier) = _$PackageImpl;
+      final PresentedOfferingContext presentedOfferingContext) = _$PackageImpl;
 
   factory _Package.fromJson(Map<String, dynamic> json) = _$PackageImpl.fromJson;
 
@@ -261,8 +275,8 @@ abstract class _Package implements Package {
   StoreProduct get storeProduct;
   @override
 
-  /// Offering this package belongs to.
-  String get offeringIdentifier;
+  /// Offering context this package belongs to.
+  PresentedOfferingContext get presentedOfferingContext;
   @override
   @JsonKey(ignore: true)
   _$$PackageImplCopyWith<_$PackageImpl> get copyWith =>

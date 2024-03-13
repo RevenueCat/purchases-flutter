@@ -473,7 +473,7 @@ void main() {
         '\$rc_lifetime',
         PackageType.lifetime,
         mockStoreProduct,
-        'main',
+        PresentedOfferingContext('main', null, null),
       );
       final purchasePackageResult =
           await Purchases.purchasePackage(mockPackage);
@@ -489,7 +489,11 @@ void main() {
             'purchasePackage',
             arguments: <String, dynamic>{
               'packageIdentifier': '\$rc_lifetime',
-              'offeringIdentifier': 'main',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
@@ -522,7 +526,7 @@ void main() {
         '\$rc_lifetime',
         PackageType.lifetime,
         mockStoreProduct,
-        'main',
+        PresentedOfferingContext('main', null, null),
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
         'com.revenuecat.weekly',
@@ -545,7 +549,11 @@ void main() {
             'purchasePackage',
             arguments: <String, dynamic>{
               'packageIdentifier': '\$rc_lifetime',
-              'offeringIdentifier': 'main',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
               'googleOldProductIdentifier': 'com.revenuecat.weekly',
               'googleProrationMode': 1,
               'googleIsPersonalizedPrice': true,
@@ -576,7 +584,7 @@ void main() {
         '\$rc_lifetime',
         PackageType.lifetime,
         mockStoreProduct,
-        'main',
+        PresentedOfferingContext('main', null, null),
       );
       const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
@@ -701,7 +709,8 @@ void main() {
         '\$199.99',
         'USD',
         productCategory: ProductCategory.subscription,
-        presentedOfferingIdentifier: 'my-offer',
+        presentedOfferingContext:
+            PresentedOfferingContext('my-offer', null, null),
       );
       final purchasePackageResult =
           await Purchases.purchaseStoreProduct(mockStoreProduct);
@@ -744,7 +753,8 @@ void main() {
         199.99,
         '\$199.99',
         'USD',
-        presentedOfferingIdentifier: 'my-offer',
+        presentedOfferingContext:
+            PresentedOfferingContext('my-offer', null, null),
       );
       const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
@@ -807,7 +817,7 @@ void main() {
         phase,
         null,
         null,
-        'my-offer',
+        PresentedOfferingContext('my-offer', null, null),
       );
       final purchasePackageResult =
           await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
@@ -866,7 +876,7 @@ void main() {
         phase,
         null,
         null,
-        'my-offer',
+        PresentedOfferingContext('my-offer', null, null),
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
         'silver',
@@ -1245,24 +1255,25 @@ void main() {
     ]);
   });
 
-  test(
-      'showInAppMessages works correctly when passing arguments',
-      () async {
+  test('showInAppMessages works correctly when passing arguments', () async {
     await Purchases.showInAppMessages(
-      types: {InAppMessageType.billingIssue, InAppMessageType.priceIncreaseConsent, InAppMessageType.generic},
+      types: {
+        InAppMessageType.billingIssue,
+        InAppMessageType.priceIncreaseConsent,
+        InAppMessageType.generic,
+      },
     );
     expect(log, <Matcher>[
       isMethodCall(
         'showInAppMessages',
         arguments: {
-          'types': [0,1,2],
+          'types': [0, 1, 2],
         },
       ),
     ]);
   });
 
-  test(
-      'showInAppMessages works correctly when not passing arguments',
+  test('showInAppMessages works correctly when not passing arguments',
       () async {
     await Purchases.showInAppMessages();
     expect(log, <Matcher>[

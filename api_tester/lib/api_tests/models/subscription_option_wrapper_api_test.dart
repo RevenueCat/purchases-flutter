@@ -2,6 +2,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
+// ignore_for_file: deprecated_member_use
 class _SubscriptionOptionApiTest {
   void _checkFromJsonFactory(Map<String, dynamic> json) {
     SubscriptionOption product = SubscriptionOption.fromJson(json);
@@ -23,7 +24,7 @@ class _SubscriptionOptionApiTest {
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
-      String? presentedOfferingIdentifier) {
+      PresentedOfferingContext? presentedOfferingContext) {
     SubscriptionOption subscriptionOption = SubscriptionOption(
         id,
         storeProductId,
@@ -36,7 +37,7 @@ class _SubscriptionOptionApiTest {
         fullPricePhase,
         freePhase,
         introPhase,
-        presentedOfferingIdentifier);
+        presentedOfferingContext);
   }
 
   void _checkProperties(SubscriptionOption subscriptionOption) {
@@ -53,5 +54,7 @@ class _SubscriptionOptionApiTest {
     PricingPhase? introPhase = subscriptionOption.introPhase;
     String? presentedOfferingIdentifier =
         subscriptionOption.presentedOfferingIdentifier;
+    PresentedOfferingContext? presentedOfferingContext =
+        subscriptionOption.presentedOfferingContext;
   }
 }

@@ -2,6 +2,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
+// ignore_for_file: deprecated_member_use
 class _StoreProductApiTest {
   void _checkFromJsonFactory(Map<String, dynamic> json) {
     StoreProduct product = StoreProduct.fromJson(json);
@@ -22,7 +23,7 @@ class _StoreProductApiTest {
       List<StoreProductDiscount>? discounts,
       ProductCategory? productCategory,
       String? subscriptionPeriod,
-      String? presentedOfferingIdentifier) {
+      PresentedOfferingContext? presentedOfferingContext) {
     StoreProduct product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode);
     product = StoreProduct(
@@ -31,7 +32,7 @@ class _StoreProductApiTest {
         discounts: discounts,
         productCategory: productCategory,
         subscriptionPeriod: subscriptionPeriod,
-        presentedOfferingIdentifier: presentedOfferingIdentifier);
+        presentedOfferingContext: presentedOfferingContext);
   }
 
   void _checkProperties(StoreProduct product) {
@@ -48,5 +49,7 @@ class _StoreProductApiTest {
     List<SubscriptionOption>? subscriptionOptions = product.subscriptionOptions;
     String? subscriptionPeriod = product.subscriptionPeriod;
     String? presentedOfferingIdentifier = product.presentedOfferingIdentifier;
+    PresentedOfferingContext? presentedOfferingContext =
+        product.presentedOfferingContext;
   }
 }

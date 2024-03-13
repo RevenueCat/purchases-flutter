@@ -70,6 +70,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
     } else if ([@"getOfferings" isEqualToString:call.method]) {
         [self getOfferingsWithResult:result];
+    } else if ([@"getCurrentOfferingForPlacement" isEqualToString:call.method]) {
+        [self getCurrentOfferingForPlacement:arguments[@"placementIdentifier"]
+                                       result:result];
+    } else if ([@"syncAttributesAndOfferingsIfNeeded" isEqualToString:call.method]) {
+        [self syncAttributesAndOfferingsIfNeededWithResult:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
         [self getProductInfo:arguments[@"productIdentifiers"] result:result];
     } else if ([@"purchaseProduct" isEqualToString:call.method]) {
@@ -78,7 +83,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
                        result:result];
     } else if ([@"purchasePackage" isEqualToString:call.method]) {
         [self purchasePackage:arguments[@"packageIdentifier"]
-                     offering:arguments[@"offeringIdentifier"]
+     presentedOfferingContext:arguments[@"presentedOfferingContext"]
       signedDiscountTimestamp:arguments[@"signedDiscountTimestamp"]
                        result:result];
     } else if ([@"getAppUserID" isEqualToString:call.method]) {
@@ -274,6 +279,16 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
     [RCCommonFunctionality getOfferingsWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
+- (void)getCurrentOfferingForPlacement:(NSString *)placement
+                             result:(FlutterResult)result {
+    [RCCommonFunctionality getCurrentOfferingForPlacement:placement 
+                                          completionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)syncAttributesAndOfferingsIfNeededWithResult:(FlutterResult)result {
+    [RCCommonFunctionality syncAttributesAndOfferingsIfNeededWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
 - (void)getProductInfo:(NSArray *)products
                 result:(FlutterResult)result {
     [RCCommonFunctionality getProductInfo:products completionBlock:^(NSArray<NSDictionary *> *productObjects) {
@@ -290,11 +305,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)purchasePackage:(NSString *)packageIdentifier
-               offering:(NSString *)offeringIdentifier
+presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
     [RCCommonFunctionality purchasePackage:packageIdentifier
-                                  offering:offeringIdentifier
+                  presentedOfferingContext: presentedOfferingContext
                    signedDiscountTimestamp:discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }

@@ -60,9 +60,12 @@ mixin _$SubscriptionOption {
   /// The intro trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-  PricingPhase? get introPhase =>
-      throw _privateConstructorUsedError; // Offering identifier the subscriptioni option was presented from
-  String? get presentedOfferingIdentifier => throw _privateConstructorUsedError;
+  PricingPhase? get introPhase => throw _privateConstructorUsedError;
+
+  /// Offering context this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
+  PresentedOfferingContext? get presentedOfferingContext =>
+      throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -88,12 +91,13 @@ abstract class $SubscriptionOptionCopyWith<$Res> {
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
-      String? presentedOfferingIdentifier});
+      PresentedOfferingContext? presentedOfferingContext});
 
   $PeriodCopyWith<$Res>? get billingPeriod;
   $PricingPhaseCopyWith<$Res>? get fullPricePhase;
   $PricingPhaseCopyWith<$Res>? get freePhase;
   $PricingPhaseCopyWith<$Res>? get introPhase;
+  $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext;
 }
 
 /// @nodoc
@@ -120,7 +124,7 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     Object? fullPricePhase = freezed,
     Object? freePhase = freezed,
     Object? introPhase = freezed,
-    Object? presentedOfferingIdentifier = freezed,
+    Object? presentedOfferingContext = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -167,10 +171,10 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
           ? _value.introPhase
           : introPhase // ignore: cast_nullable_to_non_nullable
               as PricingPhase?,
-      presentedOfferingIdentifier: freezed == presentedOfferingIdentifier
-          ? _value.presentedOfferingIdentifier
-          : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
-              as String?,
+      presentedOfferingContext: freezed == presentedOfferingContext
+          ? _value.presentedOfferingContext
+          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
+              as PresentedOfferingContext?,
     ) as $Val);
   }
 
@@ -221,6 +225,19 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
       return _then(_value.copyWith(introPhase: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext {
+    if (_value.presentedOfferingContext == null) {
+      return null;
+    }
+
+    return $PresentedOfferingContextCopyWith<$Res>(
+        _value.presentedOfferingContext!, (value) {
+      return _then(_value.copyWith(presentedOfferingContext: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -243,7 +260,7 @@ abstract class _$$SubscriptionOptionImplCopyWith<$Res>
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
-      String? presentedOfferingIdentifier});
+      PresentedOfferingContext? presentedOfferingContext});
 
   @override
   $PeriodCopyWith<$Res>? get billingPeriod;
@@ -253,6 +270,8 @@ abstract class _$$SubscriptionOptionImplCopyWith<$Res>
   $PricingPhaseCopyWith<$Res>? get freePhase;
   @override
   $PricingPhaseCopyWith<$Res>? get introPhase;
+  @override
+  $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext;
 }
 
 /// @nodoc
@@ -277,7 +296,7 @@ class __$$SubscriptionOptionImplCopyWithImpl<$Res>
     Object? fullPricePhase = freezed,
     Object? freePhase = freezed,
     Object? introPhase = freezed,
-    Object? presentedOfferingIdentifier = freezed,
+    Object? presentedOfferingContext = freezed,
   }) {
     return _then(_$SubscriptionOptionImpl(
       null == id
@@ -324,10 +343,10 @@ class __$$SubscriptionOptionImplCopyWithImpl<$Res>
           ? _value.introPhase
           : introPhase // ignore: cast_nullable_to_non_nullable
               as PricingPhase?,
-      freezed == presentedOfferingIdentifier
-          ? _value.presentedOfferingIdentifier
-          : presentedOfferingIdentifier // ignore: cast_nullable_to_non_nullable
-              as String?,
+      freezed == presentedOfferingContext
+          ? _value.presentedOfferingContext
+          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
+              as PresentedOfferingContext?,
     ));
   }
 }
@@ -347,7 +366,7 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
       this.fullPricePhase,
       this.freePhase,
       this.introPhase,
-      this.presentedOfferingIdentifier)
+      this.presentedOfferingContext)
       : _pricingPhases = pricingPhases,
         _tags = tags;
 
@@ -420,13 +439,15 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
   @override
   final PricingPhase? introPhase;
-// Offering identifier the subscriptioni option was presented from
+
+  /// Offering context this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
   @override
-  final String? presentedOfferingIdentifier;
+  final PresentedOfferingContext? presentedOfferingContext;
 
   @override
   String toString() {
-    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, isPrepaid: $isPrepaid, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase, presentedOfferingIdentifier: $presentedOfferingIdentifier)';
+    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, isPrepaid: $isPrepaid, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase, presentedOfferingContext: $presentedOfferingContext)';
   }
 
   @override
@@ -454,10 +475,9 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
                 other.freePhase == freePhase) &&
             (identical(other.introPhase, introPhase) ||
                 other.introPhase == introPhase) &&
-            (identical(other.presentedOfferingIdentifier,
-                    presentedOfferingIdentifier) ||
-                other.presentedOfferingIdentifier ==
-                    presentedOfferingIdentifier));
+            (identical(
+                    other.presentedOfferingContext, presentedOfferingContext) ||
+                other.presentedOfferingContext == presentedOfferingContext));
   }
 
   @JsonKey(ignore: true)
@@ -475,7 +495,7 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
       fullPricePhase,
       freePhase,
       introPhase,
-      presentedOfferingIdentifier);
+      presentedOfferingContext);
 
   @JsonKey(ignore: true)
   @override
@@ -494,18 +514,19 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
 
 abstract class _SubscriptionOption implements SubscriptionOption {
   const factory _SubscriptionOption(
-      final String id,
-      final String storeProductId,
-      final String productId,
-      final List<PricingPhase> pricingPhases,
-      final List<String> tags,
-      final bool isBasePlan,
-      final Period? billingPeriod,
-      final bool isPrepaid,
-      final PricingPhase? fullPricePhase,
-      final PricingPhase? freePhase,
-      final PricingPhase? introPhase,
-      final String? presentedOfferingIdentifier) = _$SubscriptionOptionImpl;
+          final String id,
+          final String storeProductId,
+          final String productId,
+          final List<PricingPhase> pricingPhases,
+          final List<String> tags,
+          final bool isBasePlan,
+          final Period? billingPeriod,
+          final bool isPrepaid,
+          final PricingPhase? fullPricePhase,
+          final PricingPhase? freePhase,
+          final PricingPhase? introPhase,
+          final PresentedOfferingContext? presentedOfferingContext) =
+      _$SubscriptionOptionImpl;
 
   factory _SubscriptionOption.fromJson(Map<String, dynamic> json) =
       _$SubscriptionOptionImpl.fromJson;
@@ -563,8 +584,11 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
   PricingPhase? get introPhase;
-  @override // Offering identifier the subscriptioni option was presented from
-  String? get presentedOfferingIdentifier;
+  @override
+
+  /// Offering context this package belongs to.
+  /// Null if not using offerings or if fetched directly from store via getProducts
+  PresentedOfferingContext? get presentedOfferingContext;
   @override
   @JsonKey(ignore: true)
   _$$SubscriptionOptionImplCopyWith<_$SubscriptionOptionImpl> get copyWith =>
