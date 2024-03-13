@@ -64,9 +64,7 @@ class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView {
             super.init()
             return
         }
-        let newHeight = paywallFooterView.bounds.height
         _view = paywallFooterView
-        channel.invokeMethod("onHeightChanged", arguments: newHeight)
         super.init()
         paywallProxy.delegate = self
     }
