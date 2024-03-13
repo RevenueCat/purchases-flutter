@@ -49,11 +49,7 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
         top: 0,
         left: 0,
         right: 0,
-        // iOS is passing the size without including the top margin with the
-        // rounded corners, so we need to adjust the bottom position.
-        bottom: Platform.isAndroid
-            ? _height - _roundedCornerRadius
-            : _height,
+        bottom: _height - _roundedCornerRadius,
         child: widget.contentCreator(_roundedCornerRadius),
       ),
       Positioned(
@@ -73,7 +69,10 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
   );
 
   void _updateHeight(double newHeight) {
-    final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+    // In android we get pixels but in iOS we get pixel independent units.
+    final pixelRatio = Platform.isAndroid
+        ? MediaQuery.of(context).devicePixelRatio
+        : 1.0;
     final finalNewHeight = newHeight / pixelRatio;
 
     if (_height != finalNewHeight) {
