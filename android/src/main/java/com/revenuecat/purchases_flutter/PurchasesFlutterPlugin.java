@@ -457,12 +457,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void purchaseProduct(final String productIdentifier,
-            final String type,
-            final String googleOldProductId,
-            @Nullable final Integer googleProrationMode,
-            @Nullable final Boolean googleIsPersonalizedPrice,
-            @Nullable final Map<String, Object> presentedOfferingContext,
-            final Result result) {
+                                 final String type,
+                                 final String googleOldProductId,
+                                 @Nullable final Integer googleProrationMode,
+                                 @Nullable final Boolean googleIsPersonalizedPrice,
+                                 @Nullable final Map<String, Object> presentedOfferingContext,
+                                 final Result result) {
         CommonKt.purchaseProduct(
                 getActivity(),
                 productIdentifier,
