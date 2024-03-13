@@ -143,8 +143,10 @@ class Purchases {
           'usesStoreKit2IfAvailable':
               // ignore: deprecated_member_use_from_same_package
               purchasesConfiguration.usesStoreKit2IfAvailable,
-          'shouldShowInAppMessagesAutomatically': purchasesConfiguration.shouldShowInAppMessagesAutomatically,
-          'entitlementVerificationMode': purchasesConfiguration.entitlementVerificationMode.name,
+          'shouldShowInAppMessagesAutomatically':
+              purchasesConfiguration.shouldShowInAppMessagesAutomatically,
+          'entitlementVerificationMode':
+              purchasesConfiguration.entitlementVerificationMode.name,
         },
       );
 
@@ -231,6 +233,35 @@ class Purchases {
   /// Time is money.
   static Future<Offerings> getOfferings() async {
     final res = await _channel.invokeMethod('getOfferings');
+    return Offerings.fromJson(
+      Map<String, dynamic>.from(res),
+    );
+  }
+
+  /// Retrieves a current offering for a placement identifier, use this to access offerings defined by targeting
+  /// placements configured in the RevenueCat dashboard.
+  static Future<Offering?> getCurrentOfferingForPlacement(
+    String placementIdentifier,
+  ) async {
+    final res = await _channel.invokeMethod(
+      'getCurrentOfferingForPlacement',
+      {'placementIdentifier': placementIdentifier},
+    );
+    if (res != null) {
+      return Offering.fromJson(
+        Map<String, dynamic>.from(res),
+      );
+    } else {
+      return null;
+    }
+  }
+
+  /// Syncs subscriber attributes and then fetches the configured offerings for this user. This method is intended to
+  /// be called when using Targeting Rules with Custom Attributes. Any subscriber attributes should be set before
+  /// calling this method to ensure the returned offerings are applied with the latest subscriber attributes.
+  static Future<Offerings> syncAttributesAndOfferingsIfNeeded() async {
+    final res =
+        await _channel.invokeMethod('syncAttributesAndOfferingsIfNeeded');
     return Offerings.fromJson(
       Map<String, dynamic>.from(res),
     );
@@ -345,7 +376,8 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'presentedOfferingIdentifier': storeProduct.presentedOfferingIdentifier,
+      'presentedOfferingIdentifier':
+          storeProduct.presentedOfferingContext?.offeringIdentifier,
     });
 
     return customerInfo;
@@ -382,7 +414,8 @@ class Purchases {
         upgradeInfo?.prorationMode?.index;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'offeringIdentifier': packageToPurchase.offeringIdentifier,
+      'presentedOfferingContext':
+          packageToPurchase.presentedOfferingContext.toJson(),
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
@@ -431,7 +464,7 @@ class Purchases {
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       'presentedOfferingIdentifier':
-          subscriptionOption.presentedOfferingIdentifier,
+          subscriptionOption.presentedOfferingContext?.offeringIdentifier,
     });
     return customerInfo;
   }
@@ -455,7 +488,8 @@ class Purchases {
     final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
       'productIdentifier': product.identifier,
       'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
-      'presentedOfferingIdentifier': product.presentedOfferingIdentifier,
+      'presentedOfferingIdentifier':
+          product.presentedOfferingContext?.offeringIdentifier,
     });
     return customerInfo;
   }
@@ -478,7 +512,8 @@ class Purchases {
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'offeringIdentifier': packageToPurchase.offeringIdentifier,
+      'offeringContext':
+          packageToPurchase.presentedOfferingContext.offeringIdentifier,
       'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
     });
     return customerInfo;

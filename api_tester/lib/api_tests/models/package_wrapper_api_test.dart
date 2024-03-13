@@ -2,6 +2,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
+// ignore_for_file: deprecated_member_use
 class _PackageApiTest {
   void _checkPackageType(PackageType type) {
     switch (type) {
@@ -26,10 +27,13 @@ class _PackageApiTest {
     Map<String, dynamic> json = package.toJson();
   }
 
-  void _checkConstructor(String identifier, PackageType packageType,
-      StoreProduct storeProduct, String offeringIdentifier) {
-    Package package =
-        Package(identifier, packageType, storeProduct, offeringIdentifier);
+  void _checkConstructor(
+      String identifier,
+      PackageType packageType,
+      StoreProduct storeProduct,
+      PresentedOfferingContext presentedOfferingContext) {
+    Package package = Package(
+        identifier, packageType, storeProduct, presentedOfferingContext);
   }
 
   void _checkProperties(Package package) {
@@ -37,5 +41,7 @@ class _PackageApiTest {
     PackageType packageType = package.packageType;
     StoreProduct storeProduct = package.storeProduct;
     String offeringIdentifier = package.offeringIdentifier;
+    PresentedOfferingContext presentedOfferingContext =
+        package.presentedOfferingContext;
   }
 }
