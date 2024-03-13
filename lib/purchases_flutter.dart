@@ -238,6 +238,8 @@ class Purchases {
     );
   }
 
+  /// Retrieves a current offering for a placement identifier, use this to access offerings defined by targeting
+  /// placements configured in the RevenueCat dashboard.
   static Future<Offering?> getCurrentOfferingForPlacement(
     String placementIdentifier,
   ) async {
@@ -254,6 +256,9 @@ class Purchases {
     }
   }
 
+  /// Syncs subscriber attributes and then fetches the configured offerings for this user. This method is intended to
+  /// be called when using Targeting Rules with Custom Attributes. Any subscriber attributes should be set before
+  /// calling this method to ensure the returned offerings are applied with the latest subscriber attributes.
   static Future<Offerings> syncAttributesAndOfferingsIfNeeded() async {
     final res =
         await _channel.invokeMethod('syncAttributesAndOfferingsIfNeeded');
