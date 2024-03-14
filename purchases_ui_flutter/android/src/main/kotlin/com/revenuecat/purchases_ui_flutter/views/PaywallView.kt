@@ -32,7 +32,12 @@ internal class PaywallView(
         methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/PaywallView/$id")
         methodChannel.setMethodCallHandler(this)
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
-        nativePaywallView = NativePaywallView(context,)
+        val displayCloseButton = creationParams["displayCloseButton"] as Boolean?
+        nativePaywallView = NativePaywallView(
+            context = context,
+            shouldDisplayDismissButton = displayCloseButton,
+            dismissHandler = { methodChannel.invokeMethod("onDismiss", null) }
+        )
         nativePaywallView.setPaywallListener(object : PaywallListenerWrapper() {
             override fun onPurchaseStarted(rcPackage: Map<String, Any?>) {
                 methodChannel.invokeMethod("onPurchaseStarted", rcPackage)

@@ -112,4 +112,8 @@ extension PurchasesUiPaywallFooterView: PaywallViewControllerDelegateWrapper {
                                didFailRestoringWith errorDictionary: [String : Any]) {
         channel.invokeMethod("onRestoreError", arguments: errorDictionary)
     }
+
+    func paywallViewControllerRequestedDismissal(_ controller: PaywallViewController) {
+        channel.invokeMethod("onDismiss", arguments: nil)
+    }
 }

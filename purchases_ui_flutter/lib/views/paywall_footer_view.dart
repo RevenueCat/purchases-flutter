@@ -31,6 +31,9 @@ import 'internal_paywall_footer_view.dart';
 /// [onRestoreError] (Optional) Callback that gets called when a restore
 /// fails.
 ///
+/// [onDismiss] (Optional) Callback that gets called when the paywall wants to
+/// dismiss. Currently, after a purchase is completed.
+///
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
@@ -43,6 +46,7 @@ class PaywallFooterView extends StatefulWidget {
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
+  final Function()? onDismiss;
   final Widget Function(double bottomPadding) contentCreator;
 
   const PaywallFooterView({
@@ -53,6 +57,7 @@ class PaywallFooterView extends StatefulWidget {
     this.onPurchaseError,
     this.onRestoreCompleted,
     this.onRestoreError,
+    this.onDismiss,
     required this.contentCreator,
   }) : super(key: key);
 
@@ -97,6 +102,7 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
             onPurchaseError: widget.onPurchaseError,
             onRestoreCompleted: widget.onRestoreCompleted,
             onRestoreError: widget.onRestoreError,
+            onDismiss: widget.onDismiss,
             onHeightChanged: _updateHeight,
           ),
         ),

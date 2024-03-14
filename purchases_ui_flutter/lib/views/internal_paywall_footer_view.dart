@@ -21,6 +21,7 @@ class InternalPaywallFooterView extends StatelessWidget {
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
+  final Function()? onDismiss;
   final Function(double) onHeightChanged;
 
   const InternalPaywallFooterView({
@@ -31,6 +32,7 @@ class InternalPaywallFooterView extends StatelessWidget {
     this.onPurchaseError,
     this.onRestoreCompleted,
     this.onRestoreError,
+    this.onDismiss,
     required this.onHeightChanged,
   }) : super(key: key);
 
@@ -87,6 +89,7 @@ class InternalPaywallFooterView extends StatelessWidget {
       onPurchaseError,
       onRestoreCompleted,
       onRestoreError,
+      onDismiss,
     );
     MethodChannel('com.revenuecat.purchasesui/PaywallFooterView/$id')
         .setMethodCallHandler((call) async {

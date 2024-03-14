@@ -24,6 +24,7 @@ class _PaywallScreenState extends State<PaywallScreen> {
         child: Center(
           child: PaywallView(
             offering: widget.offering,
+            displayCloseButton: true,
             onPurchaseStarted: (Package rcPackage) {
               print('Purchase started for package: ${rcPackage.identifier}');
             },
@@ -40,6 +41,10 @@ class _PaywallScreenState extends State<PaywallScreen> {
             },
             onRestoreError: (PurchasesError error) {
               print('Restore error: $error');
+            },
+            onDismiss: () {
+              print('Paywall asked to dismiss');
+              Navigator.pop(context);
             },
           ),
         ),

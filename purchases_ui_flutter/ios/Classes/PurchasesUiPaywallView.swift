@@ -57,6 +57,9 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
             if let offeringId = args["offeringIdentifier"] as? String {
                 _paywallViewController.update(with: offeringId)
             }
+            if let displayCloseButton = args["displayCloseButton"] as? Bool {
+                _paywallViewController.update(with: displayCloseButton)
+            }
         }
         guard let paywallView = _paywallViewController.view else {
             print("Error: error getting PaywallView.")
@@ -117,5 +120,9 @@ extension PurchasesUiPaywallView: PaywallViewControllerDelegateWrapper {
     func paywallViewController(_ controller: PaywallViewController,
                                didFailRestoringWith errorDictionary: [String : Any]) {
         _methodChannel.invokeMethod("onRestoreError", arguments: errorDictionary)
+    }
+
+    func paywallViewControllerRequestedDismissal(_ controller: PaywallViewController) {
+        _methodChannel.invokeMethod("onDismiss", arguments: nil)
     }
 }
