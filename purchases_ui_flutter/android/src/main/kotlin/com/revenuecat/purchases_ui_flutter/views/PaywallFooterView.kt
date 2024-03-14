@@ -35,7 +35,9 @@ internal class PaywallFooterView(
     init {
         methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/PaywallFooterView/${id}")
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
-        nativePaywallFooterView = object : NativePaywallFooterView(context) {
+        nativePaywallFooterView = object : NativePaywallFooterView(
+            context,
+            dismissHandler = { methodChannel.invokeMethod("onDismiss", null) }) {
             public override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
                 super.onMeasure(widthMeasureSpec, heightMeasureSpec)
                 var maxWidth = 0

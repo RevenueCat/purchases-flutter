@@ -42,6 +42,10 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
             onRestoreError: (PurchasesError error) {
               print('Restore error: $error');
             },
+            onDismiss: () {
+              print('Paywall asked to dismiss');
+              Navigator.pop(context);
+            },
             contentCreator: (bottomPadding) => Container(
               color: Colors.blue.withAlpha(80),
               child: SingleChildScrollView(
