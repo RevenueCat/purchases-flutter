@@ -31,6 +31,9 @@ import 'internal_paywall_footer_view.dart';
 /// [onRestoreError] (Optional) Callback that gets called when a restore
 /// fails.
 ///
+/// [onDismiss] (Optional) Callback that gets called when the paywall wants to
+/// dismiss. Currently, after a purchase is completed.
+///
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
