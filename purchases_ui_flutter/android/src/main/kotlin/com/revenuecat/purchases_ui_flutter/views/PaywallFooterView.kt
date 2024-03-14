@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.children
+import com.revenuecat.purchases.hybridcommon.ui.PaywallListenerWrapper
 import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI
 import com.revenuecat.purchases.ui.revenuecatui.views.PaywallFooterView as NativePaywallFooterView
 import io.flutter.plugin.common.BinaryMessenger
@@ -32,7 +33,7 @@ internal class PaywallFooterView(
     override fun dispose() {}
 
     init {
-        methodChannel = MethodChannel(messenger, "purchases_ui_flutter/PaywallFooterView/${id}")
+        methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/PaywallFooterView/${id}")
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
         nativePaywallFooterView = object : NativePaywallFooterView(context) {
             public override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -51,6 +52,30 @@ internal class PaywallFooterView(
                 updateHeight(finalHeight.toDouble())
             }
         }
+        nativePaywallFooterView.setPaywallListener(object : PaywallListenerWrapper() {
+            override fun onPurchaseStarted(rcPackage: Map<String, Any?>) {
+                methodChannel.invokeMethod("onPurchaseStarted", rcPackage)
+            }
+
+            override fun onPurchaseCompleted(customerInfo: Map<String, Any?>, storeTransaction: Map<String, Any?>) {
+                methodChannel.invokeMethod(
+                    "onPurchaseCompleted",
+                    mapOf("customerInfo" to customerInfo, "storeTransaction" to storeTransaction)
+                )
+            }
+
+            override fun onPurchaseError(error: Map<String, Any?>) {
+                methodChannel.invokeMethod("onPurchaseError", error)
+            }
+
+            override fun onRestoreCompleted(customerInfo: Map<String, Any?>) {
+                methodChannel.invokeMethod("onRestoreCompleted", customerInfo)
+            }
+
+            override fun onRestoreError(error: Map<String, Any?>) {
+                methodChannel.invokeMethod("onRestoreError", error)
+            }
+        })
         nativePaywallFooterView.layoutParams = FrameLayout.LayoutParams(
             FrameLayout.LayoutParams.MATCH_PARENT,
             FrameLayout.LayoutParams.MATCH_PARENT,

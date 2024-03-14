@@ -75,4 +75,51 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  Widget _checkPaywallFooterView() {
+    return Scaffold(
+      body: Center(
+        child: PaywallFooterView(
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _checkPaywallFooterViewWithOffering(Offering offering) {
+    return Scaffold(
+      body: Center(
+        child: PaywallFooterView(
+          offering: offering,
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _checkPaywallFooterViewWithListeners(Offering offering) {
+    return Scaffold(
+      body: Center(
+        child: PaywallFooterView(
+          onPurchaseStarted: (Package rcPackage) {
+          },
+          onPurchaseCompleted:
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
+          },
+          onPurchaseError: (PurchasesError error) {
+          },
+          onRestoreCompleted: (CustomerInfo customerInfo) {
+          },
+          onRestoreError: (PurchasesError error) {
+          },
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
 }
