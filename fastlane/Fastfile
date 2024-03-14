@@ -25,7 +25,7 @@ files_with_version_number = {
     './ios/Classes/PurchasesFlutterPlugin.m' => ['return @"{x}"'],
     './android/build.gradle' => ['version \'{x}\''],
     './android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java' => ['PLUGIN_VERSION = "{x}"'],
-    './purchases_ui_flutter/pubspec.yaml' => ['version: {x}', 'purchases_flutter: {x}'],
+    './purchases_ui_flutter/pubspec.yaml' => ['version: {x}', 'purchases_flutter: ^{x}'],
     './purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
     './purchases_ui_flutter/macos/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
     './purchases_ui_flutter/android/build.gradle' => ['version \'{x}\''],
