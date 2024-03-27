@@ -28,4 +28,7 @@ enum Store {
   /// For entitlements granted via Amazon Appstore.
   @JsonValue('AMAZON')
   amazon,
+
+  @JsonValue('RC_BILLING')
+  rcBilling,
 }
