@@ -68,6 +68,7 @@ const _$StoreEnumMap = {
   Store.promotional: 'PROMOTIONAL',
   Store.unknownStore: 'unknownStore',
   Store.amazon: 'AMAZON',
+  Store.rcBilling: 'RC_BILLING',
 };
 
 const _$PeriodTypeEnumMap = {

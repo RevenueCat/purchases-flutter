@@ -12,6 +12,7 @@ class _StoreApiTest {
       case Store.promotional:
       case Store.unknownStore:
       case Store.amazon:
+      case Store.rcBilling:
         break;
     }
   }
