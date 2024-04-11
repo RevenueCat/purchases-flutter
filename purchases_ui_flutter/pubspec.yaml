@@ -50,8 +50,6 @@ flutter:
         pluginClass: PurchasesUiFlutterPlugin
       ios:
         pluginClass: PurchasesUiFlutterPlugin
-      macos:
-        pluginClass: PurchasesUiFlutterPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
