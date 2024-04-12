@@ -31,4 +31,7 @@ enum Store {
 
   @JsonValue('RC_BILLING')
   rcBilling,
+
+  @JsonValue('EXTERNAL')
+  externalStore,
 }

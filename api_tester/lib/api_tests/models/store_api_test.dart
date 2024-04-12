@@ -13,6 +13,7 @@ class _StoreApiTest {
       case Store.unknownStore:
       case Store.amazon:
       case Store.rcBilling:
+      case Store.externalStore:
         break;
     }
   }
