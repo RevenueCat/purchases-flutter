@@ -98,33 +98,21 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         if #available(iOS 15.0, *) {
             let displayCloseButton = displayCloseButton ?? false
 
+            var options: [String:Any] = [
+                PaywallProxy.PaywallOptionsKeys.displayCloseButton: displayCloseButton,
+                // This is needed for: https://github.com/RevenueCat/purchases-flutter/issues/1023
+                PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true
+            ]
             if let requiredEntitlementIdentifier {
-                if let offeringIdentifier {
-                    self.paywallProxy.presentPaywallIfNeeded(
-                        requiredEntitlementIdentifier: requiredEntitlementIdentifier,
-                        offeringIdentifier: offeringIdentifier,
-                        displayCloseButton: displayCloseButton,
-                        paywallResultHandler: result
-                    )
-                } else {
-                    self.paywallProxy.presentPaywallIfNeeded(
-                        requiredEntitlementIdentifier: requiredEntitlementIdentifier,
-                        displayCloseButton: displayCloseButton,
-                        paywallResultHandler: result
-                    )
-                }
-            } else {
-                if let offeringIdentifier {
-                    self.paywallProxy.presentPaywall(
-                        offeringIdentifier: offeringIdentifier,
-                        displayCloseButton: displayCloseButton,
-                        paywallResultHandler: result
-                    )
-                } else {
-                    self.paywallProxy.presentPaywall(displayCloseButton: displayCloseButton,
-                                                     paywallResultHandler: result)
-                }
+                options[PaywallProxy.PaywallOptionsKeys.requiredEntitlementIdentifier] = requiredEntitlementIdentifier
             }
+            if let offeringIdentifier {
+                options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
+            }
+            self.paywallProxy.presentPaywall(
+                options: options,
+                paywallResultHandler: result
+            )
         } else {
             NSLog("Presenting paywall requires iOS 15+")
         }
