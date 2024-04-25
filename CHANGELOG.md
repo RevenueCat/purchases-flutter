@@ -1,3 +1,12 @@
+## 6.28.0
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 10.5.0 (#1051) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 7.9.0](https://github.com/RevenueCat/purchases-android/releases/tag/7.9.0)
+  * [iOS 4.41.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.41.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 10.4.2 (#1048) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 7.9.0](https://github.com/RevenueCat/purchases-android/releases/tag/7.9.0)
+  * [iOS 4.41.0](https://github.com/RevenueCat/purchases-ios/releases/tag/4.41.0)
+
 ## 6.27.0
 ### Bugfixes
 * Fix touches passing through paywall when using presentPaywall methods (#1044) via Toni Rico (@tonidero)
