@@ -8,7 +8,8 @@ part of 'purchases_error.dart';
 
 _$PurchasesErrorImpl _$$PurchasesErrorImplFromJson(Map json) =>
     _$PurchasesErrorImpl(
-      const PurchasesErrorCodeConverter().fromJson(json['code'] as int),
+      const PurchasesErrorCodeConverter()
+          .fromJson((json['code'] as num).toInt()),
       json['message'] as String,
       json['underlyingErrorMessage'] as String,
       json['readableErrorCode'] as String? ?? '',

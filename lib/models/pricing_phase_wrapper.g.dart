@@ -12,7 +12,7 @@ _$PricingPhaseImpl _$$PricingPhaseImplFromJson(Map json) => _$PricingPhaseImpl(
           : Period.fromJson(
               Map<String, dynamic>.from(json['billingPeriod'] as Map)),
       $enumDecodeNullable(_$RecurrenceModeEnumMap, json['recurrenceMode']),
-      json['billingCycleCount'] as int?,
+      (json['billingCycleCount'] as num?)?.toInt(),
       Price.fromJson(Map<String, dynamic>.from(json['price'] as Map)),
       $enumDecodeNullable(_$OfferPaymentModeEnumMap, json['offerPaymentMode']),
     );

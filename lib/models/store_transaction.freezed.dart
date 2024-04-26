@@ -20,12 +20,12 @@ StoreTransaction _$StoreTransactionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$StoreTransaction {
-  /// RevenueCat Id associated to the transaction.
+  /// RevenueCat Id associated to the transaction. Empty for Amazon.
 // ignore: invalid_annotation_target
   @JsonKey(readValue: _readTransactionIdentifier)
   String get transactionIdentifier => throw _privateConstructorUsedError;
 
-  /// Deprecated: Use transactionIdentifier instead.
+  /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
   @Deprecated('Use transactionIdentifier instead.')
   @JsonKey(readValue: _readTransactionIdentifier)
   String get revenueCatIdentifier => throw _privateConstructorUsedError;
@@ -222,13 +222,13 @@ class _$StoreTransactionImpl implements _StoreTransaction {
   factory _$StoreTransactionImpl.fromJson(Map<String, dynamic> json) =>
       _$$StoreTransactionImplFromJson(json);
 
-  /// RevenueCat Id associated to the transaction.
+  /// RevenueCat Id associated to the transaction. Empty for Amazon.
 // ignore: invalid_annotation_target
   @override
   @JsonKey(readValue: _readTransactionIdentifier)
   final String transactionIdentifier;
 
-  /// Deprecated: Use transactionIdentifier instead.
+  /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
   @override
   @Deprecated('Use transactionIdentifier instead.')
   @JsonKey(readValue: _readTransactionIdentifier)
@@ -380,13 +380,13 @@ abstract class _StoreTransaction implements StoreTransaction {
 
   @override
 
-  /// RevenueCat Id associated to the transaction.
+  /// RevenueCat Id associated to the transaction. Empty for Amazon.
 // ignore: invalid_annotation_target
   @JsonKey(readValue: _readTransactionIdentifier)
   String get transactionIdentifier;
   @override
 
-  /// Deprecated: Use transactionIdentifier instead.
+  /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
   @Deprecated('Use transactionIdentifier instead.')
   @JsonKey(readValue: _readTransactionIdentifier)
   String get revenueCatIdentifier;

@@ -12,7 +12,7 @@ _$PromotionalOfferImpl _$$PromotionalOfferImplFromJson(Map json) =>
       json['keyIdentifier'] as String,
       json['nonce'] as String,
       json['signature'] as String,
-      json['timestamp'] as int,
+      (json['timestamp'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$PromotionalOfferImplToJson(

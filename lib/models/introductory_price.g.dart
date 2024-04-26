@@ -11,10 +11,10 @@ _$IntroductoryPriceImpl _$$IntroductoryPriceImplFromJson(Map json) =>
       (json['price'] as num).toDouble(),
       json['priceString'] as String,
       json['period'] as String,
-      json['cycles'] as int,
+      (json['cycles'] as num).toInt(),
       $enumDecode(_$PeriodUnitEnumMap, json['periodUnit'],
           unknownValue: PeriodUnit.unknown),
-      json['periodNumberOfUnits'] as int,
+      (json['periodNumberOfUnits'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$IntroductoryPriceImplToJson(

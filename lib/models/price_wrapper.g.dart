@@ -8,7 +8,7 @@ part of 'price_wrapper.dart';
 
 _$PriceImpl _$$PriceImplFromJson(Map json) => _$PriceImpl(
       json['formatted'] as String,
-      json['amountMicros'] as int,
+      (json['amountMicros'] as num).toInt(),
       json['currencyCode'] as String,
     );
 

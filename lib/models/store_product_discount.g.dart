@@ -11,10 +11,10 @@ _$StoreProductDiscountImpl _$$StoreProductDiscountImplFromJson(Map json) =>
       json['identifier'] as String,
       (json['price'] as num).toDouble(),
       json['priceString'] as String,
-      json['cycles'] as int,
+      (json['cycles'] as num).toInt(),
       json['period'] as String,
       json['periodUnit'] as String,
-      json['periodNumberOfUnits'] as int,
+      (json['periodNumberOfUnits'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$StoreProductDiscountImplToJson(

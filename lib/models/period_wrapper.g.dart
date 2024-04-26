@@ -8,7 +8,7 @@ part of 'period_wrapper.dart';
 
 _$PeriodImpl _$$PeriodImplFromJson(Map json) => _$PeriodImpl(
       $enumDecode(_$PeriodUnitEnumMap, json['unit']),
-      json['value'] as int,
+      (json['value'] as num).toInt(),
       json['iso8601'] as String,
     );
 
