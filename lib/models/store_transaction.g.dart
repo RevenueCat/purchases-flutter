@@ -8,8 +8,8 @@ part of 'store_transaction.dart';
 
 _$StoreTransactionImpl _$$StoreTransactionImplFromJson(Map json) =>
     _$StoreTransactionImpl(
-      json['transactionIdentifier'] as String,
-      _readRevenueCatIdentifier(json, 'revenueCatIdentifier') as String,
+      _readTransactionIdentifier(json, 'transactionIdentifier') as String,
+      _readTransactionIdentifier(json, 'revenueCatIdentifier') as String,
       json['productIdentifier'] as String,
       json['purchaseDate'] as String,
     );

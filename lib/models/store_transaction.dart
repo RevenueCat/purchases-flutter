@@ -12,12 +12,14 @@ class StoreTransaction with _$StoreTransaction {
   /// a major release.
   const factory StoreTransaction.create(
     /// RevenueCat Id associated to the transaction.
+    // ignore: invalid_annotation_target
+    @JsonKey(readValue: _readTransactionIdentifier)
     String transactionIdentifier,
 
     /// Deprecated: Use transactionIdentifier instead.
     @Deprecated('Use transactionIdentifier instead.')
     // ignore: invalid_annotation_target
-    @JsonKey(readValue: _readRevenueCatIdentifier)
+    @JsonKey(readValue: _readTransactionIdentifier)
         String revenueCatIdentifier,
 
     /// Product Id associated with the transaction.
@@ -51,5 +53,6 @@ class StoreTransaction with _$StoreTransaction {
       _$StoreTransactionFromJson(json);
 }
 
-Object? _readRevenueCatIdentifier(Map json, String key) =>
-    json['transactionIdentifier'];
+// reads json or defaults to '' if not there (Amazon)
+Object _readTransactionIdentifier(Map json, String key) =>
+    json['transactionIdentifier'] ?? '';
