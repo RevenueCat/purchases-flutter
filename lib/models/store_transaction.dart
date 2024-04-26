@@ -11,12 +11,12 @@ class StoreTransaction with _$StoreTransaction {
   /// Experimental. This factory method is subject to changes without
   /// a major release.
   const factory StoreTransaction.create(
-    /// RevenueCat Id associated to the transaction.
+    /// RevenueCat Id associated to the transaction. Empty for Amazon.
     // ignore: invalid_annotation_target
     @JsonKey(readValue: _readTransactionIdentifier)
     String transactionIdentifier,
 
-    /// Deprecated: Use transactionIdentifier instead.
+    /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
     @Deprecated('Use transactionIdentifier instead.')
     // ignore: invalid_annotation_target
     @JsonKey(readValue: _readTransactionIdentifier)
