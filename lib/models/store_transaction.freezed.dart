@@ -20,12 +20,14 @@ StoreTransaction _$StoreTransactionFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$StoreTransaction {
-  /// RevenueCat Id associated to the transaction.
+  /// RevenueCat Id associated to the transaction. Empty for Amazon.
+// ignore: invalid_annotation_target
+  @JsonKey(readValue: _readTransactionIdentifier)
   String get transactionIdentifier => throw _privateConstructorUsedError;
 
-  /// Deprecated: Use transactionIdentifier instead.
+  /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
   @Deprecated('Use transactionIdentifier instead.')
-  @JsonKey(readValue: _readRevenueCatIdentifier)
+  @JsonKey(readValue: _readTransactionIdentifier)
   String get revenueCatIdentifier => throw _privateConstructorUsedError;
 
   /// Product Id associated with the transaction.
@@ -36,9 +38,10 @@ mixin _$StoreTransaction {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
+            @JsonKey(readValue: _readTransactionIdentifier)
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
-            @JsonKey(readValue: _readRevenueCatIdentifier)
+            @JsonKey(readValue: _readTransactionIdentifier)
             String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)
@@ -48,9 +51,10 @@ mixin _$StoreTransaction {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
+            @JsonKey(readValue: _readTransactionIdentifier)
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
-            @JsonKey(readValue: _readRevenueCatIdentifier)
+            @JsonKey(readValue: _readTransactionIdentifier)
             String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
@@ -60,9 +64,10 @@ mixin _$StoreTransaction {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
+            @JsonKey(readValue: _readTransactionIdentifier)
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
-            @JsonKey(readValue: _readRevenueCatIdentifier)
+            @JsonKey(readValue: _readTransactionIdentifier)
             String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
@@ -99,9 +104,10 @@ abstract class $StoreTransactionCopyWith<$Res> {
       _$StoreTransactionCopyWithImpl<$Res, StoreTransaction>;
   @useResult
   $Res call(
-      {String transactionIdentifier,
+      {@JsonKey(readValue: _readTransactionIdentifier)
+      String transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
-      @JsonKey(readValue: _readRevenueCatIdentifier)
+      @JsonKey(readValue: _readTransactionIdentifier)
       String revenueCatIdentifier,
       String productIdentifier,
       String purchaseDate});
@@ -155,9 +161,10 @@ abstract class _$$StoreTransactionImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String transactionIdentifier,
+      {@JsonKey(readValue: _readTransactionIdentifier)
+      String transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
-      @JsonKey(readValue: _readRevenueCatIdentifier)
+      @JsonKey(readValue: _readTransactionIdentifier)
       String revenueCatIdentifier,
       String productIdentifier,
       String purchaseDate});
@@ -204,9 +211,10 @@ class __$$StoreTransactionImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$StoreTransactionImpl implements _StoreTransaction {
   const _$StoreTransactionImpl(
+      @JsonKey(readValue: _readTransactionIdentifier)
       this.transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
-      @JsonKey(readValue: _readRevenueCatIdentifier)
+      @JsonKey(readValue: _readTransactionIdentifier)
       this.revenueCatIdentifier,
       this.productIdentifier,
       this.purchaseDate);
@@ -214,14 +222,16 @@ class _$StoreTransactionImpl implements _StoreTransaction {
   factory _$StoreTransactionImpl.fromJson(Map<String, dynamic> json) =>
       _$$StoreTransactionImplFromJson(json);
 
-  /// RevenueCat Id associated to the transaction.
+  /// RevenueCat Id associated to the transaction. Empty for Amazon.
+// ignore: invalid_annotation_target
   @override
+  @JsonKey(readValue: _readTransactionIdentifier)
   final String transactionIdentifier;
 
-  /// Deprecated: Use transactionIdentifier instead.
+  /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
   @override
   @Deprecated('Use transactionIdentifier instead.')
-  @JsonKey(readValue: _readRevenueCatIdentifier)
+  @JsonKey(readValue: _readTransactionIdentifier)
   final String revenueCatIdentifier;
 
   /// Product Id associated with the transaction.
@@ -268,9 +278,10 @@ class _$StoreTransactionImpl implements _StoreTransaction {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
+            @JsonKey(readValue: _readTransactionIdentifier)
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
-            @JsonKey(readValue: _readRevenueCatIdentifier)
+            @JsonKey(readValue: _readTransactionIdentifier)
             String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)
@@ -284,9 +295,10 @@ class _$StoreTransactionImpl implements _StoreTransaction {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
+            @JsonKey(readValue: _readTransactionIdentifier)
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
-            @JsonKey(readValue: _readRevenueCatIdentifier)
+            @JsonKey(readValue: _readTransactionIdentifier)
             String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
@@ -300,9 +312,10 @@ class _$StoreTransactionImpl implements _StoreTransaction {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
+            @JsonKey(readValue: _readTransactionIdentifier)
             String transactionIdentifier,
             @Deprecated('Use transactionIdentifier instead.')
-            @JsonKey(readValue: _readRevenueCatIdentifier)
+            @JsonKey(readValue: _readTransactionIdentifier)
             String revenueCatIdentifier,
             String productIdentifier,
             String purchaseDate)?
@@ -354,9 +367,10 @@ class _$StoreTransactionImpl implements _StoreTransaction {
 
 abstract class _StoreTransaction implements StoreTransaction {
   const factory _StoreTransaction(
+      @JsonKey(readValue: _readTransactionIdentifier)
       final String transactionIdentifier,
       @Deprecated('Use transactionIdentifier instead.')
-      @JsonKey(readValue: _readRevenueCatIdentifier)
+      @JsonKey(readValue: _readTransactionIdentifier)
       final String revenueCatIdentifier,
       final String productIdentifier,
       final String purchaseDate) = _$StoreTransactionImpl;
@@ -366,13 +380,15 @@ abstract class _StoreTransaction implements StoreTransaction {
 
   @override
 
-  /// RevenueCat Id associated to the transaction.
+  /// RevenueCat Id associated to the transaction. Empty for Amazon.
+// ignore: invalid_annotation_target
+  @JsonKey(readValue: _readTransactionIdentifier)
   String get transactionIdentifier;
   @override
 
-  /// Deprecated: Use transactionIdentifier instead.
+  /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
   @Deprecated('Use transactionIdentifier instead.')
-  @JsonKey(readValue: _readRevenueCatIdentifier)
+  @JsonKey(readValue: _readTransactionIdentifier)
   String get revenueCatIdentifier;
   @override
 

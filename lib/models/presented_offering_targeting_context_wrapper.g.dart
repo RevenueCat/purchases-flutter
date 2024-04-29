@@ -9,7 +9,7 @@ part of 'presented_offering_targeting_context_wrapper.dart';
 _$PresentedOfferingTargetingContextImpl
     _$$PresentedOfferingTargetingContextImplFromJson(Map json) =>
         _$PresentedOfferingTargetingContextImpl(
-          json['revision'] as int,
+          (json['revision'] as num).toInt(),
           json['ruleId'] as String,
         );
 
