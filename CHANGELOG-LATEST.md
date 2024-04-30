@@ -1,6 +1,7 @@
 ### Bugfixes
 * Crash on Amazon paywalls after purchasing (#1053) via Cesar de la Vega (@vegaro)
 ### Dependency Updates
+* BillingClient has been updated to version 6.2.1
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 10.6.1 (#1059) via RevenueCat Git Bot (@RCGitBot)
   * [Android 7.10.1](https://github.com/RevenueCat/purchases-android/releases/tag/7.10.1)
   * [Android 7.10.0](https://github.com/RevenueCat/purchases-android/releases/tag/7.10.0)
