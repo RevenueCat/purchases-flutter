@@ -169,7 +169,7 @@ lane :update_hybrid_common do |options|
         's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
       ],
       'purchases_ui_flutter/macos/purchases_ui_flutter.podspec' => [
-        's.dependency \'PurchasesHybridCommon\', \'{x}\'', 
+        's.dependency \'PurchasesHybridCommon\', \'{x}\'',
         's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
       ],
       'purchases_ui_flutter/android/build.gradle' => ['ext.common_version = \'{x}\''],
@@ -188,6 +188,11 @@ lane :update_hybrid_common do |options|
     open_pr: options[:open_pr] || false,
     automatic_release: options[:automatic_release] || false
   )
+end
+
+desc "Trigger bump"
+lane :trigger_bump do
+  trigger_action_in_circle_ci(action: 'bump', repo_name: repo_name)
 end
 
 ###############################################################################
