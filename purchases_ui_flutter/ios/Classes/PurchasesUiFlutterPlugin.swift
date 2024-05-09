@@ -103,9 +103,11 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 // This is needed for: https://github.com/RevenueCat/purchases-flutter/issues/1023
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true
             ]
-            if let requiredEntitlementIdentifier {
-                options[PaywallProxy.PaywallOptionsKeys.requiredEntitlementIdentifier] = requiredEntitlementIdentifier
+
+             if let offeringIdentifier {
+                options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
             }
+
             if let requiredEntitlementIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.requiredEntitlementIdentifier] = requiredEntitlementIdentifier
 
