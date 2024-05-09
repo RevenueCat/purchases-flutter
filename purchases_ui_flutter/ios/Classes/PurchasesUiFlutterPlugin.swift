@@ -103,16 +103,24 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 // This is needed for: https://github.com/RevenueCat/purchases-flutter/issues/1023
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true
             ]
-            if let requiredEntitlementIdentifier {
-                options[PaywallProxy.PaywallOptionsKeys.requiredEntitlementIdentifier] = requiredEntitlementIdentifier
-            }
-            if let offeringIdentifier {
+
+             if let offeringIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
             }
-            self.paywallProxy.presentPaywall(
-                options: options,
-                paywallResultHandler: result
-            )
+
+            if let requiredEntitlementIdentifier {
+                options[PaywallProxy.PaywallOptionsKeys.requiredEntitlementIdentifier] = requiredEntitlementIdentifier
+
+                self.paywallProxy.presentPaywallIfNeeded(
+                    options: options,
+                    paywallResultHandler: result
+                )
+            } else {
+                self.paywallProxy.presentPaywall(
+                    options: options,
+                    paywallResultHandler: result
+                )
+            }
         } else {
             NSLog("Presenting paywall requires iOS 15+")
         }
