@@ -308,7 +308,8 @@ jobs:
           name: Run Flutter integration tests
           command: |
             cd revenuecat_examples/purchase_tester
-            flutter drive --target=integration_test/app_test.dart \
+            DEVICE_ID=$(flutter devices | awk -F '•' 'NR==2 {gsub(/^[ \t]+|[ \t]+$/, "", $1); print $2}')
+            flutter drive -d $DEVICE_ID --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
 
   freezed:

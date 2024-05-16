@@ -1,3 +1,12 @@
+## 6.29.1
+### Bugfixes
+* [EXTERNAL] fix: call presentPaywallIfNeeded when needed (#1066) by @danjocha (#1069) via Cesar de la Vega (@vegaro)
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 10.6.2 (#1067) via RevenueCat Git Bot (@RCGitBot)
+### Other Changes
+* Remove SafeArea in sample in paywall.dart (#1063) via Cesar de la Vega (@vegaro)
+* Migration to applying Gradle plugins with the declarative plugins block in sample (#1062) via Cesar de la Vega (@vegaro)
+
 ## 6.29.0
 ### Bugfixes
 * Crash on Amazon paywalls after purchasing (#1053) via Cesar de la Vega (@vegaro)
