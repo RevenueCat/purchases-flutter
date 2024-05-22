@@ -1,3 +1,9 @@
+## 6.29.2
+### Bugfixes
+* Fix `purchaseDiscountedPackage` (#1080) via Toni Rico (@tonidero)
+### Dependency Updates
+* Bump rexml from 3.2.6 to 3.2.8 (#1076) via dependabot[bot] (@dependabot[bot])
+
 ## 6.29.1
 ### Bugfixes
 * [EXTERNAL] fix: call presentPaywallIfNeeded when needed (#1066) by @danjocha (#1069) via Cesar de la Vega (@vegaro)
