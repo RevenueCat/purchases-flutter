@@ -309,7 +309,7 @@ presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
     [RCCommonFunctionality purchasePackage:packageIdentifier
-                  presentedOfferingContext: presentedOfferingContext
+                  presentedOfferingContext:presentedOfferingContext
                    signedDiscountTimestamp:discountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
