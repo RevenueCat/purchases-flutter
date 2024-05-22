@@ -512,8 +512,8 @@ class Purchases {
   ) async {
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
-      'offeringContext':
-          packageToPurchase.presentedOfferingContext.offeringIdentifier,
+      'presentedOfferingContext':
+          packageToPurchase.presentedOfferingContext.toJson(),
       'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
     });
     return customerInfo;
