@@ -10,7 +10,7 @@ void main() {
   var userId = "integration-test-${DateTime.now().millisecondsSinceEpoch}";
 
   setUpAll(() {
-    PurchasesConfiguration configuration = PurchasesConfiguration("appl_KhXKryBEHUWEdShrggQyjyzHKHW");
+    PurchasesConfiguration configuration = PurchasesConfiguration("api_key");
     configuration.appUserID = userId;
     configuration.entitlementVerificationMode = EntitlementVerificationMode.informational;
     Purchases.configure(configuration);
