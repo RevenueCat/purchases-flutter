@@ -269,12 +269,26 @@ def get_phc_version
   android_phc_version = android_build_gradle_contents.match("ext.common_version = '(.*)'").captures[0]
   UI.user_error!("Android PHC version not found.") if android_phc_version.nil?
 
+  android_ui_build_gradle_path = '../purchases_ui_flutter/android/build.gradle'
+  android_ui_build_gradle_contents = File.read(android_ui_build_gradle_path)
+  android_phc_ui_version = android_ui_build_gradle_contents.match("ext.common_version = '(.*)'").captures[0]
+  UI.user_error!("Android PHC UI version not found.") if android_phc_ui_version.nil?
+
   ios_podspec_path = '../ios/purchases_flutter.podspec'
   ios_podspec_contents = File.read(ios_podspec_path)
   ios_phc_version = ios_podspec_contents.match("s.dependency 'PurchasesHybridCommon', '(.*)'").captures[0]
   UI.user_error!("iOS PHC version not found.") if ios_phc_version.nil?
 
-  UI.user_error!("Android and iOS PHC versions don't match. Please make sure they match.") if android_phc_version != ios_phc_version
+  ios_ui_podspec_path = '../purchases_ui_flutter/ios/purchases_ui_flutter.podspec'
+  ios_ui_podspec_contents = File.read(ios_ui_podspec_path)
+  ios_phc_ui_version = ios_ui_podspec_contents.match("s.dependency 'PurchasesHybridCommonUI', '(.*)'").captures[0]
+  UI.user_error!("iOS PHC UI version not found.") if ios_phc_ui_version.nil?
+
+  versions_match =
+    android_phc_version == ios_phc_version &&
+    android_phc_version == android_phc_ui_version &&
+    ios_phc_version == ios_phc_ui_version
+  UI.user_error!("Android and iOS PHC (UI) versions don't match. Please make sure they match.") unless versions_match
 
   ios_phc_version
 end
