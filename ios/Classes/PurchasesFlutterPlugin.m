@@ -247,7 +247,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
-                                                 observerMode:observerMode
+                                      purchasesAreCompletedBy:(observerMode ? RCPurchasesAreCompletedByMyApp : RCPurchasesAreCompletedByRevenueCat)
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
@@ -271,7 +271,11 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 
 - (void)setFinishTransactions:(BOOL)finishTransactions
                        result:(FlutterResult)result {
-    [RCCommonFunctionality setFinishTransactions:finishTransactions];
+    if (finishTransactions) {
+        [RCCommonFunctionality setPurchasesAreCompletedBy:RCPurchasesAreCompletedByRevenueCat];
+    } else {
+        [RCCommonFunctionality setPurchasesAreCompletedBy:RCPurchasesAreCompletedByMyApp];
+    }
     result(nil);
 }
 

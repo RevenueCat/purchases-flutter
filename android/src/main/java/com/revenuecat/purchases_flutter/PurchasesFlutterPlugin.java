@@ -8,10 +8,10 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.OptIn;
 
 import com.revenuecat.purchases.DangerousSettings;
 import com.revenuecat.purchases.Purchases;
+import com.revenuecat.purchases.PurchasesAreCompletedBy;
 import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.Store;
 import com.revenuecat.purchases.common.PlatformInfo;
@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import io.flutter.embedding.android.FlutterFragmentActivity;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
@@ -385,9 +384,22 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             if (useAmazon != null && useAmazon) {
                 store = Store.AMAZON;
             }
-            CommonKt.configure(this.applicationContext, apiKey, appUserID, observerMode,
-                    platformInfo, store, new DangerousSettings(),
-                    shouldShowInAppMessagesAutomatically, verificationMode);
+            PurchasesAreCompletedBy purchasesAreCompletedBy;
+            if (observerMode != null) {
+                purchasesAreCompletedBy = observerMode ?
+                        PurchasesAreCompletedBy.MY_APP : PurchasesAreCompletedBy.REVENUECAT;
+            } else {
+                purchasesAreCompletedBy = PurchasesAreCompletedBy.REVENUECAT;
+            }
+            CommonKt.configure(this.applicationContext,
+                    apiKey,
+                    appUserID,
+                    purchasesAreCompletedBy,
+                    platformInfo,
+                    store,
+                    new DangerousSettings(),
+                    shouldShowInAppMessagesAutomatically,
+                    verificationMode);
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {
@@ -407,7 +419,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setFinishTransactions(@Nullable Boolean finishTransactions, Result result) {
         if (finishTransactions != null) {
-            CommonKt.setFinishTransactions(finishTransactions);
+            CommonKt.setPurchasesAreCompletedBy(finishTransactions ?
+                    PurchasesAreCompletedBy.REVENUECAT : PurchasesAreCompletedBy.MY_APP);
             result.success(null);
         } else {
             result.error(
