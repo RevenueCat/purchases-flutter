@@ -384,12 +384,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             if (useAmazon != null && useAmazon) {
                 store = Store.AMAZON;
             }
-            PurchasesAreCompletedBy purchasesAreCompletedBy;
+            PurchasesAreCompletedBy purchasesAreCompletedBy = null;
             if (observerMode != null) {
                 purchasesAreCompletedBy = observerMode ?
                         PurchasesAreCompletedBy.MY_APP : PurchasesAreCompletedBy.REVENUECAT;
-            } else {
-                purchasesAreCompletedBy = PurchasesAreCompletedBy.REVENUECAT;
             }
             CommonKt.configure(this.applicationContext,
                     apiKey,
