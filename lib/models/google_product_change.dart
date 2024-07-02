@@ -26,6 +26,9 @@ enum GoogleProrationMode {
 
   // Replacement takes effect immediately, and the billing cycle remains the same.
   immediateAndChargeProratedPrice,
+
+  // Replacement takes effect when the old plan expires, and the new price will be charged at the same time.
+  deferred,
 }
 
 extension GoogleProrationModeExtension on GoogleProrationMode {
@@ -39,6 +42,8 @@ extension GoogleProrationModeExtension on GoogleProrationMode {
         return 5;
       case GoogleProrationMode.immediateAndChargeProratedPrice:
         return 2;
+      case GoogleProrationMode.deferred:
+        return 4;
       default:
         return null;
     }
