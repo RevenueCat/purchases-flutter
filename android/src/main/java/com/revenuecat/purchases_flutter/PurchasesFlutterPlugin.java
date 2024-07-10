@@ -147,8 +147,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Boolean usesStoreKit2IfAvailable = call.argument("usesStoreKit2IfAvailable"); // iOS-only, unused.
                 Boolean shouldShowInAppMessagesAutomatically = call.argument("shouldShowInAppMessagesAutomatically");
                 String verificationMode = call.argument("entitlementVerificationMode");
+                Boolean pendingTransactionsForPrepaidPlansEnabled =
+                    call.argument("pendingTransactionsForPrepaidPlansEnabled");
                 setupPurchases(apiKey, appUserId, observerMode, useAmazon,
-                        shouldShowInAppMessagesAutomatically, verificationMode, result);
+                        shouldShowInAppMessagesAutomatically, verificationMode,
+                        pendingTransactionsForPrepaidPlansEnabled, result);
                 break;
             case "setFinishTransactions":
                 Boolean finishTransactions = call.argument("finishTransactions");
@@ -377,7 +380,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
             @Nullable Boolean useAmazon, @Nullable Boolean shouldShowInAppMessagesAutomatically,
-            @Nullable String verificationMode, final Result result) {
+            @Nullable String verificationMode,
+            @Nullable Boolean pendingTransactionsForPrepaidPlansEnabled,
+            final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
             Store store = Store.PLAY_STORE;
@@ -397,7 +402,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     store,
                     new DangerousSettings(),
                     shouldShowInAppMessagesAutomatically,
-                    verificationMode);
+                    verificationMode,
+                    pendingTransactionsForPrepaidPlansEnabled);
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {

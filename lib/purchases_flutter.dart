@@ -147,6 +147,8 @@ class Purchases {
               purchasesConfiguration.shouldShowInAppMessagesAutomatically,
           'entitlementVerificationMode':
               purchasesConfiguration.entitlementVerificationMode.name,
+          'pendingTransactionsForPrepaidPlansEnabled':
+              purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
         },
       );
 
@@ -338,7 +340,7 @@ class Purchases {
       'productIdentifier': productIdentifier,
       'type': type.name,
       'googleOldProductIdentifier': upgradeInfo?.oldSKU,
-      'googleProrationMode': prorationMode?.index,
+      'googleProrationMode': prorationMode?.value,
       'googleIsPersonalizedPrice': null,
       'presentedOfferingIdentifier': null,
     });
@@ -411,7 +413,7 @@ class Purchases {
     bool? googleIsPersonalizedPrice,
   }) async {
     final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
-        upgradeInfo?.prorationMode?.index;
+        upgradeInfo?.prorationMode?.value;
     final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
       'packageIdentifier': packageToPurchase.identifier,
       'presentedOfferingContext':

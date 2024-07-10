@@ -37,3 +37,20 @@ enum ProrationMode {
   /// plus remaining prorated time from the old plan.
   immediateAndChargeFullPrice
 }
+
+extension ProrationModeExtension on ProrationMode {
+  int? get value {
+    switch (this) {
+      case ProrationMode.immediateWithTimeProration:
+        return 1;
+      case ProrationMode.immediateWithoutProration:
+        return 3;
+      case ProrationMode.immediateAndChargeFullPrice:
+        return 5;
+      case ProrationMode.immediateAndChargeProratedPrice:
+        return 2;
+      default:
+        return null;
+    }
+  }
+}

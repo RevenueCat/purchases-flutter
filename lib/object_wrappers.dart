@@ -4,6 +4,7 @@ export 'models/entitlement_info_wrapper.dart';
 export 'models/entitlement_infos_wrapper.dart';
 export 'models/entitlement_verification_mode.dart';
 export 'models/google_product_change.dart';
+export 'models/installments_info.dart';
 export 'models/introductory_price.dart';
 export 'models/offering_wrapper.dart';
 export 'models/offerings_wrapper.dart';

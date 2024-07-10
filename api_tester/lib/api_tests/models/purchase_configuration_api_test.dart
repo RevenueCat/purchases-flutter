@@ -24,6 +24,7 @@ class _PurchaseConfigurationApiTest {
     bool usesStoreKit2IfAvailable = configuration.usesStoreKit2IfAvailable;
     // ignore: deprecated_member_use
     configuration.usesStoreKit2IfAvailable = true;
+    configuration.pendingTransactionsForPrepaidPlansEnabled = true;
   }
 
   void _checkAmazonConfigurationConstructor() {
