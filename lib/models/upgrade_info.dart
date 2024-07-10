@@ -38,6 +38,7 @@ enum ProrationMode {
   immediateAndChargeFullPrice
 }
 
+// ignore_for_file: deprecated_member_use_from_same_package
 extension ProrationModeExtension on ProrationMode {
   int? get value {
     switch (this) {

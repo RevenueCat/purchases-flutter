@@ -818,6 +818,7 @@ void main() {
         null,
         null,
         PresentedOfferingContext('my-offer', null, null),
+        null,
       );
       final purchasePackageResult =
           await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
@@ -877,6 +878,7 @@ void main() {
         null,
         null,
         PresentedOfferingContext('my-offer', null, null),
+        null,
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
         'silver',
@@ -935,6 +937,7 @@ void main() {
         Period(PeriodUnit.month, 1, 'P1M'),
         false,
         phase,
+        null,
         null,
         null,
         null,

@@ -137,7 +137,10 @@ class Purchases {
         {
           'apiKey': purchasesConfiguration.apiKey,
           'appUserId': purchasesConfiguration.appUserID,
+          // ignore: deprecated_member_use_from_same_package
           'observerMode': purchasesConfiguration.observerMode,
+          'purchasesAreCompletedBy':
+              purchasesConfiguration.purchasesAreCompletedBy?.name,
           'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
           'useAmazon': purchasesConfiguration.store == Store.amazon,
           'usesStoreKit2IfAvailable':

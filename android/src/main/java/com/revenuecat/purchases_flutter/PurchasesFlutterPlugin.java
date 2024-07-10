@@ -140,6 +140,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String apiKey = call.argument("apiKey");
                 String appUserId = call.argument("appUserId");
                 Boolean observerMode = call.argument("observerMode");
+                String purchasesAreCompletedBy = call.argument("purchasesAreCompletedBy");
                 Boolean useAmazon = call.argument("useAmazon");
                 // noinspection unused
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
@@ -149,7 +150,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String verificationMode = call.argument("entitlementVerificationMode");
                 Boolean pendingTransactionsForPrepaidPlansEnabled =
                     call.argument("pendingTransactionsForPrepaidPlansEnabled");
-                setupPurchases(apiKey, appUserId, observerMode, useAmazon,
+                setupPurchases(apiKey, appUserId, observerMode, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled, result);
                 break;
@@ -379,8 +380,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
-            @Nullable Boolean useAmazon, @Nullable Boolean shouldShowInAppMessagesAutomatically,
-            @Nullable String verificationMode,
+            @Nullable String purchasesAreCompletedByString, @Nullable Boolean useAmazon, 
+            @Nullable Boolean shouldShowInAppMessagesAutomatically, @Nullable String verificationMode,
             @Nullable Boolean pendingTransactionsForPrepaidPlansEnabled,
             final Result result) {
         if (this.applicationContext != null) {
@@ -389,10 +390,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             if (useAmazon != null && useAmazon) {
                 store = Store.AMAZON;
             }
-            PurchasesAreCompletedBy purchasesAreCompletedBy = null;
-            if (observerMode != null) {
-                purchasesAreCompletedBy = observerMode ?
-                        PurchasesAreCompletedBy.MY_APP : PurchasesAreCompletedBy.REVENUECAT;
+            String purchasesAreCompletedBy = purchasesAreCompletedByString;
+            if (purchasesAreCompletedBy == null && observerMode != null) {
+                purchasesAreCompletedBy = observerMode ? "MY_APP" : "REVENUECAT";
             }
             CommonKt.configure(this.applicationContext,
                     apiKey,
@@ -423,8 +423,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setFinishTransactions(@Nullable Boolean finishTransactions, Result result) {
         if (finishTransactions != null) {
-            CommonKt.setPurchasesAreCompletedBy(finishTransactions ?
-                    PurchasesAreCompletedBy.REVENUECAT : PurchasesAreCompletedBy.MY_APP);
+            CommonKt.setPurchasesAreCompletedBy(finishTransactions ? "REVENUECAT" : "MY_APP");
             result.success(null);
         } else {
             result.error(

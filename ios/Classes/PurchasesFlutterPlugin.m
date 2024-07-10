@@ -48,17 +48,22 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
         BOOL observerMode = [arguments[@"observerMode"] boolValue];
+        NSString *purchasesAreCompletedBy = arguments[@"purchasesAreCompletedBy"];
         BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
 		BOOL shouldShowInAppMessagesAutomatically = YES;
         id object = arguments[@"shouldShowInAppMessagesAutomatically"];
         if (object != [NSNull null] && object != nil) {
             shouldShowInAppMessagesAutomatically = [object boolValue];
         }
+        NSString *actualPurchasesAreCompletedBy = purchasesAreCompletedBy;
+        if (actualPurchasesAreCompletedBy == nil && arguments[@"observerMode"] != nil) {
+            actualPurchasesAreCompletedBy = observerMode ? @"MY_APP" : @"REVENUECAT";
+        }
         NSString * _Nullable verificationMode = arguments[@"entitlementVerificationMode"];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
-                observerMode:observerMode
+     purchasesAreCompletedBy:actualPurchasesAreCompletedBy
        userDefaultsSuiteName:userDefaultsSuiteName
     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
@@ -232,7 +237,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
 
 - (void)setupPurchases:(NSString *)apiKey
              appUserID:(NSString *)appUserID
-          observerMode:(BOOL)observerMode
+purchasesAreCompletedBy:(nullable NSString *)purchasesAreCompletedBy
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
 usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
@@ -247,7 +252,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
-                                      purchasesAreCompletedBy:(observerMode ? RCPurchasesAreCompletedByMyApp : RCPurchasesAreCompletedByRevenueCat)
+                                      purchasesAreCompletedBy:purchasesAreCompletedBy
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
@@ -272,9 +277,9 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 - (void)setFinishTransactions:(BOOL)finishTransactions
                        result:(FlutterResult)result {
     if (finishTransactions) {
-        [RCCommonFunctionality setPurchasesAreCompletedBy:RCPurchasesAreCompletedByRevenueCat];
+        [RCCommonFunctionality setPurchasesAreCompletedBy:@"REVENUECAT"];
     } else {
-        [RCCommonFunctionality setPurchasesAreCompletedBy:RCPurchasesAreCompletedByMyApp];
+        [RCCommonFunctionality setPurchasesAreCompletedBy:@"MY_APP"];
     }
     result(nil);
 }

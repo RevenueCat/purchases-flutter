@@ -1,4 +1,5 @@
 import '../purchases_flutter.dart';
+import 'purchases_completed_by.dart';
 
 /// Used when calling [configure] to configure the RevenueCat plugin
 class PurchasesConfiguration {
@@ -13,7 +14,13 @@ class PurchasesConfiguration {
   /// An optional boolean. Set this to TRUE if you have your own
   /// IAP implementation and want to use only RevenueCat's backend.
   /// Default is FALSE.
+  @Deprecated('Use purchasesAreCompletedBy instead')
   bool observerMode = false;
+
+  /// Set this to myApp if you have your own
+  /// IAP implementation and want to use only RevenueCat's backend.
+  /// Default is revenueCat.
+  PurchasesAreCompletedBy? purchasesAreCompletedBy;
 
   /// iOS-only, will be ignored for Android.
   /// Set this if you would like the RevenueCat SDK to store its preferences in
