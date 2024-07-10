@@ -1219,7 +1219,7 @@ void main() {
     );
     expect(log, <Matcher>[
       isMethodCall(
-        'syncObserverModeAmazonPurchase',
+        'syncAmazonPurchase',
         arguments: {
           'productID': 'productID_test',
           'receiptID': 'receiptID_test',
@@ -1243,7 +1243,7 @@ void main() {
     );
     expect(log, <Matcher>[
       isMethodCall(
-        'syncObserverModeAmazonPurchase',
+        'syncAmazonPurchase',
         arguments: {
           'productID': 'productID_test',
           'receiptID': 'receiptID_test',

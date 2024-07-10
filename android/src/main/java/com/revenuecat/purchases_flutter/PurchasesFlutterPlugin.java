@@ -360,13 +360,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 ArrayList<Integer> types = call.argument("types");
                 showInAppMessages(types, result);
                 break;
-            case "syncObserverModeAmazonPurchase":
+            case "syncAmazonPurchase":
                 String productID = call.argument("productID");
                 String receiptID = call.argument("receiptID");
                 String amazonUserID = call.argument("amazonUserID");
                 String isoCurrencyCode = call.argument("isoCurrencyCode");
                 Double price = call.argument("price");
-                syncObserverModeAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
+                syncAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
                         price, result);
                 break;
             default:
@@ -542,13 +542,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void syncObserverModeAmazonPurchase(String productID,
+    private void syncAmazonPurchase(String productID,
             String receiptID,
             String amazonUserID,
             String isoCurrencyCode,
             Double price,
             final Result result) {
-        Purchases.getSharedInstance().syncObserverModeAmazonPurchase(productID, receiptID,
+        Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
                 amazonUserID, isoCurrencyCode, price);
         result.success(null);
     }
