@@ -1,3 +1,7 @@
+## 6.30.1
+### Bugfixes
+* Add `OptIn` annotation on paywalls code (#1112) via Cesar de la Vega (@vegaro)
+
 ## 6.30.0
 ### New Features
 * Add support for `DEFERRED` upgrades and updates purchases-hybrid-common to 11.1.0 (#1108) via RevenueCat Git Bot (@RCGitBot)
