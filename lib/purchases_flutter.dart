@@ -988,7 +988,7 @@ class Purchases {
     double? price,
   ) =>
       _channel.invokeMethod(
-        'syncObserverModeAmazonPurchase',
+        'syncAmazonPurchase',
         {
           'productID': productID,
           'receiptID': receiptID,
