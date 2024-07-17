@@ -1,3 +1,7 @@
+## 6.30.2
+### Bugfixes
+* Fix `syncObserverModeAmazonPurchase` deprecation warning (#1115) via Toni Rico (@tonidero)
+
 ## 6.30.1
 ### Bugfixes
 * Add `OptIn` annotation on paywalls code (#1112) via Cesar de la Vega (@vegaro)
