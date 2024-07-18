@@ -1,2 +1,2 @@
 ### Bugfixes
-* Add `OptIn` annotation on paywalls code (#1112) via Cesar de la Vega (@vegaro)
+* Fix `syncObserverModeAmazonPurchase` deprecation warning (#1115) via Toni Rico (@tonidero)
