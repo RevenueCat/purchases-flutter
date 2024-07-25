@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
