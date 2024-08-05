@@ -9,5 +9,18 @@ enum StoreKitVersion {
   storeKit2,
 
   /// Let RevenueCat use the most appropriate version of StoreKit
-  `default`,
+  defaultVersion,
+}
+
+extension StoreKitVersionExtension on StoreKitVersion {
+  String get name {
+    switch (this) {
+      case StoreKitVersion.storeKit1:
+        return 'STOREKIT_1';
+      case StoreKitVersion.storeKit2:
+        return 'STOREKIT_2';
+      case StoreKitVersion.defaultVersion:
+        return 'DEFAULT';
+    }
+  }
 }

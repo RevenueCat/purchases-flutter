@@ -47,25 +47,20 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     if ([@"setupPurchases" isEqualToString:call.method]) {
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
-        BOOL observerMode = [arguments[@"observerMode"] boolValue];
         NSString *purchasesAreCompletedBy = arguments[@"purchasesAreCompletedBy"];
-        BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
 		BOOL shouldShowInAppMessagesAutomatically = YES;
         id object = arguments[@"shouldShowInAppMessagesAutomatically"];
         if (object != [NSNull null] && object != nil) {
             shouldShowInAppMessagesAutomatically = [object boolValue];
         }
-        NSString *actualPurchasesAreCompletedBy = purchasesAreCompletedBy;
-        if (actualPurchasesAreCompletedBy == nil && arguments[@"observerMode"] != nil) {
-            actualPurchasesAreCompletedBy = observerMode ? @"MY_APP" : @"REVENUECAT";
-        }
         NSString * _Nullable verificationMode = arguments[@"entitlementVerificationMode"];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
+        NSString *storeKitVersion = arguments[@"storeKitVersion"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
      purchasesAreCompletedBy:actualPurchasesAreCompletedBy
        userDefaultsSuiteName:userDefaultsSuiteName
-    usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+             storeKitVersion: storeKitVersion
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
             verificationMode:verificationMode
                       result:result];
@@ -239,7 +234,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
              appUserID:(NSString *)appUserID
 purchasesAreCompletedBy:(nullable NSString *)purchasesAreCompletedBy
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
-usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
+       storeKitVersion:(nullable NSString *)storeKitVersion
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
       verificationMode:(nullable NSString *)verificationMode
                 result:(FlutterResult)result {
@@ -256,7 +251,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
-                                     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+                                              storeKitVersion:storeKitVersion
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode];

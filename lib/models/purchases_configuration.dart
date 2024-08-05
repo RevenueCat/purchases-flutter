@@ -11,9 +11,13 @@ class PurchasesConfiguration {
   /// An optional unique id for identifying the user.
   String? appUserID;
 
-  /// Set this to myApp if you have your own
-  /// IAP implementation and want to use only RevenueCat's backend.
-  /// Default is revenueCat.
+  /// Set this to MY_APP and provide a StoreKitVersion if you have your own IAP implementation and
+  /// want to only use RevenueCat's backend. Defaults to PurchasesAreCompletedByRevenueCat.
+  ///
+  /// If you are on Android and setting this to PurchasesAreCompletedByMyApp, you will have to
+  /// acknowledge the purchases yourself.
+  /// If your app is only on Android, you may specify any StoreKitVersion,
+  /// as it is ignored by the native Android SDK.
   PurchasesAreCompletedBy? purchasesAreCompletedBy;
 
   /// iOS-only, will be ignored for Android.

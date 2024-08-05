@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+import 'models/storekit_version.dart';
 import 'object_wrappers.dart';
 
 export 'object_wrappers.dart';
@@ -86,9 +87,14 @@ class Purchases {
   ///
   /// [appUserID] An optional unique id for identifying the user.
   ///
-  /// [observerMode] An optional boolean. Set this to TRUE if you have your own
-  /// IAP implementation and want to use only RevenueCat's backend.
-  /// Default is FALSE.
+  /// [purchasesAreCompletedBy] Set this to MY_APP and provide a StoreKitVersion if you
+  /// have your own IAP implementation and want to only use RevenueCat's backend.
+  /// Defaults to PurchasesAreCompletedByRevenueCat.
+  ///
+  /// If you are on Android and setting this to PurchasesAreCompletedByMyApp, you will have to
+  /// acknowledge the purchases yourself.
+  /// If your app is only on Android, you may specify any StoreKitVersion,
+  /// as it is ignored by the native Android SDK.
   ///
   /// [userDefaultsSuiteName] iOS-only, will be ignored for Android.
   /// Set this if you would like the RevenueCat SDK to store its preferences in a different
@@ -111,49 +117,94 @@ class Purchases {
   static Future<void> setup(
     String apiKey, {
     String? appUserId,
-    bool observerMode = false,
+    PurchasesAreCompletedBy? purchasesAreCompletedBy,
     String? userDefaultsSuiteName,
+    StoreKitVersion? storeKitVersion,
     bool useAmazon = false,
     bool usesStoreKit2IfAvailable = false,
   }) {
-    final configuration = (PurchasesConfiguration(apiKey)
+    final configuration = PurchasesConfiguration(apiKey)
       ..appUserID = appUserId
-      ..observerMode = observerMode
+      ..purchasesAreCompletedBy =
+          purchasesAreCompletedBy ?? const PurchasesAreCompletedByRevenueCat()
       ..userDefaultsSuiteName = userDefaultsSuiteName
-      ..store = useAmazon ? Store.amazon : null
-      ..usesStoreKit2IfAvailable = usesStoreKit2IfAvailable);
+      ..storeKitVersion = storeKitVersion ?? StoreKitVersion.defaultVersion
+      ..store = useAmazon ? Store.amazon : null;
+
     _lastReceivedCustomerInfo = null;
     return configure(configuration);
   }
+
+  // /// Sets up Purchases with your API key and an app user id.
+  // ///
+  // /// [PurchasesConfiguration] Object containing configuration parameters
+  // static Future<void> configure(
+  //   PurchasesConfiguration purchasesConfiguration,
+  // ) =>
+  //     _channel.invokeMethod(
+  //       'setupPurchases',
+  //       {
+  //         'apiKey': purchasesConfiguration.apiKey,
+  //         'appUserId': purchasesConfiguration.appUserID,
+  //         // ignore: deprecated_member_use_from_same_package
+  //         // 'observerMode': purchasesConfiguration.observerMode,
+  //         'purchasesAreCompletedBy':
+  //             purchasesConfiguration.purchasesAreCompletedBy?.name,
+  //         'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
+  //         'useAmazon': purchasesConfiguration.store == Store.amazon,
+  //         'usesStoreKit2IfAvailable':
+  //             // ignore: deprecated_member_use_from_same_package
+  //             purchasesConfiguration.usesStoreKit2IfAvailable,
+  //         'shouldShowInAppMessagesAutomatically':
+  //             purchasesConfiguration.shouldShowInAppMessagesAutomatically,
+  //         'entitlementVerificationMode':
+  //             purchasesConfiguration.entitlementVerificationMode.name,
+  //         'pendingTransactionsForPrepaidPlansEnabled':
+  //             purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
+  //       },
+  //     );
 
   /// Sets up Purchases with your API key and an app user id.
   ///
   /// [PurchasesConfiguration] Object containing configuration parameters
   static Future<void> configure(
     PurchasesConfiguration purchasesConfiguration,
-  ) =>
-      _channel.invokeMethod(
-        'setupPurchases',
-        {
-          'apiKey': purchasesConfiguration.apiKey,
-          'appUserId': purchasesConfiguration.appUserID,
-          // ignore: deprecated_member_use_from_same_package
-          'observerMode': purchasesConfiguration.observerMode,
-          'purchasesAreCompletedBy':
-              purchasesConfiguration.purchasesAreCompletedBy?.name,
-          'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
-          'useAmazon': purchasesConfiguration.store == Store.amazon,
-          'usesStoreKit2IfAvailable':
-              // ignore: deprecated_member_use_from_same_package
-              purchasesConfiguration.usesStoreKit2IfAvailable,
-          'shouldShowInAppMessagesAutomatically':
-              purchasesConfiguration.shouldShowInAppMessagesAutomatically,
-          'entitlementVerificationMode':
-              purchasesConfiguration.entitlementVerificationMode.name,
-          'pendingTransactionsForPrepaidPlansEnabled':
-              purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
-        },
-      );
+  ) async {
+    var purchasesCompletedByToUse = PurchasesAreCompletedByType.revenueCat;
+    var storeKitVersionToUse = purchasesConfiguration.storeKitVersion ??
+        StoreKitVersion.defaultVersion;
+
+    if (purchasesConfiguration.purchasesAreCompletedBy
+        is PurchasesAreCompletedByMyApp) {
+      purchasesCompletedByToUse = PurchasesAreCompletedByType.myApp;
+      storeKitVersionToUse = (purchasesConfiguration.purchasesAreCompletedBy
+              as PurchasesAreCompletedByMyApp)
+          .storeKitVersion;
+
+      if (storeKitVersionToUse != purchasesConfiguration.storeKitVersion) {
+        debugPrint(
+            "Warning: The storeKitVersion in purchasesAreCompletedBy does not match the function's storeKitVersion parameter. We will use the value found in purchasesAreCompletedBy.");
+      }
+    }
+
+    await _channel.invokeMethod(
+      'setupPurchases',
+      {
+        'apiKey': purchasesConfiguration.apiKey,
+        'appUserId': purchasesConfiguration.appUserID,
+        'purchasesAreCompletedBy': purchasesCompletedByToUse.name,
+        'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
+        'storeKitVersion': storeKitVersionToUse.name,
+        'useAmazon': purchasesConfiguration.store == Store.amazon,
+        'shouldShowInAppMessagesAutomatically':
+            purchasesConfiguration.shouldShowInAppMessagesAutomatically,
+        'entitlementVerificationMode':
+            purchasesConfiguration.entitlementVerificationMode.name,
+        'pendingTransactionsForPrepaidPlansEnabled':
+            purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
+      },
+    );
+  }
 
   // Default to TRUE, set this to FALSE if you are consuming and acknowledging transactions outside of the Purchases SDK.
   ///

@@ -139,18 +139,17 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setupPurchases":
                 String apiKey = call.argument("apiKey");
                 String appUserId = call.argument("appUserId");
-                Boolean observerMode = call.argument("observerMode");
                 String purchasesAreCompletedBy = call.argument("purchasesAreCompletedBy");
                 Boolean useAmazon = call.argument("useAmazon");
                 // noinspection unused
                 String userDefaultsSuiteName = call.argument("userDefaultsSuiteName"); // iOS-only, unused.
                 // noinspection unused
-                Boolean usesStoreKit2IfAvailable = call.argument("usesStoreKit2IfAvailable"); // iOS-only, unused.
+                String storeKitVersion = call.argument("storeKitVersion"); // iOS-only, unused.
                 Boolean shouldShowInAppMessagesAutomatically = call.argument("shouldShowInAppMessagesAutomatically");
                 String verificationMode = call.argument("entitlementVerificationMode");
-                Boolean pendingTransactionsForPrepaidPlansEnabled =
-                    call.argument("pendingTransactionsForPrepaidPlansEnabled");
-                setupPurchases(apiKey, appUserId, observerMode, purchasesAreCompletedBy, useAmazon,
+                Boolean pendingTransactionsForPrepaidPlansEnabled = call
+                        .argument("pendingTransactionsForPrepaidPlansEnabled");
+                setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled, result);
                 break;
@@ -379,8 +378,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         }
     }
 
-    private void setupPurchases(String apiKey, String appUserID, @Nullable Boolean observerMode,
-            @Nullable String purchasesAreCompletedByString, @Nullable Boolean useAmazon, 
+    private void setupPurchases(String apiKey, String appUserID,
+            @Nullable String purchasesAreCompletedBy, @Nullable Boolean useAmazon,
             @Nullable Boolean shouldShowInAppMessagesAutomatically, @Nullable String verificationMode,
             @Nullable Boolean pendingTransactionsForPrepaidPlansEnabled,
             final Result result) {
@@ -390,10 +389,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             if (useAmazon != null && useAmazon) {
                 store = Store.AMAZON;
             }
-            String purchasesAreCompletedBy = purchasesAreCompletedByString;
-            if (purchasesAreCompletedBy == null && observerMode != null) {
-                purchasesAreCompletedBy = observerMode ? "MY_APP" : "REVENUECAT";
-            }
+
             CommonKt.configure(this.applicationContext,
                     apiKey,
                     appUserID,
@@ -473,12 +469,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void purchaseProduct(final String productIdentifier,
-                                 final String type,
-                                 final String googleOldProductId,
-                                 @Nullable final Integer googleProrationMode,
-                                 @Nullable final Boolean googleIsPersonalizedPrice,
-                                 @Nullable final Map<String, Object> presentedOfferingContext,
-                                 final Result result) {
+            final String type,
+            final String googleOldProductId,
+            @Nullable final Integer googleProrationMode,
+            @Nullable final Boolean googleIsPersonalizedPrice,
+            @Nullable final Map<String, Object> presentedOfferingContext,
+            final Result result) {
         CommonKt.purchaseProduct(
                 getActivity(),
                 productIdentifier,
