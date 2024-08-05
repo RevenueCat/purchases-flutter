@@ -58,7 +58,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString *storeKitVersion = arguments[@"storeKitVersion"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
-     purchasesAreCompletedBy:actualPurchasesAreCompletedBy
+     purchasesAreCompletedBy:purchasesAreCompletedBy
        userDefaultsSuiteName:userDefaultsSuiteName
              storeKitVersion: storeKitVersion
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
