@@ -218,7 +218,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self closeWithResult:result];
     } else if ([@"setLogHandler" isEqualToString:call.method]) {
         [self setLogHandlerWithResult:result];
-    } else if ([@"syncObserverModeAmazonPurchase" isEqualToString:call.method]) {
+    } else if ([@"syncAmazonPurchase" isEqualToString:call.method]) {
         // NOOP
         result(nil);
     } else {

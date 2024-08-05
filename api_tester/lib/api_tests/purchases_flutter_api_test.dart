@@ -510,6 +510,12 @@ class _PurchasesFlutterApiTest {
         productID, receiptID, amazonUserID, isoCurrencyCode, price);
   }
 
+  void _checkSyncAmazonPurchase(String productID, String receiptID,
+      String amazonUserID, String? isoCurrencyCode, double? price) async {
+    Future<void> future = Purchases.syncAmazonPurchase(
+        productID, receiptID, amazonUserID, isoCurrencyCode, price);
+  }
+
   void _showInAppMessages() async {
     Future<void> future = Purchases.showInAppMessages(types: {
       InAppMessageType.billingIssue,

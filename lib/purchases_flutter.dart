@@ -1014,6 +1014,7 @@ class Purchases {
   /// @param [amazonUserID] Amazon's userID. This parameter will be ignored when syncing a Google purchase.
   /// @param [isoCurrencyCode] Product's currency code in ISO 4217 format.
   /// @param [price] Product's price.
+  @Deprecated('Use syncAmazonPurchase')
   static Future<void> syncObserverModeAmazonPurchase(
     String productID,
     String receiptID,
@@ -1021,8 +1022,33 @@ class Purchases {
     String? isoCurrencyCode,
     double? price,
   ) =>
+      syncAmazonPurchase(
+        productID,
+        receiptID,
+        amazonUserID,
+        isoCurrencyCode,
+        price,
+      );
+
+  /// This method will send a purchase to the RevenueCat backend. This function should only be called if you are
+  /// in Amazon observer mode or performing a client side migration of your current users to RevenueCat.
+  ///
+  /// The receipt IDs are cached if successfully posted so they are not posted more than once.
+  ///
+  /// @param [productID] Product ID associated to the purchase.
+  /// @param [receiptID] ReceiptId that represents the Amazon purchase.
+  /// @param [amazonUserID] Amazon's userID. This parameter will be ignored when syncing a Google purchase.
+  /// @param [isoCurrencyCode] Product's currency code in ISO 4217 format.
+  /// @param [price] Product's price.
+  static Future<void> syncAmazonPurchase(
+    String productID,
+    String receiptID,
+    String amazonUserID,
+    String? isoCurrencyCode,
+    double? price,
+  ) =>
       _channel.invokeMethod(
-        'syncObserverModeAmazonPurchase',
+        'syncAmazonPurchase',
         {
           'productID': productID,
           'receiptID': receiptID,

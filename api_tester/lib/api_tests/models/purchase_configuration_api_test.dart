@@ -10,22 +10,21 @@ class _PurchaseConfigurationApiTest {
 
   void _checkProperties(PurchasesConfiguration configuration) {
     String? appUserId = configuration.appUserID;
-    bool observerMode = configuration.observerMode;
     String? userDefaultsSuiteName = configuration.userDefaultsSuiteName;
     Store? store = configuration.store;
     PurchasesAreCompletedBy? purchasesAreCompletedBy =
         configuration.purchasesAreCompletedBy;
+    StoreKitVersion? storeKitVersion = configuration.storeKitVersion;
     configuration.appUserID = null;
     configuration.appUserID = "fakeUserId";
-    configuration.observerMode = false;
     configuration.purchasesAreCompletedBy = purchasesAreCompletedBy;
     configuration.userDefaultsSuiteName = null;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
     configuration.store = null;
     configuration.store = Store.playStore;
+    configuration.storeKitVersion = storeKitVersion;
+
     // deprecated, but we still need to check that the API hasn't been removed.
-    bool usesStoreKit2IfAvailable = configuration.usesStoreKit2IfAvailable;
-    configuration.usesStoreKit2IfAvailable = true;
     configuration.pendingTransactionsForPrepaidPlansEnabled = true;
   }
 
@@ -35,15 +34,18 @@ class _PurchaseConfigurationApiTest {
 
   void _checkAmazonConfigurationProperties(AmazonConfiguration configuration) {
     String? appUserId = configuration.appUserID;
-    bool observerMode = configuration.observerMode;
+    PurchasesAreCompletedBy? purchasesAreCompletedBy =
+        configuration.purchasesAreCompletedBy;
     String? userDefaultsSuiteName = configuration.userDefaultsSuiteName;
     Store? store = configuration.store;
+    StoreKitVersion? storeKitVersion = configuration.storeKitVersion;
     configuration.appUserID = null;
     configuration.appUserID = "fakeUserId";
-    configuration.observerMode = false;
+    configuration.purchasesAreCompletedBy = purchasesAreCompletedBy;
     configuration.userDefaultsSuiteName = null;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
     configuration.store = null;
     configuration.store = Store.playStore;
+    configuration.storeKitVersion = storeKitVersion;
   }
 }

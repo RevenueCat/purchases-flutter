@@ -1252,6 +1252,52 @@ void main() {
     expect(receivedLogLevel, LogLevel.info);
   });
 
+  test('syncAmazonPurchase calls channel correctly', () async {
+    await Purchases.syncAmazonPurchase(
+      'productID_test',
+      'receiptID_test',
+      'amazonUserID_test',
+      'isoCurrencyCode_test',
+      3.4,
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'syncAmazonPurchase',
+        arguments: {
+          'productID': 'productID_test',
+          'receiptID': 'receiptID_test',
+          'amazonUserID': 'amazonUserID_test',
+          'isoCurrencyCode': 'isoCurrencyCode_test',
+          'price': 3.4,
+        },
+      ),
+    ]);
+  });
+
+  test(
+      'syncAmazonPurchase calls channel correctly with null price and isoCurrencyCode',
+      () async {
+    await Purchases.syncAmazonPurchase(
+      'productID_test',
+      'receiptID_test',
+      'amazonUserID_test',
+      null,
+      null,
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'syncAmazonPurchase',
+        arguments: {
+          'productID': 'productID_test',
+          'receiptID': 'receiptID_test',
+          'amazonUserID': 'amazonUserID_test',
+          'isoCurrencyCode': null,
+          'price': null,
+        },
+      ),
+    ]);
+  });
+
   test('syncObserverModeAmazonPurchase calls channel correctly', () async {
     await Purchases.syncObserverModeAmazonPurchase(
       'productID_test',
@@ -1262,7 +1308,7 @@ void main() {
     );
     expect(log, <Matcher>[
       isMethodCall(
-        'syncObserverModeAmazonPurchase',
+        'syncAmazonPurchase',
         arguments: {
           'productID': 'productID_test',
           'receiptID': 'receiptID_test',
@@ -1286,7 +1332,7 @@ void main() {
     );
     expect(log, <Matcher>[
       isMethodCall(
-        'syncObserverModeAmazonPurchase',
+        'syncAmazonPurchase',
         arguments: {
           'productID': 'productID_test',
           'receiptID': 'receiptID_test',
