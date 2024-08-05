@@ -13,13 +13,12 @@ class _PurchasesFlutterApiTest {
     StoreKitVersion storeKitVersion = StoreKitVersion.storeKit2
 
     Future<void> callback = Purchases.setup(apiKey);
-    Future<void> callback = Purchases.setup(apiKey,
+    Future<void> callback2 = Purchases.setup(apiKey,
         appUserId: userId,
         purchasesAreCompletedBy: purchasesAreCompletedBy,
         userDefaultsSuiteName: userDefaultsSuiteName,
         storeKitVersion: storeKitVersion,
         useAmazon: useAmazon,);
-
   }
 
   void _checkConfigure() {
