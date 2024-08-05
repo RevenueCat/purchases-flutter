@@ -8,7 +8,7 @@ class _PurchasesFlutterApiTest {
     String apiKey = "fakeApiKey";
     String? userId = "fakeUserId";
     PurchasesAreCompletedBy purchasesAreCompletedBy =
-        PurchasesAreCompletedByRevenueCat();
+        const PurchasesAreCompletedByRevenueCat();
     String? userDefaultsSuiteName = "fakeSuiteName";
     bool useAmazon = false;
     StoreKitVersion storeKitVersion = StoreKitVersion.storeKit2;
@@ -27,7 +27,8 @@ class _PurchasesFlutterApiTest {
   void _checkConfigure() {
     PurchasesConfiguration configuration = PurchasesConfiguration("fakeApiKey");
     configuration.appUserID = "fakeUserId";
-    configuration.purchasesAreCompletedBy = PurchasesAreCompletedByRevenueCat();
+    configuration.purchasesAreCompletedBy =
+        const PurchasesAreCompletedByRevenueCat();
     configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
       storeKitVersion: StoreKitVersion.defaultVersion,
     );
@@ -546,6 +547,7 @@ class _PurchasesFlutterApiTest {
     PurchasesAreCompletedBy myApp = PurchasesAreCompletedByMyApp(
       storeKitVersion: StoreKitVersion.defaultVersion,
     );
-    PurchasesAreCompletedBy revenueCat = PurchasesAreCompletedByRevenueCat();
+    PurchasesAreCompletedBy revenueCat =
+        const PurchasesAreCompletedByRevenueCat();
   }
 }

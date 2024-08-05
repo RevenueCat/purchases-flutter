@@ -86,7 +86,7 @@ class Purchases {
   ///
   /// [appUserID] An optional unique id for identifying the user.
   ///
-  /// [purchasesAreCompletedBy] Set this to MY_APP and provide a StoreKitVersion if you
+  /// [purchasesAreCompletedBy] Set this to PurchasesAreCompletedByMyApp and provide a StoreKitVersion if you
   /// have your own IAP implementation and want to only use RevenueCat's backend.
   /// Defaults to PurchasesAreCompletedByRevenueCat.
   ///
@@ -912,7 +912,7 @@ class Purchases {
   ///
   /// You only need to use this method with *new* purchases. Subscription updates are observed automatically.
   ///
-  /// Important: This should only be used if you have set PurchasesAreCompletedBy to MY_APP during SDK configuration.
+  /// Important: This should only be used if you have set purchasesAreCompletedBy to PurchasesAreCompletedByMyApp during SDK configuration.
   ///
   /// @warning You need to finish the transaction yourself after calling this method.
   ///
