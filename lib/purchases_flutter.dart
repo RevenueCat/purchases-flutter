@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'models/storekit_version.dart';
 import 'object_wrappers.dart';
 
 export 'object_wrappers.dart';

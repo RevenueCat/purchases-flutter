@@ -7,26 +7,30 @@ class _PurchasesFlutterApiTest {
   void _checkSetup() {
     String apiKey = "fakeApiKey";
     String? userId = "fakeUserId";
-    bool observerMode = false;
+    PurchasesAreCompletedBy purchasesAreCompletedBy = PurchasesAreCompletedByRevenueCat();
     String? userDefaultsSuiteName = "fakeSuiteName";
     bool useAmazon = false;
-    bool usesStoreKit2IfAvailable = true;
+    StoreKitVersion storeKitVersion = StoreKitVersion.storeKit2
+
+    Future<void> callback = Purchases.setup(apiKey);
     Future<void> callback = Purchases.setup(apiKey,
         appUserId: userId,
-        observerMode: observerMode,
+        purchasesAreCompletedBy: purchasesAreCompletedBy,
         userDefaultsSuiteName: userDefaultsSuiteName,
-        useAmazon: useAmazon,
-        usesStoreKit2IfAvailable: usesStoreKit2IfAvailable);
+        storeKitVersion: storeKitVersion,
+        useAmazon: useAmazon,);
+
   }
 
   void _checkConfigure() {
     PurchasesConfiguration configuration = PurchasesConfiguration("fakeApiKey");
     configuration.appUserID = "fakeUserId";
-    configuration.observerMode = false;
+    configuration.purchasesAreCompletedBy = PurchasesAreCompletedByRevenueCat();
+    configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion)
     configuration.shouldShowInAppMessagesAutomatically = true;
     configuration.store = Store.amazon;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
-    configuration.usesStoreKit2IfAvailable = true;
+    configuration.storeKitVersion = StoreKitVersion.defaultVersion;
     Future<void> callback = Purchases.configure(configuration);
   }
 
