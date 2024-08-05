@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:purchases_flutter/models/storekit_version.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
@@ -57,11 +58,13 @@ void main() {
     response = null;
   });
 
-  test('setupPurchases', () async {
+  test('setupPurchases with purchasesAreCompletedBy', () async {
     await Purchases.setup(
       'api_key',
       appUserId: 'cesar',
-      observerMode: true,
+      purchasesAreCompletedBy: PurchasesAreCompletedByMyApp(
+        storeKitVersion: StoreKitVersion.storeKit2,
+      ),
     );
     expect(
       log,
@@ -71,11 +74,36 @@ void main() {
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
             'appUserId': 'cesar',
-            'observerMode': true,
-            'purchasesAreCompletedBy': null,
+            'purchasesAreCompletedBy': 'MY_APP',
             'userDefaultsSuiteName': null,
             'useAmazon': false,
-            'usesStoreKit2IfAvailable': false,
+            'storeKitVersion': 'STOREKIT_2',
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+          },
+        ),
+      ],
+    );
+  });
+
+  test('setupPurchases', () async {
+    await Purchases.setup(
+      'api_key',
+      appUserId: 'cesar',
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'purchasesAreCompletedBy': 'REVENUECAT',
+            'userDefaultsSuiteName': null,
+            'useAmazon': false,
+            'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
@@ -958,7 +986,8 @@ void main() {
     await Purchases.setup(
       'api_key',
       appUserId: 'cesar',
-      observerMode: true,
+      purchasesAreCompletedBy: PurchasesAreCompletedByMyApp(
+          storeKitVersion: StoreKitVersion.storeKit2),
       useAmazon: true,
     );
     expect(
@@ -969,11 +998,10 @@ void main() {
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
             'appUserId': 'cesar',
-            'observerMode': true,
-            'purchasesAreCompletedBy': null,
+            'purchasesAreCompletedBy': 'MY_APP',
             'userDefaultsSuiteName': null,
+            'storeKitVersion': 'STOREKIT_2',
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false,
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
@@ -987,8 +1015,7 @@ void main() {
     await Purchases.configure(
       AmazonConfiguration('api_key')
         ..appUserID = 'cesar'
-        ..observerMode = true
-        ..purchasesAreCompletedBy = PurchasesAreCompletedBy.revenueCat
+        ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat()
         ..pendingTransactionsForPrepaidPlansEnabled = true,
     );
     expect(
@@ -999,11 +1026,10 @@ void main() {
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
             'appUserId': 'cesar',
-            'observerMode': true,
             'purchasesAreCompletedBy': 'REVENUECAT',
             'userDefaultsSuiteName': null,
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false,
+            'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': true,
@@ -1017,7 +1043,9 @@ void main() {
     await Purchases.configure(
       PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
-        ..observerMode = true,
+        ..purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
+          storeKitVersion: StoreKitVersion.defaultVersion,
+        ),
     );
     expect(
       log,
@@ -1027,11 +1055,10 @@ void main() {
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
             'appUserId': 'cesar',
-            'observerMode': true,
-            'purchasesAreCompletedBy': null,
+            'purchasesAreCompletedBy': 'MY_APP',
             'userDefaultsSuiteName': null,
+            'storeKitVersion': 'DEFAULT',
             'useAmazon': false,
-            'usesStoreKit2IfAvailable': false,
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
@@ -1045,7 +1072,9 @@ void main() {
     await Purchases.configure(
       PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
-        ..observerMode = true
+        ..purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
+          storeKitVersion: StoreKitVersion.defaultVersion,
+        )
         ..store = Store.amazon,
     );
     expect(
@@ -1056,11 +1085,10 @@ void main() {
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
             'appUserId': 'cesar',
-            'observerMode': true,
-            'purchasesAreCompletedBy': null,
+            'purchasesAreCompletedBy': 'MY_APP',
             'userDefaultsSuiteName': null,
+            'storeKitVersion': 'DEFAULT',
             'useAmazon': true,
-            'usesStoreKit2IfAvailable': false,
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,

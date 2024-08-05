@@ -183,7 +183,8 @@ class Purchases {
 
       if (storeKitVersionToUse != purchasesConfiguration.storeKitVersion) {
         debugPrint(
-            "Warning: The storeKitVersion in purchasesAreCompletedBy does not match the function's storeKitVersion parameter. We will use the value found in purchasesAreCompletedBy.");
+            'Warning: The storeKitVersion in purchasesAreCompletedBy does not match the '
+            'function\'s storeKitVersion parameter. We will use the value found in purchasesAreCompletedBy.');
       }
     }
 
