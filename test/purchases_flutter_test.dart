@@ -57,6 +57,32 @@ void main() {
     response = null;
   });
 
+  test('setupPurchases', () async {
+    await Purchases.setup(
+      'api_key',
+      appUserId: 'cesar',
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'purchasesAreCompletedBy': 'REVENUECAT',
+            'userDefaultsSuiteName': null,
+            'useAmazon': false,
+            'storeKitVersion': 'DEFAULT',
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+          },
+        ),
+      ],
+    );
+  });
+
   test('setupPurchases with purchasesAreCompletedBy', () async {
     await Purchases.setup(
       'api_key',
@@ -86,10 +112,11 @@ void main() {
     );
   });
 
-  test('setupPurchases', () async {
+  test('setupPurchases with storeKitVersion', () async {
     await Purchases.setup(
       'api_key',
-      appUserId: 'cesar',
+      appUserId: 'will',
+      storeKitVersion: StoreKitVersion.storeKit1,
     );
     expect(
       log,
@@ -98,11 +125,41 @@ void main() {
           'setupPurchases',
           arguments: <String, dynamic>{
             'apiKey': 'api_key',
-            'appUserId': 'cesar',
+            'appUserId': 'will',
             'purchasesAreCompletedBy': 'REVENUECAT',
             'userDefaultsSuiteName': null,
             'useAmazon': false,
-            'storeKitVersion': 'DEFAULT',
+            'storeKitVersion': 'STOREKIT_1',
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+          },
+        ),
+      ],
+    );
+  });
+
+  test('setupPurchases with conflicting storeKitVersions', () async {
+    await Purchases.setup(
+      'api_key',
+      appUserId: 'will',
+      purchasesAreCompletedBy: PurchasesAreCompletedByMyApp(
+        storeKitVersion: StoreKitVersion.storeKit2,
+      ),
+      storeKitVersion: StoreKitVersion.storeKit1,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'will',
+            'purchasesAreCompletedBy': 'MY_APP',
+            'userDefaultsSuiteName': null,
+            'useAmazon': false,
+            'storeKitVersion': 'STOREKIT_2',
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
