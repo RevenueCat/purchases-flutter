@@ -236,10 +236,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "syncPurchases":
                 syncPurchases(result);
                 break;
-            case "setAutomaticAppleSearchAdsAttributionCollection":
-                // NOOP
-                result.success(null);
-                break;
             case "enableAdServicesAttributionTokenCollection":
                 // NOOP
                 result.success(null);

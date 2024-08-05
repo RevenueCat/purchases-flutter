@@ -987,7 +987,8 @@ void main() {
       'api_key',
       appUserId: 'cesar',
       purchasesAreCompletedBy: PurchasesAreCompletedByMyApp(
-          storeKitVersion: StoreKitVersion.storeKit2),
+        storeKitVersion: StoreKitVersion.storeKit2,
+      ),
       useAmazon: true,
     );
     expect(

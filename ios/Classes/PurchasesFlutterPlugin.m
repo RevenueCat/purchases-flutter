@@ -106,8 +106,6 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
         [self syncPurchasesWithResult:result];
-    } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
-        [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"enableAdServicesAttributionTokenCollection" isEqualToString:call.method]) {
         [self enableAdServicesAttributionTokenCollection:result];
     } else if ([@"isAnonymous" isEqualToString:call.method]) {
@@ -365,12 +363,6 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)getCustomerInfoWithResult:(FlutterResult)result {
     [RCCommonFunctionality getCustomerInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
-}
-
-- (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
-                                                 result:(FlutterResult)result {
-    [RCCommonFunctionality setAutomaticAppleSearchAdsAttributionCollection:enabled];
-    result(nil);
 }
 
 - (void)enableAdServicesAttributionTokenCollection:(FlutterResult)result {

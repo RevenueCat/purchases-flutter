@@ -664,16 +664,6 @@ class Purchases {
 
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default
-  @Deprecated('Use enableAdServicesAttributionTokenCollection')
-  static Future<void> setAutomaticAppleSearchAdsAttributionCollection(
-    bool enabled,
-  ) =>
-      _channel.invokeMethod('setAutomaticAppleSearchAdsAttributionCollection', {
-        'enabled': enabled,
-      });
-
-  /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
-  /// default
   static Future<void> enableAdServicesAttributionTokenCollection() =>
       _channel.invokeMethod('enableAdServicesAttributionTokenCollection');
 

@@ -216,12 +216,6 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.syncPurchases();
   }
 
-  void _checkSetAutomaticAppleSearchAdsAttributionCollection() {
-    Future<void> future;
-    bool enabled = false;
-    future = Purchases.setAutomaticAppleSearchAdsAttributionCollection(enabled);
-  }
-
   void _checkEnableAdServicesAttributionTokenCollection() {
     Future<void> future =
         Purchases.enableAdServicesAttributionTokenCollection();
