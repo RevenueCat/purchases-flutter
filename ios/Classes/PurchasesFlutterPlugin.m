@@ -106,6 +106,8 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self syncPurchasesWithResult:result];
     } else if ([@"enableAdServicesAttributionTokenCollection" isEqualToString:call.method]) {
         [self enableAdServicesAttributionTokenCollection:result];
+    } else if ([@"recordPurchaseForProductID" isEqualToString:call.method]) {
+        [self recordPurchaseForProductID:arguments[@"productIdentifier"] result:result];
     } else if ([@"isAnonymous" isEqualToString:call.method]) {
         [self isAnonymousWithResult:result];
     } else if ([@"isConfigured" isEqualToString:call.method]) {
@@ -310,6 +312,24 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)syncPurchasesWithResult:(FlutterResult)result {
     [RCCommonFunctionality syncPurchasesWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)recordPurchaseForProductID:(NSString*)productId
+                            result:(FlutterResult)result {
+    if (@available(iOS 15.0, macOS 12.0, *)) {
+        [RCCommonFunctionality recordPurchaseForProductID:productId
+                                               completion:^(NSDictionary<NSString *,id> * _Nullable responseDictionary, RCErrorContainer * _Nullable error) {
+            if (error) {
+                [self rejectWithResult:result error:error];
+            } else {
+                result(responseDictionary);
+            }
+        }];
+    } else {
+        // Fallback on earlier versions
+        NSLog(@"[Purchases] Warning: tried to call recordPurchaseForProductID, but it's only available on iOS 15.0 and macOS 12.0 or greater.");
+        result(nil);
+    }
 }
 
 - (void)getAppUserIDWithResult:(FlutterResult)result {

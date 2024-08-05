@@ -905,6 +905,30 @@ class Purchases {
     return RefundRequestStatusExtension.from(statusCode);
   }
 
+  /// iOS only. Always returns an error on iOS < 15.
+  ///
+  /// Use this method only if you already have your own IAP implementation using StoreKit 2 and want to use
+  /// RevenueCat's backend. If you are using StoreKit 1 for your implementation, you do not need this method.
+  ///
+  /// You only need to use this method with *new* purchases. Subscription updates are observed automatically.
+  ///
+  /// Important: This should only be used if you have set PurchasesAreCompletedBy to MY_APP during SDK configuration.
+  ///
+  /// @warning You need to finish the transaction yourself after calling this method.
+  ///
+  /// @param [productID] Product ID that was just purchased
+  /// @returns [Future<StoreTransaction>] If there was a transaction found and handled for the provided product ID.
+  static Future<StoreTransaction> recordPurchase(
+    String productID,
+  ) async {
+    final statusCode = await _channel.invokeMethod(
+      'recordPurchaseForProductID',
+    );
+    if (statusCode == null) throw UnsupportedPlatformException();
+    return await _channel
+        .invokeMethod('recordPurchaseForProductID', {'productID': productID});
+  }
+
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
   /// the latest transaction associated with the `product`
   ///

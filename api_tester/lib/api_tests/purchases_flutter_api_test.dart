@@ -7,25 +7,30 @@ class _PurchasesFlutterApiTest {
   void _checkSetup() {
     String apiKey = "fakeApiKey";
     String? userId = "fakeUserId";
-    PurchasesAreCompletedBy purchasesAreCompletedBy = PurchasesAreCompletedByRevenueCat();
+    PurchasesAreCompletedBy purchasesAreCompletedBy =
+        PurchasesAreCompletedByRevenueCat();
     String? userDefaultsSuiteName = "fakeSuiteName";
     bool useAmazon = false;
-    StoreKitVersion storeKitVersion = StoreKitVersion.storeKit2
+    StoreKitVersion storeKitVersion = StoreKitVersion.storeKit2;
 
     Future<void> callback = Purchases.setup(apiKey);
-    Future<void> callback2 = Purchases.setup(apiKey,
-        appUserId: userId,
-        purchasesAreCompletedBy: purchasesAreCompletedBy,
-        userDefaultsSuiteName: userDefaultsSuiteName,
-        storeKitVersion: storeKitVersion,
-        useAmazon: useAmazon,);
+    Future<void> callback2 = Purchases.setup(
+      apiKey,
+      appUserId: userId,
+      purchasesAreCompletedBy: purchasesAreCompletedBy,
+      userDefaultsSuiteName: userDefaultsSuiteName,
+      storeKitVersion: storeKitVersion,
+      useAmazon: useAmazon,
+    );
   }
 
   void _checkConfigure() {
     PurchasesConfiguration configuration = PurchasesConfiguration("fakeApiKey");
     configuration.appUserID = "fakeUserId";
     configuration.purchasesAreCompletedBy = PurchasesAreCompletedByRevenueCat();
-    configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion);
+    configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(
+      storeKitVersion: StoreKitVersion.defaultVersion,
+    );
     configuration.shouldShowInAppMessagesAutomatically = true;
     configuration.store = Store.amazon;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
@@ -212,6 +217,11 @@ class _PurchasesFlutterApiTest {
 
   void _checkSyncPurchases() {
     Future<void> future = Purchases.syncPurchases();
+  }
+
+  void _checkRecordPurchase() async {
+    String productIdentifier = "product_id";
+    Future<void> future = Purchases.recordPurchase(productIdentifier);
   }
 
   void _checkEnableAdServicesAttributionTokenCollection() {
@@ -521,5 +531,21 @@ class _PurchasesFlutterApiTest {
       InAppMessageType.priceIncreaseConsent,
       InAppMessageType.generic
     });
+  }
+
+  void _checkStoreKitVersion(StoreKitVersion storeKitVersion) {
+    switch (storeKitVersion) {
+      case StoreKitVersion.storeKit1:
+      case StoreKitVersion.storeKit2:
+      case StoreKitVersion.defaultVersion:
+        break;
+    }
+  }
+
+  void _checkPurchasesAreCompletedBy() {
+    PurchasesAreCompletedBy myApp = PurchasesAreCompletedByMyApp(
+      storeKitVersion: StoreKitVersion.defaultVersion,
+    );
+    PurchasesAreCompletedBy revenueCat = PurchasesAreCompletedByRevenueCat();
   }
 }
