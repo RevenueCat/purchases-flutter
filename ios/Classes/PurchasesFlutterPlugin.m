@@ -66,8 +66,6 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
-    } else if ([@"setFinishTransactions" isEqualToString:call.method]) {
-        [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
     } else if ([@"getOfferings" isEqualToString:call.method]) {
         [self getOfferingsWithResult:result];
     } else if ([@"getCurrentOfferingForPlacement" isEqualToString:call.method]) {
@@ -264,16 +262,6 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality setAllowSharingStoreAccount:allowSharingStoreAccount];
 #pragma GCC diagnostic pop
-    result(nil);
-}
-
-- (void)setFinishTransactions:(BOOL)finishTransactions
-                       result:(FlutterResult)result {
-    if (finishTransactions) {
-        [RCCommonFunctionality setPurchasesAreCompletedBy:@"REVENUECAT"];
-    } else {
-        [RCCommonFunctionality setPurchasesAreCompletedBy:@"MY_APP"];
-    }
     result(nil);
 }
 

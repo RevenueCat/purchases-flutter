@@ -34,11 +34,6 @@ class _PurchasesFlutterApiTest {
     Future<void> callback = Purchases.configure(configuration);
   }
 
-  void _checkSetFinishTransactions() {
-    bool finishTransactions = false;
-    Future<void> callback = Purchases.setFinishTransactions(finishTransactions);
-  }
-
   void _checkSetAllowSharingStoreAccount() {
     bool allowSharing = false;
     Future<void> callback = Purchases.setAllowSharingStoreAccount(allowSharing);

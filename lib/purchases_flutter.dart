@@ -206,18 +206,6 @@ class Purchases {
     );
   }
 
-  // Default to TRUE, set this to FALSE if you are consuming and acknowledging transactions outside of the Purchases SDK.
-  ///
-  /// [finishTransactions] The value to be passed to finishTransactions.
-  ///
-  static Future<void> setFinishTransactions(bool finishTransactions) =>
-      _channel.invokeMethod(
-        'setFinishTransactions',
-        {
-          'finishTransactions': finishTransactions,
-        },
-      );
-
   /// Deprecated. Configure behavior through the RevenueCat dashboard instead.
   /// Set this to true if you are passing in an appUserID but it is anonymous.
   ///

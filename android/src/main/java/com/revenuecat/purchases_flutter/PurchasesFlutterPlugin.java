@@ -153,10 +153,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled, result);
                 break;
-            case "setFinishTransactions":
-                Boolean finishTransactions = call.argument("finishTransactions");
-                setFinishTransactions(finishTransactions, result);
-                break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
                 setAllowSharingAppStoreAccount(allowSharing, result);
@@ -411,18 +407,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             Map<String, Object> customerInfoMap = CustomerInfoMapperKt.map(customerInfo);
             invokeChannelMethodOnUiThread(CUSTOMER_INFO_UPDATED, customerInfoMap);
         });
-    }
-
-    private void setFinishTransactions(@Nullable Boolean finishTransactions, Result result) {
-        if (finishTransactions != null) {
-            CommonKt.setPurchasesAreCompletedBy(finishTransactions ? "REVENUECAT" : "MY_APP");
-            result.success(null);
-        } else {
-            result.error(
-                    INVALID_ARGS_ERROR_CODE,
-                    "Missing finishTransactions argument",
-                    null);
-        }
     }
 
     @SuppressWarnings("deprecation")
