@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:purchases_flutter/models/storekit_version.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
 // ignore_for_file: deprecated_member_use_from_same_package
