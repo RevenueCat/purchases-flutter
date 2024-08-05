@@ -134,35 +134,6 @@ class Purchases {
     return configure(configuration);
   }
 
-  // /// Sets up Purchases with your API key and an app user id.
-  // ///
-  // /// [PurchasesConfiguration] Object containing configuration parameters
-  // static Future<void> configure(
-  //   PurchasesConfiguration purchasesConfiguration,
-  // ) =>
-  //     _channel.invokeMethod(
-  //       'setupPurchases',
-  //       {
-  //         'apiKey': purchasesConfiguration.apiKey,
-  //         'appUserId': purchasesConfiguration.appUserID,
-  //         // ignore: deprecated_member_use_from_same_package
-  //         // 'observerMode': purchasesConfiguration.observerMode,
-  //         'purchasesAreCompletedBy':
-  //             purchasesConfiguration.purchasesAreCompletedBy?.name,
-  //         'userDefaultsSuiteName': purchasesConfiguration.userDefaultsSuiteName,
-  //         'useAmazon': purchasesConfiguration.store == Store.amazon,
-  //         'usesStoreKit2IfAvailable':
-  //             // ignore: deprecated_member_use_from_same_package
-  //             purchasesConfiguration.usesStoreKit2IfAvailable,
-  //         'shouldShowInAppMessagesAutomatically':
-  //             purchasesConfiguration.shouldShowInAppMessagesAutomatically,
-  //         'entitlementVerificationMode':
-  //             purchasesConfiguration.entitlementVerificationMode.name,
-  //         'pendingTransactionsForPrepaidPlansEnabled':
-  //             purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
-  //       },
-  //     );
-
   /// Sets up Purchases with your API key and an app user id.
   ///
   /// [PurchasesConfiguration] Object containing configuration parameters

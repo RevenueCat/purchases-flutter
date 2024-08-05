@@ -26,7 +26,7 @@ class _PurchasesFlutterApiTest {
     PurchasesConfiguration configuration = PurchasesConfiguration("fakeApiKey");
     configuration.appUserID = "fakeUserId";
     configuration.purchasesAreCompletedBy = PurchasesAreCompletedByRevenueCat();
-    configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion)
+    configuration.purchasesAreCompletedBy = PurchasesAreCompletedByMyApp(storeKitVersion: StoreKitVersion.defaultVersion);
     configuration.shouldShowInAppMessagesAutomatically = true;
     configuration.store = Store.amazon;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
