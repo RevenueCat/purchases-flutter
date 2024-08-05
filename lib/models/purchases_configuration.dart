@@ -1,4 +1,5 @@
 import '../purchases_flutter.dart';
+import 'storekit_version.dart';
 
 /// Used when calling [configure] to configure the RevenueCat plugin
 class PurchasesConfiguration {
@@ -9,12 +10,6 @@ class PurchasesConfiguration {
 
   /// An optional unique id for identifying the user.
   String? appUserID;
-
-  /// An optional boolean. Set this to TRUE if you have your own
-  /// IAP implementation and want to use only RevenueCat's backend.
-  /// Default is FALSE.
-  @Deprecated('Use purchasesAreCompletedBy instead')
-  bool observerMode = false;
 
   /// Set this to myApp if you have your own
   /// IAP implementation and want to use only RevenueCat's backend.
@@ -29,22 +24,15 @@ class PurchasesConfiguration {
   String? userDefaultsSuiteName;
 
   /// iOS-only, will be ignored for Android.
-  /// Set this to FALSE to disable StoreKit2.
-  /// Default is FALSE.
+  /// By selecting the DEFAULT value, RevenueCat will automatically select the most appropriate StoreKit version
+  /// for the app's runtime environment.
   ///
-  /// RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
-  /// proven to be more performant than StoreKit 2.
-  /// We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
-  /// that you shouldn't need to care about.
-  /// Simply remove this method call to let RevenueCat decide for you which StoreKit implementation to use.
-  @Deprecated("""
-    RevenueCat currently uses StoreKit 1 for purchases, as its stability in production scenarios has
-    proven to be more performant than StoreKit 2.
-    We're collecting more data on the best approach, but StoreKit 1 vs StoreKit 2 is an implementation detail
-    that you shouldn't need to care about.
-    Simply remove this method call to let RevenueCat decide for you which StoreKit implementation to use.
-  """)
-  bool usesStoreKit2IfAvailable = false;
+  /// - Warning: Make sure you have an In-App Purchase Key configured in your app.
+  /// Please see https://rev.cat/in-app-purchase-key-configuration for more info.
+  ///
+  /// - Note: StoreKit 2 is only available on iOS 16+. StoreKit 1 will be used for previous iOS versions
+  /// regardless of this setting.
+  StoreKitVersion? storeKitVersion;
 
   /// Whether we should show store in-app messages automatically. Both Google Play and the App Store provide in-app
   /// messages for some situations like billing issues. By default, those messages will be shown automatically.

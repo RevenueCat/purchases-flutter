@@ -1,5 +1,7 @@
+import './storekit_version.dart';
+
 /// Modes for completing the purchase process.
-enum PurchasesAreCompletedBy {
+enum PurchasesAreCompletedByType {
   /// RevenueCat will **not** automatically acknowledge any purchases.
   /// You will have to do so manually.
   /// Note that failing to acknowledge a purchase within 3 days will lead
@@ -13,13 +15,30 @@ enum PurchasesAreCompletedBy {
   revenueCat,
 }
 
-extension PurchasesAreCompletedByExtension on PurchasesAreCompletedBy {
+extension PurchasesAreCompletedByTypeExtension on PurchasesAreCompletedByType {
   String get name {
     switch (this) {
-      case PurchasesAreCompletedBy.myApp:
+      case PurchasesAreCompletedByType.myApp:
         return 'MY_APP';
-      case PurchasesAreCompletedBy.revenueCat:
+      case PurchasesAreCompletedByType.revenueCat:
         return 'REVENUECAT';
     }
   }
+}
+
+// Sealed class for PurchasesAreCompletedBy
+abstract class PurchasesAreCompletedBy {
+  const PurchasesAreCompletedBy();
+}
+
+class PurchasesAreCompletedByRevenueCat extends PurchasesAreCompletedBy {
+  const PurchasesAreCompletedByRevenueCat();
+}
+
+class PurchasesAreCompletedByMyApp extends PurchasesAreCompletedBy {
+  final StoreKitVersion storeKitVersion;
+
+  PurchasesAreCompletedByMyApp({
+    required this.storeKitVersion,
+  });
 }
