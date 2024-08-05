@@ -42,11 +42,11 @@ Future<void> _configureSDK() async {
   if (StoreConfig.isForAmazonAppstore()) {
     configuration = AmazonConfiguration(StoreConfig.instance.apiKey)
       ..appUserID = null
-      ..purchasesAreCompletedBy = PurchasesAreCompletedBy.revenueCat;
+      ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
   } else {
     configuration = PurchasesConfiguration(StoreConfig.instance.apiKey)
       ..appUserID = null
-      ..purchasesAreCompletedBy = PurchasesAreCompletedBy.revenueCat;
+      ..purchasesAreCompletedBy = const PurchasesAreCompletedByRevenueCat();
   }
   await Purchases.configure(configuration);
 }
