@@ -34,7 +34,7 @@ Purchases.configure(configuration);
 
 ### Observer Mode is now PurchasesAreCompletedBy
 
-Version 8.0 of the SDK deprecates the term "Observer Mode" (and the APIs where this term was used), and replaces it with `PurchasesAreCompletedBy` (either RevenueCat or your app). When specifying that your app will complete purchases, you must provide the StoreKit version that your app is using to make purchases on iOS. If your app is only available on Android, you may provide any value since the native Android SDK ignores this value.
+Version 7.0 of the SDK deprecates the term "Observer Mode" (and the APIs where this term was used), and replaces it with `PurchasesAreCompletedBy` (either RevenueCat or your app). When specifying that your app will complete purchases, you must provide the StoreKit version that your app is using to make purchases on iOS. If your app is only available on Android, you may provide any value since the native Android SDK ignores this value.
 
 You can enable it when configuring the SDK:
 
