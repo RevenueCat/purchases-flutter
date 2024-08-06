@@ -28,7 +28,7 @@ class PurchasesConfiguration {
   String? userDefaultsSuiteName;
 
   /// iOS-only, will be ignored for Android.
-  /// By selecting the DEFAULT value, RevenueCat will automatically select the most appropriate StoreKit version
+  /// By providing StoreKitVersion.defaultVersion, RevenueCat will automatically select the most appropriate StoreKit version
   /// for the app's runtime environment.
   ///
   /// - Warning: Make sure you have an In-App Purchase Key configured in your app.
