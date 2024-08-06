@@ -67,6 +67,11 @@ mixin _$SubscriptionOption {
   PresentedOfferingContext? get presentedOfferingContext =>
       throw _privateConstructorUsedError;
 
+  /// For installment subscriptions, the details of the installment plan the customer commits to.
+  /// Null for non-installment subscriptions.
+  /// Installment plans are only available for Google Play subscriptions.
+  InstallmentsInfo? get installmentsInfo => throw _privateConstructorUsedError;
+
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SubscriptionOptionCopyWith<SubscriptionOption> get copyWith =>
@@ -91,13 +96,15 @@ abstract class $SubscriptionOptionCopyWith<$Res> {
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
-      PresentedOfferingContext? presentedOfferingContext});
+      PresentedOfferingContext? presentedOfferingContext,
+      InstallmentsInfo? installmentsInfo});
 
   $PeriodCopyWith<$Res>? get billingPeriod;
   $PricingPhaseCopyWith<$Res>? get fullPricePhase;
   $PricingPhaseCopyWith<$Res>? get freePhase;
   $PricingPhaseCopyWith<$Res>? get introPhase;
   $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext;
+  $InstallmentsInfoCopyWith<$Res>? get installmentsInfo;
 }
 
 /// @nodoc
@@ -125,6 +132,7 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     Object? freePhase = freezed,
     Object? introPhase = freezed,
     Object? presentedOfferingContext = freezed,
+    Object? installmentsInfo = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -175,6 +183,10 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
           ? _value.presentedOfferingContext
           : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
               as PresentedOfferingContext?,
+      installmentsInfo: freezed == installmentsInfo
+          ? _value.installmentsInfo
+          : installmentsInfo // ignore: cast_nullable_to_non_nullable
+              as InstallmentsInfo?,
     ) as $Val);
   }
 
@@ -238,6 +250,18 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
       return _then(_value.copyWith(presentedOfferingContext: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $InstallmentsInfoCopyWith<$Res>? get installmentsInfo {
+    if (_value.installmentsInfo == null) {
+      return null;
+    }
+
+    return $InstallmentsInfoCopyWith<$Res>(_value.installmentsInfo!, (value) {
+      return _then(_value.copyWith(installmentsInfo: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -260,7 +284,8 @@ abstract class _$$SubscriptionOptionImplCopyWith<$Res>
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
-      PresentedOfferingContext? presentedOfferingContext});
+      PresentedOfferingContext? presentedOfferingContext,
+      InstallmentsInfo? installmentsInfo});
 
   @override
   $PeriodCopyWith<$Res>? get billingPeriod;
@@ -272,6 +297,8 @@ abstract class _$$SubscriptionOptionImplCopyWith<$Res>
   $PricingPhaseCopyWith<$Res>? get introPhase;
   @override
   $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext;
+  @override
+  $InstallmentsInfoCopyWith<$Res>? get installmentsInfo;
 }
 
 /// @nodoc
@@ -297,6 +324,7 @@ class __$$SubscriptionOptionImplCopyWithImpl<$Res>
     Object? freePhase = freezed,
     Object? introPhase = freezed,
     Object? presentedOfferingContext = freezed,
+    Object? installmentsInfo = freezed,
   }) {
     return _then(_$SubscriptionOptionImpl(
       null == id
@@ -347,6 +375,10 @@ class __$$SubscriptionOptionImplCopyWithImpl<$Res>
           ? _value.presentedOfferingContext
           : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
               as PresentedOfferingContext?,
+      freezed == installmentsInfo
+          ? _value.installmentsInfo
+          : installmentsInfo // ignore: cast_nullable_to_non_nullable
+              as InstallmentsInfo?,
     ));
   }
 }
@@ -366,7 +398,8 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
       this.fullPricePhase,
       this.freePhase,
       this.introPhase,
-      this.presentedOfferingContext)
+      this.presentedOfferingContext,
+      this.installmentsInfo)
       : _pricingPhases = pricingPhases,
         _tags = tags;
 
@@ -445,9 +478,15 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
   @override
   final PresentedOfferingContext? presentedOfferingContext;
 
+  /// For installment subscriptions, the details of the installment plan the customer commits to.
+  /// Null for non-installment subscriptions.
+  /// Installment plans are only available for Google Play subscriptions.
+  @override
+  final InstallmentsInfo? installmentsInfo;
+
   @override
   String toString() {
-    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, isPrepaid: $isPrepaid, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase, presentedOfferingContext: $presentedOfferingContext)';
+    return 'SubscriptionOption(id: $id, storeProductId: $storeProductId, productId: $productId, pricingPhases: $pricingPhases, tags: $tags, isBasePlan: $isBasePlan, billingPeriod: $billingPeriod, isPrepaid: $isPrepaid, fullPricePhase: $fullPricePhase, freePhase: $freePhase, introPhase: $introPhase, presentedOfferingContext: $presentedOfferingContext, installmentsInfo: $installmentsInfo)';
   }
 
   @override
@@ -477,7 +516,9 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
                 other.introPhase == introPhase) &&
             (identical(
                     other.presentedOfferingContext, presentedOfferingContext) ||
-                other.presentedOfferingContext == presentedOfferingContext));
+                other.presentedOfferingContext == presentedOfferingContext) &&
+            (identical(other.installmentsInfo, installmentsInfo) ||
+                other.installmentsInfo == installmentsInfo));
   }
 
   @JsonKey(ignore: true)
@@ -495,7 +536,8 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
       fullPricePhase,
       freePhase,
       introPhase,
-      presentedOfferingContext);
+      presentedOfferingContext,
+      installmentsInfo);
 
   @JsonKey(ignore: true)
   @override
@@ -514,19 +556,19 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
 
 abstract class _SubscriptionOption implements SubscriptionOption {
   const factory _SubscriptionOption(
-          final String id,
-          final String storeProductId,
-          final String productId,
-          final List<PricingPhase> pricingPhases,
-          final List<String> tags,
-          final bool isBasePlan,
-          final Period? billingPeriod,
-          final bool isPrepaid,
-          final PricingPhase? fullPricePhase,
-          final PricingPhase? freePhase,
-          final PricingPhase? introPhase,
-          final PresentedOfferingContext? presentedOfferingContext) =
-      _$SubscriptionOptionImpl;
+      final String id,
+      final String storeProductId,
+      final String productId,
+      final List<PricingPhase> pricingPhases,
+      final List<String> tags,
+      final bool isBasePlan,
+      final Period? billingPeriod,
+      final bool isPrepaid,
+      final PricingPhase? fullPricePhase,
+      final PricingPhase? freePhase,
+      final PricingPhase? introPhase,
+      final PresentedOfferingContext? presentedOfferingContext,
+      final InstallmentsInfo? installmentsInfo) = _$SubscriptionOptionImpl;
 
   factory _SubscriptionOption.fromJson(Map<String, dynamic> json) =
       _$SubscriptionOptionImpl.fromJson;
@@ -589,6 +631,12 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   /// Offering context this package belongs to.
   /// Null if not using offerings or if fetched directly from store via getProducts
   PresentedOfferingContext? get presentedOfferingContext;
+  @override
+
+  /// For installment subscriptions, the details of the installment plan the customer commits to.
+  /// Null for non-installment subscriptions.
+  /// Installment plans are only available for Google Play subscriptions.
+  InstallmentsInfo? get installmentsInfo;
   @override
   @JsonKey(ignore: true)
   _$$SubscriptionOptionImplCopyWith<_$SubscriptionOptionImpl> get copyWith =>

@@ -7,6 +7,7 @@ import 'package:api_tester/api_tests/errors_api_test.dart';
 import 'package:api_tester/api_tests/models/customer_info_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/entitlement_info_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/entitlement_infos_wrapper_api_test.dart';
+import 'package:api_tester/api_tests/models/installments_info_api_test.dart';
 import 'package:api_tester/api_tests/models/introductory_price_api_test.dart';
 import 'package:api_tester/api_tests/models/offering_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/offerings_wrapper_api_test.dart';

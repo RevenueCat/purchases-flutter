@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'installments_info.dart';
 import 'period_wrapper.dart';
 import 'presented_offering_context_wrapper.dart';
 import 'pricing_phase_wrapper.dart';
@@ -58,6 +59,11 @@ class SubscriptionOption with _$SubscriptionOption {
     /// Offering context this package belongs to.
     /// Null if not using offerings or if fetched directly from store via getProducts
     PresentedOfferingContext? presentedOfferingContext,
+
+    /// For installment subscriptions, the details of the installment plan the customer commits to.
+    /// Null for non-installment subscriptions.
+    /// Installment plans are only available for Google Play subscriptions.
+    InstallmentsInfo? installmentsInfo,
   ) = _SubscriptionOption;
 
   factory SubscriptionOption.fromJson(Map<String, dynamic> json) =>

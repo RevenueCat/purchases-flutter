@@ -24,7 +24,8 @@ class _SubscriptionOptionApiTest {
       PricingPhase? fullPricePhase,
       PricingPhase? freePhase,
       PricingPhase? introPhase,
-      PresentedOfferingContext? presentedOfferingContext) {
+      PresentedOfferingContext? presentedOfferingContext,
+      InstallmentsInfo? installmentsInfo) {
     SubscriptionOption subscriptionOption = SubscriptionOption(
         id,
         storeProductId,
@@ -37,7 +38,8 @@ class _SubscriptionOptionApiTest {
         fullPricePhase,
         freePhase,
         introPhase,
-        presentedOfferingContext);
+        presentedOfferingContext,
+        installmentsInfo);
   }
 
   void _checkProperties(SubscriptionOption subscriptionOption) {
@@ -56,5 +58,6 @@ class _SubscriptionOptionApiTest {
         subscriptionOption.presentedOfferingIdentifier;
     PresentedOfferingContext? presentedOfferingContext =
         subscriptionOption.presentedOfferingContext;
+    InstallmentsInfo? installmentsInfo = subscriptionOption.installmentsInfo;
   }
 }

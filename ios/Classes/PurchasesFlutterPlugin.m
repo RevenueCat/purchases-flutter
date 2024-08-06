@@ -47,8 +47,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     if ([@"setupPurchases" isEqualToString:call.method]) {
         NSString *apiKey = arguments[@"apiKey"];
         NSString *appUserID = arguments[@"appUserId"];
-        BOOL observerMode = [arguments[@"observerMode"] boolValue];
-        BOOL usesStoreKit2IfAvailable = [arguments[@"usesStoreKit2IfAvailable"] boolValue];
+        NSString *purchasesAreCompletedBy = arguments[@"purchasesAreCompletedBy"];
 		BOOL shouldShowInAppMessagesAutomatically = YES;
         id object = arguments[@"shouldShowInAppMessagesAutomatically"];
         if (object != [NSNull null] && object != nil) {
@@ -56,18 +55,17 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         }
         NSString * _Nullable verificationMode = arguments[@"entitlementVerificationMode"];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
+        NSString *storeKitVersion = arguments[@"storeKitVersion"];
         [self setupPurchases:apiKey
                    appUserID:appUserID
-                observerMode:observerMode
+     purchasesAreCompletedBy:purchasesAreCompletedBy
        userDefaultsSuiteName:userDefaultsSuiteName
-    usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+             storeKitVersion: storeKitVersion
     shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
             verificationMode:verificationMode
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
-    } else if ([@"setFinishTransactions" isEqualToString:call.method]) {
-        [self setFinishTransactions:[arguments[@"finishTransactions"] boolValue] result:result];
     } else if ([@"getOfferings" isEqualToString:call.method]) {
         [self getOfferingsWithResult:result];
     } else if ([@"getCurrentOfferingForPlacement" isEqualToString:call.method]) {
@@ -106,10 +104,10 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
         [self syncPurchasesWithResult:result];
-    } else if ([@"setAutomaticAppleSearchAdsAttributionCollection" isEqualToString:call.method]) {
-        [self setAutomaticAppleSearchAdsAttributionCollection:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"enableAdServicesAttributionTokenCollection" isEqualToString:call.method]) {
         [self enableAdServicesAttributionTokenCollection:result];
+    } else if ([@"recordPurchaseForProductID" isEqualToString:call.method]) {
+        [self recordPurchaseForProductID:arguments[@"productIdentifier"] result:result];
     } else if ([@"isAnonymous" isEqualToString:call.method]) {
         [self isAnonymousWithResult:result];
     } else if ([@"isConfigured" isEqualToString:call.method]) {
@@ -232,9 +230,9 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
 
 - (void)setupPurchases:(NSString *)apiKey
              appUserID:(NSString *)appUserID
-          observerMode:(BOOL)observerMode
+purchasesAreCompletedBy:(nullable NSString *)purchasesAreCompletedBy
  userDefaultsSuiteName:(nullable NSString *)userDefaultsSuiteName
-usesStoreKit2IfAvailable:(BOOL)usesStoreKit2IfAvailable
+       storeKitVersion:(nullable NSString *)storeKitVersion
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
       verificationMode:(nullable NSString *)verificationMode
                 result:(FlutterResult)result {
@@ -247,11 +245,11 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
-                                      purchasesAreCompletedBy:(observerMode ? RCPurchasesAreCompletedByMyApp : RCPurchasesAreCompletedByRevenueCat)
+                                      purchasesAreCompletedBy:purchasesAreCompletedBy
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
-                                     usesStoreKit2IfAvailable:usesStoreKit2IfAvailable
+                                              storeKitVersion:storeKitVersion
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode];
@@ -266,16 +264,6 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     [RCCommonFunctionality setAllowSharingStoreAccount:allowSharingStoreAccount];
 #pragma GCC diagnostic pop
-    result(nil);
-}
-
-- (void)setFinishTransactions:(BOOL)finishTransactions
-                       result:(FlutterResult)result {
-    if (finishTransactions) {
-        [RCCommonFunctionality setPurchasesAreCompletedBy:RCPurchasesAreCompletedByRevenueCat];
-    } else {
-        [RCCommonFunctionality setPurchasesAreCompletedBy:RCPurchasesAreCompletedByMyApp];
-    }
     result(nil);
 }
 
@@ -326,6 +314,24 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     [RCCommonFunctionality syncPurchasesWithCompletionBlock:[self getResponseCompletionBlock:result]];
 }
 
+- (void)recordPurchaseForProductID:(NSString*)productId
+                            result:(FlutterResult)result {
+    if (@available(iOS 15.0, macOS 12.0, *)) {
+        [RCCommonFunctionality recordPurchaseForProductID:productId
+                                               completion:^(NSDictionary<NSString *,id> * _Nullable responseDictionary, RCErrorContainer * _Nullable error) {
+            if (error) {
+                [self rejectWithResult:result error:error];
+            } else {
+                result(responseDictionary);
+            }
+        }];
+    } else {
+        // Fallback on earlier versions
+        NSLog(@"[Purchases] Warning: tried to call recordPurchaseForProductID, but it's only available on iOS 15.0 and macOS 12.0 or greater.");
+        result(nil);
+    }
+}
+
 - (void)getAppUserIDWithResult:(FlutterResult)result {
     result([RCCommonFunctionality appUserID]);
 }
@@ -365,12 +371,6 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)getCustomerInfoWithResult:(FlutterResult)result {
     [RCCommonFunctionality getCustomerInfoWithCompletionBlock:[self getResponseCompletionBlock:result]];
-}
-
-- (void)setAutomaticAppleSearchAdsAttributionCollection:(BOOL)enabled
-                                                 result:(FlutterResult)result {
-    [RCCommonFunctionality setAutomaticAppleSearchAdsAttributionCollection:enabled];
-    result(nil);
 }
 
 - (void)enableAdServicesAttributionTokenCollection:(FlutterResult)result {

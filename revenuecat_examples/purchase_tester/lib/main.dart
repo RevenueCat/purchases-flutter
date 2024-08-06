@@ -37,7 +37,9 @@ Future<void> _configureSDK() async {
     configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
   }
 
-  configuration.entitlementVerificationMode = EntitlementVerificationMode.informational;
+  configuration.entitlementVerificationMode =
+      EntitlementVerificationMode.informational;
+  configuration.pendingTransactionsForPrepaidPlansEnabled = true;
   await Purchases.configure(configuration);
 
   await Purchases.enableAdServicesAttributionTokenCollection();

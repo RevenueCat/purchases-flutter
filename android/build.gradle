@@ -2,8 +2,8 @@ group 'com.revenuecat.purchases_flutter'
 version '6.30.2'
 
 buildscript {
-    ext.kotlin_version = '1.7.21'
-    ext.common_version = '11.1.0'
+    ext.kotlin_version = '1.8.22'
+    ext.common_version = '13.0.0'
     repositories {
         google()
         mavenCentral()
@@ -26,7 +26,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 31
+    compileSdk 34
 
     // Conditional for compatibility with AGP <4.2.
     if (project.android.hasProperty("namespace")) {
@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 21
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // purchases-hybrid-common has two variants, but this library doesn't have any
         // Gradle doesn't know which variant of purchases-hybrid-common to use when using

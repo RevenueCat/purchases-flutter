@@ -37,3 +37,21 @@ enum ProrationMode {
   /// plus remaining prorated time from the old plan.
   immediateAndChargeFullPrice
 }
+
+// ignore_for_file: deprecated_member_use_from_same_package
+extension ProrationModeExtension on ProrationMode {
+  int? get value {
+    switch (this) {
+      case ProrationMode.immediateWithTimeProration:
+        return 1;
+      case ProrationMode.immediateWithoutProration:
+        return 3;
+      case ProrationMode.immediateAndChargeFullPrice:
+        return 5;
+      case ProrationMode.immediateAndChargeProratedPrice:
+        return 2;
+      default:
+        return null;
+    }
+  }
+}

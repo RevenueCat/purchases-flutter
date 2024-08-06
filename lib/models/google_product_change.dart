@@ -43,7 +43,7 @@ extension GoogleProrationModeExtension on GoogleProrationMode {
       case GoogleProrationMode.immediateAndChargeProratedPrice:
         return 2;
       case GoogleProrationMode.deferred:
-        return 4;
+        return 6;
       default:
         return null;
     }
