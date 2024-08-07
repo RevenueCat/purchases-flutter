@@ -11,7 +11,7 @@ environment:
   flutter: '>=3.3.0'
 
 dependencies:
-  purchases_flutter: ^7.0.0
+  purchases_flutter: ^7.0.1
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
