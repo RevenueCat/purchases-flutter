@@ -36,8 +36,12 @@ mixin _$Price {
   /// If currency code cannot be determined, currency symbol is returned.
   String get currencyCode => throw _privateConstructorUsedError;
 
+  /// Serializes this Price to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Price
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PriceCopyWith<Price> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -59,6 +63,8 @@ class _$PriceCopyWithImpl<$Res, $Val extends Price>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Price
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -101,6 +107,8 @@ class __$$PriceImplCopyWithImpl<$Res>
       _$PriceImpl _value, $Res Function(_$PriceImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Price
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -170,12 +178,14 @@ class _$PriceImpl implements _Price {
                 other.currencyCode == currencyCode));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, formatted, amountMicros, currencyCode);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Price
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>
@@ -195,27 +205,29 @@ abstract class _Price implements Price {
 
   factory _Price.fromJson(Map<String, dynamic> json) = _$PriceImpl.fromJson;
 
-  @override
-
   /// Formatted price of the item, including its currency sign. For example $3.00
-  String get formatted;
   @override
+  String get formatted;
 
   /// Price in micro-units, where 1,000,000 micro-units equal one unit of the currency.
   ///
   /// For example, if price is "€7.99", price_amount_micros is 7,990,000. This value represents
   /// the localized, rounded price for a particular currency.
-  int get amountMicros;
   @override
+  int get amountMicros;
 
   /// Returns ISO 4217 currency code for price and original price.
   ///
   /// For example, if price is specified in British pounds sterling, price_currency_code is "GBP".
   ///
   /// If currency code cannot be determined, currency symbol is returned.
-  String get currencyCode;
   @override
-  @JsonKey(ignore: true)
+  String get currencyCode;
+
+  /// Create a copy of Price
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PriceImplCopyWith<_$PriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

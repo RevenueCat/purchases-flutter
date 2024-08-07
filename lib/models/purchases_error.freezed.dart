@@ -31,8 +31,12 @@ mixin _$PurchasesError {
   @JsonKey(defaultValue: '')
   String get readableErrorCode => throw _privateConstructorUsedError;
 
+  /// Serializes this PurchasesError to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PurchasesError
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PurchasesErrorCopyWith<PurchasesError> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -60,6 +64,8 @@ class _$PurchasesErrorCopyWithImpl<$Res, $Val extends PurchasesError>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PurchasesError
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -112,6 +118,8 @@ class __$$PurchasesErrorImplCopyWithImpl<$Res>
       _$PurchasesErrorImpl _value, $Res Function(_$PurchasesErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PurchasesError
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -186,12 +194,14 @@ class _$PurchasesErrorImpl implements _PurchasesError {
                 other.readableErrorCode == readableErrorCode));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, code, message, underlyingErrorMessage, readableErrorCode);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PurchasesError
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PurchasesErrorImplCopyWith<_$PurchasesErrorImpl> get copyWith =>
@@ -223,15 +233,19 @@ abstract class _PurchasesError implements PurchasesError {
   @override
   String get message;
   @override
-  String get underlyingErrorMessage;
-  @override // iOS can return a readable error code null, because the construction
+  String
+      get underlyingErrorMessage; // iOS can return a readable error code null, because the construction
 // of the error doesn't prevent it from being null. To be safe we default
 // it to '' instead of making it nullable
 // ignore: invalid_annotation_target
+  @override
   @JsonKey(defaultValue: '')
   String get readableErrorCode;
+
+  /// Create a copy of PurchasesError
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PurchasesErrorImplCopyWith<_$PurchasesErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

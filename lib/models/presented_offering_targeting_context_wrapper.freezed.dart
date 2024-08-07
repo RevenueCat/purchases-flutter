@@ -27,8 +27,12 @@ mixin _$PresentedOfferingTargetingContext {
   /// The rule id from the targeting used to obtain this object
   String get ruleId => throw _privateConstructorUsedError;
 
+  /// Serializes this PresentedOfferingTargetingContext to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PresentedOfferingTargetingContext
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PresentedOfferingTargetingContextCopyWith<PresentedOfferingTargetingContext>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -55,6 +59,8 @@ class _$PresentedOfferingTargetingContextCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PresentedOfferingTargetingContext
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -96,6 +102,8 @@ class __$$PresentedOfferingTargetingContextImplCopyWithImpl<$Res>
       $Res Function(_$PresentedOfferingTargetingContextImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PresentedOfferingTargetingContext
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,11 +156,13 @@ class _$PresentedOfferingTargetingContextImpl
             (identical(other.ruleId, ruleId) || other.ruleId == ruleId));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, revision, ruleId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PresentedOfferingTargetingContext
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PresentedOfferingTargetingContextImplCopyWith<
@@ -178,16 +188,18 @@ abstract class _PresentedOfferingTargetingContext
           Map<String, dynamic> json) =
       _$PresentedOfferingTargetingContextImpl.fromJson;
 
-  @override
-
   /// The revision of the targeting used to obtain this object
-  int get revision;
   @override
+  int get revision;
 
   /// The rule id from the targeting used to obtain this object
-  String get ruleId;
   @override
-  @JsonKey(ignore: true)
+  String get ruleId;
+
+  /// Create a copy of PresentedOfferingTargetingContext
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PresentedOfferingTargetingContextImplCopyWith<
           _$PresentedOfferingTargetingContextImpl>
       get copyWith => throw _privateConstructorUsedError;

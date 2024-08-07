@@ -91,8 +91,13 @@ mixin _$StoreTransaction {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  /// Serializes this StoreTransaction to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StoreTransaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StoreTransactionCopyWith<StoreTransaction> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -123,6 +128,8 @@ class _$StoreTransactionCopyWithImpl<$Res, $Val extends StoreTransaction>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StoreTransaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -178,6 +185,8 @@ class __$$StoreTransactionImplCopyWithImpl<$Res>
       $Res Function(_$StoreTransactionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StoreTransaction
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -262,12 +271,14 @@ class _$StoreTransactionImpl implements _StoreTransaction {
                 other.purchaseDate == purchaseDate));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, transactionIdentifier,
       revenueCatIdentifier, productIdentifier, purchaseDate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StoreTransaction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StoreTransactionImplCopyWith<_$StoreTransactionImpl> get copyWith =>
@@ -378,28 +389,30 @@ abstract class _StoreTransaction implements StoreTransaction {
   factory _StoreTransaction.fromJson(Map<String, dynamic> json) =
       _$StoreTransactionImpl.fromJson;
 
-  @override
-
   /// RevenueCat Id associated to the transaction. Empty for Amazon.
 // ignore: invalid_annotation_target
+  @override
   @JsonKey(readValue: _readTransactionIdentifier)
   String get transactionIdentifier;
-  @override
 
   /// Deprecated: Use transactionIdentifier instead. Empty for Amazon.
+  @override
   @Deprecated('Use transactionIdentifier instead.')
   @JsonKey(readValue: _readTransactionIdentifier)
   String get revenueCatIdentifier;
-  @override
 
   /// Product Id associated with the transaction.
-  String get productIdentifier;
   @override
+  String get productIdentifier;
 
   /// Purchase date of the transaction in ISO 8601 format.
-  String get purchaseDate;
   @override
-  @JsonKey(ignore: true)
+  String get purchaseDate;
+
+  /// Create a copy of StoreTransaction
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StoreTransactionImplCopyWith<_$StoreTransactionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

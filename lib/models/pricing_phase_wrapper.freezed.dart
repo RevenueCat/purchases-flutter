@@ -36,8 +36,12 @@ mixin _$PricingPhase {
   /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
   OfferPaymentMode? get offerPaymentMode => throw _privateConstructorUsedError;
 
+  /// Serializes this PricingPhase to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PricingPhase
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PricingPhaseCopyWith<PricingPhase> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -69,6 +73,8 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PricingPhase
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -102,6 +108,8 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
     ) as $Val);
   }
 
+  /// Create a copy of PricingPhase
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get billingPeriod {
@@ -114,6 +122,8 @@ class _$PricingPhaseCopyWithImpl<$Res, $Val extends PricingPhase>
     });
   }
 
+  /// Create a copy of PricingPhase
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PriceCopyWith<$Res> get price {
@@ -152,6 +162,8 @@ class __$$PricingPhaseImplCopyWithImpl<$Res>
       _$PricingPhaseImpl _value, $Res Function(_$PricingPhaseImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PricingPhase
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -237,12 +249,14 @@ class _$PricingPhaseImpl implements _PricingPhase {
                 other.offerPaymentMode == offerPaymentMode));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, billingPeriod, recurrenceMode,
       billingCycleCount, price, offerPaymentMode);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PricingPhase
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PricingPhaseImplCopyWith<_$PricingPhaseImpl> get copyWith =>
@@ -267,29 +281,31 @@ abstract class _PricingPhase implements PricingPhase {
   factory _PricingPhase.fromJson(Map<String, dynamic> json) =
       _$PricingPhaseImpl.fromJson;
 
-  @override
-
   /// Billing period for which the PricingPhase applies
-  Period? get billingPeriod;
   @override
+  Period? get billingPeriod;
 
   /// Recurrence mode of the PricingPhase
-  RecurrenceMode? get recurrenceMode;
   @override
+  RecurrenceMode? get recurrenceMode;
 
   /// Number of cycles for which the pricing phase applies.
   /// Null for infiniteRecurring or finiteRecurring recurrence modes.
-  int? get billingCycleCount;
   @override
+  int? get billingCycleCount;
 
   /// Price of the PricingPhase
-  Price get price;
   @override
+  Price get price;
 
   /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
-  OfferPaymentMode? get offerPaymentMode;
   @override
-  @JsonKey(ignore: true)
+  OfferPaymentMode? get offerPaymentMode;
+
+  /// Create a copy of PricingPhase
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PricingPhaseImplCopyWith<_$PricingPhaseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

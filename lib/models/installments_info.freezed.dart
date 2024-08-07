@@ -28,8 +28,12 @@ mixin _$InstallmentsInfo {
   /// the user commits to upon a renewal.
   int get renewalCommitmentPaymentsCount => throw _privateConstructorUsedError;
 
+  /// Serializes this InstallmentsInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of InstallmentsInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $InstallmentsInfoCopyWith<InstallmentsInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -53,6 +57,8 @@ class _$InstallmentsInfoCopyWithImpl<$Res, $Val extends InstallmentsInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of InstallmentsInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -91,6 +97,8 @@ class __$$InstallmentsInfoImplCopyWithImpl<$Res>
       $Res Function(_$InstallmentsInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of InstallmentsInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,12 +156,14 @@ class _$InstallmentsInfoImpl implements _InstallmentsInfo {
                     renewalCommitmentPaymentsCount));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, commitmentPaymentsCount, renewalCommitmentPaymentsCount);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of InstallmentsInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$InstallmentsInfoImplCopyWith<_$InstallmentsInfoImpl> get copyWith =>
@@ -175,18 +185,20 @@ abstract class _InstallmentsInfo implements InstallmentsInfo {
   factory _InstallmentsInfo.fromJson(Map<String, dynamic> json) =
       _$InstallmentsInfoImpl.fromJson;
 
-  @override
-
   /// Number of payments the customer commits to in order to purchase
   /// the subscription.
-  int get commitmentPaymentsCount;
   @override
+  int get commitmentPaymentsCount;
 
   /// After the commitment payments are complete, the number of payments
   /// the user commits to upon a renewal.
-  int get renewalCommitmentPaymentsCount;
   @override
-  @JsonKey(ignore: true)
+  int get renewalCommitmentPaymentsCount;
+
+  /// Create a copy of InstallmentsInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InstallmentsInfoImplCopyWith<_$InstallmentsInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
