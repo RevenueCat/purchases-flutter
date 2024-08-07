@@ -70,8 +70,12 @@ mixin _$StoreProduct {
   /// Note: Not available for Amazon.
   String? get subscriptionPeriod => throw _privateConstructorUsedError;
 
+  /// Serializes this StoreProduct to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $StoreProductCopyWith<StoreProduct> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -112,6 +116,8 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -185,6 +191,8 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     ) as $Val);
   }
 
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $IntroductoryPriceCopyWith<$Res>? get introductoryPrice {
@@ -197,6 +205,8 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     });
   }
 
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SubscriptionOptionCopyWith<$Res>? get defaultOption {
@@ -209,6 +219,8 @@ class _$StoreProductCopyWithImpl<$Res, $Val extends StoreProduct>
     });
   }
 
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext {
@@ -262,6 +274,8 @@ class __$$StoreProductImplCopyWithImpl<$Res>
       _$StoreProductImpl _value, $Res Function(_$StoreProductImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -469,7 +483,7 @@ class _$StoreProductImpl implements _StoreProduct {
                 other.subscriptionPeriod == subscriptionPeriod));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -487,7 +501,9 @@ class _$StoreProductImpl implements _StoreProduct {
       presentedOfferingContext,
       subscriptionPeriod);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$StoreProductImplCopyWith<_$StoreProductImpl> get copyWith =>
@@ -520,67 +536,69 @@ abstract class _StoreProduct implements StoreProduct {
   factory _StoreProduct.fromJson(Map<String, dynamic> json) =
       _$StoreProductImpl.fromJson;
 
-  @override
-
   /// Product Id.
-  String get identifier;
   @override
+  String get identifier;
 
   /// Description of the product.
-  String get description;
   @override
+  String get description;
 
   /// Title of the product.
-  String get title;
   @override
+  String get title;
 
   /// Price of the product in the local currency.
-  double get price;
   @override
+  double get price;
 
   /// Formatted price of the item, including its currency sign.
-  String get priceString;
   @override
+  String get priceString;
 
   /// Currency code for price and original price.
-  String get currencyCode;
   @override
+  String get currencyCode;
 
   /// Introductory price for product. Can be null.
 // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'introPrice')
   IntroductoryPrice? get introductoryPrice;
-  @override
 
   /// Collection of discount offers for a product. Null for Android.
-  List<StoreProductDiscount>? get discounts;
   @override
+  List<StoreProductDiscount>? get discounts;
 
   /// Product category.
-  ProductCategory? get productCategory;
   @override
+  ProductCategory? get productCategory;
 
   /// Default subscription option for a product. Google Play only.
-  SubscriptionOption? get defaultOption;
   @override
+  SubscriptionOption? get defaultOption;
 
   /// Collection of subscription options for a product. Google Play only.
-  List<SubscriptionOption>? get subscriptionOptions;
   @override
+  List<SubscriptionOption>? get subscriptionOptions;
 
   /// Offering context this package belongs to.
   /// Null if not using offerings or if fetched directly from store via getProducts
-  PresentedOfferingContext? get presentedOfferingContext;
   @override
+  PresentedOfferingContext? get presentedOfferingContext;
 
   /// Subscription period, specified in ISO 8601 format. For example,
   /// P1W equates to one week, P1M equates to one month,
   /// P3M equates to three months, P6M equates to six months,
   /// and P1Y equates to one year.
   /// Note: Not available for Amazon.
-  String? get subscriptionPeriod;
   @override
-  @JsonKey(ignore: true)
+  String? get subscriptionPeriod;
+
+  /// Create a copy of StoreProduct
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StoreProductImplCopyWith<_$StoreProductImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

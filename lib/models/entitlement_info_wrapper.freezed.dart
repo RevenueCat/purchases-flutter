@@ -81,8 +81,12 @@ mixin _$EntitlementInfo {
   /// If not, `VerificationResult.NOT_REQUESTED`.
   VerificationResult get verification => throw _privateConstructorUsedError;
 
+  /// Serializes this EntitlementInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EntitlementInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EntitlementInfoCopyWith<EntitlementInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -123,6 +127,8 @@ class _$EntitlementInfoCopyWithImpl<$Res, $Val extends EntitlementInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EntitlementInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -243,6 +249,8 @@ class __$$EntitlementInfoImplCopyWithImpl<$Res>
       _$EntitlementInfoImpl _value, $Res Function(_$EntitlementInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EntitlementInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -471,7 +479,7 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
                 other.verification == verification));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -491,7 +499,9 @@ class _$EntitlementInfoImpl implements _EntitlementInfo {
       productPlanIdentifier,
       verification);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EntitlementInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EntitlementInfoImplCopyWith<_$EntitlementInfoImpl> get copyWith =>
@@ -530,84 +540,86 @@ abstract class _EntitlementInfo implements EntitlementInfo {
   factory _EntitlementInfo.fromJson(Map<String, dynamic> json) =
       _$EntitlementInfoImpl.fromJson;
 
-  @override
-
   /// The entitlement identifier configured in the RevenueCat dashboard
-  String get identifier;
   @override
+  String get identifier;
 
   /// True if the user has access to this entitlement
-  bool get isActive;
   @override
+  bool get isActive;
 
   /// True if the underlying subscription is set to renew at the end of
   /// the billing period (expirationDate).
-  bool get willRenew;
   @override
+  bool get willRenew;
 
   /// The latest purchase or renewal date for the entitlement.
-  String get latestPurchaseDate;
   @override
+  String get latestPurchaseDate;
 
   /// The first date this entitlement was purchased
-  String get originalPurchaseDate;
   @override
+  String get originalPurchaseDate;
 
   /// The product identifier that unlocked this entitlement
-  String get productIdentifier;
   @override
+  String get productIdentifier;
 
   /// False if this entitlement is unlocked via a production purchase
-  bool get isSandbox;
   @override
+  bool get isSandbox;
 
   /// Use this property to determine whether a purchase was made by the current
   /// user or shared to them by a family member. This can be useful for
   /// onboarding users who have had an entitlement shared with them, but might
   /// not be entirely aware of the benefits they now have.
+  @override
   @JsonKey(name: 'ownershipType', unknownEnumValue: OwnershipType.unknown)
   OwnershipType get ownershipType;
-  @override
 
   /// The store where this entitlement was unlocked from
+  @override
   @JsonKey(name: 'store', unknownEnumValue: Store.unknownStore)
   Store get store;
-  @override
 
   /// The last period type this entitlement was in
+  @override
   @JsonKey(name: 'periodType', unknownEnumValue: PeriodType.unknown)
   PeriodType get periodType;
-  @override
 
   /// The expiration date for the entitlement, can be null for lifetime access.
   /// If the [periodType] is [PeriodType.trial],
   /// this is the trial expiration date.
-  String? get expirationDate;
   @override
+  String? get expirationDate;
 
   /// The date an unsubscribe was detected. Can be null if it's still
   /// subscribed or product is not a subscription.
   /// @note: Entitlement may still be active even if user has unsubscribed.
   /// Check the [isActive] property.
-  String? get unsubscribeDetectedAt;
   @override
+  String? get unsubscribeDetectedAt;
 
   /// The date a billing issue was detected. Can be null if there is no
   /// billing issue or an issue has been resolved.
   /// @note: Entitlement may still be active even if there is a billing issue.
   /// Check the [isActive] property.
-  String? get billingIssueDetectedAt;
   @override
+  String? get billingIssueDetectedAt;
 
   /// The base plan identifier that unlocked this entitlement (Google only).
-  String? get productPlanIdentifier;
   @override
+  String? get productPlanIdentifier;
 
   /// If entitlement verification was enabled, the result of that verification.
   /// If not, `VerificationResult.NOT_REQUESTED`.
-  VerificationResult get verification;
   @override
-  @JsonKey(ignore: true)
+  VerificationResult get verification;
+
+  /// Create a copy of EntitlementInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EntitlementInfoImplCopyWith<_$EntitlementInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

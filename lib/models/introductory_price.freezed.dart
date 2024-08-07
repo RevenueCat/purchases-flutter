@@ -44,8 +44,12 @@ mixin _$IntroductoryPrice {
   /// Number of units for the billing period of the introductory price.
   int get periodNumberOfUnits => throw _privateConstructorUsedError;
 
+  /// Serializes this IntroductoryPrice to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of IntroductoryPrice
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $IntroductoryPriceCopyWith<IntroductoryPrice> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -76,6 +80,8 @@ class _$IntroductoryPriceCopyWithImpl<$Res, $Val extends IntroductoryPrice>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of IntroductoryPrice
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -141,6 +147,8 @@ class __$$IntroductoryPriceImplCopyWithImpl<$Res>
       $Res Function(_$IntroductoryPriceImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IntroductoryPrice
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -246,12 +254,14 @@ class _$IntroductoryPriceImpl implements _IntroductoryPrice {
                 other.periodNumberOfUnits == periodNumberOfUnits));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, price, priceString, period,
       cycles, periodUnit, periodNumberOfUnits);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IntroductoryPrice
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IntroductoryPriceImplCopyWith<_$IntroductoryPriceImpl> get copyWith =>
@@ -279,38 +289,40 @@ abstract class _IntroductoryPrice implements IntroductoryPrice {
   factory _IntroductoryPrice.fromJson(Map<String, dynamic> json) =
       _$IntroductoryPriceImpl.fromJson;
 
-  @override
-
   /// Introductory price of a subscription in the local currency.
-  double get price;
   @override
+  double get price;
 
   /// Formatted introductory price of a subscription, including
   /// its currency sign, such as €3.99.
-  String get priceString;
   @override
+  String get priceString;
 
   /// Billing period of the introductory price, specified in
   /// ISO 8601 format.
-  String get period;
   @override
+  String get period;
 
   /// Number of subscription billing periods for which the
   /// user will be given the introductory price, such as 3.
-  int get cycles;
   @override
+  int get cycles;
 
   /// Unit for the billing period of the introductory price, can be DAY, WEEK,
   /// MONTH or YEAR.
 // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
   PeriodUnit get periodUnit;
-  @override
 
   /// Number of units for the billing period of the introductory price.
-  int get periodNumberOfUnits;
   @override
-  @JsonKey(ignore: true)
+  int get periodNumberOfUnits;
+
+  /// Create a copy of IntroductoryPrice
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IntroductoryPriceImplCopyWith<_$IntroductoryPriceImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

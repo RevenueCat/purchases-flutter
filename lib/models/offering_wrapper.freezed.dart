@@ -53,8 +53,12 @@ mixin _$Offering {
   /// Weekly package type configured in the RevenueCat dashboard, if available.
   Package? get weekly => throw _privateConstructorUsedError;
 
+  /// Serializes this Offering to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OfferingCopyWith<Offering> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -96,6 +100,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -159,6 +165,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     ) as $Val);
   }
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get lifetime {
@@ -171,6 +179,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     });
   }
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get annual {
@@ -183,6 +193,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     });
   }
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get sixMonth {
@@ -195,6 +207,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     });
   }
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get threeMonth {
@@ -207,6 +221,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     });
   }
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get twoMonth {
@@ -219,6 +235,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     });
   }
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get monthly {
@@ -231,6 +249,8 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     });
   }
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get weekly {
@@ -289,6 +309,8 @@ class __$$OfferingImplCopyWithImpl<$Res>
       _$OfferingImpl _value, $Res Function(_$OfferingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -461,7 +483,7 @@ class _$OfferingImpl extends _Offering {
             (identical(other.weekly, weekly) || other.weekly == weekly));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -477,7 +499,9 @@ class _$OfferingImpl extends _Offering {
       monthly,
       weekly);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OfferingImplCopyWith<_$OfferingImpl> get copyWith =>
@@ -509,52 +533,54 @@ abstract class _Offering extends Offering {
   factory _Offering.fromJson(Map<String, dynamic> json) =
       _$OfferingImpl.fromJson;
 
-  @override
-
   /// Unique identifier defined in RevenueCat dashboard.
-  String get identifier;
   @override
+  String get identifier;
 
   /// Offering description defined in RevenueCat dashboard.
-  String get serverDescription;
   @override
+  String get serverDescription;
 
   /// Offering metadata defined in RevenueCat dashboard.
-  Map<String, Object> get metadata;
   @override
+  Map<String, Object> get metadata;
 
   /// Array of [Package] objects available for purchase.
-  List<Package> get availablePackages;
   @override
+  List<Package> get availablePackages;
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
-  Package? get lifetime;
   @override
+  Package? get lifetime;
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
-  Package? get annual;
   @override
+  Package? get annual;
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
-  Package? get sixMonth;
   @override
+  Package? get sixMonth;
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
-  Package? get threeMonth;
   @override
+  Package? get threeMonth;
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
-  Package? get twoMonth;
   @override
+  Package? get twoMonth;
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
-  Package? get monthly;
   @override
+  Package? get monthly;
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
-  Package? get weekly;
   @override
-  @JsonKey(ignore: true)
+  Package? get weekly;
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OfferingImplCopyWith<_$OfferingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

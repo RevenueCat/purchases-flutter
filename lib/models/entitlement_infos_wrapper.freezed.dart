@@ -32,8 +32,12 @@ mixin _$EntitlementInfos {
   /// If not, `VerificationResult.NOT_REQUESTED`.
   VerificationResult get verification => throw _privateConstructorUsedError;
 
+  /// Serializes this EntitlementInfos to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of EntitlementInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $EntitlementInfosCopyWith<EntitlementInfos> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -60,6 +64,8 @@ class _$EntitlementInfosCopyWithImpl<$Res, $Val extends EntitlementInfos>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of EntitlementInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -106,6 +112,8 @@ class __$$EntitlementInfosImplCopyWithImpl<$Res>
       $Res Function(_$EntitlementInfosImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of EntitlementInfos
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -190,7 +198,7 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
                 other.verification == verification));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -198,7 +206,9 @@ class _$EntitlementInfosImpl implements _EntitlementInfos {
       const DeepCollectionEquality().hash(_active),
       verification);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of EntitlementInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$EntitlementInfosImplCopyWith<_$EntitlementInfosImpl> get copyWith =>
@@ -221,23 +231,25 @@ abstract class _EntitlementInfos implements EntitlementInfos {
   factory _EntitlementInfos.fromJson(Map<String, dynamic> json) =
       _$EntitlementInfosImpl.fromJson;
 
-  @override
-
   /// Map of all EntitlementInfo (`EntitlementInfo`) objects (active and inactive)
   /// keyed by entitlement identifier.
-  Map<String, EntitlementInfo> get all;
   @override
+  Map<String, EntitlementInfo> get all;
 
   /// Map of active EntitlementInfo (`EntitlementInfo`) objects keyed by
   /// entitlement identifier.
-  Map<String, EntitlementInfo> get active;
   @override
+  Map<String, EntitlementInfo> get active;
 
   /// If entitlement verification was enabled, the result of that verification.
   /// If not, `VerificationResult.NOT_REQUESTED`.
-  VerificationResult get verification;
   @override
-  @JsonKey(ignore: true)
+  VerificationResult get verification;
+
+  /// Create a copy of EntitlementInfos
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$EntitlementInfosImplCopyWith<_$EntitlementInfosImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

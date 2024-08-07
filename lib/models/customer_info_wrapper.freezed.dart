@@ -74,8 +74,12 @@ mixin _$CustomerInfo {
   /// If there are multiple for different platforms, it will point to the device store.
   String? get managementURL => throw _privateConstructorUsedError;
 
+  /// Serializes this CustomerInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CustomerInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $CustomerInfoCopyWith<CustomerInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -114,6 +118,8 @@ class _$CustomerInfoCopyWithImpl<$Res, $Val extends CustomerInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of CustomerInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -187,6 +193,8 @@ class _$CustomerInfoCopyWithImpl<$Res, $Val extends CustomerInfo>
     ) as $Val);
   }
 
+  /// Create a copy of CustomerInfo
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $EntitlementInfosCopyWith<$Res> get entitlements {
@@ -231,6 +239,8 @@ class __$$CustomerInfoImplCopyWithImpl<$Res>
       _$CustomerInfoImpl _value, $Res Function(_$CustomerInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CustomerInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -476,7 +486,7 @@ class _$CustomerInfoImpl implements _CustomerInfo {
                 other.managementURL == managementURL));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -494,7 +504,9 @@ class _$CustomerInfoImpl implements _CustomerInfo {
       originalApplicationVersion,
       managementURL);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CustomerInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CustomerInfoImplCopyWith<_$CustomerInfoImpl> get copyWith =>
@@ -527,53 +539,51 @@ abstract class _CustomerInfo implements CustomerInfo {
   factory _CustomerInfo.fromJson(Map<String, dynamic> json) =
       _$CustomerInfoImpl.fromJson;
 
-  @override
-
   /// Entitlements attached to this customer info
-  EntitlementInfos get entitlements;
   @override
+  EntitlementInfos get entitlements;
 
   /// Map of skus to purchase dates
-  Map<String, String?> get allPurchaseDates;
   @override
+  Map<String, String?> get allPurchaseDates;
 
   /// Set of active subscription skus
-  List<String> get activeSubscriptions;
   @override
+  List<String> get activeSubscriptions;
 
   /// Set of purchased skus, active and inactive
-  List<String> get allPurchasedProductIdentifiers;
   @override
+  List<String> get allPurchasedProductIdentifiers;
 
   /// Returns all the non-subscription purchases a user has made.
   /// The purchases are ordered by purchase date in ascending order.
-  List<StoreTransaction> get nonSubscriptionTransactions;
   @override
+  List<StoreTransaction> get nonSubscriptionTransactions;
 
   /// The date this user was first seen in RevenueCat.
-  String get firstSeen;
   @override
+  String get firstSeen;
 
   /// The original App User Id recorded for this user.
-  String get originalAppUserId;
   @override
+  String get originalAppUserId;
 
   /// Map of skus to expiration dates
-  Map<String, String?> get allExpirationDates;
   @override
+  Map<String, String?> get allExpirationDates;
 
   /// Date when this info was requested
-  String get requestDate;
   @override
+  String get requestDate;
 
   /// The latest expiration date of all purchased skus
-  String? get latestExpirationDate;
   @override
+  String? get latestExpirationDate;
 
   /// Returns the purchase date for the version of the application when the user bought the app.
   /// Use this for grandfathering users when migrating to subscriptions.
-  String? get originalPurchaseDate;
   @override
+  String? get originalPurchaseDate;
 
   /// Returns the version number for the version of the application when the
   /// user bought the app. Use this for grandfathering users when migrating
@@ -582,16 +592,20 @@ abstract class _CustomerInfo implements CustomerInfo {
   /// This corresponds to the value of CFBundleVersion (in iOS) in the
   /// Info.plist file when the purchase was originally made. This is always null
   /// in Android
-  String? get originalApplicationVersion;
   @override
+  String? get originalApplicationVersion;
 
   /// URL to manage the active subscription of the user. If this user has an active iOS
   /// subscription, this will point to the App Store, if the user has an active Play Store subscription
   /// it will point there. If there are no active subscriptions it will be null.
   /// If there are multiple for different platforms, it will point to the device store.
-  String? get managementURL;
   @override
-  @JsonKey(ignore: true)
+  String? get managementURL;
+
+  /// Create a copy of CustomerInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CustomerInfoImplCopyWith<_$CustomerInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

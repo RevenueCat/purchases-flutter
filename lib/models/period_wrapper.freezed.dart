@@ -31,8 +31,12 @@ mixin _$Period {
   /// six months, and P1Y equates to one year
   String get iso8601 => throw _privateConstructorUsedError;
 
+  /// Serializes this Period to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Period
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PeriodCopyWith<Period> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -54,6 +58,8 @@ class _$PeriodCopyWithImpl<$Res, $Val extends Period>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Period
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -96,6 +102,8 @@ class __$$PeriodImplCopyWithImpl<$Res>
       _$PeriodImpl _value, $Res Function(_$PeriodImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Period
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -157,11 +165,13 @@ class _$PeriodImpl implements _Period {
             (identical(other.iso8601, iso8601) || other.iso8601 == iso8601));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, unit, value, iso8601);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Period
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PeriodImplCopyWith<_$PeriodImpl> get copyWith =>
@@ -182,22 +192,24 @@ abstract class _Period implements Period {
 
   factory _Period.fromJson(Map<String, dynamic> json) = _$PeriodImpl.fromJson;
 
-  @override
-
   /// The number of period units: day, week, month, year, unknown
-  PeriodUnit get unit;
   @override
+  PeriodUnit get unit;
 
   /// The increment of time that a subscription period is specified in
-  int get value;
   @override
+  int get value;
 
   /// Specified in ISO 8601 format. For example, P1W equates to one week,
   /// P1M equates to one month, P3M equates to three months, P6M equates to
   /// six months, and P1Y equates to one year
-  String get iso8601;
   @override
-  @JsonKey(ignore: true)
+  String get iso8601;
+
+  /// Create a copy of Period
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PeriodImplCopyWith<_$PeriodImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

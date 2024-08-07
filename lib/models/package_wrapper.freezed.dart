@@ -38,8 +38,12 @@ mixin _$Package {
   PresentedOfferingContext get presentedOfferingContext =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this Package to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PackageCopyWith<Package> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -69,6 +73,8 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -97,6 +103,8 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
     ) as $Val);
   }
 
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $StoreProductCopyWith<$Res> get storeProduct {
@@ -105,6 +113,8 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
     });
   }
 
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext {
@@ -143,6 +153,8 @@ class __$$PackageImplCopyWithImpl<$Res>
       _$PackageImpl _value, $Res Function(_$PackageImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -227,12 +239,14 @@ class _$PackageImpl implements _Package {
                 other.presentedOfferingContext == presentedOfferingContext));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, identifier, packageType,
       storeProduct, presentedOfferingContext);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PackageImplCopyWith<_$PackageImpl> get copyWith =>
@@ -256,29 +270,31 @@ abstract class _Package implements Package {
 
   factory _Package.fromJson(Map<String, dynamic> json) = _$PackageImpl.fromJson;
 
-  @override
-
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
-  String get identifier;
   @override
+  String get identifier;
 
   /// Package type for the product. Will be one of [PackageType].
 // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
   PackageType get packageType;
-  @override
 
   /// StoreProduct assigned to this package.
 // ignore: invalid_annotation_target
+  @override
   @JsonKey(name: 'product')
   StoreProduct get storeProduct;
-  @override
 
   /// Offering context this package belongs to.
-  PresentedOfferingContext get presentedOfferingContext;
   @override
-  @JsonKey(ignore: true)
+  PresentedOfferingContext get presentedOfferingContext;
+
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PackageImplCopyWith<_$PackageImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

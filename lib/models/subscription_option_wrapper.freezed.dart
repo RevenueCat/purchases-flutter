@@ -72,8 +72,12 @@ mixin _$SubscriptionOption {
   /// Installment plans are only available for Google Play subscriptions.
   InstallmentsInfo? get installmentsInfo => throw _privateConstructorUsedError;
 
+  /// Serializes this SubscriptionOption to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SubscriptionOptionCopyWith<SubscriptionOption> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -117,6 +121,8 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -190,6 +196,8 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     ) as $Val);
   }
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PeriodCopyWith<$Res>? get billingPeriod {
@@ -202,6 +210,8 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     });
   }
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PricingPhaseCopyWith<$Res>? get fullPricePhase {
@@ -214,6 +224,8 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     });
   }
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PricingPhaseCopyWith<$Res>? get freePhase {
@@ -226,6 +238,8 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     });
   }
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PricingPhaseCopyWith<$Res>? get introPhase {
@@ -238,6 +252,8 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     });
   }
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PresentedOfferingContextCopyWith<$Res>? get presentedOfferingContext {
@@ -251,6 +267,8 @@ class _$SubscriptionOptionCopyWithImpl<$Res, $Val extends SubscriptionOption>
     });
   }
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $InstallmentsInfoCopyWith<$Res>? get installmentsInfo {
@@ -309,6 +327,8 @@ class __$$SubscriptionOptionImplCopyWithImpl<$Res>
       $Res Function(_$SubscriptionOptionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -521,7 +541,7 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
                 other.installmentsInfo == installmentsInfo));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -539,7 +559,9 @@ class _$SubscriptionOptionImpl implements _SubscriptionOption {
       presentedOfferingContext,
       installmentsInfo);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SubscriptionOptionImplCopyWith<_$SubscriptionOptionImpl> get copyWith =>
@@ -573,72 +595,74 @@ abstract class _SubscriptionOption implements SubscriptionOption {
   factory _SubscriptionOption.fromJson(Map<String, dynamic> json) =
       _$SubscriptionOptionImpl.fromJson;
 
-  @override
-
   /// Identifier of the subscription option
   /// If this SubscriptionOption represents a base plan, this will be the basePlanId.
   /// If it represents an offer, it will be {basePlanId}:{offerId}
-  String get id;
   @override
+  String get id;
 
   /// Identifier of the StoreProduct associated with this SubscriptionOption
   /// This will be {subId}:{basePlanId}
-  String get storeProductId;
   @override
+  String get storeProductId;
 
   /// Identifer of the subscription associated with this SubsriptionOption
   /// This will be {subId}
-  String get productId;
   @override
+  String get productId;
 
   /// Pricing phases defining a user's payment plan for the product over time.
-  List<PricingPhase> get pricingPhases;
   @override
+  List<PricingPhase> get pricingPhases;
 
   /// Tags defined on the base plan or offer.
-  List<String> get tags;
   @override
+  List<String> get tags;
 
   /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-  bool get isBasePlan;
   @override
+  bool get isBasePlan;
 
   /// The subscription period of fullPricePhase (after free and intro trials).
-  Period? get billingPeriod;
   @override
+  Period? get billingPeriod;
 
   /// True if the subscription is pre-paid.
-  bool get isPrepaid;
   @override
+  bool get isPrepaid;
 
   /// The full price PricingPhase of the subscription.
   /// Looks for the last price phase of the SubscriptionOption.
-  PricingPhase? get fullPricePhase;
   @override
+  PricingPhase? get fullPricePhase;
 
   /// The free trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-  PricingPhase? get freePhase;
   @override
+  PricingPhase? get freePhase;
 
   /// The intro trial PricingPhase of the subscription.
   /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
   /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-  PricingPhase? get introPhase;
   @override
+  PricingPhase? get introPhase;
 
   /// Offering context this package belongs to.
   /// Null if not using offerings or if fetched directly from store via getProducts
-  PresentedOfferingContext? get presentedOfferingContext;
   @override
+  PresentedOfferingContext? get presentedOfferingContext;
 
   /// For installment subscriptions, the details of the installment plan the customer commits to.
   /// Null for non-installment subscriptions.
   /// Installment plans are only available for Google Play subscriptions.
-  InstallmentsInfo? get installmentsInfo;
   @override
-  @JsonKey(ignore: true)
+  InstallmentsInfo? get installmentsInfo;
+
+  /// Create a copy of SubscriptionOption
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SubscriptionOptionImplCopyWith<_$SubscriptionOptionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

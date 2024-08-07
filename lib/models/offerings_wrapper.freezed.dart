@@ -26,8 +26,12 @@ mixin _$Offerings {
   /// Current offering configured in the RevenueCat dashboard.
   Offering? get current => throw _privateConstructorUsedError;
 
+  /// Serializes this Offerings to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $OfferingsCopyWith<Offerings> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -52,6 +56,8 @@ class _$OfferingsCopyWithImpl<$Res, $Val extends Offerings>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -70,6 +76,8 @@ class _$OfferingsCopyWithImpl<$Res, $Val extends Offerings>
     ) as $Val);
   }
 
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $OfferingCopyWith<$Res>? get current {
@@ -105,6 +113,8 @@ class __$$OfferingsImplCopyWithImpl<$Res>
       _$OfferingsImpl _value, $Res Function(_$OfferingsImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -163,12 +173,14 @@ class _$OfferingsImpl extends _Offerings {
             (identical(other.current, current) || other.current == current));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_all), current);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$OfferingsImplCopyWith<_$OfferingsImpl> get copyWith =>
@@ -190,16 +202,18 @@ abstract class _Offerings extends Offerings {
   factory _Offerings.fromJson(Map<String, dynamic> json) =
       _$OfferingsImpl.fromJson;
 
-  @override
-
   /// Map of all Offerings [Offering] objects keyed by their identifier.
-  Map<String, Offering> get all;
   @override
+  Map<String, Offering> get all;
 
   /// Current offering configured in the RevenueCat dashboard.
-  Offering? get current;
   @override
-  @JsonKey(ignore: true)
+  Offering? get current;
+
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$OfferingsImplCopyWith<_$OfferingsImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

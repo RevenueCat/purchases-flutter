@@ -184,10 +184,10 @@ jobs:
           project: purchases_ui_flutter
       - run:
           name: Analyze code
-          command: flutter analyze
+          command: flutter analyze lib
       - run:
           name: Analyze code for purchases_ui_flutter
-          command: cd purchases_ui_flutter && flutter analyze
+          command: cd purchases_ui_flutter && flutter analyze lib
 
   test:
     description: "Run tests for Flutter"

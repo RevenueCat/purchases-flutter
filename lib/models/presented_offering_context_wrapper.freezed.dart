@@ -31,8 +31,12 @@ mixin _$PresentedOfferingContext {
   PresentedOfferingTargetingContext? get targetingContext =>
       throw _privateConstructorUsedError;
 
+  /// Serializes this PresentedOfferingContext to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of PresentedOfferingContext
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $PresentedOfferingContextCopyWith<PresentedOfferingContext> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +66,8 @@ class _$PresentedOfferingContextCopyWithImpl<$Res,
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of PresentedOfferingContext
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -85,6 +91,8 @@ class _$PresentedOfferingContextCopyWithImpl<$Res,
     ) as $Val);
   }
 
+  /// Create a copy of PresentedOfferingContext
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $PresentedOfferingTargetingContextCopyWith<$Res>? get targetingContext {
@@ -127,6 +135,8 @@ class __$$PresentedOfferingContextImplCopyWithImpl<$Res>
       $Res Function(_$PresentedOfferingContextImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of PresentedOfferingContext
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -190,12 +200,14 @@ class _$PresentedOfferingContextImpl implements _PresentedOfferingContext {
                 other.targetingContext == targetingContext));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, offeringIdentifier, placementIdentifier, targetingContext);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of PresentedOfferingContext
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PresentedOfferingContextImplCopyWith<_$PresentedOfferingContextImpl>
@@ -220,20 +232,22 @@ abstract class _PresentedOfferingContext implements PresentedOfferingContext {
   factory _PresentedOfferingContext.fromJson(Map<String, dynamic> json) =
       _$PresentedOfferingContextImpl.fromJson;
 
-  @override
-
   /// The identifier of the offering used to obtain this object
-  String get offeringIdentifier;
   @override
+  String get offeringIdentifier;
 
   /// The identifier of the placement used to obtain this object
-  String? get placementIdentifier;
   @override
+  String? get placementIdentifier;
 
   /// The revision of the targeting used to obtain this object
-  PresentedOfferingTargetingContext? get targetingContext;
   @override
-  @JsonKey(ignore: true)
+  PresentedOfferingTargetingContext? get targetingContext;
+
+  /// Create a copy of PresentedOfferingContext
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PresentedOfferingContextImplCopyWith<_$PresentedOfferingContextImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
