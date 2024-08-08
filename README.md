@@ -24,7 +24,7 @@
 To use this plugin, add `purchases_flutter` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
 ### Requirements
-*purchases_flutter* requires Xcode 14.0+ and minimum targets iOS 11.0+.
+*purchases_flutter* requires Xcode 14.0+ and minimum targets iOS 13.0+.
 
 ## SDK Reference
  Our full SDK reference [can be found here](https://pub.dev/documentation/purchases_flutter/latest/).
