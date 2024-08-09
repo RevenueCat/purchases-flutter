@@ -925,12 +925,8 @@ class Purchases {
       'recordPurchaseForProductID',
       {'productID': productID},
     );
-
-    if (response == null) {
-      throw UnsupportedPlatformException();
-    }
-
-    return StoreTransaction.fromJson(response);
+  
+    return StoreTransaction.fromJson(Map<String, dynamic>.from(response));
   }
 
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
