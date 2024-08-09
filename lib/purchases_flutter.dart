@@ -925,7 +925,7 @@ class Purchases {
       'recordPurchaseForProductID',
       {'productID': productID},
     );
-  
+    if (response == null) throw UnsupportedPlatformException();
     return StoreTransaction.fromJson(Map<String, dynamic>.from(response));
   }
 
