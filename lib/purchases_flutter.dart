@@ -921,12 +921,16 @@ class Purchases {
   static Future<StoreTransaction> recordPurchase(
     String productID,
   ) async {
-    final statusCode = await _channel.invokeMethod(
+    final response = await _channel.invokeMethod(
       'recordPurchaseForProductID',
+      {'productID': productID},
     );
-    if (statusCode == null) throw UnsupportedPlatformException();
-    return await _channel
-        .invokeMethod('recordPurchaseForProductID', {'productID': productID});
+
+    if (response == null) {
+      throw UnsupportedPlatformException();
+    }
+
+    return StoreTransaction.fromJson(response);
   }
 
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
