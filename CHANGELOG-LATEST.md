@@ -1,3 +1,6 @@
+### Bugfixes
+* Parse recordPurchase response (#1138) via Will Taylor (@fire-at-will)
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.0.1 (#1136) via RevenueCat Git Bot (@RCGitBot)
 ### Other Changes
-* Update fastlane-plugin-revenuecat_internal (#1133) via Mark Villacampa (@MarkVillacampa)
-* update purchases_flutter dependency to 7.0.0 on purchases_ui_flutter (#1132) via Mark Villacampa (@MarkVillacampa)
+* Update iOS deployment target in readme (#1137) via Will Taylor (@fire-at-will)
