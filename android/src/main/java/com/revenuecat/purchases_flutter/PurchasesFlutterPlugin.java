@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.revenuecat.purchases.DangerousSettings;
 import com.revenuecat.purchases.Purchases;
-import com.revenuecat.purchases.PurchasesAreCompletedBy;
 import com.revenuecat.purchases.PurchasesErrorCode;
 import com.revenuecat.purchases.Store;
 import com.revenuecat.purchases.common.PlatformInfo;
@@ -51,11 +50,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
     protected static final String LOG_HANDLER_EVENT = "Purchases-LogHandlerEvent";
 
-    // Only set registrar for v1 embedder.
-    @SuppressWarnings("deprecation")
-    private io.flutter.plugin.common.PluginRegistry.Registrar registrar;
-    // Only set activity for v2 embedder. Always access activity from getActivity()
-    // method.
     @Nullable
     private Context applicationContext;
     @Nullable
@@ -67,27 +61,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private static final String PLATFORM_NAME = "flutter";
     private static final String PLUGIN_VERSION = "7.0.2";
-
-    /**
-     * Plugin registration.
-     */
-    @SuppressWarnings("deprecation")
-    public static void registerWith(io.flutter.plugin.common.PluginRegistry.Registrar registrar) {
-        PurchasesFlutterPlugin instance = new PurchasesFlutterPlugin();
-        instance.onAttachedToEngine(registrar.messenger(), registrar.context());
-        instance.registrar = registrar;
-        registrar.addViewDestroyListener(new io.flutter.plugin.common.PluginRegistry.ViewDestroyListener() {
-            @Override
-            public boolean onViewDestroy(io.flutter.view.FlutterNativeView flutterNativeView) {
-                try {
-                    Purchases.getSharedInstance().close();
-                } catch (UninitializedPropertyAccessException e) {
-                    // there's no instance so all good
-                }
-                return false;
-            }
-        });
-    }
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -127,10 +100,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     @Override
     public void onDetachedFromActivityForConfigChanges() {
         onDetachedFromActivity();
-    }
-
-    public Activity getActivity() {
-        return registrar != null ? registrar.activity() : activity;
     }
 
     @Override
@@ -219,7 +188,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 setDebugLogsEnabled(enabled, result);
                 break;
             case "setLogLevel":
-                String level = (String) call.argument("level");
+                String level = call.argument("level");
                 setLogLevel(level, result);
                 break;
             case "setProxyURLString":
@@ -231,10 +200,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "syncPurchases":
                 syncPurchases(result);
-                break;
-            case "enableAdServicesAttributionTokenCollection":
-                // NOOP
-                result.success(null);
                 break;
             case "isAnonymous":
                 isAnonymous(result);
@@ -256,6 +221,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "beginRefundRequestForProduct":
             case "beginRefundRequestForEntitlement":
             case "recordPurchaseForProductID":
+            case "enableAdServicesAttributionTokenCollection":
                 // NOOP
                 result.success(null);
                 break;
@@ -457,7 +423,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable final Map<String, Object> presentedOfferingContext,
             final Result result) {
         CommonKt.purchaseProduct(
-                getActivity(),
+                activity,
                 productIdentifier,
                 type,
                 null,
@@ -475,7 +441,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable final Boolean googleIsPersonalizedPrice,
             final Result result) {
         CommonKt.purchasePackage(
-                getActivity(),
+                activity,
                 packageIdentifier,
                 presentedOfferingContext,
                 googleOldProductId,
@@ -492,7 +458,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable final Map<String, Object> presentedOfferingContext,
             final Result result) {
         CommonKt.purchaseSubscriptionOption(
-                getActivity(),
+                activity,
                 productIdentifier,
                 optionIdentifier,
                 googleOldProductId,
@@ -744,12 +710,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private OnResult getOnResult(final Result result) {
         return new OnResult() {
             @Override
-            public void onReceived(Map<String, ?> map) {
+            public void onReceived(@NotNull Map<String, ?> map) {
                 result.success(map);
             }
 
             @Override
-            public void onError(ErrorContainer errorContainer) {
+            public void onError(@NotNull ErrorContainer errorContainer) {
                 reject(errorContainer, result);
             }
         };
@@ -764,7 +730,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             }
 
             @Override
-            public void onError(ErrorContainer errorContainer) {
+            public void onError(@NotNull ErrorContainer errorContainer) {
                 reject(errorContainer, result);
             }
         };
