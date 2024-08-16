@@ -151,7 +151,8 @@ class Purchases {
               as PurchasesAreCompletedByMyApp)
           .storeKitVersion;
 
-      if (purchasesConfiguration.storeKitVersion !=
+      if (purchasesConfiguration.storeKitVersion != null &&
+          purchasesConfiguration.storeKitVersion !=
               StoreKitVersion.defaultVersion &&
           storeKitVersionToUse != purchasesConfiguration.storeKitVersion) {
         debugPrint(
