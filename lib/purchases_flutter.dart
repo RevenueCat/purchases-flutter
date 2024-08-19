@@ -151,10 +151,20 @@ class Purchases {
               as PurchasesAreCompletedByMyApp)
           .storeKitVersion;
 
-      if (storeKitVersionToUse != purchasesConfiguration.storeKitVersion) {
+      if (purchasesConfiguration.storeKitVersion != null &&
+          purchasesConfiguration.storeKitVersion !=
+              StoreKitVersion.defaultVersion &&
+          storeKitVersionToUse != purchasesConfiguration.storeKitVersion) {
         debugPrint(
             'Warning: The storeKitVersion in purchasesAreCompletedBy does not match the '
             'function\'s storeKitVersion parameter. We will use the value found in purchasesAreCompletedBy.');
+      }
+
+      if (storeKitVersionToUse == StoreKitVersion.defaultVersion) {
+        debugPrint(
+            'Warning: You should provide the specific StoreKit version you\'re using in '
+            'your implementation when configuring PurchasesAreCompletedByMyApp, '
+            'and not rely on the DEFAULT.');
       }
     }
 
