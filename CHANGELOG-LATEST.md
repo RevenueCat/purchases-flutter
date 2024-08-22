@@ -1,6 +1,8 @@
+### Breaking Changes
+* Remove embedding v1 support (#1141) via Toni Rico (@tonidero)
+
+If you're using embedding v1, please check how to migrate in the [official flutter docs](https://docs.flutter.dev/release/breaking-changes/plugin-api-migration#upgrade-steps).
 ### Bugfixes
-* Parse recordPurchase response (#1138) via Will Taylor (@fire-at-will)
-### Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.0.1 (#1136) via RevenueCat Git Bot (@RCGitBot)
+* Refine StoreKitVersion logging in configure function (#1143) via Will Taylor (@fire-at-will)
 ### Other Changes
-* Update iOS deployment target in readme (#1137) via Will Taylor (@fire-at-will)
+* v7-MIGRATION.md typo fix (#1144) via Will Taylor (@fire-at-will)
