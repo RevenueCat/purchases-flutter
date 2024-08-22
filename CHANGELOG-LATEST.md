@@ -1,8 +1,7 @@
-### Breaking Changes
-* Remove embedding v1 support (#1141) via Toni Rico (@tonidero)
-
-If you're using embedding v1, please check how to migrate in the [official flutter docs](https://docs.flutter.dev/release/breaking-changes/plugin-api-migration#upgrade-steps).
-### Bugfixes
-* Refine StoreKitVersion logging in configure function (#1143) via Will Taylor (@fire-at-will)
+### Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.1.0 (#1148) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.6.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.6.0)
+  * [Android 8.5.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.5.0)
+  * [iOS 5.3.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.3.0)
 ### Other Changes
-* v7-MIGRATION.md typo fix (#1144) via Will Taylor (@fire-at-will)
+* Fix purchases-ui-flutter main SDK version substitution (#1147) via Toni Rico (@tonidero)
