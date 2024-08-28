@@ -1,3 +1,7 @@
+## 8.1.1
+### Dependency Updates
+* Bump rexml from 3.3.4 to 3.3.6 (#1151) via dependabot[bot] (@dependabot[bot])
+
 ## 8.1.0
 ### Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.1.0 (#1148) via RevenueCat Git Bot (@RCGitBot)
