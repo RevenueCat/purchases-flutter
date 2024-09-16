@@ -190,6 +190,10 @@ class Purchases {
   /// Deprecated. Configure behavior through the RevenueCat dashboard instead.
   /// Set this to true if you are passing in an appUserID but it is anonymous.
   ///
+  /// If you have configured the Legacy restore behavior in the RevenueCat
+  /// dashboard and are currently setting this to true,
+  /// keep this setting active.
+  ///
   /// This is true by default if you didn't pass an appUserID.
   /// If a user tries to purchase a product that is active on the current app
   /// store account, we will treat it as a restore and alias the new ID with the
