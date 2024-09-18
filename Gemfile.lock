@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/RevenueCat/fastlane-plugin-revenuecat_internal
-  revision: 5140dbc8c6d29a8ac6bccf9dd2f2b31f1f5d0437
+  revision: 55a045588e724ea7717423daac11b85718044174
   specs:
     fastlane-plugin-revenuecat_internal (0.1.0)
       nokogiri
@@ -241,7 +241,7 @@ GEM
       signet (>= 0.16, < 2.a)
     highline (2.0.3)
     http-accept (1.7.0)
-    http-cookie (1.0.6)
+    http-cookie (1.0.7)
       domain_name (~> 0.5)
     httpclient (2.8.3)
     i18n (1.14.5)
