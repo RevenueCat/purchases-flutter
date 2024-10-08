@@ -48,8 +48,8 @@ class PaywallViewWrapper: UIView {
         NSLayoutConstraint.activate([
             paywallViewController.view.topAnchor.constraint(equalTo: topAnchor),
             paywallViewController.view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            paywallViewController.view.trailingAnchor.constraint(equalTo: trailingAnchor),
-            paywallViewController.view.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            paywallViewController.view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            paywallViewController.view.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
     
@@ -70,9 +70,9 @@ class PaywallViewWrapper: UIView {
     private func updateAdditionalSafeAreaInsets() {
         let insets = UIEdgeInsets(
             top: 0,
-            left: safeAreaInsets.left,
-            bottom: 0,
-            right: safeAreaInsets.right
+            left: 0,
+            bottom: -safeAreaInsets.bottom/2,
+            right: 0
         )
         paywallViewController.additionalSafeAreaInsets = insets
     }
