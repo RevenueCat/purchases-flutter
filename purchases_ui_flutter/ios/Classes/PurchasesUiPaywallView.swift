@@ -35,11 +35,51 @@ class PurchasesUiPaywallViewFactory: NSObject, FlutterPlatformViewFactory {
 }
 
 @available(iOS 15.0, *)
+class PaywallViewWrapper: UIView {
+    private var paywallViewController: PaywallViewController
+    private var addedToHierarchy = false
+
+    init(paywallViewController: PaywallViewController) {
+        self.paywallViewController = paywallViewController
+        super.init(frame: paywallViewController.view.bounds)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+
+        // Need to wait for this view to be in the hierarchy to look for the parent UIVC.
+        // This is required to add a SwiftUI `UIHostingController` to the hierarchy in a way that allows
+        // UIKit to read properties from the environment, like traits and safe area.
+        // Not doing this leads to the view not respecting the safe area.
+        if !addedToHierarchy {
+            if let parentController = self.parentViewController {
+                paywallViewController.view.translatesAutoresizingMaskIntoConstraints = false
+                parentController.addChild(paywallViewController)
+                addSubview(paywallViewController.view)
+                paywallViewController.didMove(toParent: parentController)
+
+                NSLayoutConstraint.activate([
+                    paywallViewController.view.topAnchor.constraint(equalTo: topAnchor),
+                    paywallViewController.view.bottomAnchor.constraint(equalTo: bottomAnchor),
+                    paywallViewController.view.leadingAnchor.constraint(equalTo: leadingAnchor),
+                    paywallViewController.view.trailingAnchor.constraint(equalTo: trailingAnchor)
+                ])
+                
+                addedToHierarchy = true
+            }
+        }
+    }
+}
+
+@available(iOS 15.0, *)
 class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
-    private var _view: UIView
+    private var _view: PaywallViewWrapper
     private var _paywallProxy: PaywallProxy?
     private var _methodChannel: FlutterMethodChannel
-    // Need to keep the controller in memory while this view is alive otherwise the delegate is dealocated
     private var _paywallViewController: PaywallViewController
 
     init(
@@ -61,16 +101,10 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                 _paywallViewController.update(with: displayCloseButton)
             }
         }
-        guard let paywallView = _paywallViewController.view else {
-            print("Error: error getting PaywallView.")
-            _view = UIView()
-            super.init()
-            return
-        }
-        _view = paywallView
+        _view = PaywallViewWrapper(paywallViewController: _paywallViewController)
 
         super.init()
-        _paywallProxy?.delegate = self;
+        _paywallProxy?.delegate = self
         setupMethodCallHandler()
     }
 
@@ -88,6 +122,19 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                 result(FlutterMethodNotImplemented)
             }
         }
+    }
+}
+
+extension UIView {
+    var parentViewController: UIViewController? {
+        var responder: UIResponder? = self
+        while let nextResponder = responder?.next {
+            if let viewController = nextResponder as? UIViewController {
+                return viewController
+            }
+            responder = nextResponder
+        }
+        return nil
     }
 }
 
