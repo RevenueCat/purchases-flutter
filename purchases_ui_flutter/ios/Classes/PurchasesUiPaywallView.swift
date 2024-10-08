@@ -37,44 +37,37 @@ class PurchasesUiPaywallViewFactory: NSObject, FlutterPlatformViewFactory {
 @available(iOS 15.0, *)
 class PaywallViewWrapper: UIView {
     private var paywallViewController: PaywallViewController
+    private var addedToHierarchy = false
 
     init(paywallViewController: PaywallViewController) {
         self.paywallViewController = paywallViewController
-        super.init(frame: .zero)
-        
-        addSubview(paywallViewController.view)
-        paywallViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            paywallViewController.view.topAnchor.constraint(equalTo: topAnchor),
-            paywallViewController.view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            paywallViewController.view.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            paywallViewController.view.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        super.init(frame: paywallViewController.view.bounds)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func safeAreaInsetsDidChange() {
-        super.safeAreaInsetsDidChange()
-        updateAdditionalSafeAreaInsets()
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        updateAdditionalSafeAreaInsets()
-    }
-    
-    private func updateAdditionalSafeAreaInsets() {
-        let insets = UIEdgeInsets(
-            top: 0,
-            left: 0,
-            bottom: -safeAreaInsets.bottom/2,
-            right: 0
-        )
-        paywallViewController.additionalSafeAreaInsets = insets
+        
+        if !addedToHierarchy {
+            if let parentController = self.parentViewController {
+                paywallViewController.view.translatesAutoresizingMaskIntoConstraints = false
+                parentController.addChild(paywallViewController)
+                addSubview(paywallViewController.view)
+                paywallViewController.didMove(toParent: parentController)
+
+                NSLayoutConstraint.activate([
+                    paywallViewController.view.topAnchor.constraint(equalTo: topAnchor),
+                    paywallViewController.view.bottomAnchor.constraint(equalTo: bottomAnchor),
+                    paywallViewController.view.leadingAnchor.constraint(equalTo: leadingAnchor),
+                    paywallViewController.view.trailingAnchor.constraint(equalTo: trailingAnchor)
+                ])
+                
+                addedToHierarchy = true
+            }
+        }
     }
 }
 
@@ -125,6 +118,19 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                 result(FlutterMethodNotImplemented)
             }
         }
+    }
+}
+
+extension UIView {
+    var parentViewController: UIViewController? {
+        var responder: UIResponder? = self
+        while let nextResponder = responder?.next {
+            if let viewController = nextResponder as? UIViewController {
+                return viewController
+            }
+            responder = nextResponder
+        }
+        return nil
     }
 }
 
