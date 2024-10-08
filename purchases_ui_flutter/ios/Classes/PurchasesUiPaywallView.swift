@@ -35,11 +35,54 @@ class PurchasesUiPaywallViewFactory: NSObject, FlutterPlatformViewFactory {
 }
 
 @available(iOS 15.0, *)
+class PaywallViewWrapper: UIView {
+    private var paywallViewController: PaywallViewController
+
+    init(paywallViewController: PaywallViewController) {
+        self.paywallViewController = paywallViewController
+        super.init(frame: .zero)
+        
+        addSubview(paywallViewController.view)
+        paywallViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            paywallViewController.view.topAnchor.constraint(equalTo: topAnchor),
+            paywallViewController.view.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            paywallViewController.view.trailingAnchor.constraint(equalTo: trailingAnchor),
+            paywallViewController.view.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func safeAreaInsetsDidChange() {
+        super.safeAreaInsetsDidChange()
+        updateAdditionalSafeAreaInsets()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateAdditionalSafeAreaInsets()
+    }
+    
+    private func updateAdditionalSafeAreaInsets() {
+        let insets = UIEdgeInsets(
+            top: 0,
+            left: safeAreaInsets.left,
+            bottom: 0,
+            right: safeAreaInsets.right
+        )
+        paywallViewController.additionalSafeAreaInsets = insets
+    }
+}
+
+@available(iOS 15.0, *)
 class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
-    private var _view: UIView
+    private var _view: PaywallViewWrapper
     private var _paywallProxy: PaywallProxy?
     private var _methodChannel: FlutterMethodChannel
-    // Need to keep the controller in memory while this view is alive otherwise the delegate is dealocated
     private var _paywallViewController: PaywallViewController
 
     init(
@@ -61,16 +104,10 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                 _paywallViewController.update(with: displayCloseButton)
             }
         }
-        guard let paywallView = _paywallViewController.view else {
-            print("Error: error getting PaywallView.")
-            _view = UIView()
-            super.init()
-            return
-        }
-        _view = paywallView
+        _view = PaywallViewWrapper(paywallViewController: _paywallViewController)
 
         super.init()
-        _paywallProxy?.delegate = self;
+        _paywallProxy?.delegate = self
         setupMethodCallHandler()
     }
 
