@@ -8,6 +8,7 @@
 
 ## RevenueCatUI SDK
 ### 🐞 Bugfixes
+* Fix double callbacks issue in PaywallView (https://github.com/RevenueCat/purchases-ios/pull/4333)
 * Fix area insets in PaywallView (#1179) via Cesar de la Vega (@vegaro)
 
 ## 8.1.4
