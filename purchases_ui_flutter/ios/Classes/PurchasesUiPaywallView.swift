@@ -50,7 +50,11 @@ class PaywallViewWrapper: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
+        // Need to wait for this view to be in the hierarchy to look for the parent UIVC.
+        // This is required to add a SwiftUI `UIHostingController` to the hierarchy in a way that allows
+        // UIKit to read properties from the environment, like traits and safe area.
+        // Not doing this leads to the view not respecting the safe area.
         if !addedToHierarchy {
             if let parentController = self.parentViewController {
                 paywallViewController.view.translatesAutoresizingMaskIntoConstraints = false
