@@ -459,6 +459,7 @@ class _PurchasesFlutterApiTest {
       case InAppMessageType.billingIssue:
       case InAppMessageType.priceIncreaseConsent:
       case InAppMessageType.generic:
+      case InAppMessageType.winBackOffer:
         break;
     }
   }
