@@ -1210,7 +1210,11 @@ enum InAppMessageType {
   priceIncreaseConsent,
 
   /// iOS-only. StoreKit generic messages.
-  generic
+  generic,
+
+  /// iOS-only. This message will show if the subscriber is eligible for an iOS win-back
+  /// offer and will allow the subscriber to redeem the offer.
+  winBackOffer
 }
 
 /// Log levels.

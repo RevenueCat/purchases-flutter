@@ -459,6 +459,7 @@ class _PurchasesFlutterApiTest {
       case InAppMessageType.billingIssue:
       case InAppMessageType.priceIncreaseConsent:
       case InAppMessageType.generic:
+      case InAppMessageType.winBackOffer:
         break;
     }
   }
@@ -530,7 +531,8 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.showInAppMessages(types: {
       InAppMessageType.billingIssue,
       InAppMessageType.priceIncreaseConsent,
-      InAppMessageType.generic
+      InAppMessageType.generic,
+      InAppMessageType.winBackOffer
     });
   }
 
