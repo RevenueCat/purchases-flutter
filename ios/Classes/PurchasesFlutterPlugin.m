@@ -157,6 +157,9 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
     } else if ([@"setOnesignalID" isEqualToString:call.method]) {
         NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
+    } else if ([@"setOnesignalUserID" isEqualToString:call.method]) {
+        NSString *onesignalUserID = arguments[@"onesignalUserID"];
+        [self setOnesignalUserID:onesignalUserID result:result];
     } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
         NSString *airshipChannelID = arguments[@"airshipChannelID"];
         [self setAirshipChannelID:airshipChannelID result:result];
@@ -480,6 +483,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)setOnesignalID:(nullable NSString *)onesignalID result:(FlutterResult)result {
     [RCCommonFunctionality setOnesignalID:onesignalID];
+    result(nil);
+}
+
+- (void)setOnesignalUserID:(nullable NSString *)onesignalUserID result:(FlutterResult)result {
+    [RCCommonFunctionality setOnesignalUserID:onesignalUserID];
     result(nil);
 }
 

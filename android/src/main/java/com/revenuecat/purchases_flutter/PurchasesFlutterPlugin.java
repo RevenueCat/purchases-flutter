@@ -277,6 +277,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String onesignalID = call.argument("onesignalID");
                 setOnesignalID(onesignalID, result);
                 break;
+            case "setOnesignalUserID":
+                String onesignalUserID = call.argument("onesignalUserID");
+                setOnesignalUserID(onesignalUserID, result);
+                break;
             case "setAirshipChannelID":
                 String airshipChannelID = call.argument("airshipChannelID");
                 setAirshipChannelID(airshipChannelID, result);
@@ -603,6 +607,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setOnesignalID(String onesignalID, final Result result) {
         SubscriberAttributesKt.setOnesignalID(onesignalID);
+        result.success(null);
+    }
+
+    private void setOnesignalUserID(String onesignalUserID, final Result result) {
+        SubscriberAttributesKt.setOnesignalUserID(onesignalUserID);
         result.success(null);
     }
 
