@@ -104,6 +104,8 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
         [self syncPurchasesWithResult:result];
+    } else if ([@"syncPurchasesWith" isEqualToString:call.method]) {
+        [self syncPurchasesWithResult:result];
     } else if ([@"enableAdServicesAttributionTokenCollection" isEqualToString:call.method]) {
         [self enableAdServicesAttributionTokenCollection:result];
     } else if ([@"recordPurchaseForProductID" isEqualToString:call.method]) {

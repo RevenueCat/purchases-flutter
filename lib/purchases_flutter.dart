@@ -634,6 +634,19 @@ class Purchases {
   ///  successful purchase.
   static Future<void> syncPurchases() => _channel.invokeMethod('syncPurchases');
 
+  ///  This method will send all the purchases to the RevenueCat backend.
+  ///
+  ///  **WARNING**: Call this when using your own implementation of in-app
+  ///  purchases.
+  ///
+  ///  This method should be called anytime a sync is needed, like after a
+  ///  successful purchase.
+  static Future<CustomerInfo> syncPurchasesWith() async {
+    final result = await _channel.invokeMethod('syncPurchasesWith');
+    return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
+  }
+
+
   /// iOS only. Enable automatic collection of Apple Search Ad attribution. Disabled by
   /// default
   static Future<void> enableAdServicesAttributionTokenCollection() =>
