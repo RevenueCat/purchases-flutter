@@ -641,7 +641,7 @@ class Purchases {
   ///
   ///  This method should be called anytime a sync is needed, like after a
   ///  successful purchase.
-  static Future<CustomerInfo> syncPurchasesWith() async {
+  static Future<CustomerInfo> syncPurchasesWithResult() async {
     final result = await _channel.invokeMethod('syncPurchasesWith');
     return CustomerInfo.fromJson(Map<String, dynamic>.from(result));
   }
