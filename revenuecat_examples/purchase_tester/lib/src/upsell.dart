@@ -11,6 +11,7 @@ import 'constant.dart';
 import 'cats.dart';
 import 'initial.dart';
 import 'paywall.dart';
+import 'winback_testing_screen.dart';
 
 class UpsellScreen extends StatefulWidget {
   const UpsellScreen({Key? key}) : super(key: key);
@@ -81,6 +82,26 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       });
                     },
                     child: const Text('Sync Attributes and Offerings'),
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Win-Back Offer Testing"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WinbackTestingScreen(),
+                          ));
+                    },
+                    child: const Text("Go to Win-Back Offer Testing Screen"),
                   ),
                 ]))),
       ),
