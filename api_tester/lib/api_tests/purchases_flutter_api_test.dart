@@ -559,9 +559,6 @@ Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForProduct(
   List<WinBackOffer>? offers =
       await Purchases.getEligibleWinBackOffersForProduct(product);
 
-  if (offers == null || offers.isEmpty) {
-    throw Exception("No eligible win-back offers available for the product.");
-  }
   return await Purchases.purchaseProductWithWinBackOffer(product, offers[0]);
 }
 
@@ -570,8 +567,5 @@ Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForPackage(
   List<WinBackOffer>? offers =
       await Purchases.getEligibleWinBackOffersForPackage(package);
 
-  if (offers == null || offers.isEmpty) {
-    throw Exception("No eligible win-back offers available for the package.");
-  }
   return await Purchases.purchasePackageWithWinBackOffer(package, offers[0]);
 }
