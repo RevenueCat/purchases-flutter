@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
-import 'models/win_back_offer.dart';
 import 'object_wrappers.dart';
 
 export 'object_wrappers.dart';
@@ -922,7 +921,7 @@ class Purchases {
   /// [package] The [Package] the user intends to purchase.
   static Future<List<WinBackOffer>> getEligibleWinBackOffersForPackage(
     Package package,
-  ) =>
+  ) async =>
       getEligibleWinBackOffersForProduct(package.storeProduct);
 
   /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
@@ -967,7 +966,7 @@ class Purchases {
   static Future<CustomerInfo> purchasePackageWithWinBackOffer(
     Package package,
     WinBackOffer winBackOffer,
-  ) =>
+  ) async =>
       purchaseProductWithWinBackOffer(package.storeProduct, winBackOffer);
 
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
