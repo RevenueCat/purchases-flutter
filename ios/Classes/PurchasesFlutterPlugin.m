@@ -405,7 +405,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                           result:(FlutterResult)result {
     [RCCommonFunctionality checkTrialOrIntroductoryPriceEligibility:products
                                                     completionBlock:^(NSDictionary<NSString *, NSDictionary *> *_Nonnull responseDictionary) {
-        result([NSDictionary dictionaryWithDictionary:responseDictionary]);
+                      result([NSDictionary dictionaryWithDictionary:responseDictionary]);
     }];
 }
 
