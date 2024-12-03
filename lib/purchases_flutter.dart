@@ -967,7 +967,6 @@ class Purchases {
     Package package,
     WinBackOffer winBackOffer,
   ) async {
-    print("purchasePackageWithWinBackOffer");
     final customerInfo =
         await _invokeReturningCustomerInfo('purchasePackageWithWinBackOffer', {
       'packageIdentifier': package.identifier,
