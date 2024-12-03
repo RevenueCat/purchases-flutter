@@ -41,8 +41,12 @@ mixin _$WinBackOffer {
   /// Number of units for the billing period of the discount.
   int get periodNumberOfUnits => throw _privateConstructorUsedError;
 
+  /// Serializes this WinBackOffer to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of WinBackOffer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WinBackOfferCopyWith<WinBackOffer> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -73,6 +77,8 @@ class _$WinBackOfferCopyWithImpl<$Res, $Val extends WinBackOffer>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WinBackOffer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -143,6 +149,8 @@ class __$$WinBackOfferImplCopyWithImpl<$Res>
       _$WinBackOfferImpl _value, $Res Function(_$WinBackOfferImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WinBackOffer
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -247,12 +255,14 @@ class _$WinBackOfferImpl implements _WinBackOffer {
                 other.periodNumberOfUnits == periodNumberOfUnits));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, identifier, price, priceString,
       cycles, period, periodUnit, periodNumberOfUnits);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WinBackOffer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$WinBackOfferImplCopyWith<_$WinBackOfferImpl> get copyWith =>
@@ -279,36 +289,38 @@ abstract class _WinBackOffer implements WinBackOffer {
   factory _WinBackOffer.fromJson(Map<String, dynamic> json) =
       _$WinBackOfferImpl.fromJson;
 
-  @override
-
   /// Identifier of the discount.
+  @override
   String get identifier;
-  @override
 
   /// Identifier of the discount.
-  double get price;
   @override
+  double get price;
 
   /// Formatted price, including its currency sign, such as €3.99.
-  String get priceString;
   @override
+  String get priceString;
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
-  int get cycles;
   @override
+  int get cycles;
 
   /// Billing period of the discount, specified in ISO 8601 format.
-  String get period;
   @override
+  String get period;
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
-  String get periodUnit;
   @override
+  String get periodUnit;
 
   /// Number of units for the billing period of the discount.
-  int get periodNumberOfUnits;
   @override
-  @JsonKey(ignore: true)
+  int get periodNumberOfUnits;
+
+  /// Create a copy of WinBackOffer
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WinBackOfferImplCopyWith<_$WinBackOfferImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
