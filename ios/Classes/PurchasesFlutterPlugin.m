@@ -606,7 +606,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     }
 }
 
-#if TARGET_OS_IPHONE
+ #if TARGET_OS_IPHONE
 - (void)beginRefundRequestForActiveEntitlementWithResult:(FlutterResult)result {
     if (@available(iOS 15, *)) {
         [RCCommonFunctionality beginRefundRequestForActiveEntitlementCompletion:[self getBeginRefundResponseCompletionBlock:result]];
@@ -642,7 +642,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)showInAppMessages:(NSArray<NSNumber*>*)rawValues result:(FlutterResult)result {
-#if TARGET_OS_IPHONE
+    #if TARGET_OS_IPHONE
     if (@available(iOS 16.0, *)) {
         if (rawValues == nil) {
             [RCCommonFunctionality showStoreMessagesCompletion:^{
@@ -658,10 +658,10 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
         NSLog(@"[Purchases] Warning: tried to show in-app messages, but it's only available on iOS 16.0 or greater.");
         result(nil);
     }
-#else
+    #else
     NSLog(@"[Purchases] Warning: tried to show in-app messages, but it's only supported on iOS.");
     result(nil);
-#endif
+    #endif
 
 }
 
