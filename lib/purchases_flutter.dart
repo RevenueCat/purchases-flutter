@@ -966,8 +966,16 @@ class Purchases {
   static Future<CustomerInfo> purchasePackageWithWinBackOffer(
     Package package,
     WinBackOffer winBackOffer,
-  ) async =>
-      purchaseProductWithWinBackOffer(package.storeProduct, winBackOffer);
+  ) async {
+    print("purchasePackageWithWinBackOffer");
+    final customerInfo =
+        await _invokeReturningCustomerInfo('purchasePackageWithWinBackOffer', {
+      'packageIdentifier': package.identifier,
+      'presentedOfferingContext': package.presentedOfferingContext.toJson(),
+      'winBackOfferIdentifier': winBackOffer.identifier,
+    });
+    return customerInfo;
+  }
 
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
   /// the latest transaction associated with the active entitlement.

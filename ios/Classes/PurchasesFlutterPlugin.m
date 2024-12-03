@@ -229,7 +229,12 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
         [self purchaseProductWithWinBackOffer:arguments[@"productIdentifier"]
                        winBackOfferIdentifier:arguments[@"winBackOfferIdentifier"]
                                        result:result];
-    } else {
+    } else if ([@"purchasePackageWithWinBackOffer" isEqualToString:call.method]) {
+        [self purchasePackageWithWinBackOffer:arguments[@"packageIdentifier"]
+                     presentedOfferingContext:arguments[@"presentedOfferingContext"]
+                       winBackOfferIdentifier:arguments[@"winBackOfferIdentifier"]
+                                     result:result];
+        }else {
         result(FlutterMethodNotImplemented);
     }
 }
@@ -560,12 +565,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
         }];
     } else {
         NSLog(@"[Purchases] Warning: Win-back offers are only available on iOS 18.0 or greater.");
-        NSError *error = [NSError errorWithDomain:@"com.revenuecat.purchases"
-                                            code:24
-                                        userInfo:@{
-                                            NSLocalizedDescriptionKey: @"iOS win-back offers are only available on iOS 18.0 or greater.",
-                                            @"readable_error_code": @"UnsupportedPlatformVersion"
-                                        }];
+        NSError *error = [self createUnsupportedErrorWithDescription:@"iOS win-back offers are only available on iOS 18.0 or greater."];
         RCErrorContainer *errorContainer = [[RCErrorContainer alloc] initWithError:error
                                                                     extraPayload:@{}];
         [self rejectWithResult:result error:errorContainer];
@@ -581,14 +581,27 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                                completionBlock:[self getResponseCompletionBlock:result]];
     } else {
         NSLog(@"[Purchases] Warning: Win-back offers are only available on iOS 18.0 or greater.");
-        NSError *error = [NSError errorWithDomain:@"com.revenuecat.purchases"
-                                            code:24
-                                        userInfo:@{
-                                            NSLocalizedDescriptionKey: @"iOS win-back offers are only available on iOS 18.0 or greater.",
-                                            @"readable_error_code": @"UnsupportedPlatformVersion"
-                                        }];
+        NSError *error = [self createUnsupportedErrorWithDescription:@"iOS win-back offers are only available on iOS 18.0 or greater."];
         RCErrorContainer *errorContainer = [[RCErrorContainer alloc] initWithError:error
                                                                     extraPayload:@{}];
+        [self rejectWithResult:result error:errorContainer];
+    }
+}
+
+- (void)purchasePackageWithWinBackOffer:(NSString *)packageIdentifier
+               presentedOfferingContext:(NSDictionary *)presentedOfferingContext
+                 winBackOfferIdentifier:(NSString *)winBackOfferIdentifier
+                                 result:(FlutterResult)result {
+    if (@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)) {
+        [RCCommonFunctionality purchasePackage:packageIdentifier
+                      presentedOfferingContext:presentedOfferingContext
+                                winBackOfferID:winBackOfferIdentifier
+                               completionBlock:[self getResponseCompletionBlock:result]];
+    } else {
+        NSLog(@"[Purchases] Warning: Win-back offers are only available on iOS 18.0 or greater.");
+        NSError *error = [self createUnsupportedErrorWithDescription:@"iOS win-back offers are only available on iOS 18.0 or greater."];
+        RCErrorContainer *errorContainer = [[RCErrorContainer alloc] initWithError:error
+                                                                      extraPayload:@{}];
         [self rejectWithResult:result error:errorContainer];
     }
 }
@@ -730,6 +743,12 @@ readyForPromotedProduct:(RCStoreProduct *)product
 
 - (NSString *)platformFlavorVersion {
     return @"8.2.2";
+}
+
+- (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {
+    return [[NSError alloc] initWithDomain:RCPurchasesErrorCodeDomain
+                                      code:RCUnsupportedError
+                                  userInfo:@{NSLocalizedDescriptionKey : description}];
 }
 
 @end
