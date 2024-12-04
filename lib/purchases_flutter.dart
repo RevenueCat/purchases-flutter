@@ -894,6 +894,88 @@ class Purchases {
     return PromotionalOffer.fromJson(Map<String, dynamic>.from(result));
   }
 
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  ///
+  /// Use this function to retrieve the eligible [WinBackOffer]s that a subscriber
+  /// is eligible for for a given [StoreProduct].
+  ///
+  /// [product] The [StoreProduct] the user intends to purchase.
+  static Future<List<WinBackOffer>> getEligibleWinBackOffersForProduct(
+    StoreProduct product,
+  ) async {
+    final result =
+        await _channel.invokeMethod('eligibleWinBackOffersForProduct', {
+      'productIdentifier': product.identifier,
+    });
+
+    return (result as List)
+        .map((e) => WinBackOffer.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
+
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  ///
+  /// Use this function to retrieve the eligible [WinBackOffer]s that a subscriber
+  /// is eligible for for a given [Package].
+  ///
+  /// [package] The [Package] the user intends to purchase.
+  static Future<List<WinBackOffer>> getEligibleWinBackOffersForPackage(
+    Package package,
+  ) async =>
+      getEligibleWinBackOffersForProduct(package.storeProduct);
+
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  /// Purchase a product applying a given win-back offer.
+  ///
+  /// Returns a [CustomerInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [storeProduct] The product to purchase.
+  ///
+  /// [winBackOffer] Win-back offer that will be applied to the product.
+  /// Retrieve this offer using [getEligibleWinBackOffersForProduct]
+  /// or [getEligibleWinBackOffersForPackage].
+  static Future<CustomerInfo> purchaseProductWithWinBackOffer(
+    StoreProduct product,
+    WinBackOffer winBackOffer,
+  ) async {
+    final customerInfo =
+        await _invokeReturningCustomerInfo('purchaseProductWithWinBackOffer', {
+      'productIdentifier': product.identifier,
+      'winBackOfferIdentifier': winBackOffer.identifier,
+    });
+    return customerInfo;
+  }
+
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  /// Purchase a package applying a given win-back offer.
+  ///
+  /// Returns a [CustomerInfo] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [package] The package to purchase.
+  ///
+  /// [winBackOffer] Win-back offer that will be applied to the package.
+  /// Retrieve this offer using [getEligibleWinBackOffersForPackage].
+  static Future<CustomerInfo> purchasePackageWithWinBackOffer(
+    Package package,
+    WinBackOffer winBackOffer,
+  ) async {
+    final customerInfo =
+        await _invokeReturningCustomerInfo('purchasePackageWithWinBackOffer', {
+      'packageIdentifier': package.identifier,
+      'presentedOfferingContext': package.presentedOfferingContext.toJson(),
+      'winBackOfferIdentifier': winBackOffer.identifier,
+    });
+    return customerInfo;
+  }
+
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
   /// the latest transaction associated with the active entitlement.
   ///

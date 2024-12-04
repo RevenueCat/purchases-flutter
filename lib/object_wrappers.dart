@@ -28,3 +28,4 @@ export 'models/storekit_version.dart';
 export 'models/subscription_option_wrapper.dart';
 export 'models/upgrade_info.dart';
 export 'models/verification_result.dart';
+export 'models/win_back_offer.dart';

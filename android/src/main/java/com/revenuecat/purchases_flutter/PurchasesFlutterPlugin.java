@@ -222,6 +222,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "beginRefundRequestForEntitlement":
             case "recordPurchaseForProductID":
             case "enableAdServicesAttributionTokenCollection":
+            case "eligibleWinBackOffersForProduct":
+            case "purchaseProductWithWinBackOffer":
+            case "purchasePackageWithWinBackOffer":
                 // NOOP
                 result.success(null);
                 break;

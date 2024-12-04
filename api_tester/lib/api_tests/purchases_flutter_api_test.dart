@@ -553,3 +553,19 @@ class _PurchasesFlutterApiTest {
         const PurchasesAreCompletedByRevenueCat();
   }
 }
+
+Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForProduct(
+    StoreProduct product) async {
+  List<WinBackOffer>? offers =
+      await Purchases.getEligibleWinBackOffersForProduct(product);
+
+  return await Purchases.purchaseProductWithWinBackOffer(product, offers[0]);
+}
+
+Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForPackage(
+    Package package) async {
+  List<WinBackOffer>? offers =
+      await Purchases.getEligibleWinBackOffersForPackage(package);
+
+  return await Purchases.purchasePackageWithWinBackOffer(package, offers[0]);
+}
