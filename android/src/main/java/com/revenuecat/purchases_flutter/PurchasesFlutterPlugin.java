@@ -201,6 +201,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "syncPurchases":
                 syncPurchases(result);
                 break;
+            case "syncPurchasesWith":
+                syncPurchasesWith(result);
+                break;
             case "isAnonymous":
                 isAnonymous(result);
                 break;
@@ -521,6 +524,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private void syncPurchases(final Result result) {
         CommonKt.syncPurchases();
         result.success(null);
+    }
+
+    private void syncPurchasesWith(final Result result) {
+        CommonKt.syncPurchases(getOnResult(result));
     }
 
     private void isAnonymous(final Result result) {
