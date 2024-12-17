@@ -5,7 +5,7 @@ import 'package:purchases_flutter/object_wrappers.dart';
 class _WebPurchaseRedemptionApiTest {
 
   void _checkConstructor(Map<String, dynamic> json) {
-    WebPurchaseRedemption redemption = WebPurchaseRedemption('redemptionLink');
+    WebPurchaseRedemption redemption = const WebPurchaseRedemption('redemptionLink');
     WebPurchaseRedemption redemption2 = WebPurchaseRedemption.fromJson(json);
   }
 
