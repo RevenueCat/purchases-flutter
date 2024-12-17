@@ -234,7 +234,12 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
                      presentedOfferingContext:arguments[@"presentedOfferingContext"]
                        winBackOfferIdentifier:arguments[@"winBackOfferIdentifier"]
                                      result:result];
-        }else {
+    } else if ([@"isWebPurchaseRedemptionURL" isEqualToString call.method]) {
+        result([RCCommonFunctionality isWebPurchaseRedemptionURL:arguments[@"urlString"]]);
+    } else if ([@"redeemWebPurchase" isEqualToString call.method]) {
+        [RCCommonFunctionality redeemWebPurchaseWithUrlString:arguments[@"redemptionLink"]
+                                                   completion:[self getResponseCompletionBlock:result]];
+    } else {
         result(FlutterMethodNotImplemented);
     }
 }

@@ -1186,6 +1186,24 @@ class Purchases {
         },
       );
 
+  static Future<WebPurchaseRedemption?> parseAsWebPurchaseRedemption(String urlString) async {
+    final bool result = await _channel.invokeMethod('isWebPurchaseRedemptionURL', {
+      'urlString': urlString,
+    });
+    if (result) {
+      return WebPurchaseRedemption(urlString);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<WebPurchaseRedemptionResult> redeemWebPurchase(WebPurchaseRedemption webPurchaseRedemption) async {
+    final result = await _channel.invokeMethod('redeemWebPurchase', {
+      'redemptionLink': webPurchaseRedemption.redemptionLink,
+    });
+    return WebPurchaseRedemptionResult.fromJson(Map<String, dynamic>.from(result));
+  }
+
   static Future<CustomerInfo> _invokeReturningCustomerInfo(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
