@@ -234,9 +234,9 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
                      presentedOfferingContext:arguments[@"presentedOfferingContext"]
                        winBackOfferIdentifier:arguments[@"winBackOfferIdentifier"]
                                      result:result];
-    } else if ([@"isWebPurchaseRedemptionURL" isEqualToString call.method]) {
-        result([RCCommonFunctionality isWebPurchaseRedemptionURL:arguments[@"urlString"]]);
-    } else if ([@"redeemWebPurchase" isEqualToString call.method]) {
+    } else if ([@"isWebPurchaseRedemptionURL" isEqualToString:call.method]) {
+        result([NSNumber numberWithBool:[RCCommonFunctionality isWebPurchaseRedemptionURL:arguments[@"urlString"]]]);
+    } else if ([@"redeemWebPurchase" isEqualToString:call.method]) {
         [RCCommonFunctionality redeemWebPurchaseWithUrlString:arguments[@"redemptionLink"]
                                                    completion:[self getResponseCompletionBlock:result]];
     } else {
