@@ -334,6 +334,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 syncAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
                         price, result);
                 break;
+            case "isWebPurchaseRedemptionURL":
+                String urlString = call.argument("urlString");
+                isWebPurchaseRedemptionURL(urlString, result);
+                break;
+            case "redeemWebPurchase":
+                String redemptionLink = call.argument("redemptionLink");
+                redeemWebPurchase(redemptionLink, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -703,6 +711,30 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             CommonKt.showInAppMessagesIfNeeded(activity, messageTypesList);
         }
         result.success(null);
+    }
+
+    private void isWebPurchaseRedemptionURL(String urlString, final Result result) {
+        if (urlString == null) {
+            result.error(
+                    INVALID_ARGS_ERROR_CODE,
+                    "Missing urlString argument",
+                    null
+            );
+            return;
+        }
+        result.success(CommonKt.isWebPurchaseRedemptionURL(urlString));
+    }
+
+    private void redeemWebPurchase(String redemptionLink, final Result result) {
+        if (redemptionLink == null) {
+            result.error(
+                    INVALID_ARGS_ERROR_CODE,
+                    "Missing redemptionLink argument",
+                    null
+            );
+            return;
+        }
+        CommonKt.redeemWebPurchase(redemptionLink, getOnResult(result));
     }
 
     private void runOnUiThread(Runnable runnable) {

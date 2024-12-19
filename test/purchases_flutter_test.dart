@@ -1431,4 +1431,44 @@ void main() {
       ),
     ]);
   });
+
+  test('parseAsWebPurchaseRedemption works correctly', () async {
+    const link = 'custom-scheme://redeem_web_purchase?redemption_token=1234';
+    response = true;
+    final webPurchaseRedemption = await Purchases.parseAsWebPurchaseRedemption(link);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'isWebPurchaseRedemptionURL',
+        arguments: {
+          'urlString': link,
+        },
+      ),
+    ]);
+    expect(webPurchaseRedemption, isNotNull);
+  });
+
+  test('redeemWebPurchase works correctly', () async {
+    const link = 'custom-scheme://redeem_web_purchase?redemption_token=1234';
+    const webPurchaseRedemption = WebPurchaseRedemption(link);
+    response = {
+      'result': 'SUCCESS',
+      'customerInfo': mockCustomerInfoResponse,
+    };
+    final webPurchaseRedemptionResult = await Purchases.redeemWebPurchase(webPurchaseRedemption);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'redeemWebPurchase',
+        arguments: {
+          'redemptionLink': link,
+        },
+      ),
+    ]);
+    final expiredOrNull = webPurchaseRedemptionResult.whenOrNull(
+      success: (customerInfo) {
+        expect(customerInfo, CustomerInfo.fromJson(mockCustomerInfoResponse));
+        return webPurchaseRedemptionResult;
+      },
+    );
+    expect(expiredOrNull, isNotNull);
+  });
 }
