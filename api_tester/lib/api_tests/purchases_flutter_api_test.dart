@@ -552,6 +552,11 @@ class _PurchasesFlutterApiTest {
     PurchasesAreCompletedBy revenueCat =
         const PurchasesAreCompletedByRevenueCat();
   }
+
+  void _checkWebPurchaseRedemption(String urlString) async {
+    WebPurchaseRedemption? webPurchaseRedemption = await Purchases.parseAsWebPurchaseRedemption(urlString);
+    WebPurchaseRedemptionResult? result = await Purchases.redeemWebPurchase(webPurchaseRedemption!);
+  }
 }
 
 Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForProduct(
