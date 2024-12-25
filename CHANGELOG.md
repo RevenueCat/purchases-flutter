@@ -1,3 +1,8 @@
+## 8.4.0
+## RevenueCat SDK
+### ✨ New Features
+* Support Web Redemption Links (#1227) via Toni Rico (@tonidero)
+
 ## 8.3.2
 ## RevenueCat SDK
 ### 📦 Dependency Updates
