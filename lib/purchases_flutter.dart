@@ -1230,6 +1230,16 @@ class Purchases {
     final response = Map<String, dynamic>.from(result!);
     return response;
   }
+
+  /// Web-only: Loads and caches some optional data in the Purchases SDK.
+  /// Currently only fetches branding information.
+  ///
+  /// You can call this method after configuring the SDK to speed up the first call to purchase.
+  /// This method has no effect on non-web platforms.
+  static Future<void> preload() async {
+    if (!kIsWeb) return;
+    await _channel.invokeMethod('preload');
+  }
 }
 
 /// Billing Feature types

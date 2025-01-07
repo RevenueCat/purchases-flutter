@@ -2,13 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:magic_weather_flutter/src/app.dart';
-import 'package:magic_weather_flutter/src/constant.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'src/constant.dart';
 import 'store_config.dart';
 
 void main() async {
-  if (Platform.isIOS || Platform.isMacOS) {
+  if (kIsWeb) {
+    StoreConfig(
+      store: Store.rcBilling,
+      apiKey: webApiKey,
+    );
+  } else if (Platform.isIOS || Platform.isMacOS) {
     StoreConfig(
       store: Store.appStore,
       apiKey: appleApiKey,
