@@ -4,6 +4,8 @@ import 'dart:js' as js;
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
+import '../errors.dart';
+
 const String rcPrefix = '\$rc_';
 
 class WebPackageType {
@@ -206,8 +208,8 @@ class PurchasesFlutterPlugin {
       purchases.callMethod('configure', [apiKey, appUserId]);
     } catch (e) {
       throw PlatformException(
-        code: 'ConfigureError',
-        message: 'Error calling configure: $e',
+        code: PurchasesErrorCode.configurationError.index.toString(),
+        message: 'Purchases SDK not configured. Call configure first.',
       );
     }
   }
@@ -273,7 +275,7 @@ class PurchasesFlutterPlugin {
 
     if (!_isConfigured()) {
       throw PlatformException(
-        code: 'NotConfigured',
+        code: PurchasesErrorCode.configurationError.index.toString(),
         message: 'Purchases SDK not configured. Call configure first.',
       );
     }
@@ -295,12 +297,15 @@ class PurchasesFlutterPlugin {
       ],
     ).callMethod('catch', [
       js.allowInterop(
-        (error) => completer.completeError(
-          PlatformException(
-            code: 'CustomerInfoError',
-            message: error.toString(),
-          ),
-        ),
+        (error) {
+          final code = _mapJsErrorToPurchasesErrorCode(error);
+          completer.completeError(
+            PlatformException(
+              code: code.index.toString(),
+              message: error.toString(),
+            ),
+          );
+        },
       ),
     ]);
 
@@ -1187,5 +1192,81 @@ class PurchasesFlutterPlugin {
       'placementIdentifier': presentedOfferingContext['placementIdentifier'],
       'targetingContext': targetingContext,
     };
+  }
+
+  PurchasesErrorCode _mapJsErrorToPurchasesErrorCode(dynamic error) {
+    final errorCode = error?.errorCode ?? -1;
+    final errorType = error?.type?.toString().toLowerCase() ?? '';
+    final errorMessage = error?.message?.toString().toLowerCase() ?? '';
+
+    switch (errorCode) {
+      case 0:
+        return PurchasesErrorCode.unknownError;
+      case 1:
+        return PurchasesErrorCode.purchaseCancelledError;
+      case 2:
+        return PurchasesErrorCode.storeProblemError;
+      case 3:
+        return PurchasesErrorCode.purchaseNotAllowedError;
+      case 4:
+        return PurchasesErrorCode.purchaseInvalidError;
+      case 5:
+        return PurchasesErrorCode.productNotAvailableForPurchaseError;
+      case 6:
+        return PurchasesErrorCode.productAlreadyPurchasedError;
+      case 7:
+        return PurchasesErrorCode.receiptAlreadyInUseError;
+      case 8:
+        return PurchasesErrorCode.invalidReceiptError;
+      case 9:
+        return PurchasesErrorCode.missingReceiptFileError;
+      case 10:
+        return PurchasesErrorCode.networkError;
+      case 11:
+        return PurchasesErrorCode.invalidCredentialsError;
+      case 12:
+        return PurchasesErrorCode.unexpectedBackendResponseError;
+      case 14:
+        return PurchasesErrorCode.invalidAppUserIdError;
+      case 15:
+        return PurchasesErrorCode.operationAlreadyInProgressError;
+      case 16:
+        return PurchasesErrorCode.unknownBackendError;
+      case 17:
+        return PurchasesErrorCode.invalidAppleSubscriptionKeyError;
+      case 18:
+        return PurchasesErrorCode.ineligibleError;
+      case 19:
+        return PurchasesErrorCode.insufficientPermissionsError;
+      case 20:
+        return PurchasesErrorCode.paymentPendingError;
+      case 21:
+        return PurchasesErrorCode.invalidSubscriberAttributesError;
+      case 22:
+        return PurchasesErrorCode.logOutWithAnonymousUserError;
+      case 23:
+        return PurchasesErrorCode.configurationError;
+      case 24:
+        return PurchasesErrorCode.unsupportedError;
+      case 25:
+        return PurchasesErrorCode.emptySubscriberAttributesError;
+      case 28:
+        return PurchasesErrorCode.customerInfoError;
+    }
+
+    switch (errorType) {
+      case 'network_error':
+        return PurchasesErrorCode.networkError;
+      case 'configuration_error':
+        return PurchasesErrorCode.configurationError;
+      default:
+        if (errorMessage.contains('offline') ||
+            errorMessage.contains('network')) {
+          return PurchasesErrorCode.offlineConnectionError;
+        } else if (errorMessage.contains('configuration')) {
+          return PurchasesErrorCode.configurationError;
+        }
+        return PurchasesErrorCode.unknownError;
+    }
   }
 }
