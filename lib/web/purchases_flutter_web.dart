@@ -783,10 +783,8 @@ class PurchasesFlutterPlugin {
         return 'RC_BILLING';
       case 'promotional':
         return 'PROMOTIONAL';
-      case 'web':
-        return 'WEB';
       default:
-        return 'unknownStore';
+        return 'unknown';
     }
   }
 
