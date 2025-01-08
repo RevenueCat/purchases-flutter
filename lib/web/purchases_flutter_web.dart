@@ -4,14 +4,19 @@ import 'dart:js' as js;
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-const String rcLifetime = '\$rc_lifetime';
-const String rcAnnual = '\$rc_annual';
-const String rcSixMonth = '\$rc_six_month';
-const String rcThreeMonth = '\$rc_three_month';
-const String rcTwoMonth = '\$rc_two_month';
-const String rcMonthly = '\$rc_monthly';
-const String rcWeekly = '\$rc_weekly';
 const String rcPrefix = '\$rc_';
+
+class WebPackageType {
+  static const String unknown = 'unknown';
+  static const String custom = 'custom';
+  static const String lifetime = '${rcPrefix}lifetime';
+  static const String annual = '${rcPrefix}annual';
+  static const String sixMonth = '${rcPrefix}six_month';
+  static const String threeMonth = '${rcPrefix}three_month';
+  static const String twoMonth = '${rcPrefix}two_month';
+  static const String monthly = '${rcPrefix}monthly';
+  static const String weekly = '${rcPrefix}weekly';
+}
 
 enum LogLevel {
   verbose,
@@ -936,19 +941,19 @@ class PurchasesFlutterPlugin {
 
   String _convertPackageType(String identifier) {
     switch (identifier) {
-      case rcLifetime:
+      case WebPackageType.lifetime:
         return 'LIFETIME';
-      case rcAnnual:
+      case WebPackageType.annual:
         return 'ANNUAL';
-      case rcSixMonth:
+      case WebPackageType.sixMonth:
         return 'SIX_MONTH';
-      case rcThreeMonth:
+      case WebPackageType.threeMonth:
         return 'THREE_MONTH';
-      case rcTwoMonth:
+      case WebPackageType.twoMonth:
         return 'TWO_MONTH';
-      case rcMonthly:
+      case WebPackageType.monthly:
         return 'MONTHLY';
-      case rcWeekly:
+      case WebPackageType.weekly:
         return 'WEEKLY';
       default:
         if (identifier.startsWith(rcPrefix)) {
@@ -1087,17 +1092,20 @@ class PurchasesFlutterPlugin {
       'serverDescription': jsOffering['serverDescription'],
       'metadata': metadata,
       'availablePackages': _convertJsPackages(jsOffering['availablePackages']),
-      'lifetime':
-          _findPackageByType(jsOffering['availablePackages'], rcLifetime),
-      'annual': _findPackageByType(jsOffering['availablePackages'], rcAnnual),
-      'sixMonth':
-          _findPackageByType(jsOffering['availablePackages'], rcSixMonth),
-      'threeMonth':
-          _findPackageByType(jsOffering['availablePackages'], rcThreeMonth),
-      'twoMonth':
-          _findPackageByType(jsOffering['availablePackages'], rcTwoMonth),
-      'monthly': _findPackageByType(jsOffering['availablePackages'], rcMonthly),
-      'weekly': _findPackageByType(jsOffering['availablePackages'], rcWeekly),
+      'lifetime': _findPackageByType(
+          jsOffering['availablePackages'], WebPackageType.lifetime),
+      'annual': _findPackageByType(
+          jsOffering['availablePackages'], WebPackageType.annual),
+      'sixMonth': _findPackageByType(
+          jsOffering['availablePackages'], WebPackageType.sixMonth),
+      'threeMonth': _findPackageByType(
+          jsOffering['availablePackages'], WebPackageType.threeMonth),
+      'twoMonth': _findPackageByType(
+          jsOffering['availablePackages'], WebPackageType.twoMonth),
+      'monthly': _findPackageByType(
+          jsOffering['availablePackages'], WebPackageType.monthly),
+      'weekly': _findPackageByType(
+          jsOffering['availablePackages'], WebPackageType.weekly),
     };
   }
 
