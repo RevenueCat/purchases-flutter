@@ -848,13 +848,17 @@ class PurchasesFlutterPlugin {
     final allPurchaseDatesByProduct =
         jsCustomerInfo['allPurchaseDatesByProduct'];
     final purchaseDates = <String, String?>{};
+    final allPurchasedProductIdentifiers = <String>[];
+
     if (allPurchaseDatesByProduct != null &&
         allPurchaseDatesByProduct is js.JsObject) {
       final keys =
           js.context['Object'].callMethod('keys', [allPurchaseDatesByProduct]);
       for (final key in keys) {
         final date = allPurchaseDatesByProduct[key];
-        purchaseDates[key.toString()] = date?.toString();
+        final productId = key.toString();
+        purchaseDates[productId] = date?.toString();
+        allPurchasedProductIdentifiers.add(productId);
       }
     }
 
@@ -871,6 +875,13 @@ class PurchasesFlutterPlugin {
       }
     }
 
+    String? latestExpirationDate;
+    if (expirationDates.isNotEmpty) {
+      latestExpirationDate = expirationDates.values
+          .where((date) => date != null)
+          .reduce((a, b) => a!.compareTo(b!) > 0 ? a : b);
+    }
+
     return {
       'entitlements': {
         'active': activeEntitlements,
@@ -879,14 +890,14 @@ class PurchasesFlutterPlugin {
       },
       'allPurchaseDates': purchaseDates,
       'activeSubscriptions': activeSubscriptionsList,
-      'allPurchasedProductIdentifiers': [],
+      'allPurchasedProductIdentifiers': allPurchasedProductIdentifiers,
       'nonSubscriptionTransactions': [],
       'firstSeen': jsCustomerInfo['firstSeenDate']?.toString() ?? '',
       'originalAppUserId':
           jsCustomerInfo['originalAppUserId']?.toString() ?? '',
       'allExpirationDates': expirationDates,
       'requestDate': jsCustomerInfo['requestDate']?.toString() ?? '',
-      'latestExpirationDate': null,
+      'latestExpirationDate': latestExpirationDate,
       'originalPurchaseDate':
           jsCustomerInfo['originalPurchaseDate']?.toString(),
       'originalApplicationVersion': null,
@@ -937,7 +948,8 @@ class PurchasesFlutterPlugin {
     return {
       'identifier': jsProduct['identifier'],
       'title': jsProduct['title'],
-      'description': jsProduct['description'] ?? '', // TODO: Support null description
+      'description':
+          jsProduct['description'] ?? '', // TODO: Support null description
       'price': jsProduct['currentPrice']?['amountMicros'] ?? 0,
       'priceString': jsProduct['currentPrice']?['formattedPrice'],
       'currencyCode': jsProduct['currentPrice']?['currency'],
@@ -1073,7 +1085,8 @@ class PurchasesFlutterPlugin {
               }
             : {
                 'amountMicros': 0,
-                'currencyCode': 'USD', // TODO: Fix handling of free trial phases. Shouldn't assume USD
+                'currencyCode':
+                    'USD', // TODO: Fix handling of free trial phases. Shouldn't assume USD
                 'formatted': '\$0',
               },
         'offerPaymentMode': null, // TODO: Support offer payment mode
@@ -1099,19 +1112,33 @@ class PurchasesFlutterPlugin {
       'metadata': metadata,
       'availablePackages': _convertJsPackages(jsOffering['availablePackages']),
       'lifetime': _findPackageByType(
-          jsOffering['availablePackages'], WebPackageType.lifetime,),
+        jsOffering['availablePackages'],
+        WebPackageType.lifetime,
+      ),
       'annual': _findPackageByType(
-          jsOffering['availablePackages'], WebPackageType.annual,),
+        jsOffering['availablePackages'],
+        WebPackageType.annual,
+      ),
       'sixMonth': _findPackageByType(
-          jsOffering['availablePackages'], WebPackageType.sixMonth,),
+        jsOffering['availablePackages'],
+        WebPackageType.sixMonth,
+      ),
       'threeMonth': _findPackageByType(
-          jsOffering['availablePackages'], WebPackageType.threeMonth,),
+        jsOffering['availablePackages'],
+        WebPackageType.threeMonth,
+      ),
       'twoMonth': _findPackageByType(
-          jsOffering['availablePackages'], WebPackageType.twoMonth,),
+        jsOffering['availablePackages'],
+        WebPackageType.twoMonth,
+      ),
       'monthly': _findPackageByType(
-          jsOffering['availablePackages'], WebPackageType.monthly,),
+        jsOffering['availablePackages'],
+        WebPackageType.monthly,
+      ),
       'weekly': _findPackageByType(
-          jsOffering['availablePackages'], WebPackageType.weekly,),
+        jsOffering['availablePackages'],
+        WebPackageType.weekly,
+      ),
     };
   }
 
