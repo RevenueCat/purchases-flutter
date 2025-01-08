@@ -924,9 +924,9 @@ class PurchasesFlutterPlugin {
     }
 
     return {
+      'all': allOfferingsMap,
       'current':
           currentOffering != null ? _convertJsOffering(currentOffering) : null,
-      'all': allOfferingsMap,
     };
   }
 
@@ -934,7 +934,7 @@ class PurchasesFlutterPlugin {
     if (jsPackages == null) return [];
 
     final packages = <Map<String, dynamic>>[];
-    final List packagesList = js.JsArray.from(jsPackages);
+    final packagesList = js.JsArray.from(jsPackages).toList();
 
     for (final jsPackage in packagesList) {
       packages.add(_convertJsPackage(jsPackage));
@@ -1147,13 +1147,10 @@ class PurchasesFlutterPlugin {
 
   dynamic _jsValueToDart(dynamic value) {
     if (value is js.JsObject) {
-      // Convert nested JsObject to a Dart Map
       return _jsObjectToMap(value);
     } else if (value is List) {
-      // Convert a list of values (e.g., an array in JS)
       return value.map(_jsValueToDart).toList();
     } else {
-      // Return the value as-is for primitive types
       return value;
     }
   }
@@ -1161,12 +1158,11 @@ class PurchasesFlutterPlugin {
   Map<String, dynamic> _jsObjectToMap(js.JsObject jsObject) {
     final map = <String, dynamic>{};
 
-    // Retrieve the keys from the JavaScript object
     final keys = js.context['Object'].callMethod('keys', [jsObject]);
 
     for (final key in List<String>.from(keys)) {
       final value = jsObject[key];
-      map[key] = _jsValueToDart(value); // Process the value recursively
+      map[key] = _jsValueToDart(value);
     }
 
     return map;
