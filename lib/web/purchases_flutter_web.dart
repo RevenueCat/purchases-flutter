@@ -185,12 +185,6 @@ class PurchasesFlutterPlugin {
         purchases = purchases['Purchases'];
       }
 
-      // Check if SDK is already configured
-      final isConfigured = purchases.callMethod('isConfigured') as bool;
-      if (isConfigured) {
-        return;
-      }
-
       final apiKey = arguments['apiKey'] as String?;
       if (apiKey == null) {
         throw PlatformException(
@@ -475,22 +469,23 @@ class PurchasesFlutterPlugin {
 
     final completer = Completer<Map<String, dynamic>>();
     final nativePackageJsified = js.JsObject.jsify(arguments['nativePackage']);
-    final promise = instance.callMethod('purchasePackage', [nativePackageJsified]);
+    final promise =
+        instance.callMethod('purchasePackage', [nativePackageJsified]);
     promise.callMethod(
       'then',
       [
         js.allowInterop(
-              (result) => print("TEST SUCCESS PURCHASING PACKAGE"),
+          (result) => print("TEST SUCCESS PURCHASING PACKAGE"),
         ),
       ],
     ).callMethod('catch', [
       js.allowInterop(
-            (error) => completer.completeError(
-              PlatformException(
-                code: 'PurchasePackage',
-                message: error.toString(),
-              ),
-            ),
+        (error) => completer.completeError(
+          PlatformException(
+            code: 'PurchasePackage',
+            message: error.toString(),
+          ),
+        ),
       ),
     ]);
 
@@ -904,9 +899,8 @@ class PurchasesFlutterPlugin {
     }
 
     return {
-      'current': currentOffering != null
-          ? _convertJsOffering(currentOffering)
-          : null,
+      'current':
+          currentOffering != null ? _convertJsOffering(currentOffering) : null,
       'all': allOfferingsMap,
     };
   }
@@ -932,10 +926,10 @@ class PurchasesFlutterPlugin {
         'priceString': jsProduct['currentPrice']?['formattedPrice'],
         'currencyCode': jsProduct['currentPrice']?['currency'],
         'productType': _convertProductType(jsProduct['productType']),
-        'subscriptionOptions':
-            _convertSubscriptionOptions(jsProduct['subscriptionOptions'],
-                jsProduct['identifier'],
-            ),
+        'subscriptionOptions': _convertSubscriptionOptions(
+          jsProduct['subscriptionOptions'],
+          jsProduct['identifier'],
+        ),
         'presentedOfferingIdentifier': jsProduct['presentedOfferingContext']
             ?['offeringIdentifier'],
       };
@@ -978,10 +972,10 @@ class PurchasesFlutterPlugin {
   }
 
   Map<String, dynamic> _convertJsPackage(dynamic jsPackage) {
-    final presentedOfferingContext = jsPackage['rcBillingProduct']
-    ?['presentedOfferingContext'];
+    final presentedOfferingContext =
+        jsPackage['rcBillingProduct']?['presentedOfferingContext'];
     Map<String, dynamic>? targetingContext;
-    if (presentedOfferingContext?[ 'targetingContext'] != null) {
+    if (presentedOfferingContext?['targetingContext'] != null) {
       targetingContext = {
         'ruleId': presentedOfferingContext?['targetingContext']?['ruleId'],
         'revision': presentedOfferingContext?['targetingContext']?['revision'],
@@ -993,13 +987,10 @@ class PurchasesFlutterPlugin {
       'identifier': jsPackage['identifier'],
       'packageType': _convertPackageType(jsPackage['identifier']),
       'product': _convertJsProduct(jsPackage['rcBillingProduct']),
-      'offeringIdentifier': presentedOfferingContext
-      ?['offeringIdentifier'],
+      'offeringIdentifier': presentedOfferingContext?['offeringIdentifier'],
       'presentedOfferingContext': {
-        'offeringIdentifier': presentedOfferingContext
-        ?['offeringIdentifier'],
-        'placementIdentifier': presentedOfferingContext
-        ?['placementIdentifier'],
+        'offeringIdentifier': presentedOfferingContext?['offeringIdentifier'],
+        'placementIdentifier': presentedOfferingContext?['placementIdentifier'],
         'targetingContext': targetingContext,
       },
       'nativePackage': _jsObjectToMap(jsPackage),
@@ -1051,7 +1042,8 @@ class PurchasesFlutterPlugin {
           'value': option['base']?['period']?['number'],
         },
         'isPrepaid': false,
-        'presentedOfferingContext': null, // TODO: Implement presented offering context
+        'presentedOfferingContext':
+            null, // TODO: Implement presented offering context
       });
     }
 
@@ -1076,12 +1068,14 @@ class PurchasesFlutterPlugin {
         'offerPaymentMode': null, // TODO: Support offer payment mode
       };
 
-  String _convertPeriodUnit(String periodUnit) => {
-      'day': 'DAY',
-      'week': 'WEEK',
-      'month': 'MONTH',
-      'year': 'YEAR',
-    }[periodUnit] ?? 'UNKNOWN';
+  String _convertPeriodUnit(String periodUnit) =>
+      {
+        'day': 'DAY',
+        'week': 'WEEK',
+        'month': 'MONTH',
+        'year': 'YEAR',
+      }[periodUnit] ??
+      'UNKNOWN';
 
   Map<String, dynamic> _convertJsOffering(dynamic jsOffering) {
     Map<String, dynamic> metadata = {};
@@ -1092,19 +1086,17 @@ class PurchasesFlutterPlugin {
       'identifier': jsOffering['identifier'],
       'serverDescription': jsOffering['serverDescription'],
       'metadata': metadata,
-      'availablePackages':
-        _convertJsPackages(jsOffering['availablePackages']),
+      'availablePackages': _convertJsPackages(jsOffering['availablePackages']),
       'lifetime':
-        _findPackageByType(jsOffering['availablePackages'], rcLifetime),
+          _findPackageByType(jsOffering['availablePackages'], rcLifetime),
       'annual': _findPackageByType(jsOffering['availablePackages'], rcAnnual),
       'sixMonth':
-        _findPackageByType(jsOffering['availablePackages'], rcSixMonth),
+          _findPackageByType(jsOffering['availablePackages'], rcSixMonth),
       'threeMonth':
-        _findPackageByType(jsOffering['availablePackages'], rcThreeMonth),
+          _findPackageByType(jsOffering['availablePackages'], rcThreeMonth),
       'twoMonth':
-        _findPackageByType(jsOffering['availablePackages'], rcTwoMonth),
-      'monthly':
-        _findPackageByType(jsOffering['availablePackages'], rcMonthly),
+          _findPackageByType(jsOffering['availablePackages'], rcTwoMonth),
+      'monthly': _findPackageByType(jsOffering['availablePackages'], rcMonthly),
       'weekly': _findPackageByType(jsOffering['availablePackages'], rcWeekly),
     };
   }
