@@ -21,7 +21,9 @@ class UpsellScreen extends StatefulWidget {
 }
 
 class _UpsellScreenState extends State<UpsellScreen> {
+  String? _appUserId;
   Offerings? _offerings;
+  CustomerInfo? _customerInfo;
 
   @override
   void initState() {
@@ -34,7 +36,19 @@ class _UpsellScreenState extends State<UpsellScreen> {
     try {
       offerings = await Purchases.getOfferings();
     } on PlatformException catch (e) {
-      print(e);
+      print("Error getting offerings: $e");
+    }
+
+    try {
+      _customerInfo = await Purchases.getCustomerInfo();
+    } on PlatformException catch (e) {
+      print("Error getting customer info: $e");
+    }
+
+    try {
+      _appUserId = await Purchases.appUserID;
+    } on PlatformException catch (e) {
+      print("Error getting app user id: $e");
     }
 
     if (!mounted) return;
@@ -57,6 +71,19 @@ class _UpsellScreenState extends State<UpsellScreen> {
   Widget _buildUpsell(BuildContext context) {
     final currentOfferingId = _offerings!.current!.identifier;
     return ListView(children: [
+      if (_customerInfo != null)
+        ListTile(
+          title: const Text('Active Entitlements'),
+          trailing: Text(
+            '${_customerInfo!.entitlements.active.keys}'
+          ),
+        ),
+      if (_appUserId != null)
+        ListTile(
+          title: const Text('App User ID'),
+          trailing: Text(_appUserId!),
+        ),
+      const Divider(),
       ..._offerings!.all.entries
           .map((entry) => ExpansionTile(
                 title: Text("Offering ID: ${entry.key} "
