@@ -923,21 +923,28 @@ class PurchasesFlutterPlugin {
     return packages;
   }
 
-  Map<String, dynamic> _convertJsProduct(dynamic jsProduct) => {
-        'identifier': jsProduct['identifier'],
-        'title': jsProduct['title'],
-        'description': jsProduct['description'],
-        'price': jsProduct['currentPrice']?['amountMicros'] ?? 0,
-        'priceString': jsProduct['currentPrice']?['formattedPrice'],
-        'currencyCode': jsProduct['currentPrice']?['currency'],
-        'productType': _convertProductType(jsProduct['productType']),
-        'subscriptionOptions': _convertSubscriptionOptions(
-          jsProduct['subscriptionOptions'],
-          jsProduct['identifier'],
-        ),
-        'presentedOfferingIdentifier': jsProduct['presentedOfferingContext']
-            ?['offeringIdentifier'],
-      };
+  Map<String, dynamic> _convertJsProduct(dynamic jsProduct) {
+    final presentedOfferingContext = _convertPresentedOfferingContext(
+      jsProduct['presentedOfferingContext'],
+    );
+
+    return {
+      'identifier': jsProduct['identifier'],
+      'title': jsProduct['title'],
+      'description': jsProduct['description'],
+      'price': jsProduct['currentPrice']?['amountMicros'] ?? 0,
+      'priceString': jsProduct['currentPrice']?['formattedPrice'],
+      'currencyCode': jsProduct['currentPrice']?['currency'],
+      'productType': _convertProductType(jsProduct['productType']),
+      'subscriptionOptions': _convertSubscriptionOptions(
+        jsProduct['subscriptionOptions'],
+        jsProduct['identifier'],
+      ),
+      'presentedOfferingContext': presentedOfferingContext,
+      'presentedOfferingIdentifier':
+          presentedOfferingContext?['offeringIdentifier'],
+    };
+  }
 
   String _convertPackageType(String identifier) {
     switch (identifier) {
@@ -977,27 +984,16 @@ class PurchasesFlutterPlugin {
   }
 
   Map<String, dynamic> _convertJsPackage(dynamic jsPackage) {
-    final presentedOfferingContext =
-        jsPackage['rcBillingProduct']?['presentedOfferingContext'];
-    Map<String, dynamic>? targetingContext;
-    if (presentedOfferingContext?['targetingContext'] != null) {
-      targetingContext = {
-        'ruleId': presentedOfferingContext?['targetingContext']?['ruleId'],
-        'revision': presentedOfferingContext?['targetingContext']?['revision'],
-      };
-    } else {
-      targetingContext = null;
-    }
+    final presentedOfferingContext = _convertPresentedOfferingContext(
+      jsPackage['presentedOfferingContext'],
+    );
+
     return {
       'identifier': jsPackage['identifier'],
       'packageType': _convertPackageType(jsPackage['identifier']),
       'product': _convertJsProduct(jsPackage['rcBillingProduct']),
+      'presentedOfferingContext': presentedOfferingContext,
       'offeringIdentifier': presentedOfferingContext?['offeringIdentifier'],
-      'presentedOfferingContext': {
-        'offeringIdentifier': presentedOfferingContext?['offeringIdentifier'],
-        'placementIdentifier': presentedOfferingContext?['placementIdentifier'],
-        'targetingContext': targetingContext,
-      },
       'nativePackage': _jsObjectToMap(jsPackage),
     };
   }
@@ -1134,5 +1130,27 @@ class PurchasesFlutterPlugin {
     }
 
     return map;
+  }
+
+  Map<String, dynamic>? _convertPresentedOfferingContext(
+    dynamic presentedOfferingContext,
+  ) {
+    if (presentedOfferingContext == null) {
+      return null;
+    }
+
+    Map<String, dynamic>? targetingContext;
+    if (presentedOfferingContext['targetingContext'] != null) {
+      targetingContext = {
+        'ruleId': presentedOfferingContext['targetingContext']['ruleId'],
+        'revision': presentedOfferingContext['targetingContext']['revision'],
+      };
+    }
+
+    return {
+      'offeringIdentifier': presentedOfferingContext['offeringIdentifier'],
+      'placementIdentifier': presentedOfferingContext['placementIdentifier'],
+      'targetingContext': targetingContext,
+    };
   }
 }
