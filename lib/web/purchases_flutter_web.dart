@@ -951,8 +951,8 @@ class PurchasesFlutterPlugin {
     return {
       'identifier': jsProduct['identifier'],
       'title': jsProduct['title'],
-      'description':
-          jsProduct['description'] ?? '', // TODO: Support null description
+      'description': jsProduct['description'] ??
+          '', // TODO: Dart [StoreProduct] doesn't support a null description while JS does
       'price': jsProduct['currentPrice']?['amountMicros'] ?? 0,
       'priceString': jsProduct['currentPrice']?['formattedPrice'],
       'currencyCode': jsProduct['currentPrice']?['currency'],
