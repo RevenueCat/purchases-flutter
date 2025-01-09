@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io';
 
 class ShowDialogToDismiss extends StatelessWidget {
@@ -16,7 +17,7 @@ class ShowDialogToDismiss extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!Platform.isIOS) {
+    if (kIsWeb || !Platform.isIOS) {
       return AlertDialog(
         title: Text(
           title,
