@@ -11,6 +11,17 @@
   * [iOS 5.14.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.2)
   * [iOS 5.14.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.1)
 
+### 🔄 Other Changes
+* Expose storeError for iOS if any (https://github.com/RevenueCat/purchases-hybrid-common/pull/1011) via Toni Rico (@tonidero). You can use it like this:
+```
+try {
+  offerings = await Purchases.getOfferings();
+} on PlatformException catch (e) {
+  final storeError = e.details['storeError'];
+  // Do something with storeError if it exists
+}
+```
+
 ## 8.4.0
 ## RevenueCat SDK
 ### ✨ New Features
