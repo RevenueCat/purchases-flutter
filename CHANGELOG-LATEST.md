@@ -1,7 +1,6 @@
 ## RevenueCat SDK
 ### 📦 Dependency Updates
-* Updates purchases-hybrid-common to 13.15.2 (#1244) via RevenueCat Git Bot (@RCGitBot)
-* Bump fastlane from 2.225.0 to 2.226.0 (#1240) via dependabot[bot] (@dependabot[bot])
-
-### 🔄 Other Changes
-* Update CHANGELOG to include changes that expose storeError in iOS if it exists (#1243) via Toni Rico (@tonidero)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.16.0 (#1250) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.11.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.11.0)
+  * [iOS 5.15.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.15.0)
+  * [iOS 5.14.6](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.6)
