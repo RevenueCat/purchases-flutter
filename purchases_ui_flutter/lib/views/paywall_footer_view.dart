@@ -62,6 +62,34 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
       contentCreator: contentCreator);
 }
 
+/// View that displays the paywall in footer mode.
+/// Not supported in macOS currently. Only available for original template paywalls. Ignored for V2 Paywalls.
+///
+/// [offering] (Optional) The offering object to be displayed in the paywall.
+/// Obtained from [Purchases.getOfferings].
+///
+/// [onPurchaseStarted] (Optional) Callback that gets called when a purchase
+/// is started.
+///
+/// [onPurchaseCompleted] (Optional) Callback that gets called when a purchase
+/// is completed.
+///
+/// [onPurchaseError] (Optional) Callback that gets called when a purchase
+/// fails.
+///
+/// [onRestoreCompleted] (Optional) Callback that gets called when a restore
+/// is completed. Note that this may get called even if no entitlements have
+/// been granted in case no relevant purchases were found.
+///
+/// [onRestoreError] (Optional) Callback that gets called when a restore
+/// fails.
+///
+/// [onDismiss] (Optional) Callback that gets called when the paywall wants to
+/// dismiss. Currently, after a purchase is completed.
+///
+/// [contentCreator] A function that creates the content to be displayed above
+/// the paywall. Make sure you apply the given padding to the bottom of your
+/// content to avoid overlap.
 class OriginalTemplatePaywallFooterView extends StatefulWidget {
 
   final Offering? offering;
