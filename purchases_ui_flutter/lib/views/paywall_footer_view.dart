@@ -10,7 +10,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 import 'internal_paywall_footer_view.dart';
 
 /// View that displays the paywall in footer mode.
-/// Not supported in macOS currently.
+/// Not supported in macOS currently. Only available for original template paywalls. Ignored for V2 Paywalls.
 ///
 /// [offering] (Optional) The offering object to be displayed in the paywall.
 /// Obtained from [Purchases.getOfferings].
@@ -37,7 +37,32 @@ import 'internal_paywall_footer_view.dart';
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
-class PaywallFooterView extends StatefulWidget {
+@Deprecated('use OriginalTemplatePaywallFooterView instead')
+class PaywallFooterView extends OriginalTemplatePaywallFooterView {
+  @Deprecated('use OriginalTemplatePaywallFooterView instead')
+  const PaywallFooterView({
+    Key? key,
+    Offering? offering,
+    Function(Package rcPackage)? onPurchaseStarted,
+    Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)? onPurchaseCompleted,
+    Function(PurchasesError)? onPurchaseError,
+    Function(CustomerInfo customerInfo)? onRestoreCompleted,
+    Function(PurchasesError)? onRestoreError,
+    Function()? onDismiss,
+    required Widget Function(double bottomPadding) contentCreator,
+  }) : super(
+      key: key,
+      offering: offering,
+      onPurchaseStarted: onPurchaseStarted,
+      onPurchaseCompleted: onPurchaseCompleted,
+      onPurchaseError: onPurchaseError,
+      onRestoreCompleted: onRestoreCompleted,
+      onRestoreError: onRestoreError,
+      onDismiss: onDismiss,
+      contentCreator: contentCreator);
+}
+
+class OriginalTemplatePaywallFooterView extends StatefulWidget {
 
   final Offering? offering;
   final Function(Package rcPackage)? onPurchaseStarted;
@@ -49,7 +74,7 @@ class PaywallFooterView extends StatefulWidget {
   final Function()? onDismiss;
   final Widget Function(double bottomPadding) contentCreator;
 
-  const PaywallFooterView({
+  const OriginalTemplatePaywallFooterView({
     Key? key,
     this.offering,
     this.onPurchaseStarted,
