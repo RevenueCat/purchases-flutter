@@ -59,7 +59,8 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
       onRestoreCompleted: onRestoreCompleted,
       onRestoreError: onRestoreError,
       onDismiss: onDismiss,
-      contentCreator: contentCreator);
+      contentCreator: contentCreator,
+  );
 }
 
 /// View that displays the paywall in footer mode.
@@ -118,7 +119,7 @@ class OriginalTemplatePaywallFooterView extends StatefulWidget {
   State<StatefulWidget> createState() => _PaywallFooterViewState();
 }
 
-class _PaywallFooterViewState extends State<PaywallFooterView> {
+class _PaywallFooterViewState extends State<OriginalTemplatePaywallFooterView> {
   static const _roundedCornerRadius = 20.0;
 
   // Need to set it to a value > 0 so it's drawn. Setting it to a value that
