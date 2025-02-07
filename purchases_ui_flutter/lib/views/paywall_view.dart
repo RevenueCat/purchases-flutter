@@ -20,7 +20,8 @@ import 'paywall_view_method_handler.dart';
 /// Obtained from [Purchases.getOfferings].
 ///
 /// [displayCloseButton] (Optional) Whether to display a close button in the
-/// paywall. Defaults to false.
+/// paywall. Only available for original template paywalls.
+/// Ignored for V2 Paywalls. Defaults to false.
 ///
 /// [onPurchaseStarted] (Optional) Callback that gets called when a purchase
 /// is started.

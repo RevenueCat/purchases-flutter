@@ -8,6 +8,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
+// ignore_for_file: deprecated_member_use
 class _PurchasesFlutterApiTest {
   void _checkPresentPaywall(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall();
@@ -82,10 +83,37 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  Widget _checkOriginalTemplatePaywallFooterView() {
+    return Scaffold(
+      body: Center(
+        child: OriginalTemplatePaywallFooterView(
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
   Widget _checkPaywallFooterView() {
     return Scaffold(
       body: Center(
         child: PaywallFooterView(
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _checkOriginalTemplatePaywallFooterViewWithOffering(
+      Offering offering,
+  ) {
+    return Scaffold(
+      body: Center(
+        child: OriginalTemplatePaywallFooterView(
+          offering: offering,
           contentCreator: (double bottomPadding) {
             return Container();
           },
@@ -99,6 +127,33 @@ class _PurchasesFlutterApiTest {
       body: Center(
         child: PaywallFooterView(
           offering: offering,
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _checkOriginalTemplatePaywallFooterViewWithListeners(
+      Offering offering,
+  ) {
+    return Scaffold(
+      body: Center(
+        child: OriginalTemplatePaywallFooterView(
+          onPurchaseStarted: (Package rcPackage) {
+          },
+          onPurchaseCompleted:
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
+          },
+          onPurchaseError: (PurchasesError error) {
+          },
+          onRestoreCompleted: (CustomerInfo customerInfo) {
+          },
+          onRestoreError: (PurchasesError error) {
+          },
+          onDismiss: () {
+          },
           contentCreator: (double bottomPadding) {
             return Container();
           },
