@@ -1,3 +1,9 @@
+## 8.4.6
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.17.1 (#1258) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.16.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.16.1)
+
 ## 8.4.5
 ## RevenueCat SDK
 ### 📦 Dependency Updates
