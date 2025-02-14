@@ -102,7 +102,8 @@ commands:
     steps:
       - run:
           name: Download flutter SDK
-          command: git clone --depth 1 --branch << parameters.version >> https://github.com/flutter/flutter.git flutter
+          # Changed this temporary due to issue: https://github.com/flutter/flutter/issues/162251
+          command: git clone --depth 1 --no-single-branch https://github.com/flutter/flutter.git flutter
       - run:
           name: Setup environment variables
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
