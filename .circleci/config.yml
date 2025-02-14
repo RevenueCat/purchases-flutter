@@ -113,7 +113,7 @@ commands:
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
       - run:
           name: Flutter doctor
-          command: flutter doctor
+          command: flutter doctor -vv
 
   install-and-create-sim:
     parameters:
