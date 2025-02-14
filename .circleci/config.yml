@@ -107,7 +107,7 @@ commands:
       - run:
           name: Checkout SDK version
           # Hardcoded this temporarily due to issue: https://github.com/flutter/flutter/issues/162251
-          command: git fetch --tags && git checkout 3.29.0
+          command: cd flutter && git fetch --tags && git checkout 3.29.0
       - run:
           name: Setup environment variables
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
