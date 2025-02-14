@@ -9,6 +9,7 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'constant.dart';
 import 'cats.dart';
+import 'customer_center.dart';
 import 'initial.dart';
 import 'paywall.dart';
 import 'winback_testing_screen.dart';
@@ -102,6 +103,26 @@ class _UpsellScreenState extends State<UpsellScreen> {
                           ));
                     },
                     child: const Text("Go to Win-Back Offer Testing Screen"),
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Customer Center"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CustomerCenterScreen(),
+                          ));
+                    },
+                    child: const Text("Go to Customer Center Screen"),
                   ),
                 ]))),
       ),
