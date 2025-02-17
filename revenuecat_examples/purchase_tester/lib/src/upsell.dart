@@ -7,8 +7,8 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
-import 'constant.dart';
 import 'cats.dart';
+import 'constant.dart';
 import 'customer_center.dart';
 import 'initial.dart';
 import 'paywall.dart';
@@ -116,11 +116,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   const Text("Customer Center"),
                   ElevatedButton(
                     onPressed: () async {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CustomerCenterScreen(),
-                          ));
+                      await RevenueCatUI.presentCustomerCenter();
                     },
                     child: const Text("Go to Customer Center Screen"),
                   ),

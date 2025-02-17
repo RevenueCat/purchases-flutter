@@ -19,8 +19,10 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         let messenger = registrar.messenger()
         let factory = PurchasesUiPaywallViewFactory(messenger: messenger)
         let footerFactory = PurchasesUiPaywallFooterViewFactory(messenger: messenger)
+
         registrar.register(factory, withId: "com.revenuecat.purchasesui/PaywallView")
         registrar.register(footerFactory, withId: "com.revenuecat.purchasesui/PaywallFooterView")
+
         #endif
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
         let instance = PurchasesUiFlutterPlugin()
@@ -28,6 +30,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     }
 
     private var _paywallProxy: Any?
+    private var _customerCenterProxy: Any?
 
     #if os(iOS)
     @available(iOS 15.0, *)
@@ -41,12 +44,26 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
             self._paywallProxy = newValue
         }
     }
+
+    @available(iOS 15.0, *)
+    private var customerCenterProxy: CustomerCenterProxy {
+        get {
+            // swiftlint:disable:next force_cast
+            return self._customerCenterProxy as! CustomerCenterProxy
+        }
+
+        set {
+            self._customerCenterProxy = newValue
+        }
+    }
+
     #endif
 
     override init() {
         #if os(iOS)
         if #available(iOS 15.0, *) {
             self._paywallProxy = PaywallProxy()
+            self._customerCenterProxy = CustomerCenterProxy()
         }
         #endif
         super.init()
@@ -54,6 +71,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
+
         case "presentPaywall":
             let args = call.arguments as? Dictionary<String, Any> ?? [:]
 
@@ -63,6 +81,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
             )
+
         case "presentPaywallIfNeeded":
             guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
@@ -82,6 +101,11 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 requiredEntitlementIdentifier: requiredEntitlementIdentifier,
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
+            )
+
+        case "presentCustomerCenter":
+            self.presentCustomerCenter(
+                result
             )
         default:
             result(FlutterMethodNotImplemented)
@@ -128,6 +152,22 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         NSLog("Presenting paywall requires iOS")
         #endif
     }
+
+        private func presentCustomerCenter(
+            _ result: @escaping FlutterResult
+        ) {
+            #if os(iOS)
+            if #available(iOS 15.0, *) {
+                self.customerCenterProxy.present(
+                    options: nil
+                )
+            } else {
+                NSLog("Presenting paywall requires iOS 15+")
+            }
+            #else
+            NSLog("Presenting paywall requires iOS")
+            #endif
+        }
 
 }
 
