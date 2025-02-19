@@ -1,3 +1,8 @@
+## 8.5.1
+## RevenueCat SDK
+### 🐞 Bugfixes
+* Add proguard-rules.pro to `purchases-ui-flutter` (#1270) via Cesar de la Vega (@vegaro)
+
 ## 8.5.0
 ## RevenueCat SDK
 ### 📦 Dependency Updates
