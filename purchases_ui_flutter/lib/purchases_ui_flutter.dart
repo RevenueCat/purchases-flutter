@@ -49,7 +49,7 @@ class RevenueCatUI {
     return _parseStringToResult(result);
   }
 
-  static presentCustomerCenter() async {
+  static Future<void> presentCustomerCenter() async {
     final result = await _methodChannel.invokeMethod(
       'presentCustomerCenter',
     );

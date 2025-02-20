@@ -13,9 +13,9 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
     public static func register(with registrar: FlutterPluginRegistrar) {
 
-        #if os(macOS)
+#if os(macOS)
         let messenger = registrar.messenger
-        #else
+#else
         let messenger = registrar.messenger()
         let factory = PurchasesUiPaywallViewFactory(messenger: messenger)
         let footerFactory = PurchasesUiPaywallFooterViewFactory(messenger: messenger)
@@ -23,7 +23,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         registrar.register(factory, withId: "com.revenuecat.purchasesui/PaywallView")
         registrar.register(footerFactory, withId: "com.revenuecat.purchasesui/PaywallFooterView")
 
-        #endif
+#endif
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
         let instance = PurchasesUiFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
@@ -32,7 +32,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     private var _paywallProxy: Any?
     private var _customerCenterProxy: Any?
 
-    #if os(iOS)
+#if os(iOS)
     @available(iOS 15.0, *)
     private var paywallProxy: PaywallProxy {
         get {
@@ -57,15 +57,15 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         }
     }
 
-    #endif
+#endif
 
     override init() {
-        #if os(iOS)
+#if os(iOS)
         if #available(iOS 15.0, *) {
             self._paywallProxy = PaywallProxy()
             self._customerCenterProxy = CustomerCenterProxy()
         }
-        #endif
+#endif
         super.init()
     }
 
@@ -118,7 +118,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         offeringIdentifier: String?,
         displayCloseButton: Bool?
     ) {
-        #if os(iOS)
+#if os(iOS)
         if #available(iOS 15.0, *) {
             let displayCloseButton = displayCloseButton ?? false
 
@@ -128,7 +128,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true
             ]
 
-             if let offeringIdentifier {
+            if let offeringIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
             }
 
@@ -148,26 +148,26 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         } else {
             NSLog("Presenting paywall requires iOS 15+")
         }
-        #else
+#else
         NSLog("Presenting paywall requires iOS")
-        #endif
+#endif
     }
 
-        private func presentCustomerCenter(
-            _ result: @escaping FlutterResult
-        ) {
-            #if os(iOS)
-            if #available(iOS 15.0, *) {
-                self.customerCenterProxy.present(
-                    options: nil
-                )
-            } else {
-                NSLog("Presenting paywall requires iOS 15+")
-            }
-            #else
-            NSLog("Presenting paywall requires iOS")
-            #endif
+    private func presentCustomerCenter(
+        _ result: @escaping FlutterResult
+    ) {
+#if os(iOS)
+        if #available(iOS 15.0, *) {
+            self.customerCenterProxy.present(
+                options: nil
+            )
+        } else {
+            NSLog("Presenting paywall requires iOS 15+")
         }
+#else
+        NSLog("Presenting paywall requires iOS")
+#endif
+    }
 
 }
 
