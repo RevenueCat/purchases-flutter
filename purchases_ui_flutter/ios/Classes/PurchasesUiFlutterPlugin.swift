@@ -157,15 +157,29 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         _ result: @escaping FlutterResult
     ) {
 #if os(iOS)
-        if #available(iOS 15.0, *) {
-            self.customerCenterProxy.present(
-                options: nil
-            )
-        } else {
-            NSLog("Presenting customer center requires iOS 15+")
-        }
+    if #available(iOS 15.0, *) {
+        self.customerCenterProxy.present(
+            options: nil
+        )
+
+        result(nil)
+    } else {
+        let errorMessage = "Presenting customer center requires iOS 15+"
+        NSLog(errorMessage)
+        result(FlutterError(
+            code: "UNSUPPORTED_OS_VERSION",
+            message: errorMessage,
+            details: nil
+        ))
+    }
 #else
-        NSLog("Presenting ustomer center requires iOS")
+    let errorMessage = "Presenting customer center requires iOS"
+    NSLog(errorMessage)
+    result(FlutterError(
+        code: "UNSUPPORTED_PLATFORM",
+        message: errorMessage,
+        details: nil
+    ))
 #endif
     }
 }
