@@ -158,9 +158,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     ) {
 #if os(iOS)
     if #available(iOS 15.0, *) {
-        self.customerCenterProxy.present(
-            options: nil
-        )
+        self.customerCenterProxy.present()
 
         result(nil)
     } else {

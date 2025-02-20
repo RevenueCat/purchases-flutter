@@ -53,7 +53,6 @@ class RevenueCatUI {
     final result = await _methodChannel.invokeMethod(
       'presentCustomerCenter',
     );
-    return _parseStringToResult(result);
   }
 
   static PaywallResult _parseStringToResult(String paywallResultString) {
