@@ -162,13 +162,12 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 options: nil
             )
         } else {
-            NSLog("Presenting paywall requires iOS 15+")
+            NSLog("Presenting customer center requires iOS 15+")
         }
 #else
-        NSLog("Presenting paywall requires iOS")
+        NSLog("Presenting ustomer center requires iOS")
 #endif
     }
-
 }
 
 private extension PurchasesUiFlutterPlugin {
