@@ -7,12 +7,9 @@ import com.revenuecat.purchases.hybridcommon.ui.PaywallResultListener
 import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
 import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
 import com.revenuecat.purchases.hybridcommon.ui.presentPaywallFromFragment
-import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI
 import com.revenuecat.purchases.ui.revenuecatui.customercenter.ShowCustomerCenter
-import com.revenuecat.purchases_ui_flutter.views.CustomerCenterViewFactory
 import com.revenuecat.purchases_ui_flutter.views.PaywallFooterViewFactory
 import com.revenuecat.purchases_ui_flutter.views.PaywallViewFactory
-import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -22,7 +19,6 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-@OptIn(ExperimentalPreviewRevenueCatUIPurchasesAPI::class)
 class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     private val TAG = "PurchasesUIFlutter"
 
@@ -42,10 +38,6 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
         flutterPluginBinding.platformViewRegistry.registerViewFactory(
             "com.revenuecat.purchasesui/PaywallFooterView",
             PaywallFooterViewFactory(flutterPluginBinding.binaryMessenger)
-        )
-        flutterPluginBinding.platformViewRegistry.registerViewFactory(
-            "com.revenuecat.purchasesui/CustomerCenterView",
-            CustomerCenterViewFactory(flutterPluginBinding.binaryMessenger)
         )
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "purchases_ui_flutter")
         channel.setMethodCallHandler(this)
