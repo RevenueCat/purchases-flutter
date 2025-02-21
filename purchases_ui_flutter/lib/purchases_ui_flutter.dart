@@ -13,7 +13,7 @@ class RevenueCatUI {
   /// Presents the paywall as an activity on android or a modal in iOS.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
   /// @param [offering] If set, will present the paywall associated to the given Offering.
-  /// @param [displayCloseButton] Optionally present the paywall with a close button.
+  /// @param [displayCloseButton] Optionally present the paywall with a close button. Only available for original template paywalls. Ignored for V2 Paywalls.
   static Future<PaywallResult> presentPaywall({
     Offering? offering,
     bool displayCloseButton = false,
@@ -32,7 +32,7 @@ class RevenueCatUI {
   ///
   /// @param [requiredEntitlementIdentifier] Entitlement identifier to check if the user has access to before presenting the paywall.
   /// @param [offering] If set, will present the paywall associated to the given Offering.
-  /// @param [displayCloseButton] Optionally present the paywall with a close button.
+  /// @param [displayCloseButton] Optionally present the paywall with a close button. Only available for original template paywalls. Ignored for V2 Paywalls.
   static Future<PaywallResult> presentPaywallIfNeeded(
     String requiredEntitlementIdentifier, {
       Offering? offering,

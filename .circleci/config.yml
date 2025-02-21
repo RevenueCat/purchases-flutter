@@ -102,13 +102,21 @@ commands:
     steps:
       - run:
           name: Download flutter SDK
-          command: git clone --depth 1 --branch << parameters.version >> https://github.com/flutter/flutter.git flutter
+          # Changed this temporary due to issue: https://github.com/flutter/flutter/issues/162251
+          command: git clone --depth 1 --no-single-branch https://github.com/flutter/flutter.git flutter
+      - run:
+          name: Checkout SDK version
+          # Hardcoded this temporarily due to issue: https://github.com/flutter/flutter/issues/162251
+          command: cd flutter && git fetch --tags && git checkout 3.27.4
       - run:
           name: Setup environment variables
           command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
       - run:
+          name: Where is flutter?
+          command: which flutter
+      - run:
           name: Flutter doctor
-          command: flutter doctor
+          command: flutter doctor -vv
 
   install-and-create-sim:
     parameters:
