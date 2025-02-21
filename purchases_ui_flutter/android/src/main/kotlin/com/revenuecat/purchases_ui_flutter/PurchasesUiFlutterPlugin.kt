@@ -1,6 +1,7 @@
 package com.revenuecat.purchases_ui_flutter
 
 import android.app.Activity
+import android.content.Intent
 import android.util.Log
 import com.revenuecat.purchases.PurchasesErrorCode
 import com.revenuecat.purchases.hybridcommon.ui.PaywallResultListener
@@ -18,13 +19,17 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import io.flutter.plugin.common.PluginRegistry
 
-class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
+class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
+    PluginRegistry.ActivityResultListener {
     private val TAG = "PurchasesUIFlutter"
 
     private var activity: Activity? = null
 
     private lateinit var channel : MethodChannel
+
+    private var pendingResult: Result? = null
 
     companion object {
         private const val REQUEST_CODE_CUSTOMER_CENTER = 1001
@@ -77,6 +82,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
+        binding.addActivityResultListener(this)
     }
 
     override fun onDetachedFromActivityForConfigChanges() {
@@ -125,8 +131,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
         result: Result,
     ) {
         activity?.let {
+            pendingResult = result
             presentCustomerCenterFromActivity(it)
-            result.success(null)
         } ?: run {
             result.error(PurchasesErrorCode.UnknownError.code.toString(),
                 "Could not present Customer Center. There's no activity",
@@ -152,6 +158,21 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware 
             )
             null
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
+        if (requestCode == REQUEST_CODE_CUSTOMER_CENTER) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d(TAG, "Customer Center closed successfully")
+                pendingResult?.success("Customer Center closed successfully")
+            } else {
+                Log.d(TAG, "Customer Center closed with result code: $resultCode")
+                pendingResult?.error("ERROR_CODE", "Customer Center closed with result code: $resultCode", null)
+            }
+            pendingResult = null
+            return true
+        }
+        return false
     }
 
 }
