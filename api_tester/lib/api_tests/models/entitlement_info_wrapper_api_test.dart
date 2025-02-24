@@ -8,6 +8,7 @@ class _EntitlementInfoApiTest {
       case PeriodType.intro:
       case PeriodType.normal:
       case PeriodType.trial:
+      case PeriodType.prepaid:
       case PeriodType.unknown:
         break;
     }
