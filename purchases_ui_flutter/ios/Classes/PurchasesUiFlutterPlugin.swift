@@ -158,9 +158,9 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     ) {
 #if os(iOS)
     if #available(iOS 15.0, *) {
-        self.customerCenterProxy.present()
-
-        result(nil)
+        self.customerCenterProxy.present(resultHandler: {
+            result(nil)
+        })
     } else {
         let errorMessage = "Presenting customer center requires iOS 15+"
         NSLog(errorMessage)
