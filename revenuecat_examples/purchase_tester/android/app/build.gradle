@@ -24,8 +24,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace 'com.revenuecat.purchases_sample'
-    compileSdk 34
-    ndkVersion "25.1.8937393"
+    compileSdk 35
+    ndkVersion "26.3.11579264"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
