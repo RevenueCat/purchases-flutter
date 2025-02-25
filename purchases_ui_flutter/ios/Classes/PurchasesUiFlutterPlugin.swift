@@ -13,23 +13,26 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
     public static func register(with registrar: FlutterPluginRegistrar) {
 
-        #if os(macOS)
+#if os(macOS)
         let messenger = registrar.messenger
-        #else
+#else
         let messenger = registrar.messenger()
         let factory = PurchasesUiPaywallViewFactory(messenger: messenger)
         let footerFactory = PurchasesUiPaywallFooterViewFactory(messenger: messenger)
+
         registrar.register(factory, withId: "com.revenuecat.purchasesui/PaywallView")
         registrar.register(footerFactory, withId: "com.revenuecat.purchasesui/PaywallFooterView")
-        #endif
+
+#endif
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
         let instance = PurchasesUiFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
     private var _paywallProxy: Any?
+    private var _customerCenterProxy: Any?
 
-    #if os(iOS)
+#if os(iOS)
     @available(iOS 15.0, *)
     private var paywallProxy: PaywallProxy {
         get {
@@ -41,19 +44,34 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
             self._paywallProxy = newValue
         }
     }
-    #endif
+
+    @available(iOS 15.0, *)
+    private var customerCenterProxy: CustomerCenterProxy {
+        get {
+            // swiftlint:disable:next force_cast
+            return self._customerCenterProxy as! CustomerCenterProxy
+        }
+
+        set {
+            self._customerCenterProxy = newValue
+        }
+    }
+
+#endif
 
     override init() {
-        #if os(iOS)
+#if os(iOS)
         if #available(iOS 15.0, *) {
             self._paywallProxy = PaywallProxy()
+            self._customerCenterProxy = CustomerCenterProxy()
         }
-        #endif
+#endif
         super.init()
     }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
+
         case "presentPaywall":
             let args = call.arguments as? Dictionary<String, Any> ?? [:]
 
@@ -63,6 +81,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
             )
+
         case "presentPaywallIfNeeded":
             guard let args = call.arguments as? Dictionary<String, Any> else {
                 result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
@@ -83,6 +102,11 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
             )
+
+        case "presentCustomerCenter":
+            self.presentCustomerCenter(
+                result
+            )
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -94,7 +118,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         offeringIdentifier: String?,
         displayCloseButton: Bool?
     ) {
-        #if os(iOS)
+#if os(iOS)
         if #available(iOS 15.0, *) {
             let displayCloseButton = displayCloseButton ?? false
 
@@ -104,7 +128,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true
             ]
 
-             if let offeringIdentifier {
+            if let offeringIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
             }
 
@@ -124,11 +148,38 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         } else {
             NSLog("Presenting paywall requires iOS 15+")
         }
-        #else
+#else
         NSLog("Presenting paywall requires iOS")
-        #endif
+#endif
     }
 
+    private func presentCustomerCenter(
+        _ result: @escaping FlutterResult
+    ) {
+#if os(iOS)
+    if #available(iOS 15.0, *) {
+        self.customerCenterProxy.present(resultHandler: {
+            result(nil)
+        })
+    } else {
+        let errorMessage = "Presenting customer center requires iOS 15+"
+        NSLog(errorMessage)
+        result(FlutterError(
+            code: "UNSUPPORTED_OS_VERSION",
+            message: errorMessage,
+            details: nil
+        ))
+    }
+#else
+    let errorMessage = "Presenting customer center requires iOS"
+    NSLog(errorMessage)
+    result(FlutterError(
+        code: "UNSUPPORTED_PLATFORM",
+        message: errorMessage,
+        details: nil
+    ))
+#endif
+    }
 }
 
 private extension PurchasesUiFlutterPlugin {

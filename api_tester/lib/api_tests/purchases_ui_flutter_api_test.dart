@@ -186,4 +186,8 @@ class _PurchasesFlutterApiTest {
       ),
     );
   }
+
+  void _checkPresentCustomerCenter() async {
+    Future<void> f1 = RevenueCatUI.presentCustomerCenter();
+  }
 }
