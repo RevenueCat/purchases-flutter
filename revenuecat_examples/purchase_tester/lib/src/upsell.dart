@@ -117,7 +117,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                     onPressed: () async {
                       await RevenueCatUI.presentCustomerCenter();
                     },
-                    child: const Text("Go to Customer Center Screen"),
+                    child: const Text("Present Customer Center"),
                   ),
                 ]))),
       ),
