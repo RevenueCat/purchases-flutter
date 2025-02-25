@@ -4,9 +4,9 @@ import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'paywall_result.dart';
 
 export 'paywall_result.dart';
+export 'views/customer_center_view.dart';
 export 'views/paywall_footer_view.dart';
 export 'views/paywall_view.dart';
-export 'views/customer_center_view.dart';
 
 class RevenueCatUI {
   static const _methodChannel = MethodChannel('purchases_ui_flutter');
@@ -26,7 +26,6 @@ class RevenueCatUI {
     return _parseStringToResult(result);
   }
 
-
   /// Presents the paywall as an activity on android or a modal in iOS as long
   /// as the user does not have the given entitlement identifier active.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
@@ -36,7 +35,7 @@ class RevenueCatUI {
   /// @param [displayCloseButton] Optionally present the paywall with a close button. Only available for original template paywalls. Ignored for V2 Paywalls.
   static Future<PaywallResult> presentPaywallIfNeeded(
     String requiredEntitlementIdentifier, {
-      Offering? offering,
+    Offering? offering,
     bool displayCloseButton = false,
   }) async {
     final result = await _methodChannel.invokeMethod(
