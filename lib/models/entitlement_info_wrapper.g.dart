@@ -76,6 +76,7 @@ const _$PeriodTypeEnumMap = {
   PeriodType.intro: 'INTRO',
   PeriodType.normal: 'NORMAL',
   PeriodType.trial: 'TRIAL',
+  PeriodType.prepaid: 'PREPAID',
   PeriodType.unknown: 'unknown',
 };
 

@@ -20,6 +20,10 @@ enum PeriodType {
   @JsonValue('TRIAL')
   trial,
 
+  /// If the entitlement is under a prepaid period.
+  @JsonValue('PREPAID')
+  prepaid,
+
   /// If the period type couldn't be determined.
   unknown
 }
