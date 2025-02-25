@@ -50,7 +50,8 @@ class RevenueCatUI {
   }
 
   static Future<void> presentCustomerCenter() async {
-    final result = await _methodChannel.invokeMethod(
+    // handling result will be implemented in upcoming PRs
+    await _methodChannel.invokeMethod(
       'presentCustomerCenter',
     );
   }
