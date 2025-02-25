@@ -46,3 +46,4 @@ flutter
 
 # Cocoapods
 **/Podfile.lock
+**/.cxx
