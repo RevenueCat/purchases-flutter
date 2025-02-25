@@ -48,6 +48,13 @@ class RevenueCatUI {
     return _parseStringToResult(result);
   }
 
+  static Future<void> presentCustomerCenter() async {
+    // handling result will be implemented in upcoming PRs
+    await _methodChannel.invokeMethod(
+      'presentCustomerCenter',
+    );
+  }
+
   static PaywallResult _parseStringToResult(String paywallResultString) {
     switch (paywallResultString) {
       case 'NOT_PRESENTED':
