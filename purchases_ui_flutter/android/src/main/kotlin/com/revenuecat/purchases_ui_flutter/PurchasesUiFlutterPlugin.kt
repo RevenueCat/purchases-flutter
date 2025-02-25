@@ -120,7 +120,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                )
            )
         } else {
-            result.error(PurchasesErrorCode.UnknownError.code.toString(),
+            result.error(
+                "PAYWALLS_MISSING_WRONG_ACTIVITY",
                 "Make sure your MainActivity inherits from FlutterFragmentActivity",
                 null
             )
@@ -134,7 +135,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             pendingResult = result
             presentCustomerCenterFromActivity(it)
         } ?: run {
-            result.error(PurchasesErrorCode.UnknownError.code.toString(),
+            result.error(
+                "CUSTOMER_CENTER_MISSING_ACTIVITY",
                 "Could not present Customer Center. There's no activity",
                 null
             )
@@ -167,7 +169,11 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 pendingResult?.success("Customer Center closed successfully")
             } else {
                 Log.d(TAG, "Customer Center closed with result code: $resultCode")
-                pendingResult?.error("ERROR_CODE", "Customer Center closed with result code: $resultCode", null)
+                pendingResult?.error(
+                    "CUSTOMER_CENTER_ERROR",
+                    "Customer Center closed with result code: $resultCode",
+                    null
+                )
             }
             pendingResult = null
             return true
