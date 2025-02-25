@@ -9,7 +9,6 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'cats.dart';
 import 'constant.dart';
-import 'customer_center/customer_center.dart';
 import 'initial.dart';
 import 'paywall.dart';
 import 'winback_testing_screen.dart';
