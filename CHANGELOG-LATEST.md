@@ -1,10 +1,13 @@
 ## RevenueCat SDK
-### 🐞 Bugfixes
-* Add prepaid periodType (#1277) via Will Taylor (@fire-at-will)
 ### 📦 Dependency Updates
-* Updates purchases-hybrid-common to 13.19.0 (#1276) via RevenueCat Git Bot (@RCGitBot)
-  * [iOS 5.18.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.18.0)
-  * [iOS 5.17.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.17.0)
+* Bump nokogiri from 1.16.7 to 1.18.3 (#1271) via dependabot[bot] (@dependabot[bot])
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.21.0 (#1280) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.13.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.13.0)
+* Bump cocoapods from 1.16.0 to 1.16.2 (#1200) via dependabot[bot] (@dependabot[bot])
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.20.0 (#1279) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.13.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.13.0)
 
-### 🔄 Other Changes
-* chore: Update proguard-rules.pro like flutter_ui (#1274) via Facundo Menzella (@facumenzella)
+## RevenueCatUI SDK
+### Customer Center
+#### ✨ New Features
+* feat: Introduce CustomerCenter (#1261) via Cesar de la Vega (@vegaro)
