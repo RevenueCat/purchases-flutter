@@ -69,7 +69,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
   }
 
   Widget _buildUpsell(BuildContext context) {
-    final currentOfferingId = _offerings!.current!.identifier;
+    final currentOfferingId = _offerings?.current?.identifier;
     return ListView(children: [
       if (_customerInfo != null)
         ListTile(
