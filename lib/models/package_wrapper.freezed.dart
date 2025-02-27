@@ -38,6 +38,9 @@ mixin _$Package {
   PresentedOfferingContext get presentedOfferingContext =>
       throw _privateConstructorUsedError;
 
+  /// Package data provided by the native SDKs. Not to be used directly.
+  Map<dynamic, dynamic> get nativePackage => throw _privateConstructorUsedError;
+
   /// Serializes this Package to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
@@ -57,7 +60,8 @@ abstract class $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       PackageType packageType,
       @JsonKey(name: 'product') StoreProduct storeProduct,
-      PresentedOfferingContext presentedOfferingContext});
+      PresentedOfferingContext presentedOfferingContext,
+      Map<dynamic, dynamic> nativePackage});
 
   $StoreProductCopyWith<$Res> get storeProduct;
   $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext;
@@ -82,6 +86,7 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
     Object? packageType = null,
     Object? storeProduct = null,
     Object? presentedOfferingContext = null,
+    Object? nativePackage = null,
   }) {
     return _then(_value.copyWith(
       identifier: null == identifier
@@ -100,6 +105,10 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
           ? _value.presentedOfferingContext
           : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
               as PresentedOfferingContext,
+      nativePackage: null == nativePackage
+          ? _value.nativePackage
+          : nativePackage // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>,
     ) as $Val);
   }
 
@@ -137,7 +146,8 @@ abstract class _$$PackageImplCopyWith<$Res> implements $PackageCopyWith<$Res> {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       PackageType packageType,
       @JsonKey(name: 'product') StoreProduct storeProduct,
-      PresentedOfferingContext presentedOfferingContext});
+      PresentedOfferingContext presentedOfferingContext,
+      Map<dynamic, dynamic> nativePackage});
 
   @override
   $StoreProductCopyWith<$Res> get storeProduct;
@@ -162,6 +172,7 @@ class __$$PackageImplCopyWithImpl<$Res>
     Object? packageType = null,
     Object? storeProduct = null,
     Object? presentedOfferingContext = null,
+    Object? nativePackage = null,
   }) {
     return _then(_$PackageImpl(
       null == identifier
@@ -180,6 +191,10 @@ class __$$PackageImplCopyWithImpl<$Res>
           ? _value.presentedOfferingContext
           : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
               as PresentedOfferingContext,
+      null == nativePackage
+          ? _value._nativePackage
+          : nativePackage // ignore: cast_nullable_to_non_nullable
+              as Map<dynamic, dynamic>,
     ));
   }
 }
@@ -192,7 +207,9 @@ class _$PackageImpl implements _Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       this.packageType,
       @JsonKey(name: 'product') this.storeProduct,
-      this.presentedOfferingContext);
+      this.presentedOfferingContext,
+      final Map<dynamic, dynamic> nativePackage)
+      : _nativePackage = nativePackage;
 
   factory _$PackageImpl.fromJson(Map<String, dynamic> json) =>
       _$$PackageImplFromJson(json);
@@ -218,9 +235,20 @@ class _$PackageImpl implements _Package {
   @override
   final PresentedOfferingContext presentedOfferingContext;
 
+  /// Package data provided by the native SDKs. Not to be used directly.
+  final Map<dynamic, dynamic> _nativePackage;
+
+  /// Package data provided by the native SDKs. Not to be used directly.
+  @override
+  Map<dynamic, dynamic> get nativePackage {
+    if (_nativePackage is EqualUnmodifiableMapView) return _nativePackage;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_nativePackage);
+  }
+
   @override
   String toString() {
-    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, presentedOfferingContext: $presentedOfferingContext)';
+    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, presentedOfferingContext: $presentedOfferingContext, nativePackage: $nativePackage)';
   }
 
   @override
@@ -236,13 +264,20 @@ class _$PackageImpl implements _Package {
                 other.storeProduct == storeProduct) &&
             (identical(
                     other.presentedOfferingContext, presentedOfferingContext) ||
-                other.presentedOfferingContext == presentedOfferingContext));
+                other.presentedOfferingContext == presentedOfferingContext) &&
+            const DeepCollectionEquality()
+                .equals(other._nativePackage, _nativePackage));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, identifier, packageType,
-      storeProduct, presentedOfferingContext);
+  int get hashCode => Object.hash(
+      runtimeType,
+      identifier,
+      packageType,
+      storeProduct,
+      presentedOfferingContext,
+      const DeepCollectionEquality().hash(_nativePackage));
 
   /// Create a copy of Package
   /// with the given fields replaced by the non-null parameter values.
@@ -266,7 +301,8 @@ abstract class _Package implements Package {
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       final PackageType packageType,
       @JsonKey(name: 'product') final StoreProduct storeProduct,
-      final PresentedOfferingContext presentedOfferingContext) = _$PackageImpl;
+      final PresentedOfferingContext presentedOfferingContext,
+      final Map<dynamic, dynamic> nativePackage) = _$PackageImpl;
 
   factory _Package.fromJson(Map<String, dynamic> json) = _$PackageImpl.fromJson;
 
@@ -290,6 +326,10 @@ abstract class _Package implements Package {
   /// Offering context this package belongs to.
   @override
   PresentedOfferingContext get presentedOfferingContext;
+
+  /// Package data provided by the native SDKs. Not to be used directly.
+  @override
+  Map<dynamic, dynamic> get nativePackage;
 
   /// Create a copy of Package
   /// with the given fields replaced by the non-null parameter values.
