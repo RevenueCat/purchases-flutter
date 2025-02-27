@@ -1,3 +1,106 @@
+## 8.6.0
+## RevenueCat SDK
+### 📦 Dependency Updates
+* Bump nokogiri from 1.16.7 to 1.18.3 (#1271) via dependabot[bot] (@dependabot[bot])
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.21.0 (#1280) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.13.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.13.0)
+* Bump cocoapods from 1.16.0 to 1.16.2 (#1200) via dependabot[bot] (@dependabot[bot])
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.20.0 (#1279) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.13.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.13.0)
+
+## RevenueCatUI SDK
+### Customer Center
+#### ✨ New Features
+* feat: Introduce CustomerCenter (#1261) via Cesar de la Vega (@vegaro)
+
+## 8.5.2
+## RevenueCat SDK
+### 🐞 Bugfixes
+* Add prepaid periodType (#1277) via Will Taylor (@fire-at-will)
+### 📦 Dependency Updates
+* Updates purchases-hybrid-common to 13.19.0 (#1276) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.18.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.18.0)
+  * [iOS 5.17.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.17.0)
+
+### 🔄 Other Changes
+* chore: Update proguard-rules.pro like flutter_ui (#1274) via Facundo Menzella (@facumenzella)
+
+## 8.5.1
+## RevenueCat SDK
+### 🐞 Bugfixes
+* Add proguard-rules.pro to `purchases-ui-flutter` (#1270) via Cesar de la Vega (@vegaro)
+
+## 8.5.0
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.18.1 (#1265) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.12.2](https://github.com/RevenueCat/purchases-android/releases/tag/8.12.2)
+  * [Android 8.12.1](https://github.com/RevenueCat/purchases-android/releases/tag/8.12.1)
+  * [Android 8.12.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.12.0)
+
+### 🔄 Other Changes
+* [Paywalls V2] Deprecate PaywallFooterView in favor of OriginalTemplatePaywallFooterView (#1256) via Toni Rico (@tonidero)
+* Fix flutter doctor issue (#1263) via Toni Rico (@tonidero)
+
+## 8.4.6
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.17.1 (#1258) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.16.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.16.1)
+
+## 8.4.5
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.17.0 (#1254) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.16.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.16.0)
+  * [iOS 5.15.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.15.1)
+
+## 8.4.4
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.16.2 (#1252) via RevenueCat Git Bot (@RCGitBot)
+
+## 8.4.3
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.16.0 (#1250) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.11.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.11.0)
+  * [iOS 5.15.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.15.0)
+  * [iOS 5.14.6](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.6)
+
+## 8.4.2
+## RevenueCat SDK
+### 📦 Dependency Updates
+* Updates purchases-hybrid-common to 13.15.2 (#1244) via RevenueCat Git Bot (@RCGitBot)
+* Bump fastlane from 2.225.0 to 2.226.0 (#1240) via dependabot[bot] (@dependabot[bot])
+
+### 🔄 Other Changes
+* Update CHANGELOG to include changes that expose storeError in iOS if it exists (#1243) via Toni Rico (@tonidero)
+
+## 8.4.1
+## RevenueCat SDK
+### 📦 Dependency Updates
+* Updates purchases-hybrid-common to 13.15.1 (#1241) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.10.8](https://github.com/RevenueCat/purchases-android/releases/tag/8.10.8)
+  * [Android 8.10.7](https://github.com/RevenueCat/purchases-android/releases/tag/8.10.7)
+  * [Android 8.10.6](https://github.com/RevenueCat/purchases-android/releases/tag/8.10.6)
+  * [iOS 5.14.5](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.5)
+  * [iOS 5.14.4](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.4)
+  * [iOS 5.14.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.3)
+  * [iOS 5.14.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.2)
+  * [iOS 5.14.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.14.1)
+
+### 🔄 Other Changes
+* Expose storeError for iOS if any (https://github.com/RevenueCat/purchases-hybrid-common/pull/1011) via Toni Rico (@tonidero). You can use it like this:
+```
+try {
+  offerings = await Purchases.getOfferings();
+} on PlatformException catch (e) {
+  final storeError = e.details['storeError'];
+  // Do something with storeError if it exists
+}
+```
+
 ## 8.4.0
 ## RevenueCat SDK
 ### ✨ New Features

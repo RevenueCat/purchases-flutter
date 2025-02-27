@@ -1,9 +1,9 @@
 group 'com.revenuecat.purchases_ui_flutter'
-version '8.4.0'
+version '8.6.0'
 
 buildscript {
     ext.kotlin_version = '1.9.20'
-    ext.common_version = '13.13.0'
+    ext.common_version = '13.21.0'
     repositories {
         google()
         mavenCentral()
@@ -47,7 +47,7 @@ android {
         minSdkVersion 24
         compileSdk 34
     }
-
+    
     dependencies {
         implementation "com.revenuecat.purchases:purchases-hybrid-common-ui:$common_version"
         implementation 'androidx.compose.ui:ui-android:1.5.4'
