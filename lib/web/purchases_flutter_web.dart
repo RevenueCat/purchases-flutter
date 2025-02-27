@@ -43,7 +43,7 @@ class PurchasesFlutterPlugin {
     void injectScript() {
       final script = html.ScriptElement()
         ..src =
-            'https://unpkg.com/@revenuecat/purchases-js@0.15.1/dist/Purchases.umd.js'
+            'https://unpkg.com/@revenuecat/purchases-js@0.18.1/dist/Purchases.umd.js'
         ..type = 'text/javascript';
 
       final completer = Completer<void>();
