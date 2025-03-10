@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.testflutterapp"
+    namespace = "com.revenuecat.api_tester"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
