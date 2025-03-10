@@ -230,6 +230,7 @@ jobs:
     description: "Build Android Flutter integration tests"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
+    resource_class: large
     steps:
       - checkout
       - replace-api-key

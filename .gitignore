@@ -29,6 +29,7 @@ pubspec.lock
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
 *.jks
+**/.cxx
 revenuecat_examples/purchase_tester/ios/Flutter/flutter_export_environment.sh
 revenuecat_examples/purchase_tester/.flutter-plugins-dependencies
 revenuecat_examples/purchase_tester/ios/Flutter/Flutter.podspec
@@ -46,3 +47,4 @@ flutter
 
 # Cocoapods
 **/Podfile.lock
+

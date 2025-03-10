@@ -7,8 +7,8 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
-import 'constant.dart';
 import 'cats.dart';
+import 'constant.dart';
 import 'initial.dart';
 import 'paywall.dart';
 import 'winback_testing_screen.dart';
@@ -102,6 +102,22 @@ class _UpsellScreenState extends State<UpsellScreen> {
                           ));
                     },
                     child: const Text("Go to Win-Back Offer Testing Screen"),
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Customer Center"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await RevenueCatUI.presentCustomerCenter();
+                    },
+                    child: const Text("Present Customer Center"),
                   ),
                 ]))),
       ),
