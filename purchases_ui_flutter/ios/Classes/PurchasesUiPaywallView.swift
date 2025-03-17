@@ -141,6 +141,10 @@ extension PurchasesUiPaywallView: PaywallViewControllerDelegateWrapper {
         ])
     }
 
+    func paywallViewController(_ controller: PaywallViewController) {
+        _methodChannel.invokeMethod("onPurchaseCancelled", arguments: nil)
+    }
+
     func paywallViewController(_ controller: PaywallViewController, 
                                didFailPurchasingWith errorDictionary: [String : Any]) {
         _methodChannel.invokeMethod("onPurchaseError", arguments: errorDictionary)

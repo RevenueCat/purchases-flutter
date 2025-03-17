@@ -45,6 +45,7 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
     Offering? offering,
     Function(Package rcPackage)? onPurchaseStarted,
     Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)? onPurchaseCompleted,
+    Function()? onPurchaseCancelled,
     Function(PurchasesError)? onPurchaseError,
     Function(CustomerInfo customerInfo)? onRestoreCompleted,
     Function(PurchasesError)? onRestoreError,
@@ -55,6 +56,7 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
       offering: offering,
       onPurchaseStarted: onPurchaseStarted,
       onPurchaseCompleted: onPurchaseCompleted,
+      onPurchaseCancelled: onPurchaseCancelled,
       onPurchaseError: onPurchaseError,
       onRestoreCompleted: onRestoreCompleted,
       onRestoreError: onRestoreError,
@@ -97,6 +99,7 @@ class OriginalTemplatePaywallFooterView extends StatefulWidget {
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
   onPurchaseCompleted;
+  final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
@@ -108,6 +111,7 @@ class OriginalTemplatePaywallFooterView extends StatefulWidget {
     this.offering,
     this.onPurchaseStarted,
     this.onPurchaseCompleted,
+    this.onPurchaseCancelled,
     this.onPurchaseError,
     this.onRestoreCompleted,
     this.onRestoreError,
@@ -153,6 +157,7 @@ class _PaywallFooterViewState extends State<OriginalTemplatePaywallFooterView> {
             offering: widget.offering,
             onPurchaseStarted: widget.onPurchaseStarted,
             onPurchaseCompleted: widget.onPurchaseCompleted,
+            onPurchaseCancelled: widget.onPurchaseCancelled,
             onPurchaseError: widget.onPurchaseError,
             onRestoreCompleted: widget.onRestoreCompleted,
             onRestoreError: widget.onRestoreError,
