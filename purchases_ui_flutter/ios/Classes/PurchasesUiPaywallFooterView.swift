@@ -98,7 +98,7 @@ extension PurchasesUiPaywallFooterView: PaywallViewControllerDelegateWrapper {
         ])
     }
 
-    func paywallViewController(_ controller: PaywallViewController) {
+    func paywallViewControllerDidCancelPurchase(_ controller: PaywallViewController) {
         channel.invokeMethod("onPurchaseCancelled", arguments: nil)
     }
 
