@@ -9,6 +9,7 @@ class PaywallViewMethodHandler {
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
   onPurchaseCompleted;
+  final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
@@ -17,6 +18,7 @@ class PaywallViewMethodHandler {
   const PaywallViewMethodHandler(
       this.onPurchaseStarted,
       this.onPurchaseCompleted,
+      this.onPurchaseCancelled,
       this.onPurchaseError,
       this.onRestoreCompleted,
       this.onRestoreError,
@@ -30,6 +32,9 @@ class PaywallViewMethodHandler {
         break;
       case 'onPurchaseCompleted':
         _handleOnPurchaseCompleted(call);
+        break;
+      case 'onPurchaseCancelled':
+        onPurchaseCancelled?.call();
         break;
       case 'onPurchaseError':
         _handleOnPurchaseError(call);

@@ -70,6 +70,8 @@ class _PurchasesFlutterApiTest {
           onPurchaseCompleted:
               (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
           },
+          onPurchaseCancelled: () {
+          },
           onPurchaseError: (PurchasesError error) {
           },
           onRestoreCompleted: (CustomerInfo customerInfo) {
@@ -146,6 +148,8 @@ class _PurchasesFlutterApiTest {
           onPurchaseCompleted:
               (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
           },
+          onPurchaseCancelled: () {
+          },
           onPurchaseError: (PurchasesError error) {
           },
           onRestoreCompleted: (CustomerInfo customerInfo) {
@@ -170,6 +174,8 @@ class _PurchasesFlutterApiTest {
           },
           onPurchaseCompleted:
               (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
+          },
+          onPurchaseCancelled: () {
           },
           onPurchaseError: (PurchasesError error) {
           },

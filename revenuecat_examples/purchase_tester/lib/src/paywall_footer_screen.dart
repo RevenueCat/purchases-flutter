@@ -33,6 +33,9 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
               print('Purchase completed for customerInfo:\n $customerInfo\n '
                   'and storeTransaction:\n $storeTransaction');
             },
+            onPurchaseCancelled: () {
+              print('Purchase cancelled');
+            },
             onPurchaseError: (PurchasesError error) {
               print('Purchase error: $error');
             },

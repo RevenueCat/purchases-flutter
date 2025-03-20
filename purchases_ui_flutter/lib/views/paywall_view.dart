@@ -25,6 +25,9 @@ import 'paywall_view_method_handler.dart';
 ///
 /// [onPurchaseStarted] (Optional) Callback that gets called when a purchase
 /// is started.
+/// 
+/// [onPurchaseCancelled] (Optional) Callback that gets called when a purchase
+/// is cancelled.
 ///
 /// [onPurchaseCompleted] (Optional) Callback that gets called when a purchase
 /// is completed.
@@ -48,6 +51,7 @@ class PaywallView extends StatelessWidget {
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
       onPurchaseCompleted;
+  final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
@@ -59,6 +63,7 @@ class PaywallView extends StatelessWidget {
     this.displayCloseButton,
     this.onPurchaseStarted,
     this.onPurchaseCompleted,
+    this.onPurchaseCancelled,
     this.onPurchaseError,
     this.onRestoreCompleted,
     this.onRestoreError,
@@ -121,6 +126,7 @@ class PaywallView extends StatelessWidget {
     final handler = PaywallViewMethodHandler(
       onPurchaseStarted,
       onPurchaseCompleted,
+      onPurchaseCancelled,
       onPurchaseError,
       onRestoreCompleted,
       onRestoreError,
