@@ -40,6 +40,26 @@ void main() {
     'allPurchaseDates': {},
     'originalApplicationVersion': '1.2.3',
     'nonSubscriptionTransactions': [],
+    'virtualCurrencies': {},
+  };
+
+  final mockCustomerInfoResponseWithVirtualCurrencies = {
+    'originalAppUserId': 'pepe',
+    'entitlements': {'all': {}, 'active': {}, 'verification': 'NOT_REQUESTED'},
+    'activeSubscriptions': [],
+    'latestExpirationDate': '2021-04-09T14:48:00.000Z',
+    'allExpirationDates': {},
+    'allPurchasedProductIdentifiers': [],
+    'firstSeen': '2021-01-09T14:48:00.000Z',
+    'requestDate': '2021-04-09T14:48:00.000Z',
+    'allPurchaseDates': {},
+    'originalApplicationVersion': '1.2.3',
+    'nonSubscriptionTransactions': [],
+    'virtualCurrencies': {
+      'RC_COIN': {
+        'balance': 100,
+      }
+    },
   };
 
   setUp(() {
@@ -1470,5 +1490,13 @@ void main() {
       },
     );
     expect(expiredOrNull, isNotNull);
+  });
+
+  test('virtual currency balances are parsed correctly in customer info', () async {
+    final customerInfo = CustomerInfo.fromJson(mockCustomerInfoResponseWithVirtualCurrencies);
+    expect(customerInfo.virtualCurrencies, isNotNull);
+    expect(customerInfo.virtualCurrencies.length, equals(1));
+    expect(customerInfo.virtualCurrencies['RC_COIN'], isNotNull);
+    expect(customerInfo.virtualCurrencies['RC_COIN']?.balance, equals(100));
   });
 }
