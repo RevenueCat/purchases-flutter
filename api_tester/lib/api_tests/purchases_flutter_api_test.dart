@@ -560,9 +560,10 @@ class _PurchasesFlutterApiTest {
 
   void _checkGetVirtualCurrencyBalance(
       CustomerInfo customerInfo, String virtualCurrencyIdentifier) async {
-    VirtualCurrencyInfo virtualCurrencyInfo =
-        customerInfo.virtualCurrencies[virtualCurrencyIdentifier];
-    int balance = virtualCurrencyInfo.balance;
+    VirtualCurrencyInfo? virtualCurrencyInfo = customerInfo.virtualCurrencies[virtualCurrencyIdentifier];
+    if (virtualCurrencyInfo != null) {
+      int balance = virtualCurrencyInfo.balance;
+    }
   }
 }
 
