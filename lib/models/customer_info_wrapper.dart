@@ -37,7 +37,7 @@ class CustomerInfo with _$CustomerInfo {
     /// Map of skus to expiration dates
     Map<String, String?> allExpirationDates,
 
-    /// Map of virtual currency identifiers to their info
+    /// Map of virtual currency codes to their info
     Map<String, VirtualCurrencyInfo> virtualCurrencies,
 
     /// Date when this info was requested

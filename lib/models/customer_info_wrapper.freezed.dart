@@ -49,7 +49,7 @@ mixin _$CustomerInfo {
   Map<String, String?> get allExpirationDates =>
       throw _privateConstructorUsedError;
 
-  /// Map of virtual currency identifiers to their info
+  /// Map of virtual currency codes to their info
   Map<String, VirtualCurrencyInfo> get virtualCurrencies =>
       throw _privateConstructorUsedError;
 
@@ -432,10 +432,10 @@ class _$CustomerInfoImpl implements _CustomerInfo {
     return EqualUnmodifiableMapView(_allExpirationDates);
   }
 
-  /// Map of virtual currency identifiers to their info
+  /// Map of virtual currency codes to their info
   final Map<String, VirtualCurrencyInfo> _virtualCurrencies;
 
-  /// Map of virtual currency identifiers to their info
+  /// Map of virtual currency codes to their info
   @override
   Map<String, VirtualCurrencyInfo> get virtualCurrencies {
     if (_virtualCurrencies is EqualUnmodifiableMapView)
@@ -606,7 +606,7 @@ abstract class _CustomerInfo implements CustomerInfo {
   @override
   Map<String, String?> get allExpirationDates;
 
-  /// Map of virtual currency identifiers to their info
+  /// Map of virtual currency codes to their info
   @override
   Map<String, VirtualCurrencyInfo> get virtualCurrencies;
 
