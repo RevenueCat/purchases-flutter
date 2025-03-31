@@ -23,8 +23,12 @@ mixin _$VirtualCurrencyInfo {
   /// The user's balance of the virtual currency.
   int get balance => throw _privateConstructorUsedError;
 
+  /// Serializes this VirtualCurrencyInfo to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of VirtualCurrencyInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $VirtualCurrencyInfoCopyWith<VirtualCurrencyInfo> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -48,6 +52,8 @@ class _$VirtualCurrencyInfoCopyWithImpl<$Res, $Val extends VirtualCurrencyInfo>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of VirtualCurrencyInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +87,8 @@ class __$$VirtualCurrencyInfoImplCopyWithImpl<$Res>
       $Res Function(_$VirtualCurrencyInfoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of VirtualCurrencyInfo
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -120,11 +128,13 @@ class _$VirtualCurrencyInfoImpl implements _VirtualCurrencyInfo {
             (identical(other.balance, balance) || other.balance == balance));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, balance);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of VirtualCurrencyInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$VirtualCurrencyInfoImplCopyWith<_$VirtualCurrencyInfoImpl> get copyWith =>
@@ -146,12 +156,14 @@ abstract class _VirtualCurrencyInfo implements VirtualCurrencyInfo {
   factory _VirtualCurrencyInfo.fromJson(Map<String, dynamic> json) =
       _$VirtualCurrencyInfoImpl.fromJson;
 
-  @override
-
   /// The user's balance of the virtual currency.
-  int get balance;
   @override
-  @JsonKey(ignore: true)
+  int get balance;
+
+  /// Create a copy of VirtualCurrencyInfo
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$VirtualCurrencyInfoImplCopyWith<_$VirtualCurrencyInfoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

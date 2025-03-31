@@ -607,10 +607,11 @@ abstract class _CustomerInfo implements CustomerInfo {
   Map<String, String?> get allExpirationDates;
 
   /// Map of virtual currency identifiers to their info
-  Map<String, VirtualCurrencyInfo> get virtualCurrencies;
   @override
+  Map<String, VirtualCurrencyInfo> get virtualCurrencies;
 
   /// Date when this info was requested
+  @override
   String get requestDate;
 
   /// The latest expiration date of all purchased skus
