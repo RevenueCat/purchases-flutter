@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'entitlement_infos_wrapper.dart';
 import 'store_transaction.dart';
+import 'virtual_currency_info.dart';
 
 part 'customer_info_wrapper.freezed.dart';
 part 'customer_info_wrapper.g.dart';
@@ -35,6 +36,9 @@ class CustomerInfo with _$CustomerInfo {
 
     /// Map of skus to expiration dates
     Map<String, String?> allExpirationDates,
+
+    /// Map of virtual currency identifiers to their info
+    Map<String, VirtualCurrencyInfo> virtualCurrencies,
 
     /// Date when this info was requested
     String requestDate, {

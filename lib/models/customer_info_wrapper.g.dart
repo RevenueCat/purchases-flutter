@@ -23,6 +23,10 @@ _$CustomerInfoImpl _$$CustomerInfoImplFromJson(Map json) => _$CustomerInfoImpl(
       json['firstSeen'] as String,
       json['originalAppUserId'] as String,
       Map<String, String?>.from(json['allExpirationDates'] as Map),
+      (json['virtualCurrencies'] as Map).map(
+        (k, e) => MapEntry(k as String,
+            VirtualCurrencyInfo.fromJson(Map<String, dynamic>.from(e as Map))),
+      ),
       json['requestDate'] as String,
       latestExpirationDate: json['latestExpirationDate'] as String?,
       originalPurchaseDate: json['originalPurchaseDate'] as String?,
@@ -41,6 +45,8 @@ Map<String, dynamic> _$$CustomerInfoImplToJson(_$CustomerInfoImpl instance) =>
       'firstSeen': instance.firstSeen,
       'originalAppUserId': instance.originalAppUserId,
       'allExpirationDates': instance.allExpirationDates,
+      'virtualCurrencies':
+          instance.virtualCurrencies.map((k, e) => MapEntry(k, e.toJson())),
       'requestDate': instance.requestDate,
       'latestExpirationDate': instance.latestExpirationDate,
       'originalPurchaseDate': instance.originalPurchaseDate,
