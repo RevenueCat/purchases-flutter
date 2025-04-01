@@ -48,6 +48,10 @@ internal class PaywallView(
                 )
             }
 
+            override fun onPurchaseCancelled() {
+                methodChannel.invokeMethod("onPurchaseCancelled", null)
+            }
+
             override fun onPurchaseError(error: Map<String, Any?>) {
                 methodChannel.invokeMethod("onPurchaseError", error)
             }

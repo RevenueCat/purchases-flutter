@@ -1,3 +1,36 @@
+## 8.7.0
+## RevenueCat SDK
+### ✨ New Features
+* Add `onPurchaseCancelled` handler to `PaywallView` and `PaywallFooterView` (#1296) via Jeffrey Bunn (@Jethro87)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.26.0 (#1298) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.15.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.15.0)
+  * [Android 8.14.3](https://github.com/RevenueCat/purchases-android/releases/tag/8.14.3)
+  * [Android 8.14.2](https://github.com/RevenueCat/purchases-android/releases/tag/8.14.2)
+  * [iOS 5.20.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.20.0)
+
+### 🔄 Other Changes
+* Bump nokogiri from 1.18.3 to 1.18.4 (#1299) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane from 2.226.0 to 2.227.0 (#1294) via dependabot[bot] (@dependabot[bot])
+* Update fastlane plugin (#1293) via Toni Rico (@tonidero)
+* Bump json from 2.10.1 to 2.10.2 (#1291) via dependabot[bot] (@dependabot[bot])
+
+## 8.6.1
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.25.0 (#1290) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.14.1](https://github.com/RevenueCat/purchases-android/releases/tag/8.14.1)
+  * [Android 8.14.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.14.0)
+  * [iOS 5.19.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.19.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.24.0 (#1287) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 8.14.1](https://github.com/RevenueCat/purchases-android/releases/tag/8.14.1)
+  * [Android 8.14.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.14.0)
+  * [iOS 5.19.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.19.0)
+
+### 🔄 Other Changes
+* Increase android related versions in purchase_tester (#1281) via Cesar de la Vega (@vegaro)
+* Fix new Flutter version test issues (#1289) via Toni Rico (@tonidero)
+
 ## 8.6.0
 ## RevenueCat SDK
 ### 📦 Dependency Updates
