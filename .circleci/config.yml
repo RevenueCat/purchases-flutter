@@ -215,9 +215,8 @@ jobs:
     description: "Run API tests for Flutter"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
+<<<<<<< HEAD
     resource_class: xlarge
-    environment:
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false"
     steps:
       - checkout
       - install-sdkman
