@@ -10,18 +10,6 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
-    // Add Gradle memory settings
-    dexOptions {
-        javaMaxHeapSize = "4g"
-    }
-
-    // Add Gradle daemon settings
-    gradle.projectsEvaluated {
-        tasks.withType<JavaCompile> {
-            options.compilerArgs.addAll(arrayOf("-Xmx2048m"))
-        }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -39,6 +27,22 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        
+        // Add multidex support
+        multiDexEnabled = true
+        
+        // Increase dex options
+        dexOptions {
+            javaMaxHeapSize = "4g"
+            preDexLibraries = false
+        }
+    }
+
+    // Add packaging options
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{DEPENDENCIES,NOTICE,LICENSE,LICENSE.txt,NOTICE.txt}"
+        }
     }
 
     buildTypes {
