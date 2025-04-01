@@ -30,18 +30,19 @@ android {
         
         // Add multidex support
         multiDexEnabled = true
-        
-        // Increase dex options
-        dexOptions {
-            javaMaxHeapSize = "4g"
-            preDexLibraries = false
-        }
     }
 
     // Add packaging options
     packagingOptions {
         resources {
-            excludes += "/META-INF/{DEPENDENCIES,NOTICE,LICENSE,LICENSE.txt,NOTICE.txt}"
+            excludes += listOf(
+                "META-INF/DEPENDENCIES",
+                "META-INF/LICENSE",
+                "META-INF/LICENSE.txt",
+                "META-INF/NOTICE",
+                "META-INF/NOTICE.txt",
+                "META-INF/*.kotlin_module"
+            )
         }
     }
 
@@ -51,6 +52,11 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
         }
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize = "4g"
     }
 }
 
