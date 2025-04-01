@@ -20,6 +20,7 @@ class _CustomerInfoApiTest {
       String firstSeen,
       String originalAppUserId,
       Map<String, String?> allExpirationDates,
+      Map<String, VirtualCurrencyInfo> virtualCurrencies,
       String requestDate,
       String? latestExpirationDate,
       String? originalPurchaseDate,
@@ -34,6 +35,7 @@ class _CustomerInfoApiTest {
         firstSeen,
         originalAppUserId,
         allExpirationDates,
+        virtualCurrencies,
         requestDate);
     customerInfo = CustomerInfo(
         entitlements,
@@ -44,6 +46,7 @@ class _CustomerInfoApiTest {
         firstSeen,
         originalAppUserId,
         allExpirationDates,
+        virtualCurrencies,
         requestDate,
         latestExpirationDate: latestExpirationDate,
         originalPurchaseDate: originalPurchaseDate,
@@ -62,6 +65,8 @@ class _CustomerInfoApiTest {
     String firstSeen = customerInfo.firstSeen;
     String originalAppUserId = customerInfo.originalAppUserId;
     Map<String, String?> allExpirationDates = customerInfo.allExpirationDates;
+    Map<String, VirtualCurrencyInfo> virtualCurrencies =
+        customerInfo.virtualCurrencies;
     String requestDate = customerInfo.requestDate;
     String? latestExpirationDate = customerInfo.latestExpirationDate;
     String? originalPurchaseDate = customerInfo.originalPurchaseDate;

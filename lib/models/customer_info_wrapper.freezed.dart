@@ -49,6 +49,10 @@ mixin _$CustomerInfo {
   Map<String, String?> get allExpirationDates =>
       throw _privateConstructorUsedError;
 
+  /// Map of virtual currency codes to their info
+  Map<String, VirtualCurrencyInfo> get virtualCurrencies =>
+      throw _privateConstructorUsedError;
+
   /// Date when this info was requested
   String get requestDate => throw _privateConstructorUsedError;
 
@@ -99,6 +103,7 @@ abstract class $CustomerInfoCopyWith<$Res> {
       String firstSeen,
       String originalAppUserId,
       Map<String, String?> allExpirationDates,
+      Map<String, VirtualCurrencyInfo> virtualCurrencies,
       String requestDate,
       String? latestExpirationDate,
       String? originalPurchaseDate,
@@ -131,6 +136,7 @@ class _$CustomerInfoCopyWithImpl<$Res, $Val extends CustomerInfo>
     Object? firstSeen = null,
     Object? originalAppUserId = null,
     Object? allExpirationDates = null,
+    Object? virtualCurrencies = null,
     Object? requestDate = null,
     Object? latestExpirationDate = freezed,
     Object? originalPurchaseDate = freezed,
@@ -170,6 +176,10 @@ class _$CustomerInfoCopyWithImpl<$Res, $Val extends CustomerInfo>
           ? _value.allExpirationDates
           : allExpirationDates // ignore: cast_nullable_to_non_nullable
               as Map<String, String?>,
+      virtualCurrencies: null == virtualCurrencies
+          ? _value.virtualCurrencies
+          : virtualCurrencies // ignore: cast_nullable_to_non_nullable
+              as Map<String, VirtualCurrencyInfo>,
       requestDate: null == requestDate
           ? _value.requestDate
           : requestDate // ignore: cast_nullable_to_non_nullable
@@ -221,6 +231,7 @@ abstract class _$$CustomerInfoImplCopyWith<$Res>
       String firstSeen,
       String originalAppUserId,
       Map<String, String?> allExpirationDates,
+      Map<String, VirtualCurrencyInfo> virtualCurrencies,
       String requestDate,
       String? latestExpirationDate,
       String? originalPurchaseDate,
@@ -252,6 +263,7 @@ class __$$CustomerInfoImplCopyWithImpl<$Res>
     Object? firstSeen = null,
     Object? originalAppUserId = null,
     Object? allExpirationDates = null,
+    Object? virtualCurrencies = null,
     Object? requestDate = null,
     Object? latestExpirationDate = freezed,
     Object? originalPurchaseDate = freezed,
@@ -291,6 +303,10 @@ class __$$CustomerInfoImplCopyWithImpl<$Res>
           ? _value._allExpirationDates
           : allExpirationDates // ignore: cast_nullable_to_non_nullable
               as Map<String, String?>,
+      null == virtualCurrencies
+          ? _value._virtualCurrencies
+          : virtualCurrencies // ignore: cast_nullable_to_non_nullable
+              as Map<String, VirtualCurrencyInfo>,
       null == requestDate
           ? _value.requestDate
           : requestDate // ignore: cast_nullable_to_non_nullable
@@ -327,6 +343,7 @@ class _$CustomerInfoImpl implements _CustomerInfo {
       this.firstSeen,
       this.originalAppUserId,
       final Map<String, String?> allExpirationDates,
+      final Map<String, VirtualCurrencyInfo> virtualCurrencies,
       this.requestDate,
       {this.latestExpirationDate,
       this.originalPurchaseDate,
@@ -336,7 +353,8 @@ class _$CustomerInfoImpl implements _CustomerInfo {
         _activeSubscriptions = activeSubscriptions,
         _allPurchasedProductIdentifiers = allPurchasedProductIdentifiers,
         _nonSubscriptionTransactions = nonSubscriptionTransactions,
-        _allExpirationDates = allExpirationDates;
+        _allExpirationDates = allExpirationDates,
+        _virtualCurrencies = virtualCurrencies;
 
   factory _$CustomerInfoImpl.fromJson(Map<String, dynamic> json) =>
       _$$CustomerInfoImplFromJson(json);
@@ -414,6 +432,18 @@ class _$CustomerInfoImpl implements _CustomerInfo {
     return EqualUnmodifiableMapView(_allExpirationDates);
   }
 
+  /// Map of virtual currency codes to their info
+  final Map<String, VirtualCurrencyInfo> _virtualCurrencies;
+
+  /// Map of virtual currency codes to their info
+  @override
+  Map<String, VirtualCurrencyInfo> get virtualCurrencies {
+    if (_virtualCurrencies is EqualUnmodifiableMapView)
+      return _virtualCurrencies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_virtualCurrencies);
+  }
+
   /// Date when this info was requested
   @override
   final String requestDate;
@@ -446,7 +476,7 @@ class _$CustomerInfoImpl implements _CustomerInfo {
 
   @override
   String toString() {
-    return 'CustomerInfo(entitlements: $entitlements, allPurchaseDates: $allPurchaseDates, activeSubscriptions: $activeSubscriptions, allPurchasedProductIdentifiers: $allPurchasedProductIdentifiers, nonSubscriptionTransactions: $nonSubscriptionTransactions, firstSeen: $firstSeen, originalAppUserId: $originalAppUserId, allExpirationDates: $allExpirationDates, requestDate: $requestDate, latestExpirationDate: $latestExpirationDate, originalPurchaseDate: $originalPurchaseDate, originalApplicationVersion: $originalApplicationVersion, managementURL: $managementURL)';
+    return 'CustomerInfo(entitlements: $entitlements, allPurchaseDates: $allPurchaseDates, activeSubscriptions: $activeSubscriptions, allPurchasedProductIdentifiers: $allPurchasedProductIdentifiers, nonSubscriptionTransactions: $nonSubscriptionTransactions, firstSeen: $firstSeen, originalAppUserId: $originalAppUserId, allExpirationDates: $allExpirationDates, virtualCurrencies: $virtualCurrencies, requestDate: $requestDate, latestExpirationDate: $latestExpirationDate, originalPurchaseDate: $originalPurchaseDate, originalApplicationVersion: $originalApplicationVersion, managementURL: $managementURL)';
   }
 
   @override
@@ -472,6 +502,8 @@ class _$CustomerInfoImpl implements _CustomerInfo {
                 other.originalAppUserId == originalAppUserId) &&
             const DeepCollectionEquality()
                 .equals(other._allExpirationDates, _allExpirationDates) &&
+            const DeepCollectionEquality()
+                .equals(other._virtualCurrencies, _virtualCurrencies) &&
             (identical(other.requestDate, requestDate) ||
                 other.requestDate == requestDate) &&
             (identical(other.latestExpirationDate, latestExpirationDate) ||
@@ -498,6 +530,7 @@ class _$CustomerInfoImpl implements _CustomerInfo {
       firstSeen,
       originalAppUserId,
       const DeepCollectionEquality().hash(_allExpirationDates),
+      const DeepCollectionEquality().hash(_virtualCurrencies),
       requestDate,
       latestExpirationDate,
       originalPurchaseDate,
@@ -530,6 +563,7 @@ abstract class _CustomerInfo implements CustomerInfo {
       final String firstSeen,
       final String originalAppUserId,
       final Map<String, String?> allExpirationDates,
+      final Map<String, VirtualCurrencyInfo> virtualCurrencies,
       final String requestDate,
       {final String? latestExpirationDate,
       final String? originalPurchaseDate,
@@ -571,6 +605,10 @@ abstract class _CustomerInfo implements CustomerInfo {
   /// Map of skus to expiration dates
   @override
   Map<String, String?> get allExpirationDates;
+
+  /// Map of virtual currency codes to their info
+  @override
+  Map<String, VirtualCurrencyInfo> get virtualCurrencies;
 
   /// Date when this info was requested
   @override

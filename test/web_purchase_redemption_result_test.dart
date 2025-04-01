@@ -40,6 +40,7 @@ void main() {
       'allPurchaseDates': {},
       'originalApplicationVersion': '1.2.3',
       'nonSubscriptionTransactions': [],
+      'virtualCurrencies': {},
     };
     final result = WebPurchaseRedemptionResult.fromJson({
       'result': 'SUCCESS',

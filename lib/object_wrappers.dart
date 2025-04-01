@@ -28,6 +28,7 @@ export 'models/storekit_version.dart';
 export 'models/subscription_option_wrapper.dart';
 export 'models/upgrade_info.dart';
 export 'models/verification_result.dart';
+export 'models/virtual_currency_info.dart';
 export 'models/web_purchase_redemption.dart';
 export 'models/web_purchase_redemption_result.dart';
 export 'models/win_back_offer.dart';
