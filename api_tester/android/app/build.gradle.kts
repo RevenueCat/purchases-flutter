@@ -10,6 +10,18 @@ android {
     compileSdk = flutter.compileSdkVersion
     ndkVersion = "27.0.12077973"
 
+    // Add Gradle memory settings
+    dexOptions {
+        javaMaxHeapSize = "4g"
+    }
+
+    // Add Gradle daemon settings
+    gradle.projectsEvaluated {
+        tasks.withType<JavaCompile> {
+            options.compilerArgs.addAll(arrayOf("-Xmx2048m"))
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
