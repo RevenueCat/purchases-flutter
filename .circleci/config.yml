@@ -215,7 +215,6 @@ jobs:
     description: "Run API tests for Flutter"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
-<<<<<<< HEAD
     resource_class: xlarge
     steps:
       - checkout
