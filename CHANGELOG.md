@@ -1,3 +1,8 @@
+## 8.7.1
+## RevenueCat SDK
+### 🐞 Bugfixes
+* Fix API Tests (#1307) via Will Taylor (@fire-at-will)
+
 ## 8.7.0
 ## RevenueCat SDK
 ### ✨ New Features
