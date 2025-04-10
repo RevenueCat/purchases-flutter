@@ -560,6 +560,7 @@ void main() {
         PackageType.lifetime,
         mockStoreProduct,
         PresentedOfferingContext('main', null, null),
+        {},
       );
       final purchasePackageResult =
           await Purchases.purchasePackage(mockPackage);
@@ -613,6 +614,7 @@ void main() {
         PackageType.lifetime,
         mockStoreProduct,
         PresentedOfferingContext('main', null, null),
+        {},
       );
       final googleProductChangeInfo = GoogleProductChangeInfo(
         'com.revenuecat.weekly',
@@ -671,6 +673,7 @@ void main() {
         PackageType.lifetime,
         mockStoreProduct,
         PresentedOfferingContext('main', null, null),
+        {},
       );
       const mockPaymentDiscount = PromotionalOffer(
         'aIdentifier',
