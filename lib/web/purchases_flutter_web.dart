@@ -43,16 +43,16 @@ class PurchasesFlutterPlugin {
     void injectScript() {
       final script = html.ScriptElement()
         ..src =
-            'https://unpkg.com/@revenuecat/purchases-js@0.18.1/dist/Purchases.umd.js'
+            'https://unpkg.com/@revenuecat/purchases-js-hybrid-mappings@0.0.7-alpha.1/dist/index.umd.js'
         ..type = 'text/javascript';
 
       final completer = Completer<void>();
 
       script.onLoad.listen((_) {
-        if (js.context.hasProperty('Purchases')) {
+        if (js.context.hasProperty('PurchasesHybridMappings')) {
           completer.complete();
         } else {
-          completer.completeError('Purchases object not found on window');
+          completer.completeError('PurchasesHybridMappings object not found on window');
         }
       });
 
@@ -66,7 +66,7 @@ class PurchasesFlutterPlugin {
     }
 
     // Check if SDK is already loaded
-    if (js.context.hasProperty('Purchases')) {
+    if (js.context.hasProperty('PurchasesHybridMappings')) {
       js.context['purchasesLoaded'] = Future.value();
     } else {
       injectScript();
@@ -94,8 +94,6 @@ class PurchasesFlutterPlugin {
           return _logOut();
         case 'preload':
           return _preload();
-        case 'generateAnonymousId':
-          return _generateAnonymousId();
         case 'purchase':
           return _purchase(call.arguments);
         case 'purchaseProduct':
@@ -178,18 +176,18 @@ class PurchasesFlutterPlugin {
     try {
       await js.context['purchasesLoaded'];
 
-      if (!js.context.hasProperty('Purchases')) {
+      if (!js.context.hasProperty('PurchasesHybridMappings')) {
         throw PlatformException(
           code: 'SDKNotLoaded',
           message:
-              'Purchases JS SDK not found on window object. Make sure the SDK is properly loaded.',
+              'Purchases hybrid mappings SDK not found on window object. Make sure the SDK is properly loaded.',
         );
       }
 
-      var purchases = js.context['Purchases'];
+      var purchases = js.context['PurchasesHybridMappings'];
 
-      if (purchases.hasProperty('Purchases')) {
-        purchases = purchases['Purchases'];
+      if (purchases.hasProperty('PurchasesCommon')) {
+        purchases = purchases['PurchasesCommon'];
       }
 
       final apiKey = arguments['apiKey'] as String?;
@@ -200,12 +198,14 @@ class PurchasesFlutterPlugin {
         );
       }
 
-      var appUserId = arguments['appUserId'] as String?;
-      appUserId ??= purchases
-          .callMethod('generateRevenueCatAnonymousAppUserId')
-          .toString();
+      final appUserId = arguments['appUserId'] as String?;
 
-      purchases.callMethod('configure', [apiKey, appUserId]);
+      final options = js.JsObject.jsify({
+        'apiKey': apiKey,
+        'appUserId': appUserId,
+      });
+
+      purchases.callMethod('configure', [options]);
     } catch (e) {
       throw PlatformException(
         code: PurchasesErrorCode.configurationError.index.toString(),
@@ -218,7 +218,7 @@ class PurchasesFlutterPlugin {
     try {
       await js.context['purchasesLoaded'];
       final logLevel = arguments['level'] as String;
-      var purchases = js.context['Purchases'];
+      var purchases = js.context['PurchasesHybridMappings'];
 
       if (purchases == null) {
         throw PlatformException(
@@ -227,8 +227,8 @@ class PurchasesFlutterPlugin {
         );
       }
 
-      if (purchases.hasProperty('Purchases')) {
-        purchases = purchases['Purchases'];
+      if (purchases.hasProperty('PurchasesCommon')) {
+        purchases = purchases['PurchasesCommon'];
       }
 
       final jsLogLevel = _convertLogLevel(logLevel);
@@ -259,19 +259,13 @@ class PurchasesFlutterPlugin {
   }
 
   bool _isConfigured() {
-    var purchases = js.context['Purchases'];
-    if (purchases.hasProperty('Purchases')) {
-      purchases = purchases['Purchases'];
-    }
+    final purchases = _getStaticPurchasesCommon();
 
     return purchases.callMethod('isConfigured') as bool;
   }
 
   js.JsObject _getInstance() {
-    var purchases = js.context['Purchases'];
-    if (purchases.hasProperty('Purchases')) {
-      purchases = purchases['Purchases'];
-    }
+    final purchases = _getStaticPurchasesCommon();
 
     if (!_isConfigured()) {
       throw PlatformException(
@@ -280,7 +274,15 @@ class PurchasesFlutterPlugin {
       );
     }
 
-    return purchases.callMethod('getSharedInstance');
+    return purchases.callMethod('getInstance');
+  }
+
+  js.JsObject _getStaticPurchasesCommon() {
+    var purchases = js.context['PurchasesHybridMappings'];
+    if (purchases.hasProperty('PurchasesCommon')) {
+      purchases = purchases['PurchasesCommon'];
+    }
+    return purchases;
   }
 
   Future<Map<String, dynamic>> _getCustomerInfo() async {
@@ -292,7 +294,7 @@ class PurchasesFlutterPlugin {
       'then',
       [
         js.allowInterop(
-          (result) => completer.complete(_convertJsCustomerInfo(result)),
+          (result) => completer.complete(_convertJsRecordToMap(result)),
         ),
       ],
     ).callMethod('catch', [
@@ -321,7 +323,7 @@ class PurchasesFlutterPlugin {
       'then',
       [
         js.allowInterop(
-          (result) => completer.complete(_convertJsOfferings(result)),
+          (result) => completer.complete(_convertJsRecordToMap(result)),
         ),
       ],
     ).callMethod('catch', [
@@ -354,7 +356,7 @@ class PurchasesFlutterPlugin {
           if (result == null) {
             completer.complete(null);
           } else {
-            completer.complete(_convertJsOffering(result));
+            completer.complete(_convertJsRecordToMap(result));
           }
         }),
       ],
@@ -390,12 +392,12 @@ class PurchasesFlutterPlugin {
     final completer = Completer<Map<String, dynamic>>();
     final instance = _getInstance();
 
-    final promise = instance.callMethod('changeUser', [appUserId]);
+    final promise = instance.callMethod('logIn', [appUserId]);
     promise.callMethod(
       'then',
       [
         js.allowInterop(
-          (result) => completer.complete(_convertJsCustomerInfo(result)),
+          (result) => completer.complete(_convertJsRecordToMap(result)),
         ),
       ],
     ).callMethod('catch', [
@@ -412,12 +414,30 @@ class PurchasesFlutterPlugin {
     return completer.future;
   }
 
-  Future<void> _logOut() async {
-    throw PlatformException(
-      code: 'UnsupportedOperation',
-      message:
-          'logOut is not supported on web platform. To change users, use logIn instead.',
-    );
+  Future<Map<String, dynamic>> _logOut() async {
+    final completer = Completer<Map<String, dynamic>>();
+    final instance = _getInstance();
+
+    final promise = instance.callMethod('logOut');
+    promise.callMethod(
+      'then',
+      [
+        js.allowInterop(
+              (result) => completer.complete(_convertJsRecordToMap(result)),
+        ),
+      ],
+    ).callMethod('catch', [
+      js.allowInterop(
+            (error) => completer.completeError(
+          PlatformException(
+            code: 'LoginError',
+            message: error.toString(),
+          ),
+        ),
+      ),
+    ]);
+
+    return completer.future;
   }
 
   Future<void> _preload() async {
@@ -442,24 +462,6 @@ class PurchasesFlutterPlugin {
     }
   }
 
-  Future<String> _generateAnonymousId() async {
-    try {
-      var purchases = js.context['Purchases'];
-      if (purchases.hasProperty('Purchases')) {
-        purchases = purchases['Purchases'];
-      }
-
-      final anonymousId =
-          purchases.callMethod('generateRevenueCatAnonymousAppUserId');
-      return anonymousId.toString();
-    } catch (e) {
-      throw PlatformException(
-        code: 'GenerateAnonymousIdError',
-        message: 'Error generating anonymous ID: $e',
-      );
-    }
-  }
-
   Future<Map<String, dynamic>> _purchase(dynamic arguments) async {
     throw PlatformException(
       code: 'Unimplemented',
@@ -478,23 +480,24 @@ class PurchasesFlutterPlugin {
     final instance = _getInstance();
 
     final completer = Completer<Map<String, dynamic>>();
-    final nativePackageJsified = js.JsObject.jsify(arguments['nativePackage']);
+    final packageIdentifier = arguments['packageIdentifier'] as String;
+    final options = js.JsObject.jsify({
+      'packageIdentifier': packageIdentifier,
+      'presentedOfferingContext': arguments['presentedOfferingContext'],
+    });
     final promise =
-        instance.callMethod('purchasePackage', [nativePackageJsified]);
+        instance.callMethod('purchasePackage', [options]);
     promise.callMethod(
       'then',
       [
         js.allowInterop(
-          (result) => completer.complete({
-            'customerInfo': _convertJsCustomerInfo(result['customerInfo']),
-            // TODO: Need to expose redemption info
-          }),
+          (result) => completer.complete(_convertJsRecordToMap(result)),
         ),
       ],
     ).callMethod('catch', [
       js.allowInterop(
         (error) {
-          final errorMap = _jsObjectToMap(error);
+          final errorMap = _convertJsRecordToMap(error);
           completer.completeError(
             PlatformException(
               code: "${errorMap['errorCode']}",
@@ -523,12 +526,19 @@ class PurchasesFlutterPlugin {
 
   Future<void> _close() async {
     // Web SDK's close() just unsets the instance
-    js.context['Purchases'] = null;
+    js.context['PurchasesHybridMappings'] = null;
   }
 
   Future<bool> _isAnonymous() async {
-    final appUserId = await _getAppUserID();
-    return appUserId.startsWith('\$RCAnonymousID:');
+    try {
+      final instance = _getInstance();
+      return instance.callMethod('isAnonymous') as bool;
+    } catch (e) {
+      throw PlatformException(
+        code: 'AnonymousCheckError',
+        message: 'Error checking user anonymous status: $e',
+      );
+    }
   }
 
   Future<bool> _isSandbox() async {
@@ -606,7 +616,7 @@ class PurchasesFlutterPlugin {
   }
 
   Future<void> _setProxyURL(dynamic arguments) async {
-    // final proxyURL = arguments['proxyURLString'] as String;
+    final proxyURL = arguments['proxyURLString'] as String;
     throw PlatformException(
       code: 'Unimplemented',
       message: 'setProxyURL is not yet implemented on web platform.',
@@ -748,446 +758,40 @@ class PurchasesFlutterPlugin {
     );
   }
 
-  Map<String, dynamic> _convertJsEntitlement(dynamic jsEntitlement) => {
-        'identifier': jsEntitlement['identifier']?.toString() ?? '',
-        'isActive': jsEntitlement['isActive'] ?? false,
-        'willRenew': jsEntitlement['willRenew'] ?? false,
-        'latestPurchaseDate':
-            jsEntitlement['latestPurchaseDate']?.toString() ?? '',
-        'originalPurchaseDate':
-            jsEntitlement['originalPurchaseDate']?.toString() ?? '',
-        'productIdentifier':
-            jsEntitlement['productIdentifier']?.toString() ?? '',
-        'isSandbox': jsEntitlement['isSandbox'] ?? false,
-        'ownershipType': 'UNKNOWN',
-        'store': _convertStore(jsEntitlement['store']),
-        'periodType': _convertPeriodType(jsEntitlement['periodType']),
-        'expirationDate': jsEntitlement['expirationDate']?.toString(),
-        'unsubscribeDetectedAt':
-            jsEntitlement['unsubscribeDetectedAt']?.toString(),
-        'billingIssueDetectedAt':
-            jsEntitlement['billingIssueDetectedAt']?.toString(),
-        'productPlanIdentifier': null,
-        'verification': 'NOT_REQUESTED',
-      };
-
-  String _convertStore(dynamic store) {
-    final storeStr = (store?.toString() ?? 'unknown').toLowerCase();
-    switch (storeStr) {
-      case 'app_store':
-        return 'APP_STORE';
-      case 'mac_app_store':
-        return 'MAC_APP_STORE';
-      case 'play_store':
-        return 'PLAY_STORE';
-      case 'amazon':
-        return 'AMAZON';
-      case 'stripe':
-        return 'STRIPE';
-      case 'rc_billing':
-        return 'RC_BILLING';
-      case 'promotional':
-        return 'PROMOTIONAL';
-      default:
-        return 'unknown';
-    }
-  }
-
-  String _convertPeriodType(dynamic periodType) {
-    final typeStr = (periodType?.toString() ?? 'normal').toLowerCase();
-    switch (typeStr) {
-      case 'normal':
-        return 'NORMAL';
-      case 'intro':
-        return 'INTRO';
-      case 'trial':
-        return 'TRIAL';
-      default:
-        return 'unknown';
-    }
-  }
-
-  Map<String, dynamic> _convertJsCustomerInfo(dynamic jsCustomerInfo) {
-    if (jsCustomerInfo == null) {
-      throw PlatformException(
-        code: 'CustomerInfoError',
-        message: 'Customer info is null',
-      );
-    }
-
-    final entitlements = jsCustomerInfo['entitlements'];
-    final activeEntitlements = <String, dynamic>{};
-    final allEntitlements = <String, dynamic>{};
-
-    if (entitlements != null && entitlements is js.JsObject) {
-      if (entitlements['active'] != null) {
-        final active = entitlements['active'] as js.JsObject;
-        final activeKeys = js.context['Object'].callMethod('keys', [active]);
-        for (final key in activeKeys) {
-          final ent = active[key];
-          activeEntitlements[key.toString()] = _convertJsEntitlement(ent);
-        }
-      }
-
-      if (entitlements['all'] != null) {
-        final all = entitlements['all'] as js.JsObject;
-        final allKeys = js.context['Object'].callMethod('keys', [all]);
-        for (final key in allKeys) {
-          final ent = all[key];
-          allEntitlements[key.toString()] = _convertJsEntitlement(ent);
-        }
+  dynamic _convertJsToDart(dynamic jsValue) {
+    if (jsValue is js.JsObject) {
+      final isArray = js.context['Array'].callMethod('isArray', [jsValue]);
+      if (isArray) {
+        return _convertJsArrayToList(jsValue);
+      } else {
+        return _convertJsRecordToMap(jsValue);
       }
     }
-
-    final activeSubscriptions = jsCustomerInfo['activeSubscriptions'];
-    var activeSubscriptionsList = <String>[];
-    if (activeSubscriptions != null && activeSubscriptions is js.JsObject) {
-      final values =
-          js.context['Array'].callMethod('from', [activeSubscriptions]);
-      activeSubscriptionsList =
-          List<String>.from(values.map((x) => x.toString()));
-    }
-
-    final allPurchaseDatesByProduct =
-        jsCustomerInfo['allPurchaseDatesByProduct'];
-    final purchaseDates = <String, String?>{};
-    final allPurchasedProductIdentifiers = <String>[];
-
-    if (allPurchaseDatesByProduct != null &&
-        allPurchaseDatesByProduct is js.JsObject) {
-      final keys =
-          js.context['Object'].callMethod('keys', [allPurchaseDatesByProduct]);
-      for (final key in keys) {
-        final date = allPurchaseDatesByProduct[key];
-        final productId = key.toString();
-        purchaseDates[productId] = date?.toString();
-        allPurchasedProductIdentifiers.add(productId);
-      }
-    }
-
-    final allExpirationDatesByProduct =
-        jsCustomerInfo['allExpirationDatesByProduct'];
-    final expirationDates = <String, String?>{};
-    if (allExpirationDatesByProduct != null &&
-        allExpirationDatesByProduct is js.JsObject) {
-      final keys = js.context['Object']
-          .callMethod('keys', [allExpirationDatesByProduct]);
-      for (final key in keys) {
-        final date = allExpirationDatesByProduct[key];
-        expirationDates[key.toString()] = date?.toString();
-      }
-    }
-
-    String? latestExpirationDate;
-    if (expirationDates.isNotEmpty) {
-      latestExpirationDate = expirationDates.values
-          .where((date) => date != null)
-          .reduce((a, b) => a!.compareTo(b!) > 0 ? a : b);
-    }
-
-    return {
-      'entitlements': {
-        'active': activeEntitlements,
-        'all': allEntitlements,
-        'verification': 'NOT_REQUESTED',
-      },
-      'allPurchaseDates': purchaseDates,
-      'activeSubscriptions': activeSubscriptionsList,
-      'allPurchasedProductIdentifiers': allPurchasedProductIdentifiers,
-      'nonSubscriptionTransactions': [],
-      'firstSeen': jsCustomerInfo['firstSeenDate']?.toString() ?? '',
-      'originalAppUserId':
-          jsCustomerInfo['originalAppUserId']?.toString() ?? '',
-      'allExpirationDates': expirationDates,
-      'requestDate': jsCustomerInfo['requestDate']?.toString() ?? '',
-      'latestExpirationDate': latestExpirationDate,
-      'originalPurchaseDate':
-          jsCustomerInfo['originalPurchaseDate']?.toString(),
-      'originalApplicationVersion': null,
-      'managementURL': jsCustomerInfo['managementURL']?.toString(),
-    };
+    return jsValue;
   }
 
-  Map<String, dynamic> _convertJsOfferings(dynamic jsOfferings) {
-    final allOfferings = jsOfferings['all'];
-    final currentOffering = jsOfferings['current'];
-
-    final allOfferingsMap = <String, dynamic>{};
-
-    if (allOfferings != null) {
-      final jsAll = allOfferings as js.JsObject;
-      final keys = js.context['Object'].callMethod('keys', [jsAll]);
-      for (final key in keys) {
-        final offering = jsAll[key];
-        allOfferingsMap[key.toString()] = _convertJsOffering(offering);
-      }
+  List<dynamic> _convertJsArrayToList(js.JsObject jsArray) {
+    final length = jsArray['length'];
+    final list = <dynamic>[];
+    for (var i = 0; i < length; i++) {
+      final element = jsArray[i];
+      list.add(_convertJsToDart(element));
     }
-
-    return {
-      'all': allOfferingsMap,
-      'current':
-          currentOffering != null ? _convertJsOffering(currentOffering) : null,
-    };
+    return list;
   }
 
-  List<Map<String, dynamic>> _convertJsPackages(dynamic jsPackages) {
-    if (jsPackages == null) return [];
+  Map<String, dynamic> _convertJsRecordToMap(js.JsObject jsRecord) {
+    final result = <String, dynamic>{};
 
-    final packages = <Map<String, dynamic>>[];
-    final packagesList = js.JsArray.from(jsPackages).toList();
+    final keys = js.context['Object'].callMethod('keys', [jsRecord]);
+    final length = keys['length'];
 
-    for (final jsPackage in packagesList) {
-      packages.add(_convertJsPackage(jsPackage));
+    for (var i = 0; i < length; i++) {
+      final key = keys[i];
+      final value = jsRecord[key];
+      result[key] = _convertJsToDart(value);
     }
-
-    return packages;
-  }
-
-  Map<String, dynamic> _convertJsProduct(dynamic jsProduct) {
-    final presentedOfferingContext = _convertPresentedOfferingContext(
-      jsProduct['presentedOfferingContext'],
-    );
-
-    return {
-      'identifier': jsProduct['identifier'],
-      'title': jsProduct['title'],
-      'description': jsProduct['description'] ??
-          '', // TODO: Dart [StoreProduct] doesn't support a null description while JS does
-      'price': jsProduct['currentPrice']?['amountMicros'] ?? 0,
-      'priceString': jsProduct['currentPrice']?['formattedPrice'],
-      'currencyCode': jsProduct['currentPrice']?['currency'],
-      'productType': _convertProductType(jsProduct['productType']),
-      'subscriptionOptions': _convertSubscriptionOptions(
-        jsProduct['subscriptionOptions'],
-        jsProduct['identifier'],
-      ),
-      'presentedOfferingContext': presentedOfferingContext,
-      'presentedOfferingIdentifier':
-          presentedOfferingContext?['offeringIdentifier'],
-    };
-  }
-
-  String _convertPackageType(String identifier) {
-    switch (identifier) {
-      case WebPackageType.lifetime:
-        return 'LIFETIME';
-      case WebPackageType.annual:
-        return 'ANNUAL';
-      case WebPackageType.sixMonth:
-        return 'SIX_MONTH';
-      case WebPackageType.threeMonth:
-        return 'THREE_MONTH';
-      case WebPackageType.twoMonth:
-        return 'TWO_MONTH';
-      case WebPackageType.monthly:
-        return 'MONTHLY';
-      case WebPackageType.weekly:
-        return 'WEEKLY';
-      default:
-        if (identifier.startsWith(rcPrefix)) {
-          return 'UNKNOWN';
-        }
-        return 'CUSTOM';
-    }
-  }
-
-  String _convertProductType(String type) {
-    switch (type.toLowerCase()) {
-      case 'subscription':
-        return 'SUBS';
-      case 'consumable':
-        return 'CONSUMABLE';
-      case 'non_consumable':
-        return 'NON_CONSUMABLE';
-      default:
-        return 'UNKNOWN';
-    }
-  }
-
-  Map<String, dynamic> _convertJsPackage(dynamic jsPackage) {
-    final presentedOfferingContext = _convertPresentedOfferingContext(
-      jsPackage['rcBillingProduct']['presentedOfferingContext'],
-    );
-
-    return {
-      'identifier': jsPackage['identifier'],
-      'packageType': _convertPackageType(jsPackage['identifier']),
-      'product': _convertJsProduct(jsPackage['rcBillingProduct']),
-      'presentedOfferingContext': presentedOfferingContext,
-      'offeringIdentifier': presentedOfferingContext?['offeringIdentifier'],
-      'nativePackage': _jsObjectToMap(jsPackage),
-    };
-  }
-
-  Map<String, dynamic>? _findPackageByType(dynamic packages, String type) {
-    if (packages == null) return null;
-
-    final List packagesList = js.JsArray.from(packages);
-    final package = packagesList.firstWhere(
-      (p) => p['identifier'] == type,
-      orElse: () => null,
-    );
-
-    if (package == null) return null;
-    return _convertJsPackage(package);
-  }
-
-  List<dynamic> _convertSubscriptionOptions(
-    dynamic jsSubscriptionOptions,
-    String storeProductId,
-  ) {
-    if (jsSubscriptionOptions == null) return [];
-
-    final options = [];
-    final jsOptions = jsSubscriptionOptions as js.JsObject;
-    final keys = js.context['Object'].callMethod('keys', [jsOptions]);
-
-    for (final key in keys) {
-      final option = jsOptions[key];
-      final pricingPhases = [
-        _convertJsPricingPhase(option['base']),
-      ];
-      if (option['trial'] != null) {
-        pricingPhases.insert(0, _convertJsPricingPhase(option['trial']));
-      }
-      options.add({
-        'id': option['id'],
-        'storeProductId': storeProductId,
-        'productId': storeProductId,
-        'priceId': option['priceId'],
-        'pricingPhases': pricingPhases,
-        'tags': [],
-        'isBasePlan': true, // TODO: Support non-base plans
-        'billingPeriod': {
-          'iso8601': option['base']?['periodDuration'],
-          'unit': _convertPeriodUnit(option['base']?['period']?['unit']),
-          'value': option['base']?['period']?['number'],
-        },
-        'isPrepaid': false,
-        'presentedOfferingContext':
-            null, // TODO: Implement presented offering context
-      });
-    }
-
-    return options;
-  }
-
-  Map<String, dynamic> _convertJsPricingPhase(dynamic phase) => {
-        'billingPeriod': {
-          'iso8601': phase['periodDuration'],
-          'unit': _convertPeriodUnit(phase['period']?['unit']),
-          'value': phase['period']?['number'],
-        },
-        'recurrenceMode': null, // TODO: Support recurrence mode
-        'billingCycleCount': phase['cycleCount'],
-        'price': phase['price'] != null
-            ? {
-                'amountMicros': phase['price']['amountMicros'],
-                'currencyCode': phase['price']['currency'],
-                'formatted': phase['price']['formattedPrice'],
-              }
-            : {
-                'amountMicros': 0,
-                'currencyCode':
-                    'USD', // TODO: Fix handling of free trial phases. Shouldn't assume USD
-                'formatted': '\$0',
-              },
-        'offerPaymentMode': null, // TODO: Support offer payment mode
-      };
-
-  String _convertPeriodUnit(String periodUnit) =>
-      {
-        'day': 'DAY',
-        'week': 'WEEK',
-        'month': 'MONTH',
-        'year': 'YEAR',
-      }[periodUnit] ??
-      'UNKNOWN';
-
-  Map<String, dynamic> _convertJsOffering(dynamic jsOffering) {
-    var metadata = <String, dynamic>{};
-    if (jsOffering['metadata'] != null) {
-      metadata = _jsObjectToMap(jsOffering['metadata']);
-    }
-    return {
-      'identifier': jsOffering['identifier'],
-      'serverDescription': jsOffering['serverDescription'],
-      'metadata': metadata,
-      'availablePackages': _convertJsPackages(jsOffering['availablePackages']),
-      'lifetime': _findPackageByType(
-        jsOffering['availablePackages'],
-        WebPackageType.lifetime,
-      ),
-      'annual': _findPackageByType(
-        jsOffering['availablePackages'],
-        WebPackageType.annual,
-      ),
-      'sixMonth': _findPackageByType(
-        jsOffering['availablePackages'],
-        WebPackageType.sixMonth,
-      ),
-      'threeMonth': _findPackageByType(
-        jsOffering['availablePackages'],
-        WebPackageType.threeMonth,
-      ),
-      'twoMonth': _findPackageByType(
-        jsOffering['availablePackages'],
-        WebPackageType.twoMonth,
-      ),
-      'monthly': _findPackageByType(
-        jsOffering['availablePackages'],
-        WebPackageType.monthly,
-      ),
-      'weekly': _findPackageByType(
-        jsOffering['availablePackages'],
-        WebPackageType.weekly,
-      ),
-    };
-  }
-
-  dynamic _jsValueToDart(dynamic value) {
-    if (value is js.JsObject) {
-      return _jsObjectToMap(value);
-    } else if (value is List) {
-      return value.map(_jsValueToDart).toList();
-    } else {
-      return value;
-    }
-  }
-
-  Map<String, dynamic> _jsObjectToMap(js.JsObject jsObject) {
-    final map = <String, dynamic>{};
-
-    final keys = js.context['Object'].callMethod('keys', [jsObject]);
-
-    for (final key in List<String>.from(keys)) {
-      final value = jsObject[key];
-      map[key] = _jsValueToDart(value);
-    }
-
-    return map;
-  }
-
-  Map<String, dynamic>? _convertPresentedOfferingContext(
-    dynamic presentedOfferingContext,
-  ) {
-    if (presentedOfferingContext == null) {
-      return null;
-    }
-
-    Map<String, dynamic>? targetingContext;
-    if (presentedOfferingContext['targetingContext'] != null) {
-      targetingContext = {
-        'ruleId': presentedOfferingContext['targetingContext']['ruleId'],
-        'revision': presentedOfferingContext['targetingContext']['revision'],
-      };
-    }
-
-    return {
-      'offeringIdentifier': presentedOfferingContext['offeringIdentifier'],
-      'placementIdentifier': presentedOfferingContext['placementIdentifier'],
-      'targetingContext': targetingContext,
-    };
+    return result;
   }
 
   PurchasesErrorCode _mapJsErrorToPurchasesErrorCode(dynamic error) {

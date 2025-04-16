@@ -449,7 +449,6 @@ class Purchases {
           googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'nativePackage': packageToPurchase.nativePackage,
     });
     return customerInfo;
   }

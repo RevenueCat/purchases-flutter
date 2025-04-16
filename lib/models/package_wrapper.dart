@@ -69,9 +69,6 @@ class Package with _$Package {
 
     /// Offering context this package belongs to.
     PresentedOfferingContext presentedOfferingContext,
-
-    /// Package data provided by the native SDKs. Not to be used directly.
-    Map<dynamic, dynamic> nativePackage,
   ) = _Package;
 
   factory Package.fromJson(Map<String, dynamic> json) =>
