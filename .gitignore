@@ -17,7 +17,6 @@
 build/
 revenuecat_examples/**/pubspec.lock
 api_tester/**/pubspec.lock
-pubspec.lock
 
 # Android related
 **/android/**/gradle-wrapper.jar
