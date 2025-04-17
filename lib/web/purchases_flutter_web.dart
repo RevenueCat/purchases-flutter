@@ -8,6 +8,7 @@ import '../purchases_flutter.dart';
 
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
+  static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
 
   static void registerWith(Registrar registrar) {
     final channel = MethodChannel(
@@ -134,24 +135,12 @@ class PurchasesFlutterPlugin {
     try {
       await js.context['purchasesLoaded'];
 
-      if (!js.context.hasProperty('PurchasesHybridMappings')) {
-        throw PlatformException(
-          code: 'SDKNotLoaded',
-          message:
-              'Purchases hybrid mappings SDK not found on window object. Make sure the SDK is properly loaded.',
-        );
-      }
-
-      var purchases = js.context['PurchasesHybridMappings'];
-
-      if (purchases.hasProperty('PurchasesCommon')) {
-        purchases = purchases['PurchasesCommon'];
-      }
+      final purchases = _getStaticPurchasesCommon();
 
       final apiKey = arguments['apiKey'] as String?;
       if (apiKey == null) {
         throw PlatformException(
-          code: 'ConfigurationError',
+          code: _configurationErrorCode,
           message: 'API key is required',
         );
       }
@@ -166,18 +155,17 @@ class PurchasesFlutterPlugin {
       purchases.callMethod('configure', [options]);
     } catch (e) {
       throw PlatformException(
-        code: PurchasesErrorCode.configurationError.index.toString(),
+        code: _configurationErrorCode,
         message: 'Purchases SDK not configured. Call configure first.',
       );
     }
   }
 
   Future<void> _setLogLevel(dynamic arguments) async {
+    await js.context['purchasesLoaded'];
+    final purchasesStaticCommon = _getStaticPurchasesCommon();
     try {
-      await js.context['purchasesLoaded'];
       final logLevel = arguments['level'] as String;
-      final purchasesStaticCommon = _getStaticPurchasesCommon();
-
       final jsLogLevel = _convertLogLevel(logLevel);
       purchasesStaticCommon.callMethod('setLogLevel', [jsLogLevel]);
     } catch (e) {
@@ -216,7 +204,7 @@ class PurchasesFlutterPlugin {
 
     if (!_isConfigured()) {
       throw PlatformException(
-        code: PurchasesErrorCode.configurationError.index.toString(),
+        code: _configurationErrorCode,
         message: 'Purchases SDK not configured. Call configure first.',
       );
     }
@@ -231,7 +219,7 @@ class PurchasesFlutterPlugin {
     }
     if (purchases == null) {
       throw PlatformException(
-        code: PurchasesErrorCode.configurationError.index.toString(),
+        code: _configurationErrorCode,
         message: 'Purchases SDK not found on window object after loading.',
       );
     }
@@ -255,8 +243,8 @@ class PurchasesFlutterPlugin {
   }
 
   Future<String> _getAppUserID() async {
+    final instance = _getInstance();
     try {
-      final instance = _getInstance();
       final result = instance.callMethod('getAppUserId', []);
       return result.toString();
     } catch (e) {
@@ -295,24 +283,24 @@ class PurchasesFlutterPlugin {
   }
 
   Future<bool> _isAnonymous() async {
+    final instance = _getInstance();
     try {
-      final instance = _getInstance();
       return instance.callMethod('isAnonymous') as bool;
     } catch (e) {
       throw PlatformException(
-        code: 'AnonymousCheckError',
+        code: _unknownErrorCode,
         message: 'Error checking user anonymous status: $e',
       );
     }
   }
 
   Future<bool> _isSandbox() async {
+    final instance = _getInstance();
     try {
-      final instance = _getInstance();
       return instance.callMethod('isSandbox') as bool;
     } catch (e) {
       throw PlatformException(
-        code: 'SandboxCheckError',
+        code: _unknownErrorCode,
         message: 'Error checking sandbox status: $e',
       );
     }
