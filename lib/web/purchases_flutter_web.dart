@@ -1,14 +1,50 @@
 import 'dart:async';
-import 'dart:html' as html;
-import 'dart:js' as js;
+import 'dart:js_interop';
+import 'dart:js_interop_unsafe';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:web/web.dart';
 
 import '../purchases_flutter.dart';
 
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
+  static const _platformName = 'flutter';
+  static const _pluginVersion = '8.7.3';
+
+  static Completer<void>? _initCompleter;
+
+  static void _injectScriptIfNeeded() {
+    if (_initCompleter != null) {
+      return;
+    }
+    _initCompleter = Completer<void>();
+
+    // TODO: Host library ourselves.
+    const library = 'https://unpkg.com/@revenuecat/purchases-js-hybrid-mappings@0.0.7-alpha.2/dist/index.umd.js';
+
+    final script = HTMLScriptElement()
+      ..type = 'text/javascript'
+      ..text = '''
+        window.after_rc_load_callback = async (callback) => {
+          callback(await import("$library"));
+        };
+      ''';
+
+    assert(document.head != null);
+    document.head!.append(script);
+
+    globalContext.callMethod(
+      'after_rc_load_callback'.toJS,
+      ((JSAny? module) {
+        globalContext['revenuecat'] = module;
+        globalContext.delete('after_rc_load_callback'.toJS);
+        _initCompleter?.complete();
+      }).toJS,
+    );
+  }
 
   static void registerWith(Registrar registrar) {
     final channel = MethodChannel(
@@ -20,40 +56,17 @@ class PurchasesFlutterPlugin {
     final instance = PurchasesFlutterPlugin();
     channel.setMethodCallHandler(instance.handleMethodCall);
 
-    void injectScript() {
-      final script = html.ScriptElement()
-        ..src =
-            'https://unpkg.com/@revenuecat/purchases-js-hybrid-mappings@0.0.7-alpha.1/dist/index.umd.js'
-        ..type = 'text/javascript';
-
-      final completer = Completer<void>();
-
-      script.onLoad.listen((_) {
-        if (js.context.hasProperty('PurchasesHybridMappings')) {
-          completer.complete();
-        } else {
-          completer.completeError('PurchasesHybridMappings object not found on window');
-        }
-      });
-
-      script.onError.listen((event) {
-        final error = event as html.ErrorEvent;
-        completer.completeError('Failed to load SDK: ${error.message}');
-      });
-
-      html.document.head!.append(script);
-      js.context['purchasesLoaded'] = completer.future;
-    }
-
-    // Check if SDK is already loaded
-    if (js.context.hasProperty('PurchasesHybridMappings')) {
-      js.context['purchasesLoaded'] = Future.value();
-    } else {
-      injectScript();
-    }
+    _injectScriptIfNeeded();
   }
 
   Future<dynamic> handleMethodCall(MethodCall call) async {
+    if (_initCompleter == null) {
+      throw PlatformException(
+          code: _unknownErrorCode,
+          message: 'Purchases SDK not loaded on method call: ${call.method}',
+      );
+    }
+    await _initCompleter?.future;
     try {
       switch (call.method) {
         case 'setupPurchases':
@@ -133,10 +146,6 @@ class PurchasesFlutterPlugin {
 
   Future<void> _setupPurchases(dynamic arguments) async {
     try {
-      await js.context['purchasesLoaded'];
-
-      final purchases = _getStaticPurchasesCommon();
-
       final apiKey = arguments['apiKey'] as String?;
       if (apiKey == null) {
         throw PlatformException(
@@ -147,12 +156,14 @@ class PurchasesFlutterPlugin {
 
       final appUserId = arguments['appUserId'] as String?;
 
-      final options = js.JsObject.jsify({
+      final options = {
         'apiKey': apiKey,
         'appUserId': appUserId,
-      });
+        'flavor': _platformName,
+        'flavorVersion': _pluginVersion,
+      };
 
-      purchases.callMethod('configure', [options]);
+      _callStaticMethod('configure', [options]);
     } catch (e) {
       throw PlatformException(
         code: _configurationErrorCode,
@@ -162,18 +173,9 @@ class PurchasesFlutterPlugin {
   }
 
   Future<void> _setLogLevel(dynamic arguments) async {
-    await js.context['purchasesLoaded'];
-    final purchasesStaticCommon = _getStaticPurchasesCommon();
-    try {
-      final logLevel = arguments['level'] as String;
-      final jsLogLevel = _convertLogLevel(logLevel);
-      purchasesStaticCommon.callMethod('setLogLevel', [jsLogLevel]);
-    } catch (e) {
-      throw PlatformException(
-        code: _unknownErrorCode,
-        message: 'Error setting log level: $e',
-      );
-    }
+    final logLevel = arguments['level'] as String;
+    final jsLogLevel = _convertLogLevel(logLevel);
+    _callStaticMethod('setLogLevel', [jsLogLevel]);
   }
 
   String _convertLogLevel(String logLevel) {
@@ -193,38 +195,7 @@ class PurchasesFlutterPlugin {
     }
   }
 
-  bool _isConfigured() {
-    final purchases = _getStaticPurchasesCommon();
-
-    return purchases.callMethod('isConfigured') as bool;
-  }
-
-  js.JsObject _getInstance() {
-    final purchases = _getStaticPurchasesCommon();
-
-    if (!_isConfigured()) {
-      throw PlatformException(
-        code: _configurationErrorCode,
-        message: 'Purchases SDK not configured. Call configure first.',
-      );
-    }
-
-    return purchases.callMethod('getInstance');
-  }
-
-  js.JsObject _getStaticPurchasesCommon() {
-    var purchases = js.context['PurchasesHybridMappings'];
-    if (purchases.hasProperty('PurchasesCommon')) {
-      purchases = purchases['PurchasesCommon'];
-    }
-    if (purchases == null) {
-      throw PlatformException(
-        code: _configurationErrorCode,
-        message: 'Purchases SDK not found on window object after loading.',
-      );
-    }
-    return purchases;
-  }
+  bool _isConfigured() => _callStaticMethod('isConfigured', []) as bool;
 
   Future<Map<String, dynamic>> _getCustomerInfo() async =>
       await _getMapFromInstanceMethod('getCustomerInfo', []);
@@ -243,21 +214,14 @@ class PurchasesFlutterPlugin {
   }
 
   Future<String> _getAppUserID() async {
-    final instance = _getInstance();
-    try {
-      final result = instance.callMethod('getAppUserId', []);
-      return result.toString();
-    } catch (e) {
-      throw PlatformException(
-        code: _unknownErrorCode,
-        message: 'Error getting app user ID: $e',
-      );
-    }
+    final purchases = _getInstance();
+    return purchases.callMethod('getAppUserId'.toJS).dartify().toString();
   }
 
   Future<Map<String, dynamic>> _logIn(dynamic arguments) async {
-    final appUserId = arguments['appUserId'] as String;
-    return await _getMapFromInstanceMethod('logIn', [appUserId]);
+    final appUserId = arguments['appUserID'] as String;
+    final result = await _getMapFromInstanceMethod('logIn', [appUserId]);
+    return result;
   }
 
   Future<Map<String, dynamic>> _logOut() async =>
@@ -265,10 +229,10 @@ class PurchasesFlutterPlugin {
 
   Future<Map<String, dynamic>> _purchasePackage(dynamic arguments) async {
     final packageIdentifier = arguments['packageIdentifier'] as String;
-    final options = js.JsObject.jsify({
+    final options = {
       'packageIdentifier': packageIdentifier,
       'presentedOfferingContext': arguments['presentedOfferingContext'],
-    });
+    };
     return await _getMapFromInstanceMethod('purchasePackage', [options]);
   }
 
@@ -279,31 +243,18 @@ class PurchasesFlutterPlugin {
 
   Future<void> _close() async {
     // Web SDK's close() just unsets the instance
-    js.context['PurchasesHybridMappings'] = null;
+    // TODO
+    // js.context['PurchasesHybridMappings'] = null;
   }
 
   Future<bool> _isAnonymous() async {
-    final instance = _getInstance();
-    try {
-      return instance.callMethod('isAnonymous') as bool;
-    } catch (e) {
-      throw PlatformException(
-        code: _unknownErrorCode,
-        message: 'Error checking user anonymous status: $e',
-      );
-    }
+    final purchases = _getInstance();
+    return purchases.callMethod('isAnonymous'.toJS).dartify() as bool;
   }
 
   Future<bool> _isSandbox() async {
-    final instance = _getInstance();
-    try {
-      return instance.callMethod('isSandbox') as bool;
-    } catch (e) {
-      throw PlatformException(
-        code: _unknownErrorCode,
-        message: 'Error checking sandbox status: $e',
-      );
-    }
+    final purchases = _getInstance();
+    return purchases.callMethod('isSandbox'.toJS).dartify() as bool;
   }
 
   Future<Map<String, dynamic>> _checkTrialOrIntroductoryPriceEligibility(
@@ -335,61 +286,130 @@ class PurchasesFlutterPlugin {
         message: 'Proxy URL is required',
       );
     }
-    final completer = Completer<void>();
-
-    final purchasesCommonStatic = _getStaticPurchasesCommon();
-    final promise = purchasesCommonStatic.callMethod('setProxyUrl', [proxyURL]);
-    promise.callMethod('then', [
-      js.allowInterop((result) => completer.complete()),
-    ]).callMethod('catch', [
-      js.allowInterop((error) => completer.completeError(_processError(error))),
-    ]);
+    return _callStaticMethodReturningPromise('setProxyUrl', [proxyURL]);
   }
 
   // Helper functions to handle JS interop
 
-  Future<Map<String, dynamic>> _getMapFromInstanceMethod(
+  Object? _callStaticMethod(
+    String methodName,
+    List<dynamic> args,
+  ) {
+    final purchasesStatic = _getStaticPurchasesCommon();
+    final processedArgs = _processArgs(args);
+
+    try {
+      return purchasesStatic.callMethodVarArgs(
+          methodName.toJS,
+          processedArgs,
+      ).dartify();
+    } catch (e) {
+      throw PlatformException(
+        code: _unknownErrorCode,
+        message: 'Error calling static method $methodName: $e',
+      );
+    }
+  }
+
+  JSObject _callInstanceMethod(
+      String methodName,
+      List<dynamic> args,
+  ) {
+    final purchases = _getInstance();
+    final jsArgs = _processArgs(args);
+    return purchases.callMethodVarArgs(methodName.toJS, jsArgs);
+  }
+
+  JSObject _getInstance() {
+    final purchases = _getStaticPurchasesCommon();
+
+    if (!_isConfigured()) {
+      throw PlatformException(
+        code: _configurationErrorCode,
+        message: 'Purchases SDK not configured. Call configure first.',
+      );
+    }
+
+    return purchases.callMethod('getInstance'.toJS);
+  }
+
+  JSObject _getStaticPurchasesCommon() {
+    final purchasesHybridMappings = globalContext['PurchasesHybridMappings'] as JSObject;
+    JSObject? purchasesCommon;
+    if (purchasesHybridMappings.has('PurchasesCommon')) {
+      purchasesCommon = purchasesHybridMappings['PurchasesCommon'] as JSObject;
+    }
+    if (purchasesCommon == null) {
+      throw PlatformException(
+        code: _configurationErrorCode,
+        message: 'Purchases SDK not found on window object after loading.',
+      );
+    }
+    return purchasesCommon;
+  }
+
+  Future _callStaticMethodReturningPromise(
       String methodName,
       List<dynamic> args,
       ) async {
-    final completer = Completer<Map<String, dynamic>>();
-    final instance = _getInstance();
+    final promise = _callStaticMethod(methodName, args) as JSPromise;
+    return promise.toDart
+        .catchError((error) => throw _processError(error));
+  }
 
-    final promise = instance.callMethod(methodName, args);
-    promise.callMethod('then', [
-      js.allowInterop((result) => completer.complete(_convertJsRecordToMap(result))),
-    ]).callMethod('catch', [
-      js.allowInterop((error) => completer.completeError(_processError(error))),
-    ]);
+  Future<Map<String, dynamic>> _getMapFromInstanceMethod(
+      String methodName,
+      List<dynamic> args,
+  ) async {
+    final promise = _callInstanceMethod(methodName, args) as JSPromise;
 
-    return completer.future;
+    return promise.toDart
+        .then(_convertJsRecordToMap)
+        .catchError((error) => throw _processError(error));
   }
 
   Future<Map<String, dynamic>?> _getNullableMapFromInstanceMethod(
       String methodName,
       List<dynamic> args,
-      ) async {
-    final completer = Completer<Map<String, dynamic>?>();
-    final instance = _getInstance();
+  ) async {
+    final promise = _callInstanceMethod(methodName, args) as JSPromise;
 
-    final promise = instance.callMethod(methodName, args);
-    promise.callMethod('then', [
-      js.allowInterop((result) {
-        if (result == null) {
-          completer.complete(null);
-        } else {
-          completer.complete(_convertJsRecordToMap(result));
-        }
-      }),
-    ]).callMethod('catch', [
-      js.allowInterop((error) => completer.completeError(_processError(error))),
-    ]);
+    return promise.toDart
+        .then((value) {
+          if (value == null) {
+            return null;
+          }
+          return _convertJsRecordToMap(value);
+        })
+        .catchError((error) => throw _processError(error));
+  }
 
-    return completer.future;
+  List<JSAny?> _processArgs(List<dynamic> args) {
+    final jsArgs = <JSAny?>[];
+    for (final arg in args) {
+      if (arg is Map<String, dynamic>) {
+        jsArgs.add(arg.jsify());
+      } else if (arg is List) {
+        jsArgs.add(arg.jsify());
+      } else if (arg is String) {
+        jsArgs.add(arg.toJS);
+      } else if (arg is int) {
+        jsArgs.add(arg.toJS);
+      } else if (arg is bool) {
+        jsArgs.add(arg.toJS);
+      } else if (arg == null) {
+        jsArgs.add(null);
+      } else {
+        throw ArgumentError(
+          'Unsupported argument type: ${arg.runtimeType}',
+        );
+      }
+    }
+    return jsArgs;
   }
 
   PlatformException _processError(dynamic error) {
-    if (error is js.JsObject && error.hasProperty('code')) {
+    if (error is JSObject && error.has('code')) {
       final errorMap = _convertJsRecordToMap(error);
       final code = errorMap['code'];
       final message = errorMap['message'] as String?;
@@ -408,39 +428,13 @@ class PurchasesFlutterPlugin {
     }
   }
 
-  dynamic _convertJsToDart(dynamic jsValue) {
-    if (jsValue is js.JsObject) {
-      final isArray = js.context['Array'].callMethod('isArray', [jsValue]);
-      if (isArray) {
-        return _convertJsArrayToList(jsValue);
-      } else {
-        return _convertJsRecordToMap(jsValue);
-      }
+  Map<String, dynamic> _convertJsRecordToMap(JSAny? jsRecord) {
+    if (jsRecord == null) {
+      throw ArgumentError('returned result cannot be null');
+    } else {
+      return Map<String, dynamic>.from(
+          jsRecord.dartify() as Map<dynamic, dynamic>,
+      );
     }
-    return jsValue;
-  }
-
-  List<dynamic> _convertJsArrayToList(js.JsObject jsArray) {
-    final length = jsArray['length'];
-    final list = <dynamic>[];
-    for (var i = 0; i < length; i++) {
-      final element = jsArray[i];
-      list.add(_convertJsToDart(element));
-    }
-    return list;
-  }
-
-  Map<String, dynamic> _convertJsRecordToMap(js.JsObject jsRecord) {
-    final result = <String, dynamic>{};
-
-    final keys = js.context['Object'].callMethod('keys', [jsRecord]);
-    final length = keys['length'];
-
-    for (var i = 0; i < length; i++) {
-      final key = keys[i];
-      final value = jsRecord[key];
-      result[key] = _convertJsToDart(value);
-    }
-    return result;
   }
 }
