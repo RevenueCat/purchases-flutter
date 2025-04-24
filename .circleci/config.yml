@@ -182,12 +182,17 @@ jobs:
           project: api_tester
       - flutter-get-dependencies:
           project: purchases_ui_flutter
+      - flutter-get-dependencies:
+          project: purchases_flutter_web
       - run:
           name: Analyze code
           command: flutter analyze lib
       - run:
           name: Analyze code for purchases_ui_flutter
-          command: cd purchases_ui_flutter && flutter analyze lib
+          command: flutter analyze purchases_ui_flutter/lib
+      - run:
+          name: Analyze code for purchases_flutter_web
+          command: flutter analyze purchases_flutter_web/lib
 
   test:
     description: "Run tests for Flutter"
@@ -335,7 +340,10 @@ jobs:
           command: flutter pub publish --dry-run
       - run:
           name: Dry Run Release for purchases_ui_flutter
-          command: cd purchases_ui_flutter && flutter pub publish --dry-run
+          command: cd purchases_ui_flutter && flutter pub publish --dry-run && cd ..
+      - run:
+          name: Dry Run Release for purchases_flutter_web
+          command: cd purchases_flutter_web && flutter pub publish --dry-run && cd ..
 
   update-hybrid-common-versions:
     description: "Creates a PR updating purchases-hybrid-common to latest release"
@@ -357,7 +365,7 @@ jobs:
             automatic_release:<< pipeline.parameters.automatic >>
 
   make-release:
-    description: "Publishes a new version of purchases-flutter to pub.dev and creates a github release"
+    description: "Publishes a new version of purchases-flutter to pub.dev"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
@@ -370,7 +378,20 @@ jobs:
           command: bundle exec fastlane release
 
   make-release-purchases-flutter-ui:
-    description: "Publishes a new version of purchases-flutter-ui to pub.dev and creates a github release"
+    description: "Publishes a new version of purchases-flutter-ui to pub.dev"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - run:
+          name: release
+          command: bundle exec fastlane release_purchases_ui_flutter
+
+  make-release-purchases-flutter-web:
+    description: "Publishes a new version of purchases-flutter-web to pub.dev"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
@@ -441,10 +462,13 @@ workflows:
           requires:
             - make-release
           <<: *release-tags
+      - make-release-purchases-flutter-web:
+          <<: *release-tags
       - github_release:
           requires:
             - make-release
             - make-release-purchases-flutter-ui
+            - make-release-purchases-flutter-web
           <<: *release-tags
   weekly-run-workflow:
     when:
