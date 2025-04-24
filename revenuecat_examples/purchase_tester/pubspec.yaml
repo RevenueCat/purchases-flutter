@@ -34,6 +34,8 @@ dependency_overrides:
     path: ../../
   purchases_ui_flutter:
     path: ../../purchases_ui_flutter
+  purchases_flutter_web:
+    path: ../../purchases_flutter_web
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

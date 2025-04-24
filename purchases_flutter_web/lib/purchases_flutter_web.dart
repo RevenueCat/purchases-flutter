@@ -2,15 +2,14 @@ import 'dart:async';
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:web/web.dart';
 
-import '../purchases_flutter.dart';
-
 class PurchasesFlutterPlugin {
-  static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
-  static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
+  static final _unknownErrorCode = '0';
+  static final _configurationErrorCode = '23';
   static const _purchasesHybridMappingsVersion = '0.0.7-alpha.3';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
@@ -54,16 +53,18 @@ class PurchasesFlutterPlugin {
   }
 
   static void registerWith(Registrar registrar) {
-    final channel = MethodChannel(
-      'purchases_flutter',
-      const StandardMethodCodec(),
-      registrar,
-    );
+    if (kIsWeb) {
+      final channel = MethodChannel(
+        'purchases_flutter',
+        const StandardMethodCodec(),
+        registrar,
+      );
 
-    final instance = PurchasesFlutterPlugin();
-    channel.setMethodCallHandler(instance.handleMethodCall);
+      final instance = PurchasesFlutterPlugin();
+      channel.setMethodCallHandler(instance.handleMethodCall);
 
-    _injectScriptIfNeeded();
+      _injectScriptIfNeeded();
+    }
   }
 
   Future<dynamic> handleMethodCall(MethodCall call) async {
@@ -139,11 +140,11 @@ class PurchasesFlutterPlugin {
         case 'purchaseProductWithWinBackOffer':
         case 'getEligibleWinBackOffersForProduct':
         case 'redeemWebPurchase':
-          throw UnsupportedPlatformException();
+          throw UnsupportedError('${call.method} not implemented on web platform.');
 
         default:
           throw UnsupportedError(
-            '${call.method} not implemented on web platform.',
+            '${call.method} not recognized.',
           );
       }
     } catch (e) {
@@ -272,7 +273,7 @@ class PurchasesFlutterPlugin {
     final proxyURL = arguments['proxyURLString'] as String?;
     if (proxyURL == null) {
       throw PlatformException(
-        code: '${PurchasesErrorCode.configurationError.index}',
+        code: _configurationErrorCode,
         message: 'Proxy URL is required',
       );
     }
