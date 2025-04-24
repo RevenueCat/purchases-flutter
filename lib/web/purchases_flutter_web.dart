@@ -418,8 +418,8 @@ class PurchasesFlutterPlugin {
     if (error is JSObject && error.has('code')) {
       final errorMap = _convertJsRecordToMap(error);
       final code = errorMap['code'];
-      final message = errorMap['message'] as String?;
-      final underlyingErrorMessage = errorMap['underlyingErrorMessage'] as String?;
+      final message = errorMap['message'];
+      final underlyingErrorMessage = errorMap['underlyingErrorMessage'];
       final finalMessage = '$message. $underlyingErrorMessage';
       return PlatformException(
         code: '$code',
