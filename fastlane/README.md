@@ -45,6 +45,14 @@ Create release
 
 Create purchases_ui_flutter release
 
+### release_purchases_flutter_web
+
+```sh
+[bundle exec] fastlane release_purchases_flutter_web
+```
+
+Create purchases_ui_flutter release
+
 ### github_release_current_version
 
 ```sh

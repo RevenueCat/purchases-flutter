@@ -401,7 +401,7 @@ jobs:
       - revenuecat/trust-github-key
       - run:
           name: release
-          command: bundle exec fastlane release_purchases_ui_flutter
+          command: bundle exec fastlane release_purchases_flutter_web
 
   github_release:
     description: "Creates a github release with the current version"
