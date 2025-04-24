@@ -16,7 +16,7 @@ class PurchasesFlutterPlugin {
   static const _pluginVersion = '8.7.3';
   // TODO: Host library ourselves.
   static const _purchasesHybridMappingsUrl =
-      'https://unpkg.com/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
+      'https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
 
   static Completer<void>? _initCompleter;
 
