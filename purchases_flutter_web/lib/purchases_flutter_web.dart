@@ -390,7 +390,7 @@ class PurchasesFlutterPlugin {
       },
   ];
 
-  PlatformException _processError(dynamic error) {
+  PlatformException _processError(JSObject error) {
     if (error.has('code')) {
       final errorMap = _convertJsRecordToMap(error);
       final code = errorMap['code'];
