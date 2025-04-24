@@ -8,8 +8,8 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:web/web.dart';
 
 class PurchasesFlutterPlugin {
-  static final _unknownErrorCode = '0';
-  static final _configurationErrorCode = '23';
+  static const _unknownErrorCode = '0';
+  static const _configurationErrorCode = '23';
   static const _purchasesHybridMappingsVersion = '0.0.7-alpha.3';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
