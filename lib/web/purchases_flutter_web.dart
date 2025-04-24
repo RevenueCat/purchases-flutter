@@ -152,31 +152,24 @@ class PurchasesFlutterPlugin {
   }
 
   Future<void> _setupPurchases(dynamic arguments) async {
-    try {
-      final apiKey = arguments['apiKey'] as String?;
-      if (apiKey == null) {
-        throw PlatformException(
-          code: _configurationErrorCode,
-          message: 'API key is required',
-        );
-      }
-
-      final appUserId = arguments['appUserId'] as String?;
-
-      final options = {
-        'apiKey': apiKey,
-        'appUserId': appUserId,
-        'flavor': _platformName,
-        'flavorVersion': _pluginVersion,
-      };
-
-      _callStaticMethod('configure', [options]);
-    } catch (e) {
+    final apiKey = arguments['apiKey'] as String?;
+    if (apiKey == null) {
       throw PlatformException(
         code: _configurationErrorCode,
-        message: 'Purchases SDK not configured. Call configure first.',
+        message: 'API key is required',
       );
     }
+
+    final appUserId = arguments['appUserId'] as String?;
+
+    final options = {
+      'apiKey': apiKey,
+      'appUserId': appUserId,
+      'flavor': _platformName,
+      'flavorVersion': _pluginVersion,
+    };
+
+    _callStaticMethod('configure', [options]);
   }
 
   Future<void> _setLogLevel(dynamic arguments) async {
