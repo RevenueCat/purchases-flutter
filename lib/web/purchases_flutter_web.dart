@@ -11,8 +11,12 @@ import '../purchases_flutter.dart';
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
+  static const _purchasesHybridMappingsVersion = '0.0.7-alpha.3';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
+  // TODO: Host library ourselves.
+  static const _purchasesHybridMappingsUrl =
+      'https://unpkg.com/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
 
   static Completer<void>? _initCompleter;
 
@@ -22,14 +26,11 @@ class PurchasesFlutterPlugin {
     }
     _initCompleter = Completer<void>();
 
-    // TODO: Host library ourselves.
-    const library = 'https://unpkg.com/@revenuecat/purchases-js-hybrid-mappings@0.0.7-alpha.2/dist/index.umd.js';
-
     final script = HTMLScriptElement()
       ..type = 'text/javascript'
       ..text = '''
         window.after_rc_load_callback = async (callback) => {
-          callback(await import("$library"));
+          callback(await import("$_purchasesHybridMappingsUrl"));
         };
       ''';
 
