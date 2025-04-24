@@ -33,8 +33,14 @@ class PurchasesFlutterPlugin {
         };
       ''';
 
-    assert(document.head != null);
-    document.head!.append(script);
+    final head = document.head;
+    if (head == null) {
+      throw StateError(
+        "The current document doesn't have a head element which is required to insert a script.",
+      );
+    }
+    
+    head.append(script);
 
     globalContext.callMethod(
       'after_rc_load_callback'.toJS,
