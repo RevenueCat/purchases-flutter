@@ -184,22 +184,14 @@ class PurchasesFlutterPlugin {
     _callStaticMethod('setLogLevel', [jsLogLevel]);
   }
 
-  String _convertLogLevel(String logLevel) {
-    switch (logLevel.toLowerCase()) {
-      case 'verbose':
-        return 'VERBOSE';
-      case 'debug':
-        return 'DEBUG';
-      case 'info':
-        return 'INFO';
-      case 'warn':
-        return 'WARN';
-      case 'error':
-        return 'ERROR';
-      default:
-        return 'SILENT';
-    }
-  }
+  String _convertLogLevel(String logLevel) => switch (logLevel.toLowerCase()) {
+    'verbose' => 'VERBOSE',
+    'debug' => 'DEBUG',
+    'info' => 'INFO',
+    'warn' => 'WARN',
+    'error' => 'ERROR',
+    _ => 'SILENT',
+  };
 
   bool _isConfigured() => _callStaticMethod('isConfigured', []) as bool;
 
@@ -390,29 +382,20 @@ class PurchasesFlutterPlugin {
         .catchError((error) => throw _processError(error));
   }
 
-  List<JSAny?> _processArgs(List<dynamic> args) {
-    final jsArgs = <JSAny?>[];
-    for (final arg in args) {
-      if (arg is Map<String, dynamic>) {
-        jsArgs.add(arg.jsify());
-      } else if (arg is List) {
-        jsArgs.add(arg.jsify());
-      } else if (arg is String) {
-        jsArgs.add(arg.toJS);
-      } else if (arg is int) {
-        jsArgs.add(arg.toJS);
-      } else if (arg is bool) {
-        jsArgs.add(arg.toJS);
-      } else if (arg == null) {
-        jsArgs.add(null);
-      } else {
-        throw ArgumentError(
+  List<JSAny?> _processArgs(List<dynamic> args) => <JSAny?>[
+    for (final arg in args)
+      switch (arg) {
+        final Map<String, dynamic> arg => arg.jsify(),
+        final List arg => arg.jsify(),
+        final String arg => arg.toJS,
+        final int arg => arg.toJS,
+        final bool arg => arg.toJS,
+        null => null,
+        _ => throw ArgumentError(
           'Unsupported argument type: ${arg.runtimeType}',
-        );
-      }
-    }
-    return jsArgs;
-  }
+        ),
+      },
+  ];
 
   PlatformException _processError(dynamic error) {
     if (error is JSObject && error.has('code')) {
