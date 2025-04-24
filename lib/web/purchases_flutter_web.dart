@@ -240,9 +240,7 @@ class PurchasesFlutterPlugin {
     await _getCustomerInfo();
 
   Future<void> _close() async {
-    // Web SDK's close() just unsets the instance
-    // TODO
-    // js.context['PurchasesHybridMappings'] = null;
+    _getInstance().callMethod('close'.toJS);
   }
 
   Future<bool> _isAnonymous() async {
