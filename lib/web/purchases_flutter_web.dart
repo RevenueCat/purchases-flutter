@@ -11,7 +11,7 @@ import '../purchases_flutter.dart';
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
-  static const _purchasesHybridMappingsVersion = '0.0.7-alpha.3';
+  static const _purchasesHybridMappingsVersion = '13.29.0';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
   // TODO: Host library ourselves.
