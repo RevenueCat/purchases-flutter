@@ -14,7 +14,6 @@ class PurchasesFlutterPlugin {
   static const _purchasesHybridMappingsVersion = '13.29.0';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
-  // TODO: Host library ourselves.
   static const _purchasesHybridMappingsUrl =
       'https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
 
