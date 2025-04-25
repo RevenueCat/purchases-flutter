@@ -1,7 +1,7 @@
 ## RevenueCat SDK
-### 🐞 Bugfixes
-* Reverts version bumps done in f21e068 (#1327) via JayShortway (@JayShortway)
+### 💥 Breaking Changes
+* Increased min Flutter SDK to 3.22.0 and Dart min SDK to 3.4.0
 
-### 🔄 Other Changes
-* Remove pubspec.lock from github (#1325) via Toni Rico (@tonidero)
-* Bump nokogiri from 1.18.4 to 1.18.8 (#1323) via dependabot[bot] (@dependabot[bot])
+### New Features
+* [Beta] Flutter Web support (#1237) via Toni Rico (@tonidero)
+
