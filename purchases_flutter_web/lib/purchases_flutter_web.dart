@@ -10,10 +10,9 @@ import 'package:web/web.dart';
 class PurchasesFlutterPlugin {
   static const _unknownErrorCode = '0';
   static const _configurationErrorCode = '23';
-  static const _purchasesHybridMappingsVersion = '0.0.7-alpha.3';
+  static const _purchasesHybridMappingsVersion = '13.29.0';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
-  // TODO: Host library ourselves.
   static const _purchasesHybridMappingsUrl =
       'https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
 
@@ -53,12 +52,13 @@ class PurchasesFlutterPlugin {
   }
 
   static void registerWith(Registrar registrar) {
-    if (kIsWeb) {
-      final channel = MethodChannel(
-        'purchases_flutter',
-        const StandardMethodCodec(),
-        registrar,
-      );
+    if (!kIsWeb) return;
+
+    final channel = MethodChannel(
+      'purchases_flutter',
+      const StandardMethodCodec(),
+      registrar,
+    );
 
       final instance = PurchasesFlutterPlugin();
       channel.setMethodCallHandler(instance.handleMethodCall);
