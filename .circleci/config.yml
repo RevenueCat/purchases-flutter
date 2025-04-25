@@ -19,13 +19,22 @@ aliases:
         ignore: /.*/
       branches:
         only: main
+  android-executor: &android-executor
+    executor:
+      name: android/android-docker
+      resource-class: large
+      tag: 2024.11.1
+    environment:
+      JVM_OPTS: -Xmx6g
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
 
 orbs:
-  android: circleci/android@0.2.1
+  android: circleci/android@2.5.0
   gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
   revenuecat: revenuecat/sdks-common-config@2.1.0
   macos: circleci/macos@2.3.2
+  flutter: circleci/flutter@2.1.0
 
 parameters:
   action:
@@ -202,6 +211,24 @@ jobs:
       - run:
           name: Run tests for purchases_ui_flutter
           command: cd purchases_ui_flutter && flutter test
+
+  test_main_sdk_min_version_compatibility:
+    description: "Test min version compatibility for purchases_flutter SDK"
+    <<: *android-executor
+    steps:
+      - checkout
+      - flutter/install_sdk_and_pub:
+          version: 3.3.0
+
+  test_ui_sdk_min_version_compatibility:
+    description: "Test UI min version compatibility for purchases_ui_flutter SDK"
+    <<: *android-executor
+    steps:
+        - checkout
+        - flutter/install_sdk_and_pub:
+            version: 3.16.3
+        - flutter-get-dependencies:
+            project: purchases_ui_flutter
 
   api_test:
     description: "Run API tests for Flutter"
@@ -412,6 +439,8 @@ workflows:
       - ios-integration-test
       - macos-integration-test
       - android-integration-test-build
+      - test_main_sdk_min_version_compatibility
+      - test_ui_sdk_min_version_compatibility
 
   deploy:
     when:
