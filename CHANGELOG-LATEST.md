@@ -1,9 +1,7 @@
 ## RevenueCat SDK
-### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.28.1 (#1319) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 8.16.1](https://github.com/RevenueCat/purchases-android/releases/tag/8.16.1)
-  * [iOS 5.21.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.21.2)
-  * [iOS 5.21.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.21.1)
+### 🐞 Bugfixes
+* Reverts version bumps done in f21e068 (#1327) via JayShortway (@JayShortway)
 
 ### 🔄 Other Changes
-* Bump fastlane from 2.227.0 to 2.227.1 (#1317) via dependabot[bot] (@dependabot[bot])
+* Remove pubspec.lock from github (#1325) via Toni Rico (@tonidero)
+* Bump nokogiri from 1.18.4 to 1.18.8 (#1323) via dependabot[bot] (@dependabot[bot])
