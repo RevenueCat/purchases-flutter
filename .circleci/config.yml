@@ -223,7 +223,7 @@ jobs:
     steps:
         - checkout
         - flutter/install_sdk_and_pub:
-            version: 3.3.0
+            version: 3.16.3
         - flutter-get-dependencies:
             project: purchases_ui_flutter
 
