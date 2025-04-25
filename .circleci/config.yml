@@ -19,11 +19,14 @@ aliases:
         ignore: /.*/
       branches:
         only: main
-  android-machine-emulator: &android-machine-emulator
+  android-executor: &android-executor
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: large
-      tag: 2024.04.1
+      tag: 2024.11.1
+    environment:
+      JVM_OPTS: -Xmx6g
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
 
 orbs:
   android: circleci/android@2.5.0
@@ -211,15 +214,15 @@ jobs:
 
   test_main_sdk_min_version_compatibility:
     description: "Test min version compatibility for purchases_flutter SDK"
-    <<: *android-machine-emulator
+    <<: *android-executor
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
           version: 3.3.0
 
   test_ui_sdk_min_version_compatibility:
-    description: "Tet UI min version compatibility for purchases_ui_flutter SDK"
-    <<: *android-machine-emulator
+    description: "Test UI min version compatibility for purchases_ui_flutter SDK"
+    <<: *android-executor
     steps:
         - checkout
         - flutter/install_sdk_and_pub:
