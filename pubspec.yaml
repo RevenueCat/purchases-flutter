@@ -7,14 +7,17 @@ issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
 documentation: https://docs.revenuecat.com/docs
 
 environment:
-  sdk: ">=2.18.0 <4.0.0"
-  flutter: ">=3.3.0"
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
   freezed_annotation: ^2.0.1
   json_annotation: ^4.8.0
+  web: ^1.1.1
 
 dev_dependencies:
   build_runner: ^2.1.10
@@ -36,3 +39,6 @@ flutter:
         pluginClass: PurchasesFlutterPlugin
       macos:
         pluginClass: PurchasesFlutterPlugin
+      web:
+        pluginClass: PurchasesFlutterPlugin
+        fileName: web/purchases_flutter_web.dart
