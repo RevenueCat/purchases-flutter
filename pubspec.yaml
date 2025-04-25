@@ -7,8 +7,8 @@ issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
 documentation: https://docs.revenuecat.com/docs
 
 environment:
-  sdk: ">=2.15.0 <4.0.0"
-  flutter: ">=1.10.0"
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
 
 dependencies:
   flutter:

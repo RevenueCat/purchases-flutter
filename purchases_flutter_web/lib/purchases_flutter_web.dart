@@ -60,11 +60,10 @@ class PurchasesFlutterPlugin {
       registrar,
     );
 
-      final instance = PurchasesFlutterPlugin();
-      channel.setMethodCallHandler(instance.handleMethodCall);
+    final instance = PurchasesFlutterPlugin();
+    channel.setMethodCallHandler(instance.handleMethodCall);
 
-      _injectScriptIfNeeded();
-    }
+    _injectScriptIfNeeded();
   }
 
   Future<dynamic> handleMethodCall(MethodCall call) async {
