@@ -7,8 +7,8 @@ documentation: https://docs.revenuecat.com/docs
 
 environment:
   # TODO: Check constraints are ok
-  sdk: '>=3.2.3 <4.0.0'
-  flutter: '>=3.16.3'
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: '>=3.22.0'
 
 dependencies:
   purchases_flutter: ^8.7.4
