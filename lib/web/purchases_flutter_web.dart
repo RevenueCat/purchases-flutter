@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:web/web.dart';
@@ -53,6 +54,8 @@ class PurchasesFlutterPlugin {
   }
 
   static void registerWith(Registrar registrar) {
+    if (!kIsWeb) return;
+
     final channel = MethodChannel(
       'purchases_flutter',
       const StandardMethodCodec(),
