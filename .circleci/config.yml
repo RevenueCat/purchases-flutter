@@ -203,6 +203,32 @@ jobs:
           name: Run tests for purchases_ui_flutter
           command: cd purchases_ui_flutter && flutter test
 
+  test_main_sdk_min_version_compatibility:
+    description: "Test min version compatibility for purchases_flutter SDK"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:3.0.0
+    steps:
+      - checkout
+      - build-flutter-project
+      - flutter-get-dependencies:
+          project: revenuecat_examples/MagicWeather
+      - flutter-get-dependencies:
+          project: revenuecat_examples/purchase_tester
+      - flutter-get-dependencies:
+          project: api_tester
+      - flutter-get-dependencies:
+          project: purchases_ui_flutter
+
+  test_ui_sdk_min_version_compatibility:
+    description: "Tet UI min version compatibility for purchases_ui_flutter SDK"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:3.0.0
+    steps:
+        - checkout
+        - build-flutter-project
+        - flutter-get-dependencies:
+            project: purchases_ui_flutter
+
   api_test:
     description: "Run API tests for Flutter"
     docker:
@@ -412,6 +438,8 @@ workflows:
       - ios-integration-test
       - macos-integration-test
       - android-integration-test-build
+      - test_main_sdk_min_version_compatibility
+      - test_ui_sdk_min_version_compatibility
 
   deploy:
     when:
