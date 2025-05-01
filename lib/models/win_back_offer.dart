@@ -4,7 +4,7 @@ part 'win_back_offer.freezed.dart';
 part 'win_back_offer.g.dart';
 
 @freezed
-class WinBackOffer with _$WinBackOffer {
+abstract class WinBackOffer with _$WinBackOffer {
   const factory WinBackOffer(
     /// Identifier of the discount.
     String identifier,

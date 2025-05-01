@@ -1435,7 +1435,8 @@ void main() {
   test('parseAsWebPurchaseRedemption works correctly', () async {
     const link = 'custom-scheme://redeem_web_purchase?redemption_token=1234';
     response = true;
-    final webPurchaseRedemption = await Purchases.parseAsWebPurchaseRedemption(link);
+    final webPurchaseRedemption =
+        await Purchases.parseAsWebPurchaseRedemption(link);
     expect(log, <Matcher>[
       isMethodCall(
         'isWebPurchaseRedemptionURL',
@@ -1454,7 +1455,8 @@ void main() {
       'result': 'SUCCESS',
       'customerInfo': mockCustomerInfoResponse,
     };
-    final webPurchaseRedemptionResult = await Purchases.redeemWebPurchase(webPurchaseRedemption);
+    final webPurchaseRedemptionResult =
+        await Purchases.redeemWebPurchase(webPurchaseRedemption);
     expect(log, <Matcher>[
       isMethodCall(
         'redeemWebPurchase',
@@ -1463,12 +1465,14 @@ void main() {
         },
       ),
     ]);
-    final expiredOrNull = webPurchaseRedemptionResult.whenOrNull(
-      success: (customerInfo) {
+    Success? expiredOrNull;
+    switch (webPurchaseRedemptionResult) {
+      case Success(:final customerInfo):
         expect(customerInfo, CustomerInfo.fromJson(mockCustomerInfoResponse));
-        return webPurchaseRedemptionResult;
-      },
-    );
+        expiredOrNull = webPurchaseRedemptionResult;
+      case _:
+        break;
+    }
     expect(expiredOrNull, isNotNull);
   });
 }

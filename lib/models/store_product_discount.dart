@@ -4,7 +4,7 @@ part 'store_product_discount.freezed.dart';
 part 'store_product_discount.g.dart';
 
 @freezed
-class StoreProductDiscount with _$StoreProductDiscount {
+abstract class StoreProductDiscount with _$StoreProductDiscount {
   const factory StoreProductDiscount(
     /// Identifier of the discount.
     String identifier,
