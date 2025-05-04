@@ -165,6 +165,10 @@ class _PurchasesFlutterApiTest {
     String appUserId = await Purchases.appUserID;
   }
 
+  void _checkStorefront() async {
+    Storefront? storefront = await Purchases.storefront;
+  }
+
   void _checkLogIn() async {
     LogInResult logInResult = await Purchases.logIn("fakeUserId");
   }

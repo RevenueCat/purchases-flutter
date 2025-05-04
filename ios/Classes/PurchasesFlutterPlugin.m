@@ -86,6 +86,8 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
                        result:result];
     } else if ([@"getAppUserID" isEqualToString:call.method]) {
         [self getAppUserIDWithResult:result];
+    } else if ([@"getStorefront" isEqualToString:call.method]) {
+        [self getStorefrontWithResult:result];
     } else if ([@"restorePurchases" isEqualToString:call.method]) {
         [self restorePurchasesWithResult:result];
     } else if ([@"logOut" isEqualToString:call.method]) {
@@ -350,6 +352,12 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)getAppUserIDWithResult:(FlutterResult)result {
     result([RCCommonFunctionality appUserID]);
+}
+
+- (void)getStorefrontWithResult:(FlutterResult)result {
+    [RCCommonFunctionality getStorefrontWithCompletion:^(NSDictionary<NSString *,id> * _Nullable storefrontMap) {
+        result(storefrontMap);
+    }];
 }
 
 - (void)logInAppUserID:(NSString * _Nullable)appUserID

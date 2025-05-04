@@ -39,6 +39,8 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import kotlin.UninitializedPropertyAccessException;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 /**
  * PurchasesFlutterPlugin
@@ -172,6 +174,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "getAppUserID":
                 getAppUserID(result);
+                break;
+            case "getStorefront":
+                getStorefront(result);
                 break;
             case "restorePurchases":
                 restorePurchases(result);
@@ -481,6 +486,16 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void getAppUserID(final Result result) {
         result.success(CommonKt.getAppUserID());
+    }
+
+    private void getStorefront(final Result result) {
+        CommonKt.getStorefront(new Function1<Map<String, ? extends Object>, Unit>() {
+            @Override
+            public Unit invoke(Map<String, ?> storefrontMap) {
+                result.success(storefrontMap);
+                return null;
+            }
+        });
     }
 
     private void restorePurchases(final Result result) {

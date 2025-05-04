@@ -24,6 +24,7 @@ export 'models/store.dart';
 export 'models/store_product_discount.dart';
 export 'models/store_product_wrapper.dart';
 export 'models/store_transaction.dart';
+export 'models/storefront.dart';
 export 'models/storekit_version.dart';
 export 'models/subscription_option_wrapper.dart';
 export 'models/upgrade_info.dart';
