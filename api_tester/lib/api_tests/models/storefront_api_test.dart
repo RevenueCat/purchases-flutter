@@ -10,7 +10,6 @@ class _StorefrontApiTest {
   void _checkConstructor(
     String countryCode,
   ) {
-    Storefront storefront = Storefront(countryCode);
     Storefront storefront = Storefront(countryCode: countryCode);
   }
 
