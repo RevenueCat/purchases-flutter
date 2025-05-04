@@ -1,3 +1,8 @@
+## 8.8.0
+## RevenueCat SDK
+### ✨ New Features
+* Add `storefront` API to obtain the country of the store account (#1335) via Toni Rico (@tonidero)
+
 ## 8.7.5
 ## RevenueCat SDK
 ### 📦 Dependency Updates
