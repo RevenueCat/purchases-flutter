@@ -6,7 +6,7 @@ part 'purchases_error.freezed.dart';
 part 'purchases_error.g.dart';
 
 @freezed
-class PurchasesError with _$PurchasesError {
+abstract class PurchasesError with _$PurchasesError {
   const factory PurchasesError(
     @PurchasesErrorCodeConverter() PurchasesErrorCode code,
     String message,

@@ -6,7 +6,7 @@ part of 'package_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PackageImpl _$$PackageImplFromJson(Map json) => _$PackageImpl(
+_Package _$PackageFromJson(Map json) => _Package(
       json['identifier'] as String,
       $enumDecode(_$PackageTypeEnumMap, json['packageType'],
           unknownValue: PackageType.unknown),
@@ -15,8 +15,7 @@ _$PackageImpl _$$PackageImplFromJson(Map json) => _$PackageImpl(
           Map<String, dynamic>.from(json['presentedOfferingContext'] as Map)),
     );
 
-Map<String, dynamic> _$$PackageImplToJson(_$PackageImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PackageToJson(_Package instance) => <String, dynamic>{
       'identifier': instance.identifier,
       'packageType': _$PackageTypeEnumMap[instance.packageType]!,
       'product': instance.storeProduct.toJson(),

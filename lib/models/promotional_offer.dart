@@ -6,7 +6,7 @@ part 'promotional_offer.g.dart';
 @freezed
 
 /// The signed discount applied to a payment
-class PromotionalOffer with _$PromotionalOffer {
+abstract class PromotionalOffer with _$PromotionalOffer {
   const factory PromotionalOffer(
     /// Identifier agreed upon with the App Store for a discount of your choosing.
     String identifier,

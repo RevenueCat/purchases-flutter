@@ -8,7 +8,7 @@ part 'period_wrapper.g.dart';
 @freezed
 
 /// Contains all the details associated with a Period
-class Period with _$Period {
+abstract class Period with _$Period {
   const factory Period(
     /// The number of period units: day, week, month, year, unknown
     PeriodUnit unit,

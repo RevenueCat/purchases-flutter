@@ -8,7 +8,7 @@ part 'presented_offering_context_wrapper.g.dart';
 @freezed
 
 /// Contains all the details associated with a PresentedOfferingContext
-class PresentedOfferingContext with _$PresentedOfferingContext {
+abstract class PresentedOfferingContext with _$PresentedOfferingContext {
   const factory PresentedOfferingContext(
     /// The identifier of the offering used to obtain this object
     String offeringIdentifier,
