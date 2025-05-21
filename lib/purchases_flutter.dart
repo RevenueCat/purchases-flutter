@@ -802,6 +802,16 @@ class Purchases {
         {'firebaseAppInstanceID': firebaseAppInstanceId},
       );
 
+  /// Subscriber attribute associated with the Tenjin Installation ID for the user
+  /// Required for the RevenueCat Tenjin integration
+  ///
+  /// [tenjinAnalyticsInstallationID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setTenjinAnalyticsInstallationID(String tenjinAnalyticsInstallationID) =>
+      _channel.invokeMethod(
+        'setTenjinAnalyticsInstallationID',
+        {'tenjinAnalyticsInstallationID': tenjinAnalyticsInstallationID},
+      );
+
   /// Subscriber attribute associated with the OneSignal Player Id for the user
   /// Required for the RevenueCat OneSignal integration
   ///

@@ -281,6 +281,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String firebaseAppInstanceID = call.argument("firebaseAppInstanceID");
                 setFirebaseAppInstanceID(firebaseAppInstanceID, result);
                 break;
+            case "setTenjinAnalyticsInstallationID":
+                String tenjinAnalyticsInstallationID = call.argument("tenjinAnalyticsInstallationID");
+                setTenjinAnalyticsInstallationID(tenjinAnalyticsInstallationID, result);
+                break;
             case "setOnesignalID":
                 String onesignalID = call.argument("onesignalID");
                 setOnesignalID(onesignalID, result);
@@ -624,6 +628,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setFirebaseAppInstanceID(String firebaseAppInstanceId, final Result result) {
         SubscriberAttributesKt.setFirebaseAppInstanceID(firebaseAppInstanceId);
+        result.success(null);
+    }
+
+    private void setTenjinAnalyticsInstallationID(
+        String tenjinAnalyticsInstallationID,
+        final Result result
+    ) {
+        SubscriberAttributesKt.setTenjinAnalyticsInstallationID(tenjinAnalyticsInstallationID);
         result.success(null);
     }
 

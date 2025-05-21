@@ -317,6 +317,11 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.setFirebaseAppInstanceId(id);
   }
 
+  void _checkSetTenjinAnalyticsInstallationId() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setTenjinAnalyticsInstallationID(id);
+  }
+
   void _checkSetOnesignalId() {
     String id = "fakeId";
     Future<void> future = Purchases.setOnesignalID(id);

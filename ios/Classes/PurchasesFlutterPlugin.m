@@ -156,7 +156,10 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
     } else if([@"setFirebaseAppInstanceID" isEqualToString:call.method]) {
         NSString *firebaseAppInstanceID = arguments[@"firebaseAppInstanceID"];
         [self setFirebaseAppInstanceID:firebaseAppInstanceID result:result];
-    } else if ([@"setOnesignalID" isEqualToString:call.method]) {
+    } else if([@"setTenjinAnalyticsInstallationID" isEqualToString:call.method]) {
+        NSString *tenjinAnalyticsInstallationID = arguments[@"tenjinAnalyticsInstallationID"];
+        [self setTenjinAnalyticsInstallationID:tenjinAnalyticsInstallationID result:result];
+    }else if ([@"setOnesignalID" isEqualToString:call.method]) {
         NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
     } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
@@ -499,6 +502,12 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)setFirebaseAppInstanceID:(nullable NSString *)firebaseAppInstanceId result:(FlutterResult)result {
     [RCCommonFunctionality setFirebaseAppInstanceID:firebaseAppInstanceId];
+    result(nil);
+}
+
+- (void)setTenjinAnalyticsInstallationID:(nullable NSString *)tenjinAnalyticsInstallationID
+                                  result:(FlutterResult)result {
+    [RCCommonFunctionality setTenjinAnalyticsInstallationID:tenjinAnalyticsInstallationID];
     result(nil);
 }
 
