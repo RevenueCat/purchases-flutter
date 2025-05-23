@@ -6,7 +6,7 @@ part of 'win_back_offer.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$WinBackOfferImpl _$$WinBackOfferImplFromJson(Map json) => _$WinBackOfferImpl(
+_WinBackOffer _$WinBackOfferFromJson(Map json) => _WinBackOffer(
       json['identifier'] as String,
       (json['price'] as num).toDouble(),
       json['priceString'] as String,
@@ -16,7 +16,7 @@ _$WinBackOfferImpl _$$WinBackOfferImplFromJson(Map json) => _$WinBackOfferImpl(
       (json['periodNumberOfUnits'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$WinBackOfferImplToJson(_$WinBackOfferImpl instance) =>
+Map<String, dynamic> _$WinBackOfferToJson(_WinBackOffer instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'price': instance.price,

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,99 +10,62 @@ part of 'purchases_error.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-PurchasesError _$PurchasesErrorFromJson(Map<String, dynamic> json) {
-  return _PurchasesError.fromJson(json);
-}
 
 /// @nodoc
 mixin _$PurchasesError {
   @PurchasesErrorCodeConverter()
-  PurchasesErrorCode get code => throw _privateConstructorUsedError;
-  String get message => throw _privateConstructorUsedError;
-  String get underlyingErrorMessage =>
-      throw _privateConstructorUsedError; // iOS can return a readable error code null, because the construction
+  PurchasesErrorCode get code;
+  String get message;
+  String
+      get underlyingErrorMessage; // iOS can return a readable error code null, because the construction
 // of the error doesn't prevent it from being null. To be safe we default
 // it to '' instead of making it nullable
 // ignore: invalid_annotation_target
   @JsonKey(defaultValue: '')
-  String get readableErrorCode => throw _privateConstructorUsedError;
-
-  /// Serializes this PurchasesError to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  String get readableErrorCode;
 
   /// Create a copy of PurchasesError
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PurchasesErrorCopyWith<PurchasesError> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $PurchasesErrorCopyWith<$Res> {
-  factory $PurchasesErrorCopyWith(
-          PurchasesError value, $Res Function(PurchasesError) then) =
-      _$PurchasesErrorCopyWithImpl<$Res, PurchasesError>;
-  @useResult
-  $Res call(
-      {@PurchasesErrorCodeConverter() PurchasesErrorCode code,
-      String message,
-      String underlyingErrorMessage,
-      @JsonKey(defaultValue: '') String readableErrorCode});
-}
-
-/// @nodoc
-class _$PurchasesErrorCopyWithImpl<$Res, $Val extends PurchasesError>
-    implements $PurchasesErrorCopyWith<$Res> {
-  _$PurchasesErrorCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of PurchasesError
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $PurchasesErrorCopyWith<PurchasesError> get copyWith =>
+      _$PurchasesErrorCopyWithImpl<PurchasesError>(
+          this as PurchasesError, _$identity);
+
+  /// Serializes this PurchasesError to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? code = null,
-    Object? message = null,
-    Object? underlyingErrorMessage = null,
-    Object? readableErrorCode = null,
-  }) {
-    return _then(_value.copyWith(
-      code: null == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as PurchasesErrorCode,
-      message: null == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String,
-      underlyingErrorMessage: null == underlyingErrorMessage
-          ? _value.underlyingErrorMessage
-          : underlyingErrorMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-      readableErrorCode: null == readableErrorCode
-          ? _value.readableErrorCode
-          : readableErrorCode // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is PurchasesError &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.message, message) || other.message == message) &&
+            (identical(other.underlyingErrorMessage, underlyingErrorMessage) ||
+                other.underlyingErrorMessage == underlyingErrorMessage) &&
+            (identical(other.readableErrorCode, readableErrorCode) ||
+                other.readableErrorCode == readableErrorCode));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, code, message, underlyingErrorMessage, readableErrorCode);
+
+  @override
+  String toString() {
+    return 'PurchasesError(code: $code, message: $message, underlyingErrorMessage: $underlyingErrorMessage, readableErrorCode: $readableErrorCode)';
   }
 }
 
 /// @nodoc
-abstract class _$$PurchasesErrorImplCopyWith<$Res>
-    implements $PurchasesErrorCopyWith<$Res> {
-  factory _$$PurchasesErrorImplCopyWith(_$PurchasesErrorImpl value,
-          $Res Function(_$PurchasesErrorImpl) then) =
-      __$$PurchasesErrorImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $PurchasesErrorCopyWith<$Res> {
+  factory $PurchasesErrorCopyWith(
+          PurchasesError value, $Res Function(PurchasesError) _then) =
+      _$PurchasesErrorCopyWithImpl;
   @useResult
   $Res call(
       {@PurchasesErrorCodeConverter() PurchasesErrorCode code,
@@ -111,12 +75,12 @@ abstract class _$$PurchasesErrorImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$PurchasesErrorImplCopyWithImpl<$Res>
-    extends _$PurchasesErrorCopyWithImpl<$Res, _$PurchasesErrorImpl>
-    implements _$$PurchasesErrorImplCopyWith<$Res> {
-  __$$PurchasesErrorImplCopyWithImpl(
-      _$PurchasesErrorImpl _value, $Res Function(_$PurchasesErrorImpl) _then)
-      : super(_value, _then);
+class _$PurchasesErrorCopyWithImpl<$Res>
+    implements $PurchasesErrorCopyWith<$Res> {
+  _$PurchasesErrorCopyWithImpl(this._self, this._then);
+
+  final PurchasesError _self;
+  final $Res Function(PurchasesError) _then;
 
   /// Create a copy of PurchasesError
   /// with the given fields replaced by the non-null parameter values.
@@ -128,21 +92,21 @@ class __$$PurchasesErrorImplCopyWithImpl<$Res>
     Object? underlyingErrorMessage = null,
     Object? readableErrorCode = null,
   }) {
-    return _then(_$PurchasesErrorImpl(
-      null == code
-          ? _value.code
+    return _then(_self.copyWith(
+      code: null == code
+          ? _self.code
           : code // ignore: cast_nullable_to_non_nullable
               as PurchasesErrorCode,
-      null == message
-          ? _value.message
+      message: null == message
+          ? _self.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
-      null == underlyingErrorMessage
-          ? _value.underlyingErrorMessage
+      underlyingErrorMessage: null == underlyingErrorMessage
+          ? _self.underlyingErrorMessage
           : underlyingErrorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      null == readableErrorCode
-          ? _value.readableErrorCode
+      readableErrorCode: null == readableErrorCode
+          ? _self.readableErrorCode
           : readableErrorCode // ignore: cast_nullable_to_non_nullable
               as String,
     ));
@@ -151,15 +115,14 @@ class __$$PurchasesErrorImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PurchasesErrorImpl implements _PurchasesError {
-  const _$PurchasesErrorImpl(
+class _PurchasesError implements PurchasesError {
+  const _PurchasesError(
       @PurchasesErrorCodeConverter() this.code,
       this.message,
       this.underlyingErrorMessage,
       @JsonKey(defaultValue: '') this.readableErrorCode);
-
-  factory _$PurchasesErrorImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PurchasesErrorImplFromJson(json);
+  factory _PurchasesError.fromJson(Map<String, dynamic> json) =>
+      _$PurchasesErrorFromJson(json);
 
   @override
   @PurchasesErrorCodeConverter()
@@ -176,16 +139,26 @@ class _$PurchasesErrorImpl implements _PurchasesError {
   @JsonKey(defaultValue: '')
   final String readableErrorCode;
 
+  /// Create a copy of PurchasesError
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'PurchasesError(code: $code, message: $message, underlyingErrorMessage: $underlyingErrorMessage, readableErrorCode: $readableErrorCode)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PurchasesErrorCopyWith<_PurchasesError> get copyWith =>
+      __$PurchasesErrorCopyWithImpl<_PurchasesError>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PurchasesErrorToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PurchasesErrorImpl &&
+            other is _PurchasesError &&
             (identical(other.code, code) || other.code == code) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.underlyingErrorMessage, underlyingErrorMessage) ||
@@ -199,53 +172,64 @@ class _$PurchasesErrorImpl implements _PurchasesError {
   int get hashCode => Object.hash(
       runtimeType, code, message, underlyingErrorMessage, readableErrorCode);
 
-  /// Create a copy of PurchasesError
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PurchasesErrorImplCopyWith<_$PurchasesErrorImpl> get copyWith =>
-      __$$PurchasesErrorImplCopyWithImpl<_$PurchasesErrorImpl>(
-          this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PurchasesErrorImplToJson(
-      this,
-    );
+  String toString() {
+    return 'PurchasesError(code: $code, message: $message, underlyingErrorMessage: $underlyingErrorMessage, readableErrorCode: $readableErrorCode)';
   }
 }
 
-abstract class _PurchasesError implements PurchasesError {
-  const factory _PurchasesError(
-          @PurchasesErrorCodeConverter() final PurchasesErrorCode code,
-          final String message,
-          final String underlyingErrorMessage,
-          @JsonKey(defaultValue: '') final String readableErrorCode) =
-      _$PurchasesErrorImpl;
+/// @nodoc
+abstract mixin class _$PurchasesErrorCopyWith<$Res>
+    implements $PurchasesErrorCopyWith<$Res> {
+  factory _$PurchasesErrorCopyWith(
+          _PurchasesError value, $Res Function(_PurchasesError) _then) =
+      __$PurchasesErrorCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {@PurchasesErrorCodeConverter() PurchasesErrorCode code,
+      String message,
+      String underlyingErrorMessage,
+      @JsonKey(defaultValue: '') String readableErrorCode});
+}
 
-  factory _PurchasesError.fromJson(Map<String, dynamic> json) =
-      _$PurchasesErrorImpl.fromJson;
+/// @nodoc
+class __$PurchasesErrorCopyWithImpl<$Res>
+    implements _$PurchasesErrorCopyWith<$Res> {
+  __$PurchasesErrorCopyWithImpl(this._self, this._then);
 
-  @override
-  @PurchasesErrorCodeConverter()
-  PurchasesErrorCode get code;
-  @override
-  String get message;
-  @override
-  String
-      get underlyingErrorMessage; // iOS can return a readable error code null, because the construction
-// of the error doesn't prevent it from being null. To be safe we default
-// it to '' instead of making it nullable
-// ignore: invalid_annotation_target
-  @override
-  @JsonKey(defaultValue: '')
-  String get readableErrorCode;
+  final _PurchasesError _self;
+  final $Res Function(_PurchasesError) _then;
 
   /// Create a copy of PurchasesError
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PurchasesErrorImplCopyWith<_$PurchasesErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? code = null,
+    Object? message = null,
+    Object? underlyingErrorMessage = null,
+    Object? readableErrorCode = null,
+  }) {
+    return _then(_PurchasesError(
+      null == code
+          ? _self.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as PurchasesErrorCode,
+      null == message
+          ? _self.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == underlyingErrorMessage
+          ? _self.underlyingErrorMessage
+          : underlyingErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == readableErrorCode
+          ? _self.readableErrorCode
+          : readableErrorCode // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
+
+// dart format on

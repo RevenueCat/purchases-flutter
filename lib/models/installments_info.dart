@@ -7,7 +7,7 @@ part 'installments_info.g.dart';
 
 /// Type containing information of installment subscriptions.
 /// Currently only supported in Google Play.
-class InstallmentsInfo with _$InstallmentsInfo {
+abstract class InstallmentsInfo with _$InstallmentsInfo {
   const factory InstallmentsInfo(
     /// Number of payments the customer commits to in order to purchase
     /// the subscription.

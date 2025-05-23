@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,37 +10,51 @@ part of 'offerings_wrapper.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Offerings _$OfferingsFromJson(Map<String, dynamic> json) {
-  return _Offerings.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Offerings {
   /// Map of all Offerings [Offering] objects keyed by their identifier.
-  Map<String, Offering> get all => throw _privateConstructorUsedError;
+  Map<String, Offering> get all;
 
   /// Current offering configured in the RevenueCat dashboard.
-  Offering? get current => throw _privateConstructorUsedError;
-
-  /// Serializes this Offerings to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Offering? get current;
 
   /// Create a copy of Offerings
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $OfferingsCopyWith<Offerings> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$OfferingsCopyWithImpl<Offerings>(this as Offerings, _$identity);
+
+  /// Serializes this Offerings to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Offerings &&
+            const DeepCollectionEquality().equals(other.all, all) &&
+            (identical(other.current, current) || other.current == current));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(all), current);
+
+  @override
+  String toString() {
+    return 'Offerings(all: $all, current: $current)';
+  }
 }
 
 /// @nodoc
-abstract class $OfferingsCopyWith<$Res> {
-  factory $OfferingsCopyWith(Offerings value, $Res Function(Offerings) then) =
-      _$OfferingsCopyWithImpl<$Res, Offerings>;
+abstract mixin class $OfferingsCopyWith<$Res> {
+  factory $OfferingsCopyWith(Offerings value, $Res Function(Offerings) _then) =
+      _$OfferingsCopyWithImpl;
   @useResult
   $Res call({Map<String, Offering> all, Offering? current});
 
@@ -47,14 +62,11 @@ abstract class $OfferingsCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OfferingsCopyWithImpl<$Res, $Val extends Offerings>
-    implements $OfferingsCopyWith<$Res> {
-  _$OfferingsCopyWithImpl(this._value, this._then);
+class _$OfferingsCopyWithImpl<$Res> implements $OfferingsCopyWith<$Res> {
+  _$OfferingsCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Offerings _self;
+  final $Res Function(Offerings) _then;
 
   /// Create a copy of Offerings
   /// with the given fields replaced by the non-null parameter values.
@@ -64,16 +76,16 @@ class _$OfferingsCopyWithImpl<$Res, $Val extends Offerings>
     Object? all = null,
     Object? current = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       all: null == all
-          ? _value.all
+          ? _self.all
           : all // ignore: cast_nullable_to_non_nullable
               as Map<String, Offering>,
       current: freezed == current
-          ? _value.current
+          ? _self.current
           : current // ignore: cast_nullable_to_non_nullable
               as Offering?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of Offerings
@@ -81,68 +93,24 @@ class _$OfferingsCopyWithImpl<$Res, $Val extends Offerings>
   @override
   @pragma('vm:prefer-inline')
   $OfferingCopyWith<$Res>? get current {
-    if (_value.current == null) {
+    if (_self.current == null) {
       return null;
     }
 
-    return $OfferingCopyWith<$Res>(_value.current!, (value) {
-      return _then(_value.copyWith(current: value) as $Val);
+    return $OfferingCopyWith<$Res>(_self.current!, (value) {
+      return _then(_self.copyWith(current: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$OfferingsImplCopyWith<$Res>
-    implements $OfferingsCopyWith<$Res> {
-  factory _$$OfferingsImplCopyWith(
-          _$OfferingsImpl value, $Res Function(_$OfferingsImpl) then) =
-      __$$OfferingsImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call({Map<String, Offering> all, Offering? current});
-
-  @override
-  $OfferingCopyWith<$Res>? get current;
-}
-
-/// @nodoc
-class __$$OfferingsImplCopyWithImpl<$Res>
-    extends _$OfferingsCopyWithImpl<$Res, _$OfferingsImpl>
-    implements _$$OfferingsImplCopyWith<$Res> {
-  __$$OfferingsImplCopyWithImpl(
-      _$OfferingsImpl _value, $Res Function(_$OfferingsImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Offerings
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? all = null,
-    Object? current = freezed,
-  }) {
-    return _then(_$OfferingsImpl(
-      null == all
-          ? _value._all
-          : all // ignore: cast_nullable_to_non_nullable
-              as Map<String, Offering>,
-      current: freezed == current
-          ? _value.current
-          : current // ignore: cast_nullable_to_non_nullable
-              as Offering?,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$OfferingsImpl extends _Offerings {
-  const _$OfferingsImpl(final Map<String, Offering> all, {this.current})
+class _Offerings extends Offerings {
+  const _Offerings(final Map<String, Offering> all, {this.current})
       : _all = all,
         super._();
-
-  factory _$OfferingsImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OfferingsImplFromJson(json);
+  factory _Offerings.fromJson(Map<String, dynamic> json) =>
+      _$OfferingsFromJson(json);
 
   /// Map of all Offerings [Offering] objects keyed by their identifier.
   final Map<String, Offering> _all;
@@ -159,16 +127,26 @@ class _$OfferingsImpl extends _Offerings {
   @override
   final Offering? current;
 
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Offerings(all: $all, current: $current)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$OfferingsCopyWith<_Offerings> get copyWith =>
+      __$OfferingsCopyWithImpl<_Offerings>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$OfferingsToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OfferingsImpl &&
+            other is _Offerings &&
             const DeepCollectionEquality().equals(other._all, _all) &&
             (identical(other.current, current) || other.current == current));
   }
@@ -178,42 +156,66 @@ class _$OfferingsImpl extends _Offerings {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_all), current);
 
-  /// Create a copy of Offerings
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$OfferingsImplCopyWith<_$OfferingsImpl> get copyWith =>
-      __$$OfferingsImplCopyWithImpl<_$OfferingsImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$OfferingsImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Offerings(all: $all, current: $current)';
   }
 }
 
-abstract class _Offerings extends Offerings {
-  const factory _Offerings(final Map<String, Offering> all,
-      {final Offering? current}) = _$OfferingsImpl;
-  const _Offerings._() : super._();
-
-  factory _Offerings.fromJson(Map<String, dynamic> json) =
-      _$OfferingsImpl.fromJson;
-
-  /// Map of all Offerings [Offering] objects keyed by their identifier.
+/// @nodoc
+abstract mixin class _$OfferingsCopyWith<$Res>
+    implements $OfferingsCopyWith<$Res> {
+  factory _$OfferingsCopyWith(
+          _Offerings value, $Res Function(_Offerings) _then) =
+      __$OfferingsCopyWithImpl;
   @override
-  Map<String, Offering> get all;
+  @useResult
+  $Res call({Map<String, Offering> all, Offering? current});
 
-  /// Current offering configured in the RevenueCat dashboard.
   @override
-  Offering? get current;
+  $OfferingCopyWith<$Res>? get current;
+}
+
+/// @nodoc
+class __$OfferingsCopyWithImpl<$Res> implements _$OfferingsCopyWith<$Res> {
+  __$OfferingsCopyWithImpl(this._self, this._then);
+
+  final _Offerings _self;
+  final $Res Function(_Offerings) _then;
 
   /// Create a copy of Offerings
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$OfferingsImplCopyWith<_$OfferingsImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? all = null,
+    Object? current = freezed,
+  }) {
+    return _then(_Offerings(
+      null == all
+          ? _self._all
+          : all // ignore: cast_nullable_to_non_nullable
+              as Map<String, Offering>,
+      current: freezed == current
+          ? _self.current
+          : current // ignore: cast_nullable_to_non_nullable
+              as Offering?,
+    ));
+  }
+
+  /// Create a copy of Offerings
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $OfferingCopyWith<$Res>? get current {
+    if (_self.current == null) {
+      return null;
+    }
+
+    return $OfferingCopyWith<$Res>(_self.current!, (value) {
+      return _then(_self.copyWith(current: value));
+    });
+  }
 }
+
+// dart format on

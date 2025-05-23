@@ -6,8 +6,7 @@ part of 'purchases_error.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PurchasesErrorImpl _$$PurchasesErrorImplFromJson(Map json) =>
-    _$PurchasesErrorImpl(
+_PurchasesError _$PurchasesErrorFromJson(Map json) => _PurchasesError(
       const PurchasesErrorCodeConverter()
           .fromJson((json['code'] as num).toInt()),
       json['message'] as String,
@@ -15,8 +14,7 @@ _$PurchasesErrorImpl _$$PurchasesErrorImplFromJson(Map json) =>
       json['readableErrorCode'] as String? ?? '',
     );
 
-Map<String, dynamic> _$$PurchasesErrorImplToJson(
-        _$PurchasesErrorImpl instance) =>
+Map<String, dynamic> _$PurchasesErrorToJson(_PurchasesError instance) =>
     <String, dynamic>{
       'code': const PurchasesErrorCodeConverter().toJson(instance.code),
       'message': instance.message,

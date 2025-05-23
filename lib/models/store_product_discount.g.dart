@@ -6,8 +6,8 @@ part of 'store_product_discount.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$StoreProductDiscountImpl _$$StoreProductDiscountImplFromJson(Map json) =>
-    _$StoreProductDiscountImpl(
+_StoreProductDiscount _$StoreProductDiscountFromJson(Map json) =>
+    _StoreProductDiscount(
       json['identifier'] as String,
       (json['price'] as num).toDouble(),
       json['priceString'] as String,
@@ -17,8 +17,8 @@ _$StoreProductDiscountImpl _$$StoreProductDiscountImplFromJson(Map json) =>
       (json['periodNumberOfUnits'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$StoreProductDiscountImplToJson(
-        _$StoreProductDiscountImpl instance) =>
+Map<String, dynamic> _$StoreProductDiscountToJson(
+        _StoreProductDiscount instance) =>
     <String, dynamic>{
       'identifier': instance.identifier,
       'price': instance.price,
