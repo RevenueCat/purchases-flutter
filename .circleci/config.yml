@@ -246,15 +246,20 @@ jobs:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
 
-  android-integration-test-build:
-    description: "Build Android Flutter integration tests"
+  android-integration-test:
+    description: "Run Android integration tests for flutter"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
-    resource_class: large
     steps:
       - checkout
       - replace-api-key
       - install-sdkman
+      - android/create-avd:
+          avd-name: integration-tests
+          system-image: system-images;android-33;google_apis;x86_64
+          install: true
+      - android/start-emulator:
+          avd-name: integration-tests
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
@@ -262,41 +267,10 @@ jobs:
             flutter build apk
             ./gradlew app:assembleAndroidTest
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
-      - persist_to_workspace:
-          root: .
-          paths:
-            - revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk
-            - revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
-
-  run-firebase-tests:
-    description: "Run integration tests for Flutter"
-    executor: gcp-cli/google
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - gcp-cli/setup:
-          gcloud_service_key: GCLOUD_SERVICE_KEY
-          google_compute_zone: GOOGLE_COMPUTE_ZONE
-          google_project_id: GOOGLE_PROJECT_ID
       - run:
-          name: Test with Firebase Test Lab
-          command: >
-            gcloud firebase test android run --type instrumentation \
-              --app revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk \
-              --test revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-              --device model=MediumPhone.arm,version=33,locale=en,orientation=portrait \
-              --timeout 2m \
-              --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
-      - run:
-          name: Copy test results data
+          working_directory: revenuecat_examples/purchase_tester
           command: |
-            mkdir -p ~/gsutil/
-            gsutil -m cp -r -U `gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
-      - store_artifacts:
-          path: ~/gsutil/
-      - store_test_results:
-          path: ~/gsutil/
+            flutter test integration_test/app_test.dart
 
   ios-integration-test:
     description: "Run integration tests for Flutter"
@@ -439,7 +413,7 @@ workflows:
       - dry-run-release: *release-branches
       - ios-integration-test
       - macos-integration-test
-      - android-integration-test-build
+      - android-integration-test
       - test_main_sdk_min_version_compatibility
       - test_ui_sdk_min_version_compatibility
 
@@ -450,17 +424,13 @@ workflows:
     jobs:
       - ios-integration-test: *release-branches
       - macos-integration-test: *release-branches
-      - android-integration-test-build: *release-branches
-      - run-firebase-tests:
-          requires:
-            - android-integration-test-build
-          <<: *release-branches
+      - android-integration-test: *release-branches
       - hold:
           type: approval
           requires:
             - ios-integration-test
             - macos-integration-test
-            - run-firebase-tests
+            - android-integration-test
           <<: *release-branches
       - revenuecat/tag-current-branch:
           requires:
