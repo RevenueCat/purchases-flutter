@@ -1,3 +1,8 @@
+## 8.9.0
+## RevenueCat SDK
+### ✨ New Features
+* Add `setTenjinAnalyticsInstallationID` API (#1347) via Toni Rico (@tonidero)
+
 ## 8.8.1
 ## RevenueCat SDK
 ### 📦 Dependency Updates
