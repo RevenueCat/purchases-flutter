@@ -30,7 +30,7 @@ aliases:
 
 orbs:
   android: circleci/android@2.5.0
-  gcp-cli: circleci/gcp-cli@2.1.0
+  gcp-cli: circleci/gcp-cli@3.3.1
   swissknife: roopakv/swissknife@0.65.0
   revenuecat: revenuecat/sdks-common-config@2.1.0
   macos: circleci/macos@2.3.2
@@ -275,16 +275,17 @@ jobs:
       - checkout
       - attach_workspace:
           at: .
-      - gcp-cli/initialize:
-          gcloud-service-key: GCLOUD_SERVICE_KEY
-          google-compute-zone: GOOGLE_COMPUTE_ZONE
-          google-project-id: GOOGLE_PROJECT_ID
+      - gcp-cli/setup:
+          gcloud_service_key: GCLOUD_SERVICE_KEY
+          google_compute_zone: GOOGLE_COMPUTE_ZONE
+          google_project_id: GOOGLE_PROJECT_ID
       - run:
           name: Test with Firebase Test Lab
           command: >
             gcloud firebase test android run --type instrumentation \
               --app revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk \
               --test revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
+              --device model=MediumPhone.arm,version=33,locale=en,orientation=portrait \
               --timeout 2m \
               --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
       - run:
