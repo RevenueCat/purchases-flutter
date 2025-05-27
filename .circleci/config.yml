@@ -240,6 +240,7 @@ jobs:
     description: "Run API tests for Flutter"
     <<: *android-executor
     resource_class: xlarge
+    shell: /bin/bash --login -o pipefail
     steps:
       - checkout
       - install-sdkman
@@ -255,6 +256,7 @@ jobs:
   android-integration-test:
     description: "Run Android integration tests for flutter"
     <<: *android-machine-emulator
+    shell: /bin/bash --login -o pipefail
     steps:
       - checkout
       - replace-api-key
