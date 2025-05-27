@@ -232,24 +232,22 @@ jobs:
 
   api_test:
     description: "Run API tests for Flutter"
-    docker:
-      - image: ghcr.io/cirruslabs/flutter:stable
+    <<: *android-executor
     resource_class: xlarge
     steps:
       - checkout
       - install-sdkman
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
-      - flutter-get-dependencies:
-          project: api_tester
+      - flutter/install_sdk_and_pub:
+          version: 3.32.0
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
 
   android-integration-test:
     description: "Run Android integration tests for flutter"
-    docker:
-      - image: ghcr.io/cirruslabs/flutter:stable
+    <<: *android-executor
     steps:
       - checkout
       - replace-api-key
@@ -260,6 +258,8 @@ jobs:
           install: true
       - android/start-emulator:
           avd-name: integration-tests
+      - flutter/install_sdk_and_pub:
+          version: 3.32.0
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
