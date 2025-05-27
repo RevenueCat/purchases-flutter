@@ -255,6 +255,23 @@ jobs:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
 
+  android-integration-test-build:
+    description: "Build Android Flutter integration tests"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    resource_class: large
+    steps:
+      - checkout
+      - replace-api-key
+      - install-sdkman
+      - run:
+          working_directory: revenuecat_examples/purchase_tester/android
+          command: |
+            # flutter build generates files in android/ for building the app
+            flutter build apk
+            ./gradlew app:assembleAndroidTest
+            ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
+
   android-integration-test:
     description: "Run Android integration tests for flutter"
     <<: *android-machine-emulator
@@ -420,7 +437,7 @@ workflows:
       - dry-run-release: *release-branches
       - ios-integration-test
       - macos-integration-test
-      - android-integration-test
+      - android-integration-test-build
       - test_main_sdk_min_version_compatibility
       - test_ui_sdk_min_version_compatibility
 
