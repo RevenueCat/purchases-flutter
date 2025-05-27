@@ -248,8 +248,6 @@ jobs:
     steps:
       - checkout
       - install-sdkman
-      - ruby/install:
-          version: '3.2.0'
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - flutter-get-dependencies:
