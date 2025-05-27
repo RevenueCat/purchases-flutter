@@ -149,7 +149,7 @@ commands:
           name: Installing SDKMAN
           command: |
             if curl -s "https://get.sdkman.io?rcupdate=false" | bash; then
-              echo -e '\nsource "/root/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
+              echo -e '\nsource "/home/circleci/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
               source $BASH_ENV
             else
               echo "Error installing SDKMAN, continuing with default Java" >&2
