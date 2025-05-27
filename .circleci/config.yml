@@ -30,7 +30,7 @@ aliases:
   android-machine-emulator: &android-machine-emulator
     executor:
       name: android/android-machine
-      resource-class: large
+      resource-class: xlarge
       tag: 2024.11.1
 
 orbs:
