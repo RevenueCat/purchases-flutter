@@ -27,6 +27,11 @@ aliases:
     environment:
       JVM_OPTS: -Xmx6g
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+  android-machine-emulator: &android-machine-emulator
+    executor:
+      name: android/android-machine
+      resource-class: large
+      tag: 2024.11.1
 
 orbs:
   android: circleci/android@2.5.0
@@ -35,6 +40,7 @@ orbs:
   revenuecat: revenuecat/sdks-common-config@2.1.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
+  ruby: circleci/ruby@2.5.3
 
 parameters:
   action:
@@ -237,17 +243,18 @@ jobs:
     steps:
       - checkout
       - install-sdkman
+      - ruby/install:
+          version: '3.2.0'
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
-      - flutter/install_sdk_and_pub:
-          version: 3.32.0
+      - setup-flutter
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
 
   android-integration-test:
     description: "Run Android integration tests for flutter"
-    <<: *android-executor
+    <<: *android-machine-emulator
     steps:
       - checkout
       - replace-api-key
@@ -258,8 +265,8 @@ jobs:
           install: true
       - android/start-emulator:
           avd-name: integration-tests
-      - flutter/install_sdk_and_pub:
-          version: 3.32.0
+          post-emulator-launch-assemble-command: ''
+      - setup-flutter
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
