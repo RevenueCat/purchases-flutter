@@ -150,12 +150,16 @@ commands:
 
   install-sdkman:
     description: Install SDKMAN
+    parameters:
+      root:
+        type: string
+        default: /root
     steps:
       - run:
           name: Installing SDKMAN
           command: |
             if curl -s "https://get.sdkman.io?rcupdate=false" | bash; then
-              echo -e '\nsource "/home/circleci/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
+              echo -e '\nsource "<< parameters.root >>/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
               source $BASH_ENV
             else
               echo "Error installing SDKMAN, continuing with default Java" >&2
@@ -238,9 +242,9 @@ jobs:
 
   api_test:
     description: "Run API tests for Flutter"
-    <<: *android-executor
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
     resource_class: xlarge
-    shell: /bin/bash --login -o pipefail
     steps:
       - checkout
       - install-sdkman
@@ -248,7 +252,8 @@ jobs:
           version: '3.2.0'
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
-      - setup-flutter
+      - flutter-get-dependencies:
+          project: api_tester
       - run:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
@@ -260,7 +265,8 @@ jobs:
     steps:
       - checkout
       - replace-api-key
-      - install-sdkman
+      - install-sdkman:
+          root: /home/circleci
       - android/create-avd:
           avd-name: integration-tests
           system-image: system-images;android-33;google_apis;x86_64
@@ -269,16 +275,11 @@ jobs:
           avd-name: integration-tests
           post-emulator-launch-assemble-command: ''
       - setup-flutter
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
       - run:
-          working_directory: revenuecat_examples/purchase_tester/android
           command: |
-            # flutter build generates files in android/ for building the app
-            flutter build apk
-            ./gradlew app:assembleAndroidTest
-            ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
-      - run:
-          working_directory: revenuecat_examples/purchase_tester
-          command: |
+            cd revenuecat_examples/purchase_tester
             flutter test integration_test/app_test.dart
 
   ios-integration-test:
