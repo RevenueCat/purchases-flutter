@@ -5,7 +5,7 @@ part 'web_purchase_redemption.freezed.dart';
 part 'web_purchase_redemption.g.dart';
 
 @freezed
-class WebPurchaseRedemption with _$WebPurchaseRedemption {
+abstract class WebPurchaseRedemption with _$WebPurchaseRedemption {
   const factory WebPurchaseRedemption(
       /// The redemption link to be redeemed.
       String redemptionLink,

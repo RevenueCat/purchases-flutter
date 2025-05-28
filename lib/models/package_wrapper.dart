@@ -49,7 +49,7 @@ enum PackageType {
 /// Contains information about the product available for the user to purchase.
 /// For more info see https://docs.revenuecat.com/docs/entitlements
 
-class Package with _$Package {
+abstract class Package with _$Package {
   const factory Package(
     /// Unique identifier for this package. Can be one a predefined package type
     /// or a custom one.

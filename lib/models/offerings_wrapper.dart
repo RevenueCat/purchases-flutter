@@ -9,7 +9,7 @@ part 'offerings_wrapper.g.dart';
 
 /// This class contains all the offerings configured in RevenueCat dashboard.
 /// For more info see https://docs.revenuecat.com/docs/entitlements
-class Offerings with _$Offerings {
+abstract class Offerings with _$Offerings {
   const Offerings._();
   const factory Offerings(
     /// Map of all Offerings [Offering] objects keyed by their identifier.
