@@ -69,6 +69,7 @@ const _$StoreEnumMap = {
   Store.unknownStore: 'unknownStore',
   Store.amazon: 'AMAZON',
   Store.rcBilling: 'RC_BILLING',
+  Store.paddle: 'PADDLE',
   Store.externalStore: 'EXTERNAL',
 };
 
