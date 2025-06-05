@@ -165,6 +165,10 @@ class _PurchasesFlutterApiTest {
     String appUserId = await Purchases.appUserID;
   }
 
+  void _checkStorefront() async {
+    Storefront? storefront = await Purchases.storefront;
+  }
+
   void _checkLogIn() async {
     LogInResult logInResult = await Purchases.logIn("fakeUserId");
   }
@@ -311,6 +315,11 @@ class _PurchasesFlutterApiTest {
   void _checkSetFirebaseAppInstanceId() {
     String id = "fakeId";
     Future<void> future = Purchases.setFirebaseAppInstanceId(id);
+  }
+
+  void _checkSetTenjinAnalyticsInstallationId() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setTenjinAnalyticsInstallationID(id);
   }
 
   void _checkSetOnesignalId() {

@@ -562,6 +562,15 @@ class Purchases {
   static Future<String> get appUserID async =>
       await _channel.invokeMethod('getAppUserID') as String;
 
+  /// Gets the current storefront for the store account.
+  static Future<Storefront?> get storefront async {
+    final storefrontJson = await _channel.invokeMethod('getStorefront');
+    if (storefrontJson == null) {
+      return null;
+    }
+    return Storefront.fromJson(Map<String, dynamic>.from(storefrontJson));
+  }
+
   /// This function will logIn the current user with an appUserID.
   /// Typically this would be used after logging in a user to identify them without
   /// calling configure
@@ -791,6 +800,16 @@ class Purchases {
       _channel.invokeMethod(
         'setFirebaseAppInstanceID',
         {'firebaseAppInstanceID': firebaseAppInstanceId},
+      );
+
+  /// Subscriber attribute associated with the Tenjin Installation ID for the user
+  /// Required for the RevenueCat Tenjin integration
+  ///
+  /// [tenjinAnalyticsInstallationID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setTenjinAnalyticsInstallationID(String tenjinAnalyticsInstallationID) =>
+      _channel.invokeMethod(
+        'setTenjinAnalyticsInstallationID',
+        {'tenjinAnalyticsInstallationID': tenjinAnalyticsInstallationID},
       );
 
   /// Subscriber attribute associated with the OneSignal Player Id for the user

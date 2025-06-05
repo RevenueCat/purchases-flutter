@@ -27,14 +27,19 @@ aliases:
     environment:
       JVM_OPTS: -Xmx6g
       GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+  android-machine-emulator: &android-machine-emulator
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2024.11.1
 
 orbs:
   android: circleci/android@2.5.0
-  gcp-cli: circleci/gcp-cli@2.1.0
   swissknife: roopakv/swissknife@0.65.0
   revenuecat: revenuecat/sdks-common-config@2.1.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
+  ruby: circleci/ruby@2.5.3
 
 parameters:
   action:
@@ -144,12 +149,16 @@ commands:
 
   install-sdkman:
     description: Install SDKMAN
+    parameters:
+      root:
+        type: string
+        default: /root
     steps:
       - run:
           name: Installing SDKMAN
           command: |
             if curl -s "https://get.sdkman.io?rcupdate=false" | bash; then
-              echo -e '\nsource "/root/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
+              echo -e '\nsource "<< parameters.root >>/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
               source $BASH_ENV
             else
               echo "Error installing SDKMAN, continuing with default Java" >&2
@@ -262,40 +271,30 @@ jobs:
             flutter build apk
             ./gradlew app:assembleAndroidTest
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
-      - persist_to_workspace:
-          root: .
-          paths:
-            - revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk
-            - revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
-  run-firebase-tests:
-    description: "Run integration tests for Flutter"
-    executor: gcp-cli/google
+  android-integration-test:
+    description: "Run Android integration tests for flutter"
+    <<: *android-machine-emulator
+    shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - attach_workspace:
-          at: .
-      - gcp-cli/initialize:
-          gcloud-service-key: GCLOUD_SERVICE_KEY
-          google-compute-zone: GOOGLE_COMPUTE_ZONE
-          google-project-id: GOOGLE_PROJECT_ID
+      - replace-api-key
+      - install-sdkman:
+          root: /home/circleci
+      - android/create-avd:
+          avd-name: integration-tests
+          system-image: system-images;android-33;google_apis;x86_64
+          install: true
+      - android/start-emulator:
+          avd-name: integration-tests
+          post-emulator-launch-assemble-command: ''
+      - setup-flutter
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
       - run:
-          name: Test with Firebase Test Lab
-          command: >
-            gcloud firebase test android run --type instrumentation \
-              --app revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk \
-              --test revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-              --timeout 2m \
-              --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
-      - run:
-          name: Copy test results data
           command: |
-            mkdir -p ~/gsutil/
-            gsutil -m cp -r -U `gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
-      - store_artifacts:
-          path: ~/gsutil/
-      - store_test_results:
-          path: ~/gsutil/
+            cd revenuecat_examples/purchase_tester
+            flutter test integration_test/app_test.dart
 
   ios-integration-test:
     description: "Run integration tests for Flutter"
@@ -449,17 +448,13 @@ workflows:
     jobs:
       - ios-integration-test: *release-branches
       - macos-integration-test: *release-branches
-      - android-integration-test-build: *release-branches
-      - run-firebase-tests:
-          requires:
-            - android-integration-test-build
-          <<: *release-branches
+      - android-integration-test: *release-branches
       - hold:
           type: approval
           requires:
             - ios-integration-test
             - macos-integration-test
-            - run-firebase-tests
+            - android-integration-test
           <<: *release-branches
       - revenuecat/tag-current-branch:
           requires:

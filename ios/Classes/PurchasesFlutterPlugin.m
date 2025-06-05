@@ -86,6 +86,8 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
                        result:result];
     } else if ([@"getAppUserID" isEqualToString:call.method]) {
         [self getAppUserIDWithResult:result];
+    } else if ([@"getStorefront" isEqualToString:call.method]) {
+        [self getStorefrontWithResult:result];
     } else if ([@"restorePurchases" isEqualToString:call.method]) {
         [self restorePurchasesWithResult:result];
     } else if ([@"logOut" isEqualToString:call.method]) {
@@ -154,7 +156,10 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
     } else if([@"setFirebaseAppInstanceID" isEqualToString:call.method]) {
         NSString *firebaseAppInstanceID = arguments[@"firebaseAppInstanceID"];
         [self setFirebaseAppInstanceID:firebaseAppInstanceID result:result];
-    } else if ([@"setOnesignalID" isEqualToString:call.method]) {
+    } else if([@"setTenjinAnalyticsInstallationID" isEqualToString:call.method]) {
+        NSString *tenjinAnalyticsInstallationID = arguments[@"tenjinAnalyticsInstallationID"];
+        [self setTenjinAnalyticsInstallationID:tenjinAnalyticsInstallationID result:result];
+    }else if ([@"setOnesignalID" isEqualToString:call.method]) {
         NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
     } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
@@ -352,6 +357,12 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result([RCCommonFunctionality appUserID]);
 }
 
+- (void)getStorefrontWithResult:(FlutterResult)result {
+    [RCCommonFunctionality getStorefrontWithCompletion:^(NSDictionary<NSString *,id> * _Nullable storefrontMap) {
+        result(storefrontMap);
+    }];
+}
+
 - (void)logInAppUserID:(NSString * _Nullable)appUserID
                 result:(FlutterResult)result {
     [RCCommonFunctionality logInWithAppUserID:appUserID completionBlock:[self getResponseCompletionBlock:result]];
@@ -491,6 +502,12 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)setFirebaseAppInstanceID:(nullable NSString *)firebaseAppInstanceId result:(FlutterResult)result {
     [RCCommonFunctionality setFirebaseAppInstanceID:firebaseAppInstanceId];
+    result(nil);
+}
+
+- (void)setTenjinAnalyticsInstallationID:(nullable NSString *)tenjinAnalyticsInstallationID
+                                  result:(FlutterResult)result {
+    [RCCommonFunctionality setTenjinAnalyticsInstallationID:tenjinAnalyticsInstallationID];
     result(nil);
 }
 
@@ -747,7 +764,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"8.7.4";
+    return @"8.10.0";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {

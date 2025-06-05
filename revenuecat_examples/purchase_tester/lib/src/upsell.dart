@@ -51,6 +51,14 @@ class _UpsellScreenState extends State<UpsellScreen> {
       print("Error getting app user id: $e");
     }
 
+    Storefront? storefront;
+    try {
+      storefront = await Purchases.storefront;
+      print("Current storefront: ${storefront?.countryCode}");
+    } on PlatformException catch (e) {
+      print("Error getting storefront: $e");
+    }
+
     if (!mounted) return;
 
     setState(() {

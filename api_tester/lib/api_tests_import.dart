@@ -22,6 +22,7 @@ import 'package:api_tester/api_tests/models/store_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_discount_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/store_transaction_api_test.dart';
+import 'package:api_tester/api_tests/models/storefront_api_test.dart';
 import 'package:api_tester/api_tests/models/subscription_option_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/web_purchase_redemption_api_test.dart';
 import 'package:api_tester/api_tests/models/web_purchase_redemption_result_api_test.dart';
