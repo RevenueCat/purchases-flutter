@@ -1,12 +1,26 @@
 ## RevenueCat SDK
-### ✨ New Features
-* Add `paddle` store (#1351) via Will Taylor (@fire-at-will)
-### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.33.0 (#1352) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 8.19.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.19.0)
-  * [Android 8.18.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.18.0)
-  * [iOS 5.26.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.26.0)
-  * [iOS 5.25.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.3)
-  * [iOS 5.25.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.2)
-  * [iOS 5.25.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.1)
-  * [iOS 5.25.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.0)
+### 💥 Breaking Changes
+* Increased min Flutter SDK to 3.22.0 and Dart min SDK to 3.4.0
+
+### New Features
+* [Beta] Flutter Web support (#1237) via Toni Rico (@tonidero)
+
+In order to use Flutter Web, you need to create a new Web Billing project (See [docs](https://www.revenuecat.com/docs/web/web-billing/overview)), then configure the SDK with the provided API key, in the form of `rcb_xxx` or `rcb_sb_xxx`.
+
+Web functionality is currently limited. Supported functionality includes:
+- Configuration
+- Login/logout
+- Fetching Offerings
+- Fetching CustomerInfo
+- Purchasing Packages
+
+Currently unsupported functionality includes:
+- Setting attributes
+- Product operations (get products/purchase products).
+- Restoring purchases (Purchases can be restored using Web Billing's built-in mechanisms)
+
+Please check this out and contact us with any feedback!
+
+### Changes from previous beta
+- Added all changes from major 8.7.5+
+

@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'purchases_ui_flutter'
-  s.version          = '8.10.0'
+  s.version          = '9.0.0-beta.2'
   s.summary          = 'Flutter plugin that integrates RevenueCat Paywalls'
   s.description      = <<-DESC
 Flutter plugin that integrates RevenueCat Paywalls
