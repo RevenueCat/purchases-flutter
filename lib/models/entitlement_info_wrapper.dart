@@ -46,7 +46,7 @@ enum OwnershipType {
 /// The EntitlementInfo object gives you access to all of the information about
 /// the status of a user entitlement.
 @freezed
-class EntitlementInfo with _$EntitlementInfo {
+abstract class EntitlementInfo with _$EntitlementInfo {
   const factory EntitlementInfo(
     /// The entitlement identifier configured in the RevenueCat dashboard
     String identifier,

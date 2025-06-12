@@ -12,7 +12,7 @@ part 'subscription_option_wrapper.g.dart';
 
 /// Contains all details associated with a SubscriptionOption
 /// Used only for Google
-class SubscriptionOption with _$SubscriptionOption {
+abstract class SubscriptionOption with _$SubscriptionOption {
   const factory SubscriptionOption(
     /// Identifier of the subscription option
     /// If this SubscriptionOption represents a base plan, this will be the basePlanId.

@@ -9,7 +9,7 @@ part 'pricing_phase_wrapper.g.dart';
 @freezed
 
 /// Contains all the details associated with a PricingPhase
-class PricingPhase with _$PricingPhase {
+abstract class PricingPhase with _$PricingPhase {
   const factory PricingPhase(
     /// Billing period for which the PricingPhase applies
     Period? billingPeriod,
