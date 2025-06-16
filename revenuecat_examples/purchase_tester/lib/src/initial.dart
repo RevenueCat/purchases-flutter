@@ -37,7 +37,8 @@ class _InitialScreenState extends State<InitialScreen> {
   }
 
   void _processLink(String uri) async {
-    final webPurchaseRedemption = await Purchases.parseAsWebPurchaseRedemption(uri);
+    final webPurchaseRedemption =
+        await Purchases.parseAsWebPurchaseRedemption(uri);
     if (webPurchaseRedemption != null) {
       final result = await Purchases.redeemWebPurchase(webPurchaseRedemption);
       _showWebRedemptionResultDialog(result);
@@ -45,23 +46,17 @@ class _InitialScreenState extends State<InitialScreen> {
   }
 
   void _showWebRedemptionResultDialog(WebPurchaseRedemptionResult result) {
-    final message = result.when(
-        success: (customerInfo) {
-          return 'Web purchase redemption successful. CustomerInfo: $customerInfo';
-        },
-        error: (error) {
-          return 'Web purchase redemption failed: $error';
-        },
-        purchaseBelongsToOtherUser: () {
-          return 'Web purchase redemption failed: purchase belongs to another user';
-        },
-        invalidToken: () {
-          return 'Web purchase redemption failed: invalid token';
-        },
-        expired: (obfuscatedEmail) {
-          return 'Web purchase redemption failed: expired token for $obfuscatedEmail';
-        }
-    );
+    final message = switch (result) {
+      Success(:final customerInfo) =>
+        'Web purchase redemption successful. CustomerInfo: $customerInfo',
+      Error(:final error) => 'Web purchase redemption failed: $error',
+      PurchaseBelongsToOtherUser() =>
+        'Web purchase redemption failed: purchase belongs to another user',
+      InvalidToken() => 'Web purchase redemption failed: invalid token',
+      Expired(:final obfuscatedEmail) =>
+        'Web purchase redemption failed: expired token for $obfuscatedEmail',
+    };
+
     showDialog(
       context: context,
       builder: (context) {
@@ -84,20 +79,20 @@ class _InitialScreenState extends State<InitialScreen> {
     final customerInfo = await Purchases.getCustomerInfo();
 
     Purchases.addReadyForPromotedProductPurchaseListener(
-            (productID, startPurchase) async {
-          print('Received readyForPromotedProductPurchase event for '
-              'productID: $productID');
+        (productID, startPurchase) async {
+      print('Received readyForPromotedProductPurchase event for '
+          'productID: $productID');
 
-          try {
-            final purchaseResult = await startPurchase.call();
-            print('Promoted purchase for productID '
-                '${purchaseResult.productIdentifier} completed, or product was'
-                'already purchased. customerInfo returned is:'
-                ' ${purchaseResult.customerInfo}');
-          } on PlatformException catch (e) {
-            print('Error purchasing promoted product: ${e.message}');
-          }
-        });
+      try {
+        final purchaseResult = await startPurchase.call();
+        print('Promoted purchase for productID '
+            '${purchaseResult.productIdentifier} completed, or product was'
+            'already purchased. customerInfo returned is:'
+            ' ${purchaseResult.customerInfo}');
+      } on PlatformException catch (e) {
+        print('Error purchasing promoted product: ${e.message}');
+      }
+    });
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -120,7 +115,7 @@ class _InitialScreenState extends State<InitialScreen> {
       );
     } else {
       final isPro =
-      _customerInfo!.entitlements.active.containsKey(entitlementKey);
+          _customerInfo!.entitlements.active.containsKey(entitlementKey);
       if (isPro) {
         return const CatsScreen();
       } else {

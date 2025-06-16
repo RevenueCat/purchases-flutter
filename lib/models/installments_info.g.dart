@@ -6,14 +6,12 @@ part of 'installments_info.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$InstallmentsInfoImpl _$$InstallmentsInfoImplFromJson(Map json) =>
-    _$InstallmentsInfoImpl(
+_InstallmentsInfo _$InstallmentsInfoFromJson(Map json) => _InstallmentsInfo(
       (json['commitmentPaymentsCount'] as num).toInt(),
       (json['renewalCommitmentPaymentsCount'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$InstallmentsInfoImplToJson(
-        _$InstallmentsInfoImpl instance) =>
+Map<String, dynamic> _$InstallmentsInfoToJson(_InstallmentsInfo instance) =>
     <String, dynamic>{
       'commitmentPaymentsCount': instance.commitmentPaymentsCount,
       'renewalCommitmentPaymentsCount': instance.renewalCommitmentPaymentsCount,

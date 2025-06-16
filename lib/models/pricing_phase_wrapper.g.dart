@@ -6,7 +6,7 @@ part of 'pricing_phase_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PricingPhaseImpl _$$PricingPhaseImplFromJson(Map json) => _$PricingPhaseImpl(
+_PricingPhase _$PricingPhaseFromJson(Map json) => _PricingPhase(
       json['billingPeriod'] == null
           ? null
           : Period.fromJson(
@@ -17,7 +17,7 @@ _$PricingPhaseImpl _$$PricingPhaseImplFromJson(Map json) => _$PricingPhaseImpl(
       $enumDecodeNullable(_$OfferPaymentModeEnumMap, json['offerPaymentMode']),
     );
 
-Map<String, dynamic> _$$PricingPhaseImplToJson(_$PricingPhaseImpl instance) =>
+Map<String, dynamic> _$PricingPhaseToJson(_PricingPhase instance) =>
     <String, dynamic>{
       'billingPeriod': instance.billingPeriod?.toJson(),
       'recurrenceMode': _$RecurrenceModeEnumMap[instance.recurrenceMode],

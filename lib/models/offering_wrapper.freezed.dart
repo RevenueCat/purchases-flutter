@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,64 +10,105 @@ part of 'offering_wrapper.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Offering _$OfferingFromJson(Map<String, dynamic> json) {
-  return _Offering.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Offering {
   /// Unique identifier defined in RevenueCat dashboard.
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
 
   /// Offering description defined in RevenueCat dashboard.
-  String get serverDescription => throw _privateConstructorUsedError;
+  String get serverDescription;
 
   /// Offering metadata defined in RevenueCat dashboard.
-  Map<String, Object> get metadata => throw _privateConstructorUsedError;
+  Map<String, Object> get metadata;
 
   /// Array of [Package] objects available for purchase.
-  List<Package> get availablePackages => throw _privateConstructorUsedError;
+  List<Package> get availablePackages;
 
   /// Lifetime package type configured in the RevenueCat dashboard, if available.
-  Package? get lifetime => throw _privateConstructorUsedError;
+  Package? get lifetime;
 
   /// Annual package type configured in the RevenueCat dashboard, if available.
-  Package? get annual => throw _privateConstructorUsedError;
+  Package? get annual;
 
   /// Six month package type configured in the RevenueCat dashboard, if available.
-  Package? get sixMonth => throw _privateConstructorUsedError;
+  Package? get sixMonth;
 
   /// Three month package type configured in the RevenueCat dashboard, if available.
-  Package? get threeMonth => throw _privateConstructorUsedError;
+  Package? get threeMonth;
 
   /// Two month package type configured in the RevenueCat dashboard, if available.
-  Package? get twoMonth => throw _privateConstructorUsedError;
+  Package? get twoMonth;
 
   /// Monthly package type configured in the RevenueCat dashboard, if available.
-  Package? get monthly => throw _privateConstructorUsedError;
+  Package? get monthly;
 
   /// Weekly package type configured in the RevenueCat dashboard, if available.
-  Package? get weekly => throw _privateConstructorUsedError;
-
-  /// Serializes this Offering to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  Package? get weekly;
 
   /// Create a copy of Offering
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   $OfferingCopyWith<Offering> get copyWith =>
-      throw _privateConstructorUsedError;
+      _$OfferingCopyWithImpl<Offering>(this as Offering, _$identity);
+
+  /// Serializes this Offering to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Offering &&
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.serverDescription, serverDescription) ||
+                other.serverDescription == serverDescription) &&
+            const DeepCollectionEquality().equals(other.metadata, metadata) &&
+            const DeepCollectionEquality()
+                .equals(other.availablePackages, availablePackages) &&
+            (identical(other.lifetime, lifetime) ||
+                other.lifetime == lifetime) &&
+            (identical(other.annual, annual) || other.annual == annual) &&
+            (identical(other.sixMonth, sixMonth) ||
+                other.sixMonth == sixMonth) &&
+            (identical(other.threeMonth, threeMonth) ||
+                other.threeMonth == threeMonth) &&
+            (identical(other.twoMonth, twoMonth) ||
+                other.twoMonth == twoMonth) &&
+            (identical(other.monthly, monthly) || other.monthly == monthly) &&
+            (identical(other.weekly, weekly) || other.weekly == weekly));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      identifier,
+      serverDescription,
+      const DeepCollectionEquality().hash(metadata),
+      const DeepCollectionEquality().hash(availablePackages),
+      lifetime,
+      annual,
+      sixMonth,
+      threeMonth,
+      twoMonth,
+      monthly,
+      weekly);
+
+  @override
+  String toString() {
+    return 'Offering(identifier: $identifier, serverDescription: $serverDescription, metadata: $metadata, availablePackages: $availablePackages, lifetime: $lifetime, annual: $annual, sixMonth: $sixMonth, threeMonth: $threeMonth, twoMonth: $twoMonth, monthly: $monthly, weekly: $weekly)';
+  }
 }
 
 /// @nodoc
-abstract class $OfferingCopyWith<$Res> {
-  factory $OfferingCopyWith(Offering value, $Res Function(Offering) then) =
-      _$OfferingCopyWithImpl<$Res, Offering>;
+abstract mixin class $OfferingCopyWith<$Res> {
+  factory $OfferingCopyWith(Offering value, $Res Function(Offering) _then) =
+      _$OfferingCopyWithImpl;
   @useResult
   $Res call(
       {String identifier,
@@ -91,14 +133,11 @@ abstract class $OfferingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
-    implements $OfferingCopyWith<$Res> {
-  _$OfferingCopyWithImpl(this._value, this._then);
+class _$OfferingCopyWithImpl<$Res> implements $OfferingCopyWith<$Res> {
+  _$OfferingCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Offering _self;
+  final $Res Function(Offering) _then;
 
   /// Create a copy of Offering
   /// with the given fields replaced by the non-null parameter values.
@@ -117,52 +156,52 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
     Object? monthly = freezed,
     Object? weekly = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       identifier: null == identifier
-          ? _value.identifier
+          ? _self.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
       serverDescription: null == serverDescription
-          ? _value.serverDescription
+          ? _self.serverDescription
           : serverDescription // ignore: cast_nullable_to_non_nullable
               as String,
       metadata: null == metadata
-          ? _value.metadata
+          ? _self.metadata
           : metadata // ignore: cast_nullable_to_non_nullable
               as Map<String, Object>,
       availablePackages: null == availablePackages
-          ? _value.availablePackages
+          ? _self.availablePackages
           : availablePackages // ignore: cast_nullable_to_non_nullable
               as List<Package>,
       lifetime: freezed == lifetime
-          ? _value.lifetime
+          ? _self.lifetime
           : lifetime // ignore: cast_nullable_to_non_nullable
               as Package?,
       annual: freezed == annual
-          ? _value.annual
+          ? _self.annual
           : annual // ignore: cast_nullable_to_non_nullable
               as Package?,
       sixMonth: freezed == sixMonth
-          ? _value.sixMonth
+          ? _self.sixMonth
           : sixMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
       threeMonth: freezed == threeMonth
-          ? _value.threeMonth
+          ? _self.threeMonth
           : threeMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
       twoMonth: freezed == twoMonth
-          ? _value.twoMonth
+          ? _self.twoMonth
           : twoMonth // ignore: cast_nullable_to_non_nullable
               as Package?,
       monthly: freezed == monthly
-          ? _value.monthly
+          ? _self.monthly
           : monthly // ignore: cast_nullable_to_non_nullable
               as Package?,
       weekly: freezed == weekly
-          ? _value.weekly
+          ? _self.weekly
           : weekly // ignore: cast_nullable_to_non_nullable
               as Package?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of Offering
@@ -170,12 +209,12 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get lifetime {
-    if (_value.lifetime == null) {
+    if (_self.lifetime == null) {
       return null;
     }
 
-    return $PackageCopyWith<$Res>(_value.lifetime!, (value) {
-      return _then(_value.copyWith(lifetime: value) as $Val);
+    return $PackageCopyWith<$Res>(_self.lifetime!, (value) {
+      return _then(_self.copyWith(lifetime: value));
     });
   }
 
@@ -184,12 +223,12 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get annual {
-    if (_value.annual == null) {
+    if (_self.annual == null) {
       return null;
     }
 
-    return $PackageCopyWith<$Res>(_value.annual!, (value) {
-      return _then(_value.copyWith(annual: value) as $Val);
+    return $PackageCopyWith<$Res>(_self.annual!, (value) {
+      return _then(_self.copyWith(annual: value));
     });
   }
 
@@ -198,12 +237,12 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get sixMonth {
-    if (_value.sixMonth == null) {
+    if (_self.sixMonth == null) {
       return null;
     }
 
-    return $PackageCopyWith<$Res>(_value.sixMonth!, (value) {
-      return _then(_value.copyWith(sixMonth: value) as $Val);
+    return $PackageCopyWith<$Res>(_self.sixMonth!, (value) {
+      return _then(_self.copyWith(sixMonth: value));
     });
   }
 
@@ -212,12 +251,12 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get threeMonth {
-    if (_value.threeMonth == null) {
+    if (_self.threeMonth == null) {
       return null;
     }
 
-    return $PackageCopyWith<$Res>(_value.threeMonth!, (value) {
-      return _then(_value.copyWith(threeMonth: value) as $Val);
+    return $PackageCopyWith<$Res>(_self.threeMonth!, (value) {
+      return _then(_self.copyWith(threeMonth: value));
     });
   }
 
@@ -226,12 +265,12 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get twoMonth {
-    if (_value.twoMonth == null) {
+    if (_self.twoMonth == null) {
       return null;
     }
 
-    return $PackageCopyWith<$Res>(_value.twoMonth!, (value) {
-      return _then(_value.copyWith(twoMonth: value) as $Val);
+    return $PackageCopyWith<$Res>(_self.twoMonth!, (value) {
+      return _then(_self.copyWith(twoMonth: value));
     });
   }
 
@@ -240,12 +279,12 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get monthly {
-    if (_value.monthly == null) {
+    if (_self.monthly == null) {
       return null;
     }
 
-    return $PackageCopyWith<$Res>(_value.monthly!, (value) {
-      return _then(_value.copyWith(monthly: value) as $Val);
+    return $PackageCopyWith<$Res>(_self.monthly!, (value) {
+      return _then(_self.copyWith(monthly: value));
     });
   }
 
@@ -254,131 +293,20 @@ class _$OfferingCopyWithImpl<$Res, $Val extends Offering>
   @override
   @pragma('vm:prefer-inline')
   $PackageCopyWith<$Res>? get weekly {
-    if (_value.weekly == null) {
+    if (_self.weekly == null) {
       return null;
     }
 
-    return $PackageCopyWith<$Res>(_value.weekly!, (value) {
-      return _then(_value.copyWith(weekly: value) as $Val);
+    return $PackageCopyWith<$Res>(_self.weekly!, (value) {
+      return _then(_self.copyWith(weekly: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$OfferingImplCopyWith<$Res>
-    implements $OfferingCopyWith<$Res> {
-  factory _$$OfferingImplCopyWith(
-          _$OfferingImpl value, $Res Function(_$OfferingImpl) then) =
-      __$$OfferingImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String identifier,
-      String serverDescription,
-      Map<String, Object> metadata,
-      List<Package> availablePackages,
-      Package? lifetime,
-      Package? annual,
-      Package? sixMonth,
-      Package? threeMonth,
-      Package? twoMonth,
-      Package? monthly,
-      Package? weekly});
-
-  @override
-  $PackageCopyWith<$Res>? get lifetime;
-  @override
-  $PackageCopyWith<$Res>? get annual;
-  @override
-  $PackageCopyWith<$Res>? get sixMonth;
-  @override
-  $PackageCopyWith<$Res>? get threeMonth;
-  @override
-  $PackageCopyWith<$Res>? get twoMonth;
-  @override
-  $PackageCopyWith<$Res>? get monthly;
-  @override
-  $PackageCopyWith<$Res>? get weekly;
-}
-
-/// @nodoc
-class __$$OfferingImplCopyWithImpl<$Res>
-    extends _$OfferingCopyWithImpl<$Res, _$OfferingImpl>
-    implements _$$OfferingImplCopyWith<$Res> {
-  __$$OfferingImplCopyWithImpl(
-      _$OfferingImpl _value, $Res Function(_$OfferingImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Offering
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? identifier = null,
-    Object? serverDescription = null,
-    Object? metadata = null,
-    Object? availablePackages = null,
-    Object? lifetime = freezed,
-    Object? annual = freezed,
-    Object? sixMonth = freezed,
-    Object? threeMonth = freezed,
-    Object? twoMonth = freezed,
-    Object? monthly = freezed,
-    Object? weekly = freezed,
-  }) {
-    return _then(_$OfferingImpl(
-      null == identifier
-          ? _value.identifier
-          : identifier // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == serverDescription
-          ? _value.serverDescription
-          : serverDescription // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == metadata
-          ? _value._metadata
-          : metadata // ignore: cast_nullable_to_non_nullable
-              as Map<String, Object>,
-      null == availablePackages
-          ? _value._availablePackages
-          : availablePackages // ignore: cast_nullable_to_non_nullable
-              as List<Package>,
-      lifetime: freezed == lifetime
-          ? _value.lifetime
-          : lifetime // ignore: cast_nullable_to_non_nullable
-              as Package?,
-      annual: freezed == annual
-          ? _value.annual
-          : annual // ignore: cast_nullable_to_non_nullable
-              as Package?,
-      sixMonth: freezed == sixMonth
-          ? _value.sixMonth
-          : sixMonth // ignore: cast_nullable_to_non_nullable
-              as Package?,
-      threeMonth: freezed == threeMonth
-          ? _value.threeMonth
-          : threeMonth // ignore: cast_nullable_to_non_nullable
-              as Package?,
-      twoMonth: freezed == twoMonth
-          ? _value.twoMonth
-          : twoMonth // ignore: cast_nullable_to_non_nullable
-              as Package?,
-      monthly: freezed == monthly
-          ? _value.monthly
-          : monthly // ignore: cast_nullable_to_non_nullable
-              as Package?,
-      weekly: freezed == weekly
-          ? _value.weekly
-          : weekly // ignore: cast_nullable_to_non_nullable
-              as Package?,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$OfferingImpl extends _Offering {
-  const _$OfferingImpl(this.identifier, this.serverDescription,
+class _Offering extends Offering {
+  const _Offering(this.identifier, this.serverDescription,
       final Map<String, Object> metadata, final List<Package> availablePackages,
       {this.lifetime,
       this.annual,
@@ -390,9 +318,8 @@ class _$OfferingImpl extends _Offering {
       : _metadata = metadata,
         _availablePackages = availablePackages,
         super._();
-
-  factory _$OfferingImpl.fromJson(Map<String, dynamic> json) =>
-      _$$OfferingImplFromJson(json);
+  factory _Offering.fromJson(Map<String, dynamic> json) =>
+      _$OfferingFromJson(json);
 
   /// Unique identifier defined in RevenueCat dashboard.
   @override
@@ -453,16 +380,26 @@ class _$OfferingImpl extends _Offering {
   @override
   final Package? weekly;
 
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Offering(identifier: $identifier, serverDescription: $serverDescription, metadata: $metadata, availablePackages: $availablePackages, lifetime: $lifetime, annual: $annual, sixMonth: $sixMonth, threeMonth: $threeMonth, twoMonth: $twoMonth, monthly: $monthly, weekly: $weekly)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$OfferingCopyWith<_Offering> get copyWith =>
+      __$OfferingCopyWithImpl<_Offering>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$OfferingToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$OfferingImpl &&
+            other is _Offering &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.serverDescription, serverDescription) ||
@@ -499,88 +436,217 @@ class _$OfferingImpl extends _Offering {
       monthly,
       weekly);
 
-  /// Create a copy of Offering
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$OfferingImplCopyWith<_$OfferingImpl> get copyWith =>
-      __$$OfferingImplCopyWithImpl<_$OfferingImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$OfferingImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Offering(identifier: $identifier, serverDescription: $serverDescription, metadata: $metadata, availablePackages: $availablePackages, lifetime: $lifetime, annual: $annual, sixMonth: $sixMonth, threeMonth: $threeMonth, twoMonth: $twoMonth, monthly: $monthly, weekly: $weekly)';
   }
 }
 
-abstract class _Offering extends Offering {
-  const factory _Offering(
-      final String identifier,
-      final String serverDescription,
-      final Map<String, Object> metadata,
-      final List<Package> availablePackages,
-      {final Package? lifetime,
-      final Package? annual,
-      final Package? sixMonth,
-      final Package? threeMonth,
-      final Package? twoMonth,
-      final Package? monthly,
-      final Package? weekly}) = _$OfferingImpl;
-  const _Offering._() : super._();
-
-  factory _Offering.fromJson(Map<String, dynamic> json) =
-      _$OfferingImpl.fromJson;
-
-  /// Unique identifier defined in RevenueCat dashboard.
+/// @nodoc
+abstract mixin class _$OfferingCopyWith<$Res>
+    implements $OfferingCopyWith<$Res> {
+  factory _$OfferingCopyWith(_Offering value, $Res Function(_Offering) _then) =
+      __$OfferingCopyWithImpl;
   @override
-  String get identifier;
+  @useResult
+  $Res call(
+      {String identifier,
+      String serverDescription,
+      Map<String, Object> metadata,
+      List<Package> availablePackages,
+      Package? lifetime,
+      Package? annual,
+      Package? sixMonth,
+      Package? threeMonth,
+      Package? twoMonth,
+      Package? monthly,
+      Package? weekly});
 
-  /// Offering description defined in RevenueCat dashboard.
   @override
-  String get serverDescription;
+  $PackageCopyWith<$Res>? get lifetime;
+  @override
+  $PackageCopyWith<$Res>? get annual;
+  @override
+  $PackageCopyWith<$Res>? get sixMonth;
+  @override
+  $PackageCopyWith<$Res>? get threeMonth;
+  @override
+  $PackageCopyWith<$Res>? get twoMonth;
+  @override
+  $PackageCopyWith<$Res>? get monthly;
+  @override
+  $PackageCopyWith<$Res>? get weekly;
+}
 
-  /// Offering metadata defined in RevenueCat dashboard.
-  @override
-  Map<String, Object> get metadata;
+/// @nodoc
+class __$OfferingCopyWithImpl<$Res> implements _$OfferingCopyWith<$Res> {
+  __$OfferingCopyWithImpl(this._self, this._then);
 
-  /// Array of [Package] objects available for purchase.
-  @override
-  List<Package> get availablePackages;
-
-  /// Lifetime package type configured in the RevenueCat dashboard, if available.
-  @override
-  Package? get lifetime;
-
-  /// Annual package type configured in the RevenueCat dashboard, if available.
-  @override
-  Package? get annual;
-
-  /// Six month package type configured in the RevenueCat dashboard, if available.
-  @override
-  Package? get sixMonth;
-
-  /// Three month package type configured in the RevenueCat dashboard, if available.
-  @override
-  Package? get threeMonth;
-
-  /// Two month package type configured in the RevenueCat dashboard, if available.
-  @override
-  Package? get twoMonth;
-
-  /// Monthly package type configured in the RevenueCat dashboard, if available.
-  @override
-  Package? get monthly;
-
-  /// Weekly package type configured in the RevenueCat dashboard, if available.
-  @override
-  Package? get weekly;
+  final _Offering _self;
+  final $Res Function(_Offering) _then;
 
   /// Create a copy of Offering
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$OfferingImplCopyWith<_$OfferingImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? identifier = null,
+    Object? serverDescription = null,
+    Object? metadata = null,
+    Object? availablePackages = null,
+    Object? lifetime = freezed,
+    Object? annual = freezed,
+    Object? sixMonth = freezed,
+    Object? threeMonth = freezed,
+    Object? twoMonth = freezed,
+    Object? monthly = freezed,
+    Object? weekly = freezed,
+  }) {
+    return _then(_Offering(
+      null == identifier
+          ? _self.identifier
+          : identifier // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == serverDescription
+          ? _self.serverDescription
+          : serverDescription // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == metadata
+          ? _self._metadata
+          : metadata // ignore: cast_nullable_to_non_nullable
+              as Map<String, Object>,
+      null == availablePackages
+          ? _self._availablePackages
+          : availablePackages // ignore: cast_nullable_to_non_nullable
+              as List<Package>,
+      lifetime: freezed == lifetime
+          ? _self.lifetime
+          : lifetime // ignore: cast_nullable_to_non_nullable
+              as Package?,
+      annual: freezed == annual
+          ? _self.annual
+          : annual // ignore: cast_nullable_to_non_nullable
+              as Package?,
+      sixMonth: freezed == sixMonth
+          ? _self.sixMonth
+          : sixMonth // ignore: cast_nullable_to_non_nullable
+              as Package?,
+      threeMonth: freezed == threeMonth
+          ? _self.threeMonth
+          : threeMonth // ignore: cast_nullable_to_non_nullable
+              as Package?,
+      twoMonth: freezed == twoMonth
+          ? _self.twoMonth
+          : twoMonth // ignore: cast_nullable_to_non_nullable
+              as Package?,
+      monthly: freezed == monthly
+          ? _self.monthly
+          : monthly // ignore: cast_nullable_to_non_nullable
+              as Package?,
+      weekly: freezed == weekly
+          ? _self.weekly
+          : weekly // ignore: cast_nullable_to_non_nullable
+              as Package?,
+    ));
+  }
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<$Res>? get lifetime {
+    if (_self.lifetime == null) {
+      return null;
+    }
+
+    return $PackageCopyWith<$Res>(_self.lifetime!, (value) {
+      return _then(_self.copyWith(lifetime: value));
+    });
+  }
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<$Res>? get annual {
+    if (_self.annual == null) {
+      return null;
+    }
+
+    return $PackageCopyWith<$Res>(_self.annual!, (value) {
+      return _then(_self.copyWith(annual: value));
+    });
+  }
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<$Res>? get sixMonth {
+    if (_self.sixMonth == null) {
+      return null;
+    }
+
+    return $PackageCopyWith<$Res>(_self.sixMonth!, (value) {
+      return _then(_self.copyWith(sixMonth: value));
+    });
+  }
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<$Res>? get threeMonth {
+    if (_self.threeMonth == null) {
+      return null;
+    }
+
+    return $PackageCopyWith<$Res>(_self.threeMonth!, (value) {
+      return _then(_self.copyWith(threeMonth: value));
+    });
+  }
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<$Res>? get twoMonth {
+    if (_self.twoMonth == null) {
+      return null;
+    }
+
+    return $PackageCopyWith<$Res>(_self.twoMonth!, (value) {
+      return _then(_self.copyWith(twoMonth: value));
+    });
+  }
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<$Res>? get monthly {
+    if (_self.monthly == null) {
+      return null;
+    }
+
+    return $PackageCopyWith<$Res>(_self.monthly!, (value) {
+      return _then(_self.copyWith(monthly: value));
+    });
+  }
+
+  /// Create a copy of Offering
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<$Res>? get weekly {
+    if (_self.weekly == null) {
+      return null;
+    }
+
+    return $PackageCopyWith<$Res>(_self.weekly!, (value) {
+      return _then(_self.copyWith(weekly: value));
+    });
+  }
 }
+
+// dart format on
