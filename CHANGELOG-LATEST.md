@@ -1,12 +1,5 @@
 ## RevenueCat SDK
-### ✨ New Features
-* Add `paddle` store (#1351) via Will Taylor (@fire-at-will)
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.33.0 (#1352) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 8.19.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.19.0)
-  * [Android 8.18.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.18.0)
-  * [iOS 5.26.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.26.0)
-  * [iOS 5.25.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.3)
-  * [iOS 5.25.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.2)
-  * [iOS 5.25.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.1)
-  * [iOS 5.25.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.25.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.36.0 (#1361) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.28.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.28.1)
+  * [iOS 5.28.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.28.0)
