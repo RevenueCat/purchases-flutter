@@ -5,8 +5,6 @@ export 'package:collection/collection.dart' show DeepCollectionEquality;
 export 'package:json_annotation/json_annotation.dart';
 export 'package:meta/meta.dart';
 
-part 'freezed_annotation.g.dart';
-
 /// An [UnmodifiableListView] which overrides ==
 class EqualUnmodifiableListView<T> extends UnmodifiableListView<T> {
   /// An [UnmodifiableListView] which overrides ==
@@ -79,9 +77,6 @@ class Freezed {
     this.addImplicitFinal = true,
     this.genericArgumentFactories = false,
   });
-
-  /// Decode the options from a build.yaml
-  factory Freezed.fromJson(Map json) => _$FreezedFromJson(json);
 
   /// Whether to assume that all constructor parameters are marked as final.
   ///
