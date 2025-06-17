@@ -1,5 +1,6 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../errors.dart';
-import '../freezed_annotation/freezed_annotation.dart';
 
 part 'purchases_error.freezed.dart';
 part 'purchases_error.g.dart';

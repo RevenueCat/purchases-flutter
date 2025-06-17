@@ -1,4 +1,5 @@
-import '../freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import '../object_wrappers.dart';
 
 part 'package_wrapper.freezed.dart';

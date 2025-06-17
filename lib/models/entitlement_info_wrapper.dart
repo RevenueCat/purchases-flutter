@@ -1,8 +1,9 @@
-import '../freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'store.dart';
 import 'verification_result.dart';
 
 part 'entitlement_info_wrapper.freezed.dart';
+
 part 'entitlement_info_wrapper.g.dart';
 
 /// Enum of supported period types for an entitlement.

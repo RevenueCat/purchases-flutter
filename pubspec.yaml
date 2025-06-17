@@ -15,10 +15,9 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
+  freezed_annotation: 3.0.0
   json_annotation: ^4.8.0
   web: ^1.1.1
-  collection: ^1.15.0
-  meta: ^1.7.0
 
 dev_dependencies:
   flutter_driver:

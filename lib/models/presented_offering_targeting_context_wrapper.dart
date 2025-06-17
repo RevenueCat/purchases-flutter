@@ -1,4 +1,4 @@
-import '../freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'presented_offering_targeting_context_wrapper.freezed.dart';
 part 'presented_offering_targeting_context_wrapper.g.dart';

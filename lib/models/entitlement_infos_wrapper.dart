@@ -1,4 +1,5 @@
-import '../freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'entitlement_info_wrapper.dart';
 import 'verification_result.dart';
 

@@ -1,4 +1,4 @@
-import '../freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'installments_info.freezed.dart';
 part 'installments_info.g.dart';

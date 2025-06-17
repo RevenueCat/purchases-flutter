@@ -1,4 +1,4 @@
-import '../freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'win_back_offer.freezed.dart';
 part 'win_back_offer.g.dart';

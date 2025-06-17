@@ -1,4 +1,5 @@
-import '../freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
 import 'installments_info.dart';
 import 'period_wrapper.dart';
 import 'presented_offering_context_wrapper.dart';
