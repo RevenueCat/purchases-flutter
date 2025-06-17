@@ -7,7 +7,7 @@ documentation: https://docs.revenuecat.com/docs
 
 environment:
   # TODO: Check constraints are ok
-  sdk: '>=3.4.0 <4.0.0'
+  sdk: '>=3.6.0 <4.0.0'
   flutter: '>=3.22.0'
 
 dependencies:
