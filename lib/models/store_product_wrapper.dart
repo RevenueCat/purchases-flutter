@@ -12,7 +12,7 @@ part 'store_product_wrapper.g.dart';
 @freezed
 
 /// Contains all the product details associated with a StoreProduct
-class StoreProduct with _$StoreProduct {
+abstract class StoreProduct with _$StoreProduct {
   const factory StoreProduct(
     /// Product Id.
     String identifier,

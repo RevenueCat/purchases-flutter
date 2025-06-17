@@ -6,8 +6,7 @@ part of 'introductory_price.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$IntroductoryPriceImpl _$$IntroductoryPriceImplFromJson(Map json) =>
-    _$IntroductoryPriceImpl(
+_IntroductoryPrice _$IntroductoryPriceFromJson(Map json) => _IntroductoryPrice(
       (json['price'] as num).toDouble(),
       json['priceString'] as String,
       json['period'] as String,
@@ -17,8 +16,7 @@ _$IntroductoryPriceImpl _$$IntroductoryPriceImplFromJson(Map json) =>
       (json['periodNumberOfUnits'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$IntroductoryPriceImplToJson(
-        _$IntroductoryPriceImpl instance) =>
+Map<String, dynamic> _$IntroductoryPriceToJson(_IntroductoryPrice instance) =>
     <String, dynamic>{
       'price': instance.price,
       'priceString': instance.priceString,

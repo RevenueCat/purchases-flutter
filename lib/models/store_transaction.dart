@@ -7,7 +7,7 @@ part 'store_transaction.g.dart';
 @freezed
 
 /// Represents a purchase transaction
-class StoreTransaction with _$StoreTransaction {
+abstract class StoreTransaction with _$StoreTransaction {
   /// Experimental. This factory method is subject to changes without
   /// a major release.
   const factory StoreTransaction.create(

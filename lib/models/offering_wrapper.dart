@@ -9,7 +9,7 @@ part 'offering_wrapper.g.dart';
 
 /// An offering is a collection of [Package] available for the user
 /// to purchase. For more info see https://docs.revenuecat.com/docs/entitlements
-class Offering with _$Offering {
+abstract class Offering with _$Offering {
   const Offering._(); // Added constructor
   const factory Offering(
     /// Unique identifier defined in RevenueCat dashboard.

@@ -6,7 +6,7 @@ part 'price_wrapper.g.dart';
 @freezed
 
 /// Contains all the details associated with a Price
-class Price with _$Price {
+abstract class Price with _$Price {
   const factory Price(
     /// Formatted price of the item, including its currency sign. For example $3.00
     String formatted,

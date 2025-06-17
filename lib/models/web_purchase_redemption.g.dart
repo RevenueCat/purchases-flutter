@@ -6,13 +6,13 @@ part of 'web_purchase_redemption.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$WebPurchaseRedemptionImpl _$$WebPurchaseRedemptionImplFromJson(Map json) =>
-    _$WebPurchaseRedemptionImpl(
+_WebPurchaseRedemption _$WebPurchaseRedemptionFromJson(Map json) =>
+    _WebPurchaseRedemption(
       json['redemptionLink'] as String,
     );
 
-Map<String, dynamic> _$$WebPurchaseRedemptionImplToJson(
-        _$WebPurchaseRedemptionImpl instance) =>
+Map<String, dynamic> _$WebPurchaseRedemptionToJson(
+        _WebPurchaseRedemption instance) =>
     <String, dynamic>{
       'redemptionLink': instance.redemptionLink,
     };

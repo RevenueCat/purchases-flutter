@@ -6,14 +6,13 @@ part of 'period_wrapper.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$PeriodImpl _$$PeriodImplFromJson(Map json) => _$PeriodImpl(
+_Period _$PeriodFromJson(Map json) => _Period(
       $enumDecode(_$PeriodUnitEnumMap, json['unit']),
       (json['value'] as num).toInt(),
       json['iso8601'] as String,
     );
 
-Map<String, dynamic> _$$PeriodImplToJson(_$PeriodImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PeriodToJson(_Period instance) => <String, dynamic>{
       'unit': _$PeriodUnitEnumMap[instance.unit]!,
       'value': instance.value,
       'iso8601': instance.iso8601,

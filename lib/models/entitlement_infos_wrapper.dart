@@ -9,7 +9,7 @@ part 'entitlement_infos_wrapper.g.dart';
 @freezed
 
 /// This class contains all the entitlements associated to the user.
-class EntitlementInfos with _$EntitlementInfos {
+abstract class EntitlementInfos with _$EntitlementInfos {
   const factory EntitlementInfos(
     /// Map of all EntitlementInfo (`EntitlementInfo`) objects (active and inactive)
     /// keyed by entitlement identifier.
