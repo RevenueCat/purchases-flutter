@@ -1,5 +1,5 @@
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+import '../freezed_annotation/freezed_annotation.dart';
 
 part 'web_purchase_redemption.freezed.dart';
 part 'web_purchase_redemption.g.dart';

@@ -1,4 +1,5 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+
+import '../freezed_annotation/freezed_annotation.dart';
 
 import 'entitlement_infos_wrapper.dart';
 import 'store_transaction.dart';

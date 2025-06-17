@@ -1,5 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
+import '../freezed_annotation/freezed_annotation.dart';
 import 'period_wrapper.dart';
 import 'price_wrapper.dart';
 

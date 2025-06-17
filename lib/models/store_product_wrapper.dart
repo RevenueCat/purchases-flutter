@@ -1,5 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
+import '../freezed_annotation/freezed_annotation.dart';
 import 'introductory_price.dart';
 import 'presented_offering_context_wrapper.dart';
 import 'product_category.dart';

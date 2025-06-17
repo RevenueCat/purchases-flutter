@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import '../freezed_annotation/freezed_annotation.dart';
 
 /// Enum of entitlement verification modes
 enum VerificationResult {

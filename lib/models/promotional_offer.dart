@@ -1,4 +1,4 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import '../freezed_annotation/freezed_annotation.dart';
 
 part 'promotional_offer.freezed.dart';
 part 'promotional_offer.g.dart';
