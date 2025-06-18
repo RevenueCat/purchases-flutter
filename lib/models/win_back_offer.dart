@@ -22,24 +22,24 @@ class WinBackOffer extends Equatable {
   /// Number of units for the billing period of the discount.
   final int periodNumberOfUnits;
 
-  const WinBackOffer({
-    required this.identifier,
-    required this.price,
-    required this.priceString,
-    required this.cycles,
-    required this.period,
-    required this.periodUnit,
-    required this.periodNumberOfUnits,
-  });
+  const WinBackOffer(
+    this.identifier,
+    this.price,
+    this.priceString,
+    this.cycles,
+    this.period,
+    this.periodUnit,
+    this.periodNumberOfUnits,
+  );
 
   factory WinBackOffer.fromJson(Map<String, dynamic> json) => WinBackOffer(
-    identifier: json['identifier'] as String,
-    price: (json['price'] as num).toDouble(),
-    priceString: json['priceString'] as String,
-    cycles: json['cycles'] as int,
-    period: json['period'] as String,
-    periodUnit: json['periodUnit'] as String,
-    periodNumberOfUnits: json['periodNumberOfUnits'] as int,
+    json['identifier'] as String,
+    (json['price'] as num).toDouble(),
+    json['priceString'] as String,
+    json['cycles'] as int,
+    json['period'] as String,
+    json['periodUnit'] as String,
+    json['periodNumberOfUnits'] as int,
   );
 
   @override

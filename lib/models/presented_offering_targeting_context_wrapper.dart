@@ -7,10 +7,10 @@ class PresentedOfferingTargetingContext extends Equatable {
   /// The rule id from the targeting used to obtain this object
   final String ruleId;
 
-  const PresentedOfferingTargetingContext({
-    required this.revision,
-    required this.ruleId,
-  });
+  const PresentedOfferingTargetingContext(
+    this.revision,
+    this.ruleId,
+  );
 
   toJson() => {
     'revision': revision,
@@ -18,8 +18,8 @@ class PresentedOfferingTargetingContext extends Equatable {
   };
 
   factory PresentedOfferingTargetingContext.fromJson(Map<String, dynamic> json) => PresentedOfferingTargetingContext(
-    revision: json['revision'] as int,
-    ruleId: json['ruleId'] as String,
+    json['revision'] as int,
+    json['ruleId'] as String,
   );
 
   @override
