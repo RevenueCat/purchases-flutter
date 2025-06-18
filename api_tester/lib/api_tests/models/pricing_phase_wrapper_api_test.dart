@@ -7,10 +7,6 @@ class _PricingPhaseApiTest {
     PricingPhase pricingPhase = PricingPhase.fromJson(json);
   }
 
-  void _checkToJson(PricingPhase pricingPhase) {
-    Map<String, dynamic> json = pricingPhase.toJson();
-  }
-
   void _checkConstructor(
     Period billingPeriod,
     RecurrenceMode? recurrenceMode,

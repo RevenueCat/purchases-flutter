@@ -27,10 +27,6 @@ class _EntitlementInfoApiTest {
     EntitlementInfo info = EntitlementInfo.fromJson(json);
   }
 
-  void _checkToJson(EntitlementInfo entitlementInfo) {
-    Map<String, dynamic> json = entitlementInfo.toJson();
-  }
-
   void _checkConstructor(
       String identifier,
       bool isActive,

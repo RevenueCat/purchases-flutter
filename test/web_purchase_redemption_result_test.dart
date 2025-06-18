@@ -7,9 +7,9 @@ void main() {
       'result': 'EXPIRED',
       'obfuscatedEmail': 'test-obfuscated-email@g******m',
     });
-    Expired? resultIfExpired;
+    WebRedemptionExpired? resultIfExpired;
     switch (result) {
-      case Expired(:final obfuscatedEmail):
+      case WebRedemptionExpired(:final obfuscatedEmail):
         expect(obfuscatedEmail, 'test-obfuscated-email@g******m');
         resultIfExpired = result;
       case _:
@@ -23,9 +23,9 @@ void main() {
       'result': 'PURCHASE_BELONGS_TO_OTHER_USER',
     });
 
-    PurchaseBelongsToOtherUser? resultIfPurchaseBelongsToOtherUser;
+    WebRedemptionPurchaseBelongsToOtherUser? resultIfPurchaseBelongsToOtherUser;
     switch (result) {
-      case PurchaseBelongsToOtherUser():
+      case WebRedemptionPurchaseBelongsToOtherUser():
         resultIfPurchaseBelongsToOtherUser = result;
       case _:
         break;
@@ -39,7 +39,7 @@ void main() {
       'entitlements': {
         'all': {},
         'active': {},
-        'verification': 'NOT_REQUESTED'
+        'verification': 'NOT_REQUESTED',
       },
       'activeSubscriptions': [],
       'latestExpirationDate': '2021-04-09T14:48:00.000Z',
@@ -56,9 +56,9 @@ void main() {
       'customerInfo': customerInfoJson,
     });
 
-    Success? resultIfSuccess;
+    WebRedemptionSuccess? resultIfSuccess;
     switch (result) {
-      case Success(:final customerInfo):
+      case WebRedemptionSuccess(:final customerInfo):
         expect(customerInfo.originalAppUserId, 'pepe');
         return result;
       case _:

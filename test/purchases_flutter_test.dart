@@ -1465,9 +1465,9 @@ void main() {
         },
       ),
     ]);
-    Success? expiredOrNull;
+    WebRedemptionSuccess? expiredOrNull;
     switch (webPurchaseRedemptionResult) {
-      case Success(:final customerInfo):
+      case WebRedemptionSuccess(:final customerInfo):
         expect(customerInfo, CustomerInfo.fromJson(mockCustomerInfoResponse));
         expiredOrNull = webPurchaseRedemptionResult;
       case _:

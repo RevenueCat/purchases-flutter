@@ -1,78 +1,96 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
 import '../object_wrappers.dart';
-
-part 'package_wrapper.freezed.dart';
-part 'package_wrapper.g.dart';
 
 /// Enumeration of all possible Package types.
 enum PackageType {
   /// A package that was defined with a custom identifier.
-  @JsonValue('UNKNOWN')
   unknown,
 
   /// A package that was defined with a custom identifier.
-  @JsonValue('CUSTOM')
   custom,
 
   /// A package configured with the predefined lifetime identifier.
-  @JsonValue('LIFETIME')
   lifetime,
 
   /// A package configured with the predefined annual identifier.
-  @JsonValue('ANNUAL')
   annual,
 
   /// A package configured with the predefined six month identifier.
-  @JsonValue('SIX_MONTH')
   sixMonth,
 
   /// A package configured with the predefined three month identifier.
-  @JsonValue('THREE_MONTH')
   threeMonth,
 
   /// A package configured with the predefined two month identifier.
-  @JsonValue('TWO_MONTH')
   twoMonth,
 
   /// A package configured with the predefined monthly identifier.
-  @JsonValue('MONTHLY')
   monthly,
 
   /// A package configured with the predefined weekly identifier.
-  @JsonValue('WEEKLY')
   weekly
 }
 
-@freezed
+class Package extends Equatable {
+  /// Unique identifier for this package. Can be one a predefined package type or a custom one.
+  final String identifier;
 
-/// Contains information about the product available for the user to purchase.
-/// For more info see https://docs.revenuecat.com/docs/entitlements
+  /// Package type for the product. Will be one of [PackageType].
+  final PackageType packageType;
 
-abstract class Package with _$Package {
-  const factory Package(
-    /// Unique identifier for this package. Can be one a predefined package type
-    /// or a custom one.
-    String identifier,
+  /// StoreProduct assigned to this package.
+  final StoreProduct storeProduct;
 
-    /// Package type for the product. Will be one of [PackageType].
-    // ignore: invalid_annotation_target
-    @JsonKey(
-      name: 'packageType',
-      unknownEnumValue: PackageType.unknown,
-    )
-    PackageType packageType,
+  /// Offering context this package belongs to.
+  final PresentedOfferingContext presentedOfferingContext;
 
-    /// StoreProduct assigned to this package.
-    // ignore: invalid_annotation_target
-    @JsonKey(name: 'product') StoreProduct storeProduct,
+  const Package(
+      this.identifier,
+      this.packageType,
+      this.storeProduct,
+      this.presentedOfferingContext,
+  );
 
-    /// Offering context this package belongs to.
-    PresentedOfferingContext presentedOfferingContext,
-  ) = _Package;
+  factory Package.fromJson(Map<String, dynamic> json) => Package(
+    json['identifier'] as String,
+    _packageTypeFromJson(json['packageType']),
+    StoreProduct.fromJson(Map<String, dynamic>.from(json['product'])),
+    PresentedOfferingContext.fromJson(Map<String, dynamic>.from(json['presentedOfferingContext'])),
+  );
 
-  factory Package.fromJson(Map<String, dynamic> json) =>
-      _$PackageFromJson(json);
+  @override
+  List<Object> get props => [
+    identifier,
+    packageType,
+    storeProduct,
+    presentedOfferingContext,
+  ];
+}
+
+PackageType _packageTypeFromJson(dynamic value) {
+  switch (value) {
+    case 'UNKNOWN':
+      return PackageType.unknown;
+    case 'CUSTOM':
+      return PackageType.custom;
+    case 'LIFETIME':
+      return PackageType.lifetime;
+    case 'ANNUAL':
+      return PackageType.annual;
+    case 'SIX_MONTH':
+      return PackageType.sixMonth;
+    case 'THREE_MONTH':
+      return PackageType.threeMonth;
+    case 'TWO_MONTH':
+      return PackageType.twoMonth;
+    case 'MONTHLY':
+      return PackageType.monthly;
+    case 'WEEKLY':
+      return PackageType.weekly;
+    default:
+      return PackageType.unknown;
+  }
 }
 
 extension ExtendedPackage on Package {

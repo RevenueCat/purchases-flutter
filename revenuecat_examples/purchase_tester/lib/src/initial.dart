@@ -47,13 +47,13 @@ class _InitialScreenState extends State<InitialScreen> {
 
   void _showWebRedemptionResultDialog(WebPurchaseRedemptionResult result) {
     final message = switch (result) {
-      Success(:final customerInfo) =>
+      WebRedemptionSuccess(:final customerInfo) =>
         'Web purchase redemption successful. CustomerInfo: $customerInfo',
-      Error(:final error) => 'Web purchase redemption failed: $error',
-      PurchaseBelongsToOtherUser() =>
+      WebRedemptionError(:final error) => 'Web purchase redemption failed: $error',
+      WebRedemptionPurchaseBelongsToOtherUser() =>
         'Web purchase redemption failed: purchase belongs to another user',
-      InvalidToken() => 'Web purchase redemption failed: invalid token',
-      Expired(:final obfuscatedEmail) =>
+      WebRedemptionInvalidToken() => 'Web purchase redemption failed: invalid token',
+      WebRedemptionExpired(:final obfuscatedEmail) =>
         'Web purchase redemption failed: expired token for $obfuscatedEmail',
     };
 

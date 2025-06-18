@@ -14,20 +14,20 @@ class _WebPurchaseRedemptionResultApiTest {
       String obfuscatedEmail,
   ) {
     WebPurchaseRedemptionResult result =
-        WebPurchaseRedemptionResult.success(customerInfo: customerInfo);
-    result = WebPurchaseRedemptionResult.error(error: error);
-    result = const WebPurchaseRedemptionResult.purchaseBelongsToOtherUser();
-    result = const WebPurchaseRedemptionResult.invalidToken();
-    result = WebPurchaseRedemptionResult.expired(obfuscatedEmail: obfuscatedEmail);
+        WebRedemptionSuccess(customerInfo: customerInfo);
+    result = WebRedemptionError(error: error);
+    result = const WebRedemptionPurchaseBelongsToOtherUser();
+    result = const WebRedemptionInvalidToken();
+    result = WebRedemptionExpired(obfuscatedEmail: obfuscatedEmail);
   }
 
   void _checkSwitch(WebPurchaseRedemptionResult result) {
     final resultType = switch (result) {
-      Success(:CustomerInfo customerInfo) => 'SUCCESS',
-      Error(:PurchasesError error) => 'ERROR',
-      PurchaseBelongsToOtherUser() => 'PURCHASE_BELONGS_TO_OTHER_USER',
-      InvalidToken() => 'INVALID_TOKEN',
-      Expired(:String obfuscatedEmail) => 'EXPIRED',
+      WebRedemptionSuccess(:CustomerInfo customerInfo) => 'SUCCESS',
+      WebRedemptionError(:PurchasesError error) => 'ERROR',
+      WebRedemptionPurchaseBelongsToOtherUser() => 'PURCHASE_BELONGS_TO_OTHER_USER',
+      WebRedemptionInvalidToken() => 'INVALID_TOKEN',
+      WebRedemptionExpired(:String obfuscatedEmail) => 'EXPIRED',
     };
   }
 }
