@@ -8,7 +8,7 @@ part 'introductory_price.g.dart';
 @freezed
 
 /// Contains all the introductory information associated with a [Product]
-class IntroductoryPrice with _$IntroductoryPrice {
+abstract class IntroductoryPrice with _$IntroductoryPrice {
   const factory IntroductoryPrice(
     /// Introductory price of a subscription in the local currency.
     double price,

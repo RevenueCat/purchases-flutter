@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,128 +10,77 @@ part of 'store_product_discount.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-StoreProductDiscount _$StoreProductDiscountFromJson(Map<String, dynamic> json) {
-  return _StoreProductDiscount.fromJson(json);
-}
 
 /// @nodoc
 mixin _$StoreProductDiscount {
   /// Identifier of the discount.
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
 
   /// Identifier of the discount.
-  double get price => throw _privateConstructorUsedError;
+  double get price;
 
   /// Formatted price, including its currency sign, such as €3.99.
-  String get priceString => throw _privateConstructorUsedError;
+  String get priceString;
 
   /// Number of subscription billing periods for which the user will be given the discount, such as 3.
-  int get cycles => throw _privateConstructorUsedError;
+  int get cycles;
 
   /// Billing period of the discount, specified in ISO 8601 format.
-  String get period => throw _privateConstructorUsedError;
+  String get period;
 
   /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
-  String get periodUnit => throw _privateConstructorUsedError;
+  String get periodUnit;
 
   /// Number of units for the billing period of the discount.
-  int get periodNumberOfUnits => throw _privateConstructorUsedError;
-
-  /// Serializes this StoreProductDiscount to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  int get periodNumberOfUnits;
 
   /// Create a copy of StoreProductDiscount
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $StoreProductDiscountCopyWith<StoreProductDiscount> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $StoreProductDiscountCopyWith<$Res> {
-  factory $StoreProductDiscountCopyWith(StoreProductDiscount value,
-          $Res Function(StoreProductDiscount) then) =
-      _$StoreProductDiscountCopyWithImpl<$Res, StoreProductDiscount>;
-  @useResult
-  $Res call(
-      {String identifier,
-      double price,
-      String priceString,
-      int cycles,
-      String period,
-      String periodUnit,
-      int periodNumberOfUnits});
-}
-
-/// @nodoc
-class _$StoreProductDiscountCopyWithImpl<$Res,
-        $Val extends StoreProductDiscount>
-    implements $StoreProductDiscountCopyWith<$Res> {
-  _$StoreProductDiscountCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of StoreProductDiscount
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
+  $StoreProductDiscountCopyWith<StoreProductDiscount> get copyWith =>
+      _$StoreProductDiscountCopyWithImpl<StoreProductDiscount>(
+          this as StoreProductDiscount, _$identity);
+
+  /// Serializes this StoreProductDiscount to a JSON map.
+  Map<String, dynamic> toJson();
+
   @override
-  $Res call({
-    Object? identifier = null,
-    Object? price = null,
-    Object? priceString = null,
-    Object? cycles = null,
-    Object? period = null,
-    Object? periodUnit = null,
-    Object? periodNumberOfUnits = null,
-  }) {
-    return _then(_value.copyWith(
-      identifier: null == identifier
-          ? _value.identifier
-          : identifier // ignore: cast_nullable_to_non_nullable
-              as String,
-      price: null == price
-          ? _value.price
-          : price // ignore: cast_nullable_to_non_nullable
-              as double,
-      priceString: null == priceString
-          ? _value.priceString
-          : priceString // ignore: cast_nullable_to_non_nullable
-              as String,
-      cycles: null == cycles
-          ? _value.cycles
-          : cycles // ignore: cast_nullable_to_non_nullable
-              as int,
-      period: null == period
-          ? _value.period
-          : period // ignore: cast_nullable_to_non_nullable
-              as String,
-      periodUnit: null == periodUnit
-          ? _value.periodUnit
-          : periodUnit // ignore: cast_nullable_to_non_nullable
-              as String,
-      periodNumberOfUnits: null == periodNumberOfUnits
-          ? _value.periodNumberOfUnits
-          : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
-              as int,
-    ) as $Val);
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is StoreProductDiscount &&
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.price, price) || other.price == price) &&
+            (identical(other.priceString, priceString) ||
+                other.priceString == priceString) &&
+            (identical(other.cycles, cycles) || other.cycles == cycles) &&
+            (identical(other.period, period) || other.period == period) &&
+            (identical(other.periodUnit, periodUnit) ||
+                other.periodUnit == periodUnit) &&
+            (identical(other.periodNumberOfUnits, periodNumberOfUnits) ||
+                other.periodNumberOfUnits == periodNumberOfUnits));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, identifier, price, priceString,
+      cycles, period, periodUnit, periodNumberOfUnits);
+
+  @override
+  String toString() {
+    return 'StoreProductDiscount(identifier: $identifier, price: $price, priceString: $priceString, cycles: $cycles, period: $period, periodUnit: $periodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
   }
 }
 
 /// @nodoc
-abstract class _$$StoreProductDiscountImplCopyWith<$Res>
-    implements $StoreProductDiscountCopyWith<$Res> {
-  factory _$$StoreProductDiscountImplCopyWith(_$StoreProductDiscountImpl value,
-          $Res Function(_$StoreProductDiscountImpl) then) =
-      __$$StoreProductDiscountImplCopyWithImpl<$Res>;
-  @override
+abstract mixin class $StoreProductDiscountCopyWith<$Res> {
+  factory $StoreProductDiscountCopyWith(StoreProductDiscount value,
+          $Res Function(StoreProductDiscount) _then) =
+      _$StoreProductDiscountCopyWithImpl;
   @useResult
   $Res call(
       {String identifier,
@@ -143,12 +93,12 @@ abstract class _$$StoreProductDiscountImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$StoreProductDiscountImplCopyWithImpl<$Res>
-    extends _$StoreProductDiscountCopyWithImpl<$Res, _$StoreProductDiscountImpl>
-    implements _$$StoreProductDiscountImplCopyWith<$Res> {
-  __$$StoreProductDiscountImplCopyWithImpl(_$StoreProductDiscountImpl _value,
-      $Res Function(_$StoreProductDiscountImpl) _then)
-      : super(_value, _then);
+class _$StoreProductDiscountCopyWithImpl<$Res>
+    implements $StoreProductDiscountCopyWith<$Res> {
+  _$StoreProductDiscountCopyWithImpl(this._self, this._then);
+
+  final StoreProductDiscount _self;
+  final $Res Function(StoreProductDiscount) _then;
 
   /// Create a copy of StoreProductDiscount
   /// with the given fields replaced by the non-null parameter values.
@@ -163,33 +113,33 @@ class __$$StoreProductDiscountImplCopyWithImpl<$Res>
     Object? periodUnit = null,
     Object? periodNumberOfUnits = null,
   }) {
-    return _then(_$StoreProductDiscountImpl(
-      null == identifier
-          ? _value.identifier
+    return _then(_self.copyWith(
+      identifier: null == identifier
+          ? _self.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
-      null == price
-          ? _value.price
+      price: null == price
+          ? _self.price
           : price // ignore: cast_nullable_to_non_nullable
               as double,
-      null == priceString
-          ? _value.priceString
+      priceString: null == priceString
+          ? _self.priceString
           : priceString // ignore: cast_nullable_to_non_nullable
               as String,
-      null == cycles
-          ? _value.cycles
+      cycles: null == cycles
+          ? _self.cycles
           : cycles // ignore: cast_nullable_to_non_nullable
               as int,
-      null == period
-          ? _value.period
+      period: null == period
+          ? _self.period
           : period // ignore: cast_nullable_to_non_nullable
               as String,
-      null == periodUnit
-          ? _value.periodUnit
+      periodUnit: null == periodUnit
+          ? _self.periodUnit
           : periodUnit // ignore: cast_nullable_to_non_nullable
               as String,
-      null == periodNumberOfUnits
-          ? _value.periodNumberOfUnits
+      periodNumberOfUnits: null == periodNumberOfUnits
+          ? _self.periodNumberOfUnits
           : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
               as int,
     ));
@@ -198,18 +148,11 @@ class __$$StoreProductDiscountImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$StoreProductDiscountImpl implements _StoreProductDiscount {
-  const _$StoreProductDiscountImpl(
-      this.identifier,
-      this.price,
-      this.priceString,
-      this.cycles,
-      this.period,
-      this.periodUnit,
-      this.periodNumberOfUnits);
-
-  factory _$StoreProductDiscountImpl.fromJson(Map<String, dynamic> json) =>
-      _$$StoreProductDiscountImplFromJson(json);
+class _StoreProductDiscount implements StoreProductDiscount {
+  const _StoreProductDiscount(this.identifier, this.price, this.priceString,
+      this.cycles, this.period, this.periodUnit, this.periodNumberOfUnits);
+  factory _StoreProductDiscount.fromJson(Map<String, dynamic> json) =>
+      _$StoreProductDiscountFromJson(json);
 
   /// Identifier of the discount.
   @override
@@ -239,16 +182,27 @@ class _$StoreProductDiscountImpl implements _StoreProductDiscount {
   @override
   final int periodNumberOfUnits;
 
+  /// Create a copy of StoreProductDiscount
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'StoreProductDiscount(identifier: $identifier, price: $price, priceString: $priceString, cycles: $cycles, period: $period, periodUnit: $periodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$StoreProductDiscountCopyWith<_StoreProductDiscount> get copyWith =>
+      __$StoreProductDiscountCopyWithImpl<_StoreProductDiscount>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$StoreProductDiscountToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$StoreProductDiscountImpl &&
+            other is _StoreProductDiscount &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.price, price) || other.price == price) &&
@@ -267,69 +221,82 @@ class _$StoreProductDiscountImpl implements _StoreProductDiscount {
   int get hashCode => Object.hash(runtimeType, identifier, price, priceString,
       cycles, period, periodUnit, periodNumberOfUnits);
 
-  /// Create a copy of StoreProductDiscount
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$StoreProductDiscountImplCopyWith<_$StoreProductDiscountImpl>
-      get copyWith =>
-          __$$StoreProductDiscountImplCopyWithImpl<_$StoreProductDiscountImpl>(
-              this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$StoreProductDiscountImplToJson(
-      this,
-    );
+  String toString() {
+    return 'StoreProductDiscount(identifier: $identifier, price: $price, priceString: $priceString, cycles: $cycles, period: $period, periodUnit: $periodUnit, periodNumberOfUnits: $periodNumberOfUnits)';
   }
 }
 
-abstract class _StoreProductDiscount implements StoreProductDiscount {
-  const factory _StoreProductDiscount(
-      final String identifier,
-      final double price,
-      final String priceString,
-      final int cycles,
-      final String period,
-      final String periodUnit,
-      final int periodNumberOfUnits) = _$StoreProductDiscountImpl;
-
-  factory _StoreProductDiscount.fromJson(Map<String, dynamic> json) =
-      _$StoreProductDiscountImpl.fromJson;
-
-  /// Identifier of the discount.
+/// @nodoc
+abstract mixin class _$StoreProductDiscountCopyWith<$Res>
+    implements $StoreProductDiscountCopyWith<$Res> {
+  factory _$StoreProductDiscountCopyWith(_StoreProductDiscount value,
+          $Res Function(_StoreProductDiscount) _then) =
+      __$StoreProductDiscountCopyWithImpl;
   @override
-  String get identifier;
+  @useResult
+  $Res call(
+      {String identifier,
+      double price,
+      String priceString,
+      int cycles,
+      String period,
+      String periodUnit,
+      int periodNumberOfUnits});
+}
 
-  /// Identifier of the discount.
-  @override
-  double get price;
+/// @nodoc
+class __$StoreProductDiscountCopyWithImpl<$Res>
+    implements _$StoreProductDiscountCopyWith<$Res> {
+  __$StoreProductDiscountCopyWithImpl(this._self, this._then);
 
-  /// Formatted price, including its currency sign, such as €3.99.
-  @override
-  String get priceString;
-
-  /// Number of subscription billing periods for which the user will be given the discount, such as 3.
-  @override
-  int get cycles;
-
-  /// Billing period of the discount, specified in ISO 8601 format.
-  @override
-  String get period;
-
-  /// Unit for the billing period of the discount, can be DAY, WEEK, MONTH or YEAR.
-  @override
-  String get periodUnit;
-
-  /// Number of units for the billing period of the discount.
-  @override
-  int get periodNumberOfUnits;
+  final _StoreProductDiscount _self;
+  final $Res Function(_StoreProductDiscount) _then;
 
   /// Create a copy of StoreProductDiscount
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$StoreProductDiscountImplCopyWith<_$StoreProductDiscountImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? identifier = null,
+    Object? price = null,
+    Object? priceString = null,
+    Object? cycles = null,
+    Object? period = null,
+    Object? periodUnit = null,
+    Object? periodNumberOfUnits = null,
+  }) {
+    return _then(_StoreProductDiscount(
+      null == identifier
+          ? _self.identifier
+          : identifier // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == price
+          ? _self.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double,
+      null == priceString
+          ? _self.priceString
+          : priceString // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == cycles
+          ? _self.cycles
+          : cycles // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == period
+          ? _self.period
+          : period // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == periodUnit
+          ? _self.periodUnit
+          : periodUnit // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == periodNumberOfUnits
+          ? _self.periodNumberOfUnits
+          : periodNumberOfUnits // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
 }
+
+// dart format on

@@ -21,13 +21,13 @@ class _WebPurchaseRedemptionResultApiTest {
     result = WebPurchaseRedemptionResult.expired(obfuscatedEmail: obfuscatedEmail);
   }
 
-  void _checkFreezedWhen(WebPurchaseRedemptionResult result) {
-    result.when(
-      success: (CustomerInfo customerInfo) => 'SUCCESS',
-      error: (PurchasesError error) => 'ERROR',
-      purchaseBelongsToOtherUser: () => 'PURCHASE_BELONGS_TO_OTHER_USER',
-      invalidToken: () => 'INVALID_TOKEN',
-      expired: (String obfuscatedEmail) => 'EXPIRED',
-    );
+  void _checkSwitch(WebPurchaseRedemptionResult result) {
+    final resultType = switch (result) {
+      Success(:CustomerInfo customerInfo) => 'SUCCESS',
+      Error(:PurchasesError error) => 'ERROR',
+      PurchaseBelongsToOtherUser() => 'PURCHASE_BELONGS_TO_OTHER_USER',
+      InvalidToken() => 'INVALID_TOKEN',
+      Expired(:String obfuscatedEmail) => 'EXPIRED',
+    };
   }
 }

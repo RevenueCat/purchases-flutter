@@ -6,7 +6,7 @@ part 'presented_offering_targeting_context_wrapper.g.dart';
 @freezed
 
 /// Contains all the details associated with a PresentedOfferingContext
-class PresentedOfferingTargetingContext
+abstract class PresentedOfferingTargetingContext
     with _$PresentedOfferingTargetingContext {
   const factory PresentedOfferingTargetingContext(
     /// The revision of the targeting used to obtain this object

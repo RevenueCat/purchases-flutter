@@ -9,7 +9,7 @@ part 'customer_info_wrapper.g.dart';
 @freezed
 
 /// Class containing all information regarding the customer
-class CustomerInfo with _$CustomerInfo {
+abstract class CustomerInfo with _$CustomerInfo {
   const factory CustomerInfo(
     /// Entitlements attached to this customer info
     EntitlementInfos entitlements,

@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,48 +10,69 @@ part of 'package_wrapper.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Package _$PackageFromJson(Map<String, dynamic> json) {
-  return _Package.fromJson(json);
-}
 
 /// @nodoc
 mixin _$Package {
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
-  String get identifier => throw _privateConstructorUsedError;
+  String get identifier;
 
   /// Package type for the product. Will be one of [PackageType].
 // ignore: invalid_annotation_target
   @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-  PackageType get packageType => throw _privateConstructorUsedError;
+  PackageType get packageType;
 
   /// StoreProduct assigned to this package.
 // ignore: invalid_annotation_target
   @JsonKey(name: 'product')
-  StoreProduct get storeProduct => throw _privateConstructorUsedError;
+  StoreProduct get storeProduct;
 
   /// Offering context this package belongs to.
-  PresentedOfferingContext get presentedOfferingContext =>
-      throw _privateConstructorUsedError;
-
-  /// Serializes this Package to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  PresentedOfferingContext get presentedOfferingContext;
 
   /// Create a copy of Package
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $PackageCopyWith<Package> get copyWith => throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $PackageCopyWith<Package> get copyWith =>
+      _$PackageCopyWithImpl<Package>(this as Package, _$identity);
+
+  /// Serializes this Package to a JSON map.
+  Map<String, dynamic> toJson();
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is Package &&
+            (identical(other.identifier, identifier) ||
+                other.identifier == identifier) &&
+            (identical(other.packageType, packageType) ||
+                other.packageType == packageType) &&
+            (identical(other.storeProduct, storeProduct) ||
+                other.storeProduct == storeProduct) &&
+            (identical(
+                    other.presentedOfferingContext, presentedOfferingContext) ||
+                other.presentedOfferingContext == presentedOfferingContext));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, identifier, packageType,
+      storeProduct, presentedOfferingContext);
+
+  @override
+  String toString() {
+    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, presentedOfferingContext: $presentedOfferingContext)';
+  }
 }
 
 /// @nodoc
-abstract class $PackageCopyWith<$Res> {
-  factory $PackageCopyWith(Package value, $Res Function(Package) then) =
-      _$PackageCopyWithImpl<$Res, Package>;
+abstract mixin class $PackageCopyWith<$Res> {
+  factory $PackageCopyWith(Package value, $Res Function(Package) _then) =
+      _$PackageCopyWithImpl;
   @useResult
   $Res call(
       {String identifier,
@@ -64,14 +86,11 @@ abstract class $PackageCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PackageCopyWithImpl<$Res, $Val extends Package>
-    implements $PackageCopyWith<$Res> {
-  _$PackageCopyWithImpl(this._value, this._then);
+class _$PackageCopyWithImpl<$Res> implements $PackageCopyWith<$Res> {
+  _$PackageCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final Package _self;
+  final $Res Function(Package) _then;
 
   /// Create a copy of Package
   /// with the given fields replaced by the non-null parameter values.
@@ -83,24 +102,24 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
     Object? storeProduct = null,
     Object? presentedOfferingContext = null,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       identifier: null == identifier
-          ? _value.identifier
+          ? _self.identifier
           : identifier // ignore: cast_nullable_to_non_nullable
               as String,
       packageType: null == packageType
-          ? _value.packageType
+          ? _self.packageType
           : packageType // ignore: cast_nullable_to_non_nullable
               as PackageType,
       storeProduct: null == storeProduct
-          ? _value.storeProduct
+          ? _self.storeProduct
           : storeProduct // ignore: cast_nullable_to_non_nullable
               as StoreProduct,
       presentedOfferingContext: null == presentedOfferingContext
-          ? _value.presentedOfferingContext
+          ? _self.presentedOfferingContext
           : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
               as PresentedOfferingContext,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of Package
@@ -108,8 +127,8 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
   @override
   @pragma('vm:prefer-inline')
   $StoreProductCopyWith<$Res> get storeProduct {
-    return $StoreProductCopyWith<$Res>(_value.storeProduct, (value) {
-      return _then(_value.copyWith(storeProduct: value) as $Val);
+    return $StoreProductCopyWith<$Res>(_self.storeProduct, (value) {
+      return _then(_self.copyWith(storeProduct: value));
     });
   }
 
@@ -119,83 +138,23 @@ class _$PackageCopyWithImpl<$Res, $Val extends Package>
   @pragma('vm:prefer-inline')
   $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext {
     return $PresentedOfferingContextCopyWith<$Res>(
-        _value.presentedOfferingContext, (value) {
-      return _then(_value.copyWith(presentedOfferingContext: value) as $Val);
+        _self.presentedOfferingContext, (value) {
+      return _then(_self.copyWith(presentedOfferingContext: value));
     });
   }
 }
 
 /// @nodoc
-abstract class _$$PackageImplCopyWith<$Res> implements $PackageCopyWith<$Res> {
-  factory _$$PackageImplCopyWith(
-          _$PackageImpl value, $Res Function(_$PackageImpl) then) =
-      __$$PackageImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String identifier,
-      @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-      PackageType packageType,
-      @JsonKey(name: 'product') StoreProduct storeProduct,
-      PresentedOfferingContext presentedOfferingContext});
-
-  @override
-  $StoreProductCopyWith<$Res> get storeProduct;
-  @override
-  $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext;
-}
-
-/// @nodoc
-class __$$PackageImplCopyWithImpl<$Res>
-    extends _$PackageCopyWithImpl<$Res, _$PackageImpl>
-    implements _$$PackageImplCopyWith<$Res> {
-  __$$PackageImplCopyWithImpl(
-      _$PackageImpl _value, $Res Function(_$PackageImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Package
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? identifier = null,
-    Object? packageType = null,
-    Object? storeProduct = null,
-    Object? presentedOfferingContext = null,
-  }) {
-    return _then(_$PackageImpl(
-      null == identifier
-          ? _value.identifier
-          : identifier // ignore: cast_nullable_to_non_nullable
-              as String,
-      null == packageType
-          ? _value.packageType
-          : packageType // ignore: cast_nullable_to_non_nullable
-              as PackageType,
-      null == storeProduct
-          ? _value.storeProduct
-          : storeProduct // ignore: cast_nullable_to_non_nullable
-              as StoreProduct,
-      null == presentedOfferingContext
-          ? _value.presentedOfferingContext
-          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
-              as PresentedOfferingContext,
-    ));
-  }
-}
-
-/// @nodoc
 @JsonSerializable()
-class _$PackageImpl implements _Package {
-  const _$PackageImpl(
+class _Package implements Package {
+  const _Package(
       this.identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
       this.packageType,
       @JsonKey(name: 'product') this.storeProduct,
       this.presentedOfferingContext);
-
-  factory _$PackageImpl.fromJson(Map<String, dynamic> json) =>
-      _$$PackageImplFromJson(json);
+  factory _Package.fromJson(Map<String, dynamic> json) =>
+      _$PackageFromJson(json);
 
   /// Unique identifier for this package. Can be one a predefined package type
   /// or a custom one.
@@ -218,16 +177,26 @@ class _$PackageImpl implements _Package {
   @override
   final PresentedOfferingContext presentedOfferingContext;
 
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, presentedOfferingContext: $presentedOfferingContext)';
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$PackageCopyWith<_Package> get copyWith =>
+      __$PackageCopyWithImpl<_Package>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$PackageToJson(
+      this,
+    );
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PackageImpl &&
+            other is _Package &&
             (identical(other.identifier, identifier) ||
                 other.identifier == identifier) &&
             (identical(other.packageType, packageType) ||
@@ -244,57 +213,88 @@ class _$PackageImpl implements _Package {
   int get hashCode => Object.hash(runtimeType, identifier, packageType,
       storeProduct, presentedOfferingContext);
 
-  /// Create a copy of Package
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$PackageImplCopyWith<_$PackageImpl> get copyWith =>
-      __$$PackageImplCopyWithImpl<_$PackageImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$PackageImplToJson(
-      this,
-    );
+  String toString() {
+    return 'Package(identifier: $identifier, packageType: $packageType, storeProduct: $storeProduct, presentedOfferingContext: $presentedOfferingContext)';
   }
 }
 
-abstract class _Package implements Package {
-  const factory _Package(
-      final String identifier,
+/// @nodoc
+abstract mixin class _$PackageCopyWith<$Res> implements $PackageCopyWith<$Res> {
+  factory _$PackageCopyWith(_Package value, $Res Function(_Package) _then) =
+      __$PackageCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String identifier,
       @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-      final PackageType packageType,
-      @JsonKey(name: 'product') final StoreProduct storeProduct,
-      final PresentedOfferingContext presentedOfferingContext) = _$PackageImpl;
+      PackageType packageType,
+      @JsonKey(name: 'product') StoreProduct storeProduct,
+      PresentedOfferingContext presentedOfferingContext});
 
-  factory _Package.fromJson(Map<String, dynamic> json) = _$PackageImpl.fromJson;
-
-  /// Unique identifier for this package. Can be one a predefined package type
-  /// or a custom one.
   @override
-  String get identifier;
-
-  /// Package type for the product. Will be one of [PackageType].
-// ignore: invalid_annotation_target
+  $StoreProductCopyWith<$Res> get storeProduct;
   @override
-  @JsonKey(name: 'packageType', unknownEnumValue: PackageType.unknown)
-  PackageType get packageType;
+  $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext;
+}
 
-  /// StoreProduct assigned to this package.
-// ignore: invalid_annotation_target
-  @override
-  @JsonKey(name: 'product')
-  StoreProduct get storeProduct;
+/// @nodoc
+class __$PackageCopyWithImpl<$Res> implements _$PackageCopyWith<$Res> {
+  __$PackageCopyWithImpl(this._self, this._then);
 
-  /// Offering context this package belongs to.
-  @override
-  PresentedOfferingContext get presentedOfferingContext;
+  final _Package _self;
+  final $Res Function(_Package) _then;
 
   /// Create a copy of Package
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PackageImplCopyWith<_$PackageImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? identifier = null,
+    Object? packageType = null,
+    Object? storeProduct = null,
+    Object? presentedOfferingContext = null,
+  }) {
+    return _then(_Package(
+      null == identifier
+          ? _self.identifier
+          : identifier // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == packageType
+          ? _self.packageType
+          : packageType // ignore: cast_nullable_to_non_nullable
+              as PackageType,
+      null == storeProduct
+          ? _self.storeProduct
+          : storeProduct // ignore: cast_nullable_to_non_nullable
+              as StoreProduct,
+      null == presentedOfferingContext
+          ? _self.presentedOfferingContext
+          : presentedOfferingContext // ignore: cast_nullable_to_non_nullable
+              as PresentedOfferingContext,
+    ));
+  }
+
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StoreProductCopyWith<$Res> get storeProduct {
+    return $StoreProductCopyWith<$Res>(_self.storeProduct, (value) {
+      return _then(_self.copyWith(storeProduct: value));
+    });
+  }
+
+  /// Create a copy of Package
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PresentedOfferingContextCopyWith<$Res> get presentedOfferingContext {
+    return $PresentedOfferingContextCopyWith<$Res>(
+        _self.presentedOfferingContext, (value) {
+      return _then(_self.copyWith(presentedOfferingContext: value));
+    });
+  }
 }
+
+// dart format on
