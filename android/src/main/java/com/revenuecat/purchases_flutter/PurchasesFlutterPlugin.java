@@ -391,8 +391,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setUpdatedCustomerInfoListener() {
         Purchases.getSharedInstance().setUpdatedCustomerInfoListener(customerInfo -> {
-            Map<String, Object> customerInfoMap = CustomerInfoMapperKt.map(customerInfo);
-            invokeChannelMethodOnUiThread(CUSTOMER_INFO_UPDATED, customerInfoMap);
+            CustomerInfoMapperKt.mapAsync(
+                    customerInfo,
+                    map -> {
+                        invokeChannelMethodOnUiThread(CUSTOMER_INFO_UPDATED, map);
+                        return Unit.INSTANCE;
+                    }
+            );
         });
     }
 
