@@ -9,23 +9,23 @@ sealed class WebPurchaseRedemptionResult {
     final resultType = json['result'] as String;
     switch (resultType) {
       case 'SUCCESS':
-        return WebRedemptionSuccess(
+        return WebPurchaseRedemptionSuccess(
           customerInfo: CustomerInfo.fromJson(
             Map<String, dynamic>.from(json['customerInfo']),
           ),
         );
       case 'ERROR':
-        return WebRedemptionError(
+        return WebPurchaseRedemptionError(
           error: PurchasesError.fromJson(
             Map<String, dynamic>.from(json['error']),
           ),
         );
       case 'PURCHASE_BELONGS_TO_OTHER_USER':
-        return const WebRedemptionPurchaseBelongsToOtherUser();
+        return const WebPurchaseRedemptionPurchaseBelongsToOtherUser();
       case 'INVALID_TOKEN':
-        return const WebRedemptionInvalidToken();
+        return const WebPurchaseRedemptionInvalidToken();
       case 'EXPIRED':
-        return WebRedemptionExpired(
+        return WebPurchaseRedemptionExpired(
           obfuscatedEmail: json['obfuscatedEmail'] as String,
         );
       default:
@@ -34,25 +34,25 @@ sealed class WebPurchaseRedemptionResult {
   }
 }
 
-class WebRedemptionSuccess extends WebPurchaseRedemptionResult {
+class WebPurchaseRedemptionSuccess extends WebPurchaseRedemptionResult {
   final CustomerInfo customerInfo;
-  const WebRedemptionSuccess({required this.customerInfo});
+  const WebPurchaseRedemptionSuccess({required this.customerInfo});
 }
 
-class WebRedemptionError extends WebPurchaseRedemptionResult {
+class WebPurchaseRedemptionError extends WebPurchaseRedemptionResult {
   final PurchasesError error;
-  const WebRedemptionError({required this.error});
+  const WebPurchaseRedemptionError({required this.error});
 }
 
-class WebRedemptionPurchaseBelongsToOtherUser extends WebPurchaseRedemptionResult {
-  const WebRedemptionPurchaseBelongsToOtherUser();
+class WebPurchaseRedemptionPurchaseBelongsToOtherUser extends WebPurchaseRedemptionResult {
+  const WebPurchaseRedemptionPurchaseBelongsToOtherUser();
 }
 
-class WebRedemptionInvalidToken extends WebPurchaseRedemptionResult {
-  const WebRedemptionInvalidToken();
+class WebPurchaseRedemptionInvalidToken extends WebPurchaseRedemptionResult {
+  const WebPurchaseRedemptionInvalidToken();
 }
 
-class WebRedemptionExpired extends WebPurchaseRedemptionResult {
+class WebPurchaseRedemptionExpired extends WebPurchaseRedemptionResult {
   final String obfuscatedEmail;
-  const WebRedemptionExpired({required this.obfuscatedEmail});
+  const WebPurchaseRedemptionExpired({required this.obfuscatedEmail});
 }
