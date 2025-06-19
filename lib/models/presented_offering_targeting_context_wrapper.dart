@@ -1,23 +1,30 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-part 'presented_offering_targeting_context_wrapper.freezed.dart';
-part 'presented_offering_targeting_context_wrapper.g.dart';
+class PresentedOfferingTargetingContext extends Equatable {
+  /// The revision of the targeting used to obtain this object
+  final int revision;
 
-@freezed
+  /// The rule id from the targeting used to obtain this object
+  final String ruleId;
 
-/// Contains all the details associated with a PresentedOfferingContext
-abstract class PresentedOfferingTargetingContext
-    with _$PresentedOfferingTargetingContext {
-  const factory PresentedOfferingTargetingContext(
-    /// The revision of the targeting used to obtain this object
-    int revision,
+  const PresentedOfferingTargetingContext(
+    this.revision,
+    this.ruleId,
+  );
 
-    /// The rule id from the targeting used to obtain this object
-    String ruleId,
-  ) = _PresentedOfferingTargetingContext;
+  toJson() => {
+    'revision': revision,
+    'ruleId': ruleId,
+  };
 
-  factory PresentedOfferingTargetingContext.fromJson(
-    Map<String, dynamic> json,
-  ) =>
-      _$PresentedOfferingTargetingContextFromJson(json);
+  factory PresentedOfferingTargetingContext.fromJson(Map<String, dynamic> json) => PresentedOfferingTargetingContext(
+    json['revision'] as int,
+    json['ruleId'] as String,
+  );
+
+  @override
+  List<Object> get props => [
+    revision,
+    ruleId,
+  ];
 }

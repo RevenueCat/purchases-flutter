@@ -1,73 +1,75 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
 import 'installments_info.dart';
 import 'period_wrapper.dart';
 import 'presented_offering_context_wrapper.dart';
 import 'pricing_phase_wrapper.dart';
 
-part 'subscription_option_wrapper.freezed.dart';
-part 'subscription_option_wrapper.g.dart';
+class SubscriptionOption extends Equatable {
+  final String id;
+  final String storeProductId;
+  final String productId;
+  final List<PricingPhase> pricingPhases;
+  final List<String> tags;
+  final bool isBasePlan;
+  final Period? billingPeriod;
+  final bool isPrepaid;
+  final PricingPhase? fullPricePhase;
+  final PricingPhase? freePhase;
+  final PricingPhase? introPhase;
+  final PresentedOfferingContext? presentedOfferingContext;
+  final InstallmentsInfo? installmentsInfo;
 
-@freezed
+  const SubscriptionOption(
+    this.id,
+    this.storeProductId,
+    this.productId,
+    this.pricingPhases,
+    this.tags,
+    this.isBasePlan,
+    this.billingPeriod,
+    this.isPrepaid,
+    this.fullPricePhase,
+    this.freePhase,
+    this.introPhase,
+    this.presentedOfferingContext,
+    this.installmentsInfo,
+  );
 
-/// Contains all details associated with a SubscriptionOption
-/// Used only for Google
-abstract class SubscriptionOption with _$SubscriptionOption {
-  const factory SubscriptionOption(
-    /// Identifier of the subscription option
-    /// If this SubscriptionOption represents a base plan, this will be the basePlanId.
-    /// If it represents an offer, it will be {basePlanId}:{offerId}
-    String id,
+  factory SubscriptionOption.fromJson(Map<String, dynamic> json) => SubscriptionOption(
+    json['id'] as String,
+    json['storeProductId'] as String,
+    json['productId'] as String,
+    (json['pricingPhases'] as List)
+        .map((e) => PricingPhase.fromJson(Map<String, dynamic>.from(e)))
+        .toList(),
+    (json['tags'] as List).map((e) => e as String).toList(),
+    json['isBasePlan'] as bool,
+    json['billingPeriod'] != null ? Period.fromJson(Map<String, dynamic>.from(json['billingPeriod'])) : null,
+    json['isPrepaid'] as bool,
+    json['fullPricePhase'] != null ? PricingPhase.fromJson(Map<String, dynamic>.from(json['fullPricePhase'])) : null,
+    json['freePhase'] != null ? PricingPhase.fromJson(Map<String, dynamic>.from(json['freePhase'])) : null,
+    json['introPhase'] != null ? PricingPhase.fromJson(Map<String, dynamic>.from(json['introPhase'])) : null,
+    json['presentedOfferingContext'] != null ? PresentedOfferingContext.fromJson(Map<String, dynamic>.from(json['presentedOfferingContext'])) : null,
+    json['installmentsInfo'] != null ? InstallmentsInfo.fromJson(Map<String, dynamic>.from(json['installmentsInfo'])) : null,
+  );
 
-    /// Identifier of the StoreProduct associated with this SubscriptionOption
-    /// This will be {subId}:{basePlanId}
-    String storeProductId,
-
-    /// Identifer of the subscription associated with this SubsriptionOption
-    /// This will be {subId}
-    String productId,
-
-    /// Pricing phases defining a user's payment plan for the product over time.
-    List<PricingPhase> pricingPhases,
-
-    /// Tags defined on the base plan or offer.
-    List<String> tags,
-
-    /// True if this SubscriptionOption represents a Google subscription base plan (rather than an offer).
-    bool isBasePlan,
-
-    /// The subscription period of fullPricePhase (after free and intro trials).
-    Period? billingPeriod,
-
-    /// True if the subscription is pre-paid.
-    bool isPrepaid,
-
-    /// The full price PricingPhase of the subscription.
-    /// Looks for the last price phase of the SubscriptionOption.
-    PricingPhase? fullPricePhase,
-
-    /// The free trial PricingPhase of the subscription.
-    /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is 0.
-    /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-    PricingPhase? freePhase,
-
-    /// The intro trial PricingPhase of the subscription.
-    /// Looks for the first pricing phase of the SubscriptionOption where amountMicros is greater than 0.
-    /// There can be a freeTrialPhase and an introductoryPhase in the same SubscriptionOption.
-    PricingPhase? introPhase,
-
-    /// Offering context this package belongs to.
-    /// Null if not using offerings or if fetched directly from store via getProducts
-    PresentedOfferingContext? presentedOfferingContext,
-
-    /// For installment subscriptions, the details of the installment plan the customer commits to.
-    /// Null for non-installment subscriptions.
-    /// Installment plans are only available for Google Play subscriptions.
-    InstallmentsInfo? installmentsInfo,
-  ) = _SubscriptionOption;
-
-  factory SubscriptionOption.fromJson(Map<String, dynamic> json) =>
-      _$SubscriptionOptionFromJson(json);
+  @override
+  List<Object?> get props => [
+    id,
+    storeProductId,
+    productId,
+    pricingPhases,
+    tags,
+    isBasePlan,
+    billingPeriod,
+    isPrepaid,
+    fullPricePhase,
+    freePhase,
+    introPhase,
+    presentedOfferingContext,
+    installmentsInfo,
+  ];
 }
 
 extension ExtendedSubscriptionOption on SubscriptionOption {

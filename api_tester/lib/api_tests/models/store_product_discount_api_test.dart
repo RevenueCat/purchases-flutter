@@ -7,10 +7,6 @@ class _StoreProductDiscountApiTest {
     StoreProductDiscount discount = StoreProductDiscount.fromJson(json);
   }
 
-  void _checkToJson(StoreProductDiscount discount) {
-    Map<String, dynamic> json = discount.toJson();
-  }
-
   void _checkConstructor(String identifier, double price, String priceString,
       int cycles, String period, String periodUnit, int periodNumberOfUnits) {
     StoreProductDiscount discount = StoreProductDiscount(identifier, price,

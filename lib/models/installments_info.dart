@@ -1,23 +1,29 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'installments_info.freezed.dart';
-part 'installments_info.g.dart';
-
-@freezed
+import 'package:equatable/equatable.dart';
 
 /// Type containing information of installment subscriptions.
 /// Currently only supported in Google Play.
-abstract class InstallmentsInfo with _$InstallmentsInfo {
-  const factory InstallmentsInfo(
-    /// Number of payments the customer commits to in order to purchase
-    /// the subscription.
-    int commitmentPaymentsCount,
+class InstallmentsInfo extends Equatable {
+  /// Number of payments the customer commits to in order to purchase
+  /// the subscription.
+  final int commitmentPaymentsCount;
 
-    /// After the commitment payments are complete, the number of payments
-    /// the user commits to upon a renewal.
-    int renewalCommitmentPaymentsCount,
-  ) = _InstallmentsInfo;
+  /// After the commitment payments are complete, the number of payments
+  /// the user commits to upon a renewal.
+  final int renewalCommitmentPaymentsCount;
 
-  factory InstallmentsInfo.fromJson(Map<String, dynamic> json) =>
-      _$InstallmentsInfoFromJson(json);
+  const InstallmentsInfo(
+      this.commitmentPaymentsCount,
+      this.renewalCommitmentPaymentsCount,
+  );
+
+  factory InstallmentsInfo.fromJson(Map<String, dynamic> json) => InstallmentsInfo(
+    json['commitmentPaymentsCount'] as int,
+    json['renewalCommitmentPaymentsCount'] as int,
+  );
+
+  @override
+  List<Object?> get props => [
+    commitmentPaymentsCount,
+    renewalCommitmentPaymentsCount,
+  ];
 }

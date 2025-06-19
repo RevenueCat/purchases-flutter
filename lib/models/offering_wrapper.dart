@@ -1,57 +1,90 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
 import 'package_wrapper.dart';
 
-part 'offering_wrapper.freezed.dart';
-part 'offering_wrapper.g.dart';
+class Offering extends Equatable {
+  /// Unique identifier defined in RevenueCat dashboard.
+  final String identifier;
 
-@freezed
+  /// Offering description defined in RevenueCat dashboard.
+  final String serverDescription;
 
-/// An offering is a collection of [Package] available for the user
-/// to purchase. For more info see https://docs.revenuecat.com/docs/entitlements
-abstract class Offering with _$Offering {
-  const Offering._(); // Added constructor
-  const factory Offering(
-    /// Unique identifier defined in RevenueCat dashboard.
-    String identifier,
+  /// Offering metadata defined in RevenueCat dashboard.
+  final Map<String, Object> metadata;
 
-    /// Offering description defined in RevenueCat dashboard.
-    String serverDescription,
+  /// Array of [Package] objects available for purchase.
+  final List<Package> availablePackages;
 
-    /// Offering metadata defined in RevenueCat dashboard.
-    Map<String, Object> metadata,
+  /// Lifetime package type configured in the RevenueCat dashboard, if available.
+  final Package? lifetime;
 
-    /// Array of [Package] objects available for purchase.
-    List<Package> availablePackages, {
-    /// Lifetime package type configured in the RevenueCat dashboard, if available.
-    Package? lifetime,
+  /// Annual package type configured in the RevenueCat dashboard, if available.
+  final Package? annual;
 
-    /// Annual package type configured in the RevenueCat dashboard, if available.
-    Package? annual,
+  /// Six month package type configured in the RevenueCat dashboard, if available.
+  final Package? sixMonth;
 
-    /// Six month package type configured in the RevenueCat dashboard, if available.
-    Package? sixMonth,
+  /// Three month package type configured in the RevenueCat dashboard, if available.
+  final Package? threeMonth;
 
-    /// Three month package type configured in the RevenueCat dashboard, if available.
-    Package? threeMonth,
+  /// Two month package type configured in the RevenueCat dashboard, if available.
+  final Package? twoMonth;
 
-    /// Two month package type configured in the RevenueCat dashboard, if available.
-    Package? twoMonth,
+  /// Monthly package type configured in the RevenueCat dashboard, if available.
+  final Package? monthly;
 
-    /// Monthly package type configured in the RevenueCat dashboard, if available.
-    Package? monthly,
+  /// Weekly package type configured in the RevenueCat dashboard, if available.
+  final Package? weekly;
 
-    /// Weekly package type configured in the RevenueCat dashboard, if available.
-    Package? weekly,
-  }) = _Offering;
+  const Offering(
+    this.identifier,
+    this.serverDescription,
+    this.metadata,
+    this.availablePackages, {
+    this.lifetime,
+    this.annual,
+    this.sixMonth,
+    this.threeMonth,
+    this.twoMonth,
+    this.monthly,
+    this.weekly,
+  });
 
   /// Retrieves a specific package by identifier, use this to access custom
   /// package types configured in the RevenueCat dashboard.
   Package? getPackage(String identifier) => availablePackages
       .firstWhereOrNull((package) => package.identifier == identifier);
 
-  factory Offering.fromJson(Map<String, dynamic> json) =>
-      _$OfferingFromJson(json);
+  factory Offering.fromJson(Map<String, dynamic> json) => Offering(
+    json['identifier'] as String,
+    json['serverDescription'] as String,
+    Map<String, Object>.from(json['metadata']),
+    (json['availablePackages'] as List)
+        .map((e) => Package.fromJson(Map<String, dynamic>.from(e)))
+        .toList(),
+    lifetime: json['lifetime'] != null ? Package.fromJson(Map<String, dynamic>.from(json['lifetime'])) : null,
+    annual: json['annual'] != null ? Package.fromJson(Map<String, dynamic>.from(json['annual'])) : null,
+    sixMonth: json['sixMonth'] != null ? Package.fromJson(Map<String, dynamic>.from(json['sixMonth'])) : null,
+    threeMonth: json['threeMonth'] != null ? Package.fromJson(Map<String, dynamic>.from(json['threeMonth'])) : null,
+    twoMonth: json['twoMonth'] != null ? Package.fromJson(Map<String, dynamic>.from(json['twoMonth'])) : null,
+    monthly: json['monthly'] != null ? Package.fromJson(Map<String, dynamic>.from(json['monthly'])) : null,
+    weekly: json['weekly'] != null ? Package.fromJson(Map<String, dynamic>.from(json['weekly'])) : null,
+  );
+
+  @override
+  List<Object?> get props => [
+    identifier,
+    serverDescription,
+    metadata,
+    availablePackages,
+    lifetime,
+    annual,
+    sixMonth,
+    threeMonth,
+    twoMonth,
+    monthly,
+    weekly,
+  ];
 }
 
 extension OfferingX on Offering {

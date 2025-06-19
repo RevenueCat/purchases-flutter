@@ -18,10 +18,6 @@ class _IntroductoryPriceApiTest {
     IntroductoryPrice introductoryPrice = IntroductoryPrice.fromJson(json);
   }
 
-  void _checkToJson(IntroductoryPrice introductoryPrice) {
-    Map<String, dynamic> json = introductoryPrice.toJson();
-  }
-
   void _checkConstructor(double price, String priceString, String period,
       int cycles, PeriodUnit periodUnit, int periodNumberOfUnits) {
     IntroductoryPrice introductoryPrice = IntroductoryPrice(

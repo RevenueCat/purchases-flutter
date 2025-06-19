@@ -8,10 +8,6 @@ class _SubscriptionOptionApiTest {
     SubscriptionOption product = SubscriptionOption.fromJson(json);
   }
 
-  void _checkToJson(SubscriptionOption subscriptionOption) {
-    Map<String, dynamic> json = subscriptionOption.toJson();
-  }
-
   void _checkConstructor(
       String id,
       String storeProductId,

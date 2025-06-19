@@ -1,25 +1,39 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
 import 'presented_offering_targeting_context_wrapper.dart';
 
-part 'presented_offering_context_wrapper.freezed.dart';
-part 'presented_offering_context_wrapper.g.dart';
+class PresentedOfferingContext extends Equatable {
+  /// The identifier of the offering used to obtain this object
+  final String offeringIdentifier;
 
-@freezed
+  /// The identifier of the placement used to obtain this object
+  final String? placementIdentifier;
 
-/// Contains all the details associated with a PresentedOfferingContext
-abstract class PresentedOfferingContext with _$PresentedOfferingContext {
-  const factory PresentedOfferingContext(
-    /// The identifier of the offering used to obtain this object
-    String offeringIdentifier,
+  /// The revision of the targeting used to obtain this object
+  final PresentedOfferingTargetingContext? targetingContext;
 
-    /// The identifier of the placement used to obtain this object
-    String? placementIdentifier,
+  const PresentedOfferingContext(
+    this.offeringIdentifier,
+    this.placementIdentifier,
+    this.targetingContext,
+  );
 
-    /// The revision of the targeting used to obtain this object
-    PresentedOfferingTargetingContext? targetingContext,
-  ) = _PresentedOfferingContext;
+  toJson() => {
+    'offeringIdentifier': offeringIdentifier,
+    'placementIdentifier': placementIdentifier,
+    'targetingContext': targetingContext?.toJson(),
+  };
 
-  factory PresentedOfferingContext.fromJson(Map<String, dynamic> json) =>
-      _$PresentedOfferingContextFromJson(json);
+  factory PresentedOfferingContext.fromJson(Map<String, dynamic> json) => PresentedOfferingContext(
+    json['offeringIdentifier'] as String,
+    json['placementIdentifier'] as String?,
+    json['targetingContext'] != null ? PresentedOfferingTargetingContext.fromJson(Map<String, dynamic>.from(json['targetingContext'])) : null,
+  );
+
+  @override
+  List<Object?> get props => [
+    offeringIdentifier,
+    placementIdentifier,
+    targetingContext,
+  ];
 }

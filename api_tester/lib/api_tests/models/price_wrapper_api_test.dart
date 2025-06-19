@@ -7,10 +7,6 @@ class _PriceApiTest {
     Price price = Price.fromJson(json);
   }
 
-  void _checkToJson(Price price) {
-    Map<String, dynamic> json = price.toJson();
-  }
-
   void _checkConstructor(
     String formatted,
     int amountMicros,
