@@ -7,7 +7,7 @@ buildscript {
 
     dependencies {
         // TODO: Upgrade to gradle 8 when modal_progress_hud_nsn is updated to support it
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.10.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
