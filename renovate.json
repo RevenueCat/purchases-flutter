@@ -4,6 +4,15 @@
     {
       "matchPackageNames": ["*"],
       "enabled": false
+    },
+    {
+      "matchManagers": ["gradle-wrapper"],
+      "enabled": true
+    },
+    {
+      "matchPackageNames": ["com.android.tools.build:gradle"],
+      "matchManagers": ["gradle"],
+      "enabled": true
     }
   ]
 }
