@@ -1,4 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>RevenueCat/renovate"]
+  "extends": ["github>RevenueCat/renovate"],
+  "packageRules": [
+    {
+      "matchPackageNames": ["*"],
+      "enabledManagers": ["gradle-wrapper"]
+    }
+  ]
 }
