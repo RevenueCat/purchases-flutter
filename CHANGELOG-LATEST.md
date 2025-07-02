@@ -1,8 +1,9 @@
 ## RevenueCat SDK
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 13.38.1 (#1382) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 8.20.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.20.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 14.0.2 (#1389) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.30.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.30.0)
+* [RENOVATE] Update build-dependencies (#1383) via RevenueCat Git Bot (@RCGitBot)
 
 ### 🔄 Other Changes
-* Configure Renovate (#1376) via RevenueCat Git Bot (@RCGitBot)
-* Add `9.0.0-beta.3` to `CHANGELOG` (#1374) via Toni Rico (@tonidero)
+* Update workflows/issue-notifications.yml@v2 (#1387) via Josh Holtz (@joshdholtz)
+* Add GitHub Issue Action Ack (#1385) via Josh Holtz (@joshdholtz)
