@@ -35,6 +35,7 @@ void main() {
         '2024-01-01T00:00:00Z',
       );
       expect(info, equals(expected));
+      expect(CustomerInfo.fromJson(info.toJson()), equals(expected));
     });
 
     test('parses all fields with values', () {
@@ -81,6 +82,7 @@ void main() {
         managementURL: 'https://example.com/manage',
       );
       expect(info, equals(expected));
+      expect(CustomerInfo.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

@@ -12,7 +12,8 @@ void main() {
   setUpAll(() {
     PurchasesConfiguration configuration = PurchasesConfiguration("api_key");
     configuration.appUserID = userId;
-    configuration.entitlementVerificationMode = EntitlementVerificationMode.informational;
+    configuration.entitlementVerificationMode =
+        EntitlementVerificationMode.informational;
     Purchases.configure(configuration);
   });
 
@@ -27,7 +28,8 @@ void main() {
   testWidgets('Purchaser info fetched successfully',
       (WidgetTester tester) async {
     try {
-      assert((await Purchases.getCustomerInfo()).originalAppUserId == userId, true);
+      assert((await Purchases.getCustomerInfo()).originalAppUserId == userId,
+          true);
     } on PlatformException catch (e) {
       fail('there was an exception ' + e.toString());
     }

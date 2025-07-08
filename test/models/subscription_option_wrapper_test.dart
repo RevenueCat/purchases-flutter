@@ -36,6 +36,7 @@ void main() {
         null,
       );
       expect(info, equals(expected));
+      expect(SubscriptionOption.fromJson(info.toJson()), equals(expected));
     });
 
     test('parses all fields', () {
@@ -45,7 +46,11 @@ void main() {
         'productId': 'base2',
         'pricingPhases': [
           {
-            'price': {'formatted': '\$1.99', 'amountMicros': 1990000, 'currencyCode': 'USD'},
+            'price': {
+              'formatted': '\$1.99',
+              'amountMicros': 1990000,
+              'currencyCode': 'USD',
+            },
             'billingPeriod': {'unit': 'MONTH', 'value': 1, 'iso8601': 'P1M'},
             'recurrenceMode': 1,
             'billingCycleCount': 2,
@@ -57,21 +62,33 @@ void main() {
         'billingPeriod': {'unit': 'MONTH', 'value': 1, 'iso8601': 'P1M'},
         'isPrepaid': true,
         'fullPricePhase': {
-          'price': {'formatted': '\$2.99', 'amountMicros': 2990000, 'currencyCode': 'USD'},
+          'price': {
+            'formatted': '\$2.99',
+            'amountMicros': 2990000,
+            'currencyCode': 'USD',
+          },
           'billingPeriod': {'unit': 'MONTH', 'value': 1, 'iso8601': 'P1M'},
           'recurrenceMode': 1,
           'billingCycleCount': 1,
           'offerPaymentMode': 'SINGLE_PAYMENT',
         },
         'freePhase': {
-          'price': {'formatted': '\$0.00', 'amountMicros': 0, 'currencyCode': 'USD'},
+          'price': {
+            'formatted': '\$0.00',
+            'amountMicros': 0,
+            'currencyCode': 'USD',
+          },
           'billingPeriod': {'unit': 'MONTH', 'value': 1, 'iso8601': 'P1M'},
           'recurrenceMode': 2,
           'billingCycleCount': 1,
           'offerPaymentMode': 'FREE_TRIAL',
         },
         'introPhase': {
-          'price': {'formatted': '\$0.50', 'amountMicros': 500000, 'currencyCode': 'USD'},
+          'price': {
+            'formatted': '\$0.50',
+            'amountMicros': 500000,
+            'currencyCode': 'USD',
+          },
           'billingPeriod': {'unit': 'MONTH', 'value': 1, 'iso8601': 'P1M'},
           'recurrenceMode': 3,
           'billingCycleCount': 1,
@@ -134,6 +151,7 @@ void main() {
         InstallmentsInfo(6, 2),
       );
       expect(info, equals(expected));
+      expect(SubscriptionOption.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

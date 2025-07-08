@@ -14,6 +14,7 @@ void main() {
         2,
       );
       expect(info, equals(expected));
+      expect(InstallmentsInfo.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

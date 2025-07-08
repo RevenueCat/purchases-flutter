@@ -82,9 +82,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
       if (_customerInfo != null)
         ListTile(
           title: const Text('Active Entitlements'),
-          trailing: Text(
-            '${_customerInfo!.entitlements.active.keys}'
-          ),
+          trailing: Text('${_customerInfo!.entitlements.active.keys}'),
         ),
       if (_appUserId != null)
         ListTile(
@@ -133,7 +131,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WinbackTestingScreen(),
+                            builder: (context) => const WinbackTestingScreen(),
                           ));
                     },
                     child: const Text("Go to Win-Back Offer Testing Screen"),

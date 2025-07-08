@@ -18,22 +18,26 @@ class PresentedOfferingContext extends Equatable {
     this.targetingContext,
   );
 
-  toJson() => {
-    'offeringIdentifier': offeringIdentifier,
-    'placementIdentifier': placementIdentifier,
-    'targetingContext': targetingContext?.toJson(),
-  };
+  Map<String, dynamic> toJson() => {
+        'offeringIdentifier': offeringIdentifier,
+        'placementIdentifier': placementIdentifier,
+        'targetingContext': targetingContext?.toJson(),
+      };
 
-  factory PresentedOfferingContext.fromJson(Map<String, dynamic> json) => PresentedOfferingContext(
-    json['offeringIdentifier'] as String,
-    json['placementIdentifier'] as String?,
-    json['targetingContext'] != null ? PresentedOfferingTargetingContext.fromJson(Map<String, dynamic>.from(json['targetingContext'])) : null,
-  );
+  factory PresentedOfferingContext.fromJson(Map<String, dynamic> json) =>
+      PresentedOfferingContext(
+        json['offeringIdentifier'] as String,
+        json['placementIdentifier'] as String?,
+        json['targetingContext'] != null
+            ? PresentedOfferingTargetingContext.fromJson(
+                Map<String, dynamic>.from(json['targetingContext']),)
+            : null,
+      );
 
   @override
   List<Object?> get props => [
-    offeringIdentifier,
-    placementIdentifier,
-    targetingContext,
-  ];
+        offeringIdentifier,
+        placementIdentifier,
+        targetingContext,
+      ];
 }

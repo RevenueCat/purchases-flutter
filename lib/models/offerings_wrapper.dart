@@ -17,15 +17,23 @@ class Offerings extends Equatable {
   Offering? getOffering(String identifier) => all[identifier];
 
   factory Offerings.fromJson(Map<String, dynamic> json) => Offerings(
-    Map<String, dynamic>.from(json['all']).map(
-      (k, v) => MapEntry(k, Offering.fromJson(Map<String, dynamic>.from(v))),
-    ),
-    current: json['current'] != null ? Offering.fromJson(Map<String, dynamic>.from(json['current'])) : null,
-  );
+        Map<String, dynamic>.from(json['all']).map(
+          (k, v) =>
+              MapEntry(k, Offering.fromJson(Map<String, dynamic>.from(v))),
+        ),
+        current: json['current'] != null
+            ? Offering.fromJson(Map<String, dynamic>.from(json['current']))
+            : null,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'all': all.map((k, v) => MapEntry(k, v.toJson())),
+        'current': current?.toJson(),
+      };
 
   @override
   List<Object?> get props => [
-    all,
-    current,
-  ];
+        all,
+        current,
+      ];
 }

@@ -24,6 +24,7 @@ void main() {
         1,
       );
       expect(info, equals(expected));
+      expect(StoreProductDiscount.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

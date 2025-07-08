@@ -10,11 +10,15 @@ class Storefront extends Equatable {
   });
 
   factory Storefront.fromJson(Map<String, dynamic> json) => Storefront(
-    countryCode: json['countryCode'] as String,
-  );
+        countryCode: json['countryCode'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'countryCode': countryCode,
+      };
 
   @override
   List<Object> get props => [
-    countryCode,
-  ];
+        countryCode,
+      ];
 }

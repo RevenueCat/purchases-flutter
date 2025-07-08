@@ -16,11 +16,10 @@ class StoreConfig {
     return _instance!;
   }
 
-  static bool isForAppleStore() => instance.store == Store.appStore
-      || instance.store == Store.macAppStore;
+  static bool isForAppleStore() =>
+      instance.store == Store.appStore || instance.store == Store.macAppStore;
 
   static bool isForGooglePlay() => instance.store == Store.playStore;
 
-  static bool isForAmazonAppstore() =>
-      instance.store == Store.amazon;
+  static bool isForAmazonAppstore() => instance.store == Store.amazon;
 }

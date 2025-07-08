@@ -20,17 +20,18 @@ void main() {
         'current': null,
       };
       final info = Offerings.fromJson(json);
-      const expected = Offerings({
-        'main': Offering(
-          'main',
-          'Main offering',
-          {},
-          [],
-        ),
-      },
-        current: null,
+      const expected = Offerings(
+        {
+          'main': Offering(
+            'main',
+            'Main offering',
+            {},
+            [],
+          ),
+        },
       );
       expect(info, equals(expected));
+      expect(Offerings.fromJson(info.toJson()), equals(expected));
     });
 
     test('parses all fields', () {
@@ -563,8 +564,149 @@ void main() {
         },
       };
       final info = Offerings.fromJson(json);
-      const expected = Offerings({
-        'main': Offering(
+      const expected = Offerings(
+        {
+          'main': Offering(
+            'main',
+            'Main offering',
+            {'feature': 'premium'},
+            [
+              Package(
+                'monthly',
+                PackageType.monthly,
+                StoreProduct(
+                  'prod1',
+                  'desc',
+                  'title',
+                  9.99,
+                  '\t9.99',
+                  'USD',
+                ),
+                PresentedOfferingContext('main', null, null),
+              ),
+              Package(
+                'lifetime',
+                PackageType.lifetime,
+                StoreProduct(
+                  'prod2',
+                  'desc2',
+                  'title2',
+                  99.99,
+                  '\t99.99',
+                  'USD',
+                ),
+                PresentedOfferingContext('main', null, null),
+              ),
+              Package(
+                'annual',
+                PackageType.annual,
+                StoreProduct(
+                  'prod3',
+                  'desc3',
+                  'title3',
+                  49.99,
+                  '\t49.99',
+                  'USD',
+                ),
+                PresentedOfferingContext('main', null, null),
+              ),
+              Package(
+                'sixMonth',
+                PackageType.sixMonth,
+                StoreProduct(
+                  'prod4',
+                  'desc4',
+                  'title4',
+                  29.99,
+                  '\t29.99',
+                  'USD',
+                ),
+                PresentedOfferingContext('main', null, null),
+              ),
+              Package(
+                'threeMonth',
+                PackageType.threeMonth,
+                StoreProduct(
+                  'prod5',
+                  'desc5',
+                  'title5',
+                  19.99,
+                  '\t19.99',
+                  'USD',
+                ),
+                PresentedOfferingContext('main', null, null),
+              ),
+              Package(
+                'twoMonth',
+                PackageType.twoMonth,
+                StoreProduct(
+                  'prod6',
+                  'desc6',
+                  'title6',
+                  14.99,
+                  '\t14.99',
+                  'USD',
+                ),
+                PresentedOfferingContext('main', null, null),
+              ),
+              Package(
+                'monthly',
+                PackageType.monthly,
+                StoreProduct('prod7', 'desc7', 'title7', 9.99, '\t9.99', 'USD'),
+                PresentedOfferingContext('main', null, null),
+              ),
+              Package(
+                'weekly',
+                PackageType.weekly,
+                StoreProduct('prod8', 'desc8', 'title8', 4.99, '\t4.99', 'USD'),
+                PresentedOfferingContext('main', null, null),
+              ),
+            ],
+            lifetime: Package(
+              'lifetime',
+              PackageType.lifetime,
+              StoreProduct('prod2', 'desc2', 'title2', 99.99, '\t99.99', 'USD'),
+              PresentedOfferingContext('main', null, null),
+            ),
+            annual: Package(
+              'annual',
+              PackageType.annual,
+              StoreProduct('prod3', 'desc3', 'title3', 49.99, '\t49.99', 'USD'),
+              PresentedOfferingContext('main', null, null),
+            ),
+            sixMonth: Package(
+              'sixMonth',
+              PackageType.sixMonth,
+              StoreProduct('prod4', 'desc4', 'title4', 29.99, '\t29.99', 'USD'),
+              PresentedOfferingContext('main', null, null),
+            ),
+            threeMonth: Package(
+              'threeMonth',
+              PackageType.threeMonth,
+              StoreProduct('prod5', 'desc5', 'title5', 19.99, '\t19.99', 'USD'),
+              PresentedOfferingContext('main', null, null),
+            ),
+            twoMonth: Package(
+              'twoMonth',
+              PackageType.twoMonth,
+              StoreProduct('prod6', 'desc6', 'title6', 14.99, '\t14.99', 'USD'),
+              PresentedOfferingContext('main', null, null),
+            ),
+            monthly: Package(
+              'monthly',
+              PackageType.monthly,
+              StoreProduct('prod7', 'desc7', 'title7', 9.99, '\t9.99', 'USD'),
+              PresentedOfferingContext('main', null, null),
+            ),
+            weekly: Package(
+              'weekly',
+              PackageType.weekly,
+              StoreProduct('prod8', 'desc8', 'title8', 4.99, '\t4.99', 'USD'),
+              PresentedOfferingContext('main', null, null),
+            ),
+          ),
+        },
+        current: Offering(
           'main',
           'Main offering',
           {'feature': 'premium'},
@@ -668,113 +810,9 @@ void main() {
             PresentedOfferingContext('main', null, null),
           ),
         ),
-      },
-      current: Offering(
-        'main',
-        'Main offering',
-        {'feature': 'premium'},
-        [
-          Package(
-            'monthly',
-            PackageType.monthly,
-            StoreProduct(
-              'prod1',
-              'desc',
-              'title',
-              9.99,
-              '\t9.99',
-              'USD',
-            ),
-            PresentedOfferingContext('main', null, null),
-          ),
-          Package(
-            'lifetime',
-            PackageType.lifetime,
-            StoreProduct('prod2', 'desc2', 'title2', 99.99, '\t99.99', 'USD'),
-            PresentedOfferingContext('main', null, null),
-          ),
-          Package(
-            'annual',
-            PackageType.annual,
-            StoreProduct('prod3', 'desc3', 'title3', 49.99, '\t49.99', 'USD'),
-            PresentedOfferingContext('main', null, null),
-          ),
-          Package(
-            'sixMonth',
-            PackageType.sixMonth,
-            StoreProduct('prod4', 'desc4', 'title4', 29.99, '\t29.99', 'USD'),
-            PresentedOfferingContext('main', null, null),
-          ),
-          Package(
-            'threeMonth',
-            PackageType.threeMonth,
-            StoreProduct('prod5', 'desc5', 'title5', 19.99, '\t19.99', 'USD'),
-            PresentedOfferingContext('main', null, null),
-          ),
-          Package(
-            'twoMonth',
-            PackageType.twoMonth,
-            StoreProduct('prod6', 'desc6', 'title6', 14.99, '\t14.99', 'USD'),
-            PresentedOfferingContext('main', null, null),
-          ),
-          Package(
-            'monthly',
-            PackageType.monthly,
-            StoreProduct('prod7', 'desc7', 'title7', 9.99, '\t9.99', 'USD'),
-            PresentedOfferingContext('main', null, null),
-          ),
-          Package(
-            'weekly',
-            PackageType.weekly,
-            StoreProduct('prod8', 'desc8', 'title8', 4.99, '\t4.99', 'USD'),
-            PresentedOfferingContext('main', null, null),
-          ),
-        ],
-        lifetime: Package(
-          'lifetime',
-          PackageType.lifetime,
-          StoreProduct('prod2', 'desc2', 'title2', 99.99, '\t99.99', 'USD'),
-          PresentedOfferingContext('main', null, null),
-        ),
-        annual: Package(
-          'annual',
-          PackageType.annual,
-          StoreProduct('prod3', 'desc3', 'title3', 49.99, '\t49.99', 'USD'),
-          PresentedOfferingContext('main', null, null),
-        ),
-        sixMonth: Package(
-          'sixMonth',
-          PackageType.sixMonth,
-          StoreProduct('prod4', 'desc4', 'title4', 29.99, '\t29.99', 'USD'),
-          PresentedOfferingContext('main', null, null),
-        ),
-        threeMonth: Package(
-          'threeMonth',
-          PackageType.threeMonth,
-          StoreProduct('prod5', 'desc5', 'title5', 19.99, '\t19.99', 'USD'),
-          PresentedOfferingContext('main', null, null),
-        ),
-        twoMonth: Package(
-          'twoMonth',
-          PackageType.twoMonth,
-          StoreProduct('prod6', 'desc6', 'title6', 14.99, '\t14.99', 'USD'),
-          PresentedOfferingContext('main', null, null),
-        ),
-        monthly: Package(
-          'monthly',
-          PackageType.monthly,
-          StoreProduct('prod7', 'desc7', 'title7', 9.99, '\t9.99', 'USD'),
-          PresentedOfferingContext('main', null, null),
-        ),
-        weekly: Package(
-          'weekly',
-          PackageType.weekly,
-          StoreProduct('prod8', 'desc8', 'title8', 4.99, '\t4.99', 'USD'),
-          PresentedOfferingContext('main', null, null),
-        ),
-      ),
       );
       expect(info, equals(expected));
+      expect(Offerings.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

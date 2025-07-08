@@ -57,29 +57,22 @@ class _PurchasesFlutterApiTest {
   }
 
   Widget _checkPaywallViewWithListeners(
-      Offering offering,
-      bool displayCloseButton,
+    Offering offering,
+    bool displayCloseButton,
   ) {
     return Scaffold(
       body: Center(
         child: PaywallView(
           offering: offering,
           displayCloseButton: displayCloseButton,
-          onPurchaseStarted: (Package rcPackage) {
-          },
+          onPurchaseStarted: (Package rcPackage) {},
           onPurchaseCompleted:
-              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
-          },
-          onPurchaseCancelled: () {
-          },
-          onPurchaseError: (PurchasesError error) {
-          },
-          onRestoreCompleted: (CustomerInfo customerInfo) {
-          },
-          onRestoreError: (PurchasesError error) {
-          },
-          onDismiss: () {
-          },
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+          onPurchaseCancelled: () {},
+          onPurchaseError: (PurchasesError error) {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreError: (PurchasesError error) {},
+          onDismiss: () {},
         ),
       ),
     );
@@ -110,7 +103,7 @@ class _PurchasesFlutterApiTest {
   }
 
   Widget _checkOriginalTemplatePaywallFooterViewWithOffering(
-      Offering offering,
+    Offering offering,
   ) {
     return Scaffold(
       body: Center(
@@ -138,26 +131,19 @@ class _PurchasesFlutterApiTest {
   }
 
   Widget _checkOriginalTemplatePaywallFooterViewWithListeners(
-      Offering offering,
+    Offering offering,
   ) {
     return Scaffold(
       body: Center(
         child: OriginalTemplatePaywallFooterView(
-          onPurchaseStarted: (Package rcPackage) {
-          },
+          onPurchaseStarted: (Package rcPackage) {},
           onPurchaseCompleted:
-              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
-          },
-          onPurchaseCancelled: () {
-          },
-          onPurchaseError: (PurchasesError error) {
-          },
-          onRestoreCompleted: (CustomerInfo customerInfo) {
-          },
-          onRestoreError: (PurchasesError error) {
-          },
-          onDismiss: () {
-          },
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+          onPurchaseCancelled: () {},
+          onPurchaseError: (PurchasesError error) {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreError: (PurchasesError error) {},
+          onDismiss: () {},
           contentCreator: (double bottomPadding) {
             return Container();
           },
@@ -170,21 +156,14 @@ class _PurchasesFlutterApiTest {
     return Scaffold(
       body: Center(
         child: PaywallFooterView(
-          onPurchaseStarted: (Package rcPackage) {
-          },
+          onPurchaseStarted: (Package rcPackage) {},
           onPurchaseCompleted:
-              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
-          },
-          onPurchaseCancelled: () {
-          },
-          onPurchaseError: (PurchasesError error) {
-          },
-          onRestoreCompleted: (CustomerInfo customerInfo) {
-          },
-          onRestoreError: (PurchasesError error) {
-          },
-          onDismiss: () {
-          },
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+          onPurchaseCancelled: () {},
+          onPurchaseError: (PurchasesError error) {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreError: (PurchasesError error) {},
+          onDismiss: () {},
           contentCreator: (double bottomPadding) {
             return Container();
           },

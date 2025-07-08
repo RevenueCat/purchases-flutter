@@ -36,7 +36,9 @@ void main() {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywall();
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: {
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
           'offeringIdentifier': null,
           'displayCloseButton': false,
         },
@@ -49,7 +51,9 @@ void main() {
     await RevenueCatUI.presentPaywall(offering: offering);
 
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: {
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
           'offeringIdentifier': offering.identifier,
           'displayCloseButton': false,
         },

@@ -11,12 +11,13 @@ void main() {
         'purchaseDate': '2024-01-01T00:00:00Z',
       };
       final info = StoreTransaction.fromJson(json);
-      final expected = StoreTransaction(
+      const expected = StoreTransaction(
         'tx1',
         'sku1',
         '2024-01-01T00:00:00Z',
       );
       expect(info, equals(expected));
+      expect(StoreTransaction.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

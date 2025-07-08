@@ -8,6 +8,7 @@ void main() {
       final info = Storefront.fromJson(json);
       const expected = Storefront(countryCode: 'US');
       expect(info, equals(expected));
+      expect(Storefront.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

@@ -12,18 +12,24 @@ class InstallmentsInfo extends Equatable {
   final int renewalCommitmentPaymentsCount;
 
   const InstallmentsInfo(
-      this.commitmentPaymentsCount,
-      this.renewalCommitmentPaymentsCount,
+    this.commitmentPaymentsCount,
+    this.renewalCommitmentPaymentsCount,
   );
 
-  factory InstallmentsInfo.fromJson(Map<String, dynamic> json) => InstallmentsInfo(
-    json['commitmentPaymentsCount'] as int,
-    json['renewalCommitmentPaymentsCount'] as int,
-  );
+  factory InstallmentsInfo.fromJson(Map<String, dynamic> json) =>
+      InstallmentsInfo(
+        json['commitmentPaymentsCount'] as int,
+        json['renewalCommitmentPaymentsCount'] as int,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'commitmentPaymentsCount': commitmentPaymentsCount,
+        'renewalCommitmentPaymentsCount': renewalCommitmentPaymentsCount,
+      };
 
   @override
   List<Object?> get props => [
-    commitmentPaymentsCount,
-    renewalCommitmentPaymentsCount,
-  ];
+        commitmentPaymentsCount,
+        renewalCommitmentPaymentsCount,
+      ];
 }

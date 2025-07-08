@@ -33,23 +33,33 @@ class WinBackOffer extends Equatable {
   );
 
   factory WinBackOffer.fromJson(Map<String, dynamic> json) => WinBackOffer(
-    json['identifier'] as String,
-    (json['price'] as num).toDouble(),
-    json['priceString'] as String,
-    json['cycles'] as int,
-    json['period'] as String,
-    json['periodUnit'] as String,
-    json['periodNumberOfUnits'] as int,
-  );
+        json['identifier'] as String,
+        (json['price'] as num).toDouble(),
+        json['priceString'] as String,
+        json['cycles'] as int,
+        json['period'] as String,
+        json['periodUnit'] as String,
+        json['periodNumberOfUnits'] as int,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'identifier': identifier,
+        'price': price,
+        'priceString': priceString,
+        'cycles': cycles,
+        'period': period,
+        'periodUnit': periodUnit,
+        'periodNumberOfUnits': periodNumberOfUnits,
+      };
 
   @override
   List<Object?> get props => [
-    identifier,
-    price,
-    priceString,
-    cycles,
-    period,
-    periodUnit,
-    periodNumberOfUnits,
-  ];
+        identifier,
+        price,
+        priceString,
+        cycles,
+        period,
+        periodUnit,
+        periodNumberOfUnits,
+      ];
 }

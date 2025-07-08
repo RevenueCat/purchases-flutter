@@ -12,19 +12,22 @@ class PresentedOfferingTargetingContext extends Equatable {
     this.ruleId,
   );
 
-  toJson() => {
-    'revision': revision,
-    'ruleId': ruleId,
-  };
+  factory PresentedOfferingTargetingContext.fromJson(
+    Map<String, dynamic> json,
+  ) =>
+      PresentedOfferingTargetingContext(
+        json['revision'] as int,
+        json['ruleId'] as String,
+      );
 
-  factory PresentedOfferingTargetingContext.fromJson(Map<String, dynamic> json) => PresentedOfferingTargetingContext(
-    json['revision'] as int,
-    json['ruleId'] as String,
-  );
+  Map<String, dynamic> toJson() => {
+        'revision': revision,
+        'ruleId': ruleId,
+      };
 
   @override
   List<Object> get props => [
-    revision,
-    ruleId,
-  ];
+        revision,
+        ruleId,
+      ];
 }

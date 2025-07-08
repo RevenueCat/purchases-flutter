@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import 'map_helpers.dart';
 import 'store.dart';
 import 'verification_result.dart';
 
@@ -19,7 +18,38 @@ enum PeriodType {
   prepaid,
 
   /// If the period type couldn't be determined.
-  unknown
+  unknown,
+  ;
+
+  static fromJson(dynamic value) {
+    switch (value) {
+      case 'INTRO':
+        return PeriodType.intro;
+      case 'NORMAL':
+        return PeriodType.normal;
+      case 'TRIAL':
+        return PeriodType.trial;
+      case 'PREPAID':
+        return PeriodType.prepaid;
+      default:
+        return PeriodType.unknown;
+    }
+  }
+
+  String toJson() {
+    switch (this) {
+      case PeriodType.intro:
+        return 'INTRO';
+      case PeriodType.normal:
+        return 'NORMAL';
+      case PeriodType.trial:
+        return 'TRIAL';
+      case PeriodType.prepaid:
+        return 'PREPAID';
+      case PeriodType.unknown:
+        return 'unknown';
+    }
+  }
 }
 
 /// Enum of ownership types
@@ -31,7 +61,32 @@ enum OwnershipType {
   familyShared,
 
   /// The purchase has no or an unknown ownership type.
-  unknown
+  unknown,
+  ;
+
+  static fromJson(dynamic value) {
+    switch (value) {
+      case 'PURCHASED':
+        return OwnershipType.purchased;
+      case 'FAMILY_SHARED':
+        return OwnershipType.familyShared;
+      case 'UNKNOWN':
+        return OwnershipType.unknown;
+      default:
+        return OwnershipType.unknown;
+    }
+  }
+
+  String toJson() {
+    switch (this) {
+      case OwnershipType.purchased:
+        return 'PURCHASED';
+      case OwnershipType.familyShared:
+        return 'FAMILY_SHARED';
+      case OwnershipType.unknown:
+        return 'UNKNOWN';
+    }
+  }
 }
 
 /// The EntitlementInfo object gives you access to all of the information about
@@ -114,68 +169,58 @@ class EntitlementInfo extends Equatable {
   });
 
   factory EntitlementInfo.fromJson(Map<String, dynamic> json) =>
-    EntitlementInfo(
-      json['identifier'] as String,
-      json['isActive'] as bool,
-      json['willRenew'] as bool,
-      json['latestPurchaseDate'] as String,
-      json['originalPurchaseDate'] as String,
-      json['productIdentifier'] as String,
-      json['isSandbox'] as bool,
-      ownershipType: _ownershipTypeFromJson(json['ownershipType']),
-      store: storeFromJson(json['store']),
-      periodType: _periodTypeFromJson(json['periodType']),
-      expirationDate: json['expirationDate'] as String?,
-      unsubscribeDetectedAt: json['unsubscribeDetectedAt'] as String?,
-      billingIssueDetectedAt: json['billingIssueDetectedAt'] as String?,
-      productPlanIdentifier: json['productPlanIdentifier'] as String?,
-      verification: verificationResultFromJson(json['verification']),
-    );
+      EntitlementInfo(
+        json['identifier'] as String,
+        json['isActive'] as bool,
+        json['willRenew'] as bool,
+        json['latestPurchaseDate'] as String,
+        json['originalPurchaseDate'] as String,
+        json['productIdentifier'] as String,
+        json['isSandbox'] as bool,
+        ownershipType: OwnershipType.fromJson(json['ownershipType']),
+        store: Store.fromJson(json['store']),
+        periodType: PeriodType.fromJson(json['periodType']),
+        expirationDate: json['expirationDate'] as String?,
+        unsubscribeDetectedAt: json['unsubscribeDetectedAt'] as String?,
+        billingIssueDetectedAt: json['billingIssueDetectedAt'] as String?,
+        productPlanIdentifier: json['productPlanIdentifier'] as String?,
+        verification: VerificationResult.fromJson(json['verification']),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'identifier': identifier,
+        'isActive': isActive,
+        'willRenew': willRenew,
+        'latestPurchaseDate': latestPurchaseDate,
+        'originalPurchaseDate': originalPurchaseDate,
+        'productIdentifier': productIdentifier,
+        'isSandbox': isSandbox,
+        'ownershipType': ownershipType.toJson(),
+        'store': store.toJson(),
+        'periodType': periodType.toJson(),
+        'expirationDate': expirationDate,
+        'unsubscribeDetectedAt': unsubscribeDetectedAt,
+        'billingIssueDetectedAt': billingIssueDetectedAt,
+        'productPlanIdentifier': productPlanIdentifier,
+        'verification': verification.toJson(),
+      };
 
   @override
   List<Object?> get props => [
-    identifier,
-    isActive,
-    willRenew,
-    latestPurchaseDate,
-    originalPurchaseDate,
-    productIdentifier,
-    isSandbox,
-    ownershipType,
-    store,
-    periodType,
-    expirationDate,
-    unsubscribeDetectedAt,
-    billingIssueDetectedAt,
-    productPlanIdentifier,
-    verification,
-  ];
-}
-
-OwnershipType _ownershipTypeFromJson(dynamic value) {
-  switch (value) {
-    case 'PURCHASED':
-      return OwnershipType.purchased;
-    case 'FAMILY_SHARED':
-      return OwnershipType.familyShared;
-    case 'UNKNOWN':
-      return OwnershipType.unknown;
-    default:
-      return OwnershipType.unknown;
-  }
-}
-
-PeriodType _periodTypeFromJson(dynamic value) {
-  switch (value) {
-    case 'INTRO':
-      return PeriodType.intro;
-    case 'NORMAL':
-      return PeriodType.normal;
-    case 'TRIAL':
-      return PeriodType.trial;
-    case 'PREPAID':
-      return PeriodType.prepaid;
-    default:
-      return PeriodType.unknown;
-  }
+        identifier,
+        isActive,
+        willRenew,
+        latestPurchaseDate,
+        originalPurchaseDate,
+        productIdentifier,
+        isSandbox,
+        ownershipType,
+        store,
+        periodType,
+        expirationDate,
+        unsubscribeDetectedAt,
+        billingIssueDetectedAt,
+        productPlanIdentifier,
+        verification,
+      ];
 }

@@ -1,11 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:purchases_flutter/models/period_unit.dart';
-import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'package:purchases_flutter/models/introductory_price.dart';
-import 'package:purchases_flutter/models/store_product_discount.dart';
+import 'package:purchases_flutter/models/period_unit.dart';
 import 'package:purchases_flutter/models/product_category.dart';
-import 'package:purchases_flutter/models/subscription_option_wrapper.dart';
-import 'package:purchases_flutter/models/presented_offering_context_wrapper.dart';
+import 'package:purchases_flutter/models/store_product_discount.dart';
+import 'package:purchases_flutter/models/store_product_wrapper.dart';
 
 void main() {
   group('StoreProduct.fromJson', () {
@@ -28,6 +26,7 @@ void main() {
         'USD',
       );
       expect(info, equals(expected));
+      expect(StoreProduct.fromJson(info.toJson()), equals(expected));
     });
 
     test('parses all fields', () {
@@ -88,15 +87,13 @@ void main() {
             'P1W',
             'WEEK',
             1,
-          )
+          ),
         ],
         productCategory: ProductCategory.subscription,
-        defaultOption: null,
-        subscriptionOptions: null,
-        presentedOfferingContext: null,
         subscriptionPeriod: 'P1M',
       );
       expect(info, equals(expected));
+      expect(StoreProduct.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

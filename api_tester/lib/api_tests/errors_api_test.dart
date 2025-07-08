@@ -34,7 +34,8 @@ class _ErrorsApiTest {
       case PurchasesErrorCode.emptySubscriberAttributesError:
       case PurchasesErrorCode.productDiscountMissingIdentifierError:
       case PurchasesErrorCode.unknownNonNativeError:
-      case PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError:
+      case PurchasesErrorCode
+            .productDiscountMissingSubscriptionGroupIdentifierError:
       case PurchasesErrorCode.customerInfoError:
       case PurchasesErrorCode.systemInfoError:
       case PurchasesErrorCode.beginRefundRequestError:

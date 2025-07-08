@@ -16,6 +16,7 @@ void main() {
         'USD',
       );
       expect(info, equals(expected));
+      expect(Price.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

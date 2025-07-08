@@ -12,8 +12,8 @@ class _EntitlementInfosApiTest {
       Map<String, EntitlementInfo> active,
       VerificationResult verificationResult) {
     EntitlementInfos entitlementInfos = EntitlementInfos(all, active);
-    EntitlementInfos entitlementInfos2 = EntitlementInfos(all, active,
-        verification: verificationResult);
+    EntitlementInfos entitlementInfos2 =
+        EntitlementInfos(all, active, verification: verificationResult);
   }
 
   void _checkProperties(EntitlementInfos entitlementInfos) {

@@ -56,35 +56,63 @@ class Offering extends Equatable {
       .firstWhereOrNull((package) => package.identifier == identifier);
 
   factory Offering.fromJson(Map<String, dynamic> json) => Offering(
-    json['identifier'] as String,
-    json['serverDescription'] as String,
-    Map<String, Object>.from(json['metadata']),
-    (json['availablePackages'] as List)
-        .map((e) => Package.fromJson(Map<String, dynamic>.from(e)))
-        .toList(),
-    lifetime: json['lifetime'] != null ? Package.fromJson(Map<String, dynamic>.from(json['lifetime'])) : null,
-    annual: json['annual'] != null ? Package.fromJson(Map<String, dynamic>.from(json['annual'])) : null,
-    sixMonth: json['sixMonth'] != null ? Package.fromJson(Map<String, dynamic>.from(json['sixMonth'])) : null,
-    threeMonth: json['threeMonth'] != null ? Package.fromJson(Map<String, dynamic>.from(json['threeMonth'])) : null,
-    twoMonth: json['twoMonth'] != null ? Package.fromJson(Map<String, dynamic>.from(json['twoMonth'])) : null,
-    monthly: json['monthly'] != null ? Package.fromJson(Map<String, dynamic>.from(json['monthly'])) : null,
-    weekly: json['weekly'] != null ? Package.fromJson(Map<String, dynamic>.from(json['weekly'])) : null,
-  );
+        json['identifier'] as String,
+        json['serverDescription'] as String,
+        Map<String, Object>.from(json['metadata']),
+        (json['availablePackages'] as List)
+            .map((e) => Package.fromJson(Map<String, dynamic>.from(e)))
+            .toList(),
+        lifetime: json['lifetime'] != null
+            ? Package.fromJson(Map<String, dynamic>.from(json['lifetime']))
+            : null,
+        annual: json['annual'] != null
+            ? Package.fromJson(Map<String, dynamic>.from(json['annual']))
+            : null,
+        sixMonth: json['sixMonth'] != null
+            ? Package.fromJson(Map<String, dynamic>.from(json['sixMonth']))
+            : null,
+        threeMonth: json['threeMonth'] != null
+            ? Package.fromJson(Map<String, dynamic>.from(json['threeMonth']))
+            : null,
+        twoMonth: json['twoMonth'] != null
+            ? Package.fromJson(Map<String, dynamic>.from(json['twoMonth']))
+            : null,
+        monthly: json['monthly'] != null
+            ? Package.fromJson(Map<String, dynamic>.from(json['monthly']))
+            : null,
+        weekly: json['weekly'] != null
+            ? Package.fromJson(Map<String, dynamic>.from(json['weekly']))
+            : null,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'identifier': identifier,
+        'serverDescription': serverDescription,
+        'metadata': metadata,
+        'availablePackages': availablePackages.map((e) => e.toJson()).toList(),
+        if (lifetime != null) 'lifetime': lifetime!.toJson(),
+        if (annual != null) 'annual': annual!.toJson(),
+        if (sixMonth != null) 'sixMonth': sixMonth!.toJson(),
+        if (threeMonth != null) 'threeMonth': threeMonth!.toJson(),
+        if (twoMonth != null) 'twoMonth': twoMonth!.toJson(),
+        if (monthly != null) 'monthly': monthly!.toJson(),
+        if (weekly != null) 'weekly': weekly!.toJson(),
+      };
 
   @override
   List<Object?> get props => [
-    identifier,
-    serverDescription,
-    metadata,
-    availablePackages,
-    lifetime,
-    annual,
-    sixMonth,
-    threeMonth,
-    twoMonth,
-    monthly,
-    weekly,
-  ];
+        identifier,
+        serverDescription,
+        metadata,
+        availablePackages,
+        lifetime,
+        annual,
+        sixMonth,
+        threeMonth,
+        twoMonth,
+        monthly,
+        weekly,
+      ];
 }
 
 extension OfferingX on Offering {

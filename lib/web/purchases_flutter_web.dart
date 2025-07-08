@@ -11,7 +11,8 @@ import '../purchases_flutter.dart';
 
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
-  static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
+  static final _configurationErrorCode =
+      '${PurchasesErrorCode.configurationError.index}';
   static const _purchasesHybridMappingsVersion = '13.29.0';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
@@ -40,7 +41,7 @@ class PurchasesFlutterPlugin {
         "The current document doesn't have a head element which is required to insert a script.",
       );
     }
-    
+
     head.append(script);
 
     globalContext.callMethod(
@@ -71,8 +72,8 @@ class PurchasesFlutterPlugin {
   Future<dynamic> handleMethodCall(MethodCall call) async {
     if (_initCompleter == null) {
       throw PlatformException(
-          code: _unknownErrorCode,
-          message: 'Purchases SDK not loaded on method call: ${call.method}',
+        code: _unknownErrorCode,
+        message: 'Purchases SDK not loaded on method call: ${call.method}',
       );
     }
     await _initCompleter?.future;
@@ -181,13 +182,13 @@ class PurchasesFlutterPlugin {
   }
 
   String _convertLogLevel(String logLevel) => switch (logLevel.toLowerCase()) {
-    'verbose' => 'VERBOSE',
-    'debug' => 'DEBUG',
-    'info' => 'INFO',
-    'warn' => 'WARN',
-    'error' => 'ERROR',
-    _ => 'SILENT',
-  };
+        'verbose' => 'VERBOSE',
+        'debug' => 'DEBUG',
+        'info' => 'INFO',
+        'warn' => 'WARN',
+        'error' => 'ERROR',
+        _ => 'SILENT',
+      };
 
   bool _isConfigured() => _callStaticMethod('isConfigured', []) as bool;
 
@@ -202,8 +203,8 @@ class PurchasesFlutterPlugin {
   ) async {
     final placementIdentifier = arguments['placementIdentifier'] as String;
     return await _getNullableMapFromInstanceMethod(
-        'getCurrentOfferingForPlacement',
-        [placementIdentifier],
+      'getCurrentOfferingForPlacement',
+      [placementIdentifier],
     );
   }
 
@@ -231,9 +232,9 @@ class PurchasesFlutterPlugin {
   }
 
   Future<Map<String, dynamic>> _restorePurchases() async =>
-    // Web SDK doesn't support restore purchases, but returns current customer info
-    // to match behavior with other platforms
-    await _getCustomerInfo();
+      // Web SDK doesn't support restore purchases, but returns current customer info
+      // to match behavior with other platforms
+      await _getCustomerInfo();
 
   Future<void> _close() async {
     _getInstance().callMethod('close'.toJS);
@@ -291,10 +292,12 @@ class PurchasesFlutterPlugin {
     final processedArgs = _processArgs(args);
 
     try {
-      return purchasesStatic.callMethodVarArgs(
-          methodName.toJS,
-          processedArgs,
-      ).dartify();
+      return purchasesStatic
+          .callMethodVarArgs(
+            methodName.toJS,
+            processedArgs,
+          )
+          .dartify();
     } catch (e) {
       throw PlatformException(
         code: _unknownErrorCode,
@@ -304,8 +307,8 @@ class PurchasesFlutterPlugin {
   }
 
   JSObject _callInstanceMethod(
-      String methodName,
-      List<dynamic> args,
+    String methodName,
+    List<dynamic> args,
   ) {
     final purchases = _getInstance();
     final jsArgs = _processArgs(args);
@@ -326,7 +329,8 @@ class PurchasesFlutterPlugin {
   }
 
   JSObject _getStaticPurchasesCommon() {
-    final purchasesHybridMappings = globalContext['PurchasesHybridMappings'] as JSObject;
+    final purchasesHybridMappings =
+        globalContext['PurchasesHybridMappings'] as JSObject;
     JSObject? purchasesCommon;
     if (purchasesHybridMappings.has('PurchasesCommon')) {
       purchasesCommon = purchasesHybridMappings['PurchasesCommon'] as JSObject;
@@ -341,17 +345,16 @@ class PurchasesFlutterPlugin {
   }
 
   Future _callStaticMethodReturningPromise(
-      String methodName,
-      List<dynamic> args,
-      ) async {
+    String methodName,
+    List<dynamic> args,
+  ) async {
     final promise = _callStaticMethod(methodName, args) as JSPromise;
-    return promise.toDart
-        .catchError((error) => throw _processError(error));
+    return promise.toDart.catchError((error) => throw _processError(error));
   }
 
   Future<Map<String, dynamic>> _getMapFromInstanceMethod(
-      String methodName,
-      List<dynamic> args,
+    String methodName,
+    List<dynamic> args,
   ) async {
     final promise = _callInstanceMethod(methodName, args) as JSPromise;
 
@@ -361,35 +364,33 @@ class PurchasesFlutterPlugin {
   }
 
   Future<Map<String, dynamic>?> _getNullableMapFromInstanceMethod(
-      String methodName,
-      List<dynamic> args,
+    String methodName,
+    List<dynamic> args,
   ) async {
     final promise = _callInstanceMethod(methodName, args) as JSPromise;
 
-    return promise.toDart
-        .then((value) {
-          if (value == null) {
-            return null;
-          }
-          return _convertJsRecordToMap(value);
-        })
-        .catchError((error) => throw _processError(error));
+    return promise.toDart.then((value) {
+      if (value == null) {
+        return null;
+      }
+      return _convertJsRecordToMap(value);
+    }).catchError((error) => throw _processError(error));
   }
 
   List<JSAny?> _processArgs(List<dynamic> args) => <JSAny?>[
-    for (final arg in args)
-      switch (arg) {
-        final Map<String, dynamic> arg => arg.jsify(),
-        final List arg => arg.jsify(),
-        final String arg => arg.toJS,
-        final int arg => arg.toJS,
-        final bool arg => arg.toJS,
-        null => null,
-        _ => throw ArgumentError(
-          'Unsupported argument type: ${arg.runtimeType}',
-        ),
-      },
-  ];
+        for (final arg in args)
+          switch (arg) {
+            final Map<String, dynamic> arg => arg.jsify(),
+            final List arg => arg.jsify(),
+            final String arg => arg.toJS,
+            final int arg => arg.toJS,
+            final bool arg => arg.toJS,
+            null => null,
+            _ => throw ArgumentError(
+                'Unsupported argument type: ${arg.runtimeType}',
+              ),
+          },
+      ];
 
   PlatformException _processError(dynamic error) {
     if (error is JSObject && error.has('code')) {
@@ -416,7 +417,7 @@ class PurchasesFlutterPlugin {
       throw ArgumentError('returned result cannot be null');
     } else {
       return Map<String, dynamic>.from(
-          jsRecord.dartify() as Map<dynamic, dynamic>,
+        jsRecord.dartify() as Map<dynamic, dynamic>,
       );
     }
   }

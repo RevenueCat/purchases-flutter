@@ -23,7 +23,8 @@ void main() {
       'result': 'PURCHASE_BELONGS_TO_OTHER_USER',
     });
 
-    WebPurchaseRedemptionPurchaseBelongsToOtherUser? resultIfPurchaseBelongsToOtherUser;
+    WebPurchaseRedemptionPurchaseBelongsToOtherUser?
+        resultIfPurchaseBelongsToOtherUser;
     switch (result) {
       case WebPurchaseRedemptionPurchaseBelongsToOtherUser():
         resultIfPurchaseBelongsToOtherUser = result;

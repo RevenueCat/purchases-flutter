@@ -32,6 +32,32 @@ sealed class WebPurchaseRedemptionResult {
         throw ArgumentError.value(resultType, 'result', 'Invalid value');
     }
   }
+
+  Map<String, dynamic> toJson() {
+    if (this is WebPurchaseRedemptionSuccess) {
+      return {
+        'result': 'SUCCESS',
+        'customerInfo':
+            (this as WebPurchaseRedemptionSuccess).customerInfo.toJson(),
+      };
+    } else if (this is WebPurchaseRedemptionError) {
+      return {
+        'result': 'ERROR',
+        'error': (this as WebPurchaseRedemptionError).error.toJson(),
+      };
+    } else if (this is WebPurchaseRedemptionPurchaseBelongsToOtherUser) {
+      return {'result': 'PURCHASE_BELONGS_TO_OTHER_USER'};
+    } else if (this is WebPurchaseRedemptionInvalidToken) {
+      return {'result': 'INVALID_TOKEN'};
+    } else if (this is WebPurchaseRedemptionExpired) {
+      return {
+        'result': 'EXPIRED',
+        'obfuscatedEmail':
+            (this as WebPurchaseRedemptionExpired).obfuscatedEmail,
+      };
+    }
+    throw ArgumentError('Unknown result type');
+  }
 }
 
 class WebPurchaseRedemptionSuccess extends WebPurchaseRedemptionResult {
@@ -44,7 +70,8 @@ class WebPurchaseRedemptionError extends WebPurchaseRedemptionResult {
   const WebPurchaseRedemptionError({required this.error});
 }
 
-class WebPurchaseRedemptionPurchaseBelongsToOtherUser extends WebPurchaseRedemptionResult {
+class WebPurchaseRedemptionPurchaseBelongsToOtherUser
+    extends WebPurchaseRedemptionResult {
   const WebPurchaseRedemptionPurchaseBelongsToOtherUser();
 }
 
