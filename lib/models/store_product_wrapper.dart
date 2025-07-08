@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 import 'introductory_price.dart';
-import 'map_helpers.dart';
 import 'presented_offering_context_wrapper.dart';
 import 'product_category.dart';
 import 'store_product_discount.dart';
@@ -69,37 +68,81 @@ class StoreProduct extends Equatable {
   });
 
   factory StoreProduct.fromJson(Map<String, dynamic> json) => StoreProduct(
-      json['identifier'] as String,
-      json['description'] as String,
-      json['title'] as String,
-      (json['price'] as num).toDouble(),
-      json['priceString'] as String,
-      json['currencyCode'] as String,
-      introductoryPrice: json['introPrice'] != null ? IntroductoryPrice.fromJson(Map<String, dynamic>.from(json['introPrice'])) : null,
-      discounts: json['discounts'] != null ? (json['discounts'] as List).map((e) => StoreProductDiscount.fromJson(Map<String, dynamic>.from(e))).toList() : null,
-      productCategory: productCategoryFromJson(json['productCategory']),
-      defaultOption: json['defaultOption'] != null ? SubscriptionOption.fromJson(Map<String, dynamic>.from(json['defaultOption'])) : null,
-      subscriptionOptions: json['subscriptionOptions'] != null ? (json['subscriptionOptions'] as List).map((e) => SubscriptionOption.fromJson(Map<String, dynamic>.from(e))).toList() : null,
-      presentedOfferingContext: json['presentedOfferingContext'] != null ? PresentedOfferingContext.fromJson(Map<String, dynamic>.from(json['presentedOfferingContext'])) : null,
-      subscriptionPeriod: json['subscriptionPeriod'] as String?,
-    );
+        json['identifier'] as String,
+        json['description'] as String,
+        json['title'] as String,
+        (json['price'] as num).toDouble(),
+        json['priceString'] as String,
+        json['currencyCode'] as String,
+        introductoryPrice: json['introPrice'] != null
+            ? IntroductoryPrice.fromJson(
+                Map<String, dynamic>.from(json['introPrice']),
+              )
+            : null,
+        discounts: json['discounts'] != null
+            ? (json['discounts'] as List)
+                .map(
+                  (e) => StoreProductDiscount.fromJson(
+                    Map<String, dynamic>.from(e),
+                  ),
+                )
+                .toList()
+            : null,
+        productCategory: ProductCategory.fromJson(json['productCategory']),
+        defaultOption: json['defaultOption'] != null
+            ? SubscriptionOption.fromJson(
+                Map<String, dynamic>.from(json['defaultOption']),
+              )
+            : null,
+        subscriptionOptions: json['subscriptionOptions'] != null
+            ? (json['subscriptionOptions'] as List)
+                .map(
+                  (e) =>
+                      SubscriptionOption.fromJson(Map<String, dynamic>.from(e)),
+                )
+                .toList()
+            : null,
+        presentedOfferingContext: json['presentedOfferingContext'] != null
+            ? PresentedOfferingContext.fromJson(
+                Map<String, dynamic>.from(json['presentedOfferingContext']),
+              )
+            : null,
+        subscriptionPeriod: json['subscriptionPeriod'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'identifier': identifier,
+        'description': description,
+        'title': title,
+        'price': price,
+        'priceString': priceString,
+        'currencyCode': currencyCode,
+        'introPrice': introductoryPrice?.toJson(),
+        'discounts': discounts?.map((e) => e.toJson()).toList(),
+        'productCategory': productCategory?.toJson(),
+        'defaultOption': defaultOption?.toJson(),
+        'subscriptionOptions':
+            subscriptionOptions?.map((e) => e.toJson()).toList(),
+        'presentedOfferingContext': presentedOfferingContext?.toJson(),
+        'subscriptionPeriod': subscriptionPeriod,
+      };
 
   @override
   List<Object?> get props => [
-    identifier,
-    description,
-    title,
-    price,
-    priceString,
-    currencyCode,
-    introductoryPrice,
-    discounts,
-    productCategory,
-    defaultOption,
-    subscriptionOptions,
-    presentedOfferingContext,
-    subscriptionPeriod,
-  ];
+        identifier,
+        description,
+        title,
+        price,
+        priceString,
+        currencyCode,
+        introductoryPrice,
+        discounts,
+        productCategory,
+        defaultOption,
+        subscriptionOptions,
+        presentedOfferingContext,
+        subscriptionPeriod,
+      ];
 }
 
 extension ExtendedStoreProduct on StoreProduct {

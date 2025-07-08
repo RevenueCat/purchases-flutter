@@ -9,12 +9,17 @@ class WebPurchaseRedemption extends Equatable {
     this.redemptionLink,
   );
 
-  factory WebPurchaseRedemption.fromJson(Map<String, dynamic> json) => WebPurchaseRedemption(
-    json['redemptionLink'] as String,
-  );
+  factory WebPurchaseRedemption.fromJson(Map<String, dynamic> json) =>
+      WebPurchaseRedemption(
+        json['redemptionLink'] as String,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'redemptionLink': redemptionLink,
+      };
 
   @override
   List<Object> get props => [
-    redemptionLink,
-  ];
+        redemptionLink,
+      ];
 }

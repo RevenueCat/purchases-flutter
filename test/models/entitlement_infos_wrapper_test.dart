@@ -59,6 +59,7 @@ void main() {
         verification: VerificationResult.verified,
       );
       expect(info, equals(expected));
+      expect(EntitlementInfos.fromJson(info.toJson()), equals(expected));
     });
 
     test('parses all fields', () {
@@ -146,6 +147,7 @@ void main() {
         verification: VerificationResult.verifiedOnDevice,
       );
       expect(info, equals(expected));
+      expect(EntitlementInfos.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

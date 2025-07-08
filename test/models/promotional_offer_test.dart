@@ -20,6 +20,7 @@ void main() {
         1234567890,
       );
       expect(info, equals(expected));
+      expect(PromotionalOffer.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

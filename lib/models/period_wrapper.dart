@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import 'map_helpers.dart';
 import 'period_unit.dart';
 
 class Period extends Equatable {
@@ -22,15 +21,21 @@ class Period extends Equatable {
   );
 
   factory Period.fromJson(Map<String, dynamic> json) => Period(
-      periodUnitFromJson(json['unit']),
-      json['value'] as int,
-      json['iso8601'] as String,
-  );
+        PeriodUnit.fromJson(json['unit']),
+        json['value'] as int,
+        json['iso8601'] as String,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'unit': unit.toJson(),
+        'value': value,
+        'iso8601': iso8601,
+      };
 
   @override
   List<Object> get props => [
-    unit,
-    value,
-    iso8601,
-  ];
+        unit,
+        value,
+        iso8601,
+      ];
 }

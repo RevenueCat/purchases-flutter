@@ -29,21 +29,31 @@ class PricingPhase extends Equatable {
   );
 
   factory PricingPhase.fromJson(Map<String, dynamic> json) => PricingPhase(
-    json['billingPeriod'] != null ? Period.fromJson(Map<String, dynamic>.from(json['billingPeriod'])) : null,
-    _recurrenceModeFromJson(json['recurrenceMode']),
-    json['billingCycleCount'] as int?,
-    Price.fromJson(Map<String, dynamic>.from(json['price'])),
-    _offerPaymentModeFromJson(json['offerPaymentMode']),
-  );
+        json['billingPeriod'] != null
+            ? Period.fromJson(Map<String, dynamic>.from(json['billingPeriod']))
+            : null,
+        RecurrenceMode.fromJson(json['recurrenceMode']),
+        json['billingCycleCount'] as int?,
+        Price.fromJson(Map<String, dynamic>.from(json['price'])),
+        OfferPaymentMode.fromJson(json['offerPaymentMode']),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'billingPeriod': billingPeriod?.toJson(),
+        'recurrenceMode': recurrenceMode?.toJson(),
+        'billingCycleCount': billingCycleCount,
+        'price': price.toJson(),
+        'offerPaymentMode': offerPaymentMode?.toJson(),
+      };
 
   @override
   List<Object?> get props => [
-    billingPeriod,
-    recurrenceMode,
-    billingCycleCount,
-    price,
-    offerPaymentMode,
-  ];
+        billingPeriod,
+        recurrenceMode,
+        billingCycleCount,
+        price,
+        offerPaymentMode,
+      ];
 }
 
 enum RecurrenceMode {
@@ -51,6 +61,35 @@ enum RecurrenceMode {
   finiteRecurring,
   nonRecurring,
   unknown,
+  ;
+
+  static RecurrenceMode? fromJson(dynamic value) {
+    switch (value) {
+      case 1:
+        return RecurrenceMode.infiniteRecurring;
+      case 2:
+        return RecurrenceMode.finiteRecurring;
+      case 3:
+        return RecurrenceMode.nonRecurring;
+      case null:
+        return null;
+      default:
+        return RecurrenceMode.unknown;
+    }
+  }
+
+  dynamic toJson() {
+    switch (this) {
+      case RecurrenceMode.infiniteRecurring:
+        return 1;
+      case RecurrenceMode.finiteRecurring:
+        return 2;
+      case RecurrenceMode.nonRecurring:
+        return 3;
+      case RecurrenceMode.unknown:
+        return null;
+    }
+  }
 }
 
 enum OfferPaymentMode {
@@ -62,34 +101,31 @@ enum OfferPaymentMode {
 
   // Subscribers pay a discounted amount for a specified number of periods
   discountedRecurringPayment,
-}
+  ;
 
-RecurrenceMode? _recurrenceModeFromJson(dynamic value) {
-  switch (value) {
-    case 1:
-      return RecurrenceMode.infiniteRecurring;
-    case 2:
-      return RecurrenceMode.finiteRecurring;
-    case 3:
-      return RecurrenceMode.nonRecurring;
-    case null:
-      return null;
-    default:
-      return RecurrenceMode.unknown;
+  static OfferPaymentMode? fromJson(dynamic value) {
+    switch (value) {
+      case 'FREE_TRIAL':
+        return OfferPaymentMode.freeTrial;
+      case 'SINGLE_PAYMENT':
+        return OfferPaymentMode.singlePayment;
+      case 'DISCOUNTED_RECURRING_PAYMENT':
+        return OfferPaymentMode.discountedRecurringPayment;
+      case null:
+        return null;
+      default:
+        return null;
+    }
   }
-}
 
-OfferPaymentMode? _offerPaymentModeFromJson(dynamic value) {
-  switch (value) {
-    case 'FREE_TRIAL':
-      return OfferPaymentMode.freeTrial;
-    case 'SINGLE_PAYMENT':
-      return OfferPaymentMode.singlePayment;
-    case 'DISCOUNTED_RECURRING_PAYMENT':
-      return OfferPaymentMode.discountedRecurringPayment;
-    case null:
-      return null;
-    default:
-      return null;
+  String toJson() {
+    switch (this) {
+      case OfferPaymentMode.freeTrial:
+        return 'FREE_TRIAL';
+      case OfferPaymentMode.singlePayment:
+        return 'SINGLE_PAYMENT';
+      case OfferPaymentMode.discountedRecurringPayment:
+        return 'DISCOUNTED_RECURRING_PAYMENT';
+    }
   }
 }

@@ -26,6 +26,7 @@ void main() {
         false,
       );
       expect(info, equals(expected));
+      expect(EntitlementInfo.fromJson(info.toJson()), equals(expected));
     });
 
     test('parses all fields with values', () {
@@ -65,6 +66,7 @@ void main() {
         verification: VerificationResult.verifiedOnDevice,
       );
       expect(info, equals(expected));
+      expect(EntitlementInfo.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

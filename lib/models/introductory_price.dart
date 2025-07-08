@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-import 'map_helpers.dart';
 import 'period_unit.dart';
 
 class IntroductoryPrice extends Equatable {
@@ -35,22 +34,32 @@ class IntroductoryPrice extends Equatable {
     this.periodNumberOfUnits,
   );
 
-  factory IntroductoryPrice.fromJson(Map<String, dynamic> json) => IntroductoryPrice(
-      (json['price'] as num).toDouble(),
-      json['priceString'] as String,
-      json['period'] as String,
-      json['cycles'] as int,
-      periodUnitFromJson(json['periodUnit']),
-      json['periodNumberOfUnits'] as int,
-    );
+  factory IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
+      IntroductoryPrice(
+        (json['price'] as num).toDouble(),
+        json['priceString'] as String,
+        json['period'] as String,
+        json['cycles'] as int,
+        PeriodUnit.fromJson(json['periodUnit']),
+        json['periodNumberOfUnits'] as int,
+      );
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'price': price,
+        'priceString': priceString,
+        'period': period,
+        'cycles': cycles,
+        'periodUnit': periodUnit.toJson(),
+        'periodNumberOfUnits': periodNumberOfUnits,
+      };
 
   @override
   List<Object?> get props => [
-    price,
-    priceString,
-    period,
-    cycles,
-    periodUnit,
-    periodNumberOfUnits,
-  ];
+        price,
+        priceString,
+        period,
+        cycles,
+        periodUnit,
+        periodNumberOfUnits,
+      ];
 }

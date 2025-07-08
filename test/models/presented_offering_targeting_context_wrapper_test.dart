@@ -14,6 +14,7 @@ void main() {
         'rule_abc',
       );
       expect(info, equals(expected));
+      expect(PresentedOfferingTargetingContext.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

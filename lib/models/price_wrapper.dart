@@ -25,15 +25,21 @@ class Price extends Equatable {
   );
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
-    json['formatted'] as String,
-    json['amountMicros'] as int,
-    json['currencyCode'] as String,
-  );
+        json['formatted'] as String,
+        json['amountMicros'] as int,
+        json['currencyCode'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'formatted': formatted,
+        'amountMicros': amountMicros,
+        'currencyCode': currencyCode,
+      };
 
   @override
   List<Object?> get props => [
-    formatted,
-    amountMicros,
-    currencyCode,
-  ];
+        formatted,
+        amountMicros,
+        currencyCode,
+      ];
 }

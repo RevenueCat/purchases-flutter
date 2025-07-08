@@ -10,6 +10,7 @@ void main() {
       final info = WebPurchaseRedemption.fromJson(json);
       const expected = WebPurchaseRedemption('https://redeem.link');
       expect(info, equals(expected));
+      expect(WebPurchaseRedemption.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

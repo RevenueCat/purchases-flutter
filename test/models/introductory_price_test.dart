@@ -23,6 +23,7 @@ void main() {
         1,
       );
       expect(info, equals(expected));
+      expect(IntroductoryPrice.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

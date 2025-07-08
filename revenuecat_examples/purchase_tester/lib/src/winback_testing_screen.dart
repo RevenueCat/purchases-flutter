@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
-import 'package:purchases_flutter/models/win_back_offer.dart';
 
 class WinbackTestingScreen extends StatefulWidget {
   const WinbackTestingScreen({Key? key}) : super(key: key);
@@ -52,7 +51,7 @@ class _WinbackTestingScreenState extends State<WinbackTestingScreen> {
           await Purchases.getEligibleWinBackOffersForProduct(product);
       print('Found win-back offers: $offers');
       setState(() {
-        _productWinBackOffers = offers ?? [];
+        _productWinBackOffers = offers;
       });
     } catch (err) {
       print('Error fetching win-back offers: $err');
@@ -67,7 +66,7 @@ class _WinbackTestingScreenState extends State<WinbackTestingScreen> {
       final offers =
           await Purchases.getEligibleWinBackOffersForPackage(package);
       setState(() {
-        _packageWinBackOffers = offers ?? [];
+        _packageWinBackOffers = offers;
       });
     } catch (err) {
       print('Error fetching win-back offers: $err');

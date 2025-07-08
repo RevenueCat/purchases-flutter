@@ -24,6 +24,7 @@ void main() {
         1,
       );
       expect(info, equals(expected));
+      expect(WinBackOffer.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

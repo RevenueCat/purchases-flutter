@@ -19,6 +19,7 @@ void main() {
         'ERROR_CODE',
       );
       expect(info, equals(expected));
+      expect(PurchasesError.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

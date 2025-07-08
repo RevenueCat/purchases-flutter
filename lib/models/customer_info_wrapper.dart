@@ -72,35 +72,61 @@ class CustomerInfo extends Equatable {
   });
 
   factory CustomerInfo.fromJson(Map<String, dynamic> json) => CustomerInfo(
-      EntitlementInfos.fromJson(Map<String, dynamic>.from(json['entitlements'])),
-      Map<String, dynamic>.from(json['allPurchaseDates']).map((k, v) => MapEntry(k, v as String?)),
-      (json['activeSubscriptions'] as List).map((e) => e as String).toList(),
-      (json['allPurchasedProductIdentifiers'] as List).map((e) => e as String).toList(),
-      (json['nonSubscriptionTransactions'] as List).map((e) => StoreTransaction.fromJson(Map<String, dynamic>.from(e))).toList(),
-      json['firstSeen'] as String,
-      json['originalAppUserId'] as String,
-      Map<String, dynamic>.from(json['allExpirationDates']).map((k, v) => MapEntry(k, v as String?)),
-      json['requestDate'] as String,
-      latestExpirationDate: json['latestExpirationDate'] as String?,
-      originalPurchaseDate: json['originalPurchaseDate'] as String?,
-      originalApplicationVersion: json['originalApplicationVersion'] as String?,
-      managementURL: json['managementURL'] as String?,
-    );
+        EntitlementInfos.fromJson(
+          Map<String, dynamic>.from(json['entitlements']),
+        ),
+        Map<String, dynamic>.from(json['allPurchaseDates'])
+            .map((k, v) => MapEntry(k, v as String?)),
+        (json['activeSubscriptions'] as List).map((e) => e as String).toList(),
+        (json['allPurchasedProductIdentifiers'] as List)
+            .map((e) => e as String)
+            .toList(),
+        (json['nonSubscriptionTransactions'] as List)
+            .map((e) => StoreTransaction.fromJson(Map<String, dynamic>.from(e)))
+            .toList(),
+        json['firstSeen'] as String,
+        json['originalAppUserId'] as String,
+        Map<String, dynamic>.from(json['allExpirationDates'])
+            .map((k, v) => MapEntry(k, v as String?)),
+        json['requestDate'] as String,
+        latestExpirationDate: json['latestExpirationDate'] as String?,
+        originalPurchaseDate: json['originalPurchaseDate'] as String?,
+        originalApplicationVersion:
+            json['originalApplicationVersion'] as String?,
+        managementURL: json['managementURL'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'entitlements': entitlements.toJson(),
+        'allPurchaseDates': allPurchaseDates,
+        'activeSubscriptions': activeSubscriptions,
+        'allPurchasedProductIdentifiers': allPurchasedProductIdentifiers,
+        'nonSubscriptionTransactions':
+            nonSubscriptionTransactions.map((e) => e.toJson()).toList(),
+        'firstSeen': firstSeen,
+        'originalAppUserId': originalAppUserId,
+        'allExpirationDates': allExpirationDates,
+        'requestDate': requestDate,
+        'latestExpirationDate': latestExpirationDate,
+        'originalPurchaseDate': originalPurchaseDate,
+        'originalApplicationVersion': originalApplicationVersion,
+        'managementURL': managementURL,
+      };
 
   @override
   List<Object?> get props => [
-    entitlements,
-    allPurchaseDates,
-    activeSubscriptions,
-    allPurchasedProductIdentifiers,
-    nonSubscriptionTransactions,
-    firstSeen,
-    originalAppUserId,
-    allExpirationDates,
-    requestDate,
-    latestExpirationDate,
-    originalPurchaseDate,
-    originalApplicationVersion,
-    managementURL,
-  ];
+        entitlements,
+        allPurchaseDates,
+        activeSubscriptions,
+        allPurchasedProductIdentifiers,
+        nonSubscriptionTransactions,
+        firstSeen,
+        originalAppUserId,
+        allExpirationDates,
+        requestDate,
+        latestExpirationDate,
+        originalPurchaseDate,
+        originalApplicationVersion,
+        managementURL,
+      ];
 }

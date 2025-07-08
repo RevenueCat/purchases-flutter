@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 
 import 'entitlement_info_wrapper.dart';
-import 'map_helpers.dart';
 import 'verification_result.dart';
 
 /// This class contains all the entitlements associated to the user.
@@ -19,25 +18,38 @@ class EntitlementInfos extends Equatable {
   final VerificationResult verification;
 
   const EntitlementInfos(
-      this.all,
-      this.active, {
-       this.verification = VerificationResult.notRequested,
+    this.all,
+    this.active, {
+    this.verification = VerificationResult.notRequested,
   });
 
-  factory EntitlementInfos.fromJson(Map<String, dynamic> json) => EntitlementInfos(
-    Map<String, dynamic>.from(json['all']).map(
-      (k, v) => MapEntry(k, EntitlementInfo.fromJson(Map<String, dynamic>.from(v))),
-    ),
-    Map<String, dynamic>.from(json['active']).map(
-      (k, v) => MapEntry(k, EntitlementInfo.fromJson(Map<String, dynamic>.from(v))),
-    ),
-    verification: verificationResultFromJson(json['verification']),
-  );
+  factory EntitlementInfos.fromJson(Map<String, dynamic> json) =>
+      EntitlementInfos(
+        Map<String, dynamic>.from(json['all']).map(
+          (k, v) => MapEntry(
+            k,
+            EntitlementInfo.fromJson(Map<String, dynamic>.from(v)),
+          ),
+        ),
+        Map<String, dynamic>.from(json['active']).map(
+          (k, v) => MapEntry(
+            k,
+            EntitlementInfo.fromJson(Map<String, dynamic>.from(v)),
+          ),
+        ),
+        verification: VerificationResult.fromJson(json['verification']),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'all': all.map((k, v) => MapEntry(k, v.toJson())),
+        'active': active.map((k, v) => MapEntry(k, v.toJson())),
+        'verification': verification.toJson(),
+      };
 
   @override
   List<Object?> get props => [
-    all,
-    active,
-    verification,
-  ];
+        all,
+        active,
+        verification,
+      ];
 }

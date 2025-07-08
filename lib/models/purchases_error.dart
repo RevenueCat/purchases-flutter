@@ -6,10 +6,13 @@ import '../errors.dart';
 class PurchasesError extends Equatable {
   /// The error code
   final PurchasesErrorCode code;
+
   /// The error message
   final String message;
+
   /// The underlying error message
   final String underlyingErrorMessage;
+
   /// iOS can return a readable error code null, because the construction
   /// of the error doesn't prevent it from being null. To be safe we default
   /// it to '' instead of making it nullable
@@ -23,19 +26,26 @@ class PurchasesError extends Equatable {
   );
 
   factory PurchasesError.fromJson(Map<String, dynamic> json) => PurchasesError(
-    _purchasesErrorCodeFromJson(json['code'] as int),
-    json['message'] as String,
-    json['underlyingErrorMessage'] as String,
-    json['readableErrorCode'] as String? ?? '',
-  );
+        _purchasesErrorCodeFromJson(json['code'] as int),
+        json['message'] as String,
+        json['underlyingErrorMessage'] as String,
+        json['readableErrorCode'] as String? ?? '',
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code.index,
+        'message': message,
+        'underlyingErrorMessage': underlyingErrorMessage,
+        'readableErrorCode': readableErrorCode,
+      };
 
   @override
   List<Object?> get props => [
-    code,
-    message,
-    underlyingErrorMessage,
-    readableErrorCode,
-  ];
+        code,
+        message,
+        underlyingErrorMessage,
+        readableErrorCode,
+      ];
 }
 
 _purchasesErrorCodeFromJson(int json) {

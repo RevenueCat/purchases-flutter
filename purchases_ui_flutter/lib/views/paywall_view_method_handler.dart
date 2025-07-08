@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/package_wrapper.dart';
@@ -8,7 +7,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 class PaywallViewMethodHandler {
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
-  onPurchaseCompleted;
+      onPurchaseCompleted;
   final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
@@ -16,13 +15,13 @@ class PaywallViewMethodHandler {
   final Function()? onDismiss;
 
   const PaywallViewMethodHandler(
-      this.onPurchaseStarted,
-      this.onPurchaseCompleted,
-      this.onPurchaseCancelled,
-      this.onPurchaseError,
-      this.onRestoreCompleted,
-      this.onRestoreError,
-      this.onDismiss,
+    this.onPurchaseStarted,
+    this.onPurchaseCompleted,
+    this.onPurchaseCancelled,
+    this.onPurchaseError,
+    this.onRestoreCompleted,
+    this.onRestoreError,
+    this.onDismiss,
   );
 
   Future<void> handleMethodCall(MethodCall call) async {
@@ -55,7 +54,7 @@ class PaywallViewMethodHandler {
 
   void _handleOnPurchaseStarted(MethodCall call) {
     final rcPackage =
-    Package.fromJson(Map<String, dynamic>.from(call.arguments));
+        Package.fromJson(Map<String, dynamic>.from(call.arguments));
     onPurchaseStarted?.call(rcPackage);
   }
 
@@ -72,19 +71,19 @@ class PaywallViewMethodHandler {
 
   void _handleOnPurchaseError(MethodCall call) {
     final error =
-    PurchasesError.fromJson(Map<String, dynamic>.from(call.arguments));
+        PurchasesError.fromJson(Map<String, dynamic>.from(call.arguments));
     onPurchaseError?.call(error);
   }
 
   void _handleOnRestoreCompleted(MethodCall call) {
     final customerInfo =
-    CustomerInfo.fromJson(Map<String, dynamic>.from(call.arguments));
+        CustomerInfo.fromJson(Map<String, dynamic>.from(call.arguments));
     onRestoreCompleted?.call(customerInfo);
   }
 
   void _handleOnRestoreError(MethodCall call) {
     final error =
-    PurchasesError.fromJson(Map<String, dynamic>.from(call.arguments));
+        PurchasesError.fromJson(Map<String, dynamic>.from(call.arguments));
     onRestoreError?.call(error);
   }
 }

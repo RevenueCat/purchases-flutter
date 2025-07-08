@@ -8,18 +8,12 @@ class _StoreTransactionApiTest {
     StoreTransaction transaction = StoreTransaction.fromJson(json);
   }
 
-  void _checkConstructor(
-      String transactionIdentifier,
-      String productIdentifier,
+  void _checkConstructor(String transactionIdentifier, String productIdentifier,
       String purchaseDate) {
-    StoreTransaction transaction =
-        StoreTransaction(transactionIdentifier, productIdentifier, purchaseDate);
-    StoreTransaction transaction2 =
-        StoreTransaction(
-            transactionIdentifier,
-            productIdentifier,
-            purchaseDate
-        );
+    StoreTransaction transaction = StoreTransaction(
+        transactionIdentifier, productIdentifier, purchaseDate);
+    StoreTransaction transaction2 = StoreTransaction(
+        transactionIdentifier, productIdentifier, purchaseDate);
   }
 
   void _checkProperties(StoreTransaction transaction) {

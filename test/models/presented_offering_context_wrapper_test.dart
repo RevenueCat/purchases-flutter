@@ -20,6 +20,7 @@ void main() {
         PresentedOfferingTargetingContext(1, 'rule_abc'),
       );
       expect(info, equals(expected));
+      expect(PresentedOfferingContext.fromJson(info.toJson()), equals(expected));
     });
   });
-} 
+}

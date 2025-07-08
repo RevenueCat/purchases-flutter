@@ -25,7 +25,7 @@ import 'paywall_view_method_handler.dart';
 ///
 /// [onPurchaseStarted] (Optional) Callback that gets called when a purchase
 /// is started.
-/// 
+///
 /// [onPurchaseCancelled] (Optional) Callback that gets called when a purchase
 /// is cancelled.
 ///
@@ -133,6 +133,6 @@ class PaywallView extends StatelessWidget {
       onDismiss,
     );
     MethodChannel('com.revenuecat.purchasesui/PaywallView/$id')
-          .setMethodCallHandler(handler.handleMethodCall);
+        .setMethodCallHandler(handler.handleMethodCall);
   }
 }

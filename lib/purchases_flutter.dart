@@ -806,7 +806,9 @@ class Purchases {
   /// Required for the RevenueCat Tenjin integration
   ///
   /// [tenjinAnalyticsInstallationID] Empty String or null will delete the subscriber attribute.
-  static Future<void> setTenjinAnalyticsInstallationID(String tenjinAnalyticsInstallationID) =>
+  static Future<void> setTenjinAnalyticsInstallationID(
+    String tenjinAnalyticsInstallationID,
+  ) =>
       _channel.invokeMethod(
         'setTenjinAnalyticsInstallationID',
         {'tenjinAnalyticsInstallationID': tenjinAnalyticsInstallationID},
@@ -1205,8 +1207,11 @@ class Purchases {
         },
       );
 
-  static Future<WebPurchaseRedemption?> parseAsWebPurchaseRedemption(String urlString) async {
-    final bool result = await _channel.invokeMethod('isWebPurchaseRedemptionURL', {
+  static Future<WebPurchaseRedemption?> parseAsWebPurchaseRedemption(
+    String urlString,
+  ) async {
+    final bool result =
+        await _channel.invokeMethod('isWebPurchaseRedemptionURL', {
       'urlString': urlString,
     });
     if (result) {
@@ -1216,11 +1221,15 @@ class Purchases {
     }
   }
 
-  static Future<WebPurchaseRedemptionResult> redeemWebPurchase(WebPurchaseRedemption webPurchaseRedemption) async {
+  static Future<WebPurchaseRedemptionResult> redeemWebPurchase(
+    WebPurchaseRedemption webPurchaseRedemption,
+  ) async {
     final result = await _channel.invokeMethod('redeemWebPurchase', {
       'redemptionLink': webPurchaseRedemption.redemptionLink,
     });
-    return WebPurchaseRedemptionResult.fromJson(Map<String, dynamic>.from(result));
+    return WebPurchaseRedemptionResult.fromJson(
+      Map<String, dynamic>.from(result),
+    );
   }
 
   static Future<CustomerInfo> _invokeReturningCustomerInfo(String method,

@@ -19,24 +19,35 @@ class StoreProductDiscount extends Equatable {
     this.periodNumberOfUnits,
   );
 
-  factory StoreProductDiscount.fromJson(Map<String, dynamic> json) => StoreProductDiscount(
-    json['identifier'] as String,
-    (json['price'] as num).toDouble(),
-    json['priceString'] as String,
-    json['cycles'] as int,
-    json['period'] as String,
-    json['periodUnit'] as String,
-    json['periodNumberOfUnits'] as int,
-  );
+  factory StoreProductDiscount.fromJson(Map<String, dynamic> json) =>
+      StoreProductDiscount(
+        json['identifier'] as String,
+        (json['price'] as num).toDouble(),
+        json['priceString'] as String,
+        json['cycles'] as int,
+        json['period'] as String,
+        json['periodUnit'] as String,
+        json['periodNumberOfUnits'] as int,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'identifier': identifier,
+        'price': price,
+        'priceString': priceString,
+        'cycles': cycles,
+        'period': period,
+        'periodUnit': periodUnit,
+        'periodNumberOfUnits': periodNumberOfUnits,
+      };
 
   @override
   List<Object?> get props => [
-    identifier,
-    price,
-    priceString,
-    cycles,
-    period,
-    periodUnit,
-    periodNumberOfUnits,
-  ];
+        identifier,
+        price,
+        priceString,
+        cycles,
+        period,
+        periodUnit,
+        periodNumberOfUnits,
+      ];
 }

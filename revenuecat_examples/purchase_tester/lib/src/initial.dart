@@ -49,10 +49,12 @@ class _InitialScreenState extends State<InitialScreen> {
     final message = switch (result) {
       WebPurchaseRedemptionSuccess(:final customerInfo) =>
         'Web purchase redemption successful. CustomerInfo: $customerInfo',
-      WebPurchaseRedemptionError(:final error) => 'Web purchase redemption failed: $error',
+      WebPurchaseRedemptionError(:final error) =>
+        'Web purchase redemption failed: $error',
       WebPurchaseRedemptionPurchaseBelongsToOtherUser() =>
         'Web purchase redemption failed: purchase belongs to another user',
-      WebPurchaseRedemptionInvalidToken() => 'Web purchase redemption failed: invalid token',
+      WebPurchaseRedemptionInvalidToken() =>
+        'Web purchase redemption failed: invalid token',
       WebPurchaseRedemptionExpired(:final obfuscatedEmail) =>
         'Web purchase redemption failed: expired token for $obfuscatedEmail',
     };

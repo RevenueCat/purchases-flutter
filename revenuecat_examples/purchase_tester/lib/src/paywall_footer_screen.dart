@@ -12,7 +12,6 @@ class PaywallFooterScreen extends StatefulWidget {
 }
 
 class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -21,7 +20,8 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea( // Wrap your body content with SafeArea
+      body: SafeArea(
+        // Wrap your body content with SafeArea
         child: Center(
           child: OriginalTemplatePaywallFooterView(
             offering: widget.offering,
@@ -52,13 +52,13 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
             contentCreator: (bottomPadding) => Container(
               color: Colors.blue.withAlpha(80),
               child: SingleChildScrollView(
-                padding: EdgeInsets.only(bottom: bottomPadding),
-                child: Column(
-                  children: [
-                    for (var i in Iterable<int>.generate(50).toList()) Text('Testing footer view $i')
-                  ],
-                )
-              ),
+                  padding: EdgeInsets.only(bottom: bottomPadding),
+                  child: Column(
+                    children: [
+                      for (var i in Iterable<int>.generate(50).toList())
+                        Text('Testing footer view $i')
+                    ],
+                  )),
             ),
           ),
         ),

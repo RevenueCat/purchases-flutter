@@ -9,9 +9,9 @@ class _WebPurchaseRedemptionResultApiTest {
   }
 
   void _checkFactories(
-      CustomerInfo customerInfo,
-      PurchasesError error,
-      String obfuscatedEmail,
+    CustomerInfo customerInfo,
+    PurchasesError error,
+    String obfuscatedEmail,
   ) {
     WebPurchaseRedemptionResult result =
         WebPurchaseRedemptionSuccess(customerInfo: customerInfo);
@@ -25,7 +25,8 @@ class _WebPurchaseRedemptionResultApiTest {
     final resultType = switch (result) {
       WebPurchaseRedemptionSuccess(:CustomerInfo customerInfo) => 'SUCCESS',
       WebPurchaseRedemptionError(:PurchasesError error) => 'ERROR',
-      WebPurchaseRedemptionPurchaseBelongsToOtherUser() => 'PURCHASE_BELONGS_TO_OTHER_USER',
+      WebPurchaseRedemptionPurchaseBelongsToOtherUser() =>
+        'PURCHASE_BELONGS_TO_OTHER_USER',
       WebPurchaseRedemptionInvalidToken() => 'INVALID_TOKEN',
       WebPurchaseRedemptionExpired(:String obfuscatedEmail) => 'EXPIRED',
     };
