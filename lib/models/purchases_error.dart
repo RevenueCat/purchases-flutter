@@ -1,40 +1,46 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
 import '../errors.dart';
 
-part 'purchases_error.freezed.dart';
-part 'purchases_error.g.dart';
+/// Error information for purchases
+class PurchasesError extends Equatable {
+  /// The error code
+  final PurchasesErrorCode code;
+  /// The error message
+  final String message;
+  /// The underlying error message
+  final String underlyingErrorMessage;
+  /// iOS can return a readable error code null, because the construction
+  /// of the error doesn't prevent it from being null. To be safe we default
+  /// it to '' instead of making it nullable
+  final String readableErrorCode;
 
-@freezed
-class PurchasesError with _$PurchasesError {
-  const factory PurchasesError(
-    @PurchasesErrorCodeConverter() PurchasesErrorCode code,
-    String message,
-    String underlyingErrorMessage,
-    // iOS can return a readable error code null, because the construction
-    // of the error doesn't prevent it from being null. To be safe we default
-    // it to '' instead of making it nullable
-    // ignore: invalid_annotation_target
-    @JsonKey(defaultValue: '') String readableErrorCode,
-  ) = _PurchasesError;
+  const PurchasesError(
+    this.code,
+    this.message,
+    this.underlyingErrorMessage,
+    this.readableErrorCode,
+  );
 
-  factory PurchasesError.fromJson(Map<String, dynamic> json) =>
-      _$PurchasesErrorFromJson(json);
+  factory PurchasesError.fromJson(Map<String, dynamic> json) => PurchasesError(
+    _purchasesErrorCodeFromJson(json['code'] as int),
+    json['message'] as String,
+    json['underlyingErrorMessage'] as String,
+    json['readableErrorCode'] as String? ?? '',
+  );
+
+  @override
+  List<Object?> get props => [
+    code,
+    message,
+    underlyingErrorMessage,
+    readableErrorCode,
+  ];
 }
 
-class PurchasesErrorCodeConverter
-    implements JsonConverter<PurchasesErrorCode, int> {
-  const PurchasesErrorCodeConverter();
-
-  @override
-  PurchasesErrorCode fromJson(int json) {
-    if (json >= PurchasesErrorCode.values.length) {
-      return PurchasesErrorCode.unknownError;
-    }
-    return PurchasesErrorCode.values[json];
+_purchasesErrorCodeFromJson(int json) {
+  if (json >= PurchasesErrorCode.values.length) {
+    return PurchasesErrorCode.unknownError;
   }
-
-  @override
-  int toJson(PurchasesErrorCode errorCode) =>
-      PurchasesErrorCode.values.indexOf(errorCode);
+  return PurchasesErrorCode.values[json];
 }

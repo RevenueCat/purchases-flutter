@@ -1355,7 +1355,8 @@ extension RefundRequestStatusExtension on RefundRequestStatus {
 /// Class used to hold the result of the logIn method
 class LogInResult {
   /// true if the logged in user has been created in the
-  /// RevenueCat backend for the first time
+  /// RevenueCat backend for the first time.
+  /// Note: This won't be valid in the web target.
   final bool created;
 
   /// the [CustomerInfo] associated to the logged in user

@@ -7,10 +7,6 @@ class _PurchasesErrorApiTest {
     PurchasesError error = PurchasesError.fromJson(json);
   }
 
-  void _checkToJson(PurchasesError error) {
-    Map<String, dynamic> json = error.toJson();
-  }
-
   void _checkConstructor(
     PurchasesErrorCode code,
     String message,

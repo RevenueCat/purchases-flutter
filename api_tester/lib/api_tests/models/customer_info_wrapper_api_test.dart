@@ -7,10 +7,6 @@ class _CustomerInfoApiTest {
     CustomerInfo customerInfo = CustomerInfo.fromJson(json);
   }
 
-  void _checkToJson(CustomerInfo customerInfo) {
-    Map<String, dynamic> json = customerInfo.toJson();
-  }
-
   void _checkConstructor(
       EntitlementInfos entitlements,
       Map<String, String> allPurchaseDates,

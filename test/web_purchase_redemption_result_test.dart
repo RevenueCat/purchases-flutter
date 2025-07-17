@@ -7,12 +7,14 @@ void main() {
       'result': 'EXPIRED',
       'obfuscatedEmail': 'test-obfuscated-email@g******m',
     });
-    final resultIfExpired = result.whenOrNull(
-        expired: (obfuscatedEmail) {
-          expect(obfuscatedEmail, 'test-obfuscated-email@g******m');
-          return result;
-        },
-    );
+    WebPurchaseRedemptionExpired? resultIfExpired;
+    switch (result) {
+      case WebPurchaseRedemptionExpired(:final obfuscatedEmail):
+        expect(obfuscatedEmail, 'test-obfuscated-email@g******m');
+        resultIfExpired = result;
+      case _:
+        break;
+    }
     expect(resultIfExpired, isNotNull);
   });
 
@@ -21,16 +23,24 @@ void main() {
       'result': 'PURCHASE_BELONGS_TO_OTHER_USER',
     });
 
-    final resultIfPurchaseBelongsToOtherUser = result.whenOrNull(
-      purchaseBelongsToOtherUser: () => result,
-    );
+    WebPurchaseRedemptionPurchaseBelongsToOtherUser? resultIfPurchaseBelongsToOtherUser;
+    switch (result) {
+      case WebPurchaseRedemptionPurchaseBelongsToOtherUser():
+        resultIfPurchaseBelongsToOtherUser = result;
+      case _:
+        break;
+    }
     expect(resultIfPurchaseBelongsToOtherUser, isNotNull);
   });
 
   test('fromJson correctly parses success', () {
     const customerInfoJson = {
       'originalAppUserId': 'pepe',
-      'entitlements': {'all': {}, 'active': {}, 'verification': 'NOT_REQUESTED'},
+      'entitlements': {
+        'all': {},
+        'active': {},
+        'verification': 'NOT_REQUESTED',
+      },
       'activeSubscriptions': [],
       'latestExpirationDate': '2021-04-09T14:48:00.000Z',
       'allExpirationDates': {},
@@ -46,12 +56,14 @@ void main() {
       'customerInfo': customerInfoJson,
     });
 
-    final resultIfSuccess = result.whenOrNull(
-      success: (customerInfo) {
+    WebPurchaseRedemptionSuccess? resultIfSuccess;
+    switch (result) {
+      case WebPurchaseRedemptionSuccess(:final customerInfo):
         expect(customerInfo.originalAppUserId, 'pepe');
         return result;
-      },
-    );
+      case _:
+        break;
+    }
     expect(resultIfSuccess, isNotNull);
   });
 }

@@ -1,42 +1,58 @@
-
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 import 'customer_info_wrapper.dart';
 import 'purchases_error.dart';
 
-part 'web_purchase_redemption_result.freezed.dart';
-
-@freezed
-abstract class WebPurchaseRedemptionResult with _$WebPurchaseRedemptionResult {
-  const WebPurchaseRedemptionResult._();
-
-  const factory WebPurchaseRedemptionResult.success({required CustomerInfo customerInfo}) = _Success;
-  const factory WebPurchaseRedemptionResult.error({required PurchasesError error}) = _Error;
-  const factory WebPurchaseRedemptionResult.purchaseBelongsToOtherUser() = _PurchaseBelongsToOtherUser;
-  const factory WebPurchaseRedemptionResult.invalidToken() = _InvalidToken;
-  const factory WebPurchaseRedemptionResult.expired({required String obfuscatedEmail}) = _Expired;
+/// Represents the result of a web purchase redemption
+sealed class WebPurchaseRedemptionResult {
+  const WebPurchaseRedemptionResult();
 
   factory WebPurchaseRedemptionResult.fromJson(Map<String, dynamic> json) {
     final resultType = json['result'] as String;
     switch (resultType) {
       case 'SUCCESS':
-        return WebPurchaseRedemptionResult.success(
-          customerInfo: CustomerInfo.fromJson(Map<String, dynamic>.from(json['customerInfo'] as Map)),
+        return WebPurchaseRedemptionSuccess(
+          customerInfo: CustomerInfo.fromJson(
+            Map<String, dynamic>.from(json['customerInfo']),
+          ),
         );
       case 'ERROR':
-        return WebPurchaseRedemptionResult.error(
-          error: PurchasesError.fromJson(Map<String, dynamic>.from(json['error'] as Map)),
+        return WebPurchaseRedemptionError(
+          error: PurchasesError.fromJson(
+            Map<String, dynamic>.from(json['error']),
+          ),
         );
       case 'PURCHASE_BELONGS_TO_OTHER_USER':
-        return const WebPurchaseRedemptionResult.purchaseBelongsToOtherUser();
+        return const WebPurchaseRedemptionPurchaseBelongsToOtherUser();
       case 'INVALID_TOKEN':
-        return const WebPurchaseRedemptionResult.invalidToken();
+        return const WebPurchaseRedemptionInvalidToken();
       case 'EXPIRED':
-        return WebPurchaseRedemptionResult.expired(
+        return WebPurchaseRedemptionExpired(
           obfuscatedEmail: json['obfuscatedEmail'] as String,
         );
       default:
         throw ArgumentError.value(resultType, 'result', 'Invalid value');
     }
   }
+}
+
+class WebPurchaseRedemptionSuccess extends WebPurchaseRedemptionResult {
+  final CustomerInfo customerInfo;
+  const WebPurchaseRedemptionSuccess({required this.customerInfo});
+}
+
+class WebPurchaseRedemptionError extends WebPurchaseRedemptionResult {
+  final PurchasesError error;
+  const WebPurchaseRedemptionError({required this.error});
+}
+
+class WebPurchaseRedemptionPurchaseBelongsToOtherUser extends WebPurchaseRedemptionResult {
+  const WebPurchaseRedemptionPurchaseBelongsToOtherUser();
+}
+
+class WebPurchaseRedemptionInvalidToken extends WebPurchaseRedemptionResult {
+  const WebPurchaseRedemptionInvalidToken();
+}
+
+class WebPurchaseRedemptionExpired extends WebPurchaseRedemptionResult {
+  final String obfuscatedEmail;
+  const WebPurchaseRedemptionExpired({required this.obfuscatedEmail});
 }

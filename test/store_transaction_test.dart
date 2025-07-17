@@ -10,16 +10,14 @@ void main() {
       };
 
   test('constructor assigns correct values', () {
-    const storeTransaction = StoreTransaction.create(
+    const storeTransaction = StoreTransaction(
       'transactionIdentifier',
-      'revenueCatIdentifier',
       'productIdentifier',
       'purchaseDate',
     );
 
     expect(storeTransaction.transactionIdentifier, 'transactionIdentifier');
     // ignore: deprecated_member_use_from_same_package
-    expect(storeTransaction.revenueCatIdentifier, 'revenueCatIdentifier');
     expect(storeTransaction.productIdentifier, 'productIdentifier');
     expect(storeTransaction.purchaseDate, 'purchaseDate');
   });
@@ -29,14 +27,6 @@ void main() {
         StoreTransaction.fromJson(generateStoreTransactionJSON());
 
     expect(storeTransaction.transactionIdentifier, 'abd123cd');
-  });
-
-  test('revenueCatIdentifier is correctly parsed', () {
-    final storeTransaction =
-        StoreTransaction.fromJson(generateStoreTransactionJSON());
-
-    // ignore: deprecated_member_use_from_same_package
-    expect(storeTransaction.revenueCatIdentifier, 'abd123cd');
   });
 
   test('productId is correctly parsed', () {

@@ -8,10 +8,6 @@ class _StoreProductApiTest {
     StoreProduct product = StoreProduct.fromJson(json);
   }
 
-  void _checkToJson(StoreProduct product) {
-    Map<String, dynamic> json = product.toJson();
-  }
-
   void _checkConstructor(
       String identifier,
       String description,

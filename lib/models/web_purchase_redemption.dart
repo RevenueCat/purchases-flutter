@@ -1,16 +1,20 @@
+import 'package:equatable/equatable.dart';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+/// Represents a web purchase redemption
+class WebPurchaseRedemption extends Equatable {
+  /// The redemption link to be redeemed.
+  final String redemptionLink;
 
-part 'web_purchase_redemption.freezed.dart';
-part 'web_purchase_redemption.g.dart';
+  const WebPurchaseRedemption(
+    this.redemptionLink,
+  );
 
-@freezed
-class WebPurchaseRedemption with _$WebPurchaseRedemption {
-  const factory WebPurchaseRedemption(
-      /// The redemption link to be redeemed.
-      String redemptionLink,
-  ) = _WebPurchaseRedemption;
+  factory WebPurchaseRedemption.fromJson(Map<String, dynamic> json) => WebPurchaseRedemption(
+    json['redemptionLink'] as String,
+  );
 
-  factory WebPurchaseRedemption.fromJson(Map<String, dynamic> json) =>
-      _$WebPurchaseRedemptionFromJson(json);
+  @override
+  List<Object> get props => [
+    redemptionLink,
+  ];
 }

@@ -1,58 +1,95 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
 import 'period_wrapper.dart';
 import 'price_wrapper.dart';
 
-part 'pricing_phase_wrapper.freezed.dart';
-part 'pricing_phase_wrapper.g.dart';
+class PricingPhase extends Equatable {
+  /// Billing period for which the PricingPhase applies
+  final Period? billingPeriod;
 
-@freezed
+  /// Recurrence mode of the PricingPhase
+  final RecurrenceMode? recurrenceMode;
 
-/// Contains all the details associated with a PricingPhase
-class PricingPhase with _$PricingPhase {
-  const factory PricingPhase(
-    /// Billing period for which the PricingPhase applies
-    Period? billingPeriod,
+  /// Number of cycles for which the pricing phase applies.
+  /// Null for infiniteRecurring or finiteRecurring recurrence modes.
+  final int? billingCycleCount;
 
-    /// Recurrence mode of the PricingPhase
-    RecurrenceMode? recurrenceMode,
+  /// Price of the PricingPhase
+  final Price price;
 
-    /// Number of cycles for which the pricing phase applies.
-    /// Null for infiniteRecurring or finiteRecurring recurrence modes.
-    int? billingCycleCount,
+  /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
+  final OfferPaymentMode? offerPaymentMode;
 
-    /// Price of the PricingPhase
-    Price price,
+  const PricingPhase(
+    this.billingPeriod,
+    this.recurrenceMode,
+    this.billingCycleCount,
+    this.price,
+    this.offerPaymentMode,
+  );
 
-    /// Indicates how the pricing phase is charged for finiteRecurring pricing phases
-    OfferPaymentMode? offerPaymentMode,
-  ) = _PricingPhase;
+  factory PricingPhase.fromJson(Map<String, dynamic> json) => PricingPhase(
+    json['billingPeriod'] != null ? Period.fromJson(Map<String, dynamic>.from(json['billingPeriod'])) : null,
+    _recurrenceModeFromJson(json['recurrenceMode']),
+    json['billingCycleCount'] as int?,
+    Price.fromJson(Map<String, dynamic>.from(json['price'])),
+    _offerPaymentModeFromJson(json['offerPaymentMode']),
+  );
 
-  factory PricingPhase.fromJson(Map<String, dynamic> json) =>
-      _$PricingPhaseFromJson(json);
+  @override
+  List<Object?> get props => [
+    billingPeriod,
+    recurrenceMode,
+    billingCycleCount,
+    price,
+    offerPaymentMode,
+  ];
 }
 
 enum RecurrenceMode {
-  @JsonValue(1)
   infiniteRecurring,
-  @JsonValue(2)
   finiteRecurring,
-  @JsonValue(3)
   nonRecurring,
-  @JsonValue(null)
   unknown,
 }
 
 enum OfferPaymentMode {
   // Subscribers don't pay until the specified period ends
-  @JsonValue('FREE_TRIAL')
   freeTrial,
 
   // Subscribers pay up front for a specified period
-  @JsonValue('SINGLE_PAYMENT')
   singlePayment,
 
   // Subscribers pay a discounted amount for a specified number of periods
-  @JsonValue('DISCOUNTED_RECURRING_PAYMENT')
   discountedRecurringPayment,
+}
+
+RecurrenceMode? _recurrenceModeFromJson(dynamic value) {
+  switch (value) {
+    case 1:
+      return RecurrenceMode.infiniteRecurring;
+    case 2:
+      return RecurrenceMode.finiteRecurring;
+    case 3:
+      return RecurrenceMode.nonRecurring;
+    case null:
+      return null;
+    default:
+      return RecurrenceMode.unknown;
+  }
+}
+
+OfferPaymentMode? _offerPaymentModeFromJson(dynamic value) {
+  switch (value) {
+    case 'FREE_TRIAL':
+      return OfferPaymentMode.freeTrial;
+    case 'SINGLE_PAYMENT':
+      return OfferPaymentMode.singlePayment;
+    case 'DISCOUNTED_RECURRING_PAYMENT':
+      return OfferPaymentMode.discountedRecurringPayment;
+    case null:
+      return null;
+    default:
+      return null;
+  }
 }

@@ -29,6 +29,7 @@ files_with_version_number = {
     './purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
     './purchases_ui_flutter/macos/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
     './purchases_ui_flutter/android/build.gradle' => ['version \'{x}\''],
+    './lib/web/purchases_flutter_web.dart' => ['_pluginVersion = \'{x}\''],
 }
 
 repo_name = 'purchases-flutter'
@@ -173,6 +174,7 @@ lane :update_hybrid_common do |options|
         's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
       ],
       'purchases_ui_flutter/android/build.gradle' => ['ext.common_version = \'{x}\''],
+      'lib/web/purchases_flutter_web.dart' => ['_purchasesHybridMappingsVersion = \'{x}\''],
   }
 
   if dry_run

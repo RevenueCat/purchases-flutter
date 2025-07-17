@@ -81,11 +81,6 @@ commands:
     steps:
       - flutter-get-dependencies:
           project: <<parameters.project>>
-      - run:
-          name: Build
-          command: |
-            cd <<parameters.project>>
-            flutter packages pub run build_runner build --delete-conflicting-outputs
 
   gradle-dependencies:
     description: "Get Gradle dependencies"
@@ -227,7 +222,7 @@ jobs:
     steps:
       - checkout
       - flutter/install_sdk_and_pub:
-          version: 3.3.0
+          version: 3.27.0
 
   test_ui_sdk_min_version_compatibility:
     description: "Test UI min version compatibility for purchases_ui_flutter SDK"
@@ -235,7 +230,7 @@ jobs:
     steps:
         - checkout
         - flutter/install_sdk_and_pub:
-            version: 3.16.3
+            version: 3.27.0
         - flutter-get-dependencies:
             project: purchases_ui_flutter
 
@@ -340,18 +335,8 @@ jobs:
             flutter drive -d $DEVICE_ID --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
 
-  freezed:
-    description: "Check if Freezed files need to be added to repo"
-    docker:
-      - image: ghcr.io/cirruslabs/flutter:stable
-    steps:
-      - checkout
-      - build-flutter-project
-      - swissknife/fail_if_dirty:
-          print-modified-files: true
-
   dry-run-release:
-    description: "Check if Freezed files need to be added to repo"
+    description: "Attempts to do a dry-run release of purchases-flutter and purchases_ui_flutter"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
@@ -433,7 +418,6 @@ workflows:
       - lint
       - test
       - api_test
-      - freezed
       - dry-run-release: *release-branches
       - ios-integration-test
       - macos-integration-test

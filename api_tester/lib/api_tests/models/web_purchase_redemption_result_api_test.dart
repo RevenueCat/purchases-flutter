@@ -14,20 +14,20 @@ class _WebPurchaseRedemptionResultApiTest {
       String obfuscatedEmail,
   ) {
     WebPurchaseRedemptionResult result =
-        WebPurchaseRedemptionResult.success(customerInfo: customerInfo);
-    result = WebPurchaseRedemptionResult.error(error: error);
-    result = const WebPurchaseRedemptionResult.purchaseBelongsToOtherUser();
-    result = const WebPurchaseRedemptionResult.invalidToken();
-    result = WebPurchaseRedemptionResult.expired(obfuscatedEmail: obfuscatedEmail);
+        WebPurchaseRedemptionSuccess(customerInfo: customerInfo);
+    result = WebPurchaseRedemptionError(error: error);
+    result = const WebPurchaseRedemptionPurchaseBelongsToOtherUser();
+    result = const WebPurchaseRedemptionInvalidToken();
+    result = WebPurchaseRedemptionExpired(obfuscatedEmail: obfuscatedEmail);
   }
 
-  void _checkFreezedWhen(WebPurchaseRedemptionResult result) {
-    result.when(
-      success: (CustomerInfo customerInfo) => 'SUCCESS',
-      error: (PurchasesError error) => 'ERROR',
-      purchaseBelongsToOtherUser: () => 'PURCHASE_BELONGS_TO_OTHER_USER',
-      invalidToken: () => 'INVALID_TOKEN',
-      expired: (String obfuscatedEmail) => 'EXPIRED',
-    );
+  void _checkSwitch(WebPurchaseRedemptionResult result) {
+    final resultType = switch (result) {
+      WebPurchaseRedemptionSuccess(:CustomerInfo customerInfo) => 'SUCCESS',
+      WebPurchaseRedemptionError(:PurchasesError error) => 'ERROR',
+      WebPurchaseRedemptionPurchaseBelongsToOtherUser() => 'PURCHASE_BELONGS_TO_OTHER_USER',
+      WebPurchaseRedemptionInvalidToken() => 'INVALID_TOKEN',
+      WebPurchaseRedemptionExpired(:String obfuscatedEmail) => 'EXPIRED',
+    };
   }
 }

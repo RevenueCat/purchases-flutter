@@ -23,10 +23,6 @@ class _PackageApiTest {
     Package package = Package.fromJson(json);
   }
 
-  void _checkToJson(Package package) {
-    Map<String, dynamic> json = package.toJson();
-  }
-
   void _checkConstructor(
       String identifier,
       PackageType packageType,
