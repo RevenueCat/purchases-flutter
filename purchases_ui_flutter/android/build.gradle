@@ -1,16 +1,16 @@
 group 'com.revenuecat.purchases_ui_flutter'
-version '8.10.5'
+version '8.10.6'
 
 buildscript {
     ext.kotlin_version = '1.9.20'
-    ext.common_version = '14.0.2'
+    ext.common_version = '14.2.0'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.11.0'
+        classpath 'com.android.tools.build:gradle:8.11.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
