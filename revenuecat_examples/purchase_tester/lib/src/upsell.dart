@@ -285,9 +285,10 @@ class _PurchaseButton extends StatelessWidget {
 
   Future<void> _purchasePackage(BuildContext context, Package package) async {
     try {
-      final customerInfo = await Purchases.purchasePackage(package);
-      final isPro =
-          customerInfo.entitlements.active.containsKey(entitlementKey);
+      final purchaseResult = await Purchases.purchasePackage(package);
+      final isPro = purchaseResult.customerInfo.entitlements
+        .active.containsKey(entitlementKey);
+      print("StoreTransaction: ${purchaseResult.storeTransaction}");
       if (isPro) {
         Navigator.pushReplacement(
           context,
@@ -335,9 +336,9 @@ class _PurchaseStoreProductButton extends StatelessWidget {
   Future<void> _purchaseStoreProduct(
       BuildContext context, StoreProduct storeProduct) async {
     try {
-      final customerInfo = await Purchases.purchaseStoreProduct(storeProduct);
-      final isPro =
-          customerInfo.entitlements.active.containsKey(entitlementKey);
+      final purchaseResult = await Purchases.purchaseStoreProduct(storeProduct);
+      final isPro = purchaseResult.customerInfo.entitlements
+        .active.containsKey(entitlementKey);
       if (isPro) {
         Navigator.pushReplacement(
           context,
@@ -380,9 +381,9 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
             icon: const Icon(Icons.add_shopping_cart),
             onPressed: () async {
               try {
-                final customerInfo =
+                final purchaseResult =
                     await Purchases.purchaseSubscriptionOption(option);
-                final isPro = customerInfo.entitlements.active
+                final isPro = purchaseResult.customerInfo.entitlements.active
                     .containsKey(entitlementKey);
                 if (isPro) {
                   Navigator.pushReplacement(
