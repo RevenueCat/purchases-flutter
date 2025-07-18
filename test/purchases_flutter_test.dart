@@ -42,6 +42,12 @@ void main() {
     'nonSubscriptionTransactions': [],
   };
 
+  final mockStoreTransaction = {
+    'transactionIdentifier': 'mock_transaction_id',
+    'productIdentifier': 'mock_product_id',
+    'purchaseDate': '2025-01-01T01:20:11.000Z',
+  };
+
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
@@ -546,6 +552,7 @@ void main() {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -565,7 +572,7 @@ void main() {
           await Purchases.purchasePackage(mockPackage);
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(
@@ -599,6 +606,7 @@ void main() {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -625,7 +633,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(
@@ -657,6 +665,7 @@ void main() {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -685,7 +694,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
     } on PlatformException catch (e) {
       fail('there was an exception $e');
@@ -697,6 +706,7 @@ void main() {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -711,7 +721,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(
@@ -742,6 +752,7 @@ void main() {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -757,7 +768,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(
@@ -786,6 +797,7 @@ void main() {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -802,7 +814,7 @@ void main() {
           await Purchases.purchaseStoreProduct(mockStoreProduct);
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(
@@ -831,6 +843,7 @@ void main() {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
@@ -855,7 +868,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(
@@ -883,6 +896,7 @@ void main() {
       response = {
         'productIdentifier': 'gold:monthly',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const phase = PricingPhase(
         Period(PeriodUnit.month, 1, 'P1M'),
@@ -910,7 +924,7 @@ void main() {
           await Purchases.purchaseSubscriptionOption(mockSubscriptionOption);
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(
@@ -943,6 +957,7 @@ void main() {
       response = {
         'productIdentifier': 'gold:monthly',
         'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
       };
       const phase = PricingPhase(
         Period(PeriodUnit.month, 1, 'P1M'),
@@ -977,7 +992,7 @@ void main() {
       );
       expect(
         purchasePackageResult,
-        CustomerInfo.fromJson(mockCustomerInfoResponse),
+        PurchaseResult.fromJson(response),
       );
 
       expect(

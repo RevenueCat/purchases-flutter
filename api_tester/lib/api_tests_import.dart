@@ -17,6 +17,7 @@ import 'package:api_tester/api_tests/models/price_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/pricing_phase_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/promotional_offer_api_test.dart';
 import 'package:api_tester/api_tests/models/purchase_configuration_api_test.dart';
+import 'package:api_tester/api_tests/models/purchase_result_api_test.dart';
 import 'package:api_tester/api_tests/models/purchases_error_api_test.dart';
 import 'package:api_tester/api_tests/models/store_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_discount_api_test.dart';

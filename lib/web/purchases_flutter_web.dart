@@ -12,7 +12,7 @@ import '../purchases_flutter.dart';
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
-  static const _purchasesHybridMappingsVersion = '13.29.0';
+  static const _purchasesHybridMappingsVersion = '15.0.0';
   static const _platformName = 'flutter';
   static const _pluginVersion = '8.7.3';
   static const _purchasesHybridMappingsUrl =
@@ -162,14 +162,16 @@ class PurchasesFlutterPlugin {
       );
     }
 
-    final appUserId = arguments['appUserId'] as String?;
-
     final options = {
       'apiKey': apiKey,
-      'appUserId': appUserId,
       'flavor': _platformName,
       'flavorVersion': _pluginVersion,
     };
+    final appUserId = arguments['appUserId'] as String?;
+
+    if(appUserId != null && appUserId.isNotEmpty) {
+      options['appUserId'] = appUserId;
+    }
 
     _callStaticMethod('configure', [options]);
   }
