@@ -1238,22 +1238,6 @@ class Purchases {
     return PurchaseResult.fromJson(response);
   }
 
-  static Future<CustomerInfo> _invokeReturningCustomerInfo(String method,
-      // ignore: require_trailing_commas
-      [dynamic arguments]) async {
-    final response = await _invokeReturningMap(
-      method,
-      arguments,
-    );
-    final customerInfoJson = _getCustomerInfoJsonFromMap(response);
-    return CustomerInfo.fromJson(customerInfoJson);
-  }
-
-  static Map<String, dynamic> _getCustomerInfoJsonFromMap(
-    Map<String, dynamic> response,
-  ) =>
-      Map<String, dynamic>.from(response['customerInfo']);
-
   static Future<Map<String, dynamic>> _invokeReturningMap(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
