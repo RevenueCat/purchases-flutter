@@ -568,7 +568,7 @@ class _PurchasesFlutterApiTest {
   }
 }
 
-Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForProduct(
+Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForProduct(
     StoreProduct product) async {
   List<WinBackOffer>? offers =
       await Purchases.getEligibleWinBackOffersForProduct(product);
@@ -576,7 +576,7 @@ Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForProduct(
   return await Purchases.purchaseProductWithWinBackOffer(product, offers[0]);
 }
 
-Future<CustomerInfo> _checkFetchAndPurchaseWinBackOffersForPackage(
+Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForPackage(
     Package package) async {
   List<WinBackOffer>? offers =
       await Purchases.getEligibleWinBackOffersForPackage(package);
