@@ -93,67 +93,67 @@ class _PurchasesFlutterApiTest {
     GoogleProductChangeInfo? googleProductChangeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
     ProductCategory productType = ProductCategory.subscription;
-    CustomerInfo customerInfo = await Purchases.purchaseProduct(
+    PurchaseResult purchaseResult = await Purchases.purchaseProduct(
         productIdentifier,
         type: purchaseType,
         upgradeInfo: upgradeInfo);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+    purchaseResult = await Purchases.purchaseProduct(productIdentifier,
         upgradeInfo: upgradeInfo);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier);
+    purchaseResult = await Purchases.purchaseProduct(productIdentifier);
   }
 
   void _checkPurchaseStoreProduct(StoreProduct storeProduct) async {
     GoogleProductChangeInfo? googleProductChangeInfo;
-    CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
+    PurchaseResult purchaseResult = await Purchases.purchaseStoreProduct(
         storeProduct,
         googleProductChangeInfo: googleProductChangeInfo,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+    purchaseResult = await Purchases.purchaseStoreProduct(storeProduct,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+    purchaseResult = await Purchases.purchaseStoreProduct(storeProduct,
         googleProductChangeInfo: googleProductChangeInfo);
-    customerInfo = await Purchases.purchaseStoreProduct(storeProduct);
+    purchaseResult = await Purchases.purchaseStoreProduct(storeProduct);
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
     GoogleProductChangeInfo? googleProductChangeInfo;
-    CustomerInfo customerInfo =
+    PurchaseResult purchaseResult =
         await Purchases.purchasePackage(package, upgradeInfo: upgradeInfo);
-    customerInfo = await Purchases.purchasePackage(package,
+    purchaseResult = await Purchases.purchasePackage(package,
         googleProductChangeInfo: googleProductChangeInfo,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchasePackage(package,
+    purchaseResult = await Purchases.purchasePackage(package,
         upgradeInfo: upgradeInfo, googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchasePackage(package,
+    purchaseResult = await Purchases.purchasePackage(package,
         googleIsPersonalizedPrice: true);
   }
 
   void _checkPurchaseSubscriptionOption(SubscriptionOption subscriptionOption,
       GoogleProductChangeInfo? googleProductChangeInfo) async {
-    CustomerInfo customerInfo = await Purchases.purchaseSubscriptionOption(
+    PurchaseResult purchaseResult = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         googleProductChangeInfo: googleProductChangeInfo);
-    customerInfo = await Purchases.purchaseSubscriptionOption(
+    purchaseResult = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         googleProductChangeInfo: googleProductChangeInfo,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseSubscriptionOption(
+    purchaseResult = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         googleIsPersonalizedPrice: true);
-    customerInfo =
+    purchaseResult =
         await Purchases.purchaseSubscriptionOption(subscriptionOption);
   }
 
   void _checkPurchaseDiscountedProduct(
       StoreProduct product, PromotionalOffer offer) async {
-    CustomerInfo customerInfo =
+    PurchaseResult purchaseResult =
         await Purchases.purchaseDiscountedProduct(product, offer);
   }
 
   void _checkPurchaseDiscountedPackage(
       Package package, PromotionalOffer offer) async {
-    CustomerInfo customerInfo =
+    PurchaseResult purchaseResult =
         await Purchases.purchaseDiscountedPackage(package, offer);
   }
 
