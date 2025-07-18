@@ -951,7 +951,7 @@ class Purchases {
   /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
   /// Purchase a product applying a given win-back offer.
   ///
-  /// Returns a [CustomerInfo] object. Throws a
+  /// Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -962,22 +962,22 @@ class Purchases {
   /// [winBackOffer] Win-back offer that will be applied to the product.
   /// Retrieve this offer using [getEligibleWinBackOffersForProduct]
   /// or [getEligibleWinBackOffersForPackage].
-  static Future<CustomerInfo> purchaseProductWithWinBackOffer(
+  static Future<PurchaseResult> purchaseProductWithWinBackOffer(
     StoreProduct product,
     WinBackOffer winBackOffer,
   ) async {
-    final customerInfo =
-        await _invokeReturningCustomerInfo('purchaseProductWithWinBackOffer', {
+    final purchaseResult =
+        await _invokeReturningPurchaseResult('purchaseProductWithWinBackOffer', {
       'productIdentifier': product.identifier,
       'winBackOfferIdentifier': winBackOffer.identifier,
     });
-    return customerInfo;
+    return purchaseResult;
   }
 
   /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
   /// Purchase a package applying a given win-back offer.
   ///
-  /// Returns a [CustomerInfo] object. Throws a
+  /// Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -987,17 +987,17 @@ class Purchases {
   ///
   /// [winBackOffer] Win-back offer that will be applied to the package.
   /// Retrieve this offer using [getEligibleWinBackOffersForPackage].
-  static Future<CustomerInfo> purchasePackageWithWinBackOffer(
+  static Future<PurchaseResult> purchasePackageWithWinBackOffer(
     Package package,
     WinBackOffer winBackOffer,
   ) async {
-    final customerInfo =
-        await _invokeReturningCustomerInfo('purchasePackageWithWinBackOffer', {
+    final purchaseResult =
+        await _invokeReturningPurchaseResult('purchasePackageWithWinBackOffer', {
       'packageIdentifier': package.identifier,
       'presentedOfferingContext': package.presentedOfferingContext.toJson(),
       'winBackOfferIdentifier': winBackOffer.identifier,
     });
-    return customerInfo;
+    return purchaseResult;
   }
 
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
