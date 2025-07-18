@@ -40,7 +40,7 @@ switch (result) {
 ```
 
 * Change result of purchase methods to PurchaseResult (#1408) via Toni Rico (@tonidero)
-   * Now, the result of the purchase methods is a `PurchaseResult` object, which contains the `Purchase` object instead of a `CustomerInfo` object. The `PurchaseResult` object also contains a `CustomerInfo` object, which can be used to get the latest customer information after the purchase is made aside from other useful data, including the created `StoreTransaction`.
+   * The result of the purchase methods is now a `PurchaseResult` object instead of a `CustomerInfo` object. The `PurchaseResult` object contains a `CustomerInfo` object updated with the latest customer information after the purchase is made, and the `StoreTransaction` object created by the purchase.
 
 ### New features
 
