@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
