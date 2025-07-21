@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
@@ -115,10 +116,18 @@ class PurchasesFlutterPlugin {
         case 'isWebPurchaseRedemptionURL':
           return Future.value(false);
 
+        case 'setAttributes':
+          return _setAttributes(call.arguments);
+        case 'setEmail':
+          return _setEmail(call.arguments);
+        case 'setPhoneNumber':
+          return _setPhoneNumber(call.arguments);
+        case 'setDisplayName':
+          return _setDisplayName(call.arguments);
+
         case 'syncPurchases':
         case 'collectDeviceIdentifiers':
         case 'invalidateCustomerInfoCache':
-        case 'setAttributes':
         case 'showInAppMessages':
         case 'enableAdServicesAttributionTokenCollection':
         case 'setSimulatesAskToBuyInSandbox':
@@ -281,6 +290,26 @@ class PurchasesFlutterPlugin {
       );
     }
     return _callStaticMethodReturningPromise('setProxyUrl', [proxyURL]);
+  }
+
+  Future<void> _setAttributes(dynamic arguments) async {
+    final attributes = Map<String, dynamic>.from(arguments['attributes']);
+    _callInstanceMethod('setAttributes', [attributes]);
+  }
+
+  Future<void> _setEmail(dynamic arguments) async {
+    final email = arguments['email'] as String?;
+    _callInstanceMethod('setEmail', [email]);
+  }
+
+  Future<void> _setPhoneNumber(dynamic arguments) async {
+    final phoneNumber = arguments['phoneNumber'] as String?;
+    _callInstanceMethod('setPhoneNumber', [phoneNumber]);
+  }
+
+  Future<void> _setDisplayName(dynamic arguments) async {
+    final displayName = arguments['displayName'] as String?;
+    _callInstanceMethod('setDisplayName', [displayName]);
   }
 
   // Helper functions to handle JS interop
