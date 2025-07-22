@@ -12,6 +12,7 @@ import 'constant.dart';
 import 'initial.dart';
 import 'paywall.dart';
 import 'winback_testing_screen.dart';
+import 'virtual_currency_testing_screen.dart';
 
 class UpsellScreen extends StatefulWidget {
   const UpsellScreen({Key? key}) : super(key: key);
@@ -137,6 +138,26 @@ class _UpsellScreenState extends State<UpsellScreen> {
                           ));
                     },
                     child: const Text("Go to Win-Back Offer Testing Screen"),
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Virtual Currency Testing"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const VirtualCurrencyTestingScreen(),
+                          ));
+                    },
+                    child: const Text("Go to Virtual Currency Testing Screen"),
                   ),
                 ]))),
       ),
