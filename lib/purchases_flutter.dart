@@ -1228,6 +1228,19 @@ class Purchases {
     return WebPurchaseRedemptionResult.fromJson(Map<String, dynamic>.from(result));
   }
 
+  ///================================================================================
+  /// Virtual Currencies
+  ///================================================================================
+  
+  /// Fetches the virtual currencies for the current subscriber.
+  ///
+  /// Returns a [VirtualCurrencies] object containing the subscriber's virtual currencies.
+  static Future<VirtualCurrencies> getVirtualCurrencies() async {
+    final result = await _channel.invokeMethod('getVirtualCurrencies');
+    print('Virtual currencies: $result');
+    return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
+  }
+
   static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {

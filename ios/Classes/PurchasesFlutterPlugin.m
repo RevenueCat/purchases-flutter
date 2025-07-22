@@ -244,6 +244,8 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
     } else if ([@"redeemWebPurchase" isEqualToString:call.method]) {
         [RCCommonFunctionality redeemWebPurchaseWithUrlString:arguments[@"redemptionLink"]
                                                    completion:[self getResponseCompletionBlock:result]];
+    } else if ([@"getVirtualCurrencies" isEqualToString:call.method]) {
+        [RCCommonFunctionality getVirtualCurrenciesWithCompletion:[self getResponseCompletionBlock:result]];
     } else {
         result(FlutterMethodNotImplemented);
     }
