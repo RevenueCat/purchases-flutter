@@ -1237,7 +1237,6 @@ class Purchases {
   /// Returns a [VirtualCurrencies] object containing the subscriber's virtual currencies.
   static Future<VirtualCurrencies> getVirtualCurrencies() async {
     final result = await _channel.invokeMethod('getVirtualCurrencies');
-    print('Virtual currencies: $result');
     return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
   }
 

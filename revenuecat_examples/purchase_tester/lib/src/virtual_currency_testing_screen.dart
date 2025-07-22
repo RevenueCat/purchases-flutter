@@ -23,14 +23,12 @@ class _VirtualCurrencyTestingScreenState
     _clearVirtualCurrencies();
 
     try {
-      print('Fetching virtual currencies');
       final virtualCurrencies = await Purchases.getVirtualCurrencies();
       setState(() {
         _virtualCurrencies = virtualCurrencies;
       });
     } catch (err) {
       final errorMessage = err.toString();
-      print('Error fetching virtual currencies: $err');
       setState(() {
         _error = errorMessage;
       });
