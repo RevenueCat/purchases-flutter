@@ -354,6 +354,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getVirtualCurrencies":
                 getVirtualCurrencies(result);
                 break;
+            case "invalidateVirtualCurrenciesCache":
+                invalidateVirtualCurrenciesCache(result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -774,6 +777,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void getVirtualCurrencies(final Result result) {
         CommonKt.getVirtualCurrencies(getOnResult(result));
+    }
+
+    private void invalidateVirtualCurrenciesCache(final Result result) {
+        CommonKt.invalidateVirtualCurrenciesCache();
+        result.success(null);
     }
 
     private void runOnUiThread(Runnable runnable) {

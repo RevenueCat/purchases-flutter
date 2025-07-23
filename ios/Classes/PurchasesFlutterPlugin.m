@@ -246,6 +246,9 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
                                                    completion:[self getResponseCompletionBlock:result]];
     } else if ([@"getVirtualCurrencies" isEqualToString:call.method]) {
         [RCCommonFunctionality getVirtualCurrenciesWithCompletion:[self getResponseCompletionBlock:result]];
+    } else if ([@"invalidateVirtualCurrenciesCache" isEqualToString:call.method]) {
+        [RCCommonFunctionality invalidateVirtualCurrenciesCache];
+        result(nil);
     } else {
         result(FlutterMethodNotImplemented);
     }

@@ -1240,6 +1240,14 @@ class Purchases {
     return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
   }
 
+  /// Invalidates the cache for virtual currencies.
+  ///
+  /// This is useful for cases where a virtual currency's balance might have been updated
+  /// outside of the app, like if you decreased a user's balance from the user spending a virtual currency,
+  /// or if you increased the balance from your backend using the server APIs.
+  static Future<void> invalidateVirtualCurrenciesCache() =>
+    _channel.invokeMethod('invalidateVirtualCurrenciesCache');
+
   static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
