@@ -1545,4 +1545,49 @@ void main() {
       ),
     ]);
   });
+
+  test(
+      'getCachedVirtualCurrencies works correctly for cached virtual currencies',
+      () async {
+    response = mockVirtualCurrenciesResponse;
+    final virtualCurrencies = await Purchases.getCachedVirtualCurrencies();
+
+    expect(log, <Matcher>[
+      isMethodCall(
+        'getCachedVirtualCurrencies',
+        arguments: null,
+      ),
+    ]);
+
+    expect(virtualCurrencies, isNotNull);
+    final gold = virtualCurrencies!.all['GLD'];
+    expect(gold, isNotNull);
+    expect(gold!.balance, 100);
+    expect(gold.name, 'Gold');
+    expect(gold.code, 'GLD');
+    expect(gold.serverDescription, 'It\'s gold');
+
+    final gem = virtualCurrencies.all['GEM'];
+    expect(gem, isNotNull);
+    expect(gem!.balance, 100);
+    expect(gem.name, 'Gem');
+    expect(gem.code, 'GEM');
+    expect(gem.serverDescription, null);
+  });
+
+  test(
+      'getCachedVirtualCurrencies works correctly for no cached virtual currencies',
+      () async {
+    response = null;
+    final virtualCurrencies = await Purchases.getCachedVirtualCurrencies();
+
+    expect(log, <Matcher>[
+      isMethodCall(
+        'getCachedVirtualCurrencies',
+        arguments: null,
+      ),
+    ]);
+
+    expect(virtualCurrencies, isNull);
+  });
 }

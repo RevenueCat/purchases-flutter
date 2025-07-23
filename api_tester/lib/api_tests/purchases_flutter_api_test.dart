@@ -574,6 +574,10 @@ class _PurchasesFlutterApiTest {
   void _checkInvalidateVirtualCurrenciesCache() {
     Future<void> future = Purchases.invalidateVirtualCurrenciesCache();
   }
+
+  void _checkGetCachedVirtualCurrencies() async {
+    VirtualCurrencies? virtualCurrencies = await Purchases.getCachedVirtualCurrencies();
+  }
 }
 
 Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForProduct(
