@@ -583,3 +583,7 @@ Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForPackage(
 
   return await Purchases.purchasePackageWithWinBackOffer(package, offers[0]);
 }
+
+Future<VirtualCurrencies> _checkGetVirtualCurrencies() async {
+  return VirtualCurrencies virtualCurrencies = await Purchases.getVirtualCurrencies();
+}
