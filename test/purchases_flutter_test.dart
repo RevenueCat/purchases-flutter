@@ -48,6 +48,23 @@ void main() {
     'purchaseDate': '2025-01-01T01:20:11.000Z',
   };
 
+  final mockVirtualCurrenciesResponse = {
+    'all': {
+      'GLD': {
+        'balance': 100,
+        'name': 'Gold',
+        'code': 'GLD',
+        'serverDescription': 'It\'s gold',
+      },
+      'GEM': {
+        'balance': 100,
+        'name': 'Gem',
+        'code': 'GEM',
+        'serverDescription': null,
+      },
+    }
+  };
+
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
@@ -1489,5 +1506,33 @@ void main() {
         break;
     }
     expect(expiredOrNull, isNotNull);
+  });
+
+  test('getVirtualCurrencies works correctly', () async {
+    response = mockVirtualCurrenciesResponse;
+
+    final virtualCurrencies = await Purchases.getVirtualCurrencies();
+
+    expect(log, <Matcher>[
+      isMethodCall(
+        'getVirtualCurrencies',
+        arguments: null,
+      ),
+    ]);
+
+    expect(virtualCurrencies, isNotNull);
+    final gold = virtualCurrencies.all['GLD'];
+    expect(gold, isNotNull);
+    expect(gold!.balance, 100);
+    expect(gold.name, 'Gold');
+    expect(gold.code, 'GLD');
+    expect(gold.serverDescription, 'It\'s gold');
+
+    final gem = virtualCurrencies.all['GEM'];
+    expect(gem, isNotNull);
+    expect(gem!.balance, 100);
+    expect(gem.name, 'Gem');
+    expect(gem.code, 'GEM');
+    expect(gem.serverDescription, null);
   });
 }
