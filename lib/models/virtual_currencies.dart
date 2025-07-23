@@ -2,7 +2,9 @@ import 'package:equatable/equatable.dart';
 
 import 'virtual_currency.dart';
 
+/// The VirtualCurrencies object contains all the virtual currencies associated to a user.
 class VirtualCurrencies extends Equatable {
+  /// A map of all [VirtualCurrency] objects keyed by virtual currency code.
   final Map<String, VirtualCurrency> all;
 
   const VirtualCurrencies(this.all);
