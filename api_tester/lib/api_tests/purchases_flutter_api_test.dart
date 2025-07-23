@@ -567,7 +567,7 @@ class _PurchasesFlutterApiTest {
     WebPurchaseRedemptionResult? result = await Purchases.redeemWebPurchase(webPurchaseRedemption!);
   }
 
-  void _checkGetVirtualCurrencies() {
+  void _checkGetVirtualCurrencies() async {
     VirtualCurrencies virtualCurrencies = await Purchases.getVirtualCurrencies();
   }
 
