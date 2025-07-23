@@ -154,7 +154,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const VirtualCurrencyTestingScreen(),
+                            builder: (context) =>
+                                const VirtualCurrencyTestingScreen(),
                           ));
                     },
                     child: const Text("Go to Virtual Currency Testing Screen"),

@@ -45,19 +45,19 @@ class _VirtualCurrencyTestingScreenState
     });
     _clearVirtualCurrencies();
 
-    // try {
-    //   await Purchases.invalidateVirtualCurrenciesCache();
-    // } catch (err) {
-    //   final errorMessage = err.toString();
-    //   print('Error invalidating virtual currencies cache: $err');
-    //   setState(() {
-    //     _error = errorMessage;
-    //   });
-    // } finally {
-    //   setState(() {
-    //     _loading = false;
-    //   });
-    // }
+    try {
+      await Purchases.invalidateVirtualCurrenciesCache();
+    } catch (err) {
+      final errorMessage = err.toString();
+      print('Error invalidating virtual currencies cache: $err');
+      setState(() {
+        _error = errorMessage;
+      });
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   Future<void> _fetchCachedVirtualCurrencies() async {
@@ -66,29 +66,23 @@ class _VirtualCurrencyTestingScreenState
     });
     _clearVirtualCurrencies();
 
-    // try {
-    //   final cachedVirtualCurrencies = await Purchases.getCachedVirtualCurrencies();
-    //   if (cachedVirtualCurrencies == null) {
-    //     setState(() {
-    //       _virtualCurrencies = {};
-    //       _error = 'Cached virtual currencies are null.';
-    //     });
-    //   } else {
-    //     setState(() {
-    //       _virtualCurrencies = cachedVirtualCurrencies;
-    //     });
-    //   }
-    // } catch (err) {
-    //   final errorMessage = err.toString();
-    //   print('Error fetching cached virtual currencies: $err');
-    //   setState(() {
-    //     _error = errorMessage;
-    //   });
-    // } finally {
-    //   setState(() {
-    //     _loading = false;
-    //   });
-    // }
+    try {
+      final cachedVirtualCurrencies =
+          await Purchases.getCachedVirtualCurrencies();
+      setState(() {
+        _virtualCurrencies = cachedVirtualCurrencies;
+      });
+    } catch (err) {
+      final errorMessage = err.toString();
+      print('Error fetching cached virtual currencies: $err');
+      setState(() {
+        _error = errorMessage;
+      });
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   void _clearVirtualCurrencies() {
