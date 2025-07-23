@@ -11,7 +11,9 @@ class VirtualCurrencies extends Equatable {
       VirtualCurrencies(
         Map<String, dynamic>.from(json['all']).map(
           (k, v) => MapEntry(
-              k, VirtualCurrency.fromJson(Map<String, dynamic>.from(v))),
+            k,
+            VirtualCurrency.fromJson(Map<String, dynamic>.from(v)),
+          ),
         ),
       );
 
