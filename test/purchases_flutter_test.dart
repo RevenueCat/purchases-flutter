@@ -1535,4 +1535,14 @@ void main() {
     expect(gem.code, 'GEM');
     expect(gem.serverDescription, null);
   });
+
+  test('invalidateVirtualCurrenciesCache works correctly', () async {
+    await Purchases.invalidateVirtualCurrenciesCache();
+    expect(log, <Matcher>[
+      isMethodCall(
+        'invalidateVirtualCurrenciesCache',
+        arguments: null,
+      ),
+    ]);
+  });
 }
