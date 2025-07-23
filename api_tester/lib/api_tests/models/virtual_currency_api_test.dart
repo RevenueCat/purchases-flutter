@@ -9,8 +9,7 @@ class _VirtualCurrencyApiTest {
 
   void _checkConstructor(
       int balance, String name, String code, String? serverDescription) {
-    VirtualCurrency vc =
-        VirtualCurrency(balance, name, code, serverDescription);
+    VirtualCurrency vc = VirtualCurrency(balance, name, code, serverDescription);
   }
 
   void _checkProperties(VirtualCurrency virtualCurrency) {
