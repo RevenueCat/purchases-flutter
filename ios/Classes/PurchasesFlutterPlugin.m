@@ -249,6 +249,8 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
     } else if ([@"invalidateVirtualCurrenciesCache" isEqualToString:call.method]) {
         [RCCommonFunctionality invalidateVirtualCurrenciesCache];
         result(nil);
+    } else if ([@"getCachedVirtualCurrencies" isEqualToString:call.method]) {
+        result([RCCommonFunctionality getCachedVirtualCurrencies]);
     } else {
         result(FlutterMethodNotImplemented);
     }

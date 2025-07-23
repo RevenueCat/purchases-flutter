@@ -1234,7 +1234,8 @@ class Purchases {
   
   /// Fetches the virtual currencies for the current subscriber.
   ///
-  /// Returns a [VirtualCurrencies] object containing the subscriber's virtual currencies.
+  /// Returns a [VirtualCurrencies] object, or throws a [PlatformException] if there
+  /// was a problem fetching the virtual currencies.
   static Future<VirtualCurrencies> getVirtualCurrencies() async {
     final result = await _channel.invokeMethod('getVirtualCurrencies');
     return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
@@ -1247,6 +1248,17 @@ class Purchases {
   /// or if you increased the balance from your backend using the server APIs.
   static Future<void> invalidateVirtualCurrenciesCache() =>
     _channel.invokeMethod('invalidateVirtualCurrenciesCache');
+
+  /// The currently cached [VirtualCurrencies] if one is available.
+  /// This value will remain null until virtual currencies have been fetched at 
+  /// least once with [Purchases.getVirtualCurrencies] or an equivalent function.
+  static Future<VirtualCurrencies?> getCachedVirtualCurrencies() async {
+    final result = await _channel.invokeMethod('getCachedVirtualCurrencies');
+    if (result == null) {
+      return null;
+    }
+    return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
+  }
 
   static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
