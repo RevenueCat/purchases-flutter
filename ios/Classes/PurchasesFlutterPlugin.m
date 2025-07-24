@@ -244,6 +244,13 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
     } else if ([@"redeemWebPurchase" isEqualToString:call.method]) {
         [RCCommonFunctionality redeemWebPurchaseWithUrlString:arguments[@"redemptionLink"]
                                                    completion:[self getResponseCompletionBlock:result]];
+    } else if ([@"getVirtualCurrencies" isEqualToString:call.method]) {
+        [RCCommonFunctionality getVirtualCurrenciesWithCompletion:[self getResponseCompletionBlock:result]];
+    } else if ([@"invalidateVirtualCurrenciesCache" isEqualToString:call.method]) {
+        [RCCommonFunctionality invalidateVirtualCurrenciesCache];
+        result(nil);
+    } else if ([@"getCachedVirtualCurrencies" isEqualToString:call.method]) {
+        result([RCCommonFunctionality getCachedVirtualCurrencies]);
     } else {
         result(FlutterMethodNotImplemented);
     }

@@ -566,6 +566,18 @@ class _PurchasesFlutterApiTest {
     WebPurchaseRedemption? webPurchaseRedemption = await Purchases.parseAsWebPurchaseRedemption(urlString);
     WebPurchaseRedemptionResult? result = await Purchases.redeemWebPurchase(webPurchaseRedemption!);
   }
+
+  void _checkGetVirtualCurrencies() async {
+    VirtualCurrencies virtualCurrencies = await Purchases.getVirtualCurrencies();
+  }
+
+  void _checkInvalidateVirtualCurrenciesCache() {
+    Future<void> future = Purchases.invalidateVirtualCurrenciesCache();
+  }
+
+  void _checkGetCachedVirtualCurrencies() async {
+    VirtualCurrencies? virtualCurrencies = await Purchases.getCachedVirtualCurrencies();
+  }
 }
 
 Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForProduct(

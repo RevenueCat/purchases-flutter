@@ -141,6 +141,9 @@ class PurchasesFlutterPlugin {
         case 'purchaseProductWithWinBackOffer':
         case 'getEligibleWinBackOffersForProduct':
         case 'redeemWebPurchase':
+        case 'getVirtualCurrencies':
+        case 'invalidateVirtualCurrenciesCache':
+        case 'getCachedVirtualCurrencies':
           throw UnsupportedPlatformException();
 
         default:

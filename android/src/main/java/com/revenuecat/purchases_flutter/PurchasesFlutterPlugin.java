@@ -351,6 +351,15 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String redemptionLink = call.argument("redemptionLink");
                 redeemWebPurchase(redemptionLink, result);
                 break;
+            case "getVirtualCurrencies":
+                getVirtualCurrencies(result);
+                break;
+            case "invalidateVirtualCurrenciesCache":
+                invalidateVirtualCurrenciesCache(result);
+                break;
+            case "getCachedVirtualCurrencies":
+                getCachedVirtualCurrencies(result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -767,6 +776,19 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             return;
         }
         CommonKt.redeemWebPurchase(redemptionLink, getOnResult(result));
+    }
+
+    private void getVirtualCurrencies(final Result result) {
+        CommonKt.getVirtualCurrencies(getOnResult(result));
+    }
+
+    private void invalidateVirtualCurrenciesCache(final Result result) {
+        CommonKt.invalidateVirtualCurrenciesCache();
+        result.success(null);
+    }
+
+    private void getCachedVirtualCurrencies(final Result result) {
+        result.success(CommonKt.getCachedVirtualCurrencies());
     }
 
     private void runOnUiThread(Runnable runnable) {
