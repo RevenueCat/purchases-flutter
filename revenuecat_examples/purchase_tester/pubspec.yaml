@@ -15,6 +15,9 @@ dependencies:
 
   app_links: ^6.3.3
 
+  purchases_flutter: ^9.2.1
+  purchases_ui_flutter: ^9.2.1
+
 dev_dependencies:
   flutter_lints: ^1.0.4
   flutter_test:
