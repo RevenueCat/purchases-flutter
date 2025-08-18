@@ -39,9 +39,9 @@ class IntroductoryPrice extends Equatable {
       (json['price'] as num).toDouble(),
       json['priceString'] as String,
       json['period'] as String,
-      json['cycles'] as int,
+      (json['cycles'] as num).round(),
       periodUnitFromJson(json['periodUnit']),
-      json['periodNumberOfUnits'] as int,
+      (json['periodNumberOfUnits'] as num).round(),
     );
 
   @override
