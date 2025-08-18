@@ -15,6 +15,11 @@ dependencies:
 
   app_links: ^6.3.3
 
+  # Need to reference these to be able to get the iOS dependencies for Cocoapods added,
+  # but we override these dependencies later so these are not the versions used.
+  purchases_flutter: ^9.2.1
+  purchases_ui_flutter: ^9.2.1
+
 dev_dependencies:
   flutter_lints: ^1.0.4
   flutter_test:
