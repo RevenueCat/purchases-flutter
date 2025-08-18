@@ -26,7 +26,7 @@ class Price extends Equatable {
 
   factory Price.fromJson(Map<String, dynamic> json) => Price(
     json['formatted'] as String,
-    json['amountMicros'] as int,
+    (json['amountMicros'] as num).round(),
     json['currencyCode'] as String,
   );
 

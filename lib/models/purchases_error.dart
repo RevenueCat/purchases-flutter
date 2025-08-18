@@ -23,7 +23,7 @@ class PurchasesError extends Equatable {
   );
 
   factory PurchasesError.fromJson(Map<String, dynamic> json) => PurchasesError(
-    _purchasesErrorCodeFromJson(json['code'] as int),
+    _purchasesErrorCodeFromJson((json['code'] as num).round()),
     json['message'] as String,
     json['underlyingErrorMessage'] as String,
     json['readableErrorCode'] as String? ?? '',

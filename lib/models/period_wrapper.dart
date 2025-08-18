@@ -23,7 +23,7 @@ class Period extends Equatable {
 
   factory Period.fromJson(Map<String, dynamic> json) => Period(
       periodUnitFromJson(json['unit']),
-      json['value'] as int,
+      (json['value'] as num).round(),
       json['iso8601'] as String,
   );
 

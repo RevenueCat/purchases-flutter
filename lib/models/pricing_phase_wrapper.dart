@@ -31,7 +31,7 @@ class PricingPhase extends Equatable {
   factory PricingPhase.fromJson(Map<String, dynamic> json) => PricingPhase(
     json['billingPeriod'] != null ? Period.fromJson(Map<String, dynamic>.from(json['billingPeriod'])) : null,
     _recurrenceModeFromJson(json['recurrenceMode']),
-    json['billingCycleCount'] as int?,
+    (json['billingCycleCount'] as num?)?.round(),
     Price.fromJson(Map<String, dynamic>.from(json['price'])),
     _offerPaymentModeFromJson(json['offerPaymentMode']),
   );

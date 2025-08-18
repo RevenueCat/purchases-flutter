@@ -25,7 +25,7 @@ class VirtualCurrency extends Equatable {
 
   factory VirtualCurrency.fromJson(Map<String, dynamic> json) =>
       VirtualCurrency(
-        (json['balance'] as num).toInt(),
+        (json['balance'] as num).round(),
         json['name'] as String,
         json['code'] as String,
         json['serverDescription'] as String?,
