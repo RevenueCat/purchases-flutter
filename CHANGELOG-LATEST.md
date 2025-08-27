@@ -1,4 +1,6 @@
 ## RevenueCat SDK
-### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 16.2.2 (#1431) via RevenueCat Git Bot (@RCGitBot)
-    * Includes a fix to properly localize the purchase flow on Web according to the browser locale.
+### 🐞 Bugfixes
+* Fix WASM parsing (#1434) via Toni Rico (@tonidero)
+
+### 🔄 Other Changes
+* Add purchase_tester dependency to fix issues in latest version of flutter (#1435) via Toni Rico (@tonidero)
