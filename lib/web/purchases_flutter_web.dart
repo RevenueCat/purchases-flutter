@@ -127,6 +127,8 @@ class PurchasesFlutterPlugin {
           return _getVirtualCurrencies();
         case 'invalidateVirtualCurrenciesCache':
           return _invalidateVirtualCurrenciesCache();
+        case 'getCachedVirtualCurrencies':
+          return _getCachedVirtualCurrencies();
 
         case 'syncPurchases':
         case 'collectDeviceIdentifiers':
@@ -153,7 +155,6 @@ class PurchasesFlutterPlugin {
         case 'purchaseProductWithWinBackOffer':
         case 'getEligibleWinBackOffersForProduct':
         case 'redeemWebPurchase':
-        case 'getCachedVirtualCurrencies':
           throw UnsupportedPlatformException();
 
         default:
@@ -321,6 +322,14 @@ class PurchasesFlutterPlugin {
 
   Future<void> _invalidateVirtualCurrenciesCache() async {
     _getInstance().callMethod('invalidateVirtualCurrenciesCache'.toJS);
+  }
+
+  Future<Map<String, dynamic>?> _getCachedVirtualCurrencies() async {
+    final cachedVirtualCurrencies = _getInstance().callMethod('getCachedVirtualCurrencies'.toJS);
+    if (cachedVirtualCurrencies == null) {
+      return null;
+    }
+    return _convertJsRecordToMap(cachedVirtualCurrencies);
   }
     
   // Helper functions to handle JS interop
