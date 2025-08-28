@@ -315,10 +315,8 @@ class PurchasesFlutterPlugin {
     _callInstanceMethod('setDisplayName', [displayName]);
   }
 
-  Future<Map<String, dynamic>> _getVirtualCurrencies() async {
-    final virtualCurrencies = await _getMapFromInstanceMethod('getVirtualCurrencies', []);
-    return virtualCurrencies;
-  }
+  Future<Map<String, dynamic>> _getVirtualCurrencies() async =>
+    await _getMapFromInstanceMethod('getVirtualCurrencies', []);
 
   // Helper functions to handle JS interop
 
