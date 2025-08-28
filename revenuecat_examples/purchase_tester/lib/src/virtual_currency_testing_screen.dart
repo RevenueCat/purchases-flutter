@@ -47,6 +47,7 @@ class _VirtualCurrencyTestingScreenState
 
     try {
       await Purchases.invalidateVirtualCurrenciesCache();
+      print('Virtual currencies cache invalidated');
     } catch (err) {
       final errorMessage = err.toString();
       print('Error invalidating virtual currencies cache: $err');
@@ -69,6 +70,10 @@ class _VirtualCurrencyTestingScreenState
     try {
       final cachedVirtualCurrencies =
           await Purchases.getCachedVirtualCurrencies();
+
+      if (cachedVirtualCurrencies == null) {
+        print('No cached virtual currencies found');
+      }
       setState(() {
         _virtualCurrencies = cachedVirtualCurrencies;
       });
