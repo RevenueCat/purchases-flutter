@@ -125,6 +125,8 @@ class PurchasesFlutterPlugin {
           return _setDisplayName(call.arguments);
         case 'getVirtualCurrencies':
           return _getVirtualCurrencies();
+        case 'invalidateVirtualCurrenciesCache':
+          return _invalidateVirtualCurrenciesCache();
 
         case 'syncPurchases':
         case 'collectDeviceIdentifiers':
@@ -151,7 +153,6 @@ class PurchasesFlutterPlugin {
         case 'purchaseProductWithWinBackOffer':
         case 'getEligibleWinBackOffersForProduct':
         case 'redeemWebPurchase':
-        case 'invalidateVirtualCurrenciesCache':
         case 'getCachedVirtualCurrencies':
           throw UnsupportedPlatformException();
 
@@ -318,6 +319,10 @@ class PurchasesFlutterPlugin {
   Future<Map<String, dynamic>> _getVirtualCurrencies() async =>
     await _getMapFromInstanceMethod('getVirtualCurrencies', []);
 
+  Future<void> _invalidateVirtualCurrenciesCache() async {
+    _getInstance().callMethod('invalidateVirtualCurrenciesCache'.toJS);
+  }
+    
   // Helper functions to handle JS interop
 
   Object? _callStaticMethod(
