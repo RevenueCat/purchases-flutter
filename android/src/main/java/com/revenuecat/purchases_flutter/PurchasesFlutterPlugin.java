@@ -120,9 +120,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String verificationMode = call.argument("entitlementVerificationMode");
                 Boolean pendingTransactionsForPrepaidPlansEnabled = call
                         .argument("pendingTransactionsForPrepaidPlansEnabled");
+                Boolean automaticDeviceIdentifierCollectionEnabled = call
+                        .argument("automaticDeviceIdentifierCollectionEnabled");
                 setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
-                        pendingTransactionsForPrepaidPlansEnabled, result);
+                        pendingTransactionsForPrepaidPlansEnabled,
+                        automaticDeviceIdentifierCollectionEnabled, result);
                 break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
@@ -370,6 +373,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable String purchasesAreCompletedBy, @Nullable Boolean useAmazon,
             @Nullable Boolean shouldShowInAppMessagesAutomatically, @Nullable String verificationMode,
             @Nullable Boolean pendingTransactionsForPrepaidPlansEnabled,
+            @Nullable Boolean automaticDeviceIdentifierCollectionEnabled,
             final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
@@ -387,7 +391,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     new DangerousSettings(),
                     shouldShowInAppMessagesAutomatically,
                     verificationMode,
-                    pendingTransactionsForPrepaidPlansEnabled);
+                    pendingTransactionsForPrepaidPlansEnabled,
+                    automaticDeviceIdentifierCollectionEnabled);
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {

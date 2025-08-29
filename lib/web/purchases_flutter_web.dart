@@ -12,7 +12,7 @@ import '../purchases_flutter.dart';
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
-  static const _purchasesHybridMappingsVersion = '17.1.0';
+  static const _purchasesHybridMappingsVersion = '17.2.0';
   static const _platformName = 'flutter';
   static const _pluginVersion = '9.2.3';
   static const _purchasesHybridMappingsUrl =

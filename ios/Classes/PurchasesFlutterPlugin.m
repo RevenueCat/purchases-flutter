@@ -56,6 +56,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString * _Nullable verificationMode = arguments[@"entitlementVerificationMode"];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         NSString *storeKitVersion = arguments[@"storeKitVersion"];
+        BOOL automaticDeviceIdentifierCollectionEnabled = YES;
+        object = arguments[@"automaticDeviceIdentifierCollectionEnabled"];
+        if (object != [NSNull null] && object != nil) {
+            automaticDeviceIdentifierCollectionEnabled = [object boolValue];
+        }
         [self setupPurchases:apiKey
                    appUserID:appUserID
      purchasesAreCompletedBy:purchasesAreCompletedBy
@@ -63,6 +68,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
              storeKitVersion: storeKitVersion
 shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
             verificationMode:verificationMode
+automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -263,6 +269,7 @@ purchasesAreCompletedBy:(nullable NSString *)purchasesAreCompletedBy
        storeKitVersion:(nullable NSString *)storeKitVersion
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
       verificationMode:(nullable NSString *)verificationMode
+automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -280,7 +287,9 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
                                               storeKitVersion:storeKitVersion
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
-                                             verificationMode:verificationMode];
+                                             verificationMode:verificationMode
+                                           diagnosticsEnabled:NO
+                   automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled];
     purchases.delegate = self;
 
     result(nil);

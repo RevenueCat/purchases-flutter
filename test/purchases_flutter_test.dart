@@ -100,6 +100,7 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
           },
         ),
       ],
@@ -129,6 +130,7 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
           },
         ),
       ],
@@ -156,6 +158,7 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
           },
         ),
       ],
@@ -186,6 +189,7 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
           },
         ),
       ],
@@ -1094,6 +1098,7 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
           },
         ),
       ],
@@ -1122,6 +1127,7 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': true,
+            'automaticDeviceIdentifierCollectionEnabled': true,
           },
         ),
       ],
@@ -1151,6 +1157,7 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
           },
         ),
       ],
@@ -1181,6 +1188,35 @@ void main() {
             'shouldShowInAppMessagesAutomatically': true,
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
+          },
+        ),
+      ],
+    );
+  });
+
+  test('configure with automaticDeviceIdentifierCollectionEnabled false', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..automaticDeviceIdentifierCollectionEnabled = false,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'purchasesAreCompletedBy': 'REVENUECAT',
+            'userDefaultsSuiteName': null,
+            'storeKitVersion': 'DEFAULT',
+            'useAmazon': false,
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': false,
           },
         ),
       ],
