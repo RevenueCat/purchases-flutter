@@ -60,7 +60,7 @@ class PurchasesConfiguration {
 
   /// Enable this setting to allow the collection of identifiers when setting the identifier for an
   /// attribution network. For example, when calling [Purchases.setAdjustID] or [Purchases.setAppsflyerID],
-  /// the SDK would collect the Android advertising ID, IP and device versions, if available, and send them
+  /// the SDK would collect device identifiers, if available, and send them
   /// to RevenueCat. This is required by some attribution networks to attribute installs and re-installs.
   ///
   /// Enabling this setting does NOT mean we will always collect the identifiers. We will only do so when
