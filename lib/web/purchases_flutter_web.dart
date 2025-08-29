@@ -324,13 +324,8 @@ class PurchasesFlutterPlugin {
     _getInstance().callMethod('invalidateVirtualCurrenciesCache'.toJS);
   }
 
-  Future<Map<String, dynamic>?> _getCachedVirtualCurrencies() async {
-    final cachedVirtualCurrencies = _getInstance().callMethod('getCachedVirtualCurrencies'.toJS);
-    if (cachedVirtualCurrencies == null) {
-      return null;
-    }
-    return _convertJsRecordToMap(cachedVirtualCurrencies);
-  }
+  Future<Map<String, dynamic>?> _getCachedVirtualCurrencies() async =>
+      _getNullableMapFromInstanceSyncMethod('getCachedVirtualCurrencies');
     
   // Helper functions to handle JS interop
 
@@ -425,6 +420,20 @@ class PurchasesFlutterPlugin {
           return _convertJsRecordToMap(value);
         })
         .catchError((error) => throw _processError(error));
+  }
+
+  /// Calls a synchronous instance method on PurchasesCommon and converts 
+  /// the result to a nullable Dart map.
+  ///
+  /// Returns null if the JS method returns null, otherwise returns the converted map.
+  Map<String, dynamic>? _getNullableMapFromInstanceSyncMethod(
+      String methodName,
+  ) {
+    final result = _getInstance().callMethod(methodName.toJS);
+    if (result == null) {
+      return null;
+    }
+    return _convertJsRecordToMap(result);
   }
 
   List<JSAny?> _processArgs(List<dynamic> args) => <JSAny?>[
