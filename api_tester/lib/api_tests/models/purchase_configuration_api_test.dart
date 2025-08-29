@@ -23,6 +23,7 @@ class _PurchaseConfigurationApiTest {
     configuration.store = null;
     configuration.store = Store.playStore;
     configuration.storeKitVersion = storeKitVersion;
+    configuration.automaticDeviceIdentifierCollectionEnabled = true;
 
     // deprecated, but we still need to check that the API hasn't been removed.
     configuration.pendingTransactionsForPrepaidPlansEnabled = true;
@@ -47,5 +48,6 @@ class _PurchaseConfigurationApiTest {
     configuration.store = null;
     configuration.store = Store.playStore;
     configuration.storeKitVersion = storeKitVersion;
+    configuration.automaticDeviceIdentifierCollectionEnabled = true;
   }
 }
