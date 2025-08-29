@@ -183,6 +183,8 @@ class Purchases {
             purchasesConfiguration.entitlementVerificationMode.name,
         'pendingTransactionsForPrepaidPlansEnabled':
             purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
+        'automaticDeviceIdentifierCollectionEnabled':
+            purchasesConfiguration.automaticDeviceIdentifierCollectionEnabled,
       },
     );
   }

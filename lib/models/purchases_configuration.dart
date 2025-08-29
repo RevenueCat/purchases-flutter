@@ -57,6 +57,17 @@ class PurchasesConfiguration {
   /// in Google Play). Note that entitlements are not granted until payment is done.
   /// Disabled by default.
   bool pendingTransactionsForPrepaidPlansEnabled = false;
+
+  /// Enable this setting to allow the collection of identifiers when setting the identifier for an
+  /// attribution network. For example, when calling [Purchases.setAdjustID] or [Purchases.setAppsflyerID],
+  /// the SDK would collect device identifiers, if available, and send them
+  /// to RevenueCat. This is required by some attribution networks to attribute installs and re-installs.
+  ///
+  /// Enabling this setting does NOT mean we will always collect the identifiers. We will only do so when
+  /// setting an attribution network ID AND the user has not limited ad tracking on their device.
+  ///
+  /// Default is enabled.
+  bool automaticDeviceIdentifierCollectionEnabled = true;
 }
 
 /// A [PurchasesConfiguration] convenience object that
