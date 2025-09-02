@@ -1,4 +1,4 @@
-#import "PurchasesFlutterPlugin.h"
+#import "./include/purchases_flutter/PurchasesFlutterPlugin.h"
 
 @import StoreKit;
 

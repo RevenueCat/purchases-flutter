@@ -13,7 +13,7 @@ Flutter plugin that integrates RevenueCat Paywalls
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'RevenueCat' => 'support@revenuecat.com' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'purchases_ui_flutter/Sources/purchases_ui_flutter/**/*.swift'
   s.dependency 'Flutter'
   s.dependency 'PurchasesHybridCommonUI', '17.3.0'
   s.platform = :ios, '11.0'
