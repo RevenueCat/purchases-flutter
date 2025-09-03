@@ -3,6 +3,7 @@
 @import StoreKit;
 
 @import PurchasesHybridCommon;
+@import RevenueCat;
 
 typedef void (^RCPurchaseCompletedBlock)(RCStoreTransaction * _Nullable,
                                          RCCustomerInfo * _Nullable,
