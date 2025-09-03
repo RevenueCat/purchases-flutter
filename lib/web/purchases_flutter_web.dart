@@ -14,7 +14,7 @@ class PurchasesFlutterPlugin {
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
   static const _purchasesHybridMappingsVersion = '17.3.0';
   static const _platformName = 'flutter';
-  static const _pluginVersion = '9.3.0';
+  static const _pluginVersion = '9.4.0';
   static const _purchasesHybridMappingsUrl =
       'https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
 
@@ -123,6 +123,12 @@ class PurchasesFlutterPlugin {
           return _setPhoneNumber(call.arguments);
         case 'setDisplayName':
           return _setDisplayName(call.arguments);
+        case 'getVirtualCurrencies':
+          return _getVirtualCurrencies();
+        case 'invalidateVirtualCurrenciesCache':
+          return _invalidateVirtualCurrenciesCache();
+        case 'getCachedVirtualCurrencies':
+          return _getCachedVirtualCurrencies();
 
         case 'syncPurchases':
         case 'collectDeviceIdentifiers':
@@ -149,9 +155,6 @@ class PurchasesFlutterPlugin {
         case 'purchaseProductWithWinBackOffer':
         case 'getEligibleWinBackOffersForProduct':
         case 'redeemWebPurchase':
-        case 'getVirtualCurrencies':
-        case 'invalidateVirtualCurrenciesCache':
-        case 'getCachedVirtualCurrencies':
           throw UnsupportedPlatformException();
 
         default:
@@ -314,6 +317,16 @@ class PurchasesFlutterPlugin {
     _callInstanceMethod('setDisplayName', [displayName]);
   }
 
+  Future<Map<String, dynamic>> _getVirtualCurrencies() async =>
+    await _getMapFromInstanceMethod('getVirtualCurrencies', []);
+
+  Future<void> _invalidateVirtualCurrenciesCache() async {
+    _getInstance().callMethod('invalidateVirtualCurrenciesCache'.toJS);
+  }
+
+  Future<Map<String, dynamic>?> _getCachedVirtualCurrencies() async =>
+      _getNullableMapFromInstanceSyncMethod('getCachedVirtualCurrencies');
+    
   // Helper functions to handle JS interop
 
   Object? _callStaticMethod(
@@ -407,6 +420,20 @@ class PurchasesFlutterPlugin {
           return _convertJsRecordToMap(value);
         })
         .catchError((error) => throw _processError(error));
+  }
+
+  /// Calls a synchronous instance method on PurchasesCommon and converts 
+  /// the result to a nullable Dart map.
+  ///
+  /// Returns null if the JS method returns null, otherwise returns the converted map.
+  Map<String, dynamic>? _getNullableMapFromInstanceSyncMethod(
+      String methodName,
+  ) {
+    final result = _getInstance().callMethod(methodName.toJS);
+    if (result == null) {
+      return null;
+    }
+    return _convertJsRecordToMap(result);
   }
 
   List<JSAny?> _processArgs(List<dynamic> args) => <JSAny?>[
