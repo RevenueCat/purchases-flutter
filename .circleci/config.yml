@@ -179,19 +179,25 @@ commands:
             # Need >= 1.14.0 to prevent ActiveSupport crash
             gem install cocoapods -v '>= 1.14.0'
 
-  enable-spm-feature:
-    description: Enable Swift Package Manager support in Flutter
+  prepare-for-spm-integration-test:
+    description: Enable Swift Package Manager support in Flutter + remove local .podspec files
     steps:
       - run:
           name: Enable SPM feature
           command: flutter config --enable-swift-package-manager
+      - run:
+          name: Remove all local .podspec files recursively
+          command: find . -name "*.podspec" -type f -delete
 
-  disable-spm-feature:
-    description: Disable Swift Package Manager support in Flutter (to use Cocoapods)
+  prepare-for-cocoapods-integration-test:
+    description: Disable Swift Package Manager support in Flutter (to use Cocoapods) + remove local Swift.package files
     steps:
       - run:
           name: Disable SPM feature
           command: flutter config --no-enable-swift-package-manager
+      - run:
+          name: Remove all local Package.swift files
+          command: find . -name "Package.swift" -type f -delete
 
 jobs:
   lint:
@@ -318,7 +324,7 @@ jobs:
           device: iPhone 14
           version: '16.4'
       - setup-flutter
-      - disable-spm-feature
+      - prepare-for-cocoapods-integration-test
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -339,7 +345,7 @@ jobs:
       - checkout
       - install-correct-cocoapods
       - setup-flutter
-      - disable-spm-feature
+      - prepare-for-cocoapods-integration-test
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -363,7 +369,7 @@ jobs:
           device: iPhone 14
           version: '16.4'
       - setup-flutter
-      - enable-spm-feature
+      - prepare-for-spm-integration-test
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -383,7 +389,7 @@ jobs:
     steps:
       - checkout
       - setup-flutter
-      - enable-spm-feature
+      - prepare-for-spm-integration-test
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
