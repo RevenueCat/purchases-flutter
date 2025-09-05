@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import com.revenuecat.purchases.PurchasesErrorCode
+import com.revenuecat.purchases.PresentedOfferingContext;
 import com.revenuecat.purchases.hybridcommon.ui.PaywallResultListener
 import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
 import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
@@ -54,15 +55,19 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 result = result,
                 requiredEntitlementIdentifier = null,
                 offeringIdentifier = call.argument("offeringIdentifier"),
+                presentedOfferingContext = call.argument("presentedOfferingContext"),
                 displayCloseButton = call.argument("displayCloseButton"),
             )
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
                 val offeringIdentifier: String? = call.argument("offeringIdentifier")
+
+                val presentedOfferingContext: Map<*, *>? = call.argument("presentedOfferingContext")
                 val displayCloseButton: Boolean? = call.argument("displayCloseButton")
                 presentPaywall(
                     result = result,
                     requiredEntitlementIdentifier = requiredEntitlementIdentifier,
+                    presentedOfferingContext = presentedOfferingContext,
                     offeringIdentifier = offeringIdentifier,
                     displayCloseButton = displayCloseButton,
                 )
@@ -101,10 +106,15 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         result: Result,
         requiredEntitlementIdentifier: String?,
         offeringIdentifier: String?,
+
+        presentedOfferingContext: Map<*, *>?,
         displayCloseButton: Boolean?
     ) {
         val activity = getActivityFragment()
         if (activity != null) {
+            var paywallSource: PaywallSource
+            // todo: use presentedOfferingContext to construct paywall source
+
            presentPaywallFromFragment(
                activity,
                PresentPaywallOptions(

@@ -10,6 +10,7 @@ import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
+import 'package:purchases_flutter/models/presented_offering_context_wrapper.dart';
 
 import 'paywall_view_method_handler.dart';
 
@@ -74,8 +75,10 @@ class PaywallView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final creationParams = <String, dynamic>{
       'offeringIdentifier': offering?.identifier,
+      'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
     };
 

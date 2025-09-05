@@ -1,5 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
+import 'package:purchases_flutter/models/presented_offering_context_wrapper.dart';
 
 import 'paywall_result.dart';
 
@@ -18,8 +19,10 @@ class RevenueCatUI {
     Offering? offering,
     bool displayCloseButton = false,
   }) async {
+    final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod('presentPaywall', {
       'offeringIdentifier': offering?.identifier,
+      'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
     });
     return _parseStringToResult(result);
@@ -37,11 +40,13 @@ class RevenueCatUI {
     Offering? offering,
     bool displayCloseButton = false,
   }) async {
+    final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod(
       'presentPaywallIfNeeded',
       {
         'requiredEntitlementIdentifier': requiredEntitlementIdentifier,
         'offeringIdentifier': offering?.identifier,
+        'presentedOfferingContext': presentedOfferingContext?.toJson(),
         'displayCloseButton': displayCloseButton,
       },
     );
