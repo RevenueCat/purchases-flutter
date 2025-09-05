@@ -164,6 +164,8 @@ lane :update_hybrid_common do |options|
   files_to_update = {
       'ios/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
       'macos/purchases_flutter.podspec' => ['s.dependency \'PurchasesHybridCommon\', \'{x}\''],
+      'ios/purchases_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
+      'macos/purchases_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
       'android/build.gradle' => ['ext.common_version = \'{x}\''],
       'purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => [
         's.dependency \'PurchasesHybridCommon\', \'{x}\'',
@@ -173,6 +175,8 @@ lane :update_hybrid_common do |options|
         's.dependency \'PurchasesHybridCommon\', \'{x}\'',
         's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
       ],
+      'purchases_ui_flutter/ios/purchases_ui_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
+      'purchases_ui_flutter/macos/purchases_ui_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
       'purchases_ui_flutter/android/build.gradle' => ['ext.common_version = \'{x}\''],
       'lib/web/purchases_flutter_web.dart' => ['_purchasesHybridMappingsVersion = \'{x}\''],
   }
