@@ -1,6 +1,5 @@
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
-import 'package:purchases_flutter/models/presented_offering_context_wrapper.dart';
 
 import 'paywall_result.dart';
 

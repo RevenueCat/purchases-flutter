@@ -1,6 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
+import 'package:purchases_flutter/models/package_wrapper.dart';
+import 'package:purchases_flutter/models/presented_offering_context_wrapper.dart';
+import 'package:purchases_flutter/models/presented_offering_targeting_context_wrapper.dart';
+import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 void main() {
@@ -14,7 +18,18 @@ void main() {
     'identifier',
     'serverDescription',
     {},
-    [],
+    [
+      Package(
+        'package_id',
+        PackageType.annual,
+        StoreProduct('product_id', 'description', 'title', 2.99, '\$2.99', 'USD'),
+        PresentedOfferingContext(
+          'identifier',
+          'placement_id',
+          PresentedOfferingTargetingContext(123, 'ruleId'),
+        ),
+      )
+    ],
   );
 
   setUp(() {
@@ -38,6 +53,7 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall('presentPaywall', arguments: {
           'offeringIdentifier': null,
+          'presentedOfferingContext': null,
           'displayCloseButton': false,
         },
       ),
@@ -51,6 +67,14 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall('presentPaywall', arguments: {
           'offeringIdentifier': offering.identifier,
+          'presentedOfferingContext': {
+            'offeringIdentifier': 'identifier',
+            'placementIdentifier': 'placement_id',
+            'targetingContext': {
+              'revision': 123,
+              'ruleId': 'ruleId',
+            },
+          },
           'displayCloseButton': false,
         },
       ),
@@ -69,6 +93,14 @@ void main() {
         'presentPaywall',
         arguments: {
           'offeringIdentifier': offering.identifier,
+          'presentedOfferingContext': {
+            'offeringIdentifier': 'identifier',
+            'placementIdentifier': 'placement_id',
+            'targetingContext': {
+              'revision': 123,
+              'ruleId': 'ruleId',
+            },
+          },
           'displayCloseButton': true,
         },
       ),
@@ -84,6 +116,7 @@ void main() {
         arguments: {
           'requiredEntitlementIdentifier': 'entitlement',
           'offeringIdentifier': null,
+          'presentedOfferingContext': null,
           'displayCloseButton': false,
         },
       ),
@@ -103,6 +136,14 @@ void main() {
         arguments: {
           'requiredEntitlementIdentifier': 'entitlement',
           'offeringIdentifier': offering.identifier,
+          'presentedOfferingContext': {
+            'offeringIdentifier': 'identifier',
+            'placementIdentifier': 'placement_id',
+            'targetingContext': {
+              'revision': 123,
+              'ruleId': 'ruleId',
+            },
+          },
           'displayCloseButton': false,
         },
       ),
@@ -123,6 +164,14 @@ void main() {
         arguments: {
           'requiredEntitlementIdentifier': 'entitlement',
           'offeringIdentifier': offering.identifier,
+          'presentedOfferingContext': {
+            'offeringIdentifier': 'identifier',
+            'placementIdentifier': 'placement_id',
+            'targetingContext': {
+              'revision': 123,
+              'ruleId': 'ruleId',
+            },
+          },
           'displayCloseButton': true,
         },
       ),
