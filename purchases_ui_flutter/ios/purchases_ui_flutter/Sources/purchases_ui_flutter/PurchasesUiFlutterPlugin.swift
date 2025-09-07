@@ -79,6 +79,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 result,
                 requiredEntitlementIdentifier: nil,
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
+                presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
             )
 
@@ -100,6 +101,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 result,
                 requiredEntitlementIdentifier: requiredEntitlementIdentifier,
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
+                presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
             )
 
@@ -116,6 +118,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         _ result: @escaping FlutterResult,
         requiredEntitlementIdentifier: String?,
         offeringIdentifier: String?,
+        presentedOfferingContext: [String: Any]?,
         displayCloseButton: Bool?
     ) {
 #if os(iOS)
@@ -130,6 +133,10 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
             if let offeringIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
+
+                if let presentedOfferingContext {
+                    options[PaywallProxy.PaywallOptionsKeys.presentedOfferingContext] = presentedOfferingContext
+                }
             }
 
             if let requiredEntitlementIdentifier {
@@ -187,6 +194,7 @@ private extension PurchasesUiFlutterPlugin {
     enum Parameter: String {
         case requiredEntitlementIdentifier
         case offeringIdentifier
+        case presentedOfferingContext
         case displayCloseButton
     }
 

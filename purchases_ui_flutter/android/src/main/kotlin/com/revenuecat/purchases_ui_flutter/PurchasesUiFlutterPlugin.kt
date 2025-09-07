@@ -61,7 +61,6 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
                 val offeringIdentifier: String? = call.argument("offeringIdentifier")
-
                 val presentedOfferingContext: Map<*, *>? = call.argument("presentedOfferingContext")
                 val displayCloseButton: Boolean? = call.argument("displayCloseButton")
                 presentPaywall(
@@ -106,20 +105,16 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         result: Result,
         requiredEntitlementIdentifier: String?,
         offeringIdentifier: String?,
-
         presentedOfferingContext: Map<*, *>?,
         displayCloseButton: Boolean?
     ) {
         val activity = getActivityFragment()
         if (activity != null) {
-            var paywallSource: PaywallSource
-            // todo: use presentedOfferingContext to construct paywall source
 
            presentPaywallFromFragment(
                activity,
                PresentPaywallOptions(
-                   paywallSource = offeringIdentifier?.let { PaywallSource.OfferingIdentifier(it) }
-                       ?: PaywallSource.DefaultOffering,
+                   paywallSource = getPaywallSource(offeringIdentifier, presentedOfferingContext),
                    requiredEntitlementIdentifier = requiredEntitlementIdentifier,
                    shouldDisplayDismissButton = displayCloseButton,
                    paywallResultListener = object : PaywallResultListener {
@@ -170,6 +165,23 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             )
             null
         }
+    }
+
+    private fun getPaywallSource(
+        offeringIdentifier: String?,
+        presentedOfferingContextMap: Map<*, *>?
+    ): PaywallSource {
+        return offeringIdentifier?.let {
+            val presentedOfferingContext = MapHelper.mapPresentedOfferingContext(
+                presentedOfferingContextMap,
+            ) ?: PresentedOfferingContext(offeringIdentifier)
+
+            PaywallSource.OfferingIdentifierWithPresentedOfferingContext(
+                it,
+                presentedOfferingContext,
+            )
+        }
+            ?: PaywallSource.DefaultOffering
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {

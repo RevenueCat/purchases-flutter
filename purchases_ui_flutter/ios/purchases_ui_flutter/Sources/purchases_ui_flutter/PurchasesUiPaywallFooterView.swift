@@ -1,7 +1,8 @@
 import Flutter
 import UIKit
 import PurchasesHybridCommonUI
-import RevenueCatUI
+@_spi(Internal) import RevenueCatUI
+import RevenueCat
 
 class PurchasesUiPaywallFooterViewFactory: NSObject, FlutterPlatformViewFactory {
     private var messenger: FlutterBinaryMessenger
@@ -56,7 +57,11 @@ class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView {
         _paywallFooterViewController = paywallFooterViewController
         if let args = args as? [String: Any?] {
             if let offeringId = args["offeringIdentifier"] as? String {
-                paywallFooterViewController.update(with: offeringId)
+                var presentedOfferingContext: PresentedOfferingContext? = nil
+                if let presentedOfferingContextMap = args["presentedOfferingContext"] as? [String: Any] {
+                    presentedOfferingContext = PresentedOfferingContext.createFrom(map: presentedOfferingContextMap)
+                }
+                paywallFooterViewController.update(with: offeringId, presentedOfferingContext: presentedOfferingContext)
             }
         }
         guard let paywallFooterView = paywallFooterViewController.view else {
