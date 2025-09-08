@@ -4,8 +4,9 @@ import 'installments_info.dart';
 import 'period_wrapper.dart';
 import 'presented_offering_context_wrapper.dart';
 import 'pricing_phase_wrapper.dart';
+import 'purchasable.dart';
 
-class SubscriptionOption extends Equatable {
+class SubscriptionOption extends Equatable implements Purchasable {
   final String id;
   final String storeProductId;
   final String productId;
@@ -17,6 +18,7 @@ class SubscriptionOption extends Equatable {
   final PricingPhase? fullPricePhase;
   final PricingPhase? freePhase;
   final PricingPhase? introPhase;
+  @override
   final PresentedOfferingContext? presentedOfferingContext;
   final InstallmentsInfo? installmentsInfo;
 

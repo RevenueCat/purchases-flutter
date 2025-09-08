@@ -4,10 +4,11 @@ import 'introductory_price.dart';
 import 'map_helpers.dart';
 import 'presented_offering_context_wrapper.dart';
 import 'product_category.dart';
+import 'purchasable.dart';
 import 'store_product_discount.dart';
 import 'subscription_option_wrapper.dart';
 
-class StoreProduct extends Equatable {
+class StoreProduct extends Equatable implements Purchasable {
   /// Product Id.
   final String identifier;
 
@@ -43,6 +44,7 @@ class StoreProduct extends Equatable {
 
   /// Offering context this package belongs to.
   /// Null if not using offerings or if fetched directly from store via getProducts
+  @override
   final PresentedOfferingContext? presentedOfferingContext;
 
   /// Subscription period, specified in ISO 8601 format. For example,
