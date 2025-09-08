@@ -582,6 +582,9 @@ class Purchases {
         'packageIdentifier': purchasableItem.identifier,
       });
     } else if (purchasableItem is StoreProduct) {
+      if (kIsWeb) {
+        throw UnsupportedPlatformException();
+      }
       return await _invokeReturningPurchaseResult('purchaseProduct', {
         ...purchaseArgs,
         'productIdentifier': purchasableItem.identifier,
