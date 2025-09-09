@@ -12,6 +12,7 @@ class PurchaseParams {
   final GoogleProductChangeInfo? googleProductChangeInfo;
   final bool? googleIsPersonalizedPrice;
   final PromotionalOffer? promotionalOffer;
+  final String? customerEmail;
 
   const PurchaseParams._(
     this.package,
@@ -20,6 +21,7 @@ class PurchaseParams {
     this.googleProductChangeInfo,
     this.googleIsPersonalizedPrice,
     this.promotionalOffer,
+    this.customerEmail,
   );
 
   /// Creates purchase parameters for a package.
@@ -38,11 +40,16 @@ class PurchaseParams {
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getPromotionalOffer].
+  ///
+  /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
+  /// will ask the customer for their email.
+  ///
   const PurchaseParams.package({
     required Package package,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
+    String? customerEmail,
   }) : this._(
         package,
         null,
@@ -50,6 +57,7 @@ class PurchaseParams {
         googleProductChangeInfo,
         googleIsPersonalizedPrice,
         promotionalOffer,
+        customerEmail,
       );
 
   /// Creates purchase parameters for a store product.
@@ -68,11 +76,16 @@ class PurchaseParams {
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getPromotionalOffer].
+  ///
+  /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
+  /// will ask the customer for their email.
+  ///
   const PurchaseParams.storeProduct({
     required StoreProduct storeProduct,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
+    String? customerEmail,
   }) : this._(
         null,
         storeProduct,
@@ -80,6 +93,7 @@ class PurchaseParams {
         googleProductChangeInfo,
         googleIsPersonalizedPrice,
         promotionalOffer,
+        customerEmail,
       );
 
   /// Creates purchase parameters for a subscription option. Google Play-only.
@@ -95,10 +109,15 @@ class PurchaseParams {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
+  ///
+  /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
+  /// will ask the customer for their email.
+  ///
   const PurchaseParams.subscriptionOption({
     required SubscriptionOption subscriptionOption,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
+    String? customerEmail,
   }) : this._(
         null,
         null,
@@ -106,5 +125,6 @@ class PurchaseParams {
         googleProductChangeInfo,
         googleIsPersonalizedPrice,
         null,
+        customerEmail,
       );
 }
