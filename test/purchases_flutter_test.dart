@@ -603,7 +603,8 @@ void main() {
           prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
         ),
         googleIsPersonalizedPrice: true,
-        promotionalOffer: promotionalOffer
+        promotionalOffer: promotionalOffer,
+        customerEmail: 'testemail@revenuecat.com',
       );
       final purchasePackageResult =
       await Purchases.purchase(purchaseParams);
@@ -628,6 +629,7 @@ void main() {
               'googleProrationMode': 5,
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': '1234567890',
+              'customerEmail': 'testemail@revenuecat.com',
             },
           ),
         ],
@@ -684,6 +686,7 @@ void main() {
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
+              'customerEmail': null,
             },
           ),
         ],
@@ -725,7 +728,8 @@ void main() {
             prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
           ),
           googleIsPersonalizedPrice: true,
-          promotionalOffer: promotionalOffer
+          promotionalOffer: promotionalOffer,
+          customerEmail: 'testemail@revenuecat.com',
       );
       final purchaseProductResult =
       await Purchases.purchase(purchaseParams);
@@ -751,6 +755,7 @@ void main() {
               'googleProrationMode': 5,
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': '1234567890',
+              'customerEmail': 'testemail@revenuecat.com'
             },
           ),
         ],
@@ -799,6 +804,7 @@ void main() {
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
+              'customerEmail': null,
             },
           ),
         ],
@@ -838,6 +844,7 @@ void main() {
             prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
           ),
           googleIsPersonalizedPrice: true,
+          customerEmail: 'testemail@revenuecat.com',
       );
       final purchaseSubscriptionOptionResult =
       await Purchases.purchase(purchaseParams);
@@ -863,6 +870,7 @@ void main() {
               'googleProrationMode': 5,
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': null,
+              'customerEmail': 'testemail@revenuecat.com',
             },
           ),
         ],
@@ -917,6 +925,7 @@ void main() {
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
+              'customerEmail': null,
             },
           ),
         ],
