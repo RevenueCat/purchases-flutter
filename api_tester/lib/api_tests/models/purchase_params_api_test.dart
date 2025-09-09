@@ -4,34 +4,81 @@ import 'package:purchases_flutter/object_wrappers.dart';
 // ignore_for_file: unused_local_variable
 class _PurchaseParamsApiTest {
 
-  void _checkConstructor(
-    Purchasable purchasableItem,
+  void _checkPackageConstructor(
+    Package package,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer
   ) {
-    PurchaseParams purchaseParams = PurchaseParams(
-      purchasableItem: purchasableItem,
+    PurchaseParams purchaseParams = PurchaseParams.package(
+      package: package,
     );
-    purchaseParams = PurchaseParams(
-      purchasableItem: purchasableItem,
+    purchaseParams = PurchaseParams.package(
+      package: package,
       googleProductChangeInfo: googleProductChangeInfo,
     );
-    purchaseParams = PurchaseParams(
-      purchasableItem: purchasableItem,
+    purchaseParams = PurchaseParams.package(
+      package: package,
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
     );
-    purchaseParams = PurchaseParams(
-      purchasableItem: purchasableItem,
+    purchaseParams = PurchaseParams.package(
+      package: package,
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       promotionalOffer: promotionalOffer,
     );
   }
 
+  void _checkStoreProductConstructor(
+    StoreProduct storeProduct,
+    GoogleProductChangeInfo? googleProductChangeInfo,
+    bool? googleIsPersonalizedPrice,
+    PromotionalOffer? promotionalOffer
+  ) {
+    PurchaseParams purchaseParams = PurchaseParams.storeProduct(
+      storeProduct: storeProduct,
+    );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct: storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+    );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct: storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+    );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct: storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+    );
+  }
+
+  void _checkSubscriptionOptionConstructor(
+    SubscriptionOption subscriptionOption,
+    GoogleProductChangeInfo? googleProductChangeInfo,
+    bool? googleIsPersonalizedPrice
+  ) {
+    PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption: subscriptionOption,
+    );
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption: subscriptionOption,
+      googleProductChangeInfo: googleProductChangeInfo,
+    );
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption: subscriptionOption,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+    );
+  }
+
   void _checkProperties(PurchaseParams purchaseParams) {
-    Purchasable purchasableItem = purchaseParams.purchasableItem;
+    Package? package = purchaseParams.package;
+    StoreProduct? product = purchaseParams.product;
+    SubscriptionOption? subscriptionOption = purchaseParams.subscriptionOption;
     GoogleProductChangeInfo? googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
     bool? googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     PromotionalOffer? promotionalOffer = purchaseParams.promotionalOffer;

@@ -32,7 +32,7 @@ enum PackageType {
   weekly
 }
 
-class Package extends Equatable implements Purchasable {
+class Package extends Equatable {
   /// Unique identifier for this package. Can be one a predefined package type or a custom one.
   final String identifier;
 
@@ -43,7 +43,6 @@ class Package extends Equatable implements Purchasable {
   final StoreProduct storeProduct;
 
   /// Offering context this package belongs to.
-  @override
   final PresentedOfferingContext presentedOfferingContext;
 
   const Package(

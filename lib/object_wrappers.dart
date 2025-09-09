@@ -17,7 +17,6 @@ export 'models/price_wrapper.dart';
 export 'models/pricing_phase_wrapper.dart';
 export 'models/product_category.dart';
 export 'models/promotional_offer.dart';
-export 'models/purchasable.dart';
 export 'models/purchase_params.dart';
 export 'models/purchase_result.dart';
 export 'models/purchases_completed_by.dart';

@@ -563,44 +563,49 @@ class Purchases {
   static Future<PurchaseResult> purchase(
       PurchaseParams purchaseParams,
   ) async {
-    final purchasableItem = purchaseParams.purchasableItem;
+    final package = purchaseParams.package;
+    final storeProduct = purchaseParams.product;
+    final subscriptionOption = purchaseParams.subscriptionOption;
     final googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
     final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
     final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
-    final presentedOfferingContext = purchaseParams.purchasableItem.presentedOfferingContext?.toJson();
+    final presentedOfferingContext = purchaseParams.package?.presentedOfferingContext ??
+        purchaseParams.product?.presentedOfferingContext ??
+        purchaseParams.subscriptionOption?.presentedOfferingContext;
+    final presentedOfferingContextJson = presentedOfferingContext?.toJson();
     final purchaseArgs = <String, dynamic>{
       'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       'signedDiscountTimestamp': signedDiscountTimestamp,
-      'presentedOfferingContext': presentedOfferingContext,
+      'presentedOfferingContext': presentedOfferingContextJson,
     };
-    if (purchasableItem is Package) {
+    if (package != null) {
       return await _invokeReturningPurchaseResult('purchasePackage', {
         ...purchaseArgs,
-        'packageIdentifier': purchasableItem.identifier,
+        'packageIdentifier': package.identifier,
       });
-    } else if (purchasableItem is StoreProduct) {
+    } else if (storeProduct != null) {
       if (kIsWeb) {
         throw UnsupportedPlatformException();
       }
       return await _invokeReturningPurchaseResult('purchaseProduct', {
         ...purchaseArgs,
-        'productIdentifier': purchasableItem.identifier,
-        'type': purchasableItem.productCategory?.name,
+        'productIdentifier': storeProduct.identifier,
+        'type': storeProduct.productCategory?.name,
       });
-    } else if (purchasableItem is SubscriptionOption) {
+    } else if (subscriptionOption != null) {
       if (defaultTargetPlatform != TargetPlatform.android) {
         throw UnsupportedPlatformException();
       }
       return await _invokeReturningPurchaseResult('purchaseSubscriptionOption', {
         ...purchaseArgs,
-        'productIdentifier': purchasableItem.productId,
-        'optionIdentifier': purchasableItem.id,
+        'productIdentifier': subscriptionOption.productId,
+        'optionIdentifier': subscriptionOption.id,
       });
     } else {
-      throw ArgumentError('Unsupported purchasable item type: ${purchasableItem.runtimeType}');
+      throw ArgumentError('One of package, product or subscriptionOption must be set in PurchaseParams.');
     }
   }
 
