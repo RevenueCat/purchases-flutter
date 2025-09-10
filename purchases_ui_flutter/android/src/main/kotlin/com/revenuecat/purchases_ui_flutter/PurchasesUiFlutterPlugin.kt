@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import com.revenuecat.purchases.PurchasesErrorCode
+import com.revenuecat.purchases.PresentedOfferingContext;
 import com.revenuecat.purchases.hybridcommon.ui.PaywallResultListener
 import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
 import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
@@ -54,15 +55,18 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 result = result,
                 requiredEntitlementIdentifier = null,
                 offeringIdentifier = call.argument("offeringIdentifier"),
+                presentedOfferingContext = call.argument("presentedOfferingContext"),
                 displayCloseButton = call.argument("displayCloseButton"),
             )
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
                 val offeringIdentifier: String? = call.argument("offeringIdentifier")
+                val presentedOfferingContext: Map<*, *>? = call.argument("presentedOfferingContext")
                 val displayCloseButton: Boolean? = call.argument("displayCloseButton")
                 presentPaywall(
                     result = result,
                     requiredEntitlementIdentifier = requiredEntitlementIdentifier,
+                    presentedOfferingContext = presentedOfferingContext,
                     offeringIdentifier = offeringIdentifier,
                     displayCloseButton = displayCloseButton,
                 )
@@ -101,15 +105,16 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         result: Result,
         requiredEntitlementIdentifier: String?,
         offeringIdentifier: String?,
+        presentedOfferingContext: Map<*, *>?,
         displayCloseButton: Boolean?
     ) {
         val activity = getActivityFragment()
         if (activity != null) {
+
            presentPaywallFromFragment(
                activity,
                PresentPaywallOptions(
-                   paywallSource = offeringIdentifier?.let { PaywallSource.OfferingIdentifier(it) }
-                       ?: PaywallSource.DefaultOffering,
+                   paywallSource = getPaywallSource(offeringIdentifier, presentedOfferingContext),
                    requiredEntitlementIdentifier = requiredEntitlementIdentifier,
                    shouldDisplayDismissButton = displayCloseButton,
                    paywallResultListener = object : PaywallResultListener {
@@ -160,6 +165,23 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             )
             null
         }
+    }
+
+    private fun getPaywallSource(
+        offeringIdentifier: String?,
+        presentedOfferingContextMap: Map<*, *>?
+    ): PaywallSource {
+        return offeringIdentifier?.let {
+            val presentedOfferingContext = MapHelper.mapPresentedOfferingContext(
+                presentedOfferingContextMap,
+            ) ?: PresentedOfferingContext(offeringIdentifier)
+
+            PaywallSource.OfferingIdentifierWithPresentedOfferingContext(
+                it,
+                presentedOfferingContext,
+            )
+        }
+            ?: PaywallSource.DefaultOffering
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {

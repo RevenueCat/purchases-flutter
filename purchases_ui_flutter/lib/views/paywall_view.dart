@@ -74,8 +74,10 @@ class PaywallView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final creationParams = <String, dynamic>{
       'offeringIdentifier': offering?.identifier,
+      'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
     };
 
