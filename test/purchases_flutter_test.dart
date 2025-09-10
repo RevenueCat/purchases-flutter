@@ -597,7 +597,7 @@ void main() {
           1234567890,
       );
       final purchaseParams = PurchaseParams.package(
-        package: mockPackage,
+        mockPackage,
         googleProductChangeInfo: GoogleProductChangeInfo(
           'old_product_id',
           prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
@@ -659,7 +659,7 @@ void main() {
         PresentedOfferingContext('main', null, null),
       );
       const purchaseParams = PurchaseParams.package(
-          package: mockPackage,
+          mockPackage,
       );
       final purchasePackageResult =
       await Purchases.purchase(purchaseParams);
@@ -719,7 +719,7 @@ void main() {
         1234567890,
       );
       final purchaseParams = PurchaseParams.storeProduct(
-          storeProduct: mockStoreProduct,
+          mockStoreProduct,
           googleProductChangeInfo: GoogleProductChangeInfo(
             'old_product_id',
             prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
@@ -777,7 +777,7 @@ void main() {
         productCategory: ProductCategory.nonSubscription,
       );
       const purchaseParams = PurchaseParams.storeProduct(
-          storeProduct: mockStoreProduct,
+          mockStoreProduct,
       );
       final purchaseProductResult =
       await Purchases.purchase(purchaseParams);
@@ -832,7 +832,7 @@ void main() {
         null,
       );
       final purchaseParams = PurchaseParams.subscriptionOption(
-          subscriptionOption: mockSubscriptionOption,
+          mockSubscriptionOption,
           googleProductChangeInfo: GoogleProductChangeInfo(
             'old_product_id',
             prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
@@ -895,7 +895,7 @@ void main() {
         null,
       );
       const purchaseParams = PurchaseParams.subscriptionOption(
-          subscriptionOption: mockSubscriptionOption,
+          mockSubscriptionOption,
       );
       final purchaseSubscriptionOptionResult =
       await Purchases.purchase(purchaseParams);
