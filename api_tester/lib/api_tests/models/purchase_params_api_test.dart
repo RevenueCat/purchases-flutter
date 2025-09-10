@@ -11,19 +11,19 @@ class _PurchaseParamsApiTest {
     PromotionalOffer? promotionalOffer
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
-      package: package,
+      package,
     );
     purchaseParams = PurchaseParams.package(
-      package: package,
+      package,
       googleProductChangeInfo: googleProductChangeInfo,
     );
     purchaseParams = PurchaseParams.package(
-      package: package,
+      package,
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
     );
     purchaseParams = PurchaseParams.package(
-      package: package,
+      package,
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       promotionalOffer: promotionalOffer,
@@ -37,19 +37,19 @@ class _PurchaseParamsApiTest {
     PromotionalOffer? promotionalOffer
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
-      storeProduct: storeProduct,
+      storeProduct,
     );
     purchaseParams = PurchaseParams.storeProduct(
-      storeProduct: storeProduct,
+      storeProduct,
       googleProductChangeInfo: googleProductChangeInfo,
     );
     purchaseParams = PurchaseParams.storeProduct(
-      storeProduct: storeProduct,
+      storeProduct,
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
     );
     purchaseParams = PurchaseParams.storeProduct(
-      storeProduct: storeProduct,
+      storeProduct,
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       promotionalOffer: promotionalOffer,
@@ -62,14 +62,14 @@ class _PurchaseParamsApiTest {
     bool? googleIsPersonalizedPrice
   ) {
     PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
-      subscriptionOption: subscriptionOption,
+      subscriptionOption,
     );
     purchaseParams = PurchaseParams.subscriptionOption(
-      subscriptionOption: subscriptionOption,
+      subscriptionOption,
       googleProductChangeInfo: googleProductChangeInfo,
     );
     purchaseParams = PurchaseParams.subscriptionOption(
-      subscriptionOption: subscriptionOption,
+      subscriptionOption,
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
     );

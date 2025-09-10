@@ -32,14 +32,14 @@ class PurchaseParams {
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional boolean indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
-  /// customize for you" in the purchase dialog when true.
+  /// customized for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getPromotionalOffer].
-  const PurchaseParams.package({
-    required Package package,
+  const PurchaseParams.package(
+    Package package, {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
@@ -62,14 +62,14 @@ class PurchaseParams {
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional boolean indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
-  /// customize for you" in the purchase dialog when true.
+  /// customized for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getPromotionalOffer].
-  const PurchaseParams.storeProduct({
-    required StoreProduct storeProduct,
+  const PurchaseParams.storeProduct(
+    StoreProduct storeProduct, {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
@@ -92,11 +92,11 @@ class PurchaseParams {
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional boolean indicates
   /// personalized pricing on products available for purchase in the EU.
   /// For compliance with EU regulations. User will see "This price has been
-  /// customize for you" in the purchase dialog when true.
+  /// customized for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
-  const PurchaseParams.subscriptionOption({
-    required SubscriptionOption subscriptionOption,
+  const PurchaseParams.subscriptionOption(
+    SubscriptionOption subscriptionOption, {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) : this._(
