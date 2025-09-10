@@ -242,6 +242,7 @@ class PurchasesFlutterPlugin {
     final options = {
       'packageIdentifier': packageIdentifier,
       'presentedOfferingContext': arguments['presentedOfferingContext'],
+      'customerEmail': arguments['customerEmail'],
     };
     return await _getMapFromInstanceMethod('purchasePackage', [options]);
   }

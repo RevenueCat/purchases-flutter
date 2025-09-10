@@ -8,7 +8,8 @@ class _PurchaseParamsApiTest {
     Package package,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
-    PromotionalOffer? promotionalOffer
+    PromotionalOffer? promotionalOffer,
+    String? customerEmail,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
       package,
@@ -28,13 +29,21 @@ class _PurchaseParamsApiTest {
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       promotionalOffer: promotionalOffer,
     );
+    purchaseParams = PurchaseParams.package(
+      package,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      customerEmail: customerEmail,
+    );
   }
 
   void _checkStoreProductConstructor(
     StoreProduct storeProduct,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
-    PromotionalOffer? promotionalOffer
+    PromotionalOffer? promotionalOffer,
+    String? customerEmail,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
@@ -54,12 +63,20 @@ class _PurchaseParamsApiTest {
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       promotionalOffer: promotionalOffer,
     );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      customerEmail: customerEmail,
+    );
   }
 
   void _checkSubscriptionOptionConstructor(
     SubscriptionOption subscriptionOption,
     GoogleProductChangeInfo? googleProductChangeInfo,
-    bool? googleIsPersonalizedPrice
+    bool? googleIsPersonalizedPrice,
+    String? customerEmail,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
       subscriptionOption,
@@ -73,7 +90,12 @@ class _PurchaseParamsApiTest {
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
     );
-  }
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      customerEmail: customerEmail,
+    );}
 
   void _checkProperties(PurchaseParams purchaseParams) {
     Package? package = purchaseParams.package;
@@ -82,5 +104,6 @@ class _PurchaseParamsApiTest {
     GoogleProductChangeInfo? googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
     bool? googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     PromotionalOffer? promotionalOffer = purchaseParams.promotionalOffer;
+    String? customerEmail = purchaseParams.customerEmail;
   }
 }

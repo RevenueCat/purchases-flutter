@@ -570,6 +570,7 @@ class Purchases {
     final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
     final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
+    final customerEmail = purchaseParams.customerEmail;
     final presentedOfferingContext = purchaseParams.package?.presentedOfferingContext ??
         purchaseParams.product?.presentedOfferingContext ??
         purchaseParams.subscriptionOption?.presentedOfferingContext;
@@ -580,6 +581,7 @@ class Purchases {
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       'signedDiscountTimestamp': signedDiscountTimestamp,
       'presentedOfferingContext': presentedOfferingContextJson,
+      'customerEmail': customerEmail,
     };
     if (package != null) {
       return await _invokeReturningPurchaseResult('purchasePackage', {
