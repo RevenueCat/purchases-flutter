@@ -307,7 +307,7 @@ class _PurchaseButton extends StatelessWidget {
 
   Future<void> _purchasePackage(BuildContext context, Package package) async {
     try {
-      final purchaseParams = PurchaseParams.package(package: package);
+      final purchaseParams = PurchaseParams.package(package);
       final purchaseResult = await Purchases.purchase(purchaseParams);
       final isPro = purchaseResult.customerInfo.entitlements
         .active.containsKey(entitlementKey);
