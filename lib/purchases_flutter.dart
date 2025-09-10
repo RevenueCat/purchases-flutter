@@ -358,7 +358,7 @@ class Purchases {
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  @Deprecated('Use purchaseStoreProduct')
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchaseProduct(
     String productIdentifier, {
     UpgradeInfo? upgradeInfo,
@@ -395,6 +395,7 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchaseStoreProduct(
     StoreProduct storeProduct, {
     GoogleProductChangeInfo? googleProductChangeInfo,
@@ -437,6 +438,7 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchasePackage(
     Package packageToPurchase, {
     @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
@@ -478,6 +480,7 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchaseSubscriptionOption(
     SubscriptionOption subscriptionOption, {
     GoogleProductChangeInfo? googleProductChangeInfo,
@@ -515,6 +518,7 @@ class Purchases {
   ///
   /// [promotionalOffer] Promotional offer that will be applied to the product.
   /// Retrieve this offer using [getPromotionalOffer].
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchaseDiscountedProduct(
     StoreProduct product,
     PromotionalOffer promotionalOffer,
@@ -541,6 +545,7 @@ class Purchases {
   ///
   /// [promotionalOffer] Promotional offer that will be applied to the product.
   /// Retrieve this offer using [getPromotionalOffer].
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchaseDiscountedPackage(
     Package packageToPurchase,
     PromotionalOffer promotionalOffer,
@@ -553,6 +558,57 @@ class Purchases {
         'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
       });
     return purchaseResult;
+  }
+
+  static Future<PurchaseResult> purchase(
+      PurchaseParams purchaseParams,
+  ) async {
+    final package = purchaseParams.package;
+    final storeProduct = purchaseParams.product;
+    final subscriptionOption = purchaseParams.subscriptionOption;
+    final googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
+    final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
+    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
+    final customerEmail = purchaseParams.customerEmail;
+    final presentedOfferingContext = purchaseParams.package?.presentedOfferingContext ??
+        purchaseParams.product?.presentedOfferingContext ??
+        purchaseParams.subscriptionOption?.presentedOfferingContext;
+    final presentedOfferingContextJson = presentedOfferingContext?.toJson();
+    final purchaseArgs = <String, dynamic>{
+      'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
+      'googleProrationMode': prorationMode,
+      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'signedDiscountTimestamp': signedDiscountTimestamp,
+      'presentedOfferingContext': presentedOfferingContextJson,
+      'customerEmail': customerEmail,
+    };
+    if (package != null) {
+      return await _invokeReturningPurchaseResult('purchasePackage', {
+        ...purchaseArgs,
+        'packageIdentifier': package.identifier,
+      });
+    } else if (storeProduct != null) {
+      if (kIsWeb) {
+        throw UnsupportedPlatformException();
+      }
+      return await _invokeReturningPurchaseResult('purchaseProduct', {
+        ...purchaseArgs,
+        'productIdentifier': storeProduct.identifier,
+        'type': storeProduct.productCategory?.name,
+      });
+    } else if (subscriptionOption != null) {
+      if (defaultTargetPlatform != TargetPlatform.android) {
+        throw UnsupportedPlatformException();
+      }
+      return await _invokeReturningPurchaseResult('purchaseSubscriptionOption', {
+        ...purchaseArgs,
+        'productIdentifier': subscriptionOption.productId,
+        'optionIdentifier': subscriptionOption.id,
+      });
+    } else {
+      throw ArgumentError('One of package, product or subscriptionOption must be set in PurchaseParams.');
+    }
   }
 
   /// Restores a user's previous purchases and links their appUserIDs to any
@@ -902,9 +958,8 @@ class Purchases {
   ///
   /// Use this function to retrieve the [PromotionalOffer] to apply to a
   /// product. Returns a [PromotionalOffer] object which should be passed
-  /// to [purchaseDiscountedProduct] or [purchaseDiscountedPackage] to complete
-  /// the discounted purchase. A null [PromotionalOffer] means the user is not
-  /// entitled to the discount.
+  /// to [purchase] to complete the discounted purchase.
+  /// A null [PromotionalOffer] means the user is not entitled to the discount.
   ///
   /// [product] The [StoreProduct] the user intends to purchase.
   ///
