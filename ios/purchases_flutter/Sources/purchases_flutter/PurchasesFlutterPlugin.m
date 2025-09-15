@@ -344,7 +344,6 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
-
     [RCCommonFunctionality purchasePackage:packageIdentifier
                   presentedOfferingContext:presentedOfferingContext
                    signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
