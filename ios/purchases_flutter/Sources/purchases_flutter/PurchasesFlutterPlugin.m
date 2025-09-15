@@ -338,9 +338,14 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
+
+    // We can't send NSNull to the RCCommonFunctionality since it won't make it through the Objective-C/Swift bridging
+    // logic. Instead, this passes nil to RCCommonFunctionality if the value is NSNull.
+    NSString *sanitizedDiscountTimestamp = [discountTimestamp isKindOfClass:[NSNull class]] ? nil : discountTimestamp;
+
     [RCCommonFunctionality purchasePackage:packageIdentifier
                   presentedOfferingContext:presentedOfferingContext
-                   signedDiscountTimestamp:discountTimestamp
+                   signedDiscountTimestamp:sanitizedDiscountTimestamp
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
