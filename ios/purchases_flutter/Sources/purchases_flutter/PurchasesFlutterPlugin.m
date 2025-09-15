@@ -336,7 +336,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
     [RCCommonFunctionality purchaseProduct:productIdentifier
-                   signedDiscountTimestamp:discountTimestamp
+                   signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
@@ -344,7 +344,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
-    [RCCommonFunctionality purchasePackage:packageIdentifier
+    [RCCommonFunctionality purchasePackage:packageIdentifier.mappingNSNullToNil
                   presentedOfferingContext:presentedOfferingContext.mappingNSNullToNil
                    signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
                            completionBlock:[self getResponseCompletionBlock:result]];
