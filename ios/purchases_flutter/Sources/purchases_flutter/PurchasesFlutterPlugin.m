@@ -344,8 +344,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
-    [RCCommonFunctionality purchasePackage:packageIdentifier.mappingNSNullToNil
-                  presentedOfferingContext:presentedOfferingContext.mappingNSNullToNil
+    [RCCommonFunctionality purchasePackage:packageIdentifier
+                  presentedOfferingContext:presentedOfferingContext
                    signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
