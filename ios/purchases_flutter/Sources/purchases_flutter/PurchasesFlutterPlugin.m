@@ -19,6 +19,12 @@ typedef void (^RCStartPurchaseBlock)(RCPurchaseCompletedBlock);
 
 @end
 
+@interface NSObject (NSNullMapping)
+
+- (id)mappingNSNullToNil;
+
+@end
+
 NSString *PurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
 NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPromotedProductPurchase";
 NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
@@ -339,13 +345,9 @@ presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
 
-    // We can't send NSNull to the RCCommonFunctionality since it won't make it through the Objective-C/Swift bridging
-    // logic. Instead, this passes nil to RCCommonFunctionality if the value is NSNull.
-    NSString *sanitizedDiscountTimestamp = [discountTimestamp isKindOfClass:[NSNull class]] ? nil : discountTimestamp;
-
     [RCCommonFunctionality purchasePackage:packageIdentifier
                   presentedOfferingContext:presentedOfferingContext
-                   signedDiscountTimestamp:sanitizedDiscountTimestamp
+                   signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
@@ -793,6 +795,45 @@ readyForPromotedProduct:(RCStoreProduct *)product
     return [[NSError alloc] initWithDomain:RCPurchasesErrorCodeDomain
                                       code:RCUnsupportedError
                                   userInfo:@{NSLocalizedDescriptionKey : description}];
+}
+
+@end
+
+@implementation NSObject (NSNullMapping)
+
+- (id)mappingNSNullToNil {
+    if ([self isKindOfClass:[NSNull class]]) {
+        return nil;
+    } else if ([self isKindOfClass:NSDictionary.class]) {
+        NSMutableDictionary *filteredDict = [NSMutableDictionary dictionary];
+        NSDictionary *originalDict = (NSDictionary *)self;
+
+        for (id key in originalDict) {
+            id value = [originalDict[key] mappingNSNullToNil];
+            if (value) {
+                // Only add non-nil values to the dictionary
+                filteredDict[key] = value;
+            }
+        }
+
+        return [NSDictionary dictionaryWithDictionary:filteredDict];
+
+    } else if ([self isKindOfClass:NSArray.class]) {
+        NSMutableArray *filteredArray = [NSMutableArray array];
+        NSArray *originalArray = (NSArray *)self;
+
+        for (id value in originalArray) {
+            id newValue = [value mappingNSNullToNil];
+            if (newValue) {
+                // Only add non-nil values to the array
+                [filteredArray addObject:newValue];
+            }
+        }
+
+        return [NSArray arrayWithArray:filteredArray];
+    }
+
+    return self;
 }
 
 @end
