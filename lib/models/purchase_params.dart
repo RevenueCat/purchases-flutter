@@ -42,10 +42,11 @@ class PurchaseParams {
   /// for more info.
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
-  /// Retrieve this offer using [Purchases.getEligibleWinBackOffersForPackage].
+  /// Retrieve this offer using [Purchases.getPromotionalOffer].
+  /// Ignored if [winBackOffer] is provided or in Android and web platforms.
   ///
   /// [winBackOffer] iOS only. Win-back offer that will be applied to the product.
-  /// Retrieve this offer using [Purchases.getWinBackOffer]. If both a promotional offer
+  /// Retrieve this offer using [Purchases.getEligibleWinBackOffersForPackage]. If both a promotional offer
   /// and a win-back offer are provided, the promotional offer will be ignored.
   ///
   /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
@@ -85,6 +86,7 @@ class PurchaseParams {
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getPromotionalOffer].
+  /// Ignored if [winBackOffer] is provided or in Android and web platforms.
   ///
   /// [winBackOffer] iOS only. Win-back offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getEligibleWinBackOffersForProduct].
