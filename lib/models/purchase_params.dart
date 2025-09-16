@@ -3,6 +3,7 @@ import 'package_wrapper.dart';
 import 'promotional_offer.dart';
 import 'store_product_wrapper.dart';
 import 'subscription_option_wrapper.dart';
+import 'win_back_offer.dart';
 
 /// Parameters for making a purchase.
 class PurchaseParams {
@@ -12,6 +13,7 @@ class PurchaseParams {
   final GoogleProductChangeInfo? googleProductChangeInfo;
   final bool? googleIsPersonalizedPrice;
   final PromotionalOffer? promotionalOffer;
+  final WinBackOffer? winBackOffer;
   final String? customerEmail;
 
   const PurchaseParams._(
@@ -21,6 +23,7 @@ class PurchaseParams {
     this.googleProductChangeInfo,
     this.googleIsPersonalizedPrice,
     this.promotionalOffer,
+    this.winBackOffer,
     this.customerEmail,
   );
 
@@ -40,6 +43,11 @@ class PurchaseParams {
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getPromotionalOffer].
+  /// Ignored if [winBackOffer] is provided or in Android and web platforms.
+  ///
+  /// [winBackOffer] iOS only. Win-back offer that will be applied to the product.
+  /// Retrieve this offer using [Purchases.getEligibleWinBackOffersForPackage]. If both a promotional offer
+  /// and a win-back offer are provided, the promotional offer will be ignored.
   ///
   /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
   /// will ask the customer for their email.
@@ -49,6 +57,7 @@ class PurchaseParams {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
+    WinBackOffer? winBackOffer,
     String? customerEmail,
   }) : this._(
         package,
@@ -57,6 +66,7 @@ class PurchaseParams {
         googleProductChangeInfo,
         googleIsPersonalizedPrice,
         promotionalOffer,
+        winBackOffer,
         customerEmail,
       );
 
@@ -76,6 +86,12 @@ class PurchaseParams {
   ///
   /// [promotionalOffer] iOS only. Promotional offer that will be applied to the product.
   /// Retrieve this offer using [Purchases.getPromotionalOffer].
+  /// Ignored if [winBackOffer] is provided or in Android and web platforms.
+  ///
+  /// [winBackOffer] iOS only. Win-back offer that will be applied to the product.
+  /// Retrieve this offer using [Purchases.getEligibleWinBackOffersForProduct].
+  /// If both a promotional offer and a win-back offer are provided,
+  /// the promotional offer will be ignored.
   ///
   /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
   /// will ask the customer for their email.
@@ -85,6 +101,7 @@ class PurchaseParams {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
+    WinBackOffer? winBackOffer,
     String? customerEmail,
   }) : this._(
         null,
@@ -93,6 +110,7 @@ class PurchaseParams {
         googleProductChangeInfo,
         googleIsPersonalizedPrice,
         promotionalOffer,
+        winBackOffer,
         customerEmail,
       );
 
@@ -124,6 +142,7 @@ class PurchaseParams {
         subscriptionOption,
         googleProductChangeInfo,
         googleIsPersonalizedPrice,
+        null,
         null,
         customerEmail,
       );

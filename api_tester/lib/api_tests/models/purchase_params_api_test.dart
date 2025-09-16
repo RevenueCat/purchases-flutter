@@ -9,6 +9,7 @@ class _PurchaseParamsApiTest {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
+    WinBackOffer? winBackOffer,
     String? customerEmail,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
@@ -34,6 +35,14 @@ class _PurchaseParamsApiTest {
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+    );
+    purchaseParams = PurchaseParams.package(
+      package,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
       customerEmail: customerEmail,
     );
   }
@@ -43,6 +52,7 @@ class _PurchaseParamsApiTest {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
+    WinBackOffer? winBackOffer,
     String? customerEmail,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
@@ -68,6 +78,14 @@ class _PurchaseParamsApiTest {
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+    );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
       customerEmail: customerEmail,
     );
   }
@@ -104,6 +122,7 @@ class _PurchaseParamsApiTest {
     GoogleProductChangeInfo? googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
     bool? googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     PromotionalOffer? promotionalOffer = purchaseParams.promotionalOffer;
+    WinBackOffer? winBackOffer = purchaseParams.winBackOffer;
     String? customerEmail = purchaseParams.customerEmail;
   }
 }
