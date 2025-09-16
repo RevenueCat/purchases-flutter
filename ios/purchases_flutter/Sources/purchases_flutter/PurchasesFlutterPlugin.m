@@ -19,6 +19,12 @@ typedef void (^RCStartPurchaseBlock)(RCPurchaseCompletedBlock);
 
 @end
 
+@interface NSObject (NSNullMapping)
+
+- (id)mappingNSNullToNil;
+
+@end
+
 NSString *PurchasesCustomerInfoUpdatedEvent = @"Purchases-CustomerInfoUpdated";
 NSString *PurchasesReadyForPromotedProductPurchaseEvent = @"Purchases-ReadyForPromotedProductPurchase";
 NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
@@ -330,7 +336,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
     [RCCommonFunctionality purchaseProduct:productIdentifier
-                   signedDiscountTimestamp:discountTimestamp
+                   signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
@@ -340,7 +346,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
     [RCCommonFunctionality purchasePackage:packageIdentifier
                   presentedOfferingContext:presentedOfferingContext
-                   signedDiscountTimestamp:discountTimestamp
+                   signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
                            completionBlock:[self getResponseCompletionBlock:result]];
 }
 
@@ -781,13 +787,52 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"9.6.0";
+    return @"9.6.1";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {
     return [[NSError alloc] initWithDomain:RCPurchasesErrorCodeDomain
                                       code:RCUnsupportedError
                                   userInfo:@{NSLocalizedDescriptionKey : description}];
+}
+
+@end
+
+@implementation NSObject (NSNullMapping)
+
+- (id)mappingNSNullToNil {
+    if ([self isKindOfClass:[NSNull class]]) {
+        return nil;
+    } else if ([self isKindOfClass:NSDictionary.class]) {
+        NSMutableDictionary *filteredDict = [NSMutableDictionary dictionary];
+        NSDictionary *originalDict = (NSDictionary *)self;
+
+        for (id key in originalDict) {
+            id value = [originalDict[key] mappingNSNullToNil];
+            if (value) {
+                // Only add non-nil values to the dictionary
+                filteredDict[key] = value;
+            }
+        }
+
+        return [NSDictionary dictionaryWithDictionary:filteredDict];
+
+    } else if ([self isKindOfClass:NSArray.class]) {
+        NSMutableArray *filteredArray = [NSMutableArray array];
+        NSArray *originalArray = (NSArray *)self;
+
+        for (id value in originalArray) {
+            id newValue = [value mappingNSNullToNil];
+            if (newValue) {
+                // Only add non-nil values to the array
+                [filteredArray addObject:newValue];
+            }
+        }
+
+        return [NSArray arrayWithArray:filteredArray];
+    }
+
+    return self;
 }
 
 @end

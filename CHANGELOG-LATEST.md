@@ -4,24 +4,8 @@
 
 
 ## RevenueCat SDK
-### ✨ New Features
-* Add `customerEmail` param to `PurchaseParams` (#1463) via Toni Rico (@tonidero)
 ### 🐞 Bugfixes
-* Pass `presentedOfferingContext` to natives when presenting paywall or displaying PaywallView (#1460) via Toni Rico (@tonidero)
-### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.6.0 (#1465) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.6.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.6.0)
-  * [iOS 5.38.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.38.2)
-  * [iOS 5.38.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.38.1)
-  * [iOS 5.38.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.38.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.5.1 (#1462) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.6.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.6.0)
-  * [iOS 5.38.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.38.2)
-  * [iOS 5.38.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.38.1)
-  * [iOS 5.38.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.38.0)
-* [RENOVATE] Update build-dependencies to v8.13.0 (#1459) via RevenueCat Git Bot (@RCGitBot)
+* Fix crash when calling new purchase w/ purchase params function (#1472) via Will Taylor (@fire-at-will)
 
 ### 🔄 Other Changes
-* Update bundle dependencies (#1467) via Cesar de la Vega (@vegaro)
-* Add `purchase` method with `PurchaseParams` object (#1461) via Toni Rico (@tonidero)
-* Default to Swift Package Manager in Purchase Tester (instead of CocoaPods) (#1454) via Antonio Pallares (@ajpallares)
+* Bump fastlane-plugin-revenuecat_internal from `489faef` to `a6dc551` (#1469) via dependabot[bot] (@dependabot[bot])
