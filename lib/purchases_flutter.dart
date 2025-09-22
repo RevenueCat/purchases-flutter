@@ -894,7 +894,6 @@ class Purchases {
   }
 
   /// Subscriber attribute associated with the PostHog User ID for the user
-  /// Required for the RevenueCat PostHog integration
   ///
   /// [postHogUserID] Empty String or null will delete the subscriber attribute.
   static Future<void> setPostHogUserID(String postHogUserID) =>
