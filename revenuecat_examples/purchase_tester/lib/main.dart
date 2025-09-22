@@ -24,7 +24,7 @@ void main() async {
     const useAmazon = bool.fromEnvironment("amazon");
     StoreConfig(
       store: useAmazon ? Store.amazon : Store.playStore,
-      apiKey: useAmazon ? amazonApiKey : "goog_cRtaFpfwfcQYPXkIEqFUkVszUfN",
+      apiKey: useAmazon ? amazonApiKey : googleApiKey,
     );
   }
   WidgetsFlutterBinding.ensureInitialized();
