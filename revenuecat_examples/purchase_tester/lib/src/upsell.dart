@@ -9,6 +9,7 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'cats.dart';
 import 'constant.dart';
+import 'customer_center_view_screen.dart';
 import 'initial.dart';
 import 'paywall.dart';
 import 'winback_testing_screen.dart';
@@ -134,7 +135,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WinbackTestingScreen(),
+                            builder: (context) => const WinbackTestingScreen(),
                           ));
                     },
                     child: const Text("Go to Win-Back Offer Testing Screen"),
@@ -170,6 +171,18 @@ class _UpsellScreenState extends State<UpsellScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   const Text("Customer Center"),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CustomerCenterViewModalScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("Open Customer Center (Close Button)"),
+                  ),
+                  const SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () async {
                       await RevenueCatUI.presentCustomerCenter();

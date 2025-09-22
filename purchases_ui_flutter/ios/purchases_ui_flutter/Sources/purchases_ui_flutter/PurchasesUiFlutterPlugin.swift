@@ -19,9 +19,11 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         let messenger = registrar.messenger()
         let factory = PurchasesUiPaywallViewFactory(messenger: messenger)
         let footerFactory = PurchasesUiPaywallFooterViewFactory(messenger: messenger)
+        let customerCenterFactory = PurchasesUiCustomerCenterViewFactory(messenger: messenger)
 
         registrar.register(factory, withId: "com.revenuecat.purchasesui/PaywallView")
         registrar.register(footerFactory, withId: "com.revenuecat.purchasesui/PaywallFooterView")
+        registrar.register(customerCenterFactory, withId: "com.revenuecat.purchasesui/CustomerCenterView")
 
 #endif
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)

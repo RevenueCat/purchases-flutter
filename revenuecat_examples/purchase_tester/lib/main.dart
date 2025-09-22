@@ -17,14 +17,14 @@ void main() async {
   } else if (Platform.isIOS || Platform.isMacOS) {
     StoreConfig(
       store: Store.appStore,
-      apiKey: appleApiKey,
+      apiKey: "appl_KFpRDwauDyfIGIETKyVymslMcjX",
     );
   } else if (Platform.isAndroid) {
     // Run the app passing --dart-define=AMAZON=true
     const useAmazon = bool.fromEnvironment("amazon");
     StoreConfig(
       store: useAmazon ? Store.amazon : Store.playStore,
-      apiKey: useAmazon ? amazonApiKey : googleApiKey,
+      apiKey: useAmazon ? amazonApiKey : "goog_cRtaFpfwfcQYPXkIEqFUkVszUfN",
     );
   }
   WidgetsFlutterBinding.ensureInitialized();
