@@ -17,7 +17,7 @@ void main() async {
   } else if (Platform.isIOS || Platform.isMacOS) {
     StoreConfig(
       store: Store.appStore,
-      apiKey: "appl_KFpRDwauDyfIGIETKyVymslMcjX",
+      apiKey: appleApiKey,
     );
   } else if (Platform.isAndroid) {
     // Run the app passing --dart-define=AMAZON=true
