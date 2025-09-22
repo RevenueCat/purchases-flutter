@@ -893,6 +893,13 @@ class Purchases {
     );
   }
 
+  /// Subscriber attribute associated with the PostHog User ID for the user
+  /// Required for the RevenueCat PostHog integration
+  ///
+  /// [postHogUserID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setPostHogUserID(String postHogUserID) =>
+      _channel.invokeMethod('setPostHogUserID', {'postHogUserID': postHogUserID});
+
   /// Subscriber attribute associated with the install media source for the user
   ///
   /// [mediaSource] Empty String or null will delete the subscriber attribute.

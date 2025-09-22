@@ -296,6 +296,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String airshipChannelID = call.argument("airshipChannelID");
                 setAirshipChannelID(airshipChannelID, result);
                 break;
+            case "setPostHogUserID":
+                String postHogUserID = call.argument("postHogUserID");
+                setPostHogUserID(postHogUserID, result);
+                break;
             case "setMediaSource":
                 String mediaSource = call.argument("mediaSource");
                 setMediaSource(mediaSource, result);
@@ -665,6 +669,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setAirshipChannelID(String airshipChannelID, final Result result) {
         SubscriberAttributesKt.setAirshipChannelID(airshipChannelID);
+        result.success(null);
+    }
+
+    private void setPostHogUserID(String postHogUserID, final Result result) {
+        SubscriberAttributesKt.setPostHogUserID(postHogUserID);
         result.success(null);
     }
 
