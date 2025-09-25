@@ -332,6 +332,11 @@ class _PurchasesFlutterApiTest {
     await Purchases.setAirshipChannelID(id);
   }
 
+  void _checkSetPostHogUserID() {
+    String id = "fake_posthog_user_id";
+    Future<void> future = Purchases.setPostHogUserID(id);
+  }
+
   void _checkSetMediaSource() {
     String mediaSource = "fakeMediaSource";
     Future<void> future = Purchases.setMediaSource(mediaSource);

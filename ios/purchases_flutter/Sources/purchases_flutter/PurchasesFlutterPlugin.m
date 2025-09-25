@@ -178,6 +178,9 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
     } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
         NSString *airshipChannelID = arguments[@"airshipChannelID"];
         [self setAirshipChannelID:airshipChannelID result:result];
+    } else if ([@"setPostHogUserID" isEqualToString:call.method]) {
+        NSString *postHogUserID = arguments[@"postHogUserId"];
+        [self setPostHogUserID:postHogUserID result:result];
     } else if ([@"setMediaSource" isEqualToString:call.method]) {
         NSString *mediaSource = arguments[@"mediaSource"];
         [self setMediaSource:mediaSource result:result];
@@ -541,6 +544,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)setAirshipChannelID:(nullable NSString *)airshipChannelID result:(FlutterResult)result {
     [RCCommonFunctionality setAirshipChannelID:airshipChannelID];
+    result(nil);
+}
+
+- (void)setPostHogUserID:(nullable NSString *)postHogUserID result:(FlutterResult)result {
+    [RCCommonFunctionality setPostHogUserID:postHogUserID];
     result(nil);
 }
 
