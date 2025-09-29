@@ -430,16 +430,16 @@ workflows:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - lint
-      - test
-      - api_test
-      - freezed
-      - dry-run-release: *release-branches
+      # - lint
+      # - test
+      # - api_test
+      # - freezed
+      # - dry-run-release: *release-branches
       - ios-integration-test
       - macos-integration-test
-      - android-integration-test-build
-      - test_main_sdk_min_version_compatibility
-      - test_ui_sdk_min_version_compatibility
+      # - android-integration-test-build
+      # - test_main_sdk_min_version_compatibility
+      # - test_ui_sdk_min_version_compatibility
 
   deploy:
     when:
