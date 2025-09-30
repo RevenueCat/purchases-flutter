@@ -2,9 +2,3 @@
 
 # Default owners
 * @RevenueCat/coresdk
-
-# Paywalls
-purchases_ui_flutter/lib/views/ @RevenueCat/monetization
-purchases_ui_flutter/ios/purchases_ui_flutter/Sources/purchases_ui_flutter/ @RevenueCat/monetization
-purchases_ui_flutter/macos/purchases_ui_flutter/Sources/purchases_ui_flutter/ @RevenueCat/monetization
-purchases_ui_flutter/android/src/main/kotlin/com/revenuecat/purchases_ui_flutter/ @RevenueCat/monetization
