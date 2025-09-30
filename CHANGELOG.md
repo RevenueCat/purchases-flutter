@@ -1,3 +1,25 @@
+## 9.7.0
+> [!WARNING]  
+> If you don't have any login system in your app, please make sure your one-time purchase products have been correctly configured in the RevenueCat dashboard as either consumable or non-consumable. If they're incorrectly configured as consumables, RevenueCat will consume these purchases. This means that users won't be able to restore them from version 9.0.0 onward.
+> Non-consumables are products that are meant to be bought only once, for example, lifetime subscriptions.
+
+
+## RevenueCat SDK
+### ✨ New Features
+* Add PostHog user ID convenience setter  (#1477) via Cody Kerns (@codykerns)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.8.0 (#1481) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 9.7.2](https://github.com/RevenueCat/purchases-android/releases/tag/9.7.2)
+  * [Android 9.7.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.7.1)
+  * [iOS 5.40.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.40.0)
+  * [iOS 5.39.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.3)
+  * [iOS 5.39.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.2)
+  * [iOS 5.39.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.1)
+
+### 🔄 Other Changes
+* Bump fastlane-plugin-revenuecat_internal from `e1c0e04` to `1593f78` (#1484) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane-plugin-revenuecat_internal from `a6dc551` to `e1c0e04` (#1480) via dependabot[bot] (@dependabot[bot])
+
 ## 9.6.2
 > [!WARNING]  
 > If you don't have any login system in your app, please make sure your one-time purchase products have been correctly configured in the RevenueCat dashboard as either consumable or non-consumable. If they're incorrectly configured as consumables, RevenueCat will consume these purchases. This means that users won't be able to restore them from version 9.0.0 onward.
@@ -255,6 +277,17 @@ switch (result) {
 ### 🔄 Other Changes
 * Bump fastlane from 2.227.2 to 2.228.0 (#1360) via dependabot[bot] (@dependabot[bot])
 * Bump fastlane-plugin-revenuecat_internal from `05ef095` to `7d97553` (#1381) via dependabot[bot] (@dependabot[bot])
+
+## 8.11.0
+## RevenueCat SDK
+### 📦 Dependency Updates
+* Updates purchases-hybrid-common to 14.3.0 (#1486) via Antonio Pallares (@ajpallares)
+  * [Android 8.24.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.24.0)
+  * [Android 8.23.0](https://github.com/RevenueCat/purchases-android/releases/tag/8.23.0)
+  * [Android 8.22.1](https://github.com/RevenueCat/purchases-android/releases/tag/8.22.1)
+
+### 🔄 Other Changes
+* [V8] Prepare for next release (#1483) via Antonio Pallares (@ajpallares)
 
 ## 8.10.6
 ## RevenueCat SDK
