@@ -87,6 +87,10 @@ class _PurchasesFlutterApiTest {
         await Purchases.getProducts(productIdentifiers, type: purchaseType);
   }
 
+  void _checkPurchase(PurchaseParams params) async {
+    PurchaseResult purchaseResult = await Purchases.purchase(params);
+  }
+
   void _checkPurchaseProduct() async {
     String productIdentifier = "fakeProductId";
     UpgradeInfo? upgradeInfo;
