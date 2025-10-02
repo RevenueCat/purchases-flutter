@@ -28,7 +28,7 @@ void main() {
           'placement_id',
           PresentedOfferingTargetingContext(123, 'ruleId'),
         ),
-      )
+      ),
     ],
   );
 

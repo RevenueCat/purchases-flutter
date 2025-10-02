@@ -33,6 +33,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
     _fetchData();
   }
 
+
   Future<void> _fetchData() async {
     Offerings? offerings;
     try {
@@ -180,12 +181,23 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         ),
                       );
                     },
-                    child: const Text("Open Customer Center (Close Button)"),
+                    child: const Text("CustomerCenterViewModalScreen (Close Button)"),
                   ),
                   const SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () async {
-                      await RevenueCatUI.presentCustomerCenter();
+                      await RevenueCatUI.presentCustomerCenter(
+                        onDismiss: () => debugPrint('[CustomerCenter Modal] Dismissed'),
+                        onRestoreStarted: () => debugPrint('[CustomerCenter Modal] Restore started'),
+                        onRestoreCompleted: (data) => debugPrint('[CustomerCenter Modal] Restore completed: $data'),
+                        onRestoreFailed: (data) => debugPrint('[CustomerCenter Modal] Restore failed: $data'),
+                        onShowingManageSubscriptions: () => debugPrint('[CustomerCenter Modal] Showing manage subscriptions'),
+                        onRefundRequestStarted: (productId) => debugPrint('[CustomerCenter Modal] Refund request started for product: $productId'),
+                        onRefundRequestCompleted: (data) => debugPrint('[CustomerCenter Modal] Refund request completed for product ${data['productId']} with status ${data['status']}'),
+                        onFeedbackSurveyCompleted: (optionId) => debugPrint('[CustomerCenter Modal] Feedback survey completed with option: $optionId'),
+                        onManagementOptionSelected: (data) => debugPrint('[CustomerCenter Modal] Management option selected: ${data['optionId']} (url: ${data['url'] ?? 'none'})'),
+                        onCustomActionSelected: (data) => debugPrint('[CustomerCenter Modal] Custom action selected: ${data['actionId']} (purchase: ${data['purchaseIdentifier'] ?? 'none'})'),
+                      );
                     },
                     child: const Text("Present Customer Center"),
                   ),

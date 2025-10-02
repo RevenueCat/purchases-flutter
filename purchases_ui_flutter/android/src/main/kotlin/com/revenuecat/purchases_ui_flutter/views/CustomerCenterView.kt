@@ -27,7 +27,7 @@ internal class CustomerCenterView(
         methodChannel.setMethodCallHandler(this)
 
         customerCenterListener = createCustomerCenterListener()
-        registerCustomerCenterListener()
+        Purchases.sharedInstance.customerCenterListener = customerCenterListener
 
         nativeCustomerCenterView = NativeCustomerCenterView(context) {
             methodChannel.invokeMethod("onDismiss", null)
@@ -39,7 +39,11 @@ internal class CustomerCenterView(
 
     override fun dispose() {
         methodChannel.setMethodCallHandler(null)
-        unregisterCustomerCenterListener()
+        // Only clear if it's still our listener
+        val purchases = Purchases.sharedInstance
+        if (purchases.customerCenterListener === customerCenterListener) {
+            purchases.customerCenterListener = null
+        }
     }
 
     override fun onMethodCall(methodCall: MethodCall, result: MethodChannel.Result) {
@@ -103,16 +107,6 @@ internal class CustomerCenterView(
         }
     }
 
-    private fun registerCustomerCenterListener() {
-        Purchases.sharedInstance.customerCenterListener = customerCenterListener
-    }
-
-    private fun unregisterCustomerCenterListener() {
-        val purchases = Purchases.sharedInstance
-        if (purchases.customerCenterListener === customerCenterListener) {
-            purchases.customerCenterListener = null
-        }
-    }
 }
 
 @Suppress("UNUSED_PARAMETER")
