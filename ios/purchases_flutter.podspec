@@ -3,7 +3,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'purchases_flutter'
-  s.version          = '9.6.1'
+  s.version          = '9.7.0'
   s.summary          = 'Cross-platform subscriptions framework for Flutter.'
   s.description      = <<-DESC
   Client for the RevenueCat subscription and purchase tracking system, making implementing in-app subscriptions in Flutter easy - receipt validation and status tracking included!
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source_files = 'purchases_flutter/Sources/purchases_flutter/**/*.{h,m}'
   s.public_header_files = 'purchases_flutter/Sources/purchases_flutter/include/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'PurchasesHybridCommon', '17.7.0'
+  s.dependency 'PurchasesHybridCommon', '17.9.0'
   s.ios.deployment_target = '13.0'
   s.swift_version         = '5.0'
 

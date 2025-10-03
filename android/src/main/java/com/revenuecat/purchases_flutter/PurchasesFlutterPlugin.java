@@ -62,7 +62,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "9.6.1";
+    private static final String PLUGIN_VERSION = "9.7.0";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -295,6 +295,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setAirshipChannelID":
                 String airshipChannelID = call.argument("airshipChannelID");
                 setAirshipChannelID(airshipChannelID, result);
+                break;
+            case "setPostHogUserID":
+                String postHogUserID = call.argument("postHogUserID");
+                setPostHogUserID(postHogUserID, result);
                 break;
             case "setMediaSource":
                 String mediaSource = call.argument("mediaSource");
@@ -665,6 +669,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setAirshipChannelID(String airshipChannelID, final Result result) {
         SubscriberAttributesKt.setAirshipChannelID(airshipChannelID);
+        result.success(null);
+    }
+
+    private void setPostHogUserID(String postHogUserID, final Result result) {
+        SubscriberAttributesKt.setPostHogUserID(postHogUserID);
         result.success(null);
     }
 

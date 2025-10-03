@@ -4,8 +4,17 @@
 
 
 ## RevenueCat SDK
-### 🐞 Bugfixes
-* Fix crash when calling new purchase w/ purchase params function (#1472) via Will Taylor (@fire-at-will)
+### ✨ New Features
+* Add PostHog user ID convenience setter  (#1477) via Cody Kerns (@codykerns)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.8.0 (#1481) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 9.7.2](https://github.com/RevenueCat/purchases-android/releases/tag/9.7.2)
+  * [Android 9.7.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.7.1)
+  * [iOS 5.40.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.40.0)
+  * [iOS 5.39.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.3)
+  * [iOS 5.39.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.2)
+  * [iOS 5.39.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.1)
 
 ### 🔄 Other Changes
-* Bump fastlane-plugin-revenuecat_internal from `489faef` to `a6dc551` (#1469) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane-plugin-revenuecat_internal from `e1c0e04` to `1593f78` (#1484) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane-plugin-revenuecat_internal from `a6dc551` to `e1c0e04` (#1480) via dependabot[bot] (@dependabot[bot])
