@@ -4,17 +4,18 @@
 
 
 ## RevenueCat SDK
-### ✨ New Features
-* Add PostHog user ID convenience setter  (#1477) via Cody Kerns (@codykerns)
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.8.0 (#1481) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.7.2](https://github.com/RevenueCat/purchases-android/releases/tag/9.7.2)
-  * [Android 9.7.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.7.1)
-  * [iOS 5.40.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.40.0)
-  * [iOS 5.39.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.3)
-  * [iOS 5.39.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.2)
-  * [iOS 5.39.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.39.1)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.9.0 (#1494) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 9.8.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.8.0)
+  * [iOS 5.41.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.41.0)
 
 ### 🔄 Other Changes
-* Bump fastlane-plugin-revenuecat_internal from `e1c0e04` to `1593f78` (#1484) via dependabot[bot] (@dependabot[bot])
-* Bump fastlane-plugin-revenuecat_internal from `a6dc551` to `e1c0e04` (#1480) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane-plugin-revenuecat_internal from `b35cae0` to `3f7fffc` (#1498) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane-plugin-revenuecat_internal from `a8770fd` to `b35cae0` (#1497) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane-plugin-revenuecat_internal from `e555afb` to `a8770fd` (#1496) via dependabot[bot] (@dependabot[bot])
+* Update PHC to 17.9.0 in Package.swift of our SDKs (#1495) via Toni Rico (@tonidero)
+* Add `winBackOffer` parameter to `PurchaseParams` (#1474) via Toni Rico (@tonidero)
+* Bump fastlane-plugin-revenuecat_internal from `7508f17` to `e555afb` (#1493) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane-plugin-revenuecat_internal from `1593f78` to `7508f17` (#1492) via dependabot[bot] (@dependabot[bot])
+* Add CODEOWNERS (#1489) via Antonio Pallares (@ajpallares)
+* Update changelog for release v8.11.0 (#1488) via Antonio Pallares (@ajpallares)
