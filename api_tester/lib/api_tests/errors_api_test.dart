@@ -42,6 +42,13 @@ class _ErrorsApiTest {
       case PurchasesErrorCode.apiEndpointBlocked:
       case PurchasesErrorCode.invalidPromotionalOfferError:
       case PurchasesErrorCode.offlineConnectionError:
+      case PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode:
+      case PurchasesErrorCode.signatureVerificationFailed:
+      case PurchasesErrorCode.featureNotSupportedWithStoreKit1:
+      case PurchasesErrorCode.invalidWebPurchaseToken:
+      case PurchasesErrorCode.purchaseBelongsToOtherUser:
+      case PurchasesErrorCode.expiredWebPurchaseToken:
+      case PurchasesErrorCode.testStoreSimulatedPurchaseError:
         break;
     }
   }

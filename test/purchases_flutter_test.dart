@@ -415,6 +415,13 @@ void main() {
     expect(PurchasesErrorCode.apiEndpointBlocked.index, 33);
     expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 34);
     expect(PurchasesErrorCode.offlineConnectionError.index, 35);
+    expect(PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode.index, 36);
+    expect(PurchasesErrorCode.signatureVerificationFailed.index, 37);
+    expect(PurchasesErrorCode.featureNotSupportedWithStoreKit1.index, 38);
+    expect(PurchasesErrorCode.invalidWebPurchaseToken.index, 39);
+    expect(PurchasesErrorCode.purchaseBelongsToOtherUser.index, 40);
+    expect(PurchasesErrorCode.expiredWebPurchaseToken.index, 41);
+    expect(PurchasesErrorCode.testStoreSimulatedPurchaseError.index, 42);
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
