@@ -16,5 +16,7 @@ enum Store {
   amazon,
   rcBilling,
   paddle,
+  /// For entitlements granted via RevenueCat's Test Store.
+  testStore,
   externalStore,
 }
