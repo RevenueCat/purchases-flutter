@@ -38,6 +38,8 @@ Store storeFromJson(dynamic value) {
       return Store.paddle;
     case 'EXTERNAL':
       return Store.externalStore;
+    case 'TEST_STORE':
+      return Store.testStore;
     case null:
       return Store.unknownStore;
     default:

@@ -415,6 +415,13 @@ void main() {
     expect(PurchasesErrorCode.apiEndpointBlocked.index, 33);
     expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 34);
     expect(PurchasesErrorCode.offlineConnectionError.index, 35);
+    expect(PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode.index, 36);
+    expect(PurchasesErrorCode.signatureVerificationFailed.index, 37);
+    expect(PurchasesErrorCode.featureNotSupportedWithStoreKit1.index, 38);
+    expect(PurchasesErrorCode.invalidWebPurchaseToken.index, 39);
+    expect(PurchasesErrorCode.purchaseBelongsToOtherUser.index, 40);
+    expect(PurchasesErrorCode.expiredWebPurchaseToken.index, 41);
+    expect(PurchasesErrorCode.testStoreSimulatedPurchaseError.index, 42);
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
@@ -564,6 +571,34 @@ void main() {
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '36')),
+      PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '37')),
+      PurchasesErrorCode.signatureVerificationFailed,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '38')),
+      PurchasesErrorCode.featureNotSupportedWithStoreKit1,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '39')),
+      PurchasesErrorCode.invalidWebPurchaseToken,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '40')),
+      PurchasesErrorCode.purchaseBelongsToOtherUser,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '41')),
+      PurchasesErrorCode.expiredWebPurchaseToken,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '42')),
+      PurchasesErrorCode.testStoreSimulatedPurchaseError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '43')),
       PurchasesErrorCode.unknownError,
     );
   });
