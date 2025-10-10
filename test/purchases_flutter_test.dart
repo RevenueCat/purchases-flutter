@@ -571,6 +571,34 @@ void main() {
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '36')),
+      PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '37')),
+      PurchasesErrorCode.signatureVerificationFailed,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '38')),
+      PurchasesErrorCode.featureNotSupportedWithStoreKit1,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '39')),
+      PurchasesErrorCode.invalidWebPurchaseToken,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '40')),
+      PurchasesErrorCode.purchaseBelongsToOtherUser,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '41')),
+      PurchasesErrorCode.expiredWebPurchaseToken,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '42')),
+      PurchasesErrorCode.testStoreSimulatedPurchaseError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '43')),
       PurchasesErrorCode.unknownError,
     );
   });
