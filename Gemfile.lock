@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/RevenueCat/fastlane-plugin-revenuecat_internal
-  revision: 1593f78d0b9b24b48238337666183e3ba82f848e
+  revision: 25c7fb83d3e6f590a7130547f75135abda9f86a2
   specs:
     fastlane-plugin-revenuecat_internal (0.1.0)
       nokogiri

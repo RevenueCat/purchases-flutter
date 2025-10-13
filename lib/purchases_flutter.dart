@@ -570,6 +570,7 @@ class Purchases {
     final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
     final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
+    final winBackOffer = purchaseParams.winBackOffer;
     final customerEmail = purchaseParams.customerEmail;
     final presentedOfferingContext = purchaseParams.package?.presentedOfferingContext ??
         purchaseParams.product?.presentedOfferingContext ??
@@ -582,9 +583,16 @@ class Purchases {
       'signedDiscountTimestamp': signedDiscountTimestamp,
       'presentedOfferingContext': presentedOfferingContextJson,
       'customerEmail': customerEmail,
+      'winBackOfferIdentifier': winBackOffer?.identifier,
     };
+    final isWinBackOfferPurchase = (defaultTargetPlatform == TargetPlatform.iOS
+        || defaultTargetPlatform == TargetPlatform.macOS)
+        && winBackOffer != null;
     if (package != null) {
-      return await _invokeReturningPurchaseResult('purchasePackage', {
+      final methodName = isWinBackOfferPurchase
+          ? 'purchasePackageWithWinBackOffer'
+          : 'purchasePackage';
+      return await _invokeReturningPurchaseResult(methodName, {
         ...purchaseArgs,
         'packageIdentifier': package.identifier,
       });
@@ -592,7 +600,10 @@ class Purchases {
       if (kIsWeb) {
         throw UnsupportedPlatformException();
       }
-      return await _invokeReturningPurchaseResult('purchaseProduct', {
+      final methodName = isWinBackOfferPurchase
+          ? 'purchaseProductWithWinBackOffer'
+          : 'purchaseProduct';
+      return await _invokeReturningPurchaseResult(methodName, {
         ...purchaseArgs,
         'productIdentifier': storeProduct.identifier,
         'type': storeProduct.productCategory?.name,
@@ -1025,6 +1036,7 @@ class Purchases {
   /// [winBackOffer] Win-back offer that will be applied to the product.
   /// Retrieve this offer using [getEligibleWinBackOffersForProduct]
   /// or [getEligibleWinBackOffersForPackage].
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchaseProductWithWinBackOffer(
     StoreProduct product,
     WinBackOffer winBackOffer,
@@ -1050,6 +1062,7 @@ class Purchases {
   ///
   /// [winBackOffer] Win-back offer that will be applied to the package.
   /// Retrieve this offer using [getEligibleWinBackOffersForPackage].
+  @Deprecated('Use purchase(PurchaseParams)')
   static Future<PurchaseResult> purchasePackageWithWinBackOffer(
     Package package,
     WinBackOffer winBackOffer,

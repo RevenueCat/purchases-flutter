@@ -14,6 +14,7 @@ class _StoreApiTest {
       case Store.amazon:
       case Store.rcBilling:
       case Store.externalStore:
+      case Store.testStore:
       case Store.paddle:
         break;
     }

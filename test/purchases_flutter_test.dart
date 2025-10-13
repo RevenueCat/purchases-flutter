@@ -415,6 +415,13 @@ void main() {
     expect(PurchasesErrorCode.apiEndpointBlocked.index, 33);
     expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 34);
     expect(PurchasesErrorCode.offlineConnectionError.index, 35);
+    expect(PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode.index, 36);
+    expect(PurchasesErrorCode.signatureVerificationFailed.index, 37);
+    expect(PurchasesErrorCode.featureNotSupportedWithStoreKit1.index, 38);
+    expect(PurchasesErrorCode.invalidWebPurchaseToken.index, 39);
+    expect(PurchasesErrorCode.purchaseBelongsToOtherUser.index, 40);
+    expect(PurchasesErrorCode.expiredWebPurchaseToken.index, 41);
+    expect(PurchasesErrorCode.testStoreSimulatedPurchaseError.index, 42);
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
@@ -564,6 +571,34 @@ void main() {
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '36')),
+      PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '37')),
+      PurchasesErrorCode.signatureVerificationFailed,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '38')),
+      PurchasesErrorCode.featureNotSupportedWithStoreKit1,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '39')),
+      PurchasesErrorCode.invalidWebPurchaseToken,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '40')),
+      PurchasesErrorCode.purchaseBelongsToOtherUser,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '41')),
+      PurchasesErrorCode.expiredWebPurchaseToken,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '42')),
+      PurchasesErrorCode.testStoreSimulatedPurchaseError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '43')),
       PurchasesErrorCode.unknownError,
     );
   });
@@ -629,6 +664,7 @@ void main() {
               'googleProrationMode': 5,
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': '1234567890',
+              'winBackOfferIdentifier': null,
               'customerEmail': 'testemail@revenuecat.com',
             },
           ),
@@ -636,6 +672,77 @@ void main() {
       );
     } on PlatformException catch (e) {
       fail('there was an exception $e');
+    }
+  });
+
+  test('purchase with win-back offer calls successfully', () async {
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+      );
+      const mockPackage = Package(
+        '\$rc_lifetime',
+        PackageType.lifetime,
+        mockStoreProduct,
+        PresentedOfferingContext('main', null, null),
+      );
+      const winBackOffer = WinBackOffer(
+        'win_back_identifier',
+        4.99,
+        'USD4.99',
+        0,
+        'P1M',
+        'month',
+        1,
+      );
+      const purchaseParams = PurchaseParams.package(
+        mockPackage,
+        winBackOffer: winBackOffer,
+      );
+      final purchasePackageResult =
+      await Purchases.purchase(purchaseParams);
+      expect(
+        purchasePackageResult,
+        PurchaseResult.fromJson(response),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchasePackageWithWinBackOffer',
+            arguments: <String, dynamic>{
+              'packageIdentifier': '\$rc_lifetime',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': 'win_back_identifier',
+              'customerEmail': null,
+            },
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception $e');
+    } finally {
+      debugDefaultTargetPlatformOverride = null;
     }
   });
 
@@ -686,6 +793,7 @@ void main() {
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': null,
               'customerEmail': null,
             },
           ),
@@ -755,6 +863,7 @@ void main() {
               'googleProrationMode': 5,
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': '1234567890',
+              'winBackOfferIdentifier': null,
               'customerEmail': 'testemail@revenuecat.com'
             },
           ),
@@ -762,6 +871,75 @@ void main() {
       );
     } on PlatformException catch (e) {
       fail('there was an exception $e');
+    }
+  });
+
+  test('purchase calls successfully with store product and win back offer', () async {
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
+      };
+      const presentedOfferingContext = PresentedOfferingContext('main', null, null);
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productCategory: ProductCategory.nonSubscription,
+        presentedOfferingContext: presentedOfferingContext,
+      );
+      const winBackOffer = WinBackOffer(
+        'win_back_identifier',
+        4.99,
+        'USD4.99',
+        0,
+        'P1M',
+        'month',
+        1,
+      );
+      const purchaseParams = PurchaseParams.storeProduct(
+        mockStoreProduct,
+        winBackOffer: winBackOffer,
+      );
+      final purchaseProductResult =
+      await Purchases.purchase(purchaseParams);
+      expect(
+        purchaseProductResult,
+        PurchaseResult.fromJson(response),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProductWithWinBackOffer',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.lifetime',
+              'type': 'nonSubscription',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': 'win_back_identifier',
+              'customerEmail': null,
+            },
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception $e');
+    } finally {
+      debugDefaultTargetPlatformOverride = null;
     }
   });
 
@@ -804,6 +982,7 @@ void main() {
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': null,
               'customerEmail': null,
             },
           ),
@@ -870,6 +1049,7 @@ void main() {
               'googleProrationMode': 5,
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': null,
               'customerEmail': 'testemail@revenuecat.com',
             },
           ),
@@ -925,6 +1105,7 @@ void main() {
               'googleProrationMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': null,
               'customerEmail': null,
             },
           ),
