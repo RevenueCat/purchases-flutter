@@ -2,7 +2,6 @@ package com.revenuecat.purchases_ui_flutter.views
 
 import android.content.Context
 import android.view.View
-import com.revenuecat.purchases.Purchases
 import com.revenuecat.purchases.hybridcommon.ui.CustomerCenterListenerWrapper
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
@@ -20,30 +19,22 @@ internal class CustomerCenterView(
 
     private val methodChannel: MethodChannel
     private val nativeCustomerCenterView: NativeCustomerCenterView
-    private val customerCenterListener: CustomerCenterListenerWrapper
 
     init {
         methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/CustomerCenterView/$id")
         methodChannel.setMethodCallHandler(this)
 
-        customerCenterListener = createCustomerCenterListener()
-        Purchases.sharedInstance.customerCenterListener = customerCenterListener
-
         nativeCustomerCenterView = NativeCustomerCenterView(context) {
             methodChannel.invokeMethod("onDismiss", null)
         }
         nativeCustomerCenterView.applyCreationParams(creationParams)
+        nativeCustomerCenterView.setCustomerCenterListener(createCustomerCenterListener())
     }
 
     override fun getView(): View = nativeCustomerCenterView
 
     override fun dispose() {
         methodChannel.setMethodCallHandler(null)
-        // Only clear if it's still our listener
-        val purchases = Purchases.sharedInstance
-        if (purchases.customerCenterListener === customerCenterListener) {
-            purchases.customerCenterListener = null
-        }
     }
 
     override fun onMethodCall(methodCall: MethodCall, result: MethodChannel.Result) {
@@ -72,37 +63,35 @@ internal class CustomerCenterView(
                 methodChannel.invokeMethod("onFeedbackSurveyCompleted", feedbackSurveyOptionId)
             }
 
-            override fun onManagementOptionSelectedWrapper(option: String, url: String?) {
+            override fun onManagementOptionSelectedWrapper(action: String, url: String?) {
                 methodChannel.invokeMethod(
                     "onManagementOptionSelected",
                     mapOf(
-                        "optionId" to option,
+                        "optionId" to action,
                         "url" to url
                     )
                 )
             }
 
             override fun onManagementOptionSelectedWrapper(
-                option: String,
-                actionIdentifier: String?,
+                action: String,
+                customAction: String?,
+                purchaseIdentifier: String?
+            ) {
+                // DEPRECATED
+            }
+
+            override fun onCustomActionSelectedWrapper(
+                actionId: String,
                 purchaseIdentifier: String?
             ) {
                 methodChannel.invokeMethod(
-                    "onManagementOptionSelected",
+                    "onCustomActionSelected",
                     mapOf(
-                        "optionId" to option,
-                        "url" to null
+                        "actionId" to actionId,
+                        "purchaseIdentifier" to purchaseIdentifier
                     )
                 )
-                if (actionIdentifier != null) {
-                    methodChannel.invokeMethod(
-                        "onCustomActionSelected",
-                        mapOf(
-                            "actionId" to actionIdentifier,
-                            "purchaseIdentifier" to purchaseIdentifier
-                        )
-                    )
-                }
             }
         }
     }

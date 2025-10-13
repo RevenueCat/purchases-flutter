@@ -10,6 +10,8 @@ import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
 import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
 import com.revenuecat.purchases.hybridcommon.ui.presentPaywallFromFragment
 import com.revenuecat.purchases.ui.revenuecatui.customercenter.ShowCustomerCenter
+import com.revenuecat.purchases.hybridcommon.ui.CustomerCenterListenerWrapper
+import com.revenuecat.purchases.Purchases
 import com.revenuecat.purchases_ui_flutter.views.CustomerCenterViewFactory
 import com.revenuecat.purchases_ui_flutter.views.PaywallFooterViewFactory
 import com.revenuecat.purchases_ui_flutter.views.PaywallViewFactory
@@ -154,6 +156,10 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     private fun presentCustomerCenterFromActivity(activity: Activity) {
+        // Set up customer center listener for callbacks before presenting
+        val customerCenterListener = createCustomerCenterListener()
+        Purchases.sharedInstance.customerCenterListener = customerCenterListener
+        
         val intent = ShowCustomerCenter()
             .createIntent(activity, Unit)
         activity.startActivityForResult(intent, REQUEST_CODE_CUSTOMER_CENTER)
@@ -189,10 +195,67 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             ?: PaywallSource.DefaultOffering
     }
 
+    private fun createCustomerCenterListener(): CustomerCenterListenerWrapper {
+        return object : CustomerCenterListenerWrapper() {
+            override fun onRestoreStartedWrapper() {
+                channel.invokeMethod("onRestoreStarted", null)
+            }
+
+            override fun onRestoreCompletedWrapper(customerInfo: Map<String, Any?>) {
+                channel.invokeMethod("onRestoreCompleted", customerInfo)
+            }
+
+            override fun onRestoreFailedWrapper(error: Map<String, Any?>) {
+                channel.invokeMethod("onRestoreFailed", error)
+            }
+
+            override fun onShowingManageSubscriptionsWrapper() {
+                channel.invokeMethod("onShowingManageSubscriptions", null)
+            }
+
+            override fun onFeedbackSurveyCompletedWrapper(feedbackSurveyOptionId: String) {
+                channel.invokeMethod("onFeedbackSurveyCompleted", feedbackSurveyOptionId)
+            }
+
+            override fun onManagementOptionSelectedWrapper(action: String, url: String?) {
+                channel.invokeMethod(
+                    "onManagementOptionSelected",
+                    mapOf(
+                        "optionId" to action,
+                        "url" to url
+                    )
+                )
+            }
+
+            override fun onManagementOptionSelectedWrapper(
+                action: String,
+                customAction: String?,
+                purchaseIdentifier: String?
+            ) {
+                // DEPRECATED
+            }
+
+            override fun onCustomActionSelectedWrapper(
+                actionId: String,
+                purchaseIdentifier: String?
+            ) {
+                channel.invokeMethod(
+                    "onCustomActionSelected",
+                    mapOf(
+                        "actionId" to actionId,
+                        "purchaseIdentifier" to purchaseIdentifier
+                    )
+                )
+            }
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (requestCode == REQUEST_CODE_CUSTOMER_CENTER) {
             if (resultCode == Activity.RESULT_OK) {
                 Log.d(TAG, "Customer Center closed successfully")
+                // Send onDismiss callback
+                channel.invokeMethod("onDismiss", null)
                 pendingResult?.success("Customer Center closed successfully")
             } else {
                 Log.d(TAG, "Customer Center closed with result code: $resultCode")
@@ -203,6 +266,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 )
             }
             pendingResult = null
+            // Clean up the customer center listener after dismissal
+            Purchases.sharedInstance.customerCenterListener = null
             return true
         }
         return false
