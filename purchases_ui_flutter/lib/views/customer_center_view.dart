@@ -8,6 +8,10 @@ import 'package:flutter/services.dart';
 
 import 'customer_center_view_method_handler.dart';
 
+/// A widget that displays the customer center inline within your app.
+///
+/// This allows users to manage their subscriptions, request refunds, and access
+/// customer support without leaving your app's context.
 class CustomerCenterView extends StatelessWidget {
   const CustomerCenterView({
     super.key,
@@ -24,6 +28,13 @@ class CustomerCenterView extends StatelessWidget {
     this.onCustomActionSelected,
   });
 
+  /// Whether to show a close button in the customer center.
+  /// 
+  /// **Platform Support:**
+  /// - **iOS**: Fully supported. When `false`, no close button is shown.
+  /// - **Android**: Not supported. Close button is always shown regardless of this setting.
+  ///
+  /// Defaults to `true`.
   final bool shouldShowCloseButton;
 
   final CustomerCenterDismissCallback? onDismiss;

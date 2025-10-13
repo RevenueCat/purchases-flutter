@@ -300,4 +300,21 @@ void main() {
 
     expect(callbackWasCalled, false); // Callback should not be called when productId is null
   });
+
+  test('CustomerCenterView shouldShowCloseButton parameter is documented for platform limitations', () {
+    // This test documents the platform limitation where Android doesn't support
+    // hiding the close button, while iOS does.
+    
+    // Test that the parameter is accepted on both platforms
+    const viewWithCloseButton = CustomerCenterView(shouldShowCloseButton: true);
+    const viewWithoutCloseButton = CustomerCenterView(shouldShowCloseButton: false);
+    
+    expect(viewWithCloseButton.shouldShowCloseButton, true);
+    expect(viewWithoutCloseButton.shouldShowCloseButton, false);
+    
+    // Note: Actual behavior differs by platform:
+    // - iOS: respects the shouldShowCloseButton parameter
+    // - Android: always shows close button regardless of parameter value
+    // This is documented in the shouldShowCloseButton property documentation
+  });
 }

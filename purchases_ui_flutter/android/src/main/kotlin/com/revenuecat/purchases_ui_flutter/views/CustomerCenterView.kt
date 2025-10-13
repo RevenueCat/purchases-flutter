@@ -27,6 +27,8 @@ internal class CustomerCenterView(
         nativeCustomerCenterView = NativeCustomerCenterView(context) {
             methodChannel.invokeMethod("onDismiss", null)
         }
+        // Note: shouldShowCloseButton parameter is not supported on Android - close button is always shown
+        // The Android native CustomerCenterView doesn't provide an API to hide the close button
         nativeCustomerCenterView.setCustomerCenterListener(createCustomerCenterListener())
     }
 
