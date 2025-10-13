@@ -196,4 +196,108 @@ class _PurchasesFlutterApiTest {
   void _checkPresentCustomerCenter() async {
     Future<void> f1 = RevenueCatUI.presentCustomerCenter();
   }
+
+  void _checkPresentCustomerCenterWithCallbacks() async {
+    Future<void> f1 = RevenueCatUI.presentCustomerCenter(
+      onDismiss: () {},
+      onRestoreStarted: () {},
+      onRestoreCompleted: (Map<String, dynamic> customerInfo) {},
+      onRestoreFailed: (Map<String, dynamic> error) {},
+      onShowingManageSubscriptions: () {},
+      onRefundRequestStarted: (String refundRequestStatus) {},
+      onRefundRequestCompleted: (Map<String, dynamic> refundRequestStatus) {},
+      onFeedbackSurveyCompleted: (String feedbackSurveyOptionId) {},
+      onManagementOptionSelected: (Map<String, dynamic> data) {},
+      onCustomActionSelected: (Map<String, dynamic> data) {},
+    );
+  }
+
+  Widget _checkCustomerCenterView() {
+    return const Scaffold(
+      body: Center(
+        child: CustomerCenterView(),
+      ),
+    );
+  }
+
+  Widget _checkCustomerCenterViewWithCallbacks() {
+    return Scaffold(
+      body: Center(
+        child: CustomerCenterView(
+          onDismiss: () {},
+          onRestoreStarted: () {},
+          onRestoreCompleted: (Map<String, dynamic> customerInfo) {},
+          onRestoreFailed: (Map<String, dynamic> error) {},
+          onShowingManageSubscriptions: () {},
+          onRefundRequestStarted: (String refundRequestStatus) {},
+          onRefundRequestCompleted: (Map<String, dynamic> refundRequestStatus) {},
+          onFeedbackSurveyCompleted: (String feedbackSurveyOptionId) {},
+          onManagementOptionSelected: (Map<String, dynamic> data) {},
+          onCustomActionSelected: (Map<String, dynamic> data) {},
+        ),
+      ),
+    );
+  }
+
+  void _checkCustomerCenterEventStream() {
+    Stream<CustomerCenterEvent> stream = RevenueCatUI.customerCenterEventStream;
+    
+    // Test event stream subscription
+    stream.listen((CustomerCenterEvent event) {
+      // Test event type checking
+      switch (event.runtimeType) {
+        case CustomerCenterOnDismissEvent:
+          CustomerCenterOnDismissEvent dismissEvent = event as CustomerCenterOnDismissEvent;
+          break;
+        case CustomerCenterOnRestoreStartedEvent:
+          CustomerCenterOnRestoreStartedEvent restoreStartedEvent = event as CustomerCenterOnRestoreStartedEvent;
+          break;
+        case CustomerCenterOnRestoreCompletedEvent:
+          CustomerCenterOnRestoreCompletedEvent restoreCompletedEvent = event as CustomerCenterOnRestoreCompletedEvent;
+          Map<String, dynamic> customerInfo = restoreCompletedEvent.customerInfo;
+          break;
+        case CustomerCenterOnRestoreFailedEvent:
+          CustomerCenterOnRestoreFailedEvent restoreFailedEvent = event as CustomerCenterOnRestoreFailedEvent;
+          Map<String, dynamic> error = restoreFailedEvent.error;
+          break;
+        case CustomerCenterOnShowingManageSubscriptionsEvent:
+          CustomerCenterOnShowingManageSubscriptionsEvent manageSubsEvent = event as CustomerCenterOnShowingManageSubscriptionsEvent;
+          break;
+        case CustomerCenterOnRefundRequestStartedEvent:
+          CustomerCenterOnRefundRequestStartedEvent refundStartedEvent = event as CustomerCenterOnRefundRequestStartedEvent;
+          String refundRequestStatus = refundStartedEvent.refundRequestStatus;
+          break;
+        case CustomerCenterOnRefundRequestCompletedEvent:
+          CustomerCenterOnRefundRequestCompletedEvent refundCompletedEvent = event as CustomerCenterOnRefundRequestCompletedEvent;
+          Map<String, dynamic> refundRequestStatus = refundCompletedEvent.refundRequestStatus;
+          break;
+        case CustomerCenterOnFeedbackSurveyCompletedEvent:
+          CustomerCenterOnFeedbackSurveyCompletedEvent feedbackEvent = event as CustomerCenterOnFeedbackSurveyCompletedEvent;
+          String feedbackSurveyOptionId = feedbackEvent.feedbackSurveyOptionId;
+          break;
+        case CustomerCenterOnManagementOptionSelectedEvent:
+          CustomerCenterOnManagementOptionSelectedEvent managementEvent = event as CustomerCenterOnManagementOptionSelectedEvent;
+          Map<String, dynamic> data = managementEvent.data;
+          break;
+        case CustomerCenterOnCustomActionSelectedEvent:
+          CustomerCenterOnCustomActionSelectedEvent customActionEvent = event as CustomerCenterOnCustomActionSelectedEvent;
+          Map<String, dynamic> data = customActionEvent.data;
+          break;
+      }
+    });
+  }
+
+  void _checkCustomerCenterEventTypes() {
+    // Test that all event types are available
+    CustomerCenterOnDismissEvent dismissEvent = CustomerCenterOnDismissEvent();
+    CustomerCenterOnRestoreStartedEvent restoreStartedEvent = CustomerCenterOnRestoreStartedEvent();
+    CustomerCenterOnRestoreCompletedEvent restoreCompletedEvent = CustomerCenterOnRestoreCompletedEvent({});
+    CustomerCenterOnRestoreFailedEvent restoreFailedEvent = CustomerCenterOnRestoreFailedEvent({});
+    CustomerCenterOnShowingManageSubscriptionsEvent manageSubsEvent = CustomerCenterOnShowingManageSubscriptionsEvent();
+    CustomerCenterOnRefundRequestStartedEvent refundStartedEvent = CustomerCenterOnRefundRequestStartedEvent("");
+    CustomerCenterOnRefundRequestCompletedEvent refundCompletedEvent = CustomerCenterOnRefundRequestCompletedEvent({});
+    CustomerCenterOnFeedbackSurveyCompletedEvent feedbackEvent = CustomerCenterOnFeedbackSurveyCompletedEvent("");
+    CustomerCenterOnManagementOptionSelectedEvent managementEvent = CustomerCenterOnManagementOptionSelectedEvent({});
+    CustomerCenterOnCustomActionSelectedEvent customActionEvent = CustomerCenterOnCustomActionSelectedEvent({});
+  }
 }
