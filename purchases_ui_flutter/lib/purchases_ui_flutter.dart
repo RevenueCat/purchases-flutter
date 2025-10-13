@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/services.dart';
-import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 
 import 'paywall_result.dart';
@@ -13,10 +13,6 @@ export 'views/customer_center_view.dart';
 export 'views/paywall_footer_view.dart';
 export 'views/paywall_view.dart';
 
-// Default empty callbacks
-void _emptyCallback() {}
-void _emptyStringCallback(String _) {}
-void _emptyDataCallback(Map<String, dynamic> _) {}
 
 /// Container for CustomerCenter callbacks
 class CustomerCenterCallbacks {
