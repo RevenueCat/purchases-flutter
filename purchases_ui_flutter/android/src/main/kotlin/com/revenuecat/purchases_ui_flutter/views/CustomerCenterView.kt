@@ -27,7 +27,7 @@ internal class CustomerCenterView(
         nativeCustomerCenterView = NativeCustomerCenterView(context) {
             methodChannel.invokeMethod("onDismiss", null)
         }
-        nativeCustomerCenterView.applyCreationParams(creationParams)
+        // No Android-specific configuration options currently available
         nativeCustomerCenterView.setCustomerCenterListener(createCustomerCenterListener())
     }
 
@@ -78,7 +78,8 @@ internal class CustomerCenterView(
                 customAction: String?,
                 purchaseIdentifier: String?
             ) {
-                // DEPRECATED
+                // DEPRECATED: This method is deprecated and replaced by onCustomActionSelectedWrapper
+                // No-op implementation to maintain compatibility
             }
 
             override fun onCustomActionSelectedWrapper(
@@ -96,10 +97,4 @@ internal class CustomerCenterView(
         }
     }
 
-}
-
-@Suppress("UNUSED_PARAMETER")
-private fun NativeCustomerCenterView.applyCreationParams(creationParams: Map<String?, Any?>) {
-    // Currently there are no Android specific configuration options.
-    // This extension is reserved for future parameters to keep init tidy.
 }
