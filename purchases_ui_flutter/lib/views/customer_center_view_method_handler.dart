@@ -2,28 +2,64 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 
-typedef CustomerCenterDismissCallback = void Function();
-typedef CustomerCenterRestoreStartedCallback = void Function();
-typedef CustomerCenterRestoreCompletedCallback = void Function(CustomerInfo customerInfo);
-typedef CustomerCenterRestoreFailedCallback = void Function(PurchasesError error);
-typedef CustomerCenterManageSubscriptionsCallback = void Function();
-typedef CustomerCenterRefundRequestStartedCallback = void Function(String productIdentifier);
-typedef CustomerCenterRefundRequestCompletedCallback = void Function(String productIdentifier, String status);
-typedef CustomerCenterFeedbackSurveyCompletedCallback = void Function(String optionIdentifier);
-typedef CustomerCenterManagementOptionSelectedCallback = void Function(String optionIdentifier, String? url);
-typedef CustomerCenterCustomActionSelectedCallback = void Function(String actionIdentifier, String? purchaseIdentifier);
+/// Called when the customer center is dismissed by the user.
+typedef CustomerCenterDismissed = void Function();
+
+/// Called when a restore purchases operation begins.
+typedef CustomerCenterRestoreStarted = void Function();
+
+/// Called when restore purchases completes successfully.
+/// 
+/// [customerInfo] The updated customer information after restore.
+typedef CustomerCenterRestoreCompleted = void Function(CustomerInfo customerInfo);
+
+/// Called when restore purchases fails.
+/// 
+/// [error] The error that occurred during restore.
+typedef CustomerCenterRestoreFailed = void Function(PurchasesError error);
+
+/// Called when the customer center shows the manage subscriptions screen.
+typedef CustomerCenterManageSubscriptions = void Function();
+
+/// Called when a refund request is initiated.
+/// 
+/// [productIdentifier] The product identifier for which the refund was requested.
+typedef CustomerCenterRefundRequestStarted = void Function(String productIdentifier);
+
+/// Called when a refund request completes.
+/// 
+/// [productIdentifier] The product identifier for which the refund was requested.
+/// [status] The status of the refund request.
+typedef CustomerCenterRefundRequestCompleted = void Function(String productIdentifier, String status);
+
+/// Called when a feedback survey is completed.
+/// 
+/// [optionIdentifier] The identifier of the selected feedback option.
+typedef CustomerCenterFeedbackSurveyCompleted = void Function(String optionIdentifier);
+
+/// Called when a management option is selected.
+/// 
+/// [optionIdentifier] The identifier of the selected management option.
+/// [url] Optional URL associated with the management option.
+typedef CustomerCenterManagementOptionSelected = void Function(String optionIdentifier, String? url);
+
+/// Called when a custom action is selected.
+/// 
+/// [actionIdentifier] The identifier of the selected custom action.
+/// [purchaseIdentifier] Optional purchase identifier associated with the action.
+typedef CustomerCenterCustomActionSelected = void Function(String actionIdentifier, String? purchaseIdentifier);
 
 class CustomerCenterViewMethodHandler {
-  final CustomerCenterDismissCallback? onDismiss;
-  final CustomerCenterRestoreStartedCallback? onRestoreStarted;
-  final CustomerCenterRestoreCompletedCallback? onRestoreCompleted;
-  final CustomerCenterRestoreFailedCallback? onRestoreFailed;
-  final CustomerCenterManageSubscriptionsCallback? onShowingManageSubscriptions;
-  final CustomerCenterRefundRequestStartedCallback? onRefundRequestStarted;
-  final CustomerCenterRefundRequestCompletedCallback? onRefundRequestCompleted;
-  final CustomerCenterFeedbackSurveyCompletedCallback? onFeedbackSurveyCompleted;
-  final CustomerCenterManagementOptionSelectedCallback? onManagementOptionSelected;
-  final CustomerCenterCustomActionSelectedCallback? onCustomActionSelected;
+  final CustomerCenterDismissed? onDismiss;
+  final CustomerCenterRestoreStarted? onRestoreStarted;
+  final CustomerCenterRestoreCompleted? onRestoreCompleted;
+  final CustomerCenterRestoreFailed? onRestoreFailed;
+  final CustomerCenterManageSubscriptions? onShowingManageSubscriptions;
+  final CustomerCenterRefundRequestStarted? onRefundRequestStarted;
+  final CustomerCenterRefundRequestCompleted? onRefundRequestCompleted;
+  final CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted;
+  final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
+  final CustomerCenterCustomActionSelected? onCustomActionSelected;
 
   const CustomerCenterViewMethodHandler({
     this.onDismiss,

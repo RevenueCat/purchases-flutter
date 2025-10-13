@@ -16,16 +16,16 @@ export 'views/paywall_view.dart';
 
 /// Container for CustomerCenter callbacks
 class CustomerCenterCallbacks {
-  final CustomerCenterDismissCallback? onDismiss;
-  final CustomerCenterRestoreStartedCallback? onRestoreStarted;
-  final CustomerCenterRestoreCompletedCallback? onRestoreCompleted;
-  final CustomerCenterRestoreFailedCallback? onRestoreFailed;
-  final CustomerCenterManageSubscriptionsCallback? onShowingManageSubscriptions;
-  final CustomerCenterRefundRequestStartedCallback? onRefundRequestStarted;
-  final CustomerCenterRefundRequestCompletedCallback? onRefundRequestCompleted;
-  final CustomerCenterFeedbackSurveyCompletedCallback? onFeedbackSurveyCompleted;
-  final CustomerCenterManagementOptionSelectedCallback? onManagementOptionSelected;
-  final CustomerCenterCustomActionSelectedCallback? onCustomActionSelected;
+  final CustomerCenterDismissed? onDismiss;
+  final CustomerCenterRestoreStarted? onRestoreStarted;
+  final CustomerCenterRestoreCompleted? onRestoreCompleted;
+  final CustomerCenterRestoreFailed? onRestoreFailed;
+  final CustomerCenterManageSubscriptions? onShowingManageSubscriptions;
+  final CustomerCenterRefundRequestStarted? onRefundRequestStarted;
+  final CustomerCenterRefundRequestCompleted? onRefundRequestCompleted;
+  final CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted;
+  final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
+  final CustomerCenterCustomActionSelected? onCustomActionSelected;
 
   const CustomerCenterCallbacks({
     this.onDismiss,
@@ -92,16 +92,16 @@ class RevenueCatUI {
   }
 
   static Future<void> presentCustomerCenter({
-    CustomerCenterDismissCallback? onDismiss,
-    CustomerCenterRestoreStartedCallback? onRestoreStarted,
-    CustomerCenterRestoreCompletedCallback? onRestoreCompleted,
-    CustomerCenterRestoreFailedCallback? onRestoreFailed,
-    CustomerCenterManageSubscriptionsCallback? onShowingManageSubscriptions,
-    CustomerCenterRefundRequestStartedCallback? onRefundRequestStarted,
-    CustomerCenterRefundRequestCompletedCallback? onRefundRequestCompleted,
-    CustomerCenterFeedbackSurveyCompletedCallback? onFeedbackSurveyCompleted,
-    CustomerCenterManagementOptionSelectedCallback? onManagementOptionSelected,
-    CustomerCenterCustomActionSelectedCallback? onCustomActionSelected,
+    CustomerCenterDismissed? onDismiss,
+    CustomerCenterRestoreStarted? onRestoreStarted,
+    CustomerCenterRestoreCompleted? onRestoreCompleted,
+    CustomerCenterRestoreFailed? onRestoreFailed,
+    CustomerCenterManageSubscriptions? onShowingManageSubscriptions,
+    CustomerCenterRefundRequestStarted? onRefundRequestStarted,
+    CustomerCenterRefundRequestCompleted? onRefundRequestCompleted,
+    CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
+    CustomerCenterManagementOptionSelected? onManagementOptionSelected,
+    CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
     // Ensure method channel handler is set up
     _ensureMethodChannelHandler();

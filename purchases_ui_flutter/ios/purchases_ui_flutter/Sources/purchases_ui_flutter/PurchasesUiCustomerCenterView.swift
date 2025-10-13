@@ -83,6 +83,11 @@ final class PurchasesUiCustomerCenterView: NSObject, FlutterPlatformView {
             self?.methodChannel.invokeMethod("onDismiss", arguments: nil)
         }
     }
+
+    deinit {
+        // Clean up method channel handler to prevent memory leaks
+        methodChannel.setMethodCallHandler(nil)
+    }
 }
 
 @available(iOS 15.0, *)

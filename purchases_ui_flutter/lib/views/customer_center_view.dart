@@ -37,16 +37,16 @@ class CustomerCenterView extends StatelessWidget {
   /// Defaults to `true`.
   final bool shouldShowCloseButton;
 
-  final CustomerCenterDismissCallback? onDismiss;
-  final CustomerCenterRestoreStartedCallback? onRestoreStarted;
-  final CustomerCenterRestoreCompletedCallback? onRestoreCompleted;
-  final CustomerCenterRestoreFailedCallback? onRestoreFailed;
-  final CustomerCenterManageSubscriptionsCallback? onShowingManageSubscriptions;
-  final CustomerCenterRefundRequestStartedCallback? onRefundRequestStarted;
-  final CustomerCenterRefundRequestCompletedCallback? onRefundRequestCompleted;
-  final CustomerCenterFeedbackSurveyCompletedCallback? onFeedbackSurveyCompleted;
-  final CustomerCenterManagementOptionSelectedCallback? onManagementOptionSelected;
-  final CustomerCenterCustomActionSelectedCallback? onCustomActionSelected;
+  final CustomerCenterDismissed? onDismiss;
+  final CustomerCenterRestoreStarted? onRestoreStarted;
+  final CustomerCenterRestoreCompleted? onRestoreCompleted;
+  final CustomerCenterRestoreFailed? onRestoreFailed;
+  final CustomerCenterManageSubscriptions? onShowingManageSubscriptions;
+  final CustomerCenterRefundRequestStarted? onRefundRequestStarted;
+  final CustomerCenterRefundRequestCompleted? onRefundRequestCompleted;
+  final CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted;
+  final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
+  final CustomerCenterCustomActionSelected? onCustomActionSelected;
 
   static const String _viewType = 'com.revenuecat.purchasesui/CustomerCenterView';
 
