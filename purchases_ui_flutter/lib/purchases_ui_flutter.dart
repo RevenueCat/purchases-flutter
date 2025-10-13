@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
@@ -129,7 +130,7 @@ class RevenueCatUI {
         try {
           _handleCustomerCenterMethodCall(call);
         } catch (e) {
-          // Silently ignore callback errors
+          debugPrint('RevenueCatUI: Error handling method call ${call.method}: $e');
         }
       });
       _methodChannelHandlerSet = true;
@@ -164,43 +165,92 @@ class RevenueCatUI {
         callbacks?.onRestoreStarted?.call();
         break;
       case 'onRestoreCompleted':
-        final customerInfoData = call.arguments as Map<String, dynamic>? ?? {};
-        final customerInfo = CustomerInfo.fromJson(customerInfoData);
-        callbacks?.onRestoreCompleted?.call(customerInfo);
+        final customerInfoData = call.arguments as Map<String, dynamic>?;
+        if (customerInfoData != null) {
+          try {
+            final customerInfo = CustomerInfo.fromJson(customerInfoData);
+            callbacks?.onRestoreCompleted?.call(customerInfo);
+          } catch (e) {
+            debugPrint('RevenueCatUI: Error parsing CustomerInfo in onRestoreCompleted: $e');
+          }
+        } else {
+          debugPrint('RevenueCatUI: Warning - onRestoreCompleted called with null arguments');
+        }
         break;
       case 'onRestoreFailed':
-        final errorData = call.arguments as Map<String, dynamic>? ?? {};
-        final error = PurchasesError.fromJson(errorData);
-        callbacks?.onRestoreFailed?.call(error);
+        final errorData = call.arguments as Map<String, dynamic>?;
+        if (errorData != null) {
+          try {
+            final error = PurchasesError.fromJson(errorData);
+            callbacks?.onRestoreFailed?.call(error);
+          } catch (e) {
+            debugPrint('RevenueCatUI: Error parsing PurchasesError in onRestoreFailed: $e');
+          }
+        } else {
+          debugPrint('RevenueCatUI: Warning - onRestoreFailed called with null arguments');
+        }
         break;
       case 'onShowingManageSubscriptions':
         callbacks?.onShowingManageSubscriptions?.call();
         break;
       case 'onRefundRequestStarted':
-        final productIdentifier = call.arguments as String? ?? '';
-        callbacks?.onRefundRequestStarted?.call(productIdentifier);
+        final productIdentifier = call.arguments as String?;
+        if (productIdentifier != null && productIdentifier.isNotEmpty) {
+          callbacks?.onRefundRequestStarted?.call(productIdentifier);
+        } else {
+          debugPrint('RevenueCatUI: Warning - onRefundRequestStarted called with invalid productIdentifier: $productIdentifier');
+        }
         break;
       case 'onRefundRequestCompleted':
-        final data = call.arguments as Map<String, dynamic>? ?? {};
-        final productIdentifier = data['productId'] as String? ?? '';
-        final status = data['status'] as String? ?? '';
-        callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
+        final data = call.arguments as Map<String, dynamic>?;
+        if (data != null) {
+          final productIdentifier = data['productId'] as String?;
+          final status = data['status'] as String?;
+          if (productIdentifier != null && productIdentifier.isNotEmpty &&
+              status != null && status.isNotEmpty) {
+            callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
+          } else {
+            debugPrint('RevenueCatUI: Warning - onRefundRequestCompleted called with invalid data - productId: $productIdentifier, status: $status');
+          }
+        } else {
+          debugPrint('RevenueCatUI: Warning - onRefundRequestCompleted called with null arguments');
+        }
         break;
       case 'onFeedbackSurveyCompleted':
-        final optionIdentifier = call.arguments as String? ?? '';
-        callbacks?.onFeedbackSurveyCompleted?.call(optionIdentifier);
+        final optionIdentifier = call.arguments as String?;
+        if (optionIdentifier != null && optionIdentifier.isNotEmpty) {
+          callbacks?.onFeedbackSurveyCompleted?.call(optionIdentifier);
+        } else {
+          debugPrint('RevenueCatUI: Warning - onFeedbackSurveyCompleted called with invalid optionIdentifier: $optionIdentifier');
+        }
         break;
       case 'onManagementOptionSelected':
-        final data = call.arguments as Map<String, dynamic>? ?? {};
-        final optionIdentifier = data['optionId'] as String? ?? '';
-        final url = data['url'] as String?;
-        callbacks?.onManagementOptionSelected?.call(optionIdentifier, url);
+        final data = call.arguments as Map<String, dynamic>?;
+        if (data != null) {
+          final optionIdentifier = data['optionId'] as String?;
+          final url = data['url'] as String?; // url can be null
+          if (optionIdentifier != null && optionIdentifier.isNotEmpty) {
+            callbacks?.onManagementOptionSelected?.call(optionIdentifier, url);
+          } else {
+            debugPrint('RevenueCatUI: Warning - onManagementOptionSelected called with invalid optionId: $optionIdentifier');
+          }
+        } else {
+          debugPrint('RevenueCatUI: Warning - onManagementOptionSelected called with null arguments');
+        }
         break;
       case 'onCustomActionSelected':
-        final data = call.arguments as Map<String, dynamic>? ?? {};
-        final actionIdentifier = data['actionId'] as String? ?? '';
-        final purchaseIdentifier = data['purchaseIdentifier'] as String?;
-        callbacks?.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier);
+        final data = call.arguments as Map<String, dynamic>?;
+        if (data != null) {
+          final actionIdentifier = data['actionId'] as String?;
+          final purchaseIdentifier = data['purchaseIdentifier'] as String?; // can be null
+          if (actionIdentifier != null && actionIdentifier.isNotEmpty) {
+            callbacks?.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier);
+          } else {
+            debugPrint('RevenueCatUI: Warning - onCustomActionSelected called with invalid actionId: $actionIdentifier');
+          }
+        } else {
+          debugPrint('RevenueCatUI: Warning - onCustomActionSelected called with null arguments');
+        }
         break;
     }
   }
