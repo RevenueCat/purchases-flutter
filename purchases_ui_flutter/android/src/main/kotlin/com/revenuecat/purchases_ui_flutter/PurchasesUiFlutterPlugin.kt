@@ -232,7 +232,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 customAction: String?,
                 purchaseIdentifier: String?
             ) {
-                // DEPRECATED
+                // DEPRECATED: This method is deprecated and replaced by onCustomActionSelectedWrapper
+                // No-op implementation to maintain compatibility
             }
 
             override fun onCustomActionSelectedWrapper(
