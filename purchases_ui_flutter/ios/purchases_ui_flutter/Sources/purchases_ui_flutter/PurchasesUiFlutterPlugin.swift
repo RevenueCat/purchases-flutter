@@ -11,7 +11,6 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
     private static let BAD_ARGS_ERROR_CODE = "BAD_ARGS"
     private var methodChannel: FlutterMethodChannel?
-    private var customerCenterEventChannel: FlutterMethodChannel?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
 
@@ -29,10 +28,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
 #endif
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
-        let customerCenterEventChannel = FlutterMethodChannel(name: "purchases_ui_flutter/customerCenterEvents", binaryMessenger: messenger)
         let instance = PurchasesUiFlutterPlugin()
         instance.methodChannel = channel
-        instance.customerCenterEventChannel = customerCenterEventChannel
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -185,7 +182,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 #if os(iOS)
     if #available(iOS 15.0, *) {
         // Set up delegate to forward events to Flutter
-        self.customerCenterDelegateForwarder = CustomerCenterDelegateForwarder(methodChannel: self.customerCenterEventChannel)
+        self.customerCenterDelegateForwarder = CustomerCenterDelegateForwarder(methodChannel: self.methodChannel)
         self.customerCenterProxy.delegate = self.customerCenterDelegateForwarder
         
         self.customerCenterProxy.present(resultHandler: {

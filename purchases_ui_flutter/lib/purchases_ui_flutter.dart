@@ -41,78 +41,13 @@ class CustomerCenterCallbacks {
   });
 }
 
-/// CustomerCenter event types for global event stream
-enum CustomerCenterEventType {
-  dismiss,
-  restoreStarted,
-  restoreCompleted,
-  restoreFailed,
-  showingManageSubscriptions,
-  refundRequestStarted,
-  refundRequestCompleted,
-  feedbackSurveyCompleted,
-  managementOptionSelected,
-  customActionSelected,
-}
-
-/// CustomerCenter event data
-class CustomerCenterEvent {
-  final CustomerCenterEventType type;
-  final Map<String, dynamic>? data;
-  
-  const CustomerCenterEvent(this.type, [this.data]);
-}
 
 class RevenueCatUI {
   static const _methodChannel = MethodChannel('purchases_ui_flutter');
-  static const _customerCenterEventChannel = MethodChannel('purchases_ui_flutter/customerCenterEvents');
   
-  static Stream<CustomerCenterEvent>? _customerCenterEventStream;
   static CustomerCenterCallbacks? _customerCenterCallbacks;
   static bool _methodChannelHandlerSet = false;
   
-  /// Stream of CustomerCenter events from presentCustomerCenter()
-  /// 
-  /// Listen to this stream to receive events when using the modal CustomerCenter:
-  /// ```dart
-  /// RevenueCatUI.customerCenterEventStream.listen((event) {
-  ///   switch (event.type) {
-  ///     case CustomerCenterEventType.restoreStarted:
-  ///       print('Restore started');
-  ///       break;
-  ///     case CustomerCenterEventType.restoreCompleted:
-  ///       final customerInfo = CustomerInfo.fromJson(event.data!);
-  ///       print('Restore completed: $customerInfo');
-  ///       break;
-  ///   }
-  /// });
-  /// ```
-  static Stream<CustomerCenterEvent> get customerCenterEventStream {
-    _customerCenterEventStream ??= _setupCustomerCenterEventStream();
-    return _customerCenterEventStream!;
-  }
-  
-  static Stream<CustomerCenterEvent> _setupCustomerCenterEventStream() {
-    late StreamController<CustomerCenterEvent> controller;
-    
-    controller = StreamController<CustomerCenterEvent>.broadcast(
-      onListen: () {
-        _customerCenterEventChannel.setMethodCallHandler((call) async {
-          try {
-            final event = _handleCustomerCenterMethodCall(call);
-            controller.add(event);
-          } catch (e) {
-            controller.addError(e);
-          }
-        });
-      },
-      onCancel: () {
-        _customerCenterEventChannel.setMethodCallHandler(null);
-      },
-    );
-    
-    return controller.stream;
-  }
 
   /// Presents the paywall as an activity on android or a modal in iOS.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
@@ -190,7 +125,7 @@ class RevenueCatUI {
 
   static void _ensureMethodChannelHandler() {
     if (!_methodChannelHandlerSet) {
-      _customerCenterEventChannel.setMethodCallHandler((call) async {
+      _methodChannel.setMethodCallHandler((call) async {
         try {
           _handleCustomerCenterMethodCall(call);
         } catch (e) {
@@ -218,78 +153,55 @@ class RevenueCatUI {
     }
   }
 
-  static CustomerCenterEvent _handleCustomerCenterMethodCall(MethodCall call) {
+  static void _handleCustomerCenterMethodCall(MethodCall call) {
     final callbacks = _customerCenterCallbacks;
 
     switch (call.method) {
       case 'onDismiss':
         callbacks?.onDismiss?.call();
-        return const CustomerCenterEvent(CustomerCenterEventType.dismiss);
+        break;
       case 'onRestoreStarted':
         callbacks?.onRestoreStarted?.call();
-        return const CustomerCenterEvent(CustomerCenterEventType.restoreStarted);
+        break;
       case 'onRestoreCompleted':
         final customerInfoData = call.arguments as Map<String, dynamic>? ?? {};
         final customerInfo = CustomerInfo.fromJson(customerInfoData);
         callbacks?.onRestoreCompleted?.call(customerInfo);
-        return CustomerCenterEvent(
-          CustomerCenterEventType.restoreCompleted, 
-          customerInfoData,
-        );
+        break;
       case 'onRestoreFailed':
         final errorData = call.arguments as Map<String, dynamic>? ?? {};
         final error = PurchasesError.fromJson(errorData);
         callbacks?.onRestoreFailed?.call(error);
-        return CustomerCenterEvent(
-          CustomerCenterEventType.restoreFailed, 
-          errorData,
-        );
+        break;
       case 'onShowingManageSubscriptions':
         callbacks?.onShowingManageSubscriptions?.call();
-        return const CustomerCenterEvent(CustomerCenterEventType.showingManageSubscriptions);
+        break;
       case 'onRefundRequestStarted':
         final productIdentifier = call.arguments as String? ?? '';
         callbacks?.onRefundRequestStarted?.call(productIdentifier);
-        return CustomerCenterEvent(
-          CustomerCenterEventType.refundRequestStarted, 
-          {'productIdentifier': productIdentifier},
-        );
+        break;
       case 'onRefundRequestCompleted':
         final data = call.arguments as Map<String, dynamic>? ?? {};
         final productIdentifier = data['productIdentifier'] as String? ?? '';
         final status = data['status'] as String? ?? '';
         callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
-        return CustomerCenterEvent(
-          CustomerCenterEventType.refundRequestCompleted, 
-          data,
-        );
+        break;
       case 'onFeedbackSurveyCompleted':
         final optionIdentifier = call.arguments as String? ?? '';
         callbacks?.onFeedbackSurveyCompleted?.call(optionIdentifier);
-        return CustomerCenterEvent(
-          CustomerCenterEventType.feedbackSurveyCompleted, 
-          {'optionIdentifier': optionIdentifier},
-        );
+        break;
       case 'onManagementOptionSelected':
         final data = call.arguments as Map<String, dynamic>? ?? {};
         final optionIdentifier = data['optionId'] as String? ?? '';
         final url = data['url'] as String?;
         callbacks?.onManagementOptionSelected?.call(optionIdentifier, url);
-        return CustomerCenterEvent(
-          CustomerCenterEventType.managementOptionSelected, 
-          data,
-        );
+        break;
       case 'onCustomActionSelected':
         final data = call.arguments as Map<String, dynamic>? ?? {};
         final actionIdentifier = data['actionId'] as String? ?? '';
         final purchaseIdentifier = data['purchaseIdentifier'] as String?;
         callbacks?.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier);
-        return CustomerCenterEvent(
-          CustomerCenterEventType.customActionSelected, 
-          data,
-        );
-      default:
-        throw ArgumentError('Unknown CustomerCenter event: ${call.method}');
+        break;
     }
   }
 }
