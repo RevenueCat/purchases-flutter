@@ -33,7 +33,6 @@ class _UpsellScreenState extends State<UpsellScreen> {
     _fetchData();
   }
 
-
   Future<void> _fetchData() async {
     Offerings? offerings;
     try {
