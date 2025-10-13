@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/models/purchases_error.dart';
 
 import 'paywall_result.dart';
+import 'views/customer_center_view_method_handler.dart';
 
 export 'paywall_result.dart';
 export 'views/customer_center_view.dart';
@@ -17,28 +20,28 @@ void _emptyDataCallback(Map<String, dynamic> _) {}
 
 /// Container for CustomerCenter callbacks
 class CustomerCenterCallbacks {
-  final VoidCallback onDismiss;
-  final VoidCallback onRestoreStarted;
-  final Function(Map<String, dynamic>) onRestoreCompleted;
-  final Function(Map<String, dynamic>) onRestoreFailed;
-  final VoidCallback onShowingManageSubscriptions;
-  final Function(String) onRefundRequestStarted;
-  final Function(Map<String, dynamic>) onRefundRequestCompleted;
-  final Function(String) onFeedbackSurveyCompleted;
-  final Function(Map<String, dynamic>) onManagementOptionSelected;
-  final Function(Map<String, dynamic>) onCustomActionSelected;
+  final CustomerCenterDismissCallback? onDismiss;
+  final CustomerCenterRestoreStartedCallback? onRestoreStarted;
+  final CustomerCenterRestoreCompletedCallback? onRestoreCompleted;
+  final CustomerCenterRestoreFailedCallback? onRestoreFailed;
+  final CustomerCenterManageSubscriptionsCallback? onShowingManageSubscriptions;
+  final CustomerCenterRefundRequestStartedCallback? onRefundRequestStarted;
+  final CustomerCenterRefundRequestCompletedCallback? onRefundRequestCompleted;
+  final CustomerCenterFeedbackSurveyCompletedCallback? onFeedbackSurveyCompleted;
+  final CustomerCenterManagementOptionSelectedCallback? onManagementOptionSelected;
+  final CustomerCenterCustomActionSelectedCallback? onCustomActionSelected;
 
   const CustomerCenterCallbacks({
-    required this.onDismiss,
-    required this.onRestoreStarted,
-    required this.onRestoreCompleted,
-    required this.onRestoreFailed,
-    required this.onShowingManageSubscriptions,
-    required this.onRefundRequestStarted,
-    required this.onRefundRequestCompleted,
-    required this.onFeedbackSurveyCompleted,
-    required this.onManagementOptionSelected,
-    required this.onCustomActionSelected,
+    this.onDismiss,
+    this.onRestoreStarted,
+    this.onRestoreCompleted,
+    this.onRestoreFailed,
+    this.onShowingManageSubscriptions,
+    this.onRefundRequestStarted,
+    this.onRefundRequestCompleted,
+    this.onFeedbackSurveyCompleted,
+    this.onManagementOptionSelected,
+    this.onCustomActionSelected,
   });
 }
 
@@ -159,16 +162,16 @@ class RevenueCatUI {
   }
 
   static Future<void> presentCustomerCenter({
-    VoidCallback onDismiss = _emptyCallback,
-    VoidCallback onRestoreStarted = _emptyCallback,
-    Function(Map<String, dynamic>) onRestoreCompleted = _emptyDataCallback,
-    Function(Map<String, dynamic>) onRestoreFailed = _emptyDataCallback,
-    VoidCallback onShowingManageSubscriptions = _emptyCallback,
-    Function(String) onRefundRequestStarted = _emptyStringCallback,
-    Function(Map<String, dynamic>) onRefundRequestCompleted = _emptyDataCallback,
-    Function(String) onFeedbackSurveyCompleted = _emptyStringCallback,
-    Function(Map<String, dynamic>) onManagementOptionSelected = _emptyDataCallback,
-    Function(Map<String, dynamic>) onCustomActionSelected = _emptyDataCallback,
+    CustomerCenterDismissCallback? onDismiss,
+    CustomerCenterRestoreStartedCallback? onRestoreStarted,
+    CustomerCenterRestoreCompletedCallback? onRestoreCompleted,
+    CustomerCenterRestoreFailedCallback? onRestoreFailed,
+    CustomerCenterManageSubscriptionsCallback? onShowingManageSubscriptions,
+    CustomerCenterRefundRequestStartedCallback? onRefundRequestStarted,
+    CustomerCenterRefundRequestCompletedCallback? onRefundRequestCompleted,
+    CustomerCenterFeedbackSurveyCompletedCallback? onFeedbackSurveyCompleted,
+    CustomerCenterManagementOptionSelectedCallback? onManagementOptionSelected,
+    CustomerCenterCustomActionSelectedCallback? onCustomActionSelected,
   }) async {
     // Ensure method channel handler is set up
     _ensureMethodChannelHandler();
@@ -226,34 +229,49 @@ class RevenueCatUI {
 
     switch (call.method) {
       case 'onDismiss':
-        callbacks.onDismiss();
+        callbacks.onDismiss?.call();
         break;
       case 'onRestoreStarted':
-        callbacks.onRestoreStarted();
+        callbacks.onRestoreStarted?.call();
         break;
       case 'onRestoreCompleted':
-        callbacks.onRestoreCompleted(call.arguments as Map<String, dynamic>? ?? {});
+        final customerInfoData = call.arguments as Map<String, dynamic>? ?? {};
+        final customerInfo = CustomerInfo.fromJson(customerInfoData);
+        callbacks.onRestoreCompleted?.call(customerInfo);
         break;
       case 'onRestoreFailed':
-        callbacks.onRestoreFailed(call.arguments as Map<String, dynamic>? ?? {});
+        final errorData = call.arguments as Map<String, dynamic>? ?? {};
+        final error = PurchasesError.fromJson(errorData);
+        callbacks.onRestoreFailed?.call(error);
         break;
       case 'onShowingManageSubscriptions':
-        callbacks.onShowingManageSubscriptions();
+        callbacks.onShowingManageSubscriptions?.call();
         break;
       case 'onRefundRequestStarted':
-        callbacks.onRefundRequestStarted(call.arguments as String? ?? '');
+        final productIdentifier = call.arguments as String? ?? '';
+        callbacks.onRefundRequestStarted?.call(productIdentifier);
         break;
       case 'onRefundRequestCompleted':
-        callbacks.onRefundRequestCompleted(call.arguments as Map<String, dynamic>? ?? {});
+        final data = call.arguments as Map<String, dynamic>? ?? {};
+        final productIdentifier = data['productIdentifier'] as String? ?? '';
+        final status = data['status'] as String? ?? '';
+        callbacks.onRefundRequestCompleted?.call(productIdentifier, status);
         break;
       case 'onFeedbackSurveyCompleted':
-        callbacks.onFeedbackSurveyCompleted(call.arguments as String? ?? '');
+        final optionIdentifier = call.arguments as String? ?? '';
+        callbacks.onFeedbackSurveyCompleted?.call(optionIdentifier);
         break;
       case 'onManagementOptionSelected':
-        callbacks.onManagementOptionSelected(call.arguments as Map<String, dynamic>? ?? {});
+        final data = call.arguments as Map<String, dynamic>? ?? {};
+        final optionIdentifier = data['optionId'] as String? ?? '';
+        final url = data['url'] as String?;
+        callbacks.onManagementOptionSelected?.call(optionIdentifier, url);
         break;
       case 'onCustomActionSelected':
-        callbacks.onCustomActionSelected(call.arguments as Map<String, dynamic>? ?? {});
+        final data = call.arguments as Map<String, dynamic>? ?? {};
+        final actionIdentifier = data['actionId'] as String? ?? '';
+        final purchaseIdentifier = data['purchaseIdentifier'] as String?;
+        callbacks.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier);
         break;
     }
   }

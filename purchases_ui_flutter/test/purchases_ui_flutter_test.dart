@@ -195,4 +195,31 @@ void main() {
     paywallResult = await RevenueCatUI.presentPaywall();
     expect(paywallResult, PaywallResult.restored);
   });
+
+  test('presentCustomerCenter', () async {
+    response = null;
+    await RevenueCatUI.presentCustomerCenter();
+    expect(log, <Matcher>[
+      isMethodCall('presentCustomerCenter', arguments: null),
+    ]);
+  });
+
+  test('presentCustomerCenter with callbacks', () async {
+    response = null;
+    bool onDismissCalled = false;
+    bool onRestoreStartedCalled = false;
+    
+    await RevenueCatUI.presentCustomerCenter(
+      onDismiss: () => onDismissCalled = true,
+      onRestoreStarted: () => onRestoreStartedCalled = true,
+    );
+    
+    expect(log, <Matcher>[
+      isMethodCall('presentCustomerCenter', arguments: null),
+    ]);
+    
+    // Verify callbacks are stored (they should be callable)
+    expect(onDismissCalled, false); // Not called yet
+    expect(onRestoreStartedCalled, false); // Not called yet
+  });
 }

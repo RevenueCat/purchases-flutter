@@ -201,14 +201,14 @@ class _PurchasesFlutterApiTest {
     Future<void> f1 = RevenueCatUI.presentCustomerCenter(
       onDismiss: () {},
       onRestoreStarted: () {},
-      onRestoreCompleted: (Map<String, dynamic> customerInfo) {},
-      onRestoreFailed: (Map<String, dynamic> error) {},
+      onRestoreCompleted: (CustomerInfo customerInfo) {},
+      onRestoreFailed: (PurchasesError error) {},
       onShowingManageSubscriptions: () {},
-      onRefundRequestStarted: (String refundRequestStatus) {},
-      onRefundRequestCompleted: (Map<String, dynamic> refundRequestStatus) {},
-      onFeedbackSurveyCompleted: (String feedbackSurveyOptionId) {},
-      onManagementOptionSelected: (Map<String, dynamic> data) {},
-      onCustomActionSelected: (Map<String, dynamic> data) {},
+      onRefundRequestStarted: (String productIdentifier) {},
+      onRefundRequestCompleted: (String productIdentifier, String status) {},
+      onFeedbackSurveyCompleted: (String optionIdentifier) {},
+      onManagementOptionSelected: (String optionIdentifier, String? url) {},
+      onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
     );
   }
 
@@ -226,14 +226,14 @@ class _PurchasesFlutterApiTest {
         child: CustomerCenterView(
           onDismiss: () {},
           onRestoreStarted: () {},
-          onRestoreCompleted: (Map<String, dynamic> customerInfo) {},
-          onRestoreFailed: (Map<String, dynamic> error) {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreFailed: (PurchasesError error) {},
           onShowingManageSubscriptions: () {},
-          onRefundRequestStarted: (String refundRequestStatus) {},
-          onRefundRequestCompleted: (Map<String, dynamic> refundRequestStatus) {},
-          onFeedbackSurveyCompleted: (String feedbackSurveyOptionId) {},
-          onManagementOptionSelected: (Map<String, dynamic> data) {},
-          onCustomActionSelected: (Map<String, dynamic> data) {},
+          onRefundRequestStarted: (String productIdentifier) {},
+          onRefundRequestCompleted: (String productIdentifier, String status) {},
+          onFeedbackSurveyCompleted: (String optionIdentifier) {},
+          onManagementOptionSelected: (String optionIdentifier, String? url) {},
+          onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
         ),
       ),
     );
@@ -245,43 +245,62 @@ class _PurchasesFlutterApiTest {
     // Test event stream subscription
     stream.listen((CustomerCenterEvent event) {
       // Test event type checking
-      switch (event.runtimeType) {
-        case CustomerCenterOnDismissEvent:
-          CustomerCenterOnDismissEvent dismissEvent = event as CustomerCenterOnDismissEvent;
+      CustomerCenterEventType eventType = event.type;
+      Map<String, dynamic>? eventData = event.data;
+      
+      switch (eventType) {
+        case CustomerCenterEventType.dismiss:
+          // No data for dismiss events
           break;
-        case CustomerCenterOnRestoreStartedEvent:
-          CustomerCenterOnRestoreStartedEvent restoreStartedEvent = event as CustomerCenterOnRestoreStartedEvent;
+        case CustomerCenterEventType.restoreStarted:
+          // No data for restore started events
           break;
-        case CustomerCenterOnRestoreCompletedEvent:
-          CustomerCenterOnRestoreCompletedEvent restoreCompletedEvent = event as CustomerCenterOnRestoreCompletedEvent;
-          Map<String, dynamic> customerInfo = restoreCompletedEvent.customerInfo;
+        case CustomerCenterEventType.restoreCompleted:
+          // Data contains customerInfo
+          if (eventData != null) {
+            Map<String, dynamic> customerInfo = eventData;
+          }
           break;
-        case CustomerCenterOnRestoreFailedEvent:
-          CustomerCenterOnRestoreFailedEvent restoreFailedEvent = event as CustomerCenterOnRestoreFailedEvent;
-          Map<String, dynamic> error = restoreFailedEvent.error;
+        case CustomerCenterEventType.restoreFailed:
+          // Data contains error information
+          if (eventData != null) {
+            Map<String, dynamic> error = eventData;
+          }
           break;
-        case CustomerCenterOnShowingManageSubscriptionsEvent:
-          CustomerCenterOnShowingManageSubscriptionsEvent manageSubsEvent = event as CustomerCenterOnShowingManageSubscriptionsEvent;
+        case CustomerCenterEventType.showingManageSubscriptions:
+          // No data for manage subscriptions events
           break;
-        case CustomerCenterOnRefundRequestStartedEvent:
-          CustomerCenterOnRefundRequestStartedEvent refundStartedEvent = event as CustomerCenterOnRefundRequestStartedEvent;
-          String refundRequestStatus = refundStartedEvent.refundRequestStatus;
+        case CustomerCenterEventType.refundRequestStarted:
+          // Data contains refund request status
+          if (eventData != null) {
+            String refundRequestStatus = eventData['refundRequestStatus'] ?? '';
+          }
           break;
-        case CustomerCenterOnRefundRequestCompletedEvent:
-          CustomerCenterOnRefundRequestCompletedEvent refundCompletedEvent = event as CustomerCenterOnRefundRequestCompletedEvent;
-          Map<String, dynamic> refundRequestStatus = refundCompletedEvent.refundRequestStatus;
+        case CustomerCenterEventType.refundRequestCompleted:
+          // Data contains refund request completion status
+          if (eventData != null) {
+            Map<String, dynamic> refundRequestStatus = eventData;
+          }
           break;
-        case CustomerCenterOnFeedbackSurveyCompletedEvent:
-          CustomerCenterOnFeedbackSurveyCompletedEvent feedbackEvent = event as CustomerCenterOnFeedbackSurveyCompletedEvent;
-          String feedbackSurveyOptionId = feedbackEvent.feedbackSurveyOptionId;
+        case CustomerCenterEventType.feedbackSurveyCompleted:
+          // Data contains feedback survey option ID
+          if (eventData != null) {
+            String feedbackSurveyOptionId = eventData['feedbackSurveyOptionId'] ?? '';
+          }
           break;
-        case CustomerCenterOnManagementOptionSelectedEvent:
-          CustomerCenterOnManagementOptionSelectedEvent managementEvent = event as CustomerCenterOnManagementOptionSelectedEvent;
-          Map<String, dynamic> data = managementEvent.data;
+        case CustomerCenterEventType.managementOptionSelected:
+          // Data contains optionId and url
+          if (eventData != null) {
+            String optionId = eventData['optionId'] ?? '';
+            String? url = eventData['url'];
+          }
           break;
-        case CustomerCenterOnCustomActionSelectedEvent:
-          CustomerCenterOnCustomActionSelectedEvent customActionEvent = event as CustomerCenterOnCustomActionSelectedEvent;
-          Map<String, dynamic> data = customActionEvent.data;
+        case CustomerCenterEventType.customActionSelected:
+          // Data contains actionId and purchaseIdentifier
+          if (eventData != null) {
+            String actionId = eventData['actionId'] ?? '';
+            String? purchaseIdentifier = eventData['purchaseIdentifier'];
+          }
           break;
       }
     });
@@ -289,15 +308,27 @@ class _PurchasesFlutterApiTest {
 
   void _checkCustomerCenterEventTypes() {
     // Test that all event types are available
-    CustomerCenterOnDismissEvent dismissEvent = CustomerCenterOnDismissEvent();
-    CustomerCenterOnRestoreStartedEvent restoreStartedEvent = CustomerCenterOnRestoreStartedEvent();
-    CustomerCenterOnRestoreCompletedEvent restoreCompletedEvent = CustomerCenterOnRestoreCompletedEvent({});
-    CustomerCenterOnRestoreFailedEvent restoreFailedEvent = CustomerCenterOnRestoreFailedEvent({});
-    CustomerCenterOnShowingManageSubscriptionsEvent manageSubsEvent = CustomerCenterOnShowingManageSubscriptionsEvent();
-    CustomerCenterOnRefundRequestStartedEvent refundStartedEvent = CustomerCenterOnRefundRequestStartedEvent("");
-    CustomerCenterOnRefundRequestCompletedEvent refundCompletedEvent = CustomerCenterOnRefundRequestCompletedEvent({});
-    CustomerCenterOnFeedbackSurveyCompletedEvent feedbackEvent = CustomerCenterOnFeedbackSurveyCompletedEvent("");
-    CustomerCenterOnManagementOptionSelectedEvent managementEvent = CustomerCenterOnManagementOptionSelectedEvent({});
-    CustomerCenterOnCustomActionSelectedEvent customActionEvent = CustomerCenterOnCustomActionSelectedEvent({});
+    CustomerCenterEventType dismissType = CustomerCenterEventType.dismiss;
+    CustomerCenterEventType restoreStartedType = CustomerCenterEventType.restoreStarted;
+    CustomerCenterEventType restoreCompletedType = CustomerCenterEventType.restoreCompleted;
+    CustomerCenterEventType restoreFailedType = CustomerCenterEventType.restoreFailed;
+    CustomerCenterEventType showingManageSubscriptionsType = CustomerCenterEventType.showingManageSubscriptions;
+    CustomerCenterEventType refundRequestStartedType = CustomerCenterEventType.refundRequestStarted;
+    CustomerCenterEventType refundRequestCompletedType = CustomerCenterEventType.refundRequestCompleted;
+    CustomerCenterEventType feedbackSurveyCompletedType = CustomerCenterEventType.feedbackSurveyCompleted;
+    CustomerCenterEventType managementOptionSelectedType = CustomerCenterEventType.managementOptionSelected;
+    CustomerCenterEventType customActionSelectedType = CustomerCenterEventType.customActionSelected;
+    
+    // Test event construction
+    CustomerCenterEvent dismissEvent = const CustomerCenterEvent(CustomerCenterEventType.dismiss);
+    CustomerCenterEvent restoreStartedEvent = const CustomerCenterEvent(CustomerCenterEventType.restoreStarted);
+    CustomerCenterEvent restoreCompletedEvent = const CustomerCenterEvent(CustomerCenterEventType.restoreCompleted, {});
+    CustomerCenterEvent restoreFailedEvent = const CustomerCenterEvent(CustomerCenterEventType.restoreFailed, {});
+    CustomerCenterEvent manageSubsEvent = const CustomerCenterEvent(CustomerCenterEventType.showingManageSubscriptions);
+    CustomerCenterEvent refundStartedEvent = const CustomerCenterEvent(CustomerCenterEventType.refundRequestStarted, {'refundRequestStatus': ''});
+    CustomerCenterEvent refundCompletedEvent = const CustomerCenterEvent(CustomerCenterEventType.refundRequestCompleted, {});
+    CustomerCenterEvent feedbackEvent = const CustomerCenterEvent(CustomerCenterEventType.feedbackSurveyCompleted, {'feedbackSurveyOptionId': ''});
+    CustomerCenterEvent managementEvent = const CustomerCenterEvent(CustomerCenterEventType.managementOptionSelected, {'optionId': '', 'url': null});
+    CustomerCenterEvent customActionEvent = const CustomerCenterEvent(CustomerCenterEventType.customActionSelected, {'actionId': '', 'purchaseIdentifier': null});
   }
 }
