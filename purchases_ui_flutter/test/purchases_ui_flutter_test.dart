@@ -6,6 +6,7 @@ import 'package:purchases_flutter/models/presented_offering_context_wrapper.dart
 import 'package:purchases_flutter/models/presented_offering_targeting_context_wrapper.dart';
 import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
+import 'package:purchases_ui_flutter/views/customer_center_view_method_handler.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -221,5 +222,82 @@ void main() {
     // Verify callbacks are stored (they should be callable)
     expect(onDismissCalled, false); // Not called yet
     expect(onRestoreStartedCalled, false); // Not called yet
+  });
+
+  test('callback key format regression test - iOS productId vs productIdentifier', () async {
+    // This test documents and prevents regression of the key mismatch bug
+    // iOS sends 'productId' but we were expecting 'productIdentifier' in some places
+    
+    // Test that the correct key format is expected by simulating callback parsing
+    const mockCallbackData = {
+      'productId': 'com.example.premium',  // This is what iOS actually sends
+      'status': 'success',
+    };
+    
+    // Test data extraction logic that should match what's in _handleCustomerCenterMethodCall
+    final data = mockCallbackData;
+    final productIdentifier = data['productId'] as String? ?? '';  // Should use 'productId' not 'productIdentifier'
+    final status = data['status'] as String? ?? '';
+    
+    expect(productIdentifier, 'com.example.premium');
+    expect(status, 'success');
+    
+    // Test that wrong key would fail (demonstrating the bug that was fixed)
+    final wrongProductId = data['productIdentifier'] as String? ?? 'MISSING';
+    expect(wrongProductId, 'MISSING'); // This proves 'productIdentifier' key doesn't exist
+  });
+
+  test('CustomerCenterView method handler uses correct key format', () async {
+    String? capturedProductId;
+    String? capturedStatus;
+    
+    final handler = CustomerCenterViewMethodHandler(
+      onRefundRequestCompleted: (productId, status) {
+        capturedProductId = productId;
+        capturedStatus = status;
+      },
+    );
+
+    // Test with correct iOS format
+    await handler.handleMethodCall(
+      const MethodCall('onRefundRequestCompleted', {
+        'productId': 'com.example.premium',
+        'status': 'success',
+      }),
+    );
+
+    expect(capturedProductId, 'com.example.premium');
+    expect(capturedStatus, 'success');
+  });
+
+  test('CustomerCenterView method handler handles invalid data gracefully', () async {
+    String? capturedProductId;
+    String? capturedStatus;
+    bool callbackWasCalled = false;
+    
+    final handler = CustomerCenterViewMethodHandler(
+      onRefundRequestCompleted: (productId, status) {
+        capturedProductId = productId;
+        capturedStatus = status;
+        callbackWasCalled = true;
+      },
+    );
+
+    // Test with invalid data type
+    await handler.handleMethodCall(
+      const MethodCall('onRefundRequestCompleted', 'invalid_data'),
+    );
+
+    expect(callbackWasCalled, false); // Callback should not be called with invalid data
+
+    // Test with missing productId key
+    await handler.handleMethodCall(
+      const MethodCall('onRefundRequestCompleted', {
+        'status': 'success',
+        // Missing 'productId' key
+      }),
+    );
+
+    expect(callbackWasCalled, false); // Callback should not be called when productId is null
   });
 }

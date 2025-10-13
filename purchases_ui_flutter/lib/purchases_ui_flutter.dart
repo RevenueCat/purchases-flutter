@@ -182,7 +182,7 @@ class RevenueCatUI {
         break;
       case 'onRefundRequestCompleted':
         final data = call.arguments as Map<String, dynamic>? ?? {};
-        final productIdentifier = data['productIdentifier'] as String? ?? '';
+        final productIdentifier = data['productId'] as String? ?? '';
         final status = data['status'] as String? ?? '';
         callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
         break;

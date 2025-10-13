@@ -27,7 +27,6 @@ internal class CustomerCenterView(
         nativeCustomerCenterView = NativeCustomerCenterView(context) {
             methodChannel.invokeMethod("onDismiss", null)
         }
-        // No Android-specific configuration options currently available
         nativeCustomerCenterView.setCustomerCenterListener(createCustomerCenterListener())
     }
 
