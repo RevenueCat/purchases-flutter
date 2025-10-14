@@ -165,92 +165,103 @@ class RevenueCatUI {
         callbacks?.onRestoreStarted?.call();
         break;
       case 'onRestoreCompleted':
-        final customerInfoData = call.arguments as Map<String, dynamic>?;
-        if (customerInfoData != null) {
-          try {
-            final customerInfo = CustomerInfo.fromJson(customerInfoData);
-            callbacks?.onRestoreCompleted?.call(customerInfo);
-          } catch (e) {
-            debugPrint('RevenueCatUI: Error parsing CustomerInfo in onRestoreCompleted: $e');
-          }
-        } else {
-          debugPrint('RevenueCatUI: Warning - onRestoreCompleted called with null arguments');
+        final arguments = call.arguments;
+        if (arguments is! Map<String, dynamic>) {
+          debugPrint('RevenueCatUI: Error - onRestoreCompleted called with invalid arguments: $arguments');
+          return;
+        }
+        try {
+          final customerInfo = CustomerInfo.fromJson(arguments);
+          callbacks?.onRestoreCompleted?.call(customerInfo);
+        } catch (e) {
+          debugPrint('RevenueCatUI: Error parsing CustomerInfo in onRestoreCompleted: $e');
         }
         break;
       case 'onRestoreFailed':
-        final errorData = call.arguments as Map<String, dynamic>?;
-        if (errorData != null) {
-          try {
-            final error = PurchasesError.fromJson(errorData);
-            callbacks?.onRestoreFailed?.call(error);
-          } catch (e) {
-            debugPrint('RevenueCatUI: Error parsing PurchasesError in onRestoreFailed: $e');
-          }
-        } else {
-          debugPrint('RevenueCatUI: Warning - onRestoreFailed called with null arguments');
+        final arguments = call.arguments;
+        if (arguments is! Map<String, dynamic>) {
+          debugPrint('RevenueCatUI: Error - onRestoreFailed called with invalid arguments: $arguments');
+          return;
+        }
+        try {
+          final error = PurchasesError.fromJson(arguments);
+          callbacks?.onRestoreFailed?.call(error);
+        } catch (e) {
+          debugPrint('RevenueCatUI: Error parsing PurchasesError in onRestoreFailed: $e');
         }
         break;
       case 'onShowingManageSubscriptions':
         callbacks?.onShowingManageSubscriptions?.call();
         break;
       case 'onRefundRequestStarted':
-        final productIdentifier = call.arguments as String?;
-        if (productIdentifier != null && productIdentifier.isNotEmpty) {
-          callbacks?.onRefundRequestStarted?.call(productIdentifier);
-        } else {
-          debugPrint('RevenueCatUI: Warning - onRefundRequestStarted called with invalid productIdentifier: $productIdentifier');
+        final arguments = call.arguments;
+        if (arguments is! String || arguments.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onRefundRequestStarted called with invalid productIdentifier: $arguments');
+          return;
         }
+        callbacks?.onRefundRequestStarted?.call(arguments);
         break;
       case 'onRefundRequestCompleted':
-        final data = call.arguments as Map<String, dynamic>?;
-        if (data != null) {
-          final productIdentifier = data['productId'] as String?;
-          final status = data['status'] as String?;
-          if (productIdentifier != null && productIdentifier.isNotEmpty &&
-              status != null && status.isNotEmpty) {
-            callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
-          } else {
-            debugPrint('RevenueCatUI: Warning - onRefundRequestCompleted called with invalid data - productId: $productIdentifier, status: $status');
-          }
-        } else {
-          debugPrint('RevenueCatUI: Warning - onRefundRequestCompleted called with null arguments');
+        final arguments = call.arguments;
+        if (arguments is! Map<String, dynamic>) {
+          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called with invalid arguments: $arguments');
+          return;
         }
+        final productIdentifier = arguments['productId'];
+        final status = arguments['status'];
+        if (productIdentifier is! String || productIdentifier.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called without a valid productId: $productIdentifier');
+          return;
+        }
+        if (status is! String || status.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called without a valid status: $status');
+          return;
+        }
+        callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
         break;
       case 'onFeedbackSurveyCompleted':
-        final optionIdentifier = call.arguments as String?;
-        if (optionIdentifier != null && optionIdentifier.isNotEmpty) {
-          callbacks?.onFeedbackSurveyCompleted?.call(optionIdentifier);
-        } else {
-          debugPrint('RevenueCatUI: Warning - onFeedbackSurveyCompleted called with invalid optionIdentifier: $optionIdentifier');
+        final arguments = call.arguments;
+        if (arguments is! String || arguments.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onFeedbackSurveyCompleted called with invalid optionIdentifier: $arguments');
+          return;
         }
+        callbacks?.onFeedbackSurveyCompleted?.call(arguments);
         break;
       case 'onManagementOptionSelected':
-        final data = call.arguments as Map<String, dynamic>?;
-        if (data != null) {
-          final optionIdentifier = data['optionId'] as String?;
-          final url = data['url'] as String?; // url can be null
-          if (optionIdentifier != null && optionIdentifier.isNotEmpty) {
-            callbacks?.onManagementOptionSelected?.call(optionIdentifier, url);
-          } else {
-            debugPrint('RevenueCatUI: Warning - onManagementOptionSelected called with invalid optionId: $optionIdentifier');
-          }
-        } else {
-          debugPrint('RevenueCatUI: Warning - onManagementOptionSelected called with null arguments');
+        final arguments = call.arguments;
+        if (arguments is! Map<String, dynamic>) {
+          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called with invalid arguments: $arguments');
+          return;
         }
+        final optionIdentifier = arguments['optionId'];
+        if (optionIdentifier is! String || optionIdentifier.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called without a valid optionId: $optionIdentifier');
+          return;
+        }
+        final url = arguments['url'];
+        if (url != null && url is! String) {
+          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called with invalid url: $url');
+          return;
+        }
+        callbacks?.onManagementOptionSelected?.call(optionIdentifier, url as String?);
         break;
       case 'onCustomActionSelected':
-        final data = call.arguments as Map<String, dynamic>?;
-        if (data != null) {
-          final actionIdentifier = data['actionId'] as String?;
-          final purchaseIdentifier = data['purchaseIdentifier'] as String?; // can be null
-          if (actionIdentifier != null && actionIdentifier.isNotEmpty) {
-            callbacks?.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier);
-          } else {
-            debugPrint('RevenueCatUI: Warning - onCustomActionSelected called with invalid actionId: $actionIdentifier');
-          }
-        } else {
-          debugPrint('RevenueCatUI: Warning - onCustomActionSelected called with null arguments');
+        final arguments = call.arguments;
+        if (arguments is! Map<String, dynamic>) {
+          debugPrint('RevenueCatUI: Error - onCustomActionSelected called with invalid arguments: $arguments');
+          return;
         }
+        final actionIdentifier = arguments['actionId'];
+        if (actionIdentifier is! String || actionIdentifier.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onCustomActionSelected called without a valid actionId: $actionIdentifier');
+          return;
+        }
+        final purchaseIdentifier = arguments['purchaseIdentifier'];
+        if (purchaseIdentifier != null && purchaseIdentifier is! String) {
+          debugPrint('RevenueCatUI: Error - onCustomActionSelected called with invalid purchaseIdentifier: $purchaseIdentifier');
+          return;
+        }
+        callbacks?.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier as String?);
         break;
     }
   }
