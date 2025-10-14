@@ -165,11 +165,12 @@ class RevenueCatUI {
         callbacks?.onRestoreStarted?.call();
         break;
       case 'onRestoreCompleted':
-        final arguments = call.arguments;
-        if (arguments is! Map<String, dynamic>) {
-          debugPrint('RevenueCatUI: Error - onRestoreCompleted called with invalid arguments: $arguments');
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint('RevenueCatUI: Error - onRestoreCompleted called with invalid arguments: $rawArguments');
           return;
         }
+        final arguments = Map<String, dynamic>.from(rawArguments as Map);
         try {
           final customerInfo = CustomerInfo.fromJson(arguments);
           callbacks?.onRestoreCompleted?.call(customerInfo);
@@ -178,11 +179,12 @@ class RevenueCatUI {
         }
         break;
       case 'onRestoreFailed':
-        final arguments = call.arguments;
-        if (arguments is! Map<String, dynamic>) {
-          debugPrint('RevenueCatUI: Error - onRestoreFailed called with invalid arguments: $arguments');
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint('RevenueCatUI: Error - onRestoreFailed called with invalid arguments: $rawArguments');
           return;
         }
+        final arguments = Map<String, dynamic>.from(rawArguments as Map);
         try {
           final error = PurchasesError.fromJson(arguments);
           callbacks?.onRestoreFailed?.call(error);
@@ -202,11 +204,12 @@ class RevenueCatUI {
         callbacks?.onRefundRequestStarted?.call(arguments);
         break;
       case 'onRefundRequestCompleted':
-        final arguments = call.arguments;
-        if (arguments is! Map<String, dynamic>) {
-          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called with invalid arguments: $arguments');
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called with invalid arguments: $rawArguments');
           return;
         }
+        final arguments = Map<String, dynamic>.from(rawArguments as Map);
         final productIdentifier = arguments['productId'];
         final status = arguments['status'];
         if (productIdentifier is! String || productIdentifier.isEmpty) {
@@ -228,11 +231,12 @@ class RevenueCatUI {
         callbacks?.onFeedbackSurveyCompleted?.call(arguments);
         break;
       case 'onManagementOptionSelected':
-        final arguments = call.arguments;
-        if (arguments is! Map<String, dynamic>) {
-          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called with invalid arguments: $arguments');
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called with invalid arguments: $rawArguments');
           return;
         }
+        final arguments = Map<String, dynamic>.from(rawArguments as Map);
         final optionIdentifier = arguments['optionId'];
         if (optionIdentifier is! String || optionIdentifier.isEmpty) {
           debugPrint('RevenueCatUI: Error - onManagementOptionSelected called without a valid optionId: $optionIdentifier');
@@ -246,11 +250,12 @@ class RevenueCatUI {
         callbacks?.onManagementOptionSelected?.call(optionIdentifier, url as String?);
         break;
       case 'onCustomActionSelected':
-        final arguments = call.arguments;
-        if (arguments is! Map<String, dynamic>) {
-          debugPrint('RevenueCatUI: Error - onCustomActionSelected called with invalid arguments: $arguments');
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint('RevenueCatUI: Error - onCustomActionSelected called with invalid arguments: $rawArguments');
           return;
         }
+        final arguments = Map<String, dynamic>.from(rawArguments as Map);
         final actionIdentifier = arguments['actionId'];
         if (actionIdentifier is! String || actionIdentifier.isEmpty) {
           debugPrint('RevenueCatUI: Error - onCustomActionSelected called without a valid actionId: $actionIdentifier');

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
@@ -47,6 +49,19 @@ void main() {
     log.clear();
     response = null;
   });
+
+  Future<void> invokeCustomerCenterMethod(String method, dynamic arguments) async {
+    final codec = const StandardMethodCodec();
+    final data = codec.encodeMethodCall(MethodCall(method, arguments));
+    final completer = Completer<void>();
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
+      'purchases_ui_flutter',
+      data,
+      (_) => completer.complete(),
+    );
+    await completer.future;
+    await Future<void>.delayed(Duration.zero);
+  }
 
   test('presentPaywall', () async {
     response = 'NOT_PRESENTED';
@@ -316,5 +331,186 @@ void main() {
     // - iOS: respects the shouldShowCloseButton parameter
     // - Android: always shows close button regardless of parameter value
     // This is documented in the shouldShowCloseButton property documentation
+  });
+
+  group('RevenueCatUI customer center method handling', () {
+    test('onCustomActionSelected accepts null purchaseIdentifier', () async {
+      String? capturedActionId;
+      String? capturedPurchaseIdentifier = 'initial';
+
+      await RevenueCatUI.presentCustomerCenter(
+        onCustomActionSelected: (actionId, purchaseIdentifier) {
+          capturedActionId = actionId;
+          capturedPurchaseIdentifier = purchaseIdentifier;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onCustomActionSelected', <dynamic, dynamic>{
+        'actionId': 'custom.action',
+        'purchaseIdentifier': null,
+      });
+
+      expect(capturedActionId, 'custom.action');
+      expect(capturedPurchaseIdentifier, isNull);
+    });
+
+    test('onCustomActionSelected requires non-empty actionId', () async {
+      var callbackCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onCustomActionSelected: (_, __) {
+          callbackCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onCustomActionSelected', <dynamic, dynamic>{
+        'purchaseIdentifier': 'purchase.identifier',
+      });
+
+      expect(callbackCalled, false);
+
+      await invokeCustomerCenterMethod('onCustomActionSelected', <dynamic, dynamic>{
+        'actionId': '',
+        'purchaseIdentifier': 'purchase.identifier',
+      });
+
+      expect(callbackCalled, false);
+    });
+
+    test('onManagementOptionSelected accepts null url', () async {
+      String? capturedOptionId;
+      String? capturedUrl = 'initial';
+
+      await RevenueCatUI.presentCustomerCenter(
+        onManagementOptionSelected: (optionId, url) {
+          capturedOptionId = optionId;
+          capturedUrl = url;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onManagementOptionSelected', <dynamic, dynamic>{
+        'optionId': 'manage',
+        'url': null,
+      });
+
+      expect(capturedOptionId, 'manage');
+      expect(capturedUrl, isNull);
+    });
+
+    test('onManagementOptionSelected ignores invalid url type', () async {
+      var callbackCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onManagementOptionSelected: (_, __) {
+          callbackCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onManagementOptionSelected', <dynamic, dynamic>{
+        'optionId': 'manage',
+        'url': 123,
+      });
+
+      expect(callbackCalled, false);
+    });
+
+    test('onRefundRequestCompleted requires productId and status', () async {
+      String? capturedProductId;
+      String? capturedStatus;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onRefundRequestCompleted: (productId, status) {
+          capturedProductId = productId;
+          capturedStatus = status;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onRefundRequestCompleted', <dynamic, dynamic>{
+        'productId': 'com.app.product',
+        'status': 'success',
+      });
+
+      expect(capturedProductId, 'com.app.product');
+      expect(capturedStatus, 'success');
+
+      capturedProductId = null;
+      capturedStatus = null;
+
+      await invokeCustomerCenterMethod('onRefundRequestCompleted', <dynamic, dynamic>{
+        'productId': 'com.app.product',
+      });
+
+      expect(capturedProductId, isNull);
+      expect(capturedStatus, isNull);
+
+      await invokeCustomerCenterMethod('onRefundRequestCompleted', <dynamic, dynamic>{
+        'status': 'success',
+      });
+
+      expect(capturedProductId, isNull);
+      expect(capturedStatus, isNull);
+    });
+
+    test('onRefundRequestCompleted ignores invalid argument types', () async {
+      var callbackCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onRefundRequestCompleted: (_, __) {
+          callbackCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onRefundRequestCompleted', 'invalid');
+
+      expect(callbackCalled, false);
+    });
+
+    test('onRefundRequestStarted requires non-empty product identifier', () async {
+      var callbackCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onRefundRequestStarted: (_) {
+          callbackCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onRefundRequestStarted', '');
+      expect(callbackCalled, false);
+
+      await invokeCustomerCenterMethod('onRefundRequestStarted', 'product');
+      expect(callbackCalled, true);
+    });
+
+    test('onFeedbackSurveyCompleted requires non-empty optionIdentifier', () async {
+      var callbackCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onFeedbackSurveyCompleted: (_) {
+          callbackCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', '');
+      expect(callbackCalled, false);
+
+      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', 'option');
+      expect(callbackCalled, true);
+    });
   });
 }
