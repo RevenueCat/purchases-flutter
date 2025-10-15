@@ -88,6 +88,12 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
 
+        case "setCustomerCenterCallbacks":
+            self.setCustomerCenterCallbacks(result)
+
+        case "clearCustomerCenterCallbacks":
+            self.clearCustomerCenterCallbacks(result)
+
         case "presentPaywall":
             let args = call.arguments as? Dictionary<String, Any> ?? [:]
 
@@ -128,6 +134,37 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         default:
             result(FlutterMethodNotImplemented)
         }
+    }
+
+    private func setCustomerCenterCallbacks(
+        _ result: @escaping FlutterResult
+    ) {
+#if os(iOS)
+        if #available(iOS 15.0, *) {
+            self.ensureCustomerCenterDelegateForwarder()
+            result(nil)
+        } else {
+            result(nil)
+        }
+#else
+        result(nil)
+#endif
+    }
+
+    private func clearCustomerCenterCallbacks(
+        _ result: @escaping FlutterResult
+    ) {
+#if os(iOS)
+        if #available(iOS 15.0, *) {
+            self.customerCenterProxy.delegate = nil
+            self.customerCenterDelegateForwarder = nil
+            result(nil)
+        } else {
+            result(nil)
+        }
+#else
+        result(nil)
+#endif
     }
 
     private func presentPaywall(
@@ -182,8 +219,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 #if os(iOS)
     if #available(iOS 15.0, *) {
         // Set up delegate to forward events to Flutter
-        self.customerCenterDelegateForwarder = CustomerCenterDelegateForwarder(methodChannel: self.methodChannel)
-        self.customerCenterProxy.delegate = self.customerCenterDelegateForwarder
+        self.ensureCustomerCenterDelegateForwarder()
         
         self.customerCenterProxy.present(resultHandler: {
             result(nil)
@@ -217,6 +253,16 @@ private extension PurchasesUiFlutterPlugin {
         case presentedOfferingContext
         case displayCloseButton
     }
+
+#if os(iOS)
+    @available(iOS 15.0, *)
+    func ensureCustomerCenterDelegateForwarder() {
+        if self.customerCenterDelegateForwarder == nil {
+            self.customerCenterDelegateForwarder = CustomerCenterDelegateForwarder(methodChannel: self.methodChannel)
+        }
+        self.customerCenterProxy.delegate = self.customerCenterDelegateForwarder
+    }
+#endif
 
 }
 

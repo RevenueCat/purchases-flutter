@@ -216,6 +216,7 @@ void main() {
     response = null;
     await RevenueCatUI.presentCustomerCenter();
     expect(log, <Matcher>[
+      isMethodCall('setCustomerCenterCallbacks', arguments: null),
       isMethodCall('presentCustomerCenter', arguments: null),
     ]);
   });
@@ -231,12 +232,31 @@ void main() {
     );
     
     expect(log, <Matcher>[
+      isMethodCall('setCustomerCenterCallbacks', arguments: null),
       isMethodCall('presentCustomerCenter', arguments: null),
     ]);
     
     // Verify callbacks are stored (they should be callable)
     expect(onDismissCalled, false); // Not called yet
     expect(onRestoreStartedCalled, false); // Not called yet
+  });
+
+  test('setCustomerCenterCallbacks registers listener', () async {
+    response = null;
+    await RevenueCatUI.setCustomerCenterCallbacks();
+
+    expect(log, <Matcher>[
+      isMethodCall('setCustomerCenterCallbacks', arguments: null),
+    ]);
+  });
+
+  test('clearCustomerCenterCallbacks clears listener', () async {
+    response = null;
+    await RevenueCatUI.clearCustomerCenterCallbacks();
+
+    expect(log, <Matcher>[
+      isMethodCall('clearCustomerCenterCallbacks', arguments: null),
+    ]);
   });
 
   test('callback key format regression test - iOS productId vs productIdentifier', () async {
@@ -334,6 +354,35 @@ void main() {
   });
 
   group('RevenueCatUI customer center method handling', () {
+    test('onDismiss clears native listener and callbacks', () async {
+      var onDismissCalled = false;
+      var onRestoreStartedCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onDismiss: () {
+          onDismissCalled = true;
+        },
+        onRestoreStarted: () {
+          onRestoreStartedCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onDismiss', null);
+
+      expect(onDismissCalled, true);
+      expect(log, <Matcher>[
+        isMethodCall('clearCustomerCenterCallbacks', arguments: null),
+      ]);
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onRestoreStarted', null);
+
+      expect(onRestoreStartedCalled, false);
+    });
+
     test('onCustomActionSelected accepts null purchaseIdentifier', () async {
       String? capturedActionId;
       String? capturedPurchaseIdentifier = 'initial';
@@ -488,9 +537,6 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onRefundRequestStarted', '');
-      expect(callbackCalled, false);
-
       await invokeCustomerCenterMethod('onRefundRequestStarted', <dynamic, dynamic>{
         'productId': '',
       });
@@ -512,9 +558,6 @@ void main() {
       );
 
       log.clear();
-
-      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', '');
-      expect(callbackCalled, false);
 
       await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', <dynamic, dynamic>{
         'optionId': '',

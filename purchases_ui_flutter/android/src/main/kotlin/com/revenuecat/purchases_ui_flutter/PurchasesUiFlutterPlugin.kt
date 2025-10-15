@@ -30,6 +30,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     private val TAG = "PurchasesUIFlutter"
 
     private var activity: Activity? = null
+    private var customerCenterListener: CustomerCenterListenerWrapper? = null
 
     private lateinit var channel : MethodChannel
 
@@ -58,6 +59,14 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
 
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
+            "setCustomerCenterCallbacks" -> {
+                ensureCustomerCenterListener()
+                result.success(null)
+            }
+            "clearCustomerCenterCallbacks" -> {
+                clearCustomerCenterListener()
+                result.success(null)
+            }
             "presentPaywall" -> presentPaywall(
                 result = result,
                 requiredEntitlementIdentifier = null,
@@ -89,6 +98,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        clearCustomerCenterListener()
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
@@ -106,6 +116,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
 
     override fun onDetachedFromActivity() {
         activity = null
+        clearCustomerCenterListener()
     }
 
     private fun presentPaywall(
@@ -157,9 +168,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
 
     private fun presentCustomerCenterFromActivity(activity: Activity) {
         // Set up customer center listener for callbacks before presenting
-        val customerCenterListener = createCustomerCenterListener()
-        Purchases.sharedInstance.customerCenterListener = customerCenterListener
-        
+        ensureCustomerCenterListener()
+
         val intent = ShowCustomerCenter()
             .createIntent(activity, Unit)
         activity.startActivityForResult(intent, REQUEST_CODE_CUSTOMER_CENTER)
@@ -256,6 +266,20 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         }
     }
 
+    private fun ensureCustomerCenterListener() {
+        if (customerCenterListener == null) {
+            customerCenterListener = createCustomerCenterListener()
+        }
+        Purchases.sharedInstance.customerCenterListener = customerCenterListener
+    }
+
+    private fun clearCustomerCenterListener() {
+        customerCenterListener = null
+        runCatching {
+            Purchases.sharedInstance.customerCenterListener = null
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
         if (requestCode == REQUEST_CODE_CUSTOMER_CENTER) {
             if (resultCode == Activity.RESULT_OK) {
@@ -273,7 +297,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             }
             pendingResult = null
             // Clean up the customer center listener after dismissal
-            Purchases.sharedInstance.customerCenterListener = null
+            clearCustomerCenterListener()
             return true
         }
         return false

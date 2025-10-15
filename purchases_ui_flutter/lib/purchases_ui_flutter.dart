@@ -49,6 +49,45 @@ class RevenueCatUI {
   static CustomerCenterCallbacks? _customerCenterCallbacks;
   static bool _methodChannelHandlerSet = false;
   
+  /// Registers callbacks for the customer center presented through the SDK.
+  ///
+  /// This configures native listeners to forward events through the shared
+  /// `purchases_ui_flutter` method channel while storing the provided Dart
+  /// callbacks locally.
+  static Future<void> setCustomerCenterCallbacks({
+    CustomerCenterDismissed? onDismiss,
+    CustomerCenterRestoreStarted? onRestoreStarted,
+    CustomerCenterRestoreCompleted? onRestoreCompleted,
+    CustomerCenterRestoreFailed? onRestoreFailed,
+    CustomerCenterManageSubscriptions? onShowingManageSubscriptions,
+    CustomerCenterRefundRequestStarted? onRefundRequestStarted,
+    CustomerCenterRefundRequestCompleted? onRefundRequestCompleted,
+    CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
+    CustomerCenterManagementOptionSelected? onManagementOptionSelected,
+    CustomerCenterCustomActionSelected? onCustomActionSelected,
+  }) async {
+    _storeCustomerCenterCallbacks(
+      onDismiss: onDismiss,
+      onRestoreStarted: onRestoreStarted,
+      onRestoreCompleted: onRestoreCompleted,
+      onRestoreFailed: onRestoreFailed,
+      onShowingManageSubscriptions: onShowingManageSubscriptions,
+      onRefundRequestStarted: onRefundRequestStarted,
+      onRefundRequestCompleted: onRefundRequestCompleted,
+      onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
+      onManagementOptionSelected: onManagementOptionSelected,
+      onCustomActionSelected: onCustomActionSelected,
+    );
+
+    await _methodChannel.invokeMethod('setCustomerCenterCallbacks');
+  }
+
+  /// Clears any previously registered customer center callbacks and releases the
+  /// native listener used to forward events back to Dart.
+  static Future<void> clearCustomerCenterCallbacks() async {
+    _customerCenterCallbacks = null;
+    await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
+  }
 
   /// Presents the paywall as an activity on android or a modal in iOS.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
@@ -92,6 +131,10 @@ class RevenueCatUI {
     return _parseStringToResult(result);
   }
 
+  /// Presents the customer center modally using the native SDKs.
+  ///
+  /// Call [setCustomerCenterCallbacks] directly if you need to register the
+  /// callbacks separately from presenting.
   static Future<void> presentCustomerCenter({
     CustomerCenterDismissed? onDismiss,
     CustomerCenterRestoreStarted? onRestoreStarted,
@@ -106,9 +149,7 @@ class RevenueCatUI {
   }) async {
     // Ensure method channel handler is set up
     _ensureMethodChannelHandler();
-    
-    // Store callbacks for the delegate to use
-    _customerCenterCallbacks = CustomerCenterCallbacks(
+    await setCustomerCenterCallbacks(
       onDismiss: onDismiss,
       onRestoreStarted: onRestoreStarted,
       onRestoreCompleted: onRestoreCompleted,
@@ -120,7 +161,7 @@ class RevenueCatUI {
       onManagementOptionSelected: onManagementOptionSelected,
       onCustomActionSelected: onCustomActionSelected,
     );
-    
+
     await _methodChannel.invokeMethod('presentCustomerCenter');
   }
 
@@ -128,7 +169,7 @@ class RevenueCatUI {
     if (!_methodChannelHandlerSet) {
       _methodChannel.setMethodCallHandler((call) async {
         try {
-          _handleCustomerCenterMethodCall(call);
+          await _handleCustomerCenterMethodCall(call);
         } catch (e) {
           debugPrint('RevenueCatUI: Error handling method call ${call.method}: $e');
         }
@@ -154,12 +195,41 @@ class RevenueCatUI {
     }
   }
 
-  static void _handleCustomerCenterMethodCall(MethodCall call) {
+  static void _storeCustomerCenterCallbacks({
+    CustomerCenterDismissed? onDismiss,
+    CustomerCenterRestoreStarted? onRestoreStarted,
+    CustomerCenterRestoreCompleted? onRestoreCompleted,
+    CustomerCenterRestoreFailed? onRestoreFailed,
+    CustomerCenterManageSubscriptions? onShowingManageSubscriptions,
+    CustomerCenterRefundRequestStarted? onRefundRequestStarted,
+    CustomerCenterRefundRequestCompleted? onRefundRequestCompleted,
+    CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
+    CustomerCenterManagementOptionSelected? onManagementOptionSelected,
+    CustomerCenterCustomActionSelected? onCustomActionSelected,
+  }) {
+    _ensureMethodChannelHandler();
+    _customerCenterCallbacks = CustomerCenterCallbacks(
+      onDismiss: onDismiss,
+      onRestoreStarted: onRestoreStarted,
+      onRestoreCompleted: onRestoreCompleted,
+      onRestoreFailed: onRestoreFailed,
+      onShowingManageSubscriptions: onShowingManageSubscriptions,
+      onRefundRequestStarted: onRefundRequestStarted,
+      onRefundRequestCompleted: onRefundRequestCompleted,
+      onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
+      onManagementOptionSelected: onManagementOptionSelected,
+      onCustomActionSelected: onCustomActionSelected,
+    );
+  }
+
+  static Future<void> _handleCustomerCenterMethodCall(MethodCall call) async {
     final callbacks = _customerCenterCallbacks;
 
     switch (call.method) {
       case 'onDismiss':
         callbacks?.onDismiss?.call();
+        // Clear the listener registration to avoid retaining the plugin
+        await clearCustomerCenterCallbacks();
         break;
       case 'onRestoreStarted':
         callbacks?.onRestoreStarted?.call();
