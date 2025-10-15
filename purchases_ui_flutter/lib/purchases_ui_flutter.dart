@@ -16,7 +16,7 @@ export 'views/paywall_view.dart';
 
 
 /// Container for CustomerCenter callbacks
-class CustomerCenterCallbacks {
+class CustomerCenterListener {
   final CustomerCenterDismissed? onDismiss;
   final CustomerCenterRestoreStarted? onRestoreStarted;
   final CustomerCenterRestoreCompleted? onRestoreCompleted;
@@ -28,7 +28,7 @@ class CustomerCenterCallbacks {
   final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
   final CustomerCenterCustomActionSelected? onCustomActionSelected;
 
-  const CustomerCenterCallbacks({
+  const CustomerCenterListener({
     this.onDismiss,
     this.onRestoreStarted,
     this.onRestoreCompleted,
@@ -46,49 +46,9 @@ class CustomerCenterCallbacks {
 class RevenueCatUI {
   static const _methodChannel = MethodChannel('purchases_ui_flutter');
   
-  static CustomerCenterCallbacks? _customerCenterCallbacks;
+  static CustomerCenterListener? _customerCenterListener;
   static bool _methodChannelHandlerSet = false;
   
-  /// Registers callbacks for the customer center presented through the SDK.
-  ///
-  /// This configures native listeners to forward events through the shared
-  /// `purchases_ui_flutter` method channel while storing the provided Dart
-  /// callbacks locally.
-  static Future<void> setCustomerCenterCallbacks({
-    CustomerCenterDismissed? onDismiss,
-    CustomerCenterRestoreStarted? onRestoreStarted,
-    CustomerCenterRestoreCompleted? onRestoreCompleted,
-    CustomerCenterRestoreFailed? onRestoreFailed,
-    CustomerCenterManageSubscriptions? onShowingManageSubscriptions,
-    CustomerCenterRefundRequestStarted? onRefundRequestStarted,
-    CustomerCenterRefundRequestCompleted? onRefundRequestCompleted,
-    CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
-    CustomerCenterManagementOptionSelected? onManagementOptionSelected,
-    CustomerCenterCustomActionSelected? onCustomActionSelected,
-  }) async {
-    _storeCustomerCenterCallbacks(
-      onDismiss: onDismiss,
-      onRestoreStarted: onRestoreStarted,
-      onRestoreCompleted: onRestoreCompleted,
-      onRestoreFailed: onRestoreFailed,
-      onShowingManageSubscriptions: onShowingManageSubscriptions,
-      onRefundRequestStarted: onRefundRequestStarted,
-      onRefundRequestCompleted: onRefundRequestCompleted,
-      onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
-      onManagementOptionSelected: onManagementOptionSelected,
-      onCustomActionSelected: onCustomActionSelected,
-    );
-
-    await _methodChannel.invokeMethod('setCustomerCenterCallbacks');
-  }
-
-  /// Clears any previously registered customer center callbacks and releases the
-  /// native listener used to forward events back to Dart.
-  static Future<void> clearCustomerCenterCallbacks() async {
-    _customerCenterCallbacks = null;
-    await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
-  }
-
   /// Presents the paywall as an activity on android or a modal in iOS.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
   /// @param [offering] If set, will present the paywall associated to the given Offering.
@@ -133,9 +93,11 @@ class RevenueCatUI {
 
   /// Presents the customer center modally using the native SDKs.
   ///
-  /// Call [setCustomerCenterCallbacks] directly if you need to register the
-  /// callbacks separately from presenting.
+  /// Provide a [CustomerCenterListener] to receive customer center lifecycle
+  /// callbacks, or pass individual callback parameters for backwards
+  /// compatibility. All handlers are optional.
   static Future<void> presentCustomerCenter({
+    CustomerCenterListener? listener,
     CustomerCenterDismissed? onDismiss,
     CustomerCenterRestoreStarted? onRestoreStarted,
     CustomerCenterRestoreCompleted? onRestoreCompleted,
@@ -147,21 +109,25 @@ class RevenueCatUI {
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
-    // Ensure method channel handler is set up
     _ensureMethodChannelHandler();
-    await setCustomerCenterCallbacks(
-      onDismiss: onDismiss,
-      onRestoreStarted: onRestoreStarted,
-      onRestoreCompleted: onRestoreCompleted,
-      onRestoreFailed: onRestoreFailed,
-      onShowingManageSubscriptions: onShowingManageSubscriptions,
-      onRefundRequestStarted: onRefundRequestStarted,
-      onRefundRequestCompleted: onRefundRequestCompleted,
-      onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
-      onManagementOptionSelected: onManagementOptionSelected,
-      onCustomActionSelected: onCustomActionSelected,
-    );
-
+    final effectiveListener = listener ??
+        _listenerFromLegacyCallbacks(
+          onDismiss: onDismiss,
+          onRestoreStarted: onRestoreStarted,
+          onRestoreCompleted: onRestoreCompleted,
+          onRestoreFailed: onRestoreFailed,
+          onShowingManageSubscriptions: onShowingManageSubscriptions,
+          onRefundRequestStarted: onRefundRequestStarted,
+          onRefundRequestCompleted: onRefundRequestCompleted,
+          onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
+          onManagementOptionSelected: onManagementOptionSelected,
+          onCustomActionSelected: onCustomActionSelected,
+        );
+    if (effectiveListener != null) {
+      await _registerCustomerCenterListener(effectiveListener);
+    } else if (_customerCenterListener != null) {
+      await _clearCustomerCenterCallbacks();
+    }
     await _methodChannel.invokeMethod('presentCustomerCenter');
   }
 
@@ -195,7 +161,22 @@ class RevenueCatUI {
     }
   }
 
-  static void _storeCustomerCenterCallbacks({
+  static Future<void> _registerCustomerCenterListener(CustomerCenterListener? listener) async {
+    _storeCustomerCenterListener(listener);
+    await _methodChannel.invokeMethod('setCustomerCenterCallbacks');
+  }
+
+  static Future<void> _clearCustomerCenterCallbacks() async {
+    _customerCenterListener = null;
+    await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
+  }
+
+  static void _storeCustomerCenterListener(CustomerCenterListener? listener) {
+    _ensureMethodChannelHandler();
+    _customerCenterListener = listener ?? const CustomerCenterListener();
+  }
+
+  static CustomerCenterListener? _listenerFromLegacyCallbacks({
     CustomerCenterDismissed? onDismiss,
     CustomerCenterRestoreStarted? onRestoreStarted,
     CustomerCenterRestoreCompleted? onRestoreCompleted,
@@ -207,8 +188,22 @@ class RevenueCatUI {
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) {
-    _ensureMethodChannelHandler();
-    _customerCenterCallbacks = CustomerCenterCallbacks(
+    final hasAnyCallback = onDismiss != null ||
+        onRestoreStarted != null ||
+        onRestoreCompleted != null ||
+        onRestoreFailed != null ||
+        onShowingManageSubscriptions != null ||
+        onRefundRequestStarted != null ||
+        onRefundRequestCompleted != null ||
+        onFeedbackSurveyCompleted != null ||
+        onManagementOptionSelected != null ||
+        onCustomActionSelected != null;
+
+    if (!hasAnyCallback) {
+      return null;
+    }
+
+    return CustomerCenterListener(
       onDismiss: onDismiss,
       onRestoreStarted: onRestoreStarted,
       onRestoreCompleted: onRestoreCompleted,
@@ -223,16 +218,16 @@ class RevenueCatUI {
   }
 
   static Future<void> _handleCustomerCenterMethodCall(MethodCall call) async {
-    final callbacks = _customerCenterCallbacks;
+    final listener = _customerCenterListener;
 
     switch (call.method) {
       case 'onDismiss':
-        callbacks?.onDismiss?.call();
+        listener?.onDismiss?.call();
         // Clear the listener registration to avoid retaining the plugin
-        await clearCustomerCenterCallbacks();
+        await _clearCustomerCenterCallbacks();
         break;
       case 'onRestoreStarted':
-        callbacks?.onRestoreStarted?.call();
+        listener?.onRestoreStarted?.call();
         break;
       case 'onRestoreCompleted':
         final rawArguments = call.arguments;
@@ -243,7 +238,7 @@ class RevenueCatUI {
         final arguments = Map<String, dynamic>.from(rawArguments);
         try {
           final customerInfo = CustomerInfo.fromJson(arguments);
-          callbacks?.onRestoreCompleted?.call(customerInfo);
+          listener?.onRestoreCompleted?.call(customerInfo);
         } catch (e) {
           debugPrint('RevenueCatUI: Error parsing CustomerInfo in onRestoreCompleted: $e');
         }
@@ -257,13 +252,13 @@ class RevenueCatUI {
         final arguments = Map<String, dynamic>.from(rawArguments);
         try {
           final error = PurchasesError.fromJson(arguments);
-          callbacks?.onRestoreFailed?.call(error);
+          listener?.onRestoreFailed?.call(error);
         } catch (e) {
           debugPrint('RevenueCatUI: Error parsing PurchasesError in onRestoreFailed: $e');
         }
         break;
       case 'onShowingManageSubscriptions':
-        callbacks?.onShowingManageSubscriptions?.call();
+        listener?.onShowingManageSubscriptions?.call();
         break;
       case 'onRefundRequestStarted':
         final rawArguments = call.arguments;
@@ -277,7 +272,7 @@ class RevenueCatUI {
           debugPrint('RevenueCatUI: Error - onRefundRequestStarted called without a valid productId: $productIdentifier');
           return;
         }
-        callbacks?.onRefundRequestStarted?.call(productIdentifier);
+        listener?.onRefundRequestStarted?.call(productIdentifier);
         break;
       case 'onRefundRequestCompleted':
         final rawArguments = call.arguments;
@@ -296,7 +291,7 @@ class RevenueCatUI {
           debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called without a valid status: $status');
           return;
         }
-        callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
+        listener?.onRefundRequestCompleted?.call(productIdentifier, status);
         break;
       case 'onFeedbackSurveyCompleted':
         final rawArguments = call.arguments;
@@ -310,7 +305,7 @@ class RevenueCatUI {
           debugPrint('RevenueCatUI: Error - onFeedbackSurveyCompleted called without a valid optionId: $optionIdentifier');
           return;
         }
-        callbacks?.onFeedbackSurveyCompleted?.call(optionIdentifier);
+        listener?.onFeedbackSurveyCompleted?.call(optionIdentifier);
         break;
       case 'onManagementOptionSelected':
         final rawArguments = call.arguments;
@@ -329,7 +324,7 @@ class RevenueCatUI {
           debugPrint('RevenueCatUI: Error - onManagementOptionSelected called with invalid url: $url');
           return;
         }
-        callbacks?.onManagementOptionSelected?.call(optionIdentifier, url as String?);
+        listener?.onManagementOptionSelected?.call(optionIdentifier, url as String?);
         break;
       case 'onCustomActionSelected':
         final rawArguments = call.arguments;
@@ -348,7 +343,7 @@ class RevenueCatUI {
           debugPrint('RevenueCatUI: Error - onCustomActionSelected called with invalid purchaseIdentifier: $purchaseIdentifier');
           return;
         }
-        callbacks?.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier as String?);
+        listener?.onCustomActionSelected?.call(actionIdentifier, purchaseIdentifier as String?);
         break;
     }
   }
