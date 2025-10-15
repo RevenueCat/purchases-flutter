@@ -61,7 +61,12 @@ internal class CustomerCenterView(
             }
 
             override fun onFeedbackSurveyCompletedWrapper(feedbackSurveyOptionId: String) {
-                methodChannel.invokeMethod("onFeedbackSurveyCompleted", feedbackSurveyOptionId)
+                methodChannel.invokeMethod(
+                    "onFeedbackSurveyCompleted",
+                    mapOf(
+                        "optionId" to feedbackSurveyOptionId
+                    )
+                )
             }
 
             override fun onManagementOptionSelectedWrapper(action: String, url: String?) {

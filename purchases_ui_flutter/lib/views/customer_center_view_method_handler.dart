@@ -135,8 +135,12 @@ class CustomerCenterViewMethodHandler {
     if (onRefundRequestStarted == null) {
       return;
     }
-    if (arguments is String) {
-      onRefundRequestStarted?.call(arguments);
+    if (arguments is Map) {
+      final data = Map<String, dynamic>.from(arguments);
+      final productIdentifier = data['productId'] as String?;
+      if (productIdentifier != null) {
+        onRefundRequestStarted?.call(productIdentifier);
+      }
     }
   }
 
@@ -158,8 +162,12 @@ class CustomerCenterViewMethodHandler {
     if (onFeedbackSurveyCompleted == null) {
       return;
     }
-    if (arguments is String) {
-      onFeedbackSurveyCompleted?.call(arguments);
+    if (arguments is Map) {
+      final data = Map<String, dynamic>.from(arguments);
+      final optionIdentifier = data['optionId'] as String?;
+      if (optionIdentifier != null) {
+        onFeedbackSurveyCompleted?.call(optionIdentifier);
+      }
     }
   }
 

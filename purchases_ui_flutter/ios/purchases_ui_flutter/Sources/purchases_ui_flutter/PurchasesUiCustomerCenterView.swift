@@ -122,7 +122,12 @@ extension PurchasesUiCustomerCenterView: CustomerCenterViewControllerDelegateWra
         _ controller: CustomerCenterUIViewController,
         didStartRefundRequestForProductWithID productID: String
     ) {
-        methodChannel.invokeMethod("onRefundRequestStarted", arguments: productID)
+        methodChannel.invokeMethod(
+            "onRefundRequestStarted",
+            arguments: [
+                "productId": productID
+            ]
+        )
     }
 
     func customerCenterViewController(
@@ -157,7 +162,12 @@ extension PurchasesUiCustomerCenterView: CustomerCenterViewControllerDelegateWra
         _ controller: CustomerCenterUIViewController,
         didCompleteFeedbackSurveyWithOptionID optionID: String
     ) {
-        methodChannel.invokeMethod("onFeedbackSurveyCompleted", arguments: optionID)
+        methodChannel.invokeMethod(
+            "onFeedbackSurveyCompleted",
+            arguments: [
+                "optionId": optionID
+            ]
+        )
     }
 
     func customerCenterViewController(

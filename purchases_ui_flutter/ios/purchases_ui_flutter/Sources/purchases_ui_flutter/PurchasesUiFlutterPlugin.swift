@@ -253,7 +253,10 @@ class CustomerCenterDelegateForwarder: NSObject, CustomerCenterViewControllerDel
     }
     
     func customerCenterViewController(_ controller: CustomerCenterUIViewController, didStartRefundRequestForProductWithID productID: String) {
-        methodChannel?.invokeMethod("onRefundRequestStarted", arguments: productID)
+        let args = [
+            "productId": productID
+        ]
+        methodChannel?.invokeMethod("onRefundRequestStarted", arguments: args)
     }
     
     func customerCenterViewController(_ controller: CustomerCenterUIViewController, didCompleteRefundRequestForProductWithID productId: String, withStatus status: String) {
@@ -273,7 +276,10 @@ class CustomerCenterDelegateForwarder: NSObject, CustomerCenterViewControllerDel
     }
     
     func customerCenterViewController(_ controller: CustomerCenterUIViewController, didCompleteFeedbackSurveyWithOptionID optionID: String) {
-        methodChannel?.invokeMethod("onFeedbackSurveyCompleted", arguments: optionID)
+        let args = [
+            "optionId": optionID
+        ]
+        methodChannel?.invokeMethod("onFeedbackSurveyCompleted", arguments: args)
     }
     
     func customerCenterViewController(_ controller: CustomerCenterUIViewController, didSelectCustomAction actionID: String, withPurchaseIdentifier purchaseIdentifier: String?) {

@@ -214,7 +214,12 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             }
 
             override fun onFeedbackSurveyCompletedWrapper(feedbackSurveyOptionId: String) {
-                channel.invokeMethod("onFeedbackSurveyCompleted", feedbackSurveyOptionId)
+                channel.invokeMethod(
+                    "onFeedbackSurveyCompleted",
+                    mapOf(
+                        "optionId" to feedbackSurveyOptionId
+                    )
+                )
             }
 
             override fun onManagementOptionSelectedWrapper(action: String, url: String?) {

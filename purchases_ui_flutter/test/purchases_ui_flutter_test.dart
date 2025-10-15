@@ -491,7 +491,14 @@ void main() {
       await invokeCustomerCenterMethod('onRefundRequestStarted', '');
       expect(callbackCalled, false);
 
-      await invokeCustomerCenterMethod('onRefundRequestStarted', 'product');
+      await invokeCustomerCenterMethod('onRefundRequestStarted', <dynamic, dynamic>{
+        'productId': '',
+      });
+      expect(callbackCalled, false);
+
+      await invokeCustomerCenterMethod('onRefundRequestStarted', <dynamic, dynamic>{
+        'productId': 'product',
+      });
       expect(callbackCalled, true);
     });
 
@@ -509,7 +516,14 @@ void main() {
       await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', '');
       expect(callbackCalled, false);
 
-      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', 'option');
+      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', <dynamic, dynamic>{
+        'optionId': '',
+      });
+      expect(callbackCalled, false);
+
+      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', <dynamic, dynamic>{
+        'optionId': 'option',
+      });
       expect(callbackCalled, true);
     });
   });

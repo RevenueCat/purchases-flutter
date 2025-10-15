@@ -196,12 +196,18 @@ class RevenueCatUI {
         callbacks?.onShowingManageSubscriptions?.call();
         break;
       case 'onRefundRequestStarted':
-        final arguments = call.arguments;
-        if (arguments is! String || arguments.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onRefundRequestStarted called with invalid productIdentifier: $arguments');
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint('RevenueCatUI: Error - onRefundRequestStarted called with invalid arguments: $rawArguments');
           return;
         }
-        callbacks?.onRefundRequestStarted?.call(arguments);
+        final arguments = Map<String, dynamic>.from(rawArguments);
+        final productIdentifier = arguments['productId'];
+        if (productIdentifier is! String || productIdentifier.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onRefundRequestStarted called without a valid productId: $productIdentifier');
+          return;
+        }
+        callbacks?.onRefundRequestStarted?.call(productIdentifier);
         break;
       case 'onRefundRequestCompleted':
         final rawArguments = call.arguments;
@@ -223,12 +229,18 @@ class RevenueCatUI {
         callbacks?.onRefundRequestCompleted?.call(productIdentifier, status);
         break;
       case 'onFeedbackSurveyCompleted':
-        final arguments = call.arguments;
-        if (arguments is! String || arguments.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onFeedbackSurveyCompleted called with invalid optionIdentifier: $arguments');
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint('RevenueCatUI: Error - onFeedbackSurveyCompleted called with invalid arguments: $rawArguments');
           return;
         }
-        callbacks?.onFeedbackSurveyCompleted?.call(arguments);
+        final arguments = Map<String, dynamic>.from(rawArguments);
+        final optionIdentifier = arguments['optionId'];
+        if (optionIdentifier is! String || optionIdentifier.isEmpty) {
+          debugPrint('RevenueCatUI: Error - onFeedbackSurveyCompleted called without a valid optionId: $optionIdentifier');
+          return;
+        }
+        callbacks?.onFeedbackSurveyCompleted?.call(optionIdentifier);
         break;
       case 'onManagementOptionSelected':
         final rawArguments = call.arguments;
