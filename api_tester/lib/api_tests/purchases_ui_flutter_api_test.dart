@@ -214,14 +214,6 @@ class _PurchasesFlutterApiTest {
     );
   }
 
-  void _checkPresentCustomerCenterWithLegacyCallbacks() async {
-    Future<void> f1 = RevenueCatUI.presentCustomerCenter(
-      onDismiss: () {},
-      onRestoreCompleted: (CustomerInfo _) {},
-      onFeedbackSurveyCompleted: (_) {},
-    );
-  }
-
   Widget _checkCustomerCenterView() {
     return const Scaffold(
       body: Center(
