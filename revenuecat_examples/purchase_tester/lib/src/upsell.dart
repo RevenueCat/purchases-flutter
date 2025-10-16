@@ -186,16 +186,23 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       await RevenueCatUI.presentCustomerCenter(
-                        onDismiss: () => debugPrint('[CustomerCenter Modal] Dismissed'),
                         onRestoreStarted: () => debugPrint('[CustomerCenter Modal] Restore started'),
-                        onRestoreCompleted: (customerInfo) => debugPrint('[CustomerCenter Modal] Restore completed: ${customerInfo.originalAppUserId}'),
-                        onRestoreFailed: (error) => debugPrint('[CustomerCenter Modal] Restore failed: ${error.message}'),
-                        onShowingManageSubscriptions: () => debugPrint('[CustomerCenter Modal] Showing manage subscriptions'),
-                        onRefundRequestStarted: (productId) => debugPrint('[CustomerCenter Modal] Refund request started for product: $productId'),
-                        onRefundRequestCompleted: (productId, status) => debugPrint('[CustomerCenter Modal] Refund request completed for product $productId with status $status'),
-                        onFeedbackSurveyCompleted: (optionId) => debugPrint('[CustomerCenter Modal] Feedback survey completed with option: $optionId'),
-                        onManagementOptionSelected: (optionId, url) => debugPrint('[CustomerCenter Modal] Management option selected: $optionId (url: ${url ?? 'none'})'),
-                        onCustomActionSelected: (actionId, purchaseIdentifier) => debugPrint('[CustomerCenter Modal] Custom action selected: $actionId (purchase: ${purchaseIdentifier ?? 'none'})'),
+                        onRestoreCompleted: (customerInfo) =>
+                            debugPrint('[CustomerCenter Modal] Restore completed: ${customerInfo.originalAppUserId}'),
+                        onRestoreFailed: (error) =>
+                            debugPrint('[CustomerCenter Modal] Restore failed: ${error.message}'),
+                        onShowingManageSubscriptions: () =>
+                            debugPrint('[CustomerCenter Modal] Showing manage subscriptions'),
+                        onRefundRequestStarted: (productId) =>
+                            debugPrint('[CustomerCenter Modal] Refund request started for product: $productId'),
+                        onRefundRequestCompleted: (productId, status) =>
+                            debugPrint('[CustomerCenter Modal] Refund request completed for product $productId with status $status'),
+                        onFeedbackSurveyCompleted: (optionId) =>
+                            debugPrint('[CustomerCenter Modal] Feedback survey completed with option: $optionId'),
+                        onManagementOptionSelected: (optionId, url) =>
+                            debugPrint('[CustomerCenter Modal] Management option selected: $optionId (url: ${url ?? 'none'})'),
+                        onCustomActionSelected: (actionId, purchaseIdentifier) =>
+                            debugPrint('[CustomerCenter Modal] Custom action selected: $actionId (purchase: ${purchaseIdentifier ?? 'none'})'),
                       );
                     },
                     child: const Text("Present Customer Center"),
