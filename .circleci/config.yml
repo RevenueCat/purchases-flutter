@@ -315,7 +315,7 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.2
+      xcode: 15.4
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
@@ -339,7 +339,7 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.2
+      xcode: 15.4
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
@@ -361,7 +361,7 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.2
+      xcode: 15.4
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
@@ -384,7 +384,7 @@ jobs:
     description: "Run integration tests for Flutter"
     resource_class: macos.m1.medium.gen1
     macos:
-      xcode: 15.2
+      xcode: 15.4
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
