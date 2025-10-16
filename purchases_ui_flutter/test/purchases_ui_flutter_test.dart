@@ -216,6 +216,7 @@ void main() {
     response = null;
     await RevenueCatUI.presentCustomerCenter();
     expect(log, <Matcher>[
+      isMethodCall('clearCustomerCenterCallbacks', arguments: null),
       isMethodCall('presentCustomerCenter', arguments: null),
     ]);
   });
@@ -231,6 +232,7 @@ void main() {
     );
 
     expect(log, <Matcher>[
+      isMethodCall('clearCustomerCenterCallbacks', arguments: null),
       isMethodCall('setCustomerCenterCallbacks', arguments: null),
       isMethodCall('presentCustomerCenter', arguments: null),
     ]);
@@ -251,6 +253,7 @@ void main() {
     );
 
     expect(log, <Matcher>[
+      isMethodCall('clearCustomerCenterCallbacks', arguments: null),
       isMethodCall('setCustomerCenterCallbacks', arguments: null),
       isMethodCall('presentCustomerCenter', arguments: null),
     ]);
@@ -379,7 +382,9 @@ void main() {
 
       await invokeCustomerCenterMethod('onDismiss', null);
 
-      expect(log, isEmpty);
+      expect(log, <Matcher>[
+        isMethodCall('clearCustomerCenterCallbacks', arguments: null),
+      ]);
 
       await invokeCustomerCenterMethod('onRestoreStarted', null);
 

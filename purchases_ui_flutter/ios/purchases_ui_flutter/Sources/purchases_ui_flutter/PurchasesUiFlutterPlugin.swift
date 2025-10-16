@@ -141,7 +141,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     ) {
 #if os(iOS)
         if #available(iOS 15.0, *) {
-            self.ensureCustomerCenterDelegateForwarder()
+            self.setCustomerCenterDelegateForwarderIfNeeded()
             result(nil)
         } else {
             result(nil)
@@ -219,7 +219,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 #if os(iOS)
     if #available(iOS 15.0, *) {
         // Set up delegate to forward events to Flutter
-        self.ensureCustomerCenterDelegateForwarder()
+        self.setCustomerCenterDelegateForwarderIfNeeded()
         
         self.customerCenterProxy.present(resultHandler: {
             result(nil)
@@ -256,7 +256,7 @@ private extension PurchasesUiFlutterPlugin {
 
 #if os(iOS)
     @available(iOS 15.0, *)
-    func ensureCustomerCenterDelegateForwarder() {
+    func setCustomerCenterDelegateForwarderIfNeeded() {
         if self.customerCenterDelegateForwarder == nil {
             self.customerCenterDelegateForwarder = CustomerCenterDelegateForwarder(methodChannel: self.methodChannel)
         }
@@ -270,7 +270,7 @@ private extension PurchasesUiFlutterPlugin {
 
 #if os(iOS)
 @available(iOS 15.0, *)
-class CustomerCenterDelegateForwarder: NSObject, CustomerCenterViewControllerDelegateWrapper {
+final class CustomerCenterDelegateForwarder: NSObject, CustomerCenterViewControllerDelegateWrapper {
     
     private weak var methodChannel: FlutterMethodChannel?
     

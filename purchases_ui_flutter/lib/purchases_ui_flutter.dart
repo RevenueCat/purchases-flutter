@@ -95,6 +95,8 @@ class RevenueCatUI {
         onManagementOptionSelected != null ||
         onCustomActionSelected != null;
 
+    await _clearCustomerCenterCallbacks();
+
     if (hasCallbacks) {
       await _registerCustomerCenterCallbacks(
         onRestoreStarted: onRestoreStarted,
@@ -107,9 +109,6 @@ class RevenueCatUI {
         onManagementOptionSelected: onManagementOptionSelected,
         onCustomActionSelected: onCustomActionSelected,
       );
-    } else if (_hasRegisteredCustomerCenterCallbacks) {
-      await _clearCustomerCenterCallbacks();
-    }
     await _methodChannel.invokeMethod('presentCustomerCenter');
   }
 
@@ -169,7 +168,6 @@ class RevenueCatUI {
   }
 
   static Future<void> _clearCustomerCenterCallbacks() async {
-    final hadRegisteredCallbacks = _hasRegisteredCustomerCenterCallbacks;
     _customerCenterOnRestoreStarted = null;
     _customerCenterOnRestoreCompleted = null;
     _customerCenterOnRestoreFailed = null;
@@ -179,9 +177,7 @@ class RevenueCatUI {
     _customerCenterOnFeedbackSurveyCompleted = null;
     _customerCenterOnManagementOptionSelected = null;
     _customerCenterOnCustomActionSelected = null;
-    if (hadRegisteredCallbacks) {
-      await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
-    }
+    await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
   }
 
   static void _storeCustomerCenterCallbacks({
@@ -206,17 +202,6 @@ class RevenueCatUI {
     _customerCenterOnManagementOptionSelected = onManagementOptionSelected;
     _customerCenterOnCustomActionSelected = onCustomActionSelected;
   }
-
-  static bool get _hasRegisteredCustomerCenterCallbacks =>
-      _customerCenterOnRestoreStarted != null ||
-      _customerCenterOnRestoreCompleted != null ||
-      _customerCenterOnRestoreFailed != null ||
-      _customerCenterOnShowingManageSubscriptions != null ||
-      _customerCenterOnRefundRequestStarted != null ||
-      _customerCenterOnRefundRequestCompleted != null ||
-      _customerCenterOnFeedbackSurveyCompleted != null ||
-      _customerCenterOnManagementOptionSelected != null ||
-      _customerCenterOnCustomActionSelected != null;
 
   static Future<void> _handleCustomerCenterMethodCall(MethodCall call) async {
     switch (call.method) {
