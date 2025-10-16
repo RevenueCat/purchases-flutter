@@ -84,7 +84,7 @@ class RevenueCatUI {
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
-    _ensureMethodChannelHandler();
+    _setMethodChannelHandlerIfNeeded();
     final hasCallbacks = onRestoreStarted != null ||
         onRestoreCompleted != null ||
         onRestoreFailed != null ||
@@ -112,7 +112,7 @@ class RevenueCatUI {
     await _methodChannel.invokeMethod('presentCustomerCenter');
   }
 
-  static void _ensureMethodChannelHandler() {
+  static void _setMethodChannelHandlerIfNeeded() {
     if (!_methodChannelHandlerSet) {
       _methodChannel.setMethodCallHandler((call) async {
         try {
@@ -168,6 +168,7 @@ class RevenueCatUI {
   }
 
   static Future<void> _clearCustomerCenterCallbacks() async {
+    _setMethodChannelHandlerIfNeeded();
     _customerCenterOnRestoreStarted = null;
     _customerCenterOnRestoreCompleted = null;
     _customerCenterOnRestoreFailed = null;
@@ -191,7 +192,7 @@ class RevenueCatUI {
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) {
-    _ensureMethodChannelHandler();
+    _setMethodChannelHandlerIfNeeded();
     _customerCenterOnRestoreStarted = onRestoreStarted;
     _customerCenterOnRestoreCompleted = onRestoreCompleted;
     _customerCenterOnRestoreFailed = onRestoreFailed;
