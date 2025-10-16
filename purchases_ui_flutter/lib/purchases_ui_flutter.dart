@@ -154,17 +154,16 @@ class RevenueCatUI {
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
-    _storeCustomerCenterCallbacks(
-      onRestoreStarted: onRestoreStarted,
-      onRestoreCompleted: onRestoreCompleted,
-      onRestoreFailed: onRestoreFailed,
-      onShowingManageSubscriptions: onShowingManageSubscriptions,
-      onRefundRequestStarted: onRefundRequestStarted,
-      onRefundRequestCompleted: onRefundRequestCompleted,
-      onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
-      onManagementOptionSelected: onManagementOptionSelected,
-      onCustomActionSelected: onCustomActionSelected,
-    );
+    _setMethodChannelHandlerIfNeeded();
+    _customerCenterOnRestoreStarted = onRestoreStarted;
+    _customerCenterOnRestoreCompleted = onRestoreCompleted;
+    _customerCenterOnRestoreFailed = onRestoreFailed;
+    _customerCenterOnShowingManageSubscriptions = onShowingManageSubscriptions;
+    _customerCenterOnRefundRequestStarted = onRefundRequestStarted;
+    _customerCenterOnRefundRequestCompleted = onRefundRequestCompleted;
+    _customerCenterOnFeedbackSurveyCompleted = onFeedbackSurveyCompleted;
+    _customerCenterOnManagementOptionSelected = onManagementOptionSelected;
+    _customerCenterOnCustomActionSelected = onCustomActionSelected;
     await _methodChannel.invokeMethod('setCustomerCenterCallbacks');
   }
 
@@ -180,29 +179,6 @@ class RevenueCatUI {
     _customerCenterOnManagementOptionSelected = null;
     _customerCenterOnCustomActionSelected = null;
     await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
-  }
-
-  static void _storeCustomerCenterCallbacks({
-    CustomerCenterRestoreStarted? onRestoreStarted,
-    CustomerCenterRestoreCompleted? onRestoreCompleted,
-    CustomerCenterRestoreFailed? onRestoreFailed,
-    CustomerCenterManageSubscriptions? onShowingManageSubscriptions,
-    CustomerCenterRefundRequestStarted? onRefundRequestStarted,
-    CustomerCenterRefundRequestCompleted? onRefundRequestCompleted,
-    CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
-    CustomerCenterManagementOptionSelected? onManagementOptionSelected,
-    CustomerCenterCustomActionSelected? onCustomActionSelected,
-  }) {
-    _setMethodChannelHandlerIfNeeded();
-    _customerCenterOnRestoreStarted = onRestoreStarted;
-    _customerCenterOnRestoreCompleted = onRestoreCompleted;
-    _customerCenterOnRestoreFailed = onRestoreFailed;
-    _customerCenterOnShowingManageSubscriptions = onShowingManageSubscriptions;
-    _customerCenterOnRefundRequestStarted = onRefundRequestStarted;
-    _customerCenterOnRefundRequestCompleted = onRefundRequestCompleted;
-    _customerCenterOnFeedbackSurveyCompleted = onFeedbackSurveyCompleted;
-    _customerCenterOnManagementOptionSelected = onManagementOptionSelected;
-    _customerCenterOnCustomActionSelected = onCustomActionSelected;
   }
 
   static Future<void> _handleCustomerCenterMethodCall(MethodCall call) async {
