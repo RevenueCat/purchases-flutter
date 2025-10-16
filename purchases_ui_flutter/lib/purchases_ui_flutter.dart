@@ -109,6 +109,7 @@ class RevenueCatUI {
         onManagementOptionSelected: onManagementOptionSelected,
         onCustomActionSelected: onCustomActionSelected,
       );
+    }
     await _methodChannel.invokeMethod('presentCustomerCenter');
   }
 
