@@ -195,22 +195,22 @@ class _PurchasesFlutterApiTest {
 
   void _checkPresentCustomerCenter() async {
     Future<void> f1 = RevenueCatUI.presentCustomerCenter();
+    Future<void> f2 = RevenueCatUI.presentCustomerCenter(
+      onRestoreStarted: () {},
+    );
   }
 
   void _checkPresentCustomerCenterWithCallbacks() async {
     Future<void> f1 = RevenueCatUI.presentCustomerCenter(
-      listener: CustomerCenterListener(
-        onDismiss: () {},
-        onRestoreStarted: () {},
-        onRestoreCompleted: (CustomerInfo customerInfo) {},
-        onRestoreFailed: (PurchasesError error) {},
-        onShowingManageSubscriptions: () {},
-        onRefundRequestStarted: (String productIdentifier) {},
-        onRefundRequestCompleted: (String productIdentifier, String status) {},
-        onFeedbackSurveyCompleted: (String optionIdentifier) {},
-        onManagementOptionSelected: (String optionIdentifier, String? url) {},
-        onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
-      ),
+      onRestoreStarted: () {},
+      onRestoreCompleted: (CustomerInfo customerInfo) {},
+      onRestoreFailed: (PurchasesError error) {},
+      onShowingManageSubscriptions: () {},
+      onRefundRequestStarted: (String productIdentifier) {},
+      onRefundRequestCompleted: (String productIdentifier, String status) {},
+      onFeedbackSurveyCompleted: (String optionIdentifier) {},
+      onManagementOptionSelected: (String optionIdentifier, String? url) {},
+      onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
     );
   }
 

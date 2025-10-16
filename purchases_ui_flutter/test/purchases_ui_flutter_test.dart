@@ -222,14 +222,12 @@ void main() {
 
   test('presentCustomerCenter with callbacks', () async {
     response = null;
-    bool onDismissCalled = false;
     bool onRestoreStartedCalled = false;
+    bool onFeedbackSurveyCompletedCalled = false;
     
     await RevenueCatUI.presentCustomerCenter(
-      listener: CustomerCenterListener(
-        onDismiss: () => onDismissCalled = true,
-        onRestoreStarted: () => onRestoreStartedCalled = true,
-      ),
+      onRestoreStarted: () => onRestoreStartedCalled = true,
+      onFeedbackSurveyCompleted: (_) => onFeedbackSurveyCompletedCalled = true,
     );
 
     expect(log, <Matcher>[
@@ -238,17 +236,17 @@ void main() {
     ]);
     
     // Verify callbacks are stored (they should be callable)
-    expect(onDismissCalled, false); // Not called yet
     expect(onRestoreStartedCalled, false); // Not called yet
+    expect(onFeedbackSurveyCompletedCalled, false); // Not called yet
   });
 
-  test('presentCustomerCenter legacy named callbacks still work', () async {
+  test('presentCustomerCenter registers single callback', () async {
     response = null;
-    var dismissCalled = false;
+    var restoreStartedCalled = false;
 
     await RevenueCatUI.presentCustomerCenter(
-      onDismiss: () {
-        dismissCalled = true;
+      onRestoreStarted: () {
+        restoreStartedCalled = true;
       },
     );
 
@@ -258,8 +256,8 @@ void main() {
     ]);
 
     log.clear();
-    await invokeCustomerCenterMethod('onDismiss', null);
-    expect(dismissCalled, true);
+    await invokeCustomerCenterMethod('onRestoreStarted', null);
+    expect(restoreStartedCalled, true);
   });
 
   test('callback key format regression test - iOS productId vs productIdentifier', () async {
@@ -358,34 +356,34 @@ void main() {
 
   group('RevenueCatUI customer center method handling', () {
     test('onDismiss clears native listener and callbacks', () async {
-      var onDismissCalled = false;
-      var onRestoreStartedCalled = false;
+      var onRestoreStartedCallCount = 0;
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onDismiss: () {
-            onDismissCalled = true;
-          },
-          onRestoreStarted: () {
-            onRestoreStartedCalled = true;
-          },
-        ),
+        onRestoreStarted: () {
+          onRestoreStartedCallCount += 1;
+        },
       );
 
       log.clear();
 
+      await invokeCustomerCenterMethod('onRestoreStarted', null);
+      expect(onRestoreStartedCallCount, 1);
+
       await invokeCustomerCenterMethod('onDismiss', null);
 
-      expect(onDismissCalled, true);
       expect(log, <Matcher>[
         isMethodCall('clearCustomerCenterCallbacks', arguments: null),
       ]);
 
       log.clear();
 
+      await invokeCustomerCenterMethod('onDismiss', null);
+
+      expect(log, isEmpty);
+
       await invokeCustomerCenterMethod('onRestoreStarted', null);
 
-      expect(onRestoreStartedCalled, false);
+      expect(onRestoreStartedCallCount, 1);
     });
 
     test('onCustomActionSelected accepts null purchaseIdentifier', () async {
@@ -393,12 +391,10 @@ void main() {
       String? capturedPurchaseIdentifier = 'initial';
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onCustomActionSelected: (actionId, purchaseIdentifier) {
-            capturedActionId = actionId;
-            capturedPurchaseIdentifier = purchaseIdentifier;
-          },
-        ),
+        onCustomActionSelected: (actionId, purchaseIdentifier) {
+          capturedActionId = actionId;
+          capturedPurchaseIdentifier = purchaseIdentifier;
+        },
       );
 
       log.clear();
@@ -416,11 +412,9 @@ void main() {
       var callbackCalled = false;
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onCustomActionSelected: (_, __) {
-            callbackCalled = true;
-          },
-        ),
+        onCustomActionSelected: (_, __) {
+          callbackCalled = true;
+        },
       );
 
       log.clear();
@@ -444,12 +438,10 @@ void main() {
       String? capturedUrl = 'initial';
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onManagementOptionSelected: (optionId, url) {
-            capturedOptionId = optionId;
-            capturedUrl = url;
-          },
-        ),
+        onManagementOptionSelected: (optionId, url) {
+          capturedOptionId = optionId;
+          capturedUrl = url;
+        },
       );
 
       log.clear();
@@ -467,11 +459,9 @@ void main() {
       var callbackCalled = false;
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onManagementOptionSelected: (_, __) {
-            callbackCalled = true;
-          },
-        ),
+        onManagementOptionSelected: (_, __) {
+          callbackCalled = true;
+        },
       );
 
       log.clear();
@@ -489,12 +479,10 @@ void main() {
       String? capturedStatus;
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onRefundRequestCompleted: (productId, status) {
-            capturedProductId = productId;
-            capturedStatus = status;
-          },
-        ),
+        onRefundRequestCompleted: (productId, status) {
+          capturedProductId = productId;
+          capturedStatus = status;
+        },
       );
 
       log.clear();
@@ -529,11 +517,9 @@ void main() {
       var callbackCalled = false;
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onRefundRequestCompleted: (_, __) {
-            callbackCalled = true;
-          },
-        ),
+        onRefundRequestCompleted: (_, __) {
+          callbackCalled = true;
+        },
       );
 
       log.clear();
@@ -547,11 +533,9 @@ void main() {
       var callbackCalled = false;
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onRefundRequestStarted: (_) {
-            callbackCalled = true;
-          },
-        ),
+        onRefundRequestStarted: (_) {
+          callbackCalled = true;
+        },
       );
 
       log.clear();
@@ -571,11 +555,9 @@ void main() {
       var callbackCalled = false;
 
       await RevenueCatUI.presentCustomerCenter(
-        listener: CustomerCenterListener(
-          onFeedbackSurveyCompleted: (_) {
-            callbackCalled = true;
-          },
-        ),
+        onFeedbackSurveyCompleted: (_) {
+          callbackCalled = true;
+        },
       );
 
       log.clear();
