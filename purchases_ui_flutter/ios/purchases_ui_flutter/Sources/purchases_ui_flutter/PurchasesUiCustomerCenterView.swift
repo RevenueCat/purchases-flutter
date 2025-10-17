@@ -79,9 +79,7 @@ final class PurchasesUiCustomerCenterView: NSObject, FlutterPlatformView {
             viewController.shouldShowCloseButton = shouldShowCloseButton
         }
 
-        viewController.onCloseHandler = { [weak self] in
-            self?.methodChannel.invokeMethod("onDismiss", arguments: nil)
-        }
+        viewController.onCloseHandler = nil
     }
 
     deinit {

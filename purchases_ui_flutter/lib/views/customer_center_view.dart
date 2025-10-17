@@ -37,7 +37,7 @@ class CustomerCenterView extends StatelessWidget {
   /// Defaults to `true`.
   final bool shouldShowCloseButton;
 
-  final CustomerCenterDismissed? onDismiss;
+  final CustomerCenterOnDismiss? onDismiss;
   final CustomerCenterRestoreStarted? onRestoreStarted;
   final CustomerCenterRestoreCompleted? onRestoreCompleted;
   final CustomerCenterRestoreFailed? onRestoreFailed;

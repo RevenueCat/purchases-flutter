@@ -3,7 +3,7 @@ import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 
 /// Called when the customer center is dismissed by the user.
-typedef CustomerCenterDismissed = void Function();
+typedef CustomerCenterOnDismiss = void Function();
 
 /// Called when a restore purchases operation begins.
 typedef CustomerCenterRestoreStarted = void Function();
@@ -50,7 +50,7 @@ typedef CustomerCenterManagementOptionSelected = void Function(String optionIden
 typedef CustomerCenterCustomActionSelected = void Function(String actionIdentifier, String? purchaseIdentifier);
 
 class CustomerCenterViewMethodHandler {
-  final CustomerCenterDismissed? onDismiss;
+  final CustomerCenterOnDismiss? onDismiss;
   final CustomerCenterRestoreStarted? onRestoreStarted;
   final CustomerCenterRestoreCompleted? onRestoreCompleted;
   final CustomerCenterRestoreFailed? onRestoreFailed;
