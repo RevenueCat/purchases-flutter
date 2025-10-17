@@ -202,7 +202,6 @@ class _PurchasesFlutterApiTest {
 
   void _checkPresentCustomerCenterWithCallbacks() async {
     Future<void> f1 = RevenueCatUI.presentCustomerCenter(
-      onDismiss: () {},
       onRestoreStarted: () {},
       onRestoreCompleted: (CustomerInfo customerInfo) {},
       onRestoreFailed: (PurchasesError error) {},

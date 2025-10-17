@@ -28,9 +28,6 @@ await RevenueCatUI.presentPaywallIfNeeded("requiredEntitlementId");
  Present as a modal (callbacks optional):
 ```dart
 await RevenueCatUI.presentCustomerCenter(
-  onDismiss: () {
-    // modal closed
-  },
   onRestoreCompleted: (customerInfo) {
     // handle restore success
   },

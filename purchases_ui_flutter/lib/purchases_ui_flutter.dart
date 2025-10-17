@@ -16,7 +16,6 @@ export 'views/paywall_view.dart';
 class RevenueCatUI {
   static const _methodChannel = MethodChannel('purchases_ui_flutter');
   
-  static CustomerCenterOnDismiss? _customerCenterOnDismiss;
   static CustomerCenterRestoreStarted? _customerCenterOnRestoreStarted;
   static CustomerCenterRestoreCompleted? _customerCenterOnRestoreCompleted;
   static CustomerCenterRestoreFailed? _customerCenterOnRestoreFailed;
@@ -75,8 +74,6 @@ class RevenueCatUI {
   /// Provide callback handlers to receive customer center lifecycle events.
   /// All handlers are optional.
   static Future<void> presentCustomerCenter({
-    /// Called when the Customer Center modal is dismissed.
-    CustomerCenterOnDismiss? onDismiss,
     CustomerCenterRestoreStarted? onRestoreStarted,
     CustomerCenterRestoreCompleted? onRestoreCompleted,
     CustomerCenterRestoreFailed? onRestoreFailed,
@@ -88,8 +85,7 @@ class RevenueCatUI {
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
     _setMethodChannelHandlerIfNeeded();
-    final hasCallbacks = onDismiss != null ||
-        onRestoreStarted != null ||
+    final hasCallbacks = onRestoreStarted != null ||
         onRestoreCompleted != null ||
         onRestoreFailed != null ||
         onShowingManageSubscriptions != null ||
@@ -103,7 +99,6 @@ class RevenueCatUI {
 
     if (hasCallbacks) {
       await _registerCustomerCenterCallbacks(
-        onDismiss: onDismiss,
         onRestoreStarted: onRestoreStarted,
         onRestoreCompleted: onRestoreCompleted,
         onRestoreFailed: onRestoreFailed,
@@ -149,7 +144,6 @@ class RevenueCatUI {
   }
 
   static Future<void> _registerCustomerCenterCallbacks({
-    CustomerCenterOnDismiss? onDismiss,
     CustomerCenterRestoreStarted? onRestoreStarted,
     CustomerCenterRestoreCompleted? onRestoreCompleted,
     CustomerCenterRestoreFailed? onRestoreFailed,
@@ -161,7 +155,6 @@ class RevenueCatUI {
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
     _setMethodChannelHandlerIfNeeded();
-    _customerCenterOnDismiss = onDismiss;
     _customerCenterOnRestoreStarted = onRestoreStarted;
     _customerCenterOnRestoreCompleted = onRestoreCompleted;
     _customerCenterOnRestoreFailed = onRestoreFailed;
@@ -176,7 +169,6 @@ class RevenueCatUI {
 
   static Future<void> _clearCustomerCenterCallbacks() async {
     _setMethodChannelHandlerIfNeeded();
-    _customerCenterOnDismiss = null;
     _customerCenterOnRestoreStarted = null;
     _customerCenterOnRestoreCompleted = null;
     _customerCenterOnRestoreFailed = null;
@@ -190,7 +182,6 @@ class RevenueCatUI {
   }
 
   static Future<void> _handleCustomerCenterDismissed() async {
-    _customerCenterOnDismiss?.call();
     await _clearCustomerCenterCallbacks();
   }
 
