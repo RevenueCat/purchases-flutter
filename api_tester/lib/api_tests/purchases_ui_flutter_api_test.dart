@@ -195,5 +195,50 @@ class _PurchasesFlutterApiTest {
 
   void _checkPresentCustomerCenter() async {
     Future<void> f1 = RevenueCatUI.presentCustomerCenter();
+    Future<void> f2 = RevenueCatUI.presentCustomerCenter(
+      onRestoreStarted: () {},
+    );
   }
+
+  void _checkPresentCustomerCenterWithCallbacks() async {
+    Future<void> f1 = RevenueCatUI.presentCustomerCenter(
+      onRestoreStarted: () {},
+      onRestoreCompleted: (CustomerInfo customerInfo) {},
+      onRestoreFailed: (PurchasesError error) {},
+      onShowingManageSubscriptions: () {},
+      onRefundRequestStarted: (String productIdentifier) {},
+      onRefundRequestCompleted: (String productIdentifier, String status) {},
+      onFeedbackSurveyCompleted: (String optionIdentifier) {},
+      onManagementOptionSelected: (String optionIdentifier, String? url) {},
+      onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
+    );
+  }
+
+  Widget _checkCustomerCenterView() {
+    return const Scaffold(
+      body: Center(
+        child: CustomerCenterView(),
+      ),
+    );
+  }
+
+  Widget _checkCustomerCenterViewWithCallbacks() {
+    return Scaffold(
+      body: Center(
+        child: CustomerCenterView(
+          onDismiss: () {},
+          onRestoreStarted: () {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreFailed: (PurchasesError error) {},
+          onShowingManageSubscriptions: () {},
+          onRefundRequestStarted: (String productIdentifier) {},
+          onRefundRequestCompleted: (String productIdentifier, String status) {},
+          onFeedbackSurveyCompleted: (String optionIdentifier) {},
+          onManagementOptionSelected: (String optionIdentifier, String? url) {},
+          onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
+        ),
+      ),
+    );
+  }
+
 }

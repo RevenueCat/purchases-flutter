@@ -9,6 +9,7 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'cats.dart';
 import 'constant.dart';
+import 'customer_center_view_screen.dart';
 import 'initial.dart';
 import 'paywall.dart';
 import 'winback_testing_screen.dart';
@@ -134,7 +135,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WinbackTestingScreen(),
+                            builder: (context) => const WinbackTestingScreen(),
                           ));
                     },
                     child: const Text("Go to Win-Back Offer Testing Screen"),
@@ -171,8 +172,38 @@ class _UpsellScreenState extends State<UpsellScreen> {
                 child: Column(children: [
                   const Text("Customer Center"),
                   ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CustomerCenterViewModalScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("CustomerCenterViewModalScreen (Close Button)"),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
                     onPressed: () async {
-                      await RevenueCatUI.presentCustomerCenter();
+                      await RevenueCatUI.presentCustomerCenter(
+                        onRestoreStarted: () => debugPrint('[CustomerCenter Modal] Restore started'),
+                        onRestoreCompleted: (customerInfo) =>
+                            debugPrint('[CustomerCenter Modal] Restore completed: ${customerInfo.originalAppUserId}'),
+                        onRestoreFailed: (error) =>
+                            debugPrint('[CustomerCenter Modal] Restore failed: ${error.message}'),
+                        onShowingManageSubscriptions: () =>
+                            debugPrint('[CustomerCenter Modal] Showing manage subscriptions'),
+                        onRefundRequestStarted: (productId) =>
+                            debugPrint('[CustomerCenter Modal] Refund request started for product: $productId'),
+                        onRefundRequestCompleted: (productId, status) =>
+                            debugPrint('[CustomerCenter Modal] Refund request completed for product $productId with status $status'),
+                        onFeedbackSurveyCompleted: (optionId) =>
+                            debugPrint('[CustomerCenter Modal] Feedback survey completed with option: $optionId'),
+                        onManagementOptionSelected: (optionId, url) =>
+                            debugPrint('[CustomerCenter Modal] Management option selected: $optionId (url: ${url ?? 'none'})'),
+                        onCustomActionSelected: (actionId, purchaseIdentifier) =>
+                            debugPrint('[CustomerCenter Modal] Custom action selected: $actionId (purchase: ${purchaseIdentifier ?? 'none'})'),
+                      );
                     },
                     child: const Text("Present Customer Center"),
                   ),
