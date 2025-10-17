@@ -360,8 +360,12 @@ void main() {
   group('RevenueCatUI customer center method handling', () {
     test('onDismiss clears native listener and callbacks', () async {
       var onRestoreStartedCallCount = 0;
+      var onDismissCallCount = 0;
 
       await RevenueCatUI.presentCustomerCenter(
+        onDismiss: () {
+          onDismissCallCount += 1;
+        },
         onRestoreStarted: () {
           onRestoreStartedCallCount += 1;
         },
@@ -374,6 +378,7 @@ void main() {
 
       await invokeCustomerCenterMethod('onDismiss', null);
 
+      expect(onDismissCallCount, 1);
       expect(log, <Matcher>[
         isMethodCall('clearCustomerCenterCallbacks', arguments: null),
       ]);
@@ -382,6 +387,7 @@ void main() {
 
       await invokeCustomerCenterMethod('onDismiss', null);
 
+      expect(onDismissCallCount, 1);
       expect(log, <Matcher>[
         isMethodCall('clearCustomerCenterCallbacks', arguments: null),
       ]);

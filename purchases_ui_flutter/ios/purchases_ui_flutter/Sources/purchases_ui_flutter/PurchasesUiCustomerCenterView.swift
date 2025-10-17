@@ -79,13 +79,19 @@ final class PurchasesUiCustomerCenterView: NSObject, FlutterPlatformView {
             viewController.shouldShowCloseButton = shouldShowCloseButton
         }
 
-        viewController.onCloseHandler = nil
+        viewController.onCloseHandler = { [weak self] in
+            guard let self else {
+                return
+            }
+            self.customerCenterViewControllerWasDismissed(self.viewController)
+        }
     }
 
     deinit {
         // Clean up method channel handler to prevent memory leaks
         methodChannel.setMethodCallHandler(nil)
     }
+
 }
 
 @available(iOS 15.0, *)

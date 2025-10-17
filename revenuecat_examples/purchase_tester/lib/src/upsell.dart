@@ -186,6 +186,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       await RevenueCatUI.presentCustomerCenter(
+                        onDismiss: () =>
+                            debugPrint('[CustomerCenter Modal] Dismissed'),
                         onRestoreStarted: () => debugPrint('[CustomerCenter Modal] Restore started'),
                         onRestoreCompleted: (customerInfo) =>
                             debugPrint('[CustomerCenter Modal] Restore completed: ${customerInfo.originalAppUserId}'),
