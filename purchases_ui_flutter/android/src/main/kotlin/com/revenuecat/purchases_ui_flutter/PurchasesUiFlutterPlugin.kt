@@ -60,7 +60,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             "setCustomerCenterCallbacks" -> {
-                setCustomerCenterListenerIfNeeded()
+                ensureCustomerCenterListenerRegistered()
                 result.success(null)
             }
             "clearCustomerCenterCallbacks" -> {
@@ -168,7 +168,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
 
     private fun presentCustomerCenterFromActivity(activity: Activity) {
         // Set up customer center listener for callbacks before presenting
-        setCustomerCenterListenerIfNeeded()
+        ensureCustomerCenterListenerRegistered()
 
         val intent = ShowCustomerCenter()
             .createIntent(activity, Unit)
@@ -266,11 +266,11 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         }
     }
 
-    private fun setCustomerCenterListenerIfNeeded() {
-        if (customerCenterListener == null) {
-            customerCenterListener = createCustomerCenterListener()
+    private fun ensureCustomerCenterListenerRegistered() {
+        val listener = customerCenterListener ?: createCustomerCenterListener().also {
+            customerCenterListener = it
         }
-        Purchases.sharedInstance.customerCenterListener = customerCenterListener
+        Purchases.sharedInstance.customerCenterListener = listener
     }
 
     private fun clearCustomerCenterListener() {
