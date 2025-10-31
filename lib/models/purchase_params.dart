@@ -15,6 +15,7 @@ class PurchaseParams {
   final PromotionalOffer? promotionalOffer;
   final WinBackOffer? winBackOffer;
   final String? customerEmail;
+  final List<StoreProduct>? addOnStoreProducts;
 
   const PurchaseParams._(
     this.package,
@@ -25,6 +26,7 @@ class PurchaseParams {
     this.promotionalOffer,
     this.winBackOffer,
     this.customerEmail,
+    this.addOnStoreProducts,
   );
 
   /// Creates purchase parameters for a package.
@@ -52,6 +54,8 @@ class PurchaseParams {
   /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
   /// will ask the customer for their email.
   ///
+  /// [addOnStoreProducts] Play Store only. Add-on products to be purchased alongside the package.
+  ///
   const PurchaseParams.package(
     Package package, {
     GoogleProductChangeInfo? googleProductChangeInfo,
@@ -59,6 +63,7 @@ class PurchaseParams {
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
+    List<StoreProduct>? addOnStoreProducts,
   }) : this._(
         package,
         null,
@@ -68,6 +73,7 @@ class PurchaseParams {
         promotionalOffer,
         winBackOffer,
         customerEmail,
+        addOnStoreProducts,
       );
 
   /// Creates purchase parameters for a store product.
@@ -96,6 +102,8 @@ class PurchaseParams {
   /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
   /// will ask the customer for their email.
   ///
+  /// [addOnStoreProducts] Play Store only. Add-on products to be purchased alongside the main product.
+  ///
   const PurchaseParams.storeProduct(
     StoreProduct storeProduct, {
     GoogleProductChangeInfo? googleProductChangeInfo,
@@ -103,6 +111,7 @@ class PurchaseParams {
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
+    List<StoreProduct>? addOnStoreProducts,
   }) : this._(
         null,
         storeProduct,
@@ -112,6 +121,7 @@ class PurchaseParams {
         promotionalOffer,
         winBackOffer,
         customerEmail,
+        addOnStoreProducts,
       );
 
   /// Creates purchase parameters for a subscription option. Google Play-only.
@@ -131,11 +141,14 @@ class PurchaseParams {
   /// [customerEmail] Web only. The email of the user. If undefined, RevenueCat
   /// will ask the customer for their email.
   ///
+  /// [addOnStoreProducts] Play Store only. Add-on products to be purchased alongside the main subscription option.
+  ///
   const PurchaseParams.subscriptionOption(
     SubscriptionOption subscriptionOption, {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
+    List<StoreProduct>? addOnStoreProducts,
   }) : this._(
         null,
         null,
@@ -145,5 +158,6 @@ class PurchaseParams {
         null,
         null,
         customerEmail,
+        addOnStoreProducts,
       );
 }

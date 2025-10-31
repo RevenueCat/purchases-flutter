@@ -7,6 +7,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
+import 'add_on_purchasing_screen.dart';
 import 'cats.dart';
 import 'constant.dart';
 import 'customer_center_view_screen.dart';
@@ -244,6 +245,28 @@ class _UpsellScreenState extends State<UpsellScreen> {
     }).toList();
 
     return [
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Add-On Purchasing"),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              AddOnPurchasingScreen(offering: offering),
+                        ),
+                      );
+                    },
+                    child: const Text('add-on purchasing screen'),
+                  ),
+                ]))),
+      ),
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Card(

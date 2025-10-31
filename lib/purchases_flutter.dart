@@ -576,6 +576,12 @@ class Purchases {
         purchaseParams.product?.presentedOfferingContext ??
         purchaseParams.subscriptionOption?.presentedOfferingContext;
     final presentedOfferingContextJson = presentedOfferingContext?.toJson();
+    final addOnStoreProducts = purchaseParams.addOnStoreProducts
+        ?.map((storeProduct) => <String, String?>{
+              'productIdentifier': storeProduct.identifier,
+              'type': storeProduct.productCategory?.name,
+            },)
+        .toList();
     final purchaseArgs = <String, dynamic>{
       'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
@@ -584,6 +590,7 @@ class Purchases {
       'presentedOfferingContext': presentedOfferingContextJson,
       'customerEmail': customerEmail,
       'winBackOfferIdentifier': winBackOffer?.identifier,
+      'addOnStoreProducts': addOnStoreProducts,
     };
     final isWinBackOfferPurchase = (defaultTargetPlatform == TargetPlatform.iOS
         || defaultTargetPlatform == TargetPlatform.macOS)
