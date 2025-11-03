@@ -263,7 +263,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         ),
                       );
                     },
-                    child: const Text('add-on purchasing screen'),
+                    child: const Text('Add-On Purchasing Screen'),
                   ),
                 ]))),
       ),
