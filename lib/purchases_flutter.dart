@@ -580,6 +580,7 @@ class Purchases {
         ?.map((storeProduct) => <String, String?>{
               'productIdentifier': storeProduct.identifier,
               'type': storeProduct.productCategory?.name,
+              'presentedOfferingContext': storeProduct.presentedOfferingContext?.toJson(),
             },)
         .toList();
     final purchaseArgs = <String, dynamic>{
