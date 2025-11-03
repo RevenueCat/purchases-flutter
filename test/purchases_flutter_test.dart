@@ -618,6 +618,15 @@ void main() {
         '\$199.99',
         'USD',
       );
+      const mockStoreProduct2 = StoreProduct(
+        'com.revenuecat.sub2',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productCategory: ProductCategory.subscription,
+      );
       const mockPackage = Package(
         '\$rc_lifetime',
         PackageType.lifetime,
@@ -640,6 +649,7 @@ void main() {
         googleIsPersonalizedPrice: true,
         promotionalOffer: promotionalOffer,
         customerEmail: 'testemail@revenuecat.com',
+        addOnStoreProducts: [mockStoreProduct2],
       );
       final purchasePackageResult =
       await Purchases.purchase(purchaseParams);
@@ -666,6 +676,13 @@ void main() {
               'signedDiscountTimestamp': '1234567890',
               'winBackOfferIdentifier': null,
               'customerEmail': 'testemail@revenuecat.com',
+              'addOnStoreProducts': [
+                {
+                  'productIdentifier': 'com.revenuecat.sub2',
+                  'type': 'subscription',
+                  'presentedOfferingContext': null,
+                },
+              ],
             },
           ),
         ],
@@ -2173,5 +2190,265 @@ void main() {
     ]);
 
     expect(virtualCurrencies, isNull);
+  });
+
+  test('purchase store product with store product add-ons calls purchase successfully', () async {
+    try {
+      debugDefaultTargetPlatformOverride = TargetPlatform.android;
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.sub1',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productCategory: ProductCategory.subscription,
+        presentedOfferingContext: PresentedOfferingContext('main', null, null),
+      );
+      const mockStoreProduct2 = StoreProduct(
+        'com.revenuecat.sub2',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productCategory: ProductCategory.subscription,
+      );
+      
+      const purchaseParams = PurchaseParams.storeProduct(
+        mockStoreProduct,
+        addOnStoreProducts: [mockStoreProduct2],
+      );
+      final purchasePackageResult = await Purchases.purchase(purchaseParams);
+      expect(
+        purchasePackageResult,
+        PurchaseResult.fromJson(response),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseProduct',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.sub1',
+              'type': 'subscription',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
+              'googleOldProductIdentifier': null,
+              'googleProrationMode': null,
+              'googleIsPersonalizedPrice': null,
+              'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': null,
+              'customerEmail': null,
+              'addOnStoreProducts': [
+                {
+                  'productIdentifier': 'com.revenuecat.sub2',
+                  'type': 'subscription',
+                  'presentedOfferingContext': null,
+                },
+              ],
+            },
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception $e');
+    } finally {
+      debugDefaultTargetPlatformOverride = null;
+    }
+  });
+
+  test('purchase subscription option with store product add-ons calls purchase successfully',
+      () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
+      };
+      const presentedOfferingContext =
+          PresentedOfferingContext('main', null, null);
+      const mockSubscriptionOption = SubscriptionOption(
+        'subscription_option_id',
+        'com.revenuecat.monthly',
+        'com.revenuecat.monthly',
+        [],
+        [],
+        false,
+        Period(PeriodUnit.month, 1, 'P1M'),
+        false,
+        null,
+        null,
+        null,
+        presentedOfferingContext,
+        null,
+      );
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.sub1',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productCategory: ProductCategory.subscription,
+        presentedOfferingContext: PresentedOfferingContext('main', null, null),
+      );
+
+      final purchaseParams = PurchaseParams.subscriptionOption(
+        mockSubscriptionOption,
+        googleProductChangeInfo: GoogleProductChangeInfo(
+          'old_product_id',
+          prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
+        ),
+        googleIsPersonalizedPrice: true,
+        customerEmail: 'testemail@revenuecat.com',
+        addOnStoreProducts: [mockStoreProduct],
+      );
+      final purchaseSubscriptionOptionResult =
+          await Purchases.purchase(purchaseParams);
+      expect(
+        purchaseSubscriptionOptionResult,
+        PurchaseResult.fromJson(response),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchaseSubscriptionOption',
+            arguments: <String, dynamic>{
+              'productIdentifier': 'com.revenuecat.monthly',
+              'optionIdentifier': 'subscription_option_id',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
+              'googleOldProductIdentifier': 'old_product_id',
+              'googleProrationMode': 5,
+              'googleIsPersonalizedPrice': true,
+              'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': null,
+              'customerEmail': 'testemail@revenuecat.com',
+              'addOnStoreProducts': [
+                {
+                  'productIdentifier': 'com.revenuecat.sub1',
+                  'type': 'subscription',
+                  'presentedOfferingContext': <String, dynamic>{
+                    'offeringIdentifier': 'main',
+                    'placementIdentifier': null,
+                    'targetingContext': null,
+                  },
+                },
+              ],
+            },
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception $e');
+    }
+  });
+
+  test('purchase package calls with store product add-ons calls purchase successfully', () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+      );
+      const mockStoreProduct2 = StoreProduct(
+        'com.revenuecat.sub2',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+        productCategory: ProductCategory.subscription,
+        presentedOfferingContext: PresentedOfferingContext('main', null, null),
+      );
+      const mockPackage = Package(
+        '\$rc_lifetime',
+        PackageType.lifetime,
+        mockStoreProduct,
+        PresentedOfferingContext('main', null, null),
+      );
+      const promotionalOffer = PromotionalOffer(
+        'identifier',
+        'keyIdentifier',
+        'nonce',
+        'signature',
+        1234567890,
+      );
+      final purchaseParams = PurchaseParams.package(
+        mockPackage,
+        googleProductChangeInfo: GoogleProductChangeInfo(
+          'old_product_id',
+          prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
+        ),
+        googleIsPersonalizedPrice: true,
+        promotionalOffer: promotionalOffer,
+        customerEmail: 'testemail@revenuecat.com',
+        addOnStoreProducts: [mockStoreProduct2],
+      );
+      final purchasePackageResult = await Purchases.purchase(purchaseParams);
+      expect(
+        purchasePackageResult,
+        PurchaseResult.fromJson(response),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchasePackage',
+            arguments: <String, dynamic>{
+              'packageIdentifier': '\$rc_lifetime',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
+              'googleOldProductIdentifier': 'old_product_id',
+              'googleProrationMode': 5,
+              'googleIsPersonalizedPrice': true,
+              'signedDiscountTimestamp': '1234567890',
+              'winBackOfferIdentifier': null,
+              'customerEmail': 'testemail@revenuecat.com',
+              'addOnStoreProducts': [
+                {
+                  'productIdentifier': 'com.revenuecat.sub2',
+                  'type': 'subscription',
+                  'presentedOfferingContext': <String, dynamic>{
+                    'offeringIdentifier': 'main',
+                    'placementIdentifier': null,
+                    'targetingContext': null,
+                  },
+                },
+              ],
+            },
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception $e');
+    }
   });
 }

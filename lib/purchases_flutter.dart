@@ -577,11 +577,11 @@ class Purchases {
         purchaseParams.subscriptionOption?.presentedOfferingContext;
     final presentedOfferingContextJson = presentedOfferingContext?.toJson();
     final addOnStoreProducts = purchaseParams.addOnStoreProducts
-        ?.map((storeProduct) => <String, String?>{
+        ?.map((storeProduct) => <String, dynamic>{
               'productIdentifier': storeProduct.identifier,
               'type': storeProduct.productCategory?.name,
               'presentedOfferingContext': storeProduct.presentedOfferingContext?.toJson(),
-            },)
+            })
         .toList();
     final purchaseArgs = <String, dynamic>{
       'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
