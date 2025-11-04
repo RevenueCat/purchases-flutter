@@ -11,6 +11,7 @@ class _PurchaseParamsApiTest {
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
+    List<StoreProduct>? addOnStoreProducts,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
       package,
@@ -45,6 +46,15 @@ class _PurchaseParamsApiTest {
       winBackOffer: winBackOffer,
       customerEmail: customerEmail,
     );
+    purchaseParams = PurchaseParams.package(
+      package,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
+      addOnStoreProducts: addOnStoreProducts,
+    );
   }
 
   void _checkStoreProductConstructor(
@@ -54,6 +64,7 @@ class _PurchaseParamsApiTest {
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
+    List<StoreProduct>? addOnStoreProducts,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
@@ -88,6 +99,15 @@ class _PurchaseParamsApiTest {
       winBackOffer: winBackOffer,
       customerEmail: customerEmail,
     );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
+      addOnStoreProducts: addOnStoreProducts,
+    );
   }
 
   void _checkSubscriptionOptionConstructor(
@@ -95,6 +115,7 @@ class _PurchaseParamsApiTest {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
+    List<StoreProduct>? addOnStoreProducts,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
       subscriptionOption,
@@ -113,7 +134,15 @@ class _PurchaseParamsApiTest {
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       customerEmail: customerEmail,
-    );}
+    );
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      customerEmail: customerEmail,
+      addOnStoreProducts: addOnStoreProducts,
+    );
+  }
 
   void _checkProperties(PurchaseParams purchaseParams) {
     Package? package = purchaseParams.package;
@@ -124,5 +153,6 @@ class _PurchaseParamsApiTest {
     PromotionalOffer? promotionalOffer = purchaseParams.promotionalOffer;
     WinBackOffer? winBackOffer = purchaseParams.winBackOffer;
     String? customerEmail = purchaseParams.customerEmail;
+    List<StoreProduct>? addOnStoreProducts = purchaseParams.addOnStoreProducts;
   }
 }
