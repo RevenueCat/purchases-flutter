@@ -84,12 +84,24 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.2.0'
 }
 
-// Call passing parameter -PcommonPath="$HOME/Development/repos/purchases-hybrid-common/android"
+// Usage:
+// ./gradlew enableLocalBuild -PcommonPath="$HOME/Development/repos/purchases-hybrid-common/android"
+// ./gradlew enableLocalBuild -PandroidPath="$HOME/Development/repos/purchases-android"
 task enableLocalBuild {
     group = 'Tools'
-    description = 'Enable composite build'
+    description = 'Enable composite build for local dependencies'
     doLast {
-        new File(".composite-enable").text = commonPath
+        if (project.hasProperty('commonPath')) {
+            new File(".composite-enable").text = commonPath
+            println "Enabled local purchases-hybrid-common at: $commonPath"
+        }
+        if (project.hasProperty('androidPath')) {
+            new File(".android-enable").text = androidPath
+            println "Enabled local purchases-android at: $androidPath"
+        }
+        if (!project.hasProperty('commonPath') && !project.hasProperty('androidPath')) {
+            throw new GradleException("Please specify -PcommonPath or -PandroidPath parameter")
+        }
     }
 }
 
@@ -97,9 +109,21 @@ task disableLocalBuild {
     group = 'Tools'
     description = 'Disable composite build'
     doLast {
-        File file = file(".composite-enable")
-        if (file.exists()) {
-            file.delete()
+        def disabled = false
+        File commonFile = file(".composite-enable")
+        if (commonFile.exists()) {
+            commonFile.delete()
+            println "Disabled local purchases-hybrid-common"
+            disabled = true
+        }
+        File androidFile = file(".android-enable")
+        if (androidFile.exists()) {
+            androidFile.delete()
+            println "Disabled local purchases-android"
+            disabled = true
+        }
+        if (!disabled) {
+            println "No local builds were enabled"
         }
     }
 }
