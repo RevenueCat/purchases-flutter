@@ -16,7 +16,7 @@ This guide explains how to set up the development environment for the RevenueCat
 
 To run tests for the main plugin:
 ```bash
-flutter test
+fvm flutter test
 ```
 
 ## Sample Applications
@@ -107,6 +107,7 @@ To run integration tests, replace the API key in the test file:
 sed -i.bck s/api_key/$API_KEY/ integration_test/app_test.dart
 ```
 
+
 ## Local Development with Dependencies
 
 The RevenueCat Flutter SDK depends on several native SDKs and hybrid common libraries:
@@ -179,6 +180,14 @@ Update the plugin's Package.swift files to use local packages:
 
 > **Note**: You only need to update the Package.swift files. Xcode will automatically use the local dependencies when you build - no manual "Add Package Dependencies" step required.
 
+**For iOS debugging**: Open the sample app's iOS project in Xcode:  
+   `revenuecat_examples/purchase_tester/ios/Runner.xcodeproj` or `revenuecat_examples/MagicWeather/ios/Runner.xcodeproj`
+
+> **Recommended SPM Workflow:**  
+> 1. Make Flutter changes in your editor  
+> 2. Open `ios/Runner.xcodeproj` in Xcode  
+> 3. Build and run from Xcode (SPM local deps work perfectly!)
+
 **For purchases-hybrid-common:**
 
 **purchases_flutter** (`ios/purchases_flutter/Package.swift`):
@@ -250,8 +259,8 @@ targets: [
      # ... existing configuration ...
      
      # Add local PurchasesHybridCommon and UI
-     pod 'PurchasesHybridCommon', :path => '/path/to/purchases-hybrid-common/ios'
-     pod 'PurchasesHybridCommonUI', :path => '/path/to/purchases-hybrid-common/ios'
+     pod 'PurchasesHybridCommon', :path => '/path/to/purchases-hybrid-common'
+     pod 'PurchasesHybridCommonUI', :path => '/path/to/purchases-hybrid-common'
    end
    ```
 
@@ -275,13 +284,17 @@ targets: [
    pod install --repo-update
    ```
 
+**For iOS debugging**: Open the sample app's iOS project in Xcode:  
+   `revenuecat_examples/purchase_tester/ios/Runner.xcodeproj` or `revenuecat_examples/MagicWeather/ios/Runner.xcodeproj`
+
 #### Android Setup
 
 Choose **one** of these three alternative approaches to use local dependencies:
 
 **Option 1: enableLocalBuild task (recommended)**:
 
-Enable local builds (from either sample app):
+> **✅ Note**: The Android variant resolution issue has been solved! Both `purchases-hybrid-common` and `purchases-android` now work together seamlessly with local builds.
+
    ```bash
    cd revenuecat_examples/purchase_tester/android
    
@@ -302,14 +315,24 @@ Enable local builds (from either sample app):
    ./gradlew disableLocalBuild
    ```
 
+**For Android debugging**: Open the sample app's Android project in Android Studio:  
+   `File → Open → /path/to/purchases-flutter/revenuecat_examples/purchase_tester/android/`
+
 **Option 2: Manual includeBuild setup**:
 
 Add to your sample app's `android/settings.gradle`:
 ```gradle
 includeBuild('/path/to/purchases-hybrid-common/android') {
     dependencySubstitution {
-        substitute module('com.revenuecat.purchases:purchases-hybrid-common') using project(':purchases-hybrid-common')
-        substitute module('com.revenuecat.purchases:purchases-hybrid-common-ui') using project(':purchases-hybrid-common-ui')
+        substitute module('com.revenuecat.purchases:purchases-hybrid-common') using project(':hybridcommon')
+        substitute module('com.revenuecat.purchases:purchases-hybrid-common-ui') using project(':hybridcommon-ui')
+    }
+}
+
+includeBuild('/path/to/purchases-android') {
+    dependencySubstitution {
+        substitute module('com.revenuecat.purchases:purchases') using project(':purchases')
+        substitute module('com.revenuecat.purchases:purchases-ui') using project(':ui:revenuecatui')
     }
 }
 ```
@@ -338,7 +361,7 @@ includeBuild('/path/to/purchases-hybrid-common/android') {
 
 1. **Make changes** to the Flutter plugin code in `lib/`
 2. **Test changes** using the sample apps (changes are reflected automatically)
-3. **Run tests** with `flutter test`
+3. **Run tests** with `fvm flutter test`
 4. **Test on native platforms** by running the sample apps on iOS/Android devices
 
 ## Troubleshooting
@@ -352,6 +375,7 @@ If you encounter a security dialog on macOS when running Flutter:
 
 ### iOS/SPM Issues
 - **Swift Package Manager (Recommended)**:
+  - We recommend opening Xcode project directly and building from there
   - Clear Swift Package caches: **Product** → **Clean Build Folder** in Xcode
   - Reset package caches: **File** → **Packages** → **Reset Package Caches**
   - Ensure local package paths are correct and accessible
@@ -374,6 +398,15 @@ If you encounter a security dialog on macOS when running Flutter:
   - Verify code signing settings for your development team
 
 ### Android Issues
+- **Gradle Version Compatibility**: Ensure all projects use compatible AGP versions. If you get "Using multiple versions of the Android Gradle plugin" errors:
+  - Check that purchases-flutter, purchases-hybrid-common, and purchases-android all use the same AGP version
+  - Currently requires AGP 8.13.0 and Gradle 8.13+
+  
+- **`failOnNoDiscoveredTests` Error**: If you get "Unresolved reference: failOnNoDiscoveredTests" when building with local `purchases-hybrid-common`:
+  - This happens with Gradle versions < 9.0.0 (the property was introduced in Gradle 9.0.0)
+  - **Fix**: Comment out the `failOnNoDiscoveredTests = false` line in `purchases-hybrid-common/android/api-tests/build.gradle.kts`
+  - The property is optional and can be safely disabled for compatibility
+  
 - Clean and rebuild if you encounter dependency resolution issues:
   ```bash
   cd android && ./gradlew clean

@@ -27,22 +27,22 @@ include ":app"
 
 // Support for enableLocalBuild task (purchases-hybrid-common)
 if (file(".composite-enable").exists()) {
-    def path = file(".composite-enable").readText().trim()
+    def path = file(".composite-enable").getText().trim()
     includeBuild(path) {
         dependencySubstitution {
-            substitute module('com.revenuecat.purchases:purchases-hybrid-common') using project(':purchases-hybrid-common')
-            substitute module('com.revenuecat.purchases:purchases-hybrid-common-ui') using project(':purchases-hybrid-common-ui')
+            substitute module('com.revenuecat.purchases:purchases-hybrid-common') using project(':hybridcommon')
+            substitute module('com.revenuecat.purchases:purchases-hybrid-common-ui') using project(':hybridcommon-ui')
         }
     }
 }
 
 // Support for enableLocalAndroidBuild task (purchases-android)
 if (file(".android-enable").exists()) {
-    def path = file(".android-enable").readText().trim()
+    def path = file(".android-enable").getText().trim()
     includeBuild(path) {
         dependencySubstitution {
             substitute module('com.revenuecat.purchases:purchases') using project(':purchases')
-            substitute module('com.revenuecat.purchases:purchases-ui') using project(':purchases-ui')
+            substitute module('com.revenuecat.purchases:purchases-ui') using project(':ui:revenuecatui')
         }
     }
 }

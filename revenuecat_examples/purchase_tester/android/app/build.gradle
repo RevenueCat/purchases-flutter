@@ -56,7 +56,7 @@ android {
         // includeBuild and working with a local copy of purchases-hybrid-common
         // This line also needs to be added to purchases_flutter's build.gradle
         // https://developer.android.com/studio/build/build-variants#resolve_matching_errors
-        missingDimensionStrategy 'dependencyVersions', 'latestDependencies', 'unityIAP'
+        missingDimensionStrategy 'apis', 'defaults'
         multiDexEnabled true
     }
 
@@ -92,11 +92,11 @@ task enableLocalBuild {
     description = 'Enable composite build for local dependencies'
     doLast {
         if (project.hasProperty('commonPath')) {
-            new File(".composite-enable").text = commonPath
+            new File(rootProject.projectDir, ".composite-enable").text = commonPath
             println "Enabled local purchases-hybrid-common at: $commonPath"
         }
         if (project.hasProperty('androidPath')) {
-            new File(".android-enable").text = androidPath
+            new File(rootProject.projectDir, ".android-enable").text = androidPath
             println "Enabled local purchases-android at: $androidPath"
         }
         if (!project.hasProperty('commonPath') && !project.hasProperty('androidPath')) {
@@ -110,13 +110,13 @@ task disableLocalBuild {
     description = 'Disable composite build'
     doLast {
         def disabled = false
-        File commonFile = file(".composite-enable")
+        File commonFile = new File(rootProject.projectDir, ".composite-enable")
         if (commonFile.exists()) {
             commonFile.delete()
             println "Disabled local purchases-hybrid-common"
             disabled = true
         }
-        File androidFile = file(".android-enable")
+        File androidFile = new File(rootProject.projectDir, ".android-enable")
         if (androidFile.exists()) {
             androidFile.delete()
             println "Disabled local purchases-android"
