@@ -40,7 +40,7 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Allows you to test subscriptions with add ons.',
+              'Allows you to test subscriptions with add-ons.',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 16),
