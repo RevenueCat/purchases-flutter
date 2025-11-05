@@ -400,7 +400,7 @@ If you encounter a security dialog on macOS when running Flutter:
 ### Android Issues
 - **Gradle Version Compatibility**: Ensure all projects use compatible AGP versions. If you get "Using multiple versions of the Android Gradle plugin" errors:
   - Check that purchases-flutter, purchases-hybrid-common, and purchases-android all use the same AGP version
-  - Currently requires AGP 8.13.0 and Gradle 8.13+
+  - Currently requires AGP version indicated in `android/build.gradle#L13` and Gradle version in `android/gradle/wrapper/gradle-wrapper.properties#L4`
   
 - **`failOnNoDiscoveredTests` Error**: If you get "Unresolved reference: failOnNoDiscoveredTests" when building with local `purchases-hybrid-common`:
   - This happens with Gradle versions < 9.0.0 (the property was introduced in Gradle 9.0.0)
