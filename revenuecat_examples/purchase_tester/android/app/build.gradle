@@ -100,7 +100,7 @@ task enableLocalBuild {
             println "Enabled local purchases-android at: $androidPath"
         }
         if (!project.hasProperty('commonPath') && !project.hasProperty('androidPath')) {
-            throw new GradleException("Please specify -PcommonPath or -PandroidPath parameter")
+            throw new GradleException("Please specify -PcommonPath and/or -PandroidPath parameter")
         }
     }
 }
