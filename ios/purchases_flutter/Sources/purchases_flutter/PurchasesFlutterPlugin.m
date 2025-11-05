@@ -795,7 +795,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"9.9.2";
+    return @"9.9.2-add-ons-beta.1";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {

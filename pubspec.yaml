@@ -1,6 +1,6 @@
 name: purchases_flutter
 description: Flutter in-app purchases and subscriptions made easy. The plugin supports iOS, macOS and Android.
-version: 9.9.2
+version: 9.9.2-add-ons-beta.1
 homepage: https://www.revenuecat.com/
 repository: https://github.com/RevenueCat/purchases-flutter
 issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
