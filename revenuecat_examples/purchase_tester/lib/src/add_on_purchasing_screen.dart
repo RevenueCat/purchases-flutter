@@ -15,14 +15,13 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
   late final List<_SubscriptionOptionEntry> _options;
   String? _selectedBaseOptionId;
   final Set<String> _selectedPurchaseOptionIds = <String>{};
-  _AddOnType _selectedType = _AddOnType.addOnStoreProducts;
+  final Map<String, _PurchaseAs> _purchaseAsByOption =
+      <String, _PurchaseAs>{};
   String? _purchaseStatusMessage;
   bool _isPurchasing = false;
 
   bool get _canAttemptPurchase =>
-      !_isPurchasing &&
-      _selectedBaseOptionId != null &&
-      _selectedPurchaseOptionIds.isNotEmpty;
+      !_isPurchasing && _selectedBaseOptionId != null;
 
   @override
   void initState() {
@@ -46,7 +45,7 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: _canAttemptPurchase ? () => _onPurchasePressed() : null,
-              child: const Text('Purchase with PurchaseParams.storeProduct'),
+              child: const Text('Purchase'),
             ),
             if (_isPurchasing)
               const Padding(
@@ -62,23 +61,6 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
                 ),
               ),
             const SizedBox(height: 24),
-            Text(
-              'Add-on type',
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
-            RadioListTile<_AddOnType>(
-              contentPadding: EdgeInsets.zero,
-              title: const Text('.addOnStoreProducts()'),
-              value: _AddOnType.addOnStoreProducts,
-              groupValue: _selectedType,
-              onChanged: (value) {
-                if (value == null) return;
-                setState(() {
-                  _selectedType = value;
-                });
-              },
-            ),
-            const SizedBox(height: 16),
             Expanded(child: _buildOptionsList(context)),
           ],
         ),
@@ -102,6 +84,7 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
         final bool isBase = _selectedBaseOptionId == option.id;
         final bool isPurchaseOption =
             _selectedPurchaseOptionIds.contains(option.id);
+        final purchaseAs = _purchaseAsFor(option);
 
         return Card(
           child: Padding(
@@ -135,18 +118,35 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _OptionCheckbox(
-                      label: 'Base item',
+                      label: 'Base Item',
                       value: isBase,
                       onChanged: (checked) =>
                           _onBaseItemToggled(option, checked),
                     ),
                     if (!isBase)
                       _OptionCheckbox(
-                        label: 'Purchase option',
+                        label: 'Purchase Option',
                         value: isPurchaseOption,
                         onChanged: (checked) =>
                             _onPurchaseOptionToggled(option, checked),
                       ),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Purchase As:',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    _PurchaseAsPicker(
+                      label: 'Store Product',
+                      value: _PurchaseAs.storeProduct,
+                      groupValue: purchaseAs,
+                      onChanged: (value) => _onPurchaseAsChanged(option, value),
+                    ),
+                    _PurchaseAsPicker(
+                      label: 'Subscription Option',
+                      value: _PurchaseAs.subscriptionOption,
+                      groupValue: purchaseAs,
+                      onChanged: (value) => _onPurchaseAsChanged(option, value),
+                    ),
                   ],
                 ),
               ],
@@ -178,6 +178,12 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
     });
   }
 
+  void _onPurchaseAsChanged(SubscriptionOption option, _PurchaseAs value) {
+    setState(() {
+      _purchaseAsByOption[option.id] = value;
+    });
+  }
+
   Future<void> _onPurchasePressed() async {
     final baseId = _selectedBaseOptionId;
     if (baseId == null) return;
@@ -185,33 +191,70 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
     final baseEntry = _findEntry(baseId);
     if (baseEntry == null) return;
 
-    List<StoreProduct>? addOnStoreProducts;
-    if (_selectedType == _AddOnType.addOnStoreProducts &&
-        _selectedPurchaseOptionIds.isNotEmpty) {
-      final Map<String, StoreProduct> addOnMap = {};
-      for (final entry in _options) {
-        if (entry.option.id == baseId) continue;
-        if (_selectedPurchaseOptionIds.contains(entry.option.id)) {
-          addOnMap[entry.storeProduct.identifier] = entry.storeProduct;
-        }
-      }
-      if (addOnMap.isNotEmpty) {
-        addOnStoreProducts = addOnMap.values.toList(growable: false);
+    final List<_SubscriptionOptionEntry> selectedAddOns = _selectedPurchaseOptionIds
+        .map(_findEntry)
+        .whereType<_SubscriptionOptionEntry>()
+        .where((entry) => entry.option.id != baseId)
+        .toList(growable: false);
+
+    final basePurchaseAs = _purchaseAsFor(baseEntry.option);
+
+    final Map<String, StoreProduct> addOnStoreProductsMap = {};
+    final Map<String, SubscriptionOption> addOnSubscriptionOptionsMap = {};
+
+    for (final entry in selectedAddOns) {
+      final selection = _purchaseAsFor(entry.option);
+      if (selection == _PurchaseAs.storeProduct) {
+        addOnStoreProductsMap[entry.storeProduct.identifier] =
+            entry.storeProduct;
+      } else {
+        debugPrint('Adding add-on subscription option: ${entry.option.id}: ${entry.option.storeProductId}: ${entry.option.id}');
+        addOnSubscriptionOptionsMap[entry.option.id] = entry.option;
       }
     }
 
-    final params = PurchaseParams.storeProduct(
-      baseEntry.storeProduct,
-      addOnStoreProducts: addOnStoreProducts,
-    );
+    final List<StoreProduct>? addOnStoreProducts =
+        addOnStoreProductsMap.isNotEmpty
+            ? addOnStoreProductsMap.values.toList(growable: false)
+            : null;
+    final List<SubscriptionOption>? addOnSubscriptionOptions =
+        addOnSubscriptionOptionsMap.isNotEmpty
+            ? addOnSubscriptionOptionsMap.values.toList(growable: false)
+            : null;
 
-    final addOnIdentifiers = addOnStoreProducts
-        ?.map((product) => product.identifier)
-        .toList(growable: false);
+    final PurchaseParams params;
+    if (basePurchaseAs == _PurchaseAs.storeProduct) {
+      params = PurchaseParams.storeProduct(
+        baseEntry.storeProduct,
+        addOnStoreProducts: addOnStoreProducts,
+        addOnSubscriptionOptions: addOnSubscriptionOptions,
+      );
+    } else {
+      params = PurchaseParams.subscriptionOption(
+        baseEntry.option,
+        addOnStoreProducts: addOnStoreProducts,
+        addOnSubscriptionOptions: addOnSubscriptionOptions,
+      );
+    }
 
+    final baseDescription = basePurchaseAs == _PurchaseAs.storeProduct
+        ? baseEntry.storeProduct.identifier
+        : '${baseEntry.option.storeProductId}:${baseEntry.option.id}';
+    final addOnDescriptions = [
+      if (addOnStoreProducts != null)
+        ...addOnStoreProducts.map((product) => product.identifier),
+      if (addOnSubscriptionOptions != null)
+        ...addOnSubscriptionOptions
+            .map((option) => '${option.storeProductId}:${option.id}'),
+    ];
+    final purchaseAsLabel = basePurchaseAs == _PurchaseAs.storeProduct
+        ? 'store product'
+        : 'subscription option';
+
+    final addOnSummary =
+        addOnDescriptions.isNotEmpty ? ' with add-ons ${addOnDescriptions.join(', ')}' : '';
     final attemptMessage =
-        'Attempting purchase: ${baseEntry.storeProduct.identifier}'
-        '${addOnIdentifiers != null && addOnIdentifiers.isNotEmpty ? ' with add-ons ${addOnIdentifiers.join(', ')}' : ''}';
+        'Attempting purchase: $baseDescription as $purchaseAsLabel$addOnSummary';
     debugPrint(attemptMessage);
 
     try {
@@ -221,8 +264,7 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
       });
       final result = await Purchases.purchase(params);
       final successMessage =
-          'Purchase successful: ${result.storeTransaction.productIdentifier}'
-          '${addOnIdentifiers != null && addOnIdentifiers.isNotEmpty ? ' with add-ons ${addOnIdentifiers.join(', ')}' : ''}';
+          'Purchase successful: ${result.storeTransaction.productIdentifier}$addOnSummary';
       debugPrint(successMessage);
       setState(() {
         _isPurchasing = false;
@@ -246,6 +288,9 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
       });
     }
   }
+
+  _PurchaseAs _purchaseAsFor(SubscriptionOption option) =>
+      _purchaseAsByOption[option.id] ?? _PurchaseAs.storeProduct;
 
   _SubscriptionOptionEntry? _findEntry(String optionId) {
     for (final entry in _options) {
@@ -315,7 +360,45 @@ class _OptionCheckbox extends StatelessWidget {
   }
 }
 
-enum _AddOnType { addOnStoreProducts }
+class _PurchaseAsPicker extends StatelessWidget {
+  final String label;
+  final _PurchaseAs value;
+  final _PurchaseAs groupValue;
+  final ValueChanged<_PurchaseAs> onChanged;
+
+  const _PurchaseAsPicker({
+    required this.label,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelected = value == groupValue;
+    return InkWell(
+      onTap: () => onChanged(value),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Radio<_PurchaseAs>(
+            value: value,
+            groupValue: groupValue,
+            onChanged: (_) => onChanged(value),
+          ),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+enum _PurchaseAs { storeProduct, subscriptionOption }
 
 String _formatPricing(SubscriptionOption option) {
   if (option.pricingPhases.isEmpty) {

@@ -12,6 +12,7 @@ class _PurchaseParamsApiTest {
     WinBackOffer? winBackOffer,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
+    List<SubscriptionOption>? addOnSubscriptionOptions,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
       package,
@@ -55,6 +56,16 @@ class _PurchaseParamsApiTest {
       customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
     );
+    purchaseParams = PurchaseParams.package(
+      package,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
+      addOnStoreProducts: addOnStoreProducts,
+      addOnSubscriptionOptions: addOnSubscriptionOptions,
+    );
   }
 
   void _checkStoreProductConstructor(
@@ -65,6 +76,7 @@ class _PurchaseParamsApiTest {
     WinBackOffer? winBackOffer,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
+    List<SubscriptionOption>? addOnSubscriptionOptions,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
@@ -108,6 +120,16 @@ class _PurchaseParamsApiTest {
       customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
     );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
+      addOnStoreProducts: addOnStoreProducts,
+      addOnSubscriptionOptions: addOnSubscriptionOptions,
+    );
   }
 
   void _checkSubscriptionOptionConstructor(
@@ -116,6 +138,7 @@ class _PurchaseParamsApiTest {
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
+    List<SubscriptionOption>? addOnSubscriptionOptions,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
       subscriptionOption,
@@ -142,6 +165,14 @@ class _PurchaseParamsApiTest {
       customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
     );
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      customerEmail: customerEmail,
+      addOnStoreProducts: addOnStoreProducts,
+      addOnSubscriptionOptions: addOnSubscriptionOptions,
+    );
   }
 
   void _checkProperties(PurchaseParams purchaseParams) {
@@ -154,5 +185,6 @@ class _PurchaseParamsApiTest {
     WinBackOffer? winBackOffer = purchaseParams.winBackOffer;
     String? customerEmail = purchaseParams.customerEmail;
     List<StoreProduct>? addOnStoreProducts = purchaseParams.addOnStoreProducts;
+    List<SubscriptionOption>? addOnSubscriptionOptions = purchaseParams.addOnSubscriptionOptions;
   }
 }
