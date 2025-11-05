@@ -245,7 +245,7 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
         ...addOnStoreProducts.map((product) => product.identifier),
       if (addOnSubscriptionOptions != null)
         ...addOnSubscriptionOptions
-            .map((option) => '${option.storeProductId}:${option.id}'),
+            .map((option) => option.storeProductId),
     ];
     final purchaseAsLabel = basePurchaseAs == _PurchaseAs.storeProduct
         ? 'store product'
