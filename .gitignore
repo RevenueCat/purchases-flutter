@@ -33,6 +33,9 @@ revenuecat_examples/purchase_tester/.flutter-plugins-dependencies
 revenuecat_examples/purchase_tester/ios/Flutter/Flutter.podspec
 revenuecat_examples/purchase_tester/ios/Flutter/.last_build_id
 revenuecat_examples/purchase_tester/android/.composite-enable
+revenuecat_examples/purchase_tester/android/.android-enable
+revenuecat_examples/MagicWeather/android/.composite-enable
+revenuecat_examples/MagicWeather/android/.android-enable
 fastlane/report.xml
 *.bck
 

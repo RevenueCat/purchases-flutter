@@ -81,3 +81,47 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
+
+// Usage:
+// ./gradlew enableLocalBuild -PcommonPath="$HOME/Development/repos/purchases-hybrid-common/android"
+// ./gradlew enableLocalBuild -PandroidPath="$HOME/Development/repos/purchases-android"
+task enableLocalBuild {
+    group = 'Tools'
+    description = 'Enable composite build for local dependencies'
+    doLast {
+        if (project.hasProperty('commonPath')) {
+            new File(rootProject.projectDir, ".composite-enable").text = commonPath
+            println "Enabled local purchases-hybrid-common at: $commonPath"
+        }
+        if (project.hasProperty('androidPath')) {
+            new File(rootProject.projectDir, ".android-enable").text = androidPath
+            println "Enabled local purchases-android at: $androidPath"
+        }
+        if (!project.hasProperty('commonPath') && !project.hasProperty('androidPath')) {
+            throw new GradleException("Please specify -PcommonPath and/or -PandroidPath parameter")
+        }
+    }
+}
+
+task disableLocalBuild {
+    group = 'Tools'
+    description = 'Disable composite build'
+    doLast {
+        def disabled = false
+        File commonFile = new File(rootProject.projectDir, ".composite-enable")
+        if (commonFile.exists()) {
+            commonFile.delete()
+            println "Disabled local purchases-hybrid-common"
+            disabled = true
+        }
+        File androidFile = new File(rootProject.projectDir, ".android-enable")
+        if (androidFile.exists()) {
+            androidFile.delete()
+            println "Disabled local purchases-android"
+            disabled = true
+        }
+        if (!disabled) {
+            println "No local builds were enabled"
+        }
+    }
+}
