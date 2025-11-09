@@ -5,9 +5,6 @@
 
 ## RevenueCat SDK
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.16.0 (#1529) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.12.2](https://github.com/RevenueCat/purchases-android/releases/tag/9.12.2)
-  * [iOS 5.46.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.46.1)
-
-### 🔄 Other Changes
-* Add DEVELOPMENT instructions and fix `enableLocalBuild` task (#1520) via Cesar de la Vega (@vegaro)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.16.1 (#1532) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.46.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.46.3)
+  * [iOS 5.46.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.46.2)
