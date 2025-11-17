@@ -60,6 +60,11 @@ lane :bump do |options|
     versions_file_path: versions_path,
     is_prerelease: options[:is_prerelease]
   )
+
+  # Update CHANGELOG.md to include BC7 version
+  update_changelog_with_bc7_version(changelog_path, current_version_number)
+  commit_current_changes(commit_message: 'Update CHANGELOG.md with BC7 version')
+
   update_hybrids_versions_file(
     versions_file_path: versions_path,
     new_sdk_version: current_version_number,
@@ -111,6 +116,72 @@ lane :release_purchases_ui_flutter do |options|
   setup_credentials_file
   Dir.chdir('../purchases_ui_flutter') do
     sh('flutter', 'pub', 'publish', '--force')
+  end
+end
+
+desc "Create BC7 variant release"
+lane :release_bc7 do |options|
+  # Modify files in-place for BC7 variant
+  UI.message("Creating BC7 variant of purchases_flutter in-place...")
+
+  # Apply BC7 modifications
+  apply_bc7_modifications('..', false)
+
+  # Temporarily commit changes to satisfy git clean check
+  Dir.chdir('..') do
+    sh('git', 'add', 'pubspec.yaml', 'android/build.gradle')
+    sh('git', 'commit', '-m', '[TEMPORARY] BC7 modifications for publishing')
+  end
+
+  # Dry run
+  Dir.chdir('..') do
+    sh('flutter', 'pub', 'publish', '--dry-run')
+  end
+
+  # Setup credentials and publish
+#     setup_credentials_file
+#     Dir.chdir('..') do
+#       sh('flutter', 'pub', 'publish', '--force')
+#     end
+
+  UI.success("✅ Successfully published purchases_bc7_flutter")
+
+  # Undo the temporary commit
+  Dir.chdir('..') do
+    sh('git', 'reset', 'HEAD~1')
+  end
+end
+
+desc "Create purchases_ui_bc7_flutter release"
+lane :release_purchases_ui_bc7_flutter do |options|
+  # Modify files in-place for BC7 variant
+  UI.message("Creating BC7 variant of purchases_ui_flutter in-place...")
+
+  # Apply BC7 modifications
+  apply_bc7_modifications('../purchases_ui_flutter', true)
+
+  # Temporarily commit changes to satisfy git clean check
+  Dir.chdir('../purchases_ui_flutter') do
+    sh('git', 'add', 'pubspec.yaml', 'android/build.gradle')
+    sh('git', 'commit', '-m', '[TEMPORARY] BC7 modifications for publishing')
+  end
+
+  # Dry run
+  Dir.chdir('../purchases_ui_flutter') do
+    sh('flutter', 'pub', 'publish', '--dry-run')
+  end
+
+  # Setup credentials and publish
+#     setup_credentials_file
+#     Dir.chdir('../purchases_ui_flutter') do
+#       sh('flutter', 'pub', 'publish', '--force')
+#     end
+
+  UI.success("✅ Successfully published purchases_ui_bc7_flutter")
+
+  # Undo the temporary commit
+  Dir.chdir('../purchases_ui_flutter') do
+    sh('git', 'reset', 'HEAD~1')
   end
 end
 
@@ -303,4 +374,51 @@ def check_no_git_tag_exists(version_number)
   if git_tag_exists(tag: version_number, remote: true, remote_name: 'origin')
     raise "git tag with version #{version_number} already exists!"
   end
+end
+
+def update_changelog_with_bc7_version(changelog_path, version)
+  changelog_file_path = File.join('..', changelog_path)
+  changelog_content = File.read(changelog_file_path)
+
+  # Find the first occurrence of "## X.Y.Z" and replace with "## X.Y.Z & X.Y.Z+bc7"
+  changelog_content.sub!(/^## (#{Regexp.escape(version)})$/, "## \\1 & \\1+bc7")
+
+  File.write(changelog_file_path, changelog_content)
+  UI.success("✅ Updated CHANGELOG.md to include BC7 version")
+end
+
+def apply_bc7_modifications(source_dir, is_ui_library)
+  # Update pubspec.yaml - append -bc7 to version
+  pubspec_path = File.join(source_dir, 'pubspec.yaml')
+  pubspec_content = File.read(pubspec_path)
+
+  UI.message("🔧 Updating pubspec.yaml for UI library BC7 variant...")
+  # Append -bc7 to version number
+  pubspec_content.gsub!(/^version:\s+(\S+)/, 'version: \1+bc7')
+
+  File.write(pubspec_path, pubspec_content)
+  UI.success("✅ Updated pubspec.yaml with BC7 version")
+
+  # Update Android build.gradle - change dependency to BC7 variant
+  build_gradle_path = File.join(source_dir, 'android', 'build.gradle')
+  build_gradle_content = File.read(build_gradle_path)
+
+  if is_ui_library
+    UI.message("🔧 Updating Android build.gradle for UI library...")
+    # Change purchases-hybrid-common-ui to purchases-hybrid-common-ui-bc7
+    build_gradle_content.gsub!(
+      'com.revenuecat.purchases:purchases-hybrid-common-ui:',
+      'com.revenuecat.purchases:purchases-hybrid-common-ui-bc7:'
+    )
+  else
+    UI.message("🔧 Updating Android build.gradle for main library...")
+    # Change purchases-hybrid-common to purchases-hybrid-common-bc7
+    build_gradle_content.gsub!(
+      'com.revenuecat.purchases:purchases-hybrid-common:',
+      'com.revenuecat.purchases:purchases-hybrid-common-bc7:'
+    )
+  end
+
+  File.write(build_gradle_path, build_gradle_content)
+  UI.success("✅ Updated Android build.gradle with BC7 dependency")
 end
