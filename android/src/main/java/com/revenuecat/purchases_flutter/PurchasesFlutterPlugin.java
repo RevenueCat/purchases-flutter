@@ -155,9 +155,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 Map<String, Object> presentedOfferingContext = call.argument("presentedOfferingContext");
                 List<Map<String, Object>> addOnStoreProducts = call.argument("addOnStoreProducts");
                 List<Map<String, Object>> addOnSubscriptionOptions = call.argument("addOnSubscriptionOptions");
+                List<Map<String, Object>> addOnPackages = call.argument("addOnPackages");
                 purchaseProduct(productIdentifier, type, googleOldProductIdentifer, googleProrationMode,
                         googleIsPersonalizedPrice, presentedOfferingContext, addOnStoreProducts,
-                        addOnSubscriptionOptions, result);
+                        addOnPackages, addOnSubscriptionOptions, result);
                 break;
             case "purchasePackage":
                 String packageIdentifier = call.argument("packageIdentifier");
@@ -166,10 +167,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleProrationMode = call.argument("googleProrationMode");
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 addOnStoreProducts = call.argument("addOnStoreProducts");
+                addOnPackages = call.argument("addOnPackages");
                 addOnSubscriptionOptions = call.argument("addOnSubscriptionOptions");
                 purchasePackage(packageIdentifier, presentedOfferingContext, googleOldProductIdentifer,
                         googleProrationMode, googleIsPersonalizedPrice, addOnStoreProducts,
-                        addOnSubscriptionOptions, result);
+                        addOnPackages, addOnSubscriptionOptions, result);
                 break;
             case "purchaseSubscriptionOption":
                 productIdentifier = call.argument("productIdentifier");
@@ -179,10 +181,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 presentedOfferingContext = call.argument("presentedOfferingContext");
                 addOnStoreProducts = call.argument("addOnStoreProducts");
+                addOnPackages = call.argument("addOnPackages");
                 addOnSubscriptionOptions = call.argument("addOnSubscriptionOptions");
                 purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer,
                         googleProrationMode, googleIsPersonalizedPrice, presentedOfferingContext,
-                        addOnStoreProducts, addOnSubscriptionOptions, result);
+                        addOnStoreProducts, addOnPackages, addOnSubscriptionOptions, result);
                 break;
             case "getAppUserID":
                 getAppUserID(result);
@@ -474,6 +477,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable final Boolean googleIsPersonalizedPrice,
             @Nullable final Map<String, Object> presentedOfferingContext,
             @Nullable final List<Map<String, Object>> addOnStoreProducts,
+            @Nullable final List<Map<String, Object>> addOnPackages,
             @Nullable final List<Map<String, Object>> addOnSubscriptionOptions,
             final Result result) {
         CommonKt.purchaseProduct(
@@ -487,6 +491,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 presentedOfferingContext,
                 getOnResult(result),
                 addOnStoreProducts,
+                addOnPackages,
                 addOnSubscriptionOptions);
     }
 
@@ -496,6 +501,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable final Integer googleProrationMode,
             @Nullable final Boolean googleIsPersonalizedPrice,
             @Nullable final List<Map<String, Object>> addOnStoreProducts,
+            @Nullable final List<Map<String, Object>> addOnPackages,
             @Nullable final List<Map<String, Object>> addOnSubscriptionOptions,
             final Result result) {
         CommonKt.purchasePackage(
@@ -507,6 +513,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleIsPersonalizedPrice,
                 getOnResult(result),
                 addOnStoreProducts,
+                addOnPackages,
                 addOnSubscriptionOptions);
     }
 
@@ -517,6 +524,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable final Boolean googleIsPersonalizedPrice,
             @Nullable final Map<String, Object> presentedOfferingContext,
             @Nullable final List<Map<String, Object>> addOnStoreProducts,
+            @Nullable final List<Map<String, Object>> addOnPackages,
             @Nullable final List<Map<String, Object>> addOnSubscriptionOptions,
             final Result result) {
         CommonKt.purchaseSubscriptionOption(
@@ -529,6 +537,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 presentedOfferingContext,
                 getOnResult(result),
                 addOnStoreProducts,
+                addOnPackages
                 addOnSubscriptionOptions);
     }
 
