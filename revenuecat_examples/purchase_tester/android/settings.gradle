@@ -19,8 +19,30 @@ pluginManagement {
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
-    id "com.android.application" version "8.13.0" apply false
+    id "com.android.application" version "8.13.1" apply false
     id "org.jetbrains.kotlin.android" version "1.8.22" apply false
 }
 
 include ":app"
+
+// Support for enableLocalBuild task (purchases-hybrid-common)
+if (file(".composite-enable").exists()) {
+    def path = file(".composite-enable").getText().trim()
+    includeBuild(path) {
+        dependencySubstitution {
+            substitute module('com.revenuecat.purchases:purchases-hybrid-common') using project(':hybridcommon')
+            substitute module('com.revenuecat.purchases:purchases-hybrid-common-ui') using project(':hybridcommon-ui')
+        }
+    }
+}
+
+// Support for enableLocalAndroidBuild task (purchases-android)
+if (file(".android-enable").exists()) {
+    def path = file(".android-enable").getText().trim()
+    includeBuild(path) {
+        dependencySubstitution {
+            substitute module('com.revenuecat.purchases:purchases') using project(':purchases')
+            substitute module('com.revenuecat.purchases:purchases-ui') using project(':ui:revenuecatui')
+        }
+    }
+}
