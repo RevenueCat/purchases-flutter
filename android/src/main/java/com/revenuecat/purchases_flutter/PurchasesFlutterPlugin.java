@@ -537,7 +537,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 presentedOfferingContext,
                 getOnResult(result),
                 addOnStoreProducts,
-                addOnPackages
+                addOnPackages,
                 addOnSubscriptionOptions);
     }
 
