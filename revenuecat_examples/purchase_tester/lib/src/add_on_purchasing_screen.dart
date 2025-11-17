@@ -147,6 +147,12 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
                       groupValue: purchaseAs,
                       onChanged: (value) => _onPurchaseAsChanged(option, value),
                     ),
+                    _PurchaseAsPicker(
+                      label: 'Package',
+                      value: _PurchaseAs.package,
+                      groupValue: purchaseAs,
+                      onChanged: (value) => _onPurchaseAsChanged(option, value),
+                    ),
                   ],
                 ),
               ],
@@ -201,15 +207,19 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
 
     final Map<String, StoreProduct> addOnStoreProductsMap = {};
     final Map<String, SubscriptionOption> addOnSubscriptionOptionsMap = {};
+    final Map<String, Package> addOnPackagesMap = {};
 
     for (final entry in selectedAddOns) {
       final selection = _purchaseAsFor(entry.option);
       if (selection == _PurchaseAs.storeProduct) {
         addOnStoreProductsMap[entry.storeProduct.identifier] =
             entry.storeProduct;
-      } else {
-        debugPrint('Adding add-on subscription option: ${entry.option.id}: ${entry.option.storeProductId}: ${entry.option.id}');
+      } else if (selection == _PurchaseAs.subscriptionOption) {
+        debugPrint(
+            'Adding add-on subscription option: ${entry.option.id}: ${entry.option.storeProductId}: ${entry.option.id}');
         addOnSubscriptionOptionsMap[entry.option.id] = entry.option;
+      } else {
+        addOnPackagesMap[entry.package.identifier] = entry.package;
       }
     }
 
@@ -221,38 +231,61 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
         addOnSubscriptionOptionsMap.isNotEmpty
             ? addOnSubscriptionOptionsMap.values.toList(growable: false)
             : null;
+    final List<Package>? addOnPackages = addOnPackagesMap.isNotEmpty
+        ? addOnPackagesMap.values.toList(growable: false)
+        : null;
 
     final PurchaseParams params;
-    if (basePurchaseAs == _PurchaseAs.storeProduct) {
-      params = PurchaseParams.storeProduct(
-        baseEntry.storeProduct,
-        addOnStoreProducts: addOnStoreProducts,
-        addOnSubscriptionOptions: addOnSubscriptionOptions,
-      );
-    } else {
-      params = PurchaseParams.subscriptionOption(
-        baseEntry.option,
-        addOnStoreProducts: addOnStoreProducts,
-        addOnSubscriptionOptions: addOnSubscriptionOptions,
-      );
+    switch (basePurchaseAs) {
+      case _PurchaseAs.storeProduct:
+        params = PurchaseParams.storeProduct(
+          baseEntry.storeProduct,
+          addOnStoreProducts: addOnStoreProducts,
+          addOnPackages: addOnPackages,
+          addOnSubscriptionOptions: addOnSubscriptionOptions,
+        );
+        break;
+      case _PurchaseAs.subscriptionOption:
+        params = PurchaseParams.subscriptionOption(
+          baseEntry.option,
+          addOnStoreProducts: addOnStoreProducts,
+          addOnPackages: addOnPackages,
+          addOnSubscriptionOptions: addOnSubscriptionOptions,
+        );
+        break;
+      case _PurchaseAs.package:
+        params = PurchaseParams.package(
+          baseEntry.package,
+          addOnStoreProducts: addOnStoreProducts,
+          addOnPackages: addOnPackages,
+          addOnSubscriptionOptions: addOnSubscriptionOptions,
+        );
+        break;
     }
 
     final baseDescription = basePurchaseAs == _PurchaseAs.storeProduct
         ? baseEntry.storeProduct.identifier
-        : '${baseEntry.option.storeProductId}:${baseEntry.option.id}';
+        : basePurchaseAs == _PurchaseAs.subscriptionOption
+            ? '${baseEntry.option.storeProductId}:${baseEntry.option.id}'
+            : '${baseEntry.package.identifier} (package)';
     final addOnDescriptions = [
       if (addOnStoreProducts != null)
         ...addOnStoreProducts.map((product) => product.identifier),
       if (addOnSubscriptionOptions != null)
-        ...addOnSubscriptionOptions
-            .map((option) => option.storeProductId),
+        ...addOnSubscriptionOptions.map((option) => option.storeProductId),
+      if (addOnPackages != null)
+        ...addOnPackages.map((pkg) => '${pkg.identifier} (package)'),
     ];
     final purchaseAsLabel = basePurchaseAs == _PurchaseAs.storeProduct
         ? 'store product'
-        : 'subscription option';
+        : basePurchaseAs == _PurchaseAs.subscriptionOption
+            ? 'subscription option'
+            : 'package';
 
     final addOnSummary =
-        addOnDescriptions.isNotEmpty ? ' with add-ons ${addOnDescriptions.join(', ')}' : '';
+        addOnDescriptions.isNotEmpty
+            ? ' with add-ons ${addOnDescriptions.join(', ')}'
+            : '';
     final attemptMessage =
         'Attempting purchase: $baseDescription as $purchaseAsLabel$addOnSummary';
     debugPrint(attemptMessage);
@@ -312,6 +345,7 @@ class _AddOnPurchasingScreenState extends State<AddOnPurchasingScreen> {
           () => _SubscriptionOptionEntry(
             option: option,
             storeProduct: storeProduct,
+            package: package,
           ),
         );
       }
@@ -325,9 +359,12 @@ class _SubscriptionOptionEntry {
   final SubscriptionOption option;
   final StoreProduct storeProduct;
 
+  final Package package;
+
   _SubscriptionOptionEntry({
     required this.option,
     required this.storeProduct,
+    required this.package,
   });
 }
 
@@ -398,7 +435,7 @@ class _PurchaseAsPicker extends StatelessWidget {
   }
 }
 
-enum _PurchaseAs { storeProduct, subscriptionOption }
+enum _PurchaseAs { storeProduct, subscriptionOption, package }
 
 String _formatPricing(SubscriptionOption option) {
   if (option.pricingPhases.isEmpty) {
