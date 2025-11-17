@@ -16,6 +16,7 @@ class PurchaseParams {
   final WinBackOffer? winBackOffer;
   final String? customerEmail;
   final List<StoreProduct>? addOnStoreProducts;
+  final List<Package>? addOnPackages;
   final List<SubscriptionOption>? addOnSubscriptionOptions;
 
   const PurchaseParams._(
@@ -28,6 +29,7 @@ class PurchaseParams {
     this.winBackOffer,
     this.customerEmail,
     this.addOnStoreProducts,
+    this.addOnPackages,
     this.addOnSubscriptionOptions,
   );
 
@@ -57,6 +59,8 @@ class PurchaseParams {
   /// will ask the customer for their email.
   ///
   /// [addOnStoreProducts] Play Store only. Add-on products to be purchased with the base item.
+  /// 
+  /// [addOnPackages] Play Store only. Add-on packages to be purchased with the base item.
   ///
   /// [addOnSubscriptionOptions] Play Store only. Add-on subscription options to be purchased with the base item.
   /// 
@@ -68,6 +72,7 @@ class PurchaseParams {
     WinBackOffer? winBackOffer,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
+    List<Package>? addOnPackages,
     List<SubscriptionOption>? addOnSubscriptionOptions,
   }) : this._(
         package,
@@ -79,6 +84,7 @@ class PurchaseParams {
         winBackOffer,
         customerEmail,
         addOnStoreProducts,
+        addOnPackages,
         addOnSubscriptionOptions,
       );
 
@@ -109,6 +115,8 @@ class PurchaseParams {
   /// will ask the customer for their email.
   ///
   /// [addOnStoreProducts] Play Store only. Add-on products to be purchased with the base item.
+  /// 
+  /// [addOnPackages] Play Store only. Add-on packages to be purchased with the base item.
   ///
   /// [addOnSubscriptionOptions] Play Store only. Add-on subscription options to be purchased with the base item.
   ///
@@ -120,6 +128,7 @@ class PurchaseParams {
     WinBackOffer? winBackOffer,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
+    List<Package>? addOnPackages,
     List<SubscriptionOption>? addOnSubscriptionOptions,
   }) : this._(
         null,
@@ -131,6 +140,7 @@ class PurchaseParams {
         winBackOffer,
         customerEmail,
         addOnStoreProducts,
+        addOnPackages,
         addOnSubscriptionOptions,
       );
 
@@ -152,7 +162,9 @@ class PurchaseParams {
   /// will ask the customer for their email.
   ///
   /// [addOnStoreProducts] Play Store only. Add-on products to be purchased with the base item.
-  ///
+  /// 
+  /// [addOnPackages] Play Store only. Add-on packages to be purchased with the base item.
+  /// 
   /// [addOnSubscriptionOptions] Play Store only. Add-on subscription options to be purchased with the base item.
   ///
   const PurchaseParams.subscriptionOption(
@@ -161,6 +173,7 @@ class PurchaseParams {
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
+    List<Package>? addOnPackages,
     List<SubscriptionOption>? addOnSubscriptionOptions,
   }) : this._(
         null,
@@ -172,6 +185,7 @@ class PurchaseParams {
         null,
         customerEmail,
         addOnStoreProducts,
+        addOnPackages,
         addOnSubscriptionOptions,
       );
 }

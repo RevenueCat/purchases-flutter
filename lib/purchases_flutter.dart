@@ -582,6 +582,13 @@ class Purchases {
               'type': storeProduct.productCategory?.name,
             },)
         .toList();
+    final addOnPackages = purchaseParams.addOnPackages
+        ?.map(
+          (package) => <String, dynamic>{
+            'packageIdentifier': package.identifier,
+          },
+        )
+        .toList();
     final addOnSubscriptionOptions = purchaseParams.addOnSubscriptionOptions
         ?.map((subscriptionOption) => <String, dynamic>{
               'productIdentifier': subscriptionOption.productId,
@@ -597,6 +604,7 @@ class Purchases {
       'customerEmail': customerEmail,
       'winBackOfferIdentifier': winBackOffer?.identifier,
       'addOnStoreProducts': addOnStoreProducts,
+      'addOnPackages': addOnPackages,
       'addOnSubscriptionOptions': addOnSubscriptionOptions,
     };
     final isWinBackOfferPurchase = (defaultTargetPlatform == TargetPlatform.iOS
