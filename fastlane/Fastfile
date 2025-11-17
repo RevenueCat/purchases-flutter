@@ -139,10 +139,10 @@ lane :release_bc7 do |options|
   end
 
   # Setup credentials and publish
-#     setup_credentials_file
-#     Dir.chdir('..') do
-#       sh('flutter', 'pub', 'publish', '--force')
-#     end
+  setup_credentials_file
+  Dir.chdir('..') do
+    sh('flutter', 'pub', 'publish', '--force')
+  end
 
   UI.success("✅ Successfully published purchases_bc7_flutter")
 
@@ -172,10 +172,10 @@ lane :release_purchases_ui_bc7_flutter do |options|
   end
 
   # Setup credentials and publish
-#     setup_credentials_file
-#     Dir.chdir('../purchases_ui_flutter') do
-#       sh('flutter', 'pub', 'publish', '--force')
-#     end
+  setup_credentials_file
+  Dir.chdir('../purchases_ui_flutter') do
+    sh('flutter', 'pub', 'publish', '--force')
+  end
 
   UI.success("✅ Successfully published purchases_ui_bc7_flutter")
 
