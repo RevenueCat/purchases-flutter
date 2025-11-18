@@ -16,7 +16,7 @@ Flutter plugin that integrates RevenueCat Paywalls
   s.source           = { :path => '.' }
   s.source_files     = 'purchases_ui_flutter/Sources/purchases_ui_flutter/**/*.swift'
   s.dependency 'FlutterMacOS'
-  s.dependency 'PurchasesHybridCommonUI', '17.18.0'
+  s.dependency 'PurchasesHybridCommonUI', '17.18.1'
 
   s.platform = :osx, '10.11'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
