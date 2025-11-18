@@ -154,8 +154,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 type = call.argument("type");
                 Map<String, Object> presentedOfferingContext = call.argument("presentedOfferingContext");
                 List<Map<String, Object>> addOnStoreProducts = call.argument("addOnStoreProducts");
-                List<Map<String, Object>> addOnPackages = call.argument("addOnPackages");
                 List<Map<String, Object>> addOnSubscriptionOptions = call.argument("addOnSubscriptionOptions");
+                List<Map<String, Object>> addOnPackages = call.argument("addOnPackages");
                 purchaseProduct(productIdentifier, type, googleOldProductIdentifer, googleProrationMode,
                         googleIsPersonalizedPrice, presentedOfferingContext, addOnStoreProducts,
                         addOnSubscriptionOptions, addOnPackages, result);
@@ -167,8 +167,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleProrationMode = call.argument("googleProrationMode");
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 addOnStoreProducts = call.argument("addOnStoreProducts");
-                addOnPackages = call.argument("addOnPackages");
                 addOnSubscriptionOptions = call.argument("addOnSubscriptionOptions");
+                addOnPackages = call.argument("addOnPackages");
                 purchasePackage(packageIdentifier, presentedOfferingContext, googleOldProductIdentifer,
                         googleProrationMode, googleIsPersonalizedPrice, addOnStoreProducts,
                         addOnSubscriptionOptions, addOnPackages, result);
@@ -181,8 +181,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 googleIsPersonalizedPrice = call.argument("googleIsPersonalizedPrice");
                 presentedOfferingContext = call.argument("presentedOfferingContext");
                 addOnStoreProducts = call.argument("addOnStoreProducts");
-                addOnPackages = call.argument("addOnPackages");
                 addOnSubscriptionOptions = call.argument("addOnSubscriptionOptions");
+                addOnPackages = call.argument("addOnPackages");
                 purchaseSubscriptionOption(productIdentifier, optionIdentifier, googleOldProductIdentifer,
                         googleProrationMode, googleIsPersonalizedPrice, presentedOfferingContext,
                         addOnStoreProducts, addOnSubscriptionOptions, addOnPackages, result);
