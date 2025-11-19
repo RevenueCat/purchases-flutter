@@ -586,6 +586,7 @@ class Purchases {
         ?.map(
           (package) => <String, dynamic>{
             'packageIdentifier': package.identifier,
+            'presentedOfferingContext': package.presentedOfferingContext.toJson(),
           },
         )
         .toList();
