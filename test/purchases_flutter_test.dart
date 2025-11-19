@@ -714,6 +714,11 @@ void main() {
               'addOnPackages': [
                 {
                   'packageIdentifier': '\$rc_monthly',
+                  'presentedOfferingContext': <String, dynamic>{
+                      'offeringIdentifier': 'add_on',
+                      'placementIdentifier': null,
+                      'targetingContext': null,
+                  },
                 },
               ],
             },
@@ -2322,7 +2327,7 @@ void main() {
     }
   });
 
-  test('purchase store product with store packages add-ons calls purchase successfully', () async {
+  test('purchase store product with packages add-ons calls purchase successfully', () async {
     try {
       debugDefaultTargetPlatformOverride = TargetPlatform.android;
       response = {
@@ -2391,6 +2396,11 @@ void main() {
               'addOnPackages': [
                 {
                   'packageIdentifier': '\$rc_monthly',
+                  'presentedOfferingContext': <String, dynamic>{
+                    'offeringIdentifier': 'add_on',
+                    'placementIdentifier': null,
+                    'targetingContext': null,
+                  },
                 },
               ],
             },
@@ -2657,6 +2667,11 @@ void main() {
               'addOnPackages': [
                 {
                   'packageIdentifier': '\$rc_add_on',
+                  'presentedOfferingContext': <String, dynamic>{
+                    'offeringIdentifier': 'add_on',
+                    'placementIdentifier': null,
+                    'targetingContext': null,
+                  },
                 },
               ],
               'addOnSubscriptionOptions': null,
@@ -2936,6 +2951,11 @@ void main() {
               'addOnPackages': [
                 {
                   'packageIdentifier': '\$rc_add_on',
+                  'presentedOfferingContext': <String, dynamic>{
+                    'offeringIdentifier': 'add_on',
+                    'placementIdentifier': null,
+                    'targetingContext': null,
+                  },
                 },
               ],
               'addOnSubscriptionOptions': null,
