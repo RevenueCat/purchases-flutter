@@ -12,8 +12,8 @@ class _PurchaseParamsApiTest {
     WinBackOffer? winBackOffer,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
-    List<Package>? addOnPackages,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
       package,
@@ -83,8 +83,8 @@ class _PurchaseParamsApiTest {
       winBackOffer: winBackOffer,
       customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
-      addOnPackages: addOnPackages,
       addOnSubscriptionOptions: addOnSubscriptionOptions,
+      addOnPackages: addOnPackages,
     );
   }
 
@@ -96,8 +96,8 @@ class _PurchaseParamsApiTest {
     WinBackOffer? winBackOffer,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
-    List<Package>? addOnPackages,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
@@ -167,8 +167,8 @@ class _PurchaseParamsApiTest {
       winBackOffer: winBackOffer,
       customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
-      addOnPackages: addOnPackages,
       addOnSubscriptionOptions: addOnSubscriptionOptions,
+      addOnPackages: addOnPackages,
     );
   }
 
@@ -178,8 +178,8 @@ class _PurchaseParamsApiTest {
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
-    List<Package>? addOnPackages,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
       subscriptionOption,
@@ -226,8 +226,8 @@ class _PurchaseParamsApiTest {
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
-      addOnPackages: addOnPackages,
       addOnSubscriptionOptions: addOnSubscriptionOptions,
+      addOnPackages: addOnPackages,
     );
   }
 
@@ -241,7 +241,7 @@ class _PurchaseParamsApiTest {
     WinBackOffer? winBackOffer = purchaseParams.winBackOffer;
     String? customerEmail = purchaseParams.customerEmail;
     List<StoreProduct>? addOnStoreProducts = purchaseParams.addOnStoreProducts;
-    List<Package>? addOnPackages = purchaseParams.addOnPackages;
     List<SubscriptionOption>? addOnSubscriptionOptions = purchaseParams.addOnSubscriptionOptions;
+    List<Package>? addOnPackages = purchaseParams.addOnPackages;
   }
 }
