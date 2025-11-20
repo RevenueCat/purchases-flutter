@@ -162,7 +162,7 @@ class PurchaseParams {
   /// will ask the customer for their email.
   ///
   /// [addOnStoreProducts] Play Store only. Add-on products to be purchased with the base item.
-  /// 
+  ///
   /// [addOnSubscriptionOptions] Play Store only. Add-on subscription options to be purchased with the base item.
   /// 
   /// [addOnPackages] Play Store only. Add-on packages to be purchased with the base item.
@@ -173,8 +173,8 @@ class PurchaseParams {
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
-    List<Package>? addOnPackages,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   }) : this._(
         null,
         null,
