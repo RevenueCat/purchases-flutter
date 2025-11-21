@@ -13,6 +13,7 @@ class _PurchaseParamsApiTest {
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
       package,
@@ -63,8 +64,27 @@ class _PurchaseParamsApiTest {
       promotionalOffer: promotionalOffer,
       winBackOffer: winBackOffer,
       customerEmail: customerEmail,
+      addOnPackages: addOnPackages,
+    );
+    purchaseParams = PurchaseParams.package(
+      package,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
+      addOnSubscriptionOptions: addOnSubscriptionOptions,
+    );
+    purchaseParams = PurchaseParams.package(
+      package,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
       addOnSubscriptionOptions: addOnSubscriptionOptions,
+      addOnPackages: addOnPackages,
     );
   }
 
@@ -77,6 +97,7 @@ class _PurchaseParamsApiTest {
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
@@ -127,8 +148,27 @@ class _PurchaseParamsApiTest {
       promotionalOffer: promotionalOffer,
       winBackOffer: winBackOffer,
       customerEmail: customerEmail,
+      addOnPackages: addOnPackages,
+    );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
+      addOnSubscriptionOptions: addOnSubscriptionOptions,
+    );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      promotionalOffer: promotionalOffer,
+      winBackOffer: winBackOffer,
+      customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
       addOnSubscriptionOptions: addOnSubscriptionOptions,
+      addOnPackages: addOnPackages,
     );
   }
 
@@ -139,6 +179,7 @@ class _PurchaseParamsApiTest {
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
       subscriptionOption,
@@ -170,8 +211,23 @@ class _PurchaseParamsApiTest {
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       customerEmail: customerEmail,
+      addOnPackages: addOnPackages,
+    );
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      customerEmail: customerEmail,
+      addOnSubscriptionOptions: addOnSubscriptionOptions,
+    );
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption,
+      googleProductChangeInfo: googleProductChangeInfo,
+      googleIsPersonalizedPrice: googleIsPersonalizedPrice,
+      customerEmail: customerEmail,
       addOnStoreProducts: addOnStoreProducts,
       addOnSubscriptionOptions: addOnSubscriptionOptions,
+      addOnPackages: addOnPackages,
     );
   }
 
@@ -186,5 +242,6 @@ class _PurchaseParamsApiTest {
     String? customerEmail = purchaseParams.customerEmail;
     List<StoreProduct>? addOnStoreProducts = purchaseParams.addOnStoreProducts;
     List<SubscriptionOption>? addOnSubscriptionOptions = purchaseParams.addOnSubscriptionOptions;
+    List<Package>? addOnPackages = purchaseParams.addOnPackages;
   }
 }

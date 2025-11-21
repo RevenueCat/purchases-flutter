@@ -588,6 +588,15 @@ class Purchases {
               'optionIdentifier': subscriptionOption.id,
             },)
         .toList();
+    final addOnPackages = purchaseParams.addOnPackages
+        ?.map(
+          (package) => <String, dynamic>{
+            'packageIdentifier': package.identifier,
+            'presentedOfferingContext':
+                package.presentedOfferingContext.toJson(),
+          },
+        )
+        .toList();
     final purchaseArgs = <String, dynamic>{
       'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
@@ -598,6 +607,7 @@ class Purchases {
       'winBackOfferIdentifier': winBackOffer?.identifier,
       'addOnStoreProducts': addOnStoreProducts,
       'addOnSubscriptionOptions': addOnSubscriptionOptions,
+      'addOnPackages': addOnPackages,
     };
     final isWinBackOfferPurchase = (defaultTargetPlatform == TargetPlatform.iOS
         || defaultTargetPlatform == TargetPlatform.macOS)

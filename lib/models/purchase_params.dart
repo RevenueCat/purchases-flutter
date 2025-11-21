@@ -17,6 +17,7 @@ class PurchaseParams {
   final String? customerEmail;
   final List<StoreProduct>? addOnStoreProducts;
   final List<SubscriptionOption>? addOnSubscriptionOptions;
+  final List<Package>? addOnPackages;
 
   const PurchaseParams._(
     this.package,
@@ -29,6 +30,7 @@ class PurchaseParams {
     this.customerEmail,
     this.addOnStoreProducts,
     this.addOnSubscriptionOptions,
+    this.addOnPackages,
   );
 
   /// Creates purchase parameters for a package.
@@ -60,6 +62,8 @@ class PurchaseParams {
   ///
   /// [addOnSubscriptionOptions] Play Store only. Add-on subscription options to be purchased with the base item.
   /// 
+  /// [addOnPackages] Play Store only. Add-on packages to be purchased with the base item.
+  /// 
   const PurchaseParams.package(
     Package package, {
     GoogleProductChangeInfo? googleProductChangeInfo,
@@ -69,6 +73,7 @@ class PurchaseParams {
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   }) : this._(
         package,
         null,
@@ -80,6 +85,7 @@ class PurchaseParams {
         customerEmail,
         addOnStoreProducts,
         addOnSubscriptionOptions,
+        addOnPackages,
       );
 
   /// Creates purchase parameters for a store product.
@@ -111,6 +117,8 @@ class PurchaseParams {
   /// [addOnStoreProducts] Play Store only. Add-on products to be purchased with the base item.
   ///
   /// [addOnSubscriptionOptions] Play Store only. Add-on subscription options to be purchased with the base item.
+  /// 
+  /// [addOnPackages] Play Store only. Add-on packages to be purchased with the base item.
   ///
   const PurchaseParams.storeProduct(
     StoreProduct storeProduct, {
@@ -121,6 +129,7 @@ class PurchaseParams {
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   }) : this._(
         null,
         storeProduct,
@@ -132,6 +141,7 @@ class PurchaseParams {
         customerEmail,
         addOnStoreProducts,
         addOnSubscriptionOptions,
+        addOnPackages,
       );
 
   /// Creates purchase parameters for a subscription option. Google Play-only.
@@ -154,6 +164,8 @@ class PurchaseParams {
   /// [addOnStoreProducts] Play Store only. Add-on products to be purchased with the base item.
   ///
   /// [addOnSubscriptionOptions] Play Store only. Add-on subscription options to be purchased with the base item.
+  /// 
+  /// [addOnPackages] Play Store only. Add-on packages to be purchased with the base item.
   ///
   const PurchaseParams.subscriptionOption(
     SubscriptionOption subscriptionOption, {
@@ -162,6 +174,7 @@ class PurchaseParams {
     String? customerEmail,
     List<StoreProduct>? addOnStoreProducts,
     List<SubscriptionOption>? addOnSubscriptionOptions,
+    List<Package>? addOnPackages,
   }) : this._(
         null,
         null,
@@ -173,5 +186,6 @@ class PurchaseParams {
         customerEmail,
         addOnStoreProducts,
         addOnSubscriptionOptions,
+        addOnPackages,
       );
 }
