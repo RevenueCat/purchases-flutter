@@ -45,6 +45,22 @@ Create release
 
 Create purchases_ui_flutter release
 
+### release_bc7
+
+```sh
+[bundle exec] fastlane release_bc7
+```
+
+Create BC7 variant release
+
+### release_purchases_ui_bc7_flutter
+
+```sh
+[bundle exec] fastlane release_purchases_ui_bc7_flutter
+```
+
+Create purchases_ui_bc7_flutter release
+
 ### github_release_current_version
 
 ```sh

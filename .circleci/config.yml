@@ -459,6 +459,32 @@ jobs:
           name: release
           command: bundle exec fastlane release_purchases_ui_flutter
 
+  make-release-bc7:
+    description: "Publishes a new version of purchases_flutter with bc7 to pub.dev"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - run:
+          name: release
+          command: bundle exec fastlane release_bc7
+
+  make-release-purchases-flutter-ui-bc7:
+    description: "Publishes a new version of purchases_ui_flutter with bc7 to pub.dev"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - run:
+          name: release
+          command: bundle exec fastlane release_purchases_ui_bc7_flutter
+
   github_release:
     description: "Creates a github release with the current version"
     docker:
@@ -521,10 +547,17 @@ workflows:
           requires:
             - make-release
           <<: *release-tags
+      - make-release-bc7: *release-tags
+      - make-release-purchases-flutter-ui-bc7:
+          requires:
+              - make-release-bc7
+          <<: *release-tags
       - github_release:
           requires:
             - make-release
             - make-release-purchases-flutter-ui
+            - make-release-bc7
+            - make-release-purchases-flutter-ui-bc7
           <<: *release-tags
   weekly-run-workflow:
     when:
