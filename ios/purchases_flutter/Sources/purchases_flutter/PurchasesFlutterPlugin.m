@@ -795,7 +795,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"9.9.9";
+    return @"9.10.0-alphaaidl01";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {
