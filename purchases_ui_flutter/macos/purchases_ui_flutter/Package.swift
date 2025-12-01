@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "purchases-ui-flutter", targets: ["purchases_ui_flutter"])
     ],
     dependencies: [
-        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "17.21.1")
+        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "17.22.0-alphaaidl01")
     ],
     targets: [
         .target(
