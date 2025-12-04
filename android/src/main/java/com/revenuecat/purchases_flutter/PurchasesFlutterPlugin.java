@@ -122,10 +122,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         .argument("pendingTransactionsForPrepaidPlansEnabled");
                 Boolean automaticDeviceIdentifierCollectionEnabled = call
                         .argument("automaticDeviceIdentifierCollectionEnabled");
+                String preferredUILocaleOverride = call.argument("preferredUILocaleOverride");
                 setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled,
-                        automaticDeviceIdentifierCollectionEnabled, result);
+                        automaticDeviceIdentifierCollectionEnabled, preferredUILocaleOverride, result);
                 break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
@@ -202,6 +203,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setProxyURLString":
                 String proxyURLString = call.argument("proxyURLString");
                 setProxyURLString(proxyURLString, result);
+                break;
+            case "overridePreferredLocale":
+                String locale = call.argument("locale");
+                overridePreferredLocale(locale, result);
                 break;
             case "getCustomerInfo":
                 getCustomerInfo(result);
@@ -378,6 +383,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable Boolean shouldShowInAppMessagesAutomatically, @Nullable String verificationMode,
             @Nullable Boolean pendingTransactionsForPrepaidPlansEnabled,
             @Nullable Boolean automaticDeviceIdentifierCollectionEnabled,
+            @Nullable String preferredUILocaleOverride,
             final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
@@ -397,6 +403,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     verificationMode,
                     pendingTransactionsForPrepaidPlansEnabled,
                     automaticDeviceIdentifierCollectionEnabled);
+            
+            if (preferredUILocaleOverride != null) {
+                CommonKt.overridePreferredLocale(preferredUILocaleOverride);
+            }
+            
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {
@@ -561,6 +572,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setProxyURLString(String proxyURLString, final Result result) {
         CommonKt.setProxyURLString(proxyURLString);
+        result.success(null);
+    }
+
+    private void overridePreferredLocale(@Nullable String locale, final Result result) {
+        CommonKt.overridePreferredLocale(locale);
         result.success(null);
     }
 

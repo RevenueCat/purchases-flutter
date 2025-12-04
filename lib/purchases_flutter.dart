@@ -185,9 +185,28 @@ class Purchases {
             purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
         'automaticDeviceIdentifierCollectionEnabled':
             purchasesConfiguration.automaticDeviceIdentifierCollectionEnabled,
+        'preferredUILocaleOverride':
+            purchasesConfiguration.preferredUILocaleOverride,
       },
     );
   }
+
+  /// Overrides the preferred UI locale used by RevenueCat UI components.
+  ///
+  /// When provided, the SDK will use the specified locale instead of the system default.
+  /// Both "es-ES" and "es_ES" formats are supported.
+  ///
+  /// Pass null to revert to the system default.
+  /// When the locale is changed, the SDK will automatically clear any cached offerings.
+  ///
+  /// [locale] The locale identifier (e.g., "de-DE", "es_ES") or null to use the system default.
+  static Future<void> overridePreferredLocale(String? locale) =>
+      _channel.invokeMethod(
+        'overridePreferredLocale',
+        {
+          'locale': locale,
+        },
+      );
 
   /// Deprecated. Configure behavior through the RevenueCat dashboard instead.
   /// Set this to true if you are passing in an appUserID but it is anonymous.

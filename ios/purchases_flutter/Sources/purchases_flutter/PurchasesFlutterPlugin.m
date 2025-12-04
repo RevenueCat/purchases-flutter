@@ -63,6 +63,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString * _Nullable verificationMode = arguments[@"entitlementVerificationMode"];
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         NSString *storeKitVersion = arguments[@"storeKitVersion"];
+        NSString * _Nullable preferredUILocaleOverride = arguments[@"preferredUILocaleOverride"];
         BOOL automaticDeviceIdentifierCollectionEnabled = YES;
         object = arguments[@"automaticDeviceIdentifierCollectionEnabled"];
         if (object != [NSNull null] && object != nil) {
@@ -76,6 +77,7 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
 shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
             verificationMode:verificationMode
 automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
+      preferredUILocaleOverride:preferredUILocaleOverride
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -115,6 +117,8 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         [self setSimulatesAskToBuyInSandbox:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setProxyURLString" isEqualToString:call.method]) {
         [self setProxyURLString:arguments[@"proxyURLString"] result:result];
+    } else if ([@"overridePreferredLocale" isEqualToString:call.method]) {
+        [self overridePreferredLocale:arguments[@"locale"] result:result];
     } else if ([@"getCustomerInfo" isEqualToString:call.method]) {
         [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
@@ -280,12 +284,16 @@ purchasesAreCompletedBy:(nullable NSString *)purchasesAreCompletedBy
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
       verificationMode:(nullable NSString *)verificationMode
 automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
+ preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
     }
     if ([userDefaultsSuiteName isKindOfClass:NSNull.class]) {
         userDefaultsSuiteName = nil;
+    }
+    if ([preferredUILocaleOverride isKindOfClass:NSNull.class]) {
+        preferredUILocaleOverride = nil;
     }
 
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
@@ -300,6 +308,11 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
                                              verificationMode:verificationMode
                                            diagnosticsEnabled:NO
                    automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled];
+    
+    if (preferredUILocaleOverride != nil) {
+        [RCCommonFunctionality overridePreferredLocale:preferredUILocaleOverride];
+    }
+    
     purchases.delegate = self;
 
     result(nil);
@@ -413,6 +426,15 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)setProxyURLString:(nullable NSString *)proxyURLString
                    result:(FlutterResult)result {
     [RCCommonFunctionality setProxyURLString:proxyURLString];
+    result(nil);
+}
+
+- (void)overridePreferredLocale:(nullable NSString *)locale
+                         result:(FlutterResult)result {
+    if ([locale isKindOfClass:NSNull.class]) {
+        locale = nil;
+    }
+    [RCCommonFunctionality overridePreferredLocale:locale];
     result(nil);
 }
 
