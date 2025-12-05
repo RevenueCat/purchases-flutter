@@ -36,6 +36,7 @@ class _PurchasesFlutterApiTest {
     configuration.store = Store.amazon;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
     configuration.storeKitVersion = StoreKitVersion.defaultVersion;
+    configuration.preferredUILocaleOverride = "es-ES";
     Future<void> callback = Purchases.configure(configuration);
   }
 
@@ -171,6 +172,11 @@ class _PurchasesFlutterApiTest {
 
   void _checkStorefront() async {
     Storefront? storefront = await Purchases.storefront;
+  }
+
+  void _checkOverridePreferredLocale() async {
+    String locale = "en-US";
+    Future<void> future = Purchases.overridePreferredLocale(locale);
   }
 
   void _checkLogIn() async {
