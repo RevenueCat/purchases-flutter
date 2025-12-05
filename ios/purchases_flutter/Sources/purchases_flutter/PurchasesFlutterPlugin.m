@@ -292,9 +292,6 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
     if ([userDefaultsSuiteName isKindOfClass:NSNull.class]) {
         userDefaultsSuiteName = nil;
     }
-    if ([preferredUILocaleOverride isKindOfClass:NSNull.class]) {
-        preferredUILocaleOverride = nil;
-    }
 
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
