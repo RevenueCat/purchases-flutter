@@ -402,11 +402,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     shouldShowInAppMessagesAutomatically,
                     verificationMode,
                     pendingTransactionsForPrepaidPlansEnabled,
-                    automaticDeviceIdentifierCollectionEnabled);
-            
-            if (preferredUILocaleOverride != null) {
-                CommonKt.overridePreferredLocale(preferredUILocaleOverride);
-            }
+                    automaticDeviceIdentifierCollectionEnabled,
+                    preferredUILocaleOverride);
             
             setUpdatedCustomerInfoListener();
             result.success(null);

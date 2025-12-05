@@ -307,11 +307,8 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode
                                            diagnosticsEnabled:NO
-                   automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled];
-    
-    if (preferredUILocaleOverride != nil) {
-        [RCCommonFunctionality overridePreferredLocale:preferredUILocaleOverride];
-    }
+                   automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
+                                              preferredLocale:preferredUILocaleOverride.mappingNSNullToNil];
     
     purchases.delegate = self;
 
@@ -431,10 +428,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)overridePreferredLocale:(nullable NSString *)locale
                          result:(FlutterResult)result {
-    if ([locale isKindOfClass:NSNull.class]) {
-        locale = nil;
-    }
-    [RCCommonFunctionality overridePreferredLocale:locale];
+    [RCCommonFunctionality overridePreferredLocale:locale.mappingNSNullToNil];
     result(nil);
 }
 

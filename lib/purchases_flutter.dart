@@ -194,9 +194,6 @@ class Purchases {
   /// Overrides the preferred UI locale used by RevenueCat UI components.
   ///
   /// When provided, the SDK will use the specified locale instead of the system default.
-  /// Both "es-ES" and "es_ES" formats are supported.
-  ///
-  /// Pass null to revert to the system default.
   /// When the locale is changed, the SDK will automatically clear any cached offerings.
   ///
   /// [locale] The locale identifier (e.g., "de-DE", "es_ES") or null to use the system default.

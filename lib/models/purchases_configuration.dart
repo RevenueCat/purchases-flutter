@@ -5,10 +5,7 @@ class PurchasesConfiguration {
   /// RevenueCat API Key.
   final String apiKey;
 
-  PurchasesConfiguration(
-    this.apiKey, {
-    this.preferredUILocaleOverride,
-  });
+  PurchasesConfiguration(this.apiKey);
 
   /// An optional locale identifier to override the device's current locale
   /// for purchases and offerings.
