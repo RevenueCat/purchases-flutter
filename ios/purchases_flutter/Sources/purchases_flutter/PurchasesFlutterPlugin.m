@@ -306,7 +306,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
                                            diagnosticsEnabled:NO
                    automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
                                               preferredLocale:preferredUILocaleOverride.mappingNSNullToNil];
-    
+
     purchases.delegate = self;
 
     result(nil);
@@ -327,7 +327,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
 
 - (void)getCurrentOfferingForPlacement:(NSString *)placement
                              result:(FlutterResult)result {
-    [RCCommonFunctionality getCurrentOfferingForPlacement:placement 
+    [RCCommonFunctionality getCurrentOfferingForPlacement:placement
                                           completionBlock:[self getResponseCompletionBlock:result]];
 }
 
@@ -424,8 +424,8 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)overridePreferredUILocale:(nullable NSString *)locale
-                         result:(FlutterResult)result {
-    [RCCommonFunctionality overridePreferredUILocale:locale.mappingNSNullToNil];
+                           result:(FlutterResult)result {
+    [RCCommonFunctionality overridePreferredLocale:locale.mappingNSNullToNil];
     result(nil);
 }
 
