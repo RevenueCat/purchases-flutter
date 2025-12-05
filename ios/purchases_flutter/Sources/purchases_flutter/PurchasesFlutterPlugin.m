@@ -117,8 +117,8 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         [self setSimulatesAskToBuyInSandbox:[arguments[@"enabled"] boolValue] result:result];
     } else if ([@"setProxyURLString" isEqualToString:call.method]) {
         [self setProxyURLString:arguments[@"proxyURLString"] result:result];
-    } else if ([@"overridePreferredLocale" isEqualToString:call.method]) {
-        [self overridePreferredLocale:arguments[@"locale"] result:result];
+    } else if ([@"overridePreferredUILocale" isEqualToString:call.method]) {
+        [self overridePreferredUILocale:arguments[@"locale"] result:result];
     } else if ([@"getCustomerInfo" isEqualToString:call.method]) {
         [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
@@ -426,9 +426,9 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
-- (void)overridePreferredLocale:(nullable NSString *)locale
+- (void)overridePreferredUILocale:(nullable NSString *)locale
                          result:(FlutterResult)result {
-    [RCCommonFunctionality overridePreferredLocale:locale.mappingNSNullToNil];
+    [RCCommonFunctionality overridePreferredUILocale:locale.mappingNSNullToNil];
     result(nil);
 }
 

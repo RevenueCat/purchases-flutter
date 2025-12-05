@@ -204,9 +204,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String proxyURLString = call.argument("proxyURLString");
                 setProxyURLString(proxyURLString, result);
                 break;
-            case "overridePreferredLocale":
+            case "overridePreferredUILocale":
                 String locale = call.argument("locale");
-                overridePreferredLocale(locale, result);
+                overridePreferredUILocale(locale, result);
                 break;
             case "getCustomerInfo":
                 getCustomerInfo(result);
@@ -572,8 +572,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void overridePreferredLocale(@Nullable String locale, final Result result) {
-        CommonKt.overridePreferredLocale(locale);
+    private void overridePreferredUILocale(@Nullable String locale, final Result result) {
+        CommonKt.overridePreferredUILocale(locale);
         result.success(null);
     }
 

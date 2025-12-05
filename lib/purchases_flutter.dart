@@ -194,12 +194,14 @@ class Purchases {
   /// Overrides the preferred UI locale used by RevenueCat UI components.
   ///
   /// When provided, the SDK will use the specified locale instead of the system default.
-  /// When the locale is changed, the SDK will automatically clear any cached offerings.
+  /// Both "es-ES" and "es_ES" formats are supported.
+  ///
+  /// Pass null to revert to the system default.
   ///
   /// [locale] The locale identifier (e.g., "de-DE", "es_ES") or null to use the system default.
-  static Future<void> overridePreferredLocale(String? locale) =>
+  static Future<void> overridePreferredUILocale(String? locale) =>
       _channel.invokeMethod(
-        'overridePreferredLocale',
+        'overridePreferredUILocale',
         {
           'locale': locale,
         },

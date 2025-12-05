@@ -1809,13 +1809,13 @@ void main() {
     );
   });
 
-  test('overridePreferredLocale', () async {
-    await Purchases.overridePreferredLocale('es-ES');
+  test('overridePreferredUILocale', () async {
+    await Purchases.overridePreferredUILocale('es-ES');
     expect(
       log,
       <Matcher>[
         isMethodCall(
-          'overridePreferredLocale',
+          'overridePreferredUILocale',
           arguments: <String, dynamic>{
             'locale': 'es-ES',
           },
@@ -1824,13 +1824,13 @@ void main() {
     );
   });
 
-  test('overridePreferredLocale with null reverts to system default', () async {
-    await Purchases.overridePreferredLocale(null);
+  test('overridePreferredUILocale with null reverts to system default', () async {
+    await Purchases.overridePreferredUILocale(null);
     expect(
       log,
       <Matcher>[
         isMethodCall(
-          'overridePreferredLocale',
+          'overridePreferredUILocale',
           arguments: <String, dynamic>{
             'locale': null,
           },
