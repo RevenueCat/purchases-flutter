@@ -574,7 +574,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void overridePreferredUILocale(@Nullable String locale, final Result result) {
-        CommonKt.overridePreferredUILocale(locale);
+        CommonKt.overridePreferredLocale(locale);
         result.success(null);
     }
 
