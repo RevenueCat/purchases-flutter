@@ -101,6 +101,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -131,6 +132,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -159,6 +161,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -190,6 +193,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -1723,6 +1727,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -1752,6 +1757,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': true,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -1782,6 +1788,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -1813,6 +1820,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],
@@ -1841,6 +1849,66 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': false,
+            'preferredUILocaleOverride': null,
+          },
+        ),
+      ],
+    );
+  });
+
+  test('configure with preferredUILocaleOverride', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..preferredUILocaleOverride = 'de_DE',
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'purchasesAreCompletedBy': 'REVENUECAT',
+            'userDefaultsSuiteName': null,
+            'storeKitVersion': 'DEFAULT',
+            'useAmazon': false,
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
+            'preferredUILocaleOverride': 'de_DE',
+          },
+        ),
+      ],
+    );
+  });
+
+  test('overridePreferredUILocale', () async {
+    await Purchases.overridePreferredUILocale('es-ES');
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'overridePreferredUILocale',
+          arguments: <String, dynamic>{
+            'locale': 'es-ES',
+          },
+        ),
+      ],
+    );
+  });
+
+  test('overridePreferredUILocale with null reverts to system default', () async {
+    await Purchases.overridePreferredUILocale(null);
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'overridePreferredUILocale',
+          arguments: <String, dynamic>{
+            'locale': null,
           },
         ),
       ],

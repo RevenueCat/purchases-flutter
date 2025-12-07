@@ -62,7 +62,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "9.9.9";
+    private static final String PLUGIN_VERSION = "9.9.10";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -122,10 +122,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         .argument("pendingTransactionsForPrepaidPlansEnabled");
                 Boolean automaticDeviceIdentifierCollectionEnabled = call
                         .argument("automaticDeviceIdentifierCollectionEnabled");
+                String preferredUILocaleOverride = call.argument("preferredUILocaleOverride");
                 setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled,
-                        automaticDeviceIdentifierCollectionEnabled, result);
+                        automaticDeviceIdentifierCollectionEnabled, preferredUILocaleOverride, result);
                 break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
@@ -214,6 +215,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "setProxyURLString":
                 String proxyURLString = call.argument("proxyURLString");
                 setProxyURLString(proxyURLString, result);
+                break;
+            case "overridePreferredUILocale":
+                String locale = call.argument("locale");
+                overridePreferredUILocale(locale, result);
                 break;
             case "getCustomerInfo":
                 getCustomerInfo(result);
@@ -390,6 +395,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable Boolean shouldShowInAppMessagesAutomatically, @Nullable String verificationMode,
             @Nullable Boolean pendingTransactionsForPrepaidPlansEnabled,
             @Nullable Boolean automaticDeviceIdentifierCollectionEnabled,
+            @Nullable String preferredUILocaleOverride,
             final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
@@ -408,7 +414,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     shouldShowInAppMessagesAutomatically,
                     verificationMode,
                     pendingTransactionsForPrepaidPlansEnabled,
-                    automaticDeviceIdentifierCollectionEnabled);
+                    null,
+                    automaticDeviceIdentifierCollectionEnabled,
+                    preferredUILocaleOverride);
+
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {
@@ -591,6 +600,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void setProxyURLString(String proxyURLString, final Result result) {
         CommonKt.setProxyURLString(proxyURLString);
+        result.success(null);
+    }
+
+    private void overridePreferredUILocale(@Nullable String locale, final Result result) {
+        CommonKt.overridePreferredLocale(locale);
         result.success(null);
     }
 

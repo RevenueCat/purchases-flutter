@@ -7,6 +7,12 @@ class PurchasesConfiguration {
 
   PurchasesConfiguration(this.apiKey);
 
+  /// An optional locale identifier to override the device's current locale
+  /// for purchases and offerings.
+  /// If not set, the device's locale will be used.
+  /// Both "es-ES" and "es_ES" formats are supported.
+  String? preferredUILocaleOverride;
+
   /// An optional unique id for identifying the user.
   String? appUserID;
 
