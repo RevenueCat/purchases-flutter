@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source_files = 'purchases_flutter/Sources/purchases_flutter/**/*.{h,m}'
   s.public_header_files = 'purchases_flutter/Sources/purchases_flutter/include/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'PurchasesHybridCommon', '17.21.2'
+  s.dependency 'PurchasesHybridCommon', '17.22.0'
   s.ios.deployment_target = '13.0'
   s.swift_version         = '5.0'
 
