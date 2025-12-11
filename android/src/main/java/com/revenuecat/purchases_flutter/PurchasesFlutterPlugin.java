@@ -122,11 +122,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         .argument("pendingTransactionsForPrepaidPlansEnabled");
                 Boolean automaticDeviceIdentifierCollectionEnabled = call
                         .argument("automaticDeviceIdentifierCollectionEnabled");
+                Boolean diagnosticsEnabled = call.argument("diagnosticsEnabled");
                 String preferredUILocaleOverride = call.argument("preferredUILocaleOverride");
                 setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled,
-                        automaticDeviceIdentifierCollectionEnabled, preferredUILocaleOverride, result);
+                        automaticDeviceIdentifierCollectionEnabled, diagnosticsEnabled,
+                        preferredUILocaleOverride, result);
                 break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
@@ -383,6 +385,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable Boolean shouldShowInAppMessagesAutomatically, @Nullable String verificationMode,
             @Nullable Boolean pendingTransactionsForPrepaidPlansEnabled,
             @Nullable Boolean automaticDeviceIdentifierCollectionEnabled,
+            @Nullable Boolean diagnosticsEnabled,
             @Nullable String preferredUILocaleOverride,
             final Result result) {
         if (this.applicationContext != null) {
@@ -402,7 +405,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     shouldShowInAppMessagesAutomatically,
                     verificationMode,
                     pendingTransactionsForPrepaidPlansEnabled,
-                    null,
+                    diagnosticsEnabled,
                     automaticDeviceIdentifierCollectionEnabled,
                     preferredUILocaleOverride);
 
