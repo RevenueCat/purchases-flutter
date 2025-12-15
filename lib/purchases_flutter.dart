@@ -185,6 +185,7 @@ class Purchases {
             purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
         'automaticDeviceIdentifierCollectionEnabled':
             purchasesConfiguration.automaticDeviceIdentifierCollectionEnabled,
+        'diagnosticsEnabled': purchasesConfiguration.diagnosticsEnabled,
         'preferredUILocaleOverride':
             purchasesConfiguration.preferredUILocaleOverride,
       },

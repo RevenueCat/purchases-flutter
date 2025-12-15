@@ -101,6 +101,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -132,6 +133,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -161,6 +163,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -193,6 +196,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -1727,6 +1731,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -1757,6 +1762,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': true,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -1788,6 +1794,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -1820,6 +1827,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -1849,6 +1857,7 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': false,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
           },
         ),
@@ -1878,7 +1887,38 @@ void main() {
             'entitlementVerificationMode': 'DISABLED',
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
             'preferredUILocaleOverride': 'de_DE',
+          },
+        ),
+      ],
+    );
+  });
+
+  test('configure with diagnosticsEnabled', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..diagnosticsEnabled = true,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'purchasesAreCompletedBy': 'REVENUECAT',
+            'userDefaultsSuiteName': null,
+            'storeKitVersion': 'DEFAULT',
+            'useAmazon': false,
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': true,
+            'preferredUILocaleOverride': null,
           },
         ),
       ],

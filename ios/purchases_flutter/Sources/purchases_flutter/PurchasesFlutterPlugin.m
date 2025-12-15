@@ -69,6 +69,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         if (object != [NSNull null] && object != nil) {
             automaticDeviceIdentifierCollectionEnabled = [object boolValue];
         }
+        BOOL diagnosticsEnabled = NO;
+        object = arguments[@"diagnosticsEnabled"];
+        if (object != [NSNull null] && object != nil) {
+            diagnosticsEnabled = [object boolValue];
+        }
         [self setupPurchases:apiKey
                    appUserID:appUserID
      purchasesAreCompletedBy:purchasesAreCompletedBy
@@ -77,7 +82,8 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
 shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
             verificationMode:verificationMode
 automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
-      preferredUILocaleOverride:preferredUILocaleOverride
+          diagnosticsEnabled:diagnosticsEnabled
+   preferredUILocaleOverride:preferredUILocaleOverride
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -284,6 +290,7 @@ purchasesAreCompletedBy:(nullable NSString *)purchasesAreCompletedBy
 shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
       verificationMode:(nullable NSString *)verificationMode
 automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
+    diagnosticsEnabled:(BOOL)diagnosticsEnabled
  preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
@@ -303,7 +310,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode
-                                           diagnosticsEnabled:NO
+                                           diagnosticsEnabled:diagnosticsEnabled
                    automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
                                               preferredLocale:preferredUILocaleOverride.mappingNSNullToNil];
 
@@ -808,7 +815,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"9.9.10";
+    return @"9.10.0";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {
