@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.source_files     = 'purchases_flutter/Sources/purchases_flutter/**/*.{h,m}'
   s.public_header_files = 'purchases_flutter/Sources/purchases_flutter/include/**/*.h'
   s.dependency 'FlutterMacOS'
-  s.dependency 'PurchasesHybridCommon', '17.23.0'
+  s.dependency 'PurchasesHybridCommon', '17.24.0'
   s.platform = :osx, '10.12'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
