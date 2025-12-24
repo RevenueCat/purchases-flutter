@@ -16,7 +16,7 @@ internal class PaywallView(
     id: Int,
     messenger: BinaryMessenger,
     creationParams: Map<String?, Any?>
-) : PlatformView, MethodCallHandler {
+) : BasePaywallView(context), MethodCallHandler {
 
     private val methodChannel: MethodChannel
     private val nativePaywallView: NativePaywallView

@@ -20,7 +20,7 @@ internal class PaywallFooterView(
     id: Int,
     messenger: BinaryMessenger,
     creationParams: Map<String?, Any?>
-) : PlatformView {
+) : BasePaywallView(context) {
 
     private val methodChannel: MethodChannel
 
