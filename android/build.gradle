@@ -50,6 +50,7 @@ android {
         // includeBuild and working with a local copy of purchases-android
         // https://developer.android.com/studio/build/build-variants#resolve_matching_errors
         missingDimensionStrategy 'apis', 'defaults'
+        missingDimensionStrategy 'billingclient', 'bc8'
     }
 
     lintOptions {

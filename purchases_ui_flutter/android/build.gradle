@@ -48,6 +48,7 @@ android {
         compileSdk 34
         // Fix variant resolution for purchases-android local builds
         missingDimensionStrategy 'apis', 'defaults'
+        missingDimensionStrategy 'billingclient', 'bc8'
     }
     
     dependencies {
