@@ -56,7 +56,8 @@ android {
         // includeBuild and working with a local copy of purchases-android
         // This line also needs to be added to purchases_flutter's build.gradle
         // https://developer.android.com/studio/build/build-variants#resolve_matching_errors
-        missingDimensionStrategy 'apis', 'billingclient'
+        missingDimensionStrategy 'apis', 'defaults'
+        missingDimensionStrategy 'billingclient', 'bc8'
         multiDexEnabled true
     }
 

@@ -49,7 +49,8 @@ android {
         // Gradle doesn't know which variant of purchases-android to use when using
         // includeBuild and working with a local copy of purchases-android
         // https://developer.android.com/studio/build/build-variants#resolve_matching_errors
-        missingDimensionStrategy 'apis', 'billingclient'
+        missingDimensionStrategy 'apis', 'defaults'
+        missingDimensionStrategy 'billingclient', 'bc8'
     }
 
     lintOptions {
