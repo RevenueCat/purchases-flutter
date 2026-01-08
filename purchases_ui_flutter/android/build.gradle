@@ -47,7 +47,7 @@ android {
         minSdkVersion 24
         compileSdk 34
         // Fix variant resolution for purchases-android local builds
-        missingDimensionStrategy 'apis', 'defaults'
+        missingDimensionStrategy 'apis', 'billingclient'
     }
     
     dependencies {
