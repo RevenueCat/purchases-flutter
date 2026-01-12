@@ -1,5 +1,9 @@
 ## RevenueCat SDK
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.26.1 (#1582) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.18.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.18.1)
-  * [iOS 5.52.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.52.1)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.27.0 (#1585) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 9.19.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.19.0)
+  * [iOS 5.54.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.54.0)
+  * [iOS 5.53.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.53.0)
+
+### 🔄 Other Changes
+* Update `missingDimensionStrategy` for local development (#1584) via Cesar de la Vega (@vegaro)
