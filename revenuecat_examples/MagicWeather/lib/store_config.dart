@@ -21,4 +21,6 @@ class StoreConfig {
   static bool isForGooglePlay() => instance.store == Store.playStore;
 
   static bool isForAmazonAppstore() => instance.store == Store.amazon;
+
+  static bool isForWeb() => instance.store == Store.rcBilling;
 }

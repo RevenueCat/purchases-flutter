@@ -7,10 +7,6 @@ class _OfferingApiTest {
     Offering offering = Offering.fromJson(json);
   }
 
-  void _checkToJson(Offering offering) {
-    Map<String, dynamic> json = offering.toJson();
-  }
-
   void _checkConstructor(
       String identifier,
       String serverDescription,

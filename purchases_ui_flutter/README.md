@@ -6,20 +6,41 @@
 
 ## purchases_ui_flutter
 
-*purchases_ui_flutter* allows to use [RevenueCat](https://www.revenuecat.com/)'s paywalls in your Flutter application. Check our [main SDK](https://pub.dev/packages/purchases_flutter) for more information and our [paywalls documentation](https://www.revenuecat.com/docs/paywalls)
+*purchases_ui_flutter* allows to use [RevenueCat](https://www.revenuecat.com/)'s paywalls and customer center in your Flutter application. Check our [main SDK](https://pub.dev/packages/purchases_flutter) for more information and our [paywalls documentation](https://www.revenuecat.com/docs/paywalls)
 
 ## Installation
 To use this plugin, add `purchases_flutter` and `purchases_ui_flutter` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 
-Then, you can present your paywall like:
+## Paywalls
+
+Present your paywall like:
 ```dart
 await RevenueCatUI.presentPaywall();
 ```
 
-or, if you want to present it conditionally based on a user's entitlements:
+or conditionally based on entitlements:
 ```dart
 await RevenueCatUI.presentPaywallIfNeeded("requiredEntitlementId");
 ```
+
+## Customer Center
+
+ Present as a modal (callbacks optional):
+```dart
+await RevenueCatUI.presentCustomerCenter(
+  onRestoreCompleted: (customerInfo) {
+    // handle restore success
+  },
+  onRefundRequestCompleted: (productId, status) {
+    // handle refund completion
+  },
+);
+
+// Or, if you don't need callbacks:
+await RevenueCatUI.presentCustomerCenter();
+```
+
+Or display inline using the `CustomerCenterView` widget. See the [CustomerCenterView implementation](./lib/views/customer_center_view.dart) for full API details and callback options.
 
 ### Requirements
 *purchases_ui_flutter* requires XCode 14.0+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.

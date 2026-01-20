@@ -1,13 +1,9 @@
-import 'package:json_annotation/json_annotation.dart';
-
 /// Supported [StoreProduct] types.
 enum ProductCategory {
   /// A type of [StoreProduct] for in-app products.
-  @JsonValue('NON_SUBSCRIPTION')
   nonSubscription,
 
   /// A type of [StoreProduct] for subscriptions.
-  @JsonValue('SUBSCRIPTION')
   subscription
 }
 

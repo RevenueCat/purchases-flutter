@@ -8,6 +8,7 @@ class _EntitlementInfoApiTest {
       case PeriodType.intro:
       case PeriodType.normal:
       case PeriodType.trial:
+      case PeriodType.prepaid:
       case PeriodType.unknown:
         break;
     }
@@ -24,10 +25,6 @@ class _EntitlementInfoApiTest {
 
   void _checkFromJsonFactory(Map<String, dynamic> json) {
     EntitlementInfo info = EntitlementInfo.fromJson(json);
-  }
-
-  void _checkToJson(EntitlementInfo entitlementInfo) {
-    Map<String, dynamic> json = entitlementInfo.toJson();
   }
 
   void _checkConstructor(

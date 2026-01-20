@@ -7,10 +7,6 @@ class _PeriodApiTest {
     Period period = Period.fromJson(json);
   }
 
-  void _checkToJson(Period period) {
-    Map<String, dynamic> json = period.toJson();
-  }
-
   void _checkConstructor(
     PeriodUnit unit,
     int value,

@@ -7,10 +7,6 @@ class _PromotionalOfferApiTest {
     PromotionalOffer offer = PromotionalOffer.fromJson(json);
   }
 
-  void _checkToJson(PromotionalOffer offer) {
-    Map<String, dynamic> json = offer.toJson();
-  }
-
   void _checkConstructor(String identifier, String keyIdentifier, String nonce,
       String signature, int timestamp) {
     PromotionalOffer offer = PromotionalOffer(

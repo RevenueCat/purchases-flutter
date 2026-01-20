@@ -8,6 +8,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
+// ignore_for_file: deprecated_member_use
 class _PurchasesFlutterApiTest {
   void _checkPresentPaywall(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall();
@@ -69,6 +70,8 @@ class _PurchasesFlutterApiTest {
           onPurchaseCompleted:
               (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
           },
+          onPurchaseCancelled: () {
+          },
           onPurchaseError: (PurchasesError error) {
           },
           onRestoreCompleted: (CustomerInfo customerInfo) {
@@ -82,10 +85,37 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  Widget _checkOriginalTemplatePaywallFooterView() {
+    return Scaffold(
+      body: Center(
+        child: OriginalTemplatePaywallFooterView(
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
   Widget _checkPaywallFooterView() {
     return Scaffold(
       body: Center(
         child: PaywallFooterView(
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _checkOriginalTemplatePaywallFooterViewWithOffering(
+      Offering offering,
+  ) {
+    return Scaffold(
+      body: Center(
+        child: OriginalTemplatePaywallFooterView(
+          offering: offering,
           contentCreator: (double bottomPadding) {
             return Container();
           },
@@ -107,14 +137,18 @@ class _PurchasesFlutterApiTest {
     );
   }
 
-  Widget _checkPaywallFooterViewWithListeners(Offering offering) {
+  Widget _checkOriginalTemplatePaywallFooterViewWithListeners(
+      Offering offering,
+  ) {
     return Scaffold(
       body: Center(
-        child: PaywallFooterView(
+        child: OriginalTemplatePaywallFooterView(
           onPurchaseStarted: (Package rcPackage) {
           },
           onPurchaseCompleted:
               (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
+          },
+          onPurchaseCancelled: () {
           },
           onPurchaseError: (PurchasesError error) {
           },
@@ -131,4 +165,80 @@ class _PurchasesFlutterApiTest {
       ),
     );
   }
+
+  Widget _checkPaywallFooterViewWithListeners(Offering offering) {
+    return Scaffold(
+      body: Center(
+        child: PaywallFooterView(
+          onPurchaseStarted: (Package rcPackage) {
+          },
+          onPurchaseCompleted:
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
+          },
+          onPurchaseCancelled: () {
+          },
+          onPurchaseError: (PurchasesError error) {
+          },
+          onRestoreCompleted: (CustomerInfo customerInfo) {
+          },
+          onRestoreError: (PurchasesError error) {
+          },
+          onDismiss: () {
+          },
+          contentCreator: (double bottomPadding) {
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+
+  void _checkPresentCustomerCenter() async {
+    Future<void> f1 = RevenueCatUI.presentCustomerCenter();
+    Future<void> f2 = RevenueCatUI.presentCustomerCenter(
+      onRestoreStarted: () {},
+    );
+  }
+
+  void _checkPresentCustomerCenterWithCallbacks() async {
+    Future<void> f1 = RevenueCatUI.presentCustomerCenter(
+      onRestoreStarted: () {},
+      onRestoreCompleted: (CustomerInfo customerInfo) {},
+      onRestoreFailed: (PurchasesError error) {},
+      onShowingManageSubscriptions: () {},
+      onRefundRequestStarted: (String productIdentifier) {},
+      onRefundRequestCompleted: (String productIdentifier, String status) {},
+      onFeedbackSurveyCompleted: (String optionIdentifier) {},
+      onManagementOptionSelected: (String optionIdentifier, String? url) {},
+      onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
+    );
+  }
+
+  Widget _checkCustomerCenterView() {
+    return const Scaffold(
+      body: Center(
+        child: CustomerCenterView(),
+      ),
+    );
+  }
+
+  Widget _checkCustomerCenterViewWithCallbacks() {
+    return Scaffold(
+      body: Center(
+        child: CustomerCenterView(
+          onDismiss: () {},
+          onRestoreStarted: () {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreFailed: (PurchasesError error) {},
+          onShowingManageSubscriptions: () {},
+          onRefundRequestStarted: (String productIdentifier) {},
+          onRefundRequestCompleted: (String productIdentifier, String status) {},
+          onFeedbackSurveyCompleted: (String optionIdentifier) {},
+          onManagementOptionSelected: (String optionIdentifier, String? url) {},
+          onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
+        ),
+      ),
+    );
+  }
+
 }

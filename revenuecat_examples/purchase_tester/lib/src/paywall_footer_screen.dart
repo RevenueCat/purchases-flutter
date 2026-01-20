@@ -23,7 +23,7 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
     return Scaffold(
       body: SafeArea( // Wrap your body content with SafeArea
         child: Center(
-          child: PaywallFooterView(
+          child: OriginalTemplatePaywallFooterView(
             offering: widget.offering,
             onPurchaseStarted: (Package rcPackage) {
               print('Purchase started for package: ${rcPackage.identifier}');
@@ -32,6 +32,9 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
                 (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
               print('Purchase completed for customerInfo:\n $customerInfo\n '
                   'and storeTransaction:\n $storeTransaction');
+            },
+            onPurchaseCancelled: () {
+              print('Purchase cancelled');
             },
             onPurchaseError: (PurchasesError error) {
               print('Purchase error: $error');

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:magic_weather_flutter/src/model/styles.dart';
 import 'dart:io';
 
@@ -20,7 +21,7 @@ class TopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!Platform.isIOS) {
+    if (kIsWeb || !Platform.isIOS) {
       return Scaffold(
         backgroundColor: kColorBar,
         appBar: AppBar(

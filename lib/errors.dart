@@ -115,7 +115,28 @@ enum PurchasesErrorCode {
   invalidPromotionalOfferError,
 
   /// Error performing request because the internet connection appears to be offline.
-  offlineConnectionError
+  offlineConnectionError,
+
+  /// The feature is not available in custom entitlements computation mode.
+  featureNotAvailableInCustomEntitlementsComputationMode,
+
+  /// Request failed signature verification. Please see https://rev.cat/trusted-entitlements for more info.
+  signatureVerificationFailed,
+
+  /// The feature is not supported with StoreKit 1.
+  featureNotSupportedWithStoreKit1,
+
+  /// The web purchase token is invalid.
+  invalidWebPurchaseToken,
+
+  /// Indicates that the web purchase belongs to a different user and can't be redeemed again.
+  purchaseBelongsToOtherUser,
+
+  /// The link you provided has expired. A new one will be sent to the email used to make the purchase.
+  expiredWebPurchaseToken,
+
+  /// Error thrown when simulating a purchase failure in Test Store.
+  testStoreSimulatedPurchaseError
 }
 
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
@@ -143,7 +164,7 @@ class PurchasesErrorHelper {
   /// }
   /// ```
   static PurchasesErrorCode getErrorCode(PlatformException e) {
-    final errorCode = int.parse(e.code);
+    final errorCode = num.parse(e.code).round();
     if (errorCode >= PurchasesErrorCode.values.length) {
       return PurchasesErrorCode.unknownError;
     }

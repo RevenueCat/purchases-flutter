@@ -15,8 +15,6 @@
 .packages
 .pub/
 build/
-revenuecat_examples/**/pubspec.lock
-api_tester/**/pubspec.lock
 pubspec.lock
 
 # Android related
@@ -29,11 +27,15 @@ pubspec.lock
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
 *.jks
+**/.cxx
 revenuecat_examples/purchase_tester/ios/Flutter/flutter_export_environment.sh
 revenuecat_examples/purchase_tester/.flutter-plugins-dependencies
 revenuecat_examples/purchase_tester/ios/Flutter/Flutter.podspec
 revenuecat_examples/purchase_tester/ios/Flutter/.last_build_id
 revenuecat_examples/purchase_tester/android/.composite-enable
+revenuecat_examples/purchase_tester/android/.android-enable
+revenuecat_examples/MagicWeather/android/.composite-enable
+revenuecat_examples/MagicWeather/android/.android-enable
 fastlane/report.xml
 *.bck
 
@@ -46,3 +48,8 @@ flutter
 
 # Cocoapods
 **/Podfile.lock
+
+# Swift Package Manager
+.build/
+.swiftpm/
+**/Package.resolved

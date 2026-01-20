@@ -1,26 +1,26 @@
 package com.revenuecat.purchases_ui_flutter.views
 
 import android.content.Context
-import android.util.AttributeSet
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.view.children
+import com.revenuecat.purchases.InternalRevenueCatAPI
+import com.revenuecat.purchases.PresentedOfferingContext
 import com.revenuecat.purchases.hybridcommon.ui.PaywallListenerWrapper
-import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI
-import com.revenuecat.purchases.ui.revenuecatui.views.PaywallFooterView as NativePaywallFooterView
+import com.revenuecat.purchases_ui_flutter.MapHelper
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
+import com.revenuecat.purchases.ui.revenuecatui.views.PaywallFooterView as NativePaywallFooterView
 
-@OptIn(ExperimentalPreviewRevenueCatUIPurchasesAPI::class)
+@OptIn(InternalRevenueCatAPI::class)
 internal class PaywallFooterView(
     context: Context,
     id: Int,
     messenger: BinaryMessenger,
     creationParams: Map<String?, Any?>
-) : PlatformView {
+) : BasePaywallView(context) {
 
     private val methodChannel: MethodChannel
 
@@ -35,6 +35,9 @@ internal class PaywallFooterView(
     init {
         methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/PaywallFooterView/${id}")
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
+        val presentedOfferingContext = (creationParams["presentedOfferingContext"] as? Map<*, *>)?.let {
+            MapHelper.mapPresentedOfferingContext(it)
+        } ?: offeringIdentifier?.let { PresentedOfferingContext(it) }
         nativePaywallFooterView = object : NativePaywallFooterView(
             context,
             dismissHandler = { methodChannel.invokeMethod("onDismiss", null) }
@@ -67,6 +70,10 @@ internal class PaywallFooterView(
                 )
             }
 
+            override fun onPurchaseCancelled() {
+                methodChannel.invokeMethod("onPurchaseCancelled", null)
+            }
+
             override fun onPurchaseError(error: Map<String, Any?>) {
                 methodChannel.invokeMethod("onPurchaseError", error)
             }
@@ -84,7 +91,12 @@ internal class PaywallFooterView(
             FrameLayout.LayoutParams.MATCH_PARENT,
             Gravity.BOTTOM
         )
-        nativePaywallFooterView.setOfferingId(offeringIdentifier)
+        if (offeringIdentifier != null && presentedOfferingContext != null) {
+            nativePaywallFooterView.setOfferingIdAndPresentedOfferingContext(
+                offeringIdentifier,
+                presentedOfferingContext
+            )
+        }
     }
 
     private fun updateHeight(newHeight: Double) {

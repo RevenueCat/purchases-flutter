@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/constant.dart';
@@ -8,7 +9,12 @@ import 'store_config.dart';
 import 'src/app.dart';
 
 void main() async {
-  if (Platform.isIOS || Platform.isMacOS) {
+  if (kIsWeb) {
+    StoreConfig(
+      store: Store.rcBilling,
+      apiKey: webApiKey,
+    );
+  } else if (Platform.isIOS || Platform.isMacOS) {
     StoreConfig(
       store: Store.appStore,
       apiKey: appleApiKey,

@@ -10,7 +10,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 import 'internal_paywall_footer_view.dart';
 
 /// View that displays the paywall in footer mode.
-/// Not supported in macOS currently.
+/// Not supported in macOS currently. Only available for original template paywalls. Ignored for V2 Paywalls.
 ///
 /// [offering] (Optional) The offering object to be displayed in the paywall.
 /// Obtained from [Purchases.getOfferings].
@@ -37,23 +37,81 @@ import 'internal_paywall_footer_view.dart';
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
-class PaywallFooterView extends StatefulWidget {
+@Deprecated('use OriginalTemplatePaywallFooterView instead')
+class PaywallFooterView extends OriginalTemplatePaywallFooterView {
+  @Deprecated('use OriginalTemplatePaywallFooterView instead')
+  const PaywallFooterView({
+    Key? key,
+    Offering? offering,
+    Function(Package rcPackage)? onPurchaseStarted,
+    Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)? onPurchaseCompleted,
+    Function()? onPurchaseCancelled,
+    Function(PurchasesError)? onPurchaseError,
+    Function(CustomerInfo customerInfo)? onRestoreCompleted,
+    Function(PurchasesError)? onRestoreError,
+    Function()? onDismiss,
+    required Widget Function(double bottomPadding) contentCreator,
+  }) : super(
+      key: key,
+      offering: offering,
+      onPurchaseStarted: onPurchaseStarted,
+      onPurchaseCompleted: onPurchaseCompleted,
+      onPurchaseCancelled: onPurchaseCancelled,
+      onPurchaseError: onPurchaseError,
+      onRestoreCompleted: onRestoreCompleted,
+      onRestoreError: onRestoreError,
+      onDismiss: onDismiss,
+      contentCreator: contentCreator,
+  );
+}
+
+/// View that displays the paywall in footer mode.
+/// Not supported in macOS currently. Only available for original template paywalls. Ignored for V2 Paywalls.
+///
+/// [offering] (Optional) The offering object to be displayed in the paywall.
+/// Obtained from [Purchases.getOfferings].
+///
+/// [onPurchaseStarted] (Optional) Callback that gets called when a purchase
+/// is started.
+///
+/// [onPurchaseCompleted] (Optional) Callback that gets called when a purchase
+/// is completed.
+///
+/// [onPurchaseError] (Optional) Callback that gets called when a purchase
+/// fails.
+///
+/// [onRestoreCompleted] (Optional) Callback that gets called when a restore
+/// is completed. Note that this may get called even if no entitlements have
+/// been granted in case no relevant purchases were found.
+///
+/// [onRestoreError] (Optional) Callback that gets called when a restore
+/// fails.
+///
+/// [onDismiss] (Optional) Callback that gets called when the paywall wants to
+/// dismiss. Currently, after a purchase is completed.
+///
+/// [contentCreator] A function that creates the content to be displayed above
+/// the paywall. Make sure you apply the given padding to the bottom of your
+/// content to avoid overlap.
+class OriginalTemplatePaywallFooterView extends StatefulWidget {
 
   final Offering? offering;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
   onPurchaseCompleted;
+  final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
   final Function()? onDismiss;
   final Widget Function(double bottomPadding) contentCreator;
 
-  const PaywallFooterView({
+  const OriginalTemplatePaywallFooterView({
     Key? key,
     this.offering,
     this.onPurchaseStarted,
     this.onPurchaseCompleted,
+    this.onPurchaseCancelled,
     this.onPurchaseError,
     this.onRestoreCompleted,
     this.onRestoreError,
@@ -65,7 +123,7 @@ class PaywallFooterView extends StatefulWidget {
   State<StatefulWidget> createState() => _PaywallFooterViewState();
 }
 
-class _PaywallFooterViewState extends State<PaywallFooterView> {
+class _PaywallFooterViewState extends State<OriginalTemplatePaywallFooterView> {
   static const _roundedCornerRadius = 20.0;
 
   // Need to set it to a value > 0 so it's drawn. Setting it to a value that
@@ -99,6 +157,7 @@ class _PaywallFooterViewState extends State<PaywallFooterView> {
             offering: widget.offering,
             onPurchaseStarted: widget.onPurchaseStarted,
             onPurchaseCompleted: widget.onPurchaseCompleted,
+            onPurchaseCancelled: widget.onPurchaseCancelled,
             onPurchaseError: widget.onPurchaseError,
             onRestoreCompleted: widget.onRestoreCompleted,
             onRestoreError: widget.onRestoreError,

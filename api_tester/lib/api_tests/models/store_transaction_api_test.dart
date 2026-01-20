@@ -8,21 +8,15 @@ class _StoreTransactionApiTest {
     StoreTransaction transaction = StoreTransaction.fromJson(json);
   }
 
-  void _checkToJson(StoreTransaction transaction) {
-    Map<String, dynamic> json = transaction.toJson();
-  }
-
   void _checkConstructor(
       String transactionIdentifier,
-      String revenueCatIdentifier,
       String productIdentifier,
       String purchaseDate) {
     StoreTransaction transaction =
-        StoreTransaction(revenueCatIdentifier, productIdentifier, purchaseDate);
+        StoreTransaction(transactionIdentifier, productIdentifier, purchaseDate);
     StoreTransaction transaction2 =
-        StoreTransaction.create(
+        StoreTransaction(
             transactionIdentifier,
-            revenueCatIdentifier,
             productIdentifier,
             purchaseDate
         );
@@ -30,7 +24,6 @@ class _StoreTransactionApiTest {
 
   void _checkProperties(StoreTransaction transaction) {
     String transactionIdentifier = transaction.transactionIdentifier;
-    String revenueCatIdentifier = transaction.revenueCatIdentifier;
     String productIdentifier = transaction.productIdentifier;
     String purchaseDate = transaction.purchaseDate;
   }

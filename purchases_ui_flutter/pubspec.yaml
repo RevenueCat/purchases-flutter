@@ -1,17 +1,17 @@
 name: purchases_ui_flutter
 description: "Flutter plugin that integrates RevenueCat Paywalls. This plugin supports iOS and Android."
-version: 8.2.1
+version: 9.10.6
 homepage: https://www.revenuecat.com/
 issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
 documentation: https://docs.revenuecat.com/docs
 
 environment:
   # TODO: Check constraints are ok
-  sdk: '>=3.2.3 <4.0.0'
-  flutter: '>=3.3.0'
+  sdk: '>=3.6.0 <4.0.0'
+  flutter: '>=3.27.0'
 
 dependencies:
-  purchases_flutter: ^8.2.1
+  purchases_flutter: ^9.10.6
   flutter:
     sdk: flutter
   plugin_platform_interface: ^2.0.2

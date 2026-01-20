@@ -183,9 +183,30 @@ class Purchases {
             purchasesConfiguration.entitlementVerificationMode.name,
         'pendingTransactionsForPrepaidPlansEnabled':
             purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
+        'automaticDeviceIdentifierCollectionEnabled':
+            purchasesConfiguration.automaticDeviceIdentifierCollectionEnabled,
+        'diagnosticsEnabled': purchasesConfiguration.diagnosticsEnabled,
+        'preferredUILocaleOverride':
+            purchasesConfiguration.preferredUILocaleOverride,
       },
     );
   }
+
+  /// Overrides the preferred UI locale used by RevenueCat UI components.
+  ///
+  /// When provided, the SDK will use the specified locale instead of the system default.
+  /// Both "es-ES" and "es_ES" formats are supported.
+  ///
+  /// Pass null to revert to the system default.
+  ///
+  /// [locale] The locale identifier (e.g., "de-DE", "es_ES") or null to use the system default.
+  static Future<void> overridePreferredUILocale(String? locale) =>
+      _channel.invokeMethod(
+        'overridePreferredUILocale',
+        {
+          'locale': locale,
+        },
+      );
 
   /// Deprecated. Configure behavior through the RevenueCat dashboard instead.
   /// Set this to true if you are passing in an appUserID but it is anonymous.
@@ -341,7 +362,7 @@ class Purchases {
   /// It is now recommended to use [Purchases.purchaseStoreProduct]
   /// to make a purchase with a [StoreProduct] if you can.
   ///
-  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// Makes a purchase. Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -356,25 +377,26 @@ class Purchases {
   /// [type] If the product is an Android INAPP, this needs to be
   /// PurchaseType.INAPP otherwise the product won't be found.
   /// PurchaseType.Subs by default. This parameter only has effect in Android.
-  @Deprecated('Use purchaseStoreProduct')
-  static Future<CustomerInfo> purchaseProduct(
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchaseProduct(
     String productIdentifier, {
     UpgradeInfo? upgradeInfo,
     PurchaseType type = PurchaseType.subs,
   }) async {
     final prorationMode = upgradeInfo?.prorationMode;
-    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
-      'productIdentifier': productIdentifier,
-      'type': type.name,
-      'googleOldProductIdentifier': upgradeInfo?.oldSKU,
-      'googleProrationMode': prorationMode?.value,
-      'googleIsPersonalizedPrice': null,
-      'presentedOfferingIdentifier': null,
-    });
-    return customerInfo;
+    final purchaseResult =
+      await _invokeReturningPurchaseResult('purchaseProduct', {
+        'productIdentifier': productIdentifier,
+        'type': type.name,
+        'googleOldProductIdentifier': upgradeInfo?.oldSKU,
+        'googleProrationMode': prorationMode?.value,
+        'googleIsPersonalizedPrice': null,
+        'presentedOfferingIdentifier': null,
+      });
+    return purchaseResult;
   }
 
-  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// Makes a purchase. Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -392,27 +414,29 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
-  static Future<CustomerInfo> purchaseStoreProduct(
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchaseStoreProduct(
     StoreProduct storeProduct, {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
-    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
-      'productIdentifier': storeProduct.identifier,
-      'type': storeProduct.productCategory?.name,
-      'googleOldProductIdentifier':
-          googleProductChangeInfo?.oldProductIdentifier,
-      'googleProrationMode': prorationMode,
-      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-      'presentedOfferingIdentifier':
-          storeProduct.presentedOfferingContext?.offeringIdentifier,
-    });
+    final purchaseResult =
+      await _invokeReturningPurchaseResult('purchaseProduct', {
+        'productIdentifier': storeProduct.identifier,
+        'type': storeProduct.productCategory?.name,
+        'googleOldProductIdentifier':
+            googleProductChangeInfo?.oldProductIdentifier,
+        'googleProrationMode': prorationMode,
+        'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+        'presentedOfferingIdentifier':
+            storeProduct.presentedOfferingContext?.offeringIdentifier,
+      });
 
-    return customerInfo;
+    return purchaseResult;
   }
 
-  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// Makes a purchase. Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -433,7 +457,8 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
-  static Future<CustomerInfo> purchasePackage(
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchasePackage(
     Package packageToPurchase, {
     @Deprecated('Use GoogleProductChangeInfo') UpgradeInfo? upgradeInfo,
     GoogleProductChangeInfo? googleProductChangeInfo,
@@ -441,21 +466,22 @@ class Purchases {
   }) async {
     final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
         upgradeInfo?.prorationMode?.value;
-    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
-      'packageIdentifier': packageToPurchase.identifier,
-      'presentedOfferingContext':
-          packageToPurchase.presentedOfferingContext.toJson(),
-      'googleOldProductIdentifier':
-          googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
-      'googleProrationMode': prorationMode,
-      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
-    });
-    return customerInfo;
+    final purchaseResult =
+      await _invokeReturningPurchaseResult('purchasePackage', {
+        'packageIdentifier': packageToPurchase.identifier,
+        'presentedOfferingContext':
+            packageToPurchase.presentedOfferingContext.toJson(),
+        'googleOldProductIdentifier':
+            googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
+        'googleProrationMode': prorationMode,
+        'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      });
+    return purchaseResult;
   }
 
   /// Google Play only.
   ///
-  /// Makes a purchase. Returns a [CustomerInfo] object. Throws a
+  /// Makes a purchase. Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -473,7 +499,8 @@ class Purchases {
   /// customize for you" in the purchase dialog when true.
   /// See https://developer.android.com/google/play/billing/integrate#personalized-price
   /// for more info.
-  static Future<CustomerInfo> purchaseSubscriptionOption(
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchaseSubscriptionOption(
     SubscriptionOption subscriptionOption, {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
@@ -484,8 +511,8 @@ class Purchases {
 
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
 
-    final customerInfo =
-        await _invokeReturningCustomerInfo('purchaseSubscriptionOption', {
+    final purchaseResult =
+        await _invokeReturningPurchaseResult('purchaseSubscriptionOption', {
       'productIdentifier': subscriptionOption.productId,
       'optionIdentifier': subscriptionOption.id,
       'googleOldProductIdentifier':
@@ -495,12 +522,12 @@ class Purchases {
       'presentedOfferingIdentifier':
           subscriptionOption.presentedOfferingContext?.offeringIdentifier,
     });
-    return customerInfo;
+    return purchaseResult;
   }
 
   /// iOS only. Purchase a product applying a given promotional offer.
   ///
-  /// Returns a [CustomerInfo] object. Throws a
+  /// Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -510,22 +537,24 @@ class Purchases {
   ///
   /// [promotionalOffer] Promotional offer that will be applied to the product.
   /// Retrieve this offer using [getPromotionalOffer].
-  static Future<CustomerInfo> purchaseDiscountedProduct(
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchaseDiscountedProduct(
     StoreProduct product,
     PromotionalOffer promotionalOffer,
   ) async {
-    final customerInfo = await _invokeReturningCustomerInfo('purchaseProduct', {
-      'productIdentifier': product.identifier,
-      'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
-      'presentedOfferingIdentifier':
-          product.presentedOfferingContext?.offeringIdentifier,
-    });
-    return customerInfo;
+    final purchaseResult =
+      await _invokeReturningPurchaseResult('purchaseProduct', {
+        'productIdentifier': product.identifier,
+        'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
+        'presentedOfferingIdentifier':
+            product.presentedOfferingContext?.offeringIdentifier,
+      });
+    return purchaseResult;
   }
 
   /// iOS only. Purchase a package applying a given promotional offer.
   ///
-  /// Returns a [CustomerInfo] object. Throws a
+  /// Returns a [PurchaseResult] object. Throws a
   /// [PlatformException] if the purchase is unsuccessful.
   /// Check if [PurchasesErrorHelper.getErrorCode] is
   /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
@@ -535,17 +564,81 @@ class Purchases {
   ///
   /// [promotionalOffer] Promotional offer that will be applied to the product.
   /// Retrieve this offer using [getPromotionalOffer].
-  static Future<CustomerInfo> purchaseDiscountedPackage(
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchaseDiscountedPackage(
     Package packageToPurchase,
     PromotionalOffer promotionalOffer,
   ) async {
-    final customerInfo = await _invokeReturningCustomerInfo('purchasePackage', {
-      'packageIdentifier': packageToPurchase.identifier,
-      'presentedOfferingContext':
-          packageToPurchase.presentedOfferingContext.toJson(),
-      'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
-    });
-    return customerInfo;
+    final purchaseResult =
+      await _invokeReturningPurchaseResult('purchasePackage', {
+        'packageIdentifier': packageToPurchase.identifier,
+        'presentedOfferingContext':
+            packageToPurchase.presentedOfferingContext.toJson(),
+        'signedDiscountTimestamp': promotionalOffer.timestamp.toString(),
+      });
+    return purchaseResult;
+  }
+
+  static Future<PurchaseResult> purchase(
+      PurchaseParams purchaseParams,
+  ) async {
+    final package = purchaseParams.package;
+    final storeProduct = purchaseParams.product;
+    final subscriptionOption = purchaseParams.subscriptionOption;
+    final googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
+    final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
+    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
+    final winBackOffer = purchaseParams.winBackOffer;
+    final customerEmail = purchaseParams.customerEmail;
+    final presentedOfferingContext = purchaseParams.package?.presentedOfferingContext ??
+        purchaseParams.product?.presentedOfferingContext ??
+        purchaseParams.subscriptionOption?.presentedOfferingContext;
+    final presentedOfferingContextJson = presentedOfferingContext?.toJson();
+    final purchaseArgs = <String, dynamic>{
+      'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
+      'googleProrationMode': prorationMode,
+      'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
+      'signedDiscountTimestamp': signedDiscountTimestamp,
+      'presentedOfferingContext': presentedOfferingContextJson,
+      'customerEmail': customerEmail,
+      'winBackOfferIdentifier': winBackOffer?.identifier,
+    };
+    final isWinBackOfferPurchase = (defaultTargetPlatform == TargetPlatform.iOS
+        || defaultTargetPlatform == TargetPlatform.macOS)
+        && winBackOffer != null;
+    if (package != null) {
+      final methodName = isWinBackOfferPurchase
+          ? 'purchasePackageWithWinBackOffer'
+          : 'purchasePackage';
+      return await _invokeReturningPurchaseResult(methodName, {
+        ...purchaseArgs,
+        'packageIdentifier': package.identifier,
+      });
+    } else if (storeProduct != null) {
+      if (kIsWeb) {
+        throw UnsupportedPlatformException();
+      }
+      final methodName = isWinBackOfferPurchase
+          ? 'purchaseProductWithWinBackOffer'
+          : 'purchaseProduct';
+      return await _invokeReturningPurchaseResult(methodName, {
+        ...purchaseArgs,
+        'productIdentifier': storeProduct.identifier,
+        'type': storeProduct.productCategory?.name,
+      });
+    } else if (subscriptionOption != null) {
+      if (defaultTargetPlatform != TargetPlatform.android) {
+        throw UnsupportedPlatformException();
+      }
+      return await _invokeReturningPurchaseResult('purchaseSubscriptionOption', {
+        ...purchaseArgs,
+        'productIdentifier': subscriptionOption.productId,
+        'optionIdentifier': subscriptionOption.id,
+      });
+    } else {
+      throw ArgumentError('One of package, product or subscriptionOption must be set in PurchaseParams.');
+    }
   }
 
   /// Restores a user's previous purchases and links their appUserIDs to any
@@ -561,6 +654,15 @@ class Purchases {
   /// Gets the current appUserID.
   static Future<String> get appUserID async =>
       await _channel.invokeMethod('getAppUserID') as String;
+
+  /// Gets the current storefront for the store account.
+  static Future<Storefront?> get storefront async {
+    final storefrontJson = await _channel.invokeMethod('getStorefront');
+    if (storefrontJson == null) {
+      return null;
+    }
+    return Storefront.fromJson(Map<String, dynamic>.from(storefrontJson));
+  }
 
   /// This function will logIn the current user with an appUserID.
   /// Typically this would be used after logging in a user to identify them without
@@ -806,6 +908,16 @@ class Purchases {
         {'firebaseAppInstanceID': firebaseAppInstanceId},
       );
 
+  /// Subscriber attribute associated with the Tenjin Installation ID for the user
+  /// Required for the RevenueCat Tenjin integration
+  ///
+  /// [tenjinAnalyticsInstallationID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setTenjinAnalyticsInstallationID(String tenjinAnalyticsInstallationID) =>
+      _channel.invokeMethod(
+        'setTenjinAnalyticsInstallationID',
+        {'tenjinAnalyticsInstallationID': tenjinAnalyticsInstallationID},
+      );
+
   /// Subscriber attribute associated with the OneSignal Player Id for the user
   /// Required for the RevenueCat OneSignal integration
   ///
@@ -823,6 +935,12 @@ class Purchases {
       {'airshipChannelID': airshipChannelID},
     );
   }
+
+  /// Subscriber attribute associated with the PostHog User ID for the user
+  ///
+  /// [postHogUserID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setPostHogUserID(String postHogUserID) =>
+      _channel.invokeMethod('setPostHogUserID', {'postHogUserID': postHogUserID});
 
   /// Subscriber attribute associated with the install media source for the user
   ///
@@ -889,9 +1007,8 @@ class Purchases {
   ///
   /// Use this function to retrieve the [PromotionalOffer] to apply to a
   /// product. Returns a [PromotionalOffer] object which should be passed
-  /// to [purchaseDiscountedProduct] or [purchaseDiscountedPackage] to complete
-  /// the discounted purchase. A null [PromotionalOffer] means the user is not
-  /// entitled to the discount.
+  /// to [purchase] to complete the discounted purchase.
+  /// A null [PromotionalOffer] means the user is not entitled to the discount.
   ///
   /// [product] The [StoreProduct] the user intends to purchase.
   ///
@@ -905,6 +1022,90 @@ class Purchases {
       'discountIdentifier': discount.identifier,
     });
     return PromotionalOffer.fromJson(Map<String, dynamic>.from(result));
+  }
+
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  ///
+  /// Use this function to retrieve the eligible [WinBackOffer]s that a subscriber
+  /// is eligible for for a given [StoreProduct].
+  ///
+  /// [product] The [StoreProduct] the user intends to purchase.
+  static Future<List<WinBackOffer>> getEligibleWinBackOffersForProduct(
+    StoreProduct product,
+  ) async {
+    final result =
+        await _channel.invokeMethod('eligibleWinBackOffersForProduct', {
+      'productIdentifier': product.identifier,
+    });
+
+    return (result as List)
+        .map((e) => WinBackOffer.fromJson(Map<String, dynamic>.from(e)))
+        .toList();
+  }
+
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  ///
+  /// Use this function to retrieve the eligible [WinBackOffer]s that a subscriber
+  /// is eligible for for a given [Package].
+  ///
+  /// [package] The [Package] the user intends to purchase.
+  static Future<List<WinBackOffer>> getEligibleWinBackOffersForPackage(
+    Package package,
+  ) async =>
+      getEligibleWinBackOffersForProduct(package.storeProduct);
+
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  /// Purchase a product applying a given win-back offer.
+  ///
+  /// Returns a [PurchaseResult] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [storeProduct] The product to purchase.
+  ///
+  /// [winBackOffer] Win-back offer that will be applied to the product.
+  /// Retrieve this offer using [getEligibleWinBackOffersForProduct]
+  /// or [getEligibleWinBackOffersForPackage].
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchaseProductWithWinBackOffer(
+    StoreProduct product,
+    WinBackOffer winBackOffer,
+  ) async {
+    final purchaseResult =
+        await _invokeReturningPurchaseResult('purchaseProductWithWinBackOffer', {
+      'productIdentifier': product.identifier,
+      'winBackOfferIdentifier': winBackOffer.identifier,
+    });
+    return purchaseResult;
+  }
+
+  /// iOS only, requires iOS 18.0 or greater with StoreKit 2.
+  /// Purchase a package applying a given win-back offer.
+  ///
+  /// Returns a [PurchaseResult] object. Throws a
+  /// [PlatformException] if the purchase is unsuccessful.
+  /// Check if [PurchasesErrorHelper.getErrorCode] is
+  /// [PurchasesErrorCode.purchaseCancelledError] to check if the user cancelled
+  /// the purchase.
+  ///
+  /// [package] The package to purchase.
+  ///
+  /// [winBackOffer] Win-back offer that will be applied to the package.
+  /// Retrieve this offer using [getEligibleWinBackOffersForPackage].
+  @Deprecated('Use purchase(PurchaseParams)')
+  static Future<PurchaseResult> purchasePackageWithWinBackOffer(
+    Package package,
+    WinBackOffer winBackOffer,
+  ) async {
+    final purchaseResult =
+        await _invokeReturningPurchaseResult('purchasePackageWithWinBackOffer', {
+      'packageIdentifier': package.identifier,
+      'presentedOfferingContext': package.presentedOfferingContext.toJson(),
+      'winBackOfferIdentifier': winBackOffer.identifier,
+    });
+    return purchaseResult;
   }
 
   /// iOS 15+ only. Presents a refund request sheet in the current window scene for
@@ -1117,21 +1318,65 @@ class Purchases {
         },
       );
 
-  static Future<CustomerInfo> _invokeReturningCustomerInfo(String method,
+  static Future<WebPurchaseRedemption?> parseAsWebPurchaseRedemption(String urlString) async {
+    final bool result = await _channel.invokeMethod('isWebPurchaseRedemptionURL', {
+      'urlString': urlString,
+    });
+    if (result) {
+      return WebPurchaseRedemption(urlString);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<WebPurchaseRedemptionResult> redeemWebPurchase(WebPurchaseRedemption webPurchaseRedemption) async {
+    final result = await _channel.invokeMethod('redeemWebPurchase', {
+      'redemptionLink': webPurchaseRedemption.redemptionLink,
+    });
+    return WebPurchaseRedemptionResult.fromJson(Map<String, dynamic>.from(result));
+  }
+
+  ///================================================================================
+  /// Virtual Currencies
+  ///================================================================================
+  
+  /// Fetches the virtual currencies for the current subscriber.
+  ///
+  /// Returns a [VirtualCurrencies] object, or throws a [PlatformException] if there
+  /// was a problem fetching the virtual currencies.
+  static Future<VirtualCurrencies> getVirtualCurrencies() async {
+    final result = await _channel.invokeMethod('getVirtualCurrencies');
+    return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
+  }
+
+  /// Invalidates the cache for virtual currencies.
+  ///
+  /// This is useful for cases where a virtual currency's balance might have been updated
+  /// outside of the app, like if you decreased a user's balance from the user spending a virtual currency,
+  /// or if you increased the balance from your backend using the server APIs.
+  static Future<void> invalidateVirtualCurrenciesCache() =>
+    _channel.invokeMethod('invalidateVirtualCurrenciesCache');
+
+  /// The currently cached [VirtualCurrencies] if one is available.
+  /// This value will remain null until virtual currencies have been fetched at 
+  /// least once with [Purchases.getVirtualCurrencies] or an equivalent function.
+  static Future<VirtualCurrencies?> getCachedVirtualCurrencies() async {
+    final result = await _channel.invokeMethod('getCachedVirtualCurrencies');
+    if (result == null) {
+      return null;
+    }
+    return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
+  }
+
+  static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
     final response = await _invokeReturningMap(
       method,
       arguments,
     );
-    final customerInfoJson = _getCustomerInfoJsonFromMap(response);
-    return CustomerInfo.fromJson(customerInfoJson);
+    return PurchaseResult.fromJson(response);
   }
-
-  static Map<String, dynamic> _getCustomerInfoJsonFromMap(
-    Map<String, dynamic> response,
-  ) =>
-      Map<String, dynamic>.from(response['customerInfo']);
 
   static Future<Map<String, dynamic>> _invokeReturningMap(String method,
       // ignore: require_trailing_commas
@@ -1249,7 +1494,8 @@ extension RefundRequestStatusExtension on RefundRequestStatus {
 /// Class used to hold the result of the logIn method
 class LogInResult {
   /// true if the logged in user has been created in the
-  /// RevenueCat backend for the first time
+  /// RevenueCat backend for the first time.
+  /// Note: This won't be valid in the web target.
   final bool created;
 
   /// the [CustomerInfo] associated to the logged in user

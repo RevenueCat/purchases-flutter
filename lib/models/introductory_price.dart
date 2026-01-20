@@ -1,40 +1,56 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
+import 'map_helpers.dart';
 import 'period_unit.dart';
 
-part 'introductory_price.freezed.dart';
-part 'introductory_price.g.dart';
+class IntroductoryPrice extends Equatable {
+  /// Introductory price of a subscription in the local currency.
+  final double price;
 
-@freezed
+  /// Formatted introductory price of a subscription, including
+  /// its currency sign, such as €3.99.
+  final String priceString;
 
-/// Contains all the introductory information associated with a [Product]
-class IntroductoryPrice with _$IntroductoryPrice {
-  const factory IntroductoryPrice(
-    /// Introductory price of a subscription in the local currency.
-    double price,
+  /// Billing period of the introductory price, specified in
+  /// ISO 8601 format.
+  final String period;
 
-    /// Formatted introductory price of a subscription, including
-    /// its currency sign, such as €3.99.
-    String priceString,
+  /// Number of subscription billing periods for which the
+  /// user will be given the introductory price, such as 3.
+  final int cycles;
 
-    /// Billing period of the introductory price, specified in
-    /// ISO 8601 format.
-    String period,
+  /// Unit for the billing period of the introductory price, can be DAY, WEEK,
+  /// MONTH or YEAR.
+  final PeriodUnit periodUnit;
 
-    /// Number of subscription billing periods for which the
-    /// user will be given the introductory price, such as 3.
-    int cycles,
+  /// Number of units for the billing period of the introductory price.
+  final int periodNumberOfUnits;
 
-    /// Unit for the billing period of the introductory price, can be DAY, WEEK,
-    /// MONTH or YEAR.
-    // ignore: invalid_annotation_target
-    @JsonKey(name: 'periodUnit', unknownEnumValue: PeriodUnit.unknown)
-        PeriodUnit periodUnit,
+  const IntroductoryPrice(
+    this.price,
+    this.priceString,
+    this.period,
+    this.cycles,
+    this.periodUnit,
+    this.periodNumberOfUnits,
+  );
 
-    /// Number of units for the billing period of the introductory price.
-    int periodNumberOfUnits,
-  ) = _IntroductoryPrice;
+  factory IntroductoryPrice.fromJson(Map<String, dynamic> json) => IntroductoryPrice(
+      (json['price'] as num).toDouble(),
+      json['priceString'] as String,
+      json['period'] as String,
+      (json['cycles'] as num).round(),
+      periodUnitFromJson(json['periodUnit']),
+      (json['periodNumberOfUnits'] as num).round(),
+    );
 
-  factory IntroductoryPrice.fromJson(Map<String, dynamic> json) =>
-      _$IntroductoryPriceFromJson(json);
+  @override
+  List<Object?> get props => [
+    price,
+    priceString,
+    period,
+    cycles,
+    periodUnit,
+    periodNumberOfUnits,
+  ];
 }

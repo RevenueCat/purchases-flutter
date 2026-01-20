@@ -36,6 +36,7 @@ class _PurchasesFlutterApiTest {
     configuration.store = Store.amazon;
     configuration.userDefaultsSuiteName = "fakeSuiteName";
     configuration.storeKitVersion = StoreKitVersion.defaultVersion;
+    configuration.preferredUILocaleOverride = "es-ES";
     Future<void> callback = Purchases.configure(configuration);
   }
 
@@ -87,73 +88,77 @@ class _PurchasesFlutterApiTest {
         await Purchases.getProducts(productIdentifiers, type: purchaseType);
   }
 
+  void _checkPurchase(PurchaseParams params) async {
+    PurchaseResult purchaseResult = await Purchases.purchase(params);
+  }
+
   void _checkPurchaseProduct() async {
     String productIdentifier = "fakeProductId";
     UpgradeInfo? upgradeInfo;
     GoogleProductChangeInfo? googleProductChangeInfo;
     PurchaseType purchaseType = PurchaseType.subs;
     ProductCategory productType = ProductCategory.subscription;
-    CustomerInfo customerInfo = await Purchases.purchaseProduct(
+    PurchaseResult purchaseResult = await Purchases.purchaseProduct(
         productIdentifier,
         type: purchaseType,
         upgradeInfo: upgradeInfo);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier,
+    purchaseResult = await Purchases.purchaseProduct(productIdentifier,
         upgradeInfo: upgradeInfo);
-    customerInfo = await Purchases.purchaseProduct(productIdentifier);
+    purchaseResult = await Purchases.purchaseProduct(productIdentifier);
   }
 
   void _checkPurchaseStoreProduct(StoreProduct storeProduct) async {
     GoogleProductChangeInfo? googleProductChangeInfo;
-    CustomerInfo customerInfo = await Purchases.purchaseStoreProduct(
+    PurchaseResult purchaseResult = await Purchases.purchaseStoreProduct(
         storeProduct,
         googleProductChangeInfo: googleProductChangeInfo,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+    purchaseResult = await Purchases.purchaseStoreProduct(storeProduct,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseStoreProduct(storeProduct,
+    purchaseResult = await Purchases.purchaseStoreProduct(storeProduct,
         googleProductChangeInfo: googleProductChangeInfo);
-    customerInfo = await Purchases.purchaseStoreProduct(storeProduct);
+    purchaseResult = await Purchases.purchaseStoreProduct(storeProduct);
   }
 
   void _checkPurchasePackage(Package package) async {
     UpgradeInfo? upgradeInfo;
     GoogleProductChangeInfo? googleProductChangeInfo;
-    CustomerInfo customerInfo =
+    PurchaseResult purchaseResult =
         await Purchases.purchasePackage(package, upgradeInfo: upgradeInfo);
-    customerInfo = await Purchases.purchasePackage(package,
+    purchaseResult = await Purchases.purchasePackage(package,
         googleProductChangeInfo: googleProductChangeInfo,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchasePackage(package,
+    purchaseResult = await Purchases.purchasePackage(package,
         upgradeInfo: upgradeInfo, googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchasePackage(package,
+    purchaseResult = await Purchases.purchasePackage(package,
         googleIsPersonalizedPrice: true);
   }
 
   void _checkPurchaseSubscriptionOption(SubscriptionOption subscriptionOption,
       GoogleProductChangeInfo? googleProductChangeInfo) async {
-    CustomerInfo customerInfo = await Purchases.purchaseSubscriptionOption(
+    PurchaseResult purchaseResult = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         googleProductChangeInfo: googleProductChangeInfo);
-    customerInfo = await Purchases.purchaseSubscriptionOption(
+    purchaseResult = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         googleProductChangeInfo: googleProductChangeInfo,
         googleIsPersonalizedPrice: true);
-    customerInfo = await Purchases.purchaseSubscriptionOption(
+    purchaseResult = await Purchases.purchaseSubscriptionOption(
         subscriptionOption,
         googleIsPersonalizedPrice: true);
-    customerInfo =
+    purchaseResult =
         await Purchases.purchaseSubscriptionOption(subscriptionOption);
   }
 
   void _checkPurchaseDiscountedProduct(
       StoreProduct product, PromotionalOffer offer) async {
-    CustomerInfo customerInfo =
+    PurchaseResult purchaseResult =
         await Purchases.purchaseDiscountedProduct(product, offer);
   }
 
   void _checkPurchaseDiscountedPackage(
       Package package, PromotionalOffer offer) async {
-    CustomerInfo customerInfo =
+    PurchaseResult purchaseResult =
         await Purchases.purchaseDiscountedPackage(package, offer);
   }
 
@@ -163,6 +168,15 @@ class _PurchasesFlutterApiTest {
 
   void _checkAppUserId() async {
     String appUserId = await Purchases.appUserID;
+  }
+
+  void _checkStorefront() async {
+    Storefront? storefront = await Purchases.storefront;
+  }
+
+  void _checkOverridePreferredUILocale() async {
+    String locale = "en-US";
+    Future<void> future = Purchases.overridePreferredUILocale(locale);
   }
 
   void _checkLogIn() async {
@@ -313,6 +327,11 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.setFirebaseAppInstanceId(id);
   }
 
+  void _checkSetTenjinAnalyticsInstallationId() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setTenjinAnalyticsInstallationID(id);
+  }
+
   void _checkSetOnesignalId() {
     String id = "fakeId";
     Future<void> future = Purchases.setOnesignalID(id);
@@ -321,6 +340,11 @@ class _PurchasesFlutterApiTest {
   void _checkSetAirshipChannelId() async {
     String id = "fakeId";
     await Purchases.setAirshipChannelID(id);
+  }
+
+  void _checkSetPostHogUserID() {
+    String id = "fake_posthog_user_id";
+    Future<void> future = Purchases.setPostHogUserID(id);
   }
 
   void _checkSetMediaSource() {
@@ -552,4 +576,37 @@ class _PurchasesFlutterApiTest {
     PurchasesAreCompletedBy revenueCat =
         const PurchasesAreCompletedByRevenueCat();
   }
+
+  void _checkWebPurchaseRedemption(String urlString) async {
+    WebPurchaseRedemption? webPurchaseRedemption = await Purchases.parseAsWebPurchaseRedemption(urlString);
+    WebPurchaseRedemptionResult? result = await Purchases.redeemWebPurchase(webPurchaseRedemption!);
+  }
+
+  void _checkGetVirtualCurrencies() async {
+    VirtualCurrencies virtualCurrencies = await Purchases.getVirtualCurrencies();
+  }
+
+  void _checkInvalidateVirtualCurrenciesCache() {
+    Future<void> future = Purchases.invalidateVirtualCurrenciesCache();
+  }
+
+  void _checkGetCachedVirtualCurrencies() async {
+    VirtualCurrencies? virtualCurrencies = await Purchases.getCachedVirtualCurrencies();
+  }
+}
+
+Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForProduct(
+    StoreProduct product) async {
+  List<WinBackOffer>? offers =
+      await Purchases.getEligibleWinBackOffersForProduct(product);
+
+  return await Purchases.purchaseProductWithWinBackOffer(product, offers[0]);
+}
+
+Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForPackage(
+    Package package) async {
+  List<WinBackOffer>? offers =
+      await Purchases.getEligibleWinBackOffersForPackage(package);
+
+  return await Purchases.purchasePackageWithWinBackOffer(package, offers[0]);
 }

@@ -1,27 +1,31 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:equatable/equatable.dart';
 
 import 'offering_wrapper.dart';
 
-part 'offerings_wrapper.freezed.dart';
-part 'offerings_wrapper.g.dart';
-
-@freezed
-
 /// This class contains all the offerings configured in RevenueCat dashboard.
 /// For more info see https://docs.revenuecat.com/docs/entitlements
-class Offerings with _$Offerings {
-  const Offerings._();
-  const factory Offerings(
-    /// Map of all Offerings [Offering] objects keyed by their identifier.
-    Map<String, Offering> all, {
+class Offerings extends Equatable {
+  /// Map of all Offerings [Offering] objects keyed by their identifier.
+  final Map<String, Offering> all;
 
-    /// Current offering configured in the RevenueCat dashboard.
-    Offering? current,
-  }) = _Offerings;
+  /// Current offering configured in the RevenueCat dashboard.
+  final Offering? current;
 
-  /// Retrieves an specific offering by its identifier.
+  const Offerings(this.all, {this.current});
+
+  /// Retrieves a specific offering by its identifier.
   Offering? getOffering(String identifier) => all[identifier];
 
-  factory Offerings.fromJson(Map<String, dynamic> json) =>
-      _$OfferingsFromJson(json);
+  factory Offerings.fromJson(Map<String, dynamic> json) => Offerings(
+    Map<String, dynamic>.from(json['all']).map(
+      (k, v) => MapEntry(k, Offering.fromJson(Map<String, dynamic>.from(v))),
+    ),
+    current: json['current'] != null ? Offering.fromJson(Map<String, dynamic>.from(json['current'])) : null,
+  );
+
+  @override
+  List<Object?> get props => [
+    all,
+    current,
+  ];
 }

@@ -3,7 +3,7 @@ package com.revenuecat.purchases_ui_flutter.views
 import android.content.Context
 import android.view.View
 import com.revenuecat.purchases.hybridcommon.ui.PaywallListenerWrapper
-import com.revenuecat.purchases.ui.revenuecatui.ExperimentalPreviewRevenueCatUIPurchasesAPI
+import com.revenuecat.purchases_ui_flutter.MapHelper
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -11,13 +11,12 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.platform.PlatformView
 import com.revenuecat.purchases.ui.revenuecatui.views.PaywallView as NativePaywallView
 
-@OptIn(ExperimentalPreviewRevenueCatUIPurchasesAPI::class)
 internal class PaywallView(
     context: Context,
     id: Int,
     messenger: BinaryMessenger,
     creationParams: Map<String?, Any?>
-) : PlatformView, MethodCallHandler {
+) : BasePaywallView(context), MethodCallHandler {
 
     private val methodChannel: MethodChannel
     private val nativePaywallView: NativePaywallView
@@ -32,6 +31,9 @@ internal class PaywallView(
         methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/PaywallView/$id")
         methodChannel.setMethodCallHandler(this)
         val offeringIdentifier = creationParams["offeringIdentifier"] as String?
+        val presentedOfferingContext = (creationParams["presentedOfferingContext"] as? Map<*, *>)?.let {
+            MapHelper.mapPresentedOfferingContext(it)
+        }
         val displayCloseButton = creationParams["displayCloseButton"] as Boolean?
         nativePaywallView = NativePaywallView(
             context = context,
@@ -50,6 +52,10 @@ internal class PaywallView(
                 )
             }
 
+            override fun onPurchaseCancelled() {
+                methodChannel.invokeMethod("onPurchaseCancelled", null)
+            }
+
             override fun onPurchaseError(error: Map<String, Any?>) {
                 methodChannel.invokeMethod("onPurchaseError", error)
             }
@@ -62,7 +68,7 @@ internal class PaywallView(
                 methodChannel.invokeMethod("onRestoreError", error)
             }
         })
-        nativePaywallView.setOfferingId(offeringIdentifier)
+        nativePaywallView.setOfferingId(offeringIdentifier, presentedOfferingContext)
     }
 
     // We currently don't have any communication in this channel from dart to native, so this can be empty.

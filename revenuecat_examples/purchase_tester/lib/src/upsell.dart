@@ -7,10 +7,13 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
-import 'constant.dart';
 import 'cats.dart';
+import 'constant.dart';
+import 'customer_center_view_screen.dart';
 import 'initial.dart';
 import 'paywall.dart';
+import 'winback_testing_screen.dart';
+import 'virtual_currency_testing_screen.dart';
 
 class UpsellScreen extends StatefulWidget {
   const UpsellScreen({Key? key}) : super(key: key);
@@ -20,7 +23,9 @@ class UpsellScreen extends StatefulWidget {
 }
 
 class _UpsellScreenState extends State<UpsellScreen> {
+  String? _appUserId;
   Offerings? _offerings;
+  CustomerInfo? _customerInfo;
 
   @override
   void initState() {
@@ -33,7 +38,27 @@ class _UpsellScreenState extends State<UpsellScreen> {
     try {
       offerings = await Purchases.getOfferings();
     } on PlatformException catch (e) {
-      print(e);
+      print("Error getting offerings: $e");
+    }
+
+    try {
+      _customerInfo = await Purchases.getCustomerInfo();
+    } on PlatformException catch (e) {
+      print("Error getting customer info: $e");
+    }
+
+    try {
+      _appUserId = await Purchases.appUserID;
+    } on PlatformException catch (e) {
+      print("Error getting app user id: $e");
+    }
+
+    Storefront? storefront;
+    try {
+      storefront = await Purchases.storefront;
+      print("Current storefront: ${storefront?.countryCode}");
+    } on PlatformException catch (e) {
+      print("Error getting storefront: $e");
     }
 
     if (!mounted) return;
@@ -54,8 +79,21 @@ class _UpsellScreenState extends State<UpsellScreen> {
   }
 
   Widget _buildUpsell(BuildContext context) {
-    final currentOfferingId = _offerings!.current!.identifier;
+    final currentOfferingId = _offerings?.current?.identifier;
     return ListView(children: [
+      if (_customerInfo != null)
+        ListTile(
+          title: const Text('Active Entitlements'),
+          trailing: Text(
+            '${_customerInfo!.entitlements.active.keys}'
+          ),
+        ),
+      if (_appUserId != null)
+        ListTile(
+          title: const Text('App User ID'),
+          trailing: Text(_appUserId!),
+        ),
+      const Divider(),
       ..._offerings!.all.entries
           .map((entry) => ExpansionTile(
                 title: Text("Offering ID: ${entry.key} "
@@ -81,6 +119,93 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       });
                     },
                     child: const Text('Sync Attributes and Offerings'),
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Win-Back Offer Testing"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const WinbackTestingScreen(),
+                          ));
+                    },
+                    child: const Text("Go to Win-Back Offer Testing Screen"),
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Virtual Currency Testing"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const VirtualCurrencyTestingScreen(),
+                          ));
+                    },
+                    child: const Text("Go to Virtual Currency Testing Screen"),
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Customer Center"),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const CustomerCenterViewModalScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("CustomerCenterViewModalScreen (Close Button)"),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await RevenueCatUI.presentCustomerCenter(
+                        onRestoreStarted: () => debugPrint('[CustomerCenter Modal] Restore started'),
+                        onRestoreCompleted: (customerInfo) =>
+                            debugPrint('[CustomerCenter Modal] Restore completed: ${customerInfo.originalAppUserId}'),
+                        onRestoreFailed: (error) =>
+                            debugPrint('[CustomerCenter Modal] Restore failed: ${error.message}'),
+                        onShowingManageSubscriptions: () =>
+                            debugPrint('[CustomerCenter Modal] Showing manage subscriptions'),
+                        onRefundRequestStarted: (productId) =>
+                            debugPrint('[CustomerCenter Modal] Refund request started for product: $productId'),
+                        onRefundRequestCompleted: (productId, status) =>
+                            debugPrint('[CustomerCenter Modal] Refund request completed for product $productId with status $status'),
+                        onFeedbackSurveyCompleted: (optionId) =>
+                            debugPrint('[CustomerCenter Modal] Feedback survey completed with option: $optionId'),
+                        onManagementOptionSelected: (optionId, url) =>
+                            debugPrint('[CustomerCenter Modal] Management option selected: $optionId (url: ${url ?? 'none'})'),
+                        onCustomActionSelected: (actionId, purchaseIdentifier) =>
+                            debugPrint('[CustomerCenter Modal] Custom action selected: $actionId (purchase: ${purchaseIdentifier ?? 'none'})'),
+                      );
+                    },
+                    child: const Text("Present Customer Center"),
                   ),
                 ]))),
       ),
@@ -213,9 +338,11 @@ class _PurchaseButton extends StatelessWidget {
 
   Future<void> _purchasePackage(BuildContext context, Package package) async {
     try {
-      final customerInfo = await Purchases.purchasePackage(package);
-      final isPro =
-          customerInfo.entitlements.active.containsKey(entitlementKey);
+      final purchaseParams = PurchaseParams.package(package);
+      final purchaseResult = await Purchases.purchase(purchaseParams);
+      final isPro = purchaseResult.customerInfo.entitlements
+        .active.containsKey(entitlementKey);
+      print("StoreTransaction: ${purchaseResult.storeTransaction}");
       if (isPro) {
         Navigator.pushReplacement(
           context,
@@ -263,9 +390,9 @@ class _PurchaseStoreProductButton extends StatelessWidget {
   Future<void> _purchaseStoreProduct(
       BuildContext context, StoreProduct storeProduct) async {
     try {
-      final customerInfo = await Purchases.purchaseStoreProduct(storeProduct);
-      final isPro =
-          customerInfo.entitlements.active.containsKey(entitlementKey);
+      final purchaseResult = await Purchases.purchaseStoreProduct(storeProduct);
+      final isPro = purchaseResult.customerInfo.entitlements
+        .active.containsKey(entitlementKey);
       if (isPro) {
         Navigator.pushReplacement(
           context,
@@ -308,9 +435,9 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
             icon: const Icon(Icons.add_shopping_cart),
             onPressed: () async {
               try {
-                final customerInfo =
+                final purchaseResult =
                     await Purchases.purchaseSubscriptionOption(option);
-                final isPro = customerInfo.entitlements.active
+                final isPro = purchaseResult.customerInfo.entitlements.active
                     .containsKey(entitlementKey);
                 if (isPro) {
                   Navigator.pushReplacement(

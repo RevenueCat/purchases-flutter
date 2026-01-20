@@ -19,13 +19,38 @@ aliases:
         ignore: /.*/
       branches:
         only: main
+  android-executor: &android-executor
+    executor:
+      name: android/android-docker
+      resource-class: large
+      tag: 2024.11.1
+    environment:
+      JVM_OPTS: -Xmx6g
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+  android-machine-emulator: &android-machine-emulator
+    executor:
+      name: android/android-machine
+      resource-class: xlarge
+      tag: 2024.11.1
 
 orbs:
-  android: circleci/android@0.2.1
-  gcp-cli: circleci/gcp-cli@2.1.0
+  android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
   revenuecat: revenuecat/sdks-common-config@2.1.0
   macos: circleci/macos@2.3.2
+  flutter: circleci/flutter@2.1.0
+  ruby: circleci/ruby@2.5.3
+
+executors:
+  macos-executor:
+    parameters:
+      xcode_version:
+        type: string
+        default: "15.4"
+    macos:
+      xcode: << parameters.xcode_version >>
+    resource_class: m4pro.medium
+    shell: /bin/bash --login -o pipefail
 
 parameters:
   action:
@@ -67,11 +92,6 @@ commands:
     steps:
       - flutter-get-dependencies:
           project: <<parameters.project>>
-      - run:
-          name: Build
-          command: |
-            cd <<parameters.project>>
-            flutter packages pub run build_runner build --delete-conflicting-outputs
 
   gradle-dependencies:
     description: "Get Gradle dependencies"
@@ -135,12 +155,16 @@ commands:
 
   install-sdkman:
     description: Install SDKMAN
+    parameters:
+      root:
+        type: string
+        default: /root
     steps:
       - run:
           name: Installing SDKMAN
           command: |
             if curl -s "https://get.sdkman.io?rcupdate=false" | bash; then
-              echo -e '\nsource "/root/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
+              echo -e '\nsource "<< parameters.root >>/.sdkman/bin/sdkman-init.sh"' >> $BASH_ENV
               source $BASH_ENV
             else
               echo "Error installing SDKMAN, continuing with default Java" >&2
@@ -165,6 +189,26 @@ commands:
 
             # Need >= 1.14.0 to prevent ActiveSupport crash
             gem install cocoapods -v '>= 1.14.0'
+
+  prepare-for-spm-integration-test:
+    description: Enable Swift Package Manager support in Flutter + remove local .podspec files
+    steps:
+      - run:
+          name: Enable SPM feature
+          command: flutter config --enable-swift-package-manager
+      - run:
+          name: Remove all local .podspec files recursively
+          command: find . -name "*.podspec" -type f -delete
+
+  prepare-for-cocoapods-integration-test:
+    description: Disable Swift Package Manager support in Flutter (to use Cocoapods) + remove local Swift.package files
+    steps:
+      - run:
+          name: Disable SPM feature
+          command: flutter config --no-enable-swift-package-manager
+      - run:
+          name: Remove all local Package.swift files
+          command: find . -name "Package.swift" -type f -delete
 
 jobs:
   lint:
@@ -203,10 +247,29 @@ jobs:
           name: Run tests for purchases_ui_flutter
           command: cd purchases_ui_flutter && flutter test
 
+  test_main_sdk_min_version_compatibility:
+    description: "Test min version compatibility for purchases_flutter SDK"
+    <<: *android-executor
+    steps:
+      - checkout
+      - flutter/install_sdk_and_pub:
+          version: 3.27.0
+
+  test_ui_sdk_min_version_compatibility:
+    description: "Test UI min version compatibility for purchases_ui_flutter SDK"
+    <<: *android-executor
+    steps:
+        - checkout
+        - flutter/install_sdk_and_pub:
+            version: 3.27.0
+        - flutter-get-dependencies:
+            project: purchases_ui_flutter
+
   api_test:
     description: "Run API tests for Flutter"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
+    resource_class: xlarge
     steps:
       - checkout
       - install-sdkman
@@ -222,6 +285,7 @@ jobs:
     description: "Build Android Flutter integration tests"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
+    resource_class: large
     steps:
       - checkout
       - replace-api-key
@@ -233,47 +297,35 @@ jobs:
             flutter build apk
             ./gradlew app:assembleAndroidTest
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
-      - persist_to_workspace:
-          root: .
-          paths:
-            - revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk
-            - revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
-  run-firebase-tests:
-    description: "Run integration tests for Flutter"
-    executor: gcp-cli/google
+  android-integration-test:
+    description: "Run Android integration tests for flutter"
+    <<: *android-machine-emulator
+    shell: /bin/bash --login -o pipefail
     steps:
       - checkout
-      - attach_workspace:
-          at: .
-      - gcp-cli/initialize:
-          gcloud-service-key: GCLOUD_SERVICE_KEY
-          google-compute-zone: GOOGLE_COMPUTE_ZONE
-          google-project-id: GOOGLE_PROJECT_ID
+      - replace-api-key
+      - install-sdkman:
+          root: /home/circleci
+      - android/create-avd:
+          avd-name: integration-tests
+          system-image: system-images;android-33;google_apis;x86_64
+          install: true
+      - android/start-emulator:
+          avd-name: integration-tests
+          post-emulator-launch-assemble-command: ''
+      - setup-flutter
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
       - run:
-          name: Test with Firebase Test Lab
-          command: >
-            gcloud firebase test android run --type instrumentation \
-              --app revenuecat_examples/purchase_tester/build/app/outputs/apk/debug/app-debug.apk \
-              --test revenuecat_examples/purchase_tester/build/app/outputs/apk/androidTest/debug/app-debug-androidTest.apk \
-              --timeout 2m \
-              --results-bucket cloud-test-${GOOGLE_PROJECT_ID}
-      - run:
-          name: Copy test results data
           command: |
-            mkdir -p ~/gsutil/
-            gsutil -m cp -r -U `gsutil ls gs://cloud-test-$GOOGLE_PROJECT_ID | tail -1` ~/gsutil/ | true
-      - store_artifacts:
-          path: ~/gsutil/
-      - store_test_results:
-          path: ~/gsutil/
+            cd revenuecat_examples/purchase_tester
+            flutter test integration_test/app_test.dart
 
-  ios-integration-test:
+  ios-integration-test-cocoapods:
     description: "Run integration tests for Flutter"
-    resource_class: macos.m1.medium.gen1
-    macos:
-      xcode: 15.2
-    shell: /bin/bash --login -o pipefail
+    executor:
+      name: macos-executor
     steps:
       - checkout
       - install-correct-cocoapods
@@ -281,6 +333,7 @@ jobs:
           device: iPhone 14
           version: '16.4'
       - setup-flutter
+      - prepare-for-cocoapods-integration-test
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -291,16 +344,15 @@ jobs:
             flutter drive --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
 
-  macos-integration-test:
+  macos-integration-test-cocoapods:
     description: "Run integration tests for Flutter"
-    resource_class: macos.m1.medium.gen1
-    macos:
-      xcode: 15.2
-    shell: /bin/bash --login -o pipefail
+    executor:
+      name: macos-executor
     steps:
       - checkout
       - install-correct-cocoapods
       - setup-flutter
+      - prepare-for-cocoapods-integration-test
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
@@ -312,18 +364,48 @@ jobs:
             flutter drive -d $DEVICE_ID --target=integration_test/app_test.dart \
             --driver=test_driver/integration_test.dart
 
-  freezed:
-    description: "Check if Freezed files need to be added to repo"
-    docker:
-      - image: ghcr.io/cirruslabs/flutter:stable
+  ios-integration-test-spm:
+    description: "Run integration tests for Flutter"
+    executor:
+      name: macos-executor
     steps:
       - checkout
-      - build-flutter-project
-      - swissknife/fail_if_dirty:
-          print-modified-files: true
+      - macos/preboot-simulator:
+          device: iPhone 14
+          version: '16.4'
+      - setup-flutter
+      - prepare-for-spm-integration-test
+      - replace-api-key
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
+      - run:
+          name: Run Flutter integration tests
+          command: |
+            cd revenuecat_examples/purchase_tester
+            flutter drive --target=integration_test/app_test.dart \
+            --driver=test_driver/integration_test.dart
+
+  macos-integration-test-spm:
+    description: "Run integration tests for Flutter"
+    executor:
+      name: macos-executor
+    steps:
+      - checkout
+      - setup-flutter
+      - prepare-for-spm-integration-test
+      - replace-api-key
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
+      - run:
+          name: Run Flutter integration tests
+          command: |
+            cd revenuecat_examples/purchase_tester
+            DEVICE_ID=$(flutter devices | awk -F '•' 'NR==2 {gsub(/^[ \t]+|[ \t]+$/, "", $1); print $2}')
+            flutter drive -d $DEVICE_ID --target=integration_test/app_test.dart \
+            --driver=test_driver/integration_test.dart        
 
   dry-run-release:
-    description: "Check if Freezed files need to be added to repo"
+    description: "Attempts to do a dry-run release of purchases-flutter and purchases_ui_flutter"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
@@ -405,30 +487,33 @@ workflows:
       - lint
       - test
       - api_test
-      - freezed
       - dry-run-release: *release-branches
-      - ios-integration-test
-      - macos-integration-test
+      - ios-integration-test-cocoapods
+      - macos-integration-test-cocoapods
+      - ios-integration-test-spm
+      - macos-integration-test-spm
       - android-integration-test-build
+      - test_main_sdk_min_version_compatibility
+      - test_ui_sdk_min_version_compatibility
 
   deploy:
     when:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - ios-integration-test: *release-branches
-      - macos-integration-test: *release-branches
-      - android-integration-test-build: *release-branches
-      - run-firebase-tests:
-          requires:
-            - android-integration-test-build
-          <<: *release-branches
+      - ios-integration-test-cocoapods: *release-branches
+      - macos-integration-test-cocoapods: *release-branches
+      - ios-integration-test-spm: *release-branches
+      - macos-integration-test-spm: *release-branches
+      - android-integration-test: *release-branches
       - hold:
           type: approval
           requires:
-            - ios-integration-test
-            - macos-integration-test
-            - run-firebase-tests
+            - ios-integration-test-cocoapods
+            - macos-integration-test-cocoapods
+            - ios-integration-test-spm
+            - macos-integration-test-spm
+            - android-integration-test
           <<: *release-branches
       - revenuecat/tag-current-branch:
           requires:

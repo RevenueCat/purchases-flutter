@@ -44,8 +44,6 @@ extension GoogleProrationModeExtension on GoogleProrationMode {
         return 2;
       case GoogleProrationMode.deferred:
         return 6;
-      default:
-        return null;
     }
   }
 }

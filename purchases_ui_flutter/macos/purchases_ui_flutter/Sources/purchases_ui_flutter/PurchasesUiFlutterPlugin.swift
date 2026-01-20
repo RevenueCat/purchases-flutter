@@ -1,0 +1,1 @@
+../../../../ios/purchases_ui_flutter/Sources/purchases_ui_flutter/PurchasesUiFlutterPlugin.swift
