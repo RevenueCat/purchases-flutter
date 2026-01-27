@@ -189,7 +189,7 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         NSString *airshipChannelID = arguments[@"airshipChannelID"];
         [self setAirshipChannelID:airshipChannelID result:result];
     } else if ([@"setPostHogUserID" isEqualToString:call.method]) {
-        NSString *postHogUserID = arguments[@"postHogUserId"];
+        NSString *postHogUserID = arguments[@"postHogUserID"];
         [self setPostHogUserID:postHogUserID result:result];
     } else if ([@"setMediaSource" isEqualToString:call.method]) {
         NSString *mediaSource = arguments[@"mediaSource"];
