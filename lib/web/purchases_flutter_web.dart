@@ -14,7 +14,7 @@ class PurchasesFlutterPlugin {
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
   static const _purchasesHybridMappingsVersion = '17.30.0';
   static const _platformName = 'flutter';
-  static const _pluginVersion = '9.10.6';
+  static const _pluginVersion = '9.10.8';
   static const _purchasesHybridMappingsUrl =
       'https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
 
