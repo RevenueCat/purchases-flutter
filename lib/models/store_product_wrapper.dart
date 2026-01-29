@@ -52,6 +52,30 @@ class StoreProduct extends Equatable {
   /// Note: Not available for Amazon.
   final String? subscriptionPeriod;
 
+  /// Price per week in the local currency.
+  /// Null for non-subscription products.
+  final double? pricePerWeek;
+
+  /// Price per month in the local currency.
+  /// Null for non-subscription products.
+  final double? pricePerMonth;
+
+  /// Price per year in the local currency.
+  /// Null for non-subscription products.
+  final double? pricePerYear;
+
+  /// Formatted price per week, including its currency sign.
+  /// Null for non-subscription products.
+  final String? pricePerWeekString;
+
+  /// Formatted price per month, including its currency sign.
+  /// Null for non-subscription products.
+  final String? pricePerMonthString;
+
+  /// Formatted price per year, including its currency sign.
+  /// Null for non-subscription products.
+  final String? pricePerYearString;
+
   const StoreProduct(
     this.identifier,
     this.description,
@@ -66,6 +90,12 @@ class StoreProduct extends Equatable {
     this.subscriptionOptions,
     this.presentedOfferingContext,
     this.subscriptionPeriod,
+    this.pricePerWeek,
+    this.pricePerMonth,
+    this.pricePerYear,
+    this.pricePerWeekString,
+    this.pricePerMonthString,
+    this.pricePerYearString,
   });
 
   factory StoreProduct.fromJson(Map<String, dynamic> json) => StoreProduct(
@@ -82,6 +112,12 @@ class StoreProduct extends Equatable {
       subscriptionOptions: json['subscriptionOptions'] != null ? (json['subscriptionOptions'] as List).map((e) => SubscriptionOption.fromJson(Map<String, dynamic>.from(e))).toList() : null,
       presentedOfferingContext: json['presentedOfferingContext'] != null ? PresentedOfferingContext.fromJson(Map<String, dynamic>.from(json['presentedOfferingContext'])) : null,
       subscriptionPeriod: json['subscriptionPeriod'] as String?,
+      pricePerWeek: json['pricePerWeek'] != null ? (json['pricePerWeek'] as num).toDouble() : null,
+      pricePerMonth: json['pricePerMonth'] != null ? (json['pricePerMonth'] as num).toDouble() : null,
+      pricePerYear: json['pricePerYear'] != null ? (json['pricePerYear'] as num).toDouble() : null,
+      pricePerWeekString: json['pricePerWeekString'] as String?,
+      pricePerMonthString: json['pricePerMonthString'] as String?,
+      pricePerYearString: json['pricePerYearString'] as String?,
     );
 
   @override
@@ -99,6 +135,12 @@ class StoreProduct extends Equatable {
     subscriptionOptions,
     presentedOfferingContext,
     subscriptionPeriod,
+    pricePerWeek,
+    pricePerMonth,
+    pricePerYear,
+    pricePerWeekString,
+    pricePerMonthString,
+    pricePerYearString,
   ];
 }
 
