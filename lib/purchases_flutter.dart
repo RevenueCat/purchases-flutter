@@ -1250,13 +1250,16 @@ class Purchases {
   /// @param [amazonUserID] Amazon's userID. This parameter will be ignored when syncing a Google purchase.
   /// @param [isoCurrencyCode] Product's currency code in ISO 4217 format.
   /// @param [price] Product's price.
+  /// @param [purchaseTime] Purchase time in milliseconds since epoch. Usage of this parameter is
+  /// highly recommended and usages without it are deprecated and will be removed in future versions.
   static Future<void> syncAmazonPurchase(
     String productID,
     String receiptID,
     String amazonUserID,
     String? isoCurrencyCode,
-    double? price,
-  ) =>
+    double? price, {
+    int? purchaseTime,
+  }) =>
       _channel.invokeMethod(
         'syncAmazonPurchase',
         {
@@ -1265,6 +1268,7 @@ class Purchases {
           'amazonUserID': amazonUserID,
           'isoCurrencyCode': isoCurrencyCode,
           'price': price,
+          'purchaseTime': purchaseTime,
         },
       );
 
