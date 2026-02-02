@@ -19,7 +19,13 @@ class _StoreProductApiTest {
       List<StoreProductDiscount>? discounts,
       ProductCategory? productCategory,
       String? subscriptionPeriod,
-      PresentedOfferingContext? presentedOfferingContext) {
+      PresentedOfferingContext? presentedOfferingContext,
+      double? pricePerWeek,
+      double? pricePerMonth,
+      double? pricePerYear,
+      String? pricePerWeekString,
+      String? pricePerMonthString,
+      String? pricePerYearString) {
     StoreProduct product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode);
     product = StoreProduct(
@@ -28,7 +34,13 @@ class _StoreProductApiTest {
         discounts: discounts,
         productCategory: productCategory,
         subscriptionPeriod: subscriptionPeriod,
-        presentedOfferingContext: presentedOfferingContext);
+        presentedOfferingContext: presentedOfferingContext,
+        pricePerWeek: pricePerWeek,
+        pricePerMonth: pricePerMonth,
+        pricePerYear: pricePerYear,
+        pricePerWeekString: pricePerWeekString,
+        pricePerMonthString: pricePerMonthString,
+        pricePerYearString: pricePerYearString);
   }
 
   void _checkProperties(StoreProduct product) {
@@ -47,5 +59,11 @@ class _StoreProductApiTest {
     String? presentedOfferingIdentifier = product.presentedOfferingIdentifier;
     PresentedOfferingContext? presentedOfferingContext =
         product.presentedOfferingContext;
+    double? pricePerWeek = product.pricePerWeek;
+    double? pricePerMonth = product.pricePerMonth;
+    double? pricePerYear = product.pricePerYear;
+    String? pricePerWeekString = product.pricePerWeekString;
+    String? pricePerMonthString = product.pricePerMonthString;
+    String? pricePerYearString = product.pricePerYearString;
   }
 }
