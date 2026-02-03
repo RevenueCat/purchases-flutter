@@ -815,7 +815,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-return @"9.10.8";
+    return @"9.10.8";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {
