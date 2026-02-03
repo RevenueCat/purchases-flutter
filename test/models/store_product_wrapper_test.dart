@@ -62,6 +62,12 @@ void main() {
         'subscriptionOptions': null,
         'presentedOfferingContext': null,
         'subscriptionPeriod': 'P1M',
+        'pricePerWeek': 0.69,
+        'pricePerMonth': 2.99,
+        'pricePerYear': 35.88,
+        'pricePerWeekString': '\$0.69',
+        'pricePerMonthString': '\$2.99',
+        'pricePerYearString': '\$35.88',
       };
       final info = StoreProduct.fromJson(json);
       const expected = StoreProduct(
@@ -95,6 +101,12 @@ void main() {
         subscriptionOptions: null,
         presentedOfferingContext: null,
         subscriptionPeriod: 'P1M',
+        pricePerWeek: 0.69,
+        pricePerMonth: 2.99,
+        pricePerYear: 35.88,
+        pricePerWeekString: '\$0.69',
+        pricePerMonthString: '\$2.99',
+        pricePerYearString: '\$35.88',
       );
       expect(info, equals(expected));
     });
