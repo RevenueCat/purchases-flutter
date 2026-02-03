@@ -62,7 +62,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "9.10.7";
+private static final String PLUGIN_VERSION = "9.10.8";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -354,8 +354,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String amazonUserID = call.argument("amazonUserID");
                 String isoCurrencyCode = call.argument("isoCurrencyCode");
                 Double price = call.argument("price");
+                Integer purchaseTime = call.argument("purchaseTime");
+                Long purchaseTimeLong = null;
+                if (purchaseTime != null) {
+                    purchaseTimeLong = purchaseTime.longValue();
+                }
                 syncAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
-                        price, result);
+                        price, purchaseTimeLong, result);
                 break;
             case "isWebPurchaseRedemptionURL":
                 String urlString = call.argument("urlString");
@@ -555,14 +560,22 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
+    @SuppressWarnings("deprecation")
     private void syncAmazonPurchase(String productID,
             String receiptID,
             String amazonUserID,
             String isoCurrencyCode,
             Double price,
+            Long purchaseTime,
             final Result result) {
-        Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
-                amazonUserID, isoCurrencyCode, price);
+        if (purchaseTime == null) {
+            Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
+                    amazonUserID, isoCurrencyCode, price);
+        } else {
+            Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
+                    amazonUserID, isoCurrencyCode, price, purchaseTime);
+        }
+
         result.success(null);
     }
 

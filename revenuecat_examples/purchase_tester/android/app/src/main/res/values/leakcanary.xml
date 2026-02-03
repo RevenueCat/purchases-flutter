@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Override LeakCanary test environment detection.
+         LeakCanary by default will disable itself if it finds the org.junit.Test class in the classPath.
+         Because we include these for integreation tests LeakCanary will disable itself.
+         We override this value with a non-existent class name in order to allow LeakCanary to run regardless.
+         See https://github.com/square/leakcanary/blob/main/docs/recipes.md#leakcanary-test-environment-detection
+          -->
+    <string name="leak_canary_test_class_name">com.nonexistent.test.ClassThatDoesNotExist</string>
+</resources>
