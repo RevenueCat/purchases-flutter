@@ -76,23 +76,21 @@ class PaywallViewWrapper: UIView {
     }
 
     override func removeFromSuperview() {
-        // Clean up the view controller hierarchy when this view is removed
-        if addedToHierarchy {
-            paywallViewController.willMove(toParent: nil)
-            paywallViewController.view.removeFromSuperview()
-            paywallViewController.removeFromParent()
-            addedToHierarchy = false
-        }
+        cleanupViewControllerHierarchy()
         super.removeFromSuperview()
     }
 
     deinit {
         // Ensure cleanup happens even if removeFromSuperview wasn't called
-        if addedToHierarchy {
-            paywallViewController.willMove(toParent: nil)
-            paywallViewController.view.removeFromSuperview()
-            paywallViewController.removeFromParent()
-        }
+        cleanupViewControllerHierarchy()
+    }
+
+    private func cleanupViewControllerHierarchy() {
+        guard addedToHierarchy else { return }
+        paywallViewController.willMove(toParent: nil)
+        paywallViewController.view.removeFromSuperview()
+        paywallViewController.removeFromParent()
+        addedToHierarchy = false
     }
 }
 
@@ -149,13 +147,6 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         }
     }
 
-    deinit {
-        // Clear method channel handler to break any potential retain cycles
-        _methodChannel.setMethodCallHandler(nil)
-        // Clear proxy delegate
-        _paywallProxy?.delegate = nil
-        _paywallProxy = nil
-    }
 }
 
 @available(iOS 15.0, *)

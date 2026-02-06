@@ -78,12 +78,6 @@ class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView {
     func view() -> UIView {
         return _view
     }
-
-    deinit {
-        // Clear proxy delegate to break any potential retain cycles
-        _paywallProxy?.delegate = nil
-        _paywallProxy = nil
-    }
 }
 
 
