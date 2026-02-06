@@ -80,9 +80,9 @@ class _UpsellScreenState extends State<UpsellScreen> {
 
   Widget _buildUpsell(BuildContext context) {
     final currentOfferingId = _offerings?.current?.identifier;
-    // Sort offerings by serverDescription (name) for stable ordering
+    // Sort offerings by identifier (key) for stable ordering, case-insensitive
     final sortedOfferings = _offerings!.all.entries.toList()
-      ..sort((a, b) => a.value.serverDescription.compareTo(b.value.serverDescription));
+      ..sort((a, b) => a.key.toLowerCase().compareTo(b.key.toLowerCase()));
     
     return ListView(children: [
       if (_customerInfo != null)
