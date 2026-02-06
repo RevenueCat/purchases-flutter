@@ -210,6 +210,48 @@ commands:
           name: Remove all local Package.swift files
           command: find . -name "Package.swift" -type f -delete
 
+  pod-update-with-retry:
+    description: Run pod update with retry for CocoaPods propagation issues
+    parameters:
+      working_directory:
+        type: string
+      enable_retry:
+        type: boolean
+        default: false
+      max_retries:
+        type: integer
+        default: 5
+      retry_wait_seconds:
+        type: integer
+        default: 300
+    steps:
+      - run:
+          name: Pod update<< parameters.enable_retry && ' (with retry)' || '' >>
+          working_directory: << parameters.working_directory >>
+          command: |
+            enable_retry=<< parameters.enable_retry >>
+            max_retries=<< parameters.max_retries >>
+            retry_wait=<< parameters.retry_wait_seconds >>
+            retry_count=0
+
+            if [ "$enable_retry" = "false" ]; then
+              pod update --repo-update
+              exit $?
+            fi
+
+            until pod update --repo-update; do
+              retry_count=$((retry_count + 1))
+              if [ "$retry_count" -ge "$max_retries" ]; then
+                echo "Pod update failed after $max_retries attempts"
+                exit 1
+              fi
+              echo "Pod update failed (attempt $retry_count/$max_retries)"
+              echo "Waiting $retry_wait seconds before retrying (CocoaPods may not have propagated yet)..."
+              sleep "$retry_wait"
+              echo "Retrying pod update..."
+            done
+            echo "Pod update succeeded"
+
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -324,6 +366,10 @@ jobs:
 
   ios-integration-test-cocoapods:
     description: "Run integration tests for Flutter"
+    parameters:
+      enable_retry:
+        type: boolean
+        default: false
     executor:
       name: macos-executor
     steps:
@@ -335,6 +381,9 @@ jobs:
       - setup-flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
+      - pod-update-with-retry:
+          working_directory: revenuecat_examples/purchase_tester/ios
+          enable_retry: << parameters.enable_retry >>
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
       - run:
@@ -346,6 +395,10 @@ jobs:
 
   macos-integration-test-cocoapods:
     description: "Run integration tests for Flutter"
+    parameters:
+      enable_retry:
+        type: boolean
+        default: false
     executor:
       name: macos-executor
     steps:
@@ -354,6 +407,9 @@ jobs:
       - setup-flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
+      - pod-update-with-retry:
+          working_directory: revenuecat_examples/purchase_tester/macos
+          enable_retry: << parameters.enable_retry >>
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
       - run:
@@ -501,8 +557,12 @@ workflows:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - ios-integration-test-cocoapods: *release-branches
-      - macos-integration-test-cocoapods: *release-branches
+      - ios-integration-test-cocoapods:
+          enable_retry: true
+          <<: *release-branches
+      - macos-integration-test-cocoapods:
+          enable_retry: true
+          <<: *release-branches
       - ios-integration-test-spm: *release-branches
       - macos-integration-test-spm: *release-branches
       - android-integration-test: *release-branches
