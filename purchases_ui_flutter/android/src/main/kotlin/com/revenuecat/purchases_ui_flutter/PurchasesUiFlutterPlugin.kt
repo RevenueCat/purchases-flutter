@@ -73,18 +73,21 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 offeringIdentifier = call.argument("offeringIdentifier"),
                 presentedOfferingContext = call.argument("presentedOfferingContext"),
                 displayCloseButton = call.argument("displayCloseButton"),
+                customVariables = call.argument("customVariables"),
             )
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
                 val offeringIdentifier: String? = call.argument("offeringIdentifier")
                 val presentedOfferingContext: Map<*, *>? = call.argument("presentedOfferingContext")
                 val displayCloseButton: Boolean? = call.argument("displayCloseButton")
+                val customVariables: Map<String, String>? = call.argument("customVariables")
                 presentPaywall(
                     result = result,
                     requiredEntitlementIdentifier = requiredEntitlementIdentifier,
                     presentedOfferingContext = presentedOfferingContext,
                     offeringIdentifier = offeringIdentifier,
                     displayCloseButton = displayCloseButton,
+                    customVariables = customVariables,
                 )
             }
             "presentCustomerCenter" -> presentCustomerCenter(
@@ -124,7 +127,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         requiredEntitlementIdentifier: String?,
         offeringIdentifier: String?,
         presentedOfferingContext: Map<*, *>?,
-        displayCloseButton: Boolean?
+        displayCloseButton: Boolean?,
+        customVariables: Map<String, String>?
     ) {
         val activity = getActivityFragment()
         if (activity != null) {
@@ -135,6 +139,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                    paywallSource = getPaywallSource(offeringIdentifier, presentedOfferingContext),
                    requiredEntitlementIdentifier = requiredEntitlementIdentifier,
                    shouldDisplayDismissButton = displayCloseButton,
+                   customVariables = customVariables,
                    paywallResultListener = object : PaywallResultListener {
                        override fun onPaywallResult(paywallResult: String) {
                            result.success(paywallResult)

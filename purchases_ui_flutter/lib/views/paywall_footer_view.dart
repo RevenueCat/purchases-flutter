@@ -43,6 +43,7 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
   const PaywallFooterView({
     Key? key,
     Offering? offering,
+    Map<String, String>? customVariables,
     Function(Package rcPackage)? onPurchaseStarted,
     Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)? onPurchaseCompleted,
     Function()? onPurchaseCancelled,
@@ -54,6 +55,7 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
   }) : super(
       key: key,
       offering: offering,
+      customVariables: customVariables,
       onPurchaseStarted: onPurchaseStarted,
       onPurchaseCompleted: onPurchaseCompleted,
       onPurchaseCancelled: onPurchaseCancelled,
@@ -93,9 +95,14 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
+///
+/// [customVariables] (Optional) A map of custom variable names to their values.
+/// These values can be used for text substitution in paywalls using the
+/// `{{ custom.variable_name }}` syntax.
 class OriginalTemplatePaywallFooterView extends StatefulWidget {
 
   final Offering? offering;
+  final Map<String, String>? customVariables;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
   onPurchaseCompleted;
@@ -109,6 +116,7 @@ class OriginalTemplatePaywallFooterView extends StatefulWidget {
   const OriginalTemplatePaywallFooterView({
     Key? key,
     this.offering,
+    this.customVariables,
     this.onPurchaseStarted,
     this.onPurchaseCompleted,
     this.onPurchaseCancelled,
@@ -155,6 +163,7 @@ class _PaywallFooterViewState extends State<OriginalTemplatePaywallFooterView> {
           height: _height,
           child: InternalPaywallFooterView(
             offering: widget.offering,
+            customVariables: widget.customVariables,
             onPurchaseStarted: widget.onPurchaseStarted,
             onPurchaseCompleted: widget.onPurchaseCompleted,
             onPurchaseCancelled: widget.onPurchaseCancelled,

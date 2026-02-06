@@ -71,6 +71,7 @@ void main() {
           'offeringIdentifier': null,
           'presentedOfferingContext': null,
           'displayCloseButton': false,
+          'customVariables': null,
         },
       ),
     ]);
@@ -92,6 +93,7 @@ void main() {
             },
           },
           'displayCloseButton': false,
+          'customVariables': null,
         },
       ),
     ]);
@@ -118,6 +120,7 @@ void main() {
             },
           },
           'displayCloseButton': true,
+          'customVariables': null,
         },
       ),
     ]);
@@ -134,6 +137,7 @@ void main() {
           'offeringIdentifier': null,
           'presentedOfferingContext': null,
           'displayCloseButton': false,
+          'customVariables': null,
         },
       ),
     ]);
@@ -161,6 +165,7 @@ void main() {
             },
           },
           'displayCloseButton': false,
+          'customVariables': null,
         },
       ),
     ]);
@@ -189,8 +194,41 @@ void main() {
             },
           },
           'displayCloseButton': true,
+          'customVariables': null,
         },
       ),
+    ]);
+  });
+
+  test('presentPaywall with custom variables', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      customVariables: {'player_name': 'John', 'level': '5'},
+    );
+    expect(log, <Matcher>[
+      isMethodCall('presentPaywall', arguments: {
+        'offeringIdentifier': null,
+        'presentedOfferingContext': null,
+        'displayCloseButton': false,
+        'customVariables': {'player_name': 'John', 'level': '5'},
+      }),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded with custom variables', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      customVariables: {'player_name': 'John'},
+    );
+    expect(log, <Matcher>[
+      isMethodCall('presentPaywallIfNeeded', arguments: {
+        'requiredEntitlementIdentifier': 'entitlement',
+        'offeringIdentifier': null,
+        'presentedOfferingContext': null,
+        'displayCloseButton': false,
+        'customVariables': {'player_name': 'John'},
+      }),
     ]);
   });
 

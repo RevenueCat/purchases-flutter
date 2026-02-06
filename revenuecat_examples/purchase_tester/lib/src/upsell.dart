@@ -9,6 +9,7 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'cats.dart';
 import 'constant.dart';
+import 'custom_variables_editor.dart';
 import 'customer_center_view_screen.dart';
 import 'initial.dart';
 import 'paywall.dart';
@@ -26,6 +27,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
   String? _appUserId;
   Offerings? _offerings;
   CustomerInfo? _customerInfo;
+  Map<String, String> _customVariables = {};
 
   @override
   void initState() {
@@ -68,10 +70,58 @@ class _UpsellScreenState extends State<UpsellScreen> {
     });
   }
 
+  void _openCustomVariablesEditor() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CustomVariablesEditor(
+          variables: _customVariables,
+          onVariablesChanged: (variables) {
+            setState(() {
+              _customVariables = variables;
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Upsell Screen')),
+      appBar: AppBar(
+        title: const Text('Upsell Screen'),
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.code),
+                onPressed: _openCustomVariablesEditor,
+                tooltip: 'Custom Variables',
+              ),
+              if (_customVariables.isNotEmpty)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Text(
+                      '${_customVariables.length}',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
       body: _offerings == null
           ? const Center(child: CircularProgressIndicator())
           : _buildUpsell(context),
@@ -255,7 +305,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ElevatedButton(
                     onPressed: () async {
                       final paywallResult =
-                          await RevenueCatUI.presentPaywall(offering: offering);
+                          await RevenueCatUI.presentPaywall(
+                            offering: offering,
+                            customVariables: _customVariables.isNotEmpty
+                                ? _customVariables
+                                : null,
+                          );
                       log('Paywall result: $paywallResult');
                     },
                     child: const Text('Present paywall'),
@@ -265,7 +320,11 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       final paywallResult =
                           await RevenueCatUI.presentPaywallIfNeeded(
                               entitlementKey,
-                              offering: offering);
+                              offering: offering,
+                              customVariables: _customVariables.isNotEmpty
+                                  ? _customVariables
+                                  : null,
+                          );
                       log('Paywall result: $paywallResult');
                     },
                     child: const Text(
@@ -278,6 +337,9 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         MaterialPageRoute(
                             builder: (context) => PaywallScreen(
                                   offering: offering,
+                                  customVariables: _customVariables.isNotEmpty
+                                      ? _customVariables
+                                      : null,
                                 )),
                       );
                     },
@@ -290,6 +352,9 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         MaterialPageRoute(
                             builder: (context) => PaywallFooterScreen(
                                   offering: offering,
+                                  customVariables: _customVariables.isNotEmpty
+                                      ? _customVariables
+                                      : null,
                                 )),
                       );
                     },
@@ -303,7 +368,11 @@ class _UpsellScreenState extends State<UpsellScreen> {
                               placement);
                       if (offering != null) {
                         final paywallResult = await RevenueCatUI.presentPaywall(
-                            offering: offering);
+                            offering: offering,
+                            customVariables: _customVariables.isNotEmpty
+                                ? _customVariables
+                                : null,
+                        );
                         log('Paywall result: $paywallResult');
                       } else {
                         log('No offering to show');

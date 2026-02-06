@@ -105,6 +105,11 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
             if let displayCloseButton = args["displayCloseButton"] as? Bool {
                 _paywallViewController.update(with: displayCloseButton)
             }
+            if let customVariables = args["customVariables"] as? [String: String] {
+                for (key, value) in customVariables {
+                    _paywallViewController.setCustomVariable(value, forKey: key)
+                }
+            }
         }
         _view = PaywallViewWrapper(paywallViewController: _paywallViewController)
 

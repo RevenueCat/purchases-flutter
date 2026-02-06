@@ -97,6 +97,9 @@ internal class PaywallFooterView(
                 presentedOfferingContext
             )
         }
+        // Note: customVariables for platform views require native PaywallFooterView.setCustomVariables()
+        // which is not yet available in purchases-android. Custom variables work with modal
+        // presentation via RevenueCatUI.presentPaywall() / presentPaywallIfNeeded().
     }
 
     private fun updateHeight(newHeight: Double) {
