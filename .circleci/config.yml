@@ -226,7 +226,7 @@ commands:
         default: 300
     steps:
       - run:
-          name: Pod update<< parameters.enable_retry && ' (with retry)' || '' >>
+          name: Pod update
           working_directory: << parameters.working_directory >>
           command: |
             enable_retry=<< parameters.enable_retry >>
