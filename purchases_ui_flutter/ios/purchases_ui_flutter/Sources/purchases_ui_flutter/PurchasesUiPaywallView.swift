@@ -44,11 +44,11 @@ class PaywallViewWrapper: UIView {
         self.paywallViewController = paywallViewController
         super.init(frame: paywallViewController.view.bounds)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
 
@@ -69,10 +69,28 @@ class PaywallViewWrapper: UIView {
                     paywallViewController.view.leadingAnchor.constraint(equalTo: leadingAnchor),
                     paywallViewController.view.trailingAnchor.constraint(equalTo: trailingAnchor)
                 ])
-                
+
                 addedToHierarchy = true
             }
         }
+    }
+
+    override func removeFromSuperview() {
+        cleanupViewControllerHierarchy()
+        super.removeFromSuperview()
+    }
+
+    deinit {
+        // Ensure cleanup happens even if removeFromSuperview wasn't called
+        cleanupViewControllerHierarchy()
+    }
+
+    private func cleanupViewControllerHierarchy() {
+        guard addedToHierarchy else { return }
+        paywallViewController.willMove(toParent: nil)
+        paywallViewController.view.removeFromSuperview()
+        paywallViewController.removeFromParent()
+        addedToHierarchy = false
     }
 }
 
@@ -128,6 +146,7 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
             }
         }
     }
+
 }
 
 @available(iOS 15.0, *)
