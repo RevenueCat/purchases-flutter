@@ -381,11 +381,11 @@ jobs:
       - setup-flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
       - pod-update-with-retry:
           working_directory: revenuecat_examples/purchase_tester/ios
           enable_retry: << parameters.enable_retry >>
-      - build-flutter-project:
-          project: revenuecat_examples/purchase_tester
       - run:
           name: Run Flutter integration tests
           command: |
@@ -407,11 +407,11 @@ jobs:
       - setup-flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
+      - build-flutter-project:
+          project: revenuecat_examples/purchase_tester
       - pod-update-with-retry:
           working_directory: revenuecat_examples/purchase_tester/macos
           enable_retry: << parameters.enable_retry >>
-      - build-flutter-project:
-          project: revenuecat_examples/purchase_tester
       - run:
           name: Run Flutter integration tests
           command: |
