@@ -215,6 +215,9 @@ commands:
     parameters:
       working_directory:
         type: string
+      platform:
+        type: enum
+        enum: [ios, macos]
       enable_retry:
         type: boolean
         default: false
@@ -225,6 +228,9 @@ commands:
         type: integer
         default: 300
     steps:
+      - run:
+          name: Flutter precache << parameters.platform >>
+          command: flutter precache --<< parameters.platform >>
       - run:
           name: Pod update
           working_directory: << parameters.working_directory >>
@@ -385,6 +391,7 @@ jobs:
           project: revenuecat_examples/purchase_tester
       - pod-update-with-retry:
           working_directory: revenuecat_examples/purchase_tester/ios
+          platform: ios
           enable_retry: << parameters.enable_retry >>
       - run:
           name: Run Flutter integration tests
@@ -411,6 +418,7 @@ jobs:
           project: revenuecat_examples/purchase_tester
       - pod-update-with-retry:
           working_directory: revenuecat_examples/purchase_tester/macos
+          platform: macos
           enable_retry: << parameters.enable_retry >>
       - run:
           name: Run Flutter integration tests
