@@ -181,7 +181,10 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
             var options: [String:Any] = [
                 PaywallProxy.PaywallOptionsKeys.displayCloseButton: displayCloseButton,
                 // This is needed for: https://github.com/RevenueCat/purchases-flutter/issues/1023
-                PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true
+                PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true,
+                // Use full screen presentation to avoid white areas in landscape orientation
+                // See: https://linear.app/revenuecat/issue/PW-148
+                PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation: true
             ]
 
             if let offeringIdentifier {
