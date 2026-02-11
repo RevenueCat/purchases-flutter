@@ -552,8 +552,10 @@ workflows:
       - test
       - api_test
       - dry-run-release: *release-branches
-      - ios-integration-test-cocoapods
-      - macos-integration-test-cocoapods
+      - ios-integration-test-cocoapods:
+          name: ios-integration-test-cocoapods
+      - macos-integration-test-cocoapods:
+          name: macos-integration-test-cocoapods
       - ios-integration-test-spm
       - macos-integration-test-spm
       - android-integration-test-build
@@ -566,9 +568,11 @@ workflows:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - ios-integration-test-cocoapods:
+          name: ios-integration-test-cocoapods-release
           enable_retry: true
           <<: *release-branches
       - macos-integration-test-cocoapods:
+          name: macos-integration-test-cocoapods-release
           enable_retry: true
           <<: *release-branches
       - ios-integration-test-spm: *release-branches
@@ -577,8 +581,8 @@ workflows:
       - hold:
           type: approval
           requires:
-            - ios-integration-test-cocoapods
-            - macos-integration-test-cocoapods
+            - ios-integration-test-cocoapods-release
+            - macos-integration-test-cocoapods-release
             - ios-integration-test-spm
             - macos-integration-test-spm
             - android-integration-test
