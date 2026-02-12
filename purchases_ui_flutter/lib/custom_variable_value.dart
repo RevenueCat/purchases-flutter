@@ -1,3 +1,17 @@
+/// Converts a map of custom variables to a map of strings for native platform consumption.
+///
+/// This is used internally to convert [CustomVariableValue] objects to their string
+/// representations before passing to native code. This approach ensures that when
+/// new variable types are added, the conversion logic is centralized.
+///
+/// @nodoc
+Map<String, String>? convertCustomVariablesToStrings(
+  Map<String, CustomVariableValue>? customVariables,
+) {
+  if (customVariables == null) return null;
+  return customVariables.map((key, value) => MapEntry(key, value.stringValue));
+}
+
 /// A value type for custom paywall variables that can be passed to paywalls at runtime.
 ///
 /// Custom variables allow developers to personalize paywall text with dynamic values.

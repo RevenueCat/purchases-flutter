@@ -44,7 +44,7 @@ class RevenueCatUI {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
-      'customVariables': _convertCustomVariables(customVariables),
+      'customVariables': convertCustomVariablesToStrings(customVariables),
     });
     return _parseStringToResult(result);
   }
@@ -71,7 +71,7 @@ class RevenueCatUI {
         'offeringIdentifier': offering?.identifier,
         'presentedOfferingContext': presentedOfferingContext?.toJson(),
         'displayCloseButton': displayCloseButton,
-        'customVariables': _convertCustomVariables(customVariables),
+        'customVariables': convertCustomVariablesToStrings(customVariables),
       },
     );
     return _parseStringToResult(result);
@@ -132,13 +132,6 @@ class RevenueCatUI {
       });
       _methodChannelHandlerSet = true;
     }
-  }
-
-  static Map<String, String>? _convertCustomVariables(
-    Map<String, CustomVariableValue>? customVariables,
-  ) {
-    if (customVariables == null) return null;
-    return customVariables.map((key, value) => MapEntry(key, value.stringValue));
   }
 
   static PaywallResult _parseStringToResult(String paywallResultString) {

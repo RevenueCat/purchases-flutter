@@ -86,7 +86,7 @@ class PaywallView extends StatelessWidget {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
-      'customVariables': customVariables?.map((key, value) => MapEntry(key, value.stringValue)),
+      'customVariables': convertCustomVariablesToStrings(customVariables),
     };
 
     return Platform.isAndroid

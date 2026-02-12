@@ -114,8 +114,8 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         _paywallViewController = paywallProxy.createPaywallView()
         if let args = args as? [String: Any?] {
             // Custom variables must be set before any other updates that might initialize the hosting controller
-            if let customVariables = args["customVariables"] as? [String: String] {
-                for (key, value) in customVariables {
+            if let customVariables = args["customVariables"] as? [String: Any] {
+                customVariables.compactMapValues { $0 as? String }.forEach { key, value in
                     _paywallViewController.setCustomVariable(value, forKey: key)
                 }
             }
