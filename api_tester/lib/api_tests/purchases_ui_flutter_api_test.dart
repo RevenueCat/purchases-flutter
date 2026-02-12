@@ -27,6 +27,35 @@ class _PurchasesFlutterApiTest {
         offering: offering, displayCloseButton: true);
   }
 
+  void _checkPresentPaywallWithCustomVariables(Offering? offering) async {
+    Future<PaywallResult> f1 = RevenueCatUI.presentPaywall(
+      customVariables: {'player_name': 'John'},
+    );
+    Future<PaywallResult> f2 = RevenueCatUI.presentPaywall(
+      offering: offering,
+      customVariables: {'player_name': 'John', 'level': '5'},
+    );
+    Future<PaywallResult> f3 = RevenueCatUI.presentPaywallIfNeeded(
+      "test",
+      customVariables: {'player_name': 'John'},
+    );
+  }
+
+  Widget _checkPaywallViewWithCustomVariables(Offering offering) {
+    return PaywallView(
+      offering: offering,
+      customVariables: {'player_name': 'John'},
+    );
+  }
+
+  Widget _checkOriginalTemplatePaywallFooterViewWithCustomVariables(Offering offering) {
+    return OriginalTemplatePaywallFooterView(
+      offering: offering,
+      customVariables: {'player_name': 'John'},
+      contentCreator: (double bottomPadding) => Container(),
+    );
+  }
+
   void _checkPaywallResult(PaywallResult result) {
     switch (result) {
       case PaywallResult.notPresented:

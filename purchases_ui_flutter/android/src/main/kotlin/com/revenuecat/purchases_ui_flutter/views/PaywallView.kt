@@ -69,6 +69,9 @@ internal class PaywallView(
             }
         })
         nativePaywallView.setOfferingId(offeringIdentifier, presentedOfferingContext)
+        // Note: customVariables for platform views require native PaywallView.setCustomVariables()
+        // which is not yet available in purchases-android. Custom variables work with modal
+        // presentation via RevenueCatUI.presentPaywall() / presentPaywallIfNeeded().
     }
 
     // We currently don't have any communication in this channel from dart to native, so this can be empty.

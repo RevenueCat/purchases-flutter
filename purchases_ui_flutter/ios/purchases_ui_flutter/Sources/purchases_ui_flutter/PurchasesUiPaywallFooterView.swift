@@ -63,6 +63,11 @@ class PurchasesUiPaywallFooterView: NSObject, FlutterPlatformView {
                 }
                 paywallFooterViewController.update(with: offeringId, presentedOfferingContext: presentedOfferingContext)
             }
+            if let customVariables = args["customVariables"] as? [String: String] {
+                for (key, value) in customVariables {
+                    paywallFooterViewController.setCustomVariable(value, forKey: key)
+                }
+            }
         }
         guard let paywallFooterView = paywallFooterViewController.view else {
             print("Error: error getting PaywallFooterView.")
