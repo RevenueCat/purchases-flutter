@@ -27,9 +27,13 @@ class _PackageApiTest {
       String identifier,
       PackageType packageType,
       StoreProduct storeProduct,
-      PresentedOfferingContext presentedOfferingContext) {
+      PresentedOfferingContext presentedOfferingContext,
+      String? webCheckoutUrl) {
     Package package = Package(
         identifier, packageType, storeProduct, presentedOfferingContext);
+    package = Package(
+        identifier, packageType, storeProduct, presentedOfferingContext,
+        webCheckoutUrl: webCheckoutUrl);
   }
 
   void _checkProperties(Package package) {
@@ -39,5 +43,6 @@ class _PackageApiTest {
     String offeringIdentifier = package.offeringIdentifier;
     PresentedOfferingContext presentedOfferingContext =
         package.presentedOfferingContext;
+    String? webCheckoutUrl = package.webCheckoutUrl;
   }
 }
