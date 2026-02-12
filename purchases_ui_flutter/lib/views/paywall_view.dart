@@ -11,6 +11,7 @@ import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
+import '../custom_variable_value.dart';
 import 'paywall_view_method_handler.dart';
 
 /// View that displays the paywall in full screen mode.
@@ -52,7 +53,7 @@ import 'paywall_view_method_handler.dart';
 class PaywallView extends StatelessWidget {
   final Offering? offering;
   final bool? displayCloseButton;
-  final Map<String, dynamic>? customVariables;
+  final Map<String, CustomVariableValue>? customVariables;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
       onPurchaseCompleted;
@@ -85,7 +86,7 @@ class PaywallView extends StatelessWidget {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
-      'customVariables': customVariables,
+      'customVariables': customVariables?.map((key, value) => MapEntry(key, value.stringValue)),
     };
 
     return Platform.isAndroid

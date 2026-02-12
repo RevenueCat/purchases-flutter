@@ -203,7 +203,10 @@ void main() {
   test('presentPaywall with custom variables', () async {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywall(
-      customVariables: {'player_name': 'John', 'level': '5'},
+      customVariables: {
+        'player_name': CustomVariableValue.string('John'),
+        'level': CustomVariableValue.string('5'),
+      },
     );
     expect(log, <Matcher>[
       isMethodCall('presentPaywall', arguments: {
@@ -219,7 +222,9 @@ void main() {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywallIfNeeded(
       'entitlement',
-      customVariables: {'player_name': 'John'},
+      customVariables: {
+        'player_name': CustomVariableValue.string('John'),
+      },
     );
     expect(log, <Matcher>[
       isMethodCall('presentPaywallIfNeeded', arguments: {

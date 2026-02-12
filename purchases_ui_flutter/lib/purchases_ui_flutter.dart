@@ -6,9 +6,11 @@ import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 
+import 'custom_variable_value.dart';
 import 'paywall_result.dart';
 import 'views/customer_center_view_method_handler.dart';
 
+export 'custom_variable_value.dart';
 export 'paywall_result.dart';
 export 'views/customer_center_view.dart';
 export 'views/paywall_footer_view.dart';
@@ -35,14 +37,14 @@ class RevenueCatUI {
   static Future<PaywallResult> presentPaywall({
     Offering? offering,
     bool displayCloseButton = false,
-    Map<String, dynamic>? customVariables,
+    Map<String, CustomVariableValue>? customVariables,
   }) async {
     final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod('presentPaywall', {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
-      'customVariables': customVariables,
+      'customVariables': _convertCustomVariables(customVariables),
     });
     return _parseStringToResult(result);
   }
@@ -59,7 +61,7 @@ class RevenueCatUI {
     String requiredEntitlementIdentifier, {
     Offering? offering,
     bool displayCloseButton = false,
-    Map<String, dynamic>? customVariables,
+    Map<String, CustomVariableValue>? customVariables,
   }) async {
     final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod(
@@ -69,7 +71,7 @@ class RevenueCatUI {
         'offeringIdentifier': offering?.identifier,
         'presentedOfferingContext': presentedOfferingContext?.toJson(),
         'displayCloseButton': displayCloseButton,
-        'customVariables': customVariables,
+        'customVariables': _convertCustomVariables(customVariables),
       },
     );
     return _parseStringToResult(result);
@@ -130,6 +132,13 @@ class RevenueCatUI {
       });
       _methodChannelHandlerSet = true;
     }
+  }
+
+  static Map<String, String>? _convertCustomVariables(
+    Map<String, CustomVariableValue>? customVariables,
+  ) {
+    if (customVariables == null) return null;
+    return customVariables.map((key, value) => MapEntry(key, value.stringValue));
   }
 
   static PaywallResult _parseStringToResult(String paywallResultString) {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class PaywallScreen extends StatefulWidget {
   final Offering? offering;
-  final Map<String, dynamic>? customVariables;
+  final Map<String, CustomVariableValue>? customVariables;
 
   const PaywallScreen({Key? key, this.offering, this.customVariables}) : super(key: key);
 
