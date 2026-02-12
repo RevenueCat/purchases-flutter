@@ -48,14 +48,6 @@ class _PurchasesFlutterApiTest {
     );
   }
 
-  Widget _checkOriginalTemplatePaywallFooterViewWithCustomVariables(Offering offering) {
-    return OriginalTemplatePaywallFooterView(
-      offering: offering,
-      customVariables: {'player_name': 'John'},
-      contentCreator: (double bottomPadding) => Container(),
-    );
-  }
-
   void _checkPaywallResult(PaywallResult result) {
     switch (result) {
       case PaywallResult.notPresented:
