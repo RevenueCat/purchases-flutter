@@ -130,6 +130,17 @@ class _UpsellScreenState extends State<UpsellScreen> {
 
   Widget _buildUpsell(BuildContext context) {
     final currentOfferingId = _offerings?.current?.identifier;
+    // Sort offerings by identifier (key) for stable ordering, case-insensitive
+    // Put current/default offering first
+    final sortedOfferings = _offerings!.all.entries.toList()
+      ..sort((a, b) {
+        // Current offering always comes first
+        if (a.key == currentOfferingId) return -1;
+        if (b.key == currentOfferingId) return 1;
+        // Otherwise sort alphabetically
+        return a.key.toLowerCase().compareTo(b.key.toLowerCase());
+      });
+    
     return ListView(children: [
       if (_customerInfo != null)
         ListTile(
@@ -144,14 +155,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
           trailing: Text(_appUserId!),
         ),
       const Divider(),
-      ..._offerings!.all.entries
-          .map((entry) => ExpansionTile(
-                title: Text("Offering ID: ${entry.key} "
-                        "${entry.key == currentOfferingId ? '(Current)' : ''}"
-                    .trim()),
-                children: _buildOffering(context, entry.value),
-              ))
-          .toList(),
+      ...sortedOfferings.map((entry) => ExpansionTile(
+            title: Text("Offering ID: ${entry.key} "
+                    "${entry.key == currentOfferingId ? '(Current)' : ''}"
+                .trim()),
+            children: _buildOffering(context, entry.value),
+          )).toList(),
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Card(
