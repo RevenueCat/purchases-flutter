@@ -15,7 +15,6 @@ import 'paywall_view_method_handler.dart';
 
 class InternalPaywallFooterView extends StatelessWidget {
   final Offering? offering;
-  final Map<String, String>? customVariables;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
   onPurchaseCompleted;
@@ -29,7 +28,6 @@ class InternalPaywallFooterView extends StatelessWidget {
   const InternalPaywallFooterView({
     Key? key,
     this.offering,
-    this.customVariables,
     this.onPurchaseStarted,
     this.onPurchaseCompleted,
     this.onPurchaseCancelled,
@@ -46,7 +44,6 @@ class InternalPaywallFooterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final creationParams = <String, dynamic>{
       'offeringIdentifier': offering?.identifier,
-      'customVariables': customVariables,
     };
 
     return Platform.isAndroid

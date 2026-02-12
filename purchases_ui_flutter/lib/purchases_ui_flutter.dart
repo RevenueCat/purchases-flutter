@@ -35,7 +35,7 @@ class RevenueCatUI {
   static Future<PaywallResult> presentPaywall({
     Offering? offering,
     bool displayCloseButton = false,
-    Map<String, String>? customVariables,
+    Map<String, dynamic>? customVariables,
   }) async {
     final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod('presentPaywall', {
@@ -59,7 +59,7 @@ class RevenueCatUI {
     String requiredEntitlementIdentifier, {
     Offering? offering,
     bool displayCloseButton = false,
-    Map<String, String>? customVariables,
+    Map<String, dynamic>? customVariables,
   }) async {
     final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod(

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 
 class PaywallFooterScreen extends StatefulWidget {
   final Offering? offering;
-  final Map<String, String>? customVariables;
 
-  const PaywallFooterScreen({Key? key, this.offering, this.customVariables}) : super(key: key);
+  const PaywallFooterScreen({Key? key, this.offering}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _PaywallFooterScreenState();
@@ -26,7 +25,6 @@ class _PaywallFooterScreenState extends State<PaywallFooterScreen> {
         child: Center(
           child: OriginalTemplatePaywallFooterView(
             offering: widget.offering,
-            customVariables: widget.customVariables,
             onPurchaseStarted: (Package rcPackage) {
               print('Purchase started for package: ${rcPackage.identifier}');
             },

@@ -52,7 +52,7 @@ import 'paywall_view_method_handler.dart';
 class PaywallView extends StatelessWidget {
   final Offering? offering;
   final bool? displayCloseButton;
-  final Map<String, String>? customVariables;
+  final Map<String, dynamic>? customVariables;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
       onPurchaseCompleted;

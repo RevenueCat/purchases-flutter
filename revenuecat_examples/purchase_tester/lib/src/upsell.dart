@@ -27,7 +27,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
   String? _appUserId;
   Offerings? _offerings;
   CustomerInfo? _customerInfo;
-  Map<String, String> _customVariables = {};
+  Map<String, dynamic> _customVariables = {};
 
   @override
   void initState() {
@@ -361,9 +361,6 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         MaterialPageRoute(
                             builder: (context) => PaywallFooterScreen(
                                   offering: offering,
-                                  customVariables: _customVariables.isNotEmpty
-                                      ? _customVariables
-                                      : null,
                                 )),
                       );
                     },
