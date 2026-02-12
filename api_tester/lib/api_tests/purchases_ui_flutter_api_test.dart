@@ -9,6 +9,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
 // ignore_for_file: deprecated_member_use
+// ignore_for_file: prefer_const_literals_to_create_immutables
 class _PurchasesFlutterApiTest {
   void _checkPresentPaywall(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall();
