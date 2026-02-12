@@ -18,7 +18,8 @@ class _OfferingApiTest {
       Package? threeMonth,
       Package? twoMonth,
       Package? monthly,
-      Package? weekly) {
+      Package? weekly, 
+      String? webCheckoutUrl) {
     Offering offering =
         Offering(identifier, serverDescription, metadata, availablePackages);
     offering = Offering(
@@ -30,6 +31,16 @@ class _OfferingApiTest {
         twoMonth: twoMonth,
         monthly: monthly,
         weekly: weekly);
+    offering = Offering(
+        identifier, serverDescription, metadata, availablePackages,
+        lifetime: lifetime,
+        annual: annual,
+        sixMonth: sixMonth,
+        threeMonth: threeMonth,
+        twoMonth: twoMonth,
+        monthly: monthly,
+        weekly: weekly,
+        webCheckoutUrl: webCheckoutUrl);
   }
 
   void _checkProperties(Offering offering) {
@@ -44,6 +55,7 @@ class _OfferingApiTest {
     Package? twoMonth = offering.twoMonth;
     Package? monthly = offering.monthly;
     Package? weekly = offering.weekly;
+    String? webCheckoutUrl = offering.webCheckoutUrl;
 
     String value = offering.getMetadataString('key', 'default value');
   }
