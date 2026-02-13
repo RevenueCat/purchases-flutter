@@ -7,7 +7,11 @@ RevenueCat's official Flutter SDK for in-app purchases and subscriptions. This p
 **Related repositories:**
 - **iOS SDK**: https://github.com/RevenueCat/purchases-ios
 - **Android SDK**: https://github.com/RevenueCat/purchases-android
-- **Hybrid Common**: https://github.com/RevenueCat/purchases-hybrid-common (shared layer for Flutter, React Native, etc.)
+- **JS SDK**: https://github.com/RevenueCat/purchases-js (used for web support)
+- **Hybrid Common**: https://github.com/RevenueCat/purchases-hybrid-common — shared layer for hybrid SDKs (Flutter, React Native, Unity, Cordova). Contains:
+  - `ios/` and `android/` native wrappers that bridge platform SDKs to hybrid frameworks
+  - `typescript/` shared TypeScript types and mappings
+  - `purchases-js-hybrid-mappings/` web-specific mappings
 
 When implementing features or debugging, check these repos for reference and patterns.
 
