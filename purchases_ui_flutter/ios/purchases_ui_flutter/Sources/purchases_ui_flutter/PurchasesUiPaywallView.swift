@@ -111,20 +111,29 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                                               binaryMessenger: messenger)
         let paywallProxy = PaywallProxy()
         _paywallProxy = paywallProxy
-        _paywallViewController = paywallProxy.createPaywallView()
+        let paywallViewController = paywallProxy.createPaywallView()
         if let args = args as? [String: Any?] {
+            // Custom variables must be set before any other updates that might initialize the hosting controller
+            if let customVariables = args["customVariables"] as? [String: Any] {
+                customVariables
+                    .compactMapValues { $0 as? String }
+                    .forEach { key, value in
+                        paywallViewController.setCustomVariable(value, forKey: key)
+                    }
+            }
             if let offeringId = args["offeringIdentifier"] as? String {
                 var presentedOfferingContext: PresentedOfferingContext? = nil
                 if let presentedOfferingContextMap = args["presentedOfferingContext"] as? [String: Any] {
                     presentedOfferingContext = PresentedOfferingContext.createFrom(map: presentedOfferingContextMap)
                 }
-                _paywallViewController.update(with: offeringId, presentedOfferingContext: presentedOfferingContext)
+                paywallViewController.update(with: offeringId, presentedOfferingContext: presentedOfferingContext)
             }
             if let displayCloseButton = args["displayCloseButton"] as? Bool {
-                _paywallViewController.update(with: displayCloseButton)
+                paywallViewController.update(with: displayCloseButton)
             }
         }
-        _view = PaywallViewWrapper(paywallViewController: _paywallViewController)
+        _paywallViewController = paywallViewController
+        _view = PaywallViewWrapper(paywallViewController: paywallViewController)
 
         super.init()
         _paywallProxy?.delegate = self
