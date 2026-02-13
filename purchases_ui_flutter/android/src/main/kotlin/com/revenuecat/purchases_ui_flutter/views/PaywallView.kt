@@ -3,6 +3,7 @@ package com.revenuecat.purchases_ui_flutter.views
 import android.content.Context
 import android.view.View
 import com.revenuecat.purchases.hybridcommon.ui.PaywallListenerWrapper
+import com.revenuecat.purchases.ui.revenuecatui.CustomVariableValue
 import com.revenuecat.purchases_ui_flutter.MapHelper
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
@@ -69,6 +70,13 @@ internal class PaywallView(
             }
         })
         nativePaywallView.setOfferingId(offeringIdentifier, presentedOfferingContext)
+        val customVariables = creationParams["customVariables"] as? Map<String, Any?>
+        if (customVariables != null) {
+            val convertedVariables = customVariables.mapNotNull { (key, value) ->
+                value?.let { key to CustomVariableValue.String(it.toString()) }
+            }.toMap()
+            nativePaywallView.setCustomVariables(convertedVariables)
+        }
     }
 
     // We currently don't have any communication in this channel from dart to native, so this can be empty.

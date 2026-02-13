@@ -9,6 +9,7 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
 // ignore_for_file: deprecated_member_use
+// ignore_for_file: prefer_const_literals_to_create_immutables
 class _PurchasesFlutterApiTest {
   void _checkPresentPaywall(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall();
@@ -25,6 +26,43 @@ class _PurchasesFlutterApiTest {
         RevenueCatUI.presentPaywallIfNeeded("test", offering: offering);
     Future<PaywallResult> f8 = RevenueCatUI.presentPaywallIfNeeded("test",
         offering: offering, displayCloseButton: true);
+  }
+
+  void _checkPresentPaywallWithCustomVariables(Offering? offering) async {
+    Future<PaywallResult> f1 = RevenueCatUI.presentPaywall(
+      customVariables: {'player_name': const CustomVariableValue.string('John')},
+    );
+    Future<PaywallResult> f2 = RevenueCatUI.presentPaywall(
+      offering: offering,
+      customVariables: {
+        'player_name': const CustomVariableValue.string('John'),
+        'level': const CustomVariableValue.string('5'),
+      },
+    );
+    Future<PaywallResult> f3 = RevenueCatUI.presentPaywallIfNeeded(
+      "test",
+      customVariables: {'player_name': const CustomVariableValue.string('John')},
+    );
+  }
+
+  Widget _checkPaywallViewWithCustomVariables(Offering offering) {
+    return PaywallView(
+      offering: offering,
+      customVariables: {'player_name': const CustomVariableValue.string('John')},
+    );
+  }
+
+  void _checkCustomVariableValue() {
+    // Create a string custom variable value
+    CustomVariableValue stringValue = const CustomVariableValue.string('test');
+
+    // Access the string value
+    String value = stringValue.stringValue;
+
+    // CustomVariableValue is a sealed class with only String subtype available
+    StringCustomVariableValue stringVariable = const StringCustomVariableValue('test');
+    String directValue = stringVariable.value;
+    String stringValueFromSubtype = stringVariable.stringValue;
   }
 
   void _checkPaywallResult(PaywallResult result) {
