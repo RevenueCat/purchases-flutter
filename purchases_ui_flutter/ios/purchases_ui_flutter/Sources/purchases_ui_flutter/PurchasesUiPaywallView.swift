@@ -42,7 +42,10 @@ class PaywallViewWrapper: UIView {
 
     init(paywallViewController: PaywallViewController) {
         self.paywallViewController = paywallViewController
-        super.init(frame: paywallViewController.view.bounds)
+        // Initialize with zero frame - the actual frame will be set by Flutter's layout system
+        // and Auto Layout constraints will size the paywall view correctly
+        super.init(frame: .zero)
+        print("[PaywallViewWrapper] Initialized with frame: .zero")
     }
 
     required init?(coder: NSCoder) {
@@ -71,6 +74,9 @@ class PaywallViewWrapper: UIView {
                 ])
 
                 addedToHierarchy = true
+                print("[PaywallViewWrapper] Added to hierarchy. Frame: \(self.frame), Bounds: \(self.bounds)")
+            } else {
+                print("[PaywallViewWrapper] parentViewController is nil. Frame: \(self.frame), Superview: \(String(describing: self.superview)), Window: \(String(describing: self.window))")
             }
         }
     }
