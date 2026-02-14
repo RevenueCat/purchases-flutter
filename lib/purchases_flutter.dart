@@ -595,6 +595,27 @@ class Purchases {
         purchaseParams.product?.presentedOfferingContext ??
         purchaseParams.subscriptionOption?.presentedOfferingContext;
     final presentedOfferingContextJson = presentedOfferingContext?.toJson();
+    final addOnStoreProducts = purchaseParams.addOnStoreProducts
+        ?.map((storeProduct) => <String, dynamic>{
+              'productIdentifier': storeProduct.identifier,
+              'type': storeProduct.productCategory?.name,
+            },)
+        .toList();
+    final addOnSubscriptionOptions = purchaseParams.addOnSubscriptionOptions
+        ?.map((subscriptionOption) => <String, dynamic>{
+              'productIdentifier': subscriptionOption.productId,
+              'optionIdentifier': subscriptionOption.id,
+            },)
+        .toList();
+    final addOnPackages = purchaseParams.addOnPackages
+        ?.map(
+          (package) => <String, dynamic>{
+            'packageIdentifier': package.identifier,
+            'presentedOfferingContext':
+                package.presentedOfferingContext.toJson(),
+          },
+        )
+        .toList();
     final purchaseArgs = <String, dynamic>{
       'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
       'googleProrationMode': prorationMode,
@@ -603,6 +624,9 @@ class Purchases {
       'presentedOfferingContext': presentedOfferingContextJson,
       'customerEmail': customerEmail,
       'winBackOfferIdentifier': winBackOffer?.identifier,
+      'addOnStoreProducts': addOnStoreProducts,
+      'addOnSubscriptionOptions': addOnSubscriptionOptions,
+      'addOnPackages': addOnPackages,
     };
     final isWinBackOfferPurchase = (defaultTargetPlatform == TargetPlatform.iOS
         || defaultTargetPlatform == TargetPlatform.macOS)
