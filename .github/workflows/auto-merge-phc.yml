@@ -6,12 +6,89 @@ on:
 
 jobs:
   auto-merge:
-    if: contains(github.event.pull_request.labels.*.name, 'pr:phc_dependencies')
+    # Only run for PRs created by RCGitBot with the phc_dependencies label
+    if: |
+      contains(github.event.pull_request.labels.*.name, 'pr:phc_dependencies') &&
+      github.event.pull_request.user.login == 'RCGitBot'
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get PR diff
+        id: diff
+        run: |
+          gh pr diff "$PR_NUMBER" --repo "$REPO" > diff.txt
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: AI Review
+        id: ai_review
+        run: |
+          DIFF_CONTENT=$(cat diff.txt)
+
+          # Prepare the prompt
+          PROMPT="You are a code reviewer for RevenueCat SDKs. Review this PR diff for a purchases-hybrid-common (PHC) dependency update.
+
+          This is an automated PR that updates the PHC dependency version. Your job is to verify:
+          1. The changes are ONLY version bumps (no unexpected code changes)
+          2. The version numbers look valid (semantic versioning)
+          3. No suspicious or malicious changes are included
+
+          PR Title: ${{ github.event.pull_request.title }}
+          PR Author: ${{ github.event.pull_request.user.login }}
+
+          Diff:
+          \`\`\`
+          ${DIFF_CONTENT}
+          \`\`\`
+
+          Respond with ONLY one of these two options:
+          - \"APPROVE\" if the changes look safe and are only version bumps
+          - \"REJECT: <reason>\" if there are suspicious changes or issues"
+
+          # Call Claude API
+          RESPONSE=$(curl -s https://api.anthropic.com/v1/messages \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d "$(jq -n \
+              --arg prompt "$PROMPT" \
+              '{
+                model: "claude-sonnet-4-20250514",
+                max_tokens: 256,
+                messages: [{role: "user", content: $prompt}]
+              }')")
+
+          # Extract the response text
+          REVIEW_RESULT=$(echo "$RESPONSE" | jq -r '.content[0].text // empty')
+
+          if [ -z "$REVIEW_RESULT" ]; then
+            echo "❌ Failed to get AI review response"
+            echo "Response: $RESPONSE"
+            exit 1
+          fi
+
+          echo "AI Review Result: $REVIEW_RESULT"
+          echo "result=$REVIEW_RESULT" >> $GITHUB_OUTPUT
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Check AI Review Result
+        run: |
+          REVIEW_RESULT="${{ steps.ai_review.outputs.result }}"
+          if [[ "$REVIEW_RESULT" != APPROVE* ]]; then
+            echo "❌ AI review did not approve the PR"
+            echo "Result: $REVIEW_RESULT"
+            exit 1
+          fi
+          echo "✅ AI review approved the PR"
+
       - name: Approve PR
         run: gh pr review --approve "$PR_URL"
         env:
