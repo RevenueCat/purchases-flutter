@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 /// A widget that allows editing custom variables for paywall text substitution.
 /// Variables can be used in paywalls with the `{{ custom.variable_name }}` syntax.
 class CustomVariablesEditor extends StatefulWidget {
-  final Map<String, String> variables;
-  final ValueChanged<Map<String, String>> onVariablesChanged;
+  final Map<String, dynamic> variables;
+  final ValueChanged<Map<String, dynamic>> onVariablesChanged;
 
   const CustomVariablesEditor({
     Key? key,
@@ -17,7 +17,7 @@ class CustomVariablesEditor extends StatefulWidget {
 }
 
 class _CustomVariablesEditorState extends State<CustomVariablesEditor> {
-  late List<MapEntry<String, String>> _variablesList;
+  late List<MapEntry<String, dynamic>> _variablesList;
 
   @override
   void initState() {

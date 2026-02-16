@@ -27,7 +27,14 @@ class _UpsellScreenState extends State<UpsellScreen> {
   String? _appUserId;
   Offerings? _offerings;
   CustomerInfo? _customerInfo;
-  Map<String, String> _customVariables = {};
+  Map<String, dynamic> _customVariables = {};
+
+  Map<String, CustomVariableValue>? _getCustomVariablesForPaywall() {
+    if (_customVariables.isEmpty) return null;
+    return _customVariables.map(
+      (key, value) => MapEntry(key, CustomVariableValue.string(value.toString())),
+    );
+  }
 
   @override
   void initState() {
@@ -316,9 +323,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       final paywallResult =
                           await RevenueCatUI.presentPaywall(
                             offering: offering,
-                            customVariables: _customVariables.isNotEmpty
-                                ? _customVariables
-                                : null,
+                            customVariables: _getCustomVariablesForPaywall(),
                           );
                       log('Paywall result: $paywallResult');
                     },
@@ -330,9 +335,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                           await RevenueCatUI.presentPaywallIfNeeded(
                               entitlementKey,
                               offering: offering,
-                              customVariables: _customVariables.isNotEmpty
-                                  ? _customVariables
-                                  : null,
+                              customVariables: _getCustomVariablesForPaywall(),
                           );
                       log('Paywall result: $paywallResult');
                     },
@@ -346,9 +349,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         MaterialPageRoute(
                             builder: (context) => PaywallScreen(
                                   offering: offering,
-                                  customVariables: _customVariables.isNotEmpty
-                                      ? _customVariables
-                                      : null,
+                                  customVariables: _getCustomVariablesForPaywall(),
                                 )),
                       );
                     },
@@ -361,9 +362,6 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         MaterialPageRoute(
                             builder: (context) => PaywallFooterScreen(
                                   offering: offering,
-                                  customVariables: _customVariables.isNotEmpty
-                                      ? _customVariables
-                                      : null,
                                 )),
                       );
                     },
@@ -378,9 +376,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       if (offering != null) {
                         final paywallResult = await RevenueCatUI.presentPaywall(
                             offering: offering,
-                            customVariables: _customVariables.isNotEmpty
-                                ? _customVariables
-                                : null,
+                            customVariables: _getCustomVariablesForPaywall(),
                         );
                         log('Paywall result: $paywallResult');
                       } else {

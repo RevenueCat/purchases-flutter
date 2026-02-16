@@ -45,26 +45,32 @@ class Package extends Equatable {
   /// Offering context this package belongs to.
   final PresentedOfferingContext presentedOfferingContext;
 
+  /// URL to use for web checkout for this package. Null if not available.
+  final String? webCheckoutUrl;
+
   const Package(
       this.identifier,
       this.packageType,
       this.storeProduct,
-      this.presentedOfferingContext,
-  );
+      this.presentedOfferingContext, {
+      this.webCheckoutUrl,
+  });
 
   factory Package.fromJson(Map<String, dynamic> json) => Package(
     json['identifier'] as String,
     _packageTypeFromJson(json['packageType']),
     StoreProduct.fromJson(Map<String, dynamic>.from(json['product'])),
     PresentedOfferingContext.fromJson(Map<String, dynamic>.from(json['presentedOfferingContext'])),
+    webCheckoutUrl: json['webCheckoutUrl'] as String?,
   );
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
     identifier,
     packageType,
     storeProduct,
     presentedOfferingContext,
+    webCheckoutUrl,
   ];
 }
 

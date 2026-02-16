@@ -36,6 +36,9 @@ class Offering extends Equatable {
   /// Weekly package type configured in the RevenueCat dashboard, if available.
   final Package? weekly;
 
+  /// URL to use for web checkout for this offering. Null if not available.
+  final String? webCheckoutUrl;
+
   const Offering(
     this.identifier,
     this.serverDescription,
@@ -48,6 +51,7 @@ class Offering extends Equatable {
     this.twoMonth,
     this.monthly,
     this.weekly,
+    this.webCheckoutUrl,
   });
 
   /// Retrieves a specific package by identifier, use this to access custom
@@ -69,6 +73,7 @@ class Offering extends Equatable {
     twoMonth: json['twoMonth'] != null ? Package.fromJson(Map<String, dynamic>.from(json['twoMonth'])) : null,
     monthly: json['monthly'] != null ? Package.fromJson(Map<String, dynamic>.from(json['monthly'])) : null,
     weekly: json['weekly'] != null ? Package.fromJson(Map<String, dynamic>.from(json['weekly'])) : null,
+    webCheckoutUrl: json['webCheckoutUrl'] as String?,
   );
 
   @override
@@ -84,6 +89,7 @@ class Offering extends Equatable {
     twoMonth,
     monthly,
     weekly,
+    webCheckoutUrl,
   ];
 }
 
