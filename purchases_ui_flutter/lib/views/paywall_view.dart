@@ -11,6 +11,7 @@ import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
+import '../custom_variable_value.dart';
 import 'paywall_view_method_handler.dart';
 
 /// View that displays the paywall in full screen mode.
@@ -45,9 +46,14 @@ import 'paywall_view_method_handler.dart';
 /// [onDismiss] (Optional) Callback that gets called when the paywall wants to
 /// dismiss. Currently, after a purchase is completed or when the close button
 /// is tapped.
+///
+/// [customVariables] (Optional) A map of custom variable names to their values.
+/// These values can be used for text substitution in paywalls using the
+/// `{{ custom.variable_name }}` syntax.
 class PaywallView extends StatelessWidget {
   final Offering? offering;
   final bool? displayCloseButton;
+  final Map<String, CustomVariableValue>? customVariables;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
       onPurchaseCompleted;
@@ -61,6 +67,7 @@ class PaywallView extends StatelessWidget {
     Key? key,
     this.offering,
     this.displayCloseButton,
+    this.customVariables,
     this.onPurchaseStarted,
     this.onPurchaseCompleted,
     this.onPurchaseCancelled,
@@ -79,6 +86,7 @@ class PaywallView extends StatelessWidget {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
+      'customVariables': convertCustomVariablesToStrings(customVariables),
     };
 
     return Platform.isAndroid
