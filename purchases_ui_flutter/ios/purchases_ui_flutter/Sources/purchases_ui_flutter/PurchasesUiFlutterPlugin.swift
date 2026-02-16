@@ -102,7 +102,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 requiredEntitlementIdentifier: nil,
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
-                displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
+                displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
+                customVariables: args[Parameter.customVariables.rawValue] as? [String: String]
             )
 
         case "presentPaywallIfNeeded":
@@ -124,7 +125,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 requiredEntitlementIdentifier: requiredEntitlementIdentifier,
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
-                displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool
+                displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
+                customVariables: args[Parameter.customVariables.rawValue] as? [String: String]
             )
 
         case "presentCustomerCenter":
@@ -172,7 +174,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         requiredEntitlementIdentifier: String?,
         offeringIdentifier: String?,
         presentedOfferingContext: [String: Any]?,
-        displayCloseButton: Bool?
+        displayCloseButton: Bool?,
+        customVariables: [String: String]?
     ) {
 #if os(iOS)
         if #available(iOS 15.0, *) {
@@ -193,6 +196,10 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 if let presentedOfferingContext {
                     options[PaywallProxy.PaywallOptionsKeys.presentedOfferingContext] = presentedOfferingContext
                 }
+            }
+
+            if let customVariables {
+                options[PaywallProxy.PaywallOptionsKeys.customVariables] = customVariables
             }
 
             if let requiredEntitlementIdentifier {
@@ -255,6 +262,7 @@ private extension PurchasesUiFlutterPlugin {
         case offeringIdentifier
         case presentedOfferingContext
         case displayCloseButton
+        case customVariables
     }
 
 #if os(iOS)

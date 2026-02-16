@@ -210,6 +210,54 @@ commands:
           name: Remove all local Package.swift files
           command: find . -name "Package.swift" -type f -delete
 
+  pod-update-with-retry:
+    description: Run pod update with retry for CocoaPods propagation issues
+    parameters:
+      working_directory:
+        type: string
+      platform:
+        type: enum
+        enum: [ios, macos]
+      enable_retry:
+        type: boolean
+        default: false
+      max_retries:
+        type: integer
+        default: 5
+      retry_wait_seconds:
+        type: integer
+        default: 300
+    steps:
+      - run:
+          name: Flutter precache << parameters.platform >>
+          command: flutter precache --<< parameters.platform >>
+      - run:
+          name: Pod update
+          working_directory: << parameters.working_directory >>
+          command: |
+            enable_retry=<< parameters.enable_retry >>
+            max_retries=<< parameters.max_retries >>
+            retry_wait=<< parameters.retry_wait_seconds >>
+            retry_count=0
+
+            if [ "$enable_retry" = "false" ]; then
+              pod update --repo-update
+              exit $?
+            fi
+
+            until pod update --repo-update; do
+              retry_count=$((retry_count + 1))
+              if [ "$retry_count" -ge "$max_retries" ]; then
+                echo "Pod update failed after $max_retries attempts"
+                exit 1
+              fi
+              echo "Pod update failed (attempt $retry_count/$max_retries)"
+              echo "Waiting $retry_wait seconds before retrying (CocoaPods may not have propagated yet)..."
+              sleep "$retry_wait"
+              echo "Retrying pod update..."
+            done
+            echo "Pod update succeeded"
+
 jobs:
   lint:
     description: "Run static analysis for Flutter"
@@ -324,6 +372,10 @@ jobs:
 
   ios-integration-test-cocoapods:
     description: "Run integration tests for Flutter"
+    parameters:
+      enable_retry:
+        type: boolean
+        default: false
     executor:
       name: macos-executor
     steps:
@@ -337,6 +389,10 @@ jobs:
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
+      - pod-update-with-retry:
+          working_directory: revenuecat_examples/purchase_tester/ios
+          platform: ios
+          enable_retry: << parameters.enable_retry >>
       - run:
           name: Run Flutter integration tests
           command: |
@@ -346,6 +402,10 @@ jobs:
 
   macos-integration-test-cocoapods:
     description: "Run integration tests for Flutter"
+    parameters:
+      enable_retry:
+        type: boolean
+        default: false
     executor:
       name: macos-executor
     steps:
@@ -356,6 +416,10 @@ jobs:
       - replace-api-key
       - build-flutter-project:
           project: revenuecat_examples/purchase_tester
+      - pod-update-with-retry:
+          working_directory: revenuecat_examples/purchase_tester/macos
+          platform: macos
+          enable_retry: << parameters.enable_retry >>
       - run:
           name: Run Flutter integration tests
           command: |
@@ -488,8 +552,10 @@ workflows:
       - test
       - api_test
       - dry-run-release: *release-branches
-      - ios-integration-test-cocoapods
-      - macos-integration-test-cocoapods
+      - ios-integration-test-cocoapods:
+          name: ios-integration-test-cocoapods
+      - macos-integration-test-cocoapods:
+          name: macos-integration-test-cocoapods
       - ios-integration-test-spm
       - macos-integration-test-spm
       - android-integration-test-build
@@ -501,16 +567,22 @@ workflows:
       not:
         equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
-      - ios-integration-test-cocoapods: *release-branches
-      - macos-integration-test-cocoapods: *release-branches
+      - ios-integration-test-cocoapods:
+          name: ios-integration-test-cocoapods-release
+          enable_retry: true
+          <<: *release-branches
+      - macos-integration-test-cocoapods:
+          name: macos-integration-test-cocoapods-release
+          enable_retry: true
+          <<: *release-branches
       - ios-integration-test-spm: *release-branches
       - macos-integration-test-spm: *release-branches
       - android-integration-test: *release-branches
       - hold:
           type: approval
           requires:
-            - ios-integration-test-cocoapods
-            - macos-integration-test-cocoapods
+            - ios-integration-test-cocoapods-release
+            - macos-integration-test-cocoapods-release
             - ios-integration-test-spm
             - macos-integration-test-spm
             - android-integration-test

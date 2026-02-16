@@ -6,9 +6,11 @@ import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 
+import 'custom_variable_value.dart';
 import 'paywall_result.dart';
 import 'views/customer_center_view_method_handler.dart';
 
+export 'custom_variable_value.dart';
 export 'paywall_result.dart';
 export 'views/customer_center_view.dart';
 export 'views/paywall_footer_view.dart';
@@ -31,15 +33,18 @@ class RevenueCatUI {
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
   /// @param [offering] If set, will present the paywall associated to the given Offering.
   /// @param [displayCloseButton] Optionally present the paywall with a close button. Only available for original template paywalls. Ignored for V2 Paywalls.
+  /// @param [customVariables] A map of custom variable names to their values. These values can be used for text substitution in paywalls using the `{{ custom.variable_name }}` syntax.
   static Future<PaywallResult> presentPaywall({
     Offering? offering,
     bool displayCloseButton = false,
+    Map<String, CustomVariableValue>? customVariables,
   }) async {
     final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod('presentPaywall', {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
+      'customVariables': convertCustomVariablesToStrings(customVariables),
     });
     return _parseStringToResult(result);
   }
@@ -51,10 +56,12 @@ class RevenueCatUI {
   /// @param [requiredEntitlementIdentifier] Entitlement identifier to check if the user has access to before presenting the paywall.
   /// @param [offering] If set, will present the paywall associated to the given Offering.
   /// @param [displayCloseButton] Optionally present the paywall with a close button. Only available for original template paywalls. Ignored for V2 Paywalls.
+  /// @param [customVariables] A map of custom variable names to their values. These values can be used for text substitution in paywalls using the `{{ custom.variable_name }}` syntax.
   static Future<PaywallResult> presentPaywallIfNeeded(
     String requiredEntitlementIdentifier, {
     Offering? offering,
     bool displayCloseButton = false,
+    Map<String, CustomVariableValue>? customVariables,
   }) async {
     final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod(
@@ -64,6 +71,7 @@ class RevenueCatUI {
         'offeringIdentifier': offering?.identifier,
         'presentedOfferingContext': presentedOfferingContext?.toJson(),
         'displayCloseButton': displayCloseButton,
+        'customVariables': convertCustomVariablesToStrings(customVariables),
       },
     );
     return _parseStringToResult(result);
