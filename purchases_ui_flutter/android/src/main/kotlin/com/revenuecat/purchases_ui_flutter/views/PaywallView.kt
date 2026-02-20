@@ -69,7 +69,7 @@ internal class PaywallView(
                 methodChannel.invokeMethod("onRestoreError", error)
             }
         })
-        nativePaywallView.setOfferingId(offeringIdentifier, presentedOfferingContext)
+        // Custom variables must be set before setting the offering to ensure they're applied
         val customVariables = creationParams["customVariables"] as? Map<String, Any?>
         if (customVariables != null) {
             val convertedVariables = customVariables.mapNotNull { (key, value) ->
@@ -77,6 +77,7 @@ internal class PaywallView(
             }.toMap()
             nativePaywallView.setCustomVariables(convertedVariables)
         }
+        nativePaywallView.setOfferingId(offeringIdentifier, presentedOfferingContext)
     }
 
     // We currently don't have any communication in this channel from dart to native, so this can be empty.
