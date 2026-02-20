@@ -192,7 +192,8 @@ lane :update_hybrid_common do |options|
     current_version: current_phc_version,
     next_version: new_version_number,
     open_pr: options[:open_pr] || false,
-    automatic_release: options[:automatic_release] || false
+    automatic_release: options[:automatic_release] || false,
+    enable_auto_merge: options[:automatic_release] || false
   )
 end
 
