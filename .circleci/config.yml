@@ -13,6 +13,18 @@ aliases:
         ignore: /.*/
       branches:
         only: /^release\/.*/
+  bump-phc-branches: &bump-phc-branches
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        only: /^bump-phc\/.*/
+  exclude-bump-phc-branches: &exclude-bump-phc-branches
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        ignore: /^bump-phc\/.*/
   only-main-branch: &only-main-branch
     filters:
       tags:
@@ -555,8 +567,18 @@ workflows:
       - dry-run-release: *release-branches
       - ios-integration-test-cocoapods:
           name: ios-integration-test-cocoapods
+          <<: *exclude-bump-phc-branches
       - macos-integration-test-cocoapods:
           name: macos-integration-test-cocoapods
+          <<: *exclude-bump-phc-branches
+      - ios-integration-test-cocoapods:
+          name: ios-integration-test-cocoapods-phc-bump
+          enable_retry: true
+          <<: *bump-phc-branches
+      - macos-integration-test-cocoapods:
+          name: macos-integration-test-cocoapods-phc-bump
+          enable_retry: true
+          <<: *bump-phc-branches
       - ios-integration-test-spm
       - macos-integration-test-spm
       - android-integration-test-build
