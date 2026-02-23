@@ -165,3 +165,5 @@ cd revenuecat_examples/purchase_tester && flutter drive \
 - **Keep diffs minimal** — preserve existing formatting
 - **Don't break the public API** — if `api_tester` fails, investigate why
 - **Check native SDKs** when unsure about implementation details
+- **Never commit Claude-related files** — do not stage or commit `.claude/` directory, `settings.local.json`, or any AI tool configuration files
+- **Never commit API keys or secrets** — do not stage or commit API keys, tokens, credentials, or any sensitive data
