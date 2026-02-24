@@ -19,7 +19,7 @@ aliases:
         ignore: /.*/
       branches:
         only: /^bump-phc\/.*/
-  exclude-bump-phc-branches: &exclude-bump-phc-branches
+  not-bump-phc-branches: &not-bump-phc-branches
     filters:
       tags:
         ignore: /.*/
@@ -567,10 +567,10 @@ workflows:
       - dry-run-release: *release-branches
       - ios-integration-test-cocoapods:
           name: ios-integration-test-cocoapods
-          <<: *exclude-bump-phc-branches
+          <<: *not-bump-phc-branches
       - macos-integration-test-cocoapods:
           name: macos-integration-test-cocoapods
-          <<: *exclude-bump-phc-branches
+          <<: *not-bump-phc-branches
       - ios-integration-test-cocoapods:
           name: ios-integration-test-cocoapods-phc-bump
           enable_retry: true
