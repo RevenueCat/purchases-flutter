@@ -5,6 +5,10 @@ ios/Pods/
 ios/.symlinks/
 ios/Flutter/Flutter.framework
 ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/flutter_export_environment.sh
 .flutter-plugins
 .flutter-plugins-dependencies
+.metadata
 pubspec.lock
