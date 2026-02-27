@@ -100,6 +100,7 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
     private var _paywallProxy: PaywallProxy?
     private var _methodChannel: FlutterMethodChannel
     private var _paywallViewController: PaywallViewController
+    private var _purchaseLogicBridge: HybridPurchaseLogicBridge?
 
     init(
         frame: CGRect,
@@ -111,7 +112,25 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
                                               binaryMessenger: messenger)
         let paywallProxy = PaywallProxy()
         _paywallProxy = paywallProxy
-        let paywallViewController = paywallProxy.createPaywallView()
+
+        let hasPurchaseLogic = (args as? [String: Any?])?["hasPurchaseLogic"] as? Bool ?? false
+        var purchaseLogicBridge: HybridPurchaseLogicBridge? = nil
+        if hasPurchaseLogic {
+            let methodChannel = _methodChannel
+            purchaseLogicBridge = HybridPurchaseLogicBridge(
+                onPerformPurchase: { eventData in
+                    methodChannel.invokeMethod("onPerformPurchase", arguments: eventData)
+                },
+                onPerformRestore: { eventData in
+                    methodChannel.invokeMethod("onPerformRestore", arguments: eventData)
+                }
+            )
+            _purchaseLogicBridge = purchaseLogicBridge
+        }
+
+        let params = PaywallViewCreationParams()
+        params.purchaseLogicBridge = purchaseLogicBridge
+        let paywallViewController = paywallProxy.createPaywallView(params: params)
         if let args = args as? [String: Any?] {
             // Custom variables must be set before any other updates that might initialize the hosting controller
             if let customVariables = args["customVariables"] as? [String: Any] {
@@ -140,6 +159,10 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         setupMethodCallHandler()
     }
 
+    deinit {
+        _purchaseLogicBridge?.cancelPending()
+    }
+
     func view() -> UIView {
         return _view
     }
@@ -148,8 +171,18 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         _methodChannel.setMethodCallHandler { [weak self] (call, result) in
             guard self != nil else { return }
             switch call.method {
-            // We currently don't have any communication in this channel from dart to native,
-            // so this can be empty.
+            case "resolvePurchaseLogicResult":
+                if let args = call.arguments as? [String: Any],
+                   let requestId = args["requestId"] as? String,
+                   let resultString = args["result"] as? String {
+                    let errorMessage = args["errorMessage"] as? String
+                    HybridPurchaseLogicBridge.resolveResult(
+                        requestId: requestId,
+                        resultString: resultString,
+                        errorMessage: errorMessage
+                    )
+                }
+                result(nil)
             default:
                 result(FlutterMethodNotImplemented)
             }
