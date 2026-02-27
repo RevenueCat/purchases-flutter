@@ -13,6 +13,18 @@ aliases:
         ignore: /.*/
       branches:
         only: /^release\/.*/
+  bump-phc-branches: &bump-phc-branches
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        only: /^bump-phc\/.*/
+  not-bump-phc-branches: &not-bump-phc-branches
+    filters:
+      tags:
+        ignore: /.*/
+      branches:
+        ignore: /^bump-phc\/.*/
   only-main-branch: &only-main-branch
     filters:
       tags:
@@ -36,7 +48,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@2.1.0
+  revenuecat: revenuecat/sdks-common-config@3.11.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -542,7 +554,8 @@ jobs:
 workflows:
   danger:
     jobs:
-      - revenuecat/danger
+      - revenuecat/danger:
+          ruby_version: "3.2.0"
   test:
     when:
       not:
@@ -554,8 +567,18 @@ workflows:
       - dry-run-release: *release-branches
       - ios-integration-test-cocoapods:
           name: ios-integration-test-cocoapods
+          <<: *not-bump-phc-branches
       - macos-integration-test-cocoapods:
           name: macos-integration-test-cocoapods
+          <<: *not-bump-phc-branches
+      - ios-integration-test-cocoapods:
+          name: ios-integration-test-cocoapods-phc-bump
+          enable_retry: true
+          <<: *bump-phc-branches
+      - macos-integration-test-cocoapods:
+          name: macos-integration-test-cocoapods-phc-bump
+          enable_retry: true
+          <<: *bump-phc-branches
       - ios-integration-test-spm
       - macos-integration-test-spm
       - android-integration-test-build
