@@ -1,0 +1,17 @@
+name: maestro_test_app
+description: Maestro E2E test app for RevenueCat Flutter SDK
+publish_to: 'none'
+version: 1.0.0
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+  flutter: '>=3.27.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  purchases_flutter: any
+  purchases_ui_flutter: any
+
+flutter:
+  uses-material-design: true
