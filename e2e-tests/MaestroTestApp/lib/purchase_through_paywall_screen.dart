@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
@@ -14,20 +13,17 @@ class PurchaseThroughPaywallScreen extends StatefulWidget {
 class _PurchaseThroughPaywallScreenState
     extends State<PurchaseThroughPaywallScreen> {
   String _entitlements = 'none';
-  StreamSubscription? _subscription;
 
   @override
   void initState() {
     super.initState();
-    _subscription = Purchases.customerInfoStream.listen((info) {
-      _updateEntitlements(info);
-    });
+    Purchases.addCustomerInfoUpdateListener(_updateEntitlements);
     Purchases.getCustomerInfo().then(_updateEntitlements);
   }
 
   @override
   void dispose() {
-    _subscription?.cancel();
+    Purchases.removeCustomerInfoUpdateListener(_updateEntitlements);
     super.dispose();
   }
 
