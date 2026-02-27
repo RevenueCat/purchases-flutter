@@ -113,9 +113,10 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         let paywallProxy = PaywallProxy()
         _paywallProxy = paywallProxy
 
-        let hasPurchaseLogic = (args as? [String: Any?])?["hasPurchaseLogic"] as? Bool ?? false
+        let argsDictionary = args as? [String: Any?]
+
         var purchaseLogicBridge: HybridPurchaseLogicBridge? = nil
-        if hasPurchaseLogic {
+        if argsDictionary?["hasPurchaseLogic"] as? Bool == true {
             let methodChannel = _methodChannel
             purchaseLogicBridge = HybridPurchaseLogicBridge(
                 onPerformPurchase: { eventData in
@@ -130,25 +131,21 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
 
         let params = PaywallViewCreationParams()
         params.purchaseLogicBridge = purchaseLogicBridge
-        if let args = args as? [String: Any?] {
-            params.offeringIdentifier = args["offeringIdentifier"] as? String
-            if let presentedOfferingContextMap = args["presentedOfferingContext"] as? [String: Any] {
-                params.presentedOfferingContext = presentedOfferingContextMap
-            }
+        params.offeringIdentifier = argsDictionary?["offeringIdentifier"] as? String
+        if let presentedOfferingContextMap = argsDictionary?["presentedOfferingContext"] as? [String: Any] {
+            params.presentedOfferingContext = presentedOfferingContextMap
         }
         let paywallViewController = paywallProxy.createPaywallView(params: params)
-        if let args = args as? [String: Any?] {
-            // Custom variables must be set before any other updates that might initialize the hosting controller
-            if let customVariables = args["customVariables"] as? [String: Any] {
-                customVariables
-                    .compactMapValues { $0 as? String }
-                    .forEach { key, value in
-                        paywallViewController.setCustomVariable(value, forKey: key)
-                    }
-            }
-            if let displayCloseButton = args["displayCloseButton"] as? Bool {
-                paywallViewController.update(with: displayCloseButton)
-            }
+        // Custom variables must be set before any other updates that might initialize the hosting controller
+        if let customVariables = argsDictionary?["customVariables"] as? [String: Any] {
+            customVariables
+                .compactMapValues { $0 as? String }
+                .forEach { key, value in
+                    paywallViewController.setCustomVariable(value, forKey: key)
+                }
+        }
+        if let displayCloseButton = argsDictionary?["displayCloseButton"] as? Bool {
+            paywallViewController.update(with: displayCloseButton)
         }
         _paywallViewController = paywallViewController
         _view = PaywallViewWrapper(paywallViewController: paywallViewController)
