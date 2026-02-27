@@ -2,6 +2,7 @@ package com.revenuecat.purchases_ui_flutter.views
 
 import android.content.Context
 import android.view.View
+import com.revenuecat.purchases.hybridcommon.ui.HybridPurchaseLogicBridge
 import com.revenuecat.purchases.hybridcommon.ui.PaywallListenerWrapper
 import com.revenuecat.purchases.ui.revenuecatui.CustomVariableValue
 import com.revenuecat.purchases_ui_flutter.MapHelper
@@ -21,12 +22,15 @@ internal class PaywallView(
 
     private val methodChannel: MethodChannel
     private val nativePaywallView: NativePaywallView
+    private var purchaseLogicBridge: HybridPurchaseLogicBridge? = null
 
     override fun getView(): View {
         return nativePaywallView
     }
 
-    override fun dispose() {}
+    override fun dispose() {
+        purchaseLogicBridge?.cancelPending()
+    }
 
     init {
         methodChannel = MethodChannel(messenger, "com.revenuecat.purchasesui/PaywallView/$id")
@@ -78,11 +82,34 @@ internal class PaywallView(
             nativePaywallView.setCustomVariables(convertedVariables)
         }
         nativePaywallView.setOfferingId(offeringIdentifier, presentedOfferingContext)
+
+        val hasPurchaseLogic = creationParams["hasPurchaseLogic"] as? Boolean ?: false
+        if (hasPurchaseLogic) {
+            val bridge = HybridPurchaseLogicBridge(
+                onPerformPurchase = { eventData ->
+                    methodChannel.invokeMethod("onPerformPurchase", eventData)
+                },
+                onPerformRestore = { eventData ->
+                    methodChannel.invokeMethod("onPerformRestore", eventData)
+                }
+            )
+            purchaseLogicBridge = bridge
+            nativePaywallView.setPurchaseLogic(bridge)
+        }
     }
 
-    // We currently don't have any communication in this channel from dart to native, so this can be empty.
     override fun onMethodCall(methodCall: MethodCall, result: MethodChannel.Result) {
         when (methodCall.method) {
+            "resolvePurchaseLogicResult" -> {
+                val args = methodCall.arguments as? Map<*, *>
+                val requestId = args?.get("requestId") as? String
+                val resultString = args?.get("result") as? String
+                val errorMessage = args?.get("errorMessage") as? String
+                if (requestId != null && resultString != null) {
+                    HybridPurchaseLogicBridge.resolveResult(requestId, resultString, errorMessage)
+                }
+                result.success(null)
+            }
             else -> result.notImplemented()
         }
     }
