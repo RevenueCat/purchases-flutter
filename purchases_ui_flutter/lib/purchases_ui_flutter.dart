@@ -12,23 +12,31 @@ import 'views/customer_center_view_method_handler.dart';
 
 export 'custom_variable_value.dart';
 export 'paywall_result.dart';
+export 'purchase_logic.dart';
 export 'views/customer_center_view.dart';
 export 'views/paywall_footer_view.dart';
 export 'views/paywall_view.dart';
+
 class RevenueCatUI {
   static const _methodChannel = MethodChannel('purchases_ui_flutter');
-  
+
   static CustomerCenterRestoreStarted? _customerCenterOnRestoreStarted;
   static CustomerCenterRestoreCompleted? _customerCenterOnRestoreCompleted;
   static CustomerCenterRestoreFailed? _customerCenterOnRestoreFailed;
-  static CustomerCenterManageSubscriptions? _customerCenterOnShowingManageSubscriptions;
-  static CustomerCenterRefundRequestStarted? _customerCenterOnRefundRequestStarted;
-  static CustomerCenterRefundRequestCompleted? _customerCenterOnRefundRequestCompleted;
-  static CustomerCenterFeedbackSurveyCompleted? _customerCenterOnFeedbackSurveyCompleted;
-  static CustomerCenterManagementOptionSelected? _customerCenterOnManagementOptionSelected;
-  static CustomerCenterCustomActionSelected? _customerCenterOnCustomActionSelected;
+  static CustomerCenterManageSubscriptions?
+  _customerCenterOnShowingManageSubscriptions;
+  static CustomerCenterRefundRequestStarted?
+  _customerCenterOnRefundRequestStarted;
+  static CustomerCenterRefundRequestCompleted?
+  _customerCenterOnRefundRequestCompleted;
+  static CustomerCenterFeedbackSurveyCompleted?
+  _customerCenterOnFeedbackSurveyCompleted;
+  static CustomerCenterManagementOptionSelected?
+  _customerCenterOnManagementOptionSelected;
+  static CustomerCenterCustomActionSelected?
+  _customerCenterOnCustomActionSelected;
   static bool _methodChannelHandlerSet = false;
-  
+
   /// Presents the paywall as an activity on android or a modal in iOS.
   /// Returns a [PaywallResult] indicating the result of the paywall presentation.
   /// @param [offering] If set, will present the paywall associated to the given Offering.
@@ -39,7 +47,9 @@ class RevenueCatUI {
     bool displayCloseButton = false,
     Map<String, CustomVariableValue>? customVariables,
   }) async {
-    final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
+    final presentedOfferingContext = offering?.availablePackages
+        .elementAtOrNull(0)
+        ?.presentedOfferingContext;
     final result = await _methodChannel.invokeMethod('presentPaywall', {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
@@ -63,17 +73,16 @@ class RevenueCatUI {
     bool displayCloseButton = false,
     Map<String, CustomVariableValue>? customVariables,
   }) async {
-    final presentedOfferingContext = offering?.availablePackages.elementAtOrNull(0)?.presentedOfferingContext;
-    final result = await _methodChannel.invokeMethod(
-      'presentPaywallIfNeeded',
-      {
-        'requiredEntitlementIdentifier': requiredEntitlementIdentifier,
-        'offeringIdentifier': offering?.identifier,
-        'presentedOfferingContext': presentedOfferingContext?.toJson(),
-        'displayCloseButton': displayCloseButton,
-        'customVariables': convertCustomVariablesToStrings(customVariables),
-      },
-    );
+    final presentedOfferingContext = offering?.availablePackages
+        .elementAtOrNull(0)
+        ?.presentedOfferingContext;
+    final result = await _methodChannel.invokeMethod('presentPaywallIfNeeded', {
+      'requiredEntitlementIdentifier': requiredEntitlementIdentifier,
+      'offeringIdentifier': offering?.identifier,
+      'presentedOfferingContext': presentedOfferingContext?.toJson(),
+      'displayCloseButton': displayCloseButton,
+      'customVariables': convertCustomVariablesToStrings(customVariables),
+    });
     return _parseStringToResult(result);
   }
 
@@ -93,7 +102,8 @@ class RevenueCatUI {
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
     _setMethodChannelHandlerIfNeeded();
-    final hasCallbacks = onRestoreStarted != null ||
+    final hasCallbacks =
+        onRestoreStarted != null ||
         onRestoreCompleted != null ||
         onRestoreFailed != null ||
         onShowingManageSubscriptions != null ||
@@ -127,7 +137,9 @@ class RevenueCatUI {
         try {
           await _handleCustomerCenterMethodCall(call);
         } catch (e) {
-          debugPrint('RevenueCatUI: Error handling method call ${call.method}: $e');
+          debugPrint(
+            'RevenueCatUI: Error handling method call ${call.method}: $e',
+          );
         }
       });
       _methodChannelHandlerSet = true;
@@ -204,7 +216,9 @@ class RevenueCatUI {
       case 'onRestoreCompleted':
         final rawArguments = call.arguments;
         if (rawArguments is! Map) {
-          debugPrint('RevenueCatUI: Error - onRestoreCompleted called with invalid arguments: $rawArguments');
+          debugPrint(
+            'RevenueCatUI: Error - onRestoreCompleted called with invalid arguments: $rawArguments',
+          );
           return;
         }
         final arguments = Map<String, dynamic>.from(rawArguments);
@@ -212,13 +226,17 @@ class RevenueCatUI {
           final customerInfo = CustomerInfo.fromJson(arguments);
           _customerCenterOnRestoreCompleted?.call(customerInfo);
         } catch (e) {
-          debugPrint('RevenueCatUI: Error parsing CustomerInfo in onRestoreCompleted: $e');
+          debugPrint(
+            'RevenueCatUI: Error parsing CustomerInfo in onRestoreCompleted: $e',
+          );
         }
         break;
       case 'onRestoreFailed':
         final rawArguments = call.arguments;
         if (rawArguments is! Map) {
-          debugPrint('RevenueCatUI: Error - onRestoreFailed called with invalid arguments: $rawArguments');
+          debugPrint(
+            'RevenueCatUI: Error - onRestoreFailed called with invalid arguments: $rawArguments',
+          );
           return;
         }
         final arguments = Map<String, dynamic>.from(rawArguments);
@@ -226,7 +244,9 @@ class RevenueCatUI {
           final error = PurchasesError.fromJson(arguments);
           _customerCenterOnRestoreFailed?.call(error);
         } catch (e) {
-          debugPrint('RevenueCatUI: Error parsing PurchasesError in onRestoreFailed: $e');
+          debugPrint(
+            'RevenueCatUI: Error parsing PurchasesError in onRestoreFailed: $e',
+          );
         }
         break;
       case 'onShowingManageSubscriptions':
@@ -235,13 +255,17 @@ class RevenueCatUI {
       case 'onRefundRequestStarted':
         final rawArguments = call.arguments;
         if (rawArguments is! Map) {
-          debugPrint('RevenueCatUI: Error - onRefundRequestStarted called with invalid arguments: $rawArguments');
+          debugPrint(
+            'RevenueCatUI: Error - onRefundRequestStarted called with invalid arguments: $rawArguments',
+          );
           return;
         }
         final arguments = Map<String, dynamic>.from(rawArguments);
         final productIdentifier = arguments['productId'];
         if (productIdentifier is! String || productIdentifier.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onRefundRequestStarted called without a valid productId: $productIdentifier');
+          debugPrint(
+            'RevenueCatUI: Error - onRefundRequestStarted called without a valid productId: $productIdentifier',
+          );
           return;
         }
         _customerCenterOnRefundRequestStarted?.call(productIdentifier);
@@ -249,32 +273,45 @@ class RevenueCatUI {
       case 'onRefundRequestCompleted':
         final rawArguments = call.arguments;
         if (rawArguments is! Map) {
-          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called with invalid arguments: $rawArguments');
+          debugPrint(
+            'RevenueCatUI: Error - onRefundRequestCompleted called with invalid arguments: $rawArguments',
+          );
           return;
         }
         final arguments = Map<String, dynamic>.from(rawArguments);
         final productIdentifier = arguments['productId'];
         final status = arguments['status'];
         if (productIdentifier is! String || productIdentifier.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called without a valid productId: $productIdentifier');
+          debugPrint(
+            'RevenueCatUI: Error - onRefundRequestCompleted called without a valid productId: $productIdentifier',
+          );
           return;
         }
         if (status is! String || status.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onRefundRequestCompleted called without a valid status: $status');
+          debugPrint(
+            'RevenueCatUI: Error - onRefundRequestCompleted called without a valid status: $status',
+          );
           return;
         }
-        _customerCenterOnRefundRequestCompleted?.call(productIdentifier, status);
+        _customerCenterOnRefundRequestCompleted?.call(
+          productIdentifier,
+          status,
+        );
         break;
       case 'onFeedbackSurveyCompleted':
         final rawArguments = call.arguments;
         if (rawArguments is! Map) {
-          debugPrint('RevenueCatUI: Error - onFeedbackSurveyCompleted called with invalid arguments: $rawArguments');
+          debugPrint(
+            'RevenueCatUI: Error - onFeedbackSurveyCompleted called with invalid arguments: $rawArguments',
+          );
           return;
         }
         final arguments = Map<String, dynamic>.from(rawArguments);
         final optionIdentifier = arguments['optionId'];
         if (optionIdentifier is! String || optionIdentifier.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onFeedbackSurveyCompleted called without a valid optionId: $optionIdentifier');
+          debugPrint(
+            'RevenueCatUI: Error - onFeedbackSurveyCompleted called without a valid optionId: $optionIdentifier',
+          );
           return;
         }
         _customerCenterOnFeedbackSurveyCompleted?.call(optionIdentifier);
@@ -282,40 +319,58 @@ class RevenueCatUI {
       case 'onManagementOptionSelected':
         final rawArguments = call.arguments;
         if (rawArguments is! Map) {
-          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called with invalid arguments: $rawArguments');
+          debugPrint(
+            'RevenueCatUI: Error - onManagementOptionSelected called with invalid arguments: $rawArguments',
+          );
           return;
         }
         final arguments = Map<String, dynamic>.from(rawArguments);
         final optionIdentifier = arguments['optionId'];
         if (optionIdentifier is! String || optionIdentifier.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called without a valid optionId: $optionIdentifier');
+          debugPrint(
+            'RevenueCatUI: Error - onManagementOptionSelected called without a valid optionId: $optionIdentifier',
+          );
           return;
         }
         final url = arguments['url'];
         if (url != null && url is! String) {
-          debugPrint('RevenueCatUI: Error - onManagementOptionSelected called with invalid url: $url');
+          debugPrint(
+            'RevenueCatUI: Error - onManagementOptionSelected called with invalid url: $url',
+          );
           return;
         }
-        _customerCenterOnManagementOptionSelected?.call(optionIdentifier, url as String?);
+        _customerCenterOnManagementOptionSelected?.call(
+          optionIdentifier,
+          url as String?,
+        );
         break;
       case 'onCustomActionSelected':
         final rawArguments = call.arguments;
         if (rawArguments is! Map) {
-          debugPrint('RevenueCatUI: Error - onCustomActionSelected called with invalid arguments: $rawArguments');
+          debugPrint(
+            'RevenueCatUI: Error - onCustomActionSelected called with invalid arguments: $rawArguments',
+          );
           return;
         }
         final arguments = Map<String, dynamic>.from(rawArguments);
         final actionIdentifier = arguments['actionId'];
         if (actionIdentifier is! String || actionIdentifier.isEmpty) {
-          debugPrint('RevenueCatUI: Error - onCustomActionSelected called without a valid actionId: $actionIdentifier');
+          debugPrint(
+            'RevenueCatUI: Error - onCustomActionSelected called without a valid actionId: $actionIdentifier',
+          );
           return;
         }
         final purchaseIdentifier = arguments['purchaseIdentifier'];
         if (purchaseIdentifier != null && purchaseIdentifier is! String) {
-          debugPrint('RevenueCatUI: Error - onCustomActionSelected called with invalid purchaseIdentifier: $purchaseIdentifier');
+          debugPrint(
+            'RevenueCatUI: Error - onCustomActionSelected called with invalid purchaseIdentifier: $purchaseIdentifier',
+          );
           return;
         }
-        _customerCenterOnCustomActionSelected?.call(actionIdentifier, purchaseIdentifier as String?);
+        _customerCenterOnCustomActionSelected?.call(
+          actionIdentifier,
+          purchaseIdentifier as String?,
+        );
         break;
     }
   }
