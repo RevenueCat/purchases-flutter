@@ -231,6 +231,25 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  void _checkPurchaseLogicResult(PurchaseLogicResult result) {
+    switch (result) {
+      case PurchaseLogicResult.success:
+      case PurchaseLogicResult.cancellation:
+      case PurchaseLogicResult.error:
+        break;
+    }
+  }
+
+  Widget _checkPaywallViewWithPurchaseLogic(PaywallPurchaseLogic logic) {
+    return Scaffold(
+      body: Center(
+        child: PaywallView(
+          purchaseLogic: logic,
+        ),
+      ),
+    );
+  }
+
   void _checkPresentCustomerCenter() async {
     Future<void> f1 = RevenueCatUI.presentCustomerCenter();
     Future<void> f2 = RevenueCatUI.presentCustomerCenter(
