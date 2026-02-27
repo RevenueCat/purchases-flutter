@@ -103,7 +103,7 @@ class PaywallViewMethodHandler {
     onRestoreError?.call(error);
   }
 
-  void _handleOnPerformPurchase(MethodCall call) async {
+  Future<void> _handleOnPerformPurchase(MethodCall call) async {
     if (purchaseLogic == null || methodChannel == null) return;
     final arguments = Map<String, dynamic>.from(call.arguments);
     final requestId = arguments['requestId'] as String;
@@ -126,7 +126,7 @@ class PaywallViewMethodHandler {
     }
   }
 
-  void _handleOnPerformRestore(MethodCall call) async {
+  Future<void> _handleOnPerformRestore(MethodCall call) async {
     if (purchaseLogic == null || methodChannel == null) return;
     final arguments = Map<String, dynamic>.from(call.arguments);
     final requestId = arguments['requestId'] as String;
