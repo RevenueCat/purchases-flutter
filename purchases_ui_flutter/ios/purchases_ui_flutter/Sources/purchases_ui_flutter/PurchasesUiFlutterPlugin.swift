@@ -187,6 +187,12 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true
             ]
 
+            // Present paywalls full-screen on iPhone to avoid side white areas
+            // in landscape orientation (PW-148). Keep iPad behavior unchanged.
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                options[PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation] = true
+            }
+
             if let offeringIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
 
