@@ -35,7 +35,8 @@ sealed class CustomVariableValue {
   const CustomVariableValue._();
 
   /// Creates a string custom variable value.
-  const factory CustomVariableValue.string(String value) = StringCustomVariableValue;
+  const factory CustomVariableValue.string(String value) =
+      StringCustomVariableValue;
 
   /// Returns the string representation of this value.
   String get stringValue;
