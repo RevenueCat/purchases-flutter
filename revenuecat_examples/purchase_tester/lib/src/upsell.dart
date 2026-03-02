@@ -350,6 +350,9 @@ class _UpsellScreenState extends State<UpsellScreen> {
                             builder: (context) => PaywallScreen(
                                   offering: offering,
                                   customVariables: _getCustomVariablesForPaywall(),
+                                  purchaseLogic: purchasesAreCompletedByMyApp
+                                      ? SamplePurchaseLogic()
+                                      : null,
                                 )),
                       );
                     },
