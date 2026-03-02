@@ -1,5 +1,5 @@
 //TO DO: add the Apple API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
-const appleApiKey = 'appl_api_key';
+const appleApiKey = 'appl_SYkbbYptqjDadVkQeBUtXxVxCcw';
 
 //TO DO: add the Google API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
 const googleApiKey = 'googl_api_key';
