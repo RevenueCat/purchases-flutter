@@ -356,6 +356,28 @@ class _UpsellScreenState extends State<UpsellScreen> {
                     child: const Text('Show paywall view'),
                   ),
                   ElevatedButton(
+                    onPressed: purchasesAreCompletedByMyApp
+                        ? () async {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PaywallScreen(
+                                        offering: offering,
+                                        customVariables: _getCustomVariablesForPaywall(),
+                                        purchaseLogic: SamplePurchaseLogic(),
+                                      )),
+                            );
+                          }
+                        : null,
+                    child: Text(
+                        purchasesAreCompletedByMyApp
+                            ? 'Show paywall view with custom PurchaseLogic'
+                            : 'Show paywall view with custom PurchaseLogic\n'
+                              '(Enable purchasesAreCompletedByMyApp)',
+                        textAlign: TextAlign.center,
+                    ),
+                  ),
+                  ElevatedButton(
                     onPressed: () async {
                       Navigator.push(
                         context,

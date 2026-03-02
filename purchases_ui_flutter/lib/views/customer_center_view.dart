@@ -29,7 +29,7 @@ class CustomerCenterView extends StatelessWidget {
   });
 
   /// Whether to show a close button in the customer center.
-  /// 
+  ///
   /// **Platform Support:**
   /// - **iOS**: Fully supported. When `false`, no close button is shown.
   /// - **Android**: Not supported. Close button is always shown regardless of this setting.
@@ -48,7 +48,8 @@ class CustomerCenterView extends StatelessWidget {
   final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
   final CustomerCenterCustomActionSelected? onCustomActionSelected;
 
-  static const String _viewType = 'com.revenuecat.purchasesui/CustomerCenterView';
+  static const String _viewType =
+      'com.revenuecat.purchasesui/CustomerCenterView';
 
   @override
   Widget build(BuildContext context) {
@@ -62,42 +63,37 @@ class CustomerCenterView extends StatelessWidget {
   }
 
   UiKitView _buildUiKitView(Map<String, dynamic> creationParams) => UiKitView(
-        viewType: _viewType,
-        layoutDirection: TextDirection.ltr,
-        creationParams: creationParams,
-        creationParamsCodec: const StandardMessageCodec(),
-        onPlatformViewCreated: _buildListenerChannel,
-      );
+    viewType: _viewType,
+    layoutDirection: TextDirection.ltr,
+    creationParams: creationParams,
+    creationParamsCodec: const StandardMessageCodec(),
+    onPlatformViewCreated: _buildListenerChannel,
+  );
 
   PlatformViewLink _buildAndroidPlatformViewLink(
     Map<String, dynamic> creationParams,
-  ) =>
-      PlatformViewLink(
-        viewType: _viewType,
-        surfaceFactory: (context, controller) => AndroidViewSurface(
-          controller: controller as AndroidViewController,
-          gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
-          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-        ),
-        onCreatePlatformView: (params) =>
-            PlatformViewsService.initSurfaceAndroidView(
-          id: params.id,
-          viewType: _viewType,
-          layoutDirection: TextDirection.ltr,
-          creationParams: creationParams,
-          creationParamsCodec: const StandardMessageCodec(),
-          onFocus: () {
-            params.onFocusChanged(true);
-          },
-        )
-              ..addOnPlatformViewCreatedListener(
-                params.onPlatformViewCreated,
-              )
-              ..addOnPlatformViewCreatedListener(
-                _buildListenerChannel,
-              )
-              ..create(),
-      );
+  ) => PlatformViewLink(
+    viewType: _viewType,
+    surfaceFactory: (context, controller) => AndroidViewSurface(
+      controller: controller as AndroidViewController,
+      gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+      hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+    ),
+    onCreatePlatformView: (params) =>
+        PlatformViewsService.initSurfaceAndroidView(
+            id: params.id,
+            viewType: _viewType,
+            layoutDirection: TextDirection.ltr,
+            creationParams: creationParams,
+            creationParamsCodec: const StandardMessageCodec(),
+            onFocus: () {
+              params.onFocusChanged(true);
+            },
+          )
+          ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+          ..addOnPlatformViewCreatedListener(_buildListenerChannel)
+          ..create(),
+  );
 
   void _buildListenerChannel(int id) {
     final handler = CustomerCenterViewMethodHandler(
@@ -112,7 +108,8 @@ class CustomerCenterView extends StatelessWidget {
       onManagementOptionSelected: onManagementOptionSelected,
       onCustomActionSelected: onCustomActionSelected,
     );
-    MethodChannel('com.revenuecat.purchasesui/CustomerCenterView/$id')
-        .setMethodCallHandler(handler.handleMethodCall);
+    MethodChannel(
+      'com.revenuecat.purchasesui/CustomerCenterView/$id',
+    ).setMethodCallHandler(handler.handleMethodCall);
   }
 }
