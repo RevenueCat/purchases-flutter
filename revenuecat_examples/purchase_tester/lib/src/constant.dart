@@ -1,5 +1,5 @@
 //TO DO: add the Apple API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
-const appleApiKey = 'appl_api_key';
+const appleApiKey = 'appl_SYkbbYptqjDadVkQeBUtXxVxCcw';
 
 //TO DO: add the Google API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
 const googleApiKey = 'googl_api_key';
@@ -11,3 +11,8 @@ const amazonApiKey = 'amazon_api_key';
 const webApiKey = 'web_api_key';
 
 const entitlementKey = 'pro';
+
+// Set this to true to configure the SDK with purchasesAreCompletedBy: myApp.
+// When enabled, PaywallView will use SamplePurchaseLogic (in paywall.dart)
+// to handle purchases and restores instead of the default RevenueCat flow.
+const purchasesAreCompletedByMyApp = false;

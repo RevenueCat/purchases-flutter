@@ -44,7 +44,8 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
     Key? key,
     Offering? offering,
     Function(Package rcPackage)? onPurchaseStarted,
-    Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)? onPurchaseCompleted,
+    Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
+    onPurchaseCompleted,
     Function()? onPurchaseCancelled,
     Function(PurchasesError)? onPurchaseError,
     Function(CustomerInfo customerInfo)? onRestoreCompleted,
@@ -52,17 +53,17 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
     Function()? onDismiss,
     required Widget Function(double bottomPadding) contentCreator,
   }) : super(
-      key: key,
-      offering: offering,
-      onPurchaseStarted: onPurchaseStarted,
-      onPurchaseCompleted: onPurchaseCompleted,
-      onPurchaseCancelled: onPurchaseCancelled,
-      onPurchaseError: onPurchaseError,
-      onRestoreCompleted: onRestoreCompleted,
-      onRestoreError: onRestoreError,
-      onDismiss: onDismiss,
-      contentCreator: contentCreator,
-  );
+         key: key,
+         offering: offering,
+         onPurchaseStarted: onPurchaseStarted,
+         onPurchaseCompleted: onPurchaseCompleted,
+         onPurchaseCancelled: onPurchaseCancelled,
+         onPurchaseError: onPurchaseError,
+         onRestoreCompleted: onRestoreCompleted,
+         onRestoreError: onRestoreError,
+         onDismiss: onDismiss,
+         contentCreator: contentCreator,
+       );
 }
 
 /// View that displays the paywall in footer mode.
@@ -94,7 +95,6 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
 class OriginalTemplatePaywallFooterView extends StatefulWidget {
-
   final Offering? offering;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?

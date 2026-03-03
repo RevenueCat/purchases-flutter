@@ -17,30 +17,25 @@ void main() {
   final log = <MethodCall>[];
   dynamic response;
 
-  const offering = Offering(
-    'identifier',
-    'serverDescription',
-    {},
-    [
-      Package(
-        'package_id',
-        PackageType.annual,
-        StoreProduct('product_id', 'description', 'title', 2.99, '\$2.99', 'USD'),
-        PresentedOfferingContext(
-          'identifier',
-          'placement_id',
-          PresentedOfferingTargetingContext(123, 'ruleId'),
-        ),
+  const offering = Offering('identifier', 'serverDescription', {}, [
+    Package(
+      'package_id',
+      PackageType.annual,
+      StoreProduct('product_id', 'description', 'title', 2.99, '\$2.99', 'USD'),
+      PresentedOfferingContext(
+        'identifier',
+        'placement_id',
+        PresentedOfferingTargetingContext(123, 'ruleId'),
       ),
-    ],
-  );
+    ),
+  ]);
 
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
-      log.add(call);
-      return response;
-    });
+          log.add(call);
+          return response;
+        });
   });
 
   tearDown(() {
@@ -50,15 +45,19 @@ void main() {
     response = null;
   });
 
-  Future<void> invokeCustomerCenterMethod(String method, dynamic arguments) async {
+  Future<void> invokeCustomerCenterMethod(
+    String method,
+    dynamic arguments,
+  ) async {
     final codec = const StandardMethodCodec();
     final data = codec.encodeMethodCall(MethodCall(method, arguments));
     final completer = Completer<void>();
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.handlePlatformMessage(
-      'purchases_ui_flutter',
-      data,
-      (_) => completer.complete(),
-    );
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .handlePlatformMessage(
+          'purchases_ui_flutter',
+          data,
+          (_) => completer.complete(),
+        );
     await completer.future;
     await Future<void>.delayed(Duration.zero);
   }
@@ -67,7 +66,9 @@ void main() {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywall();
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: {
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
           'offeringIdentifier': null,
           'presentedOfferingContext': null,
           'displayCloseButton': false,
@@ -83,15 +84,14 @@ void main() {
     await RevenueCatUI.presentPaywall(offering: offering);
 
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: {
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
           'offeringIdentifier': offering.identifier,
           'presentedOfferingContext': {
             'offeringIdentifier': 'identifier',
             'placementIdentifier': 'placement_id',
-            'targetingContext': {
-              'revision': 123,
-              'ruleId': 'ruleId',
-            },
+            'targetingContext': {'revision': 123, 'ruleId': 'ruleId'},
           },
           'displayCloseButton': false,
           'customVariables': null,
@@ -116,10 +116,7 @@ void main() {
           'presentedOfferingContext': {
             'offeringIdentifier': 'identifier',
             'placementIdentifier': 'placement_id',
-            'targetingContext': {
-              'revision': 123,
-              'ruleId': 'ruleId',
-            },
+            'targetingContext': {'revision': 123, 'ruleId': 'ruleId'},
           },
           'displayCloseButton': true,
           'customVariables': null,
@@ -163,10 +160,7 @@ void main() {
           'presentedOfferingContext': {
             'offeringIdentifier': 'identifier',
             'placementIdentifier': 'placement_id',
-            'targetingContext': {
-              'revision': 123,
-              'ruleId': 'ruleId',
-            },
+            'targetingContext': {'revision': 123, 'ruleId': 'ruleId'},
           },
           'displayCloseButton': false,
           'customVariables': null,
@@ -193,10 +187,7 @@ void main() {
           'presentedOfferingContext': {
             'offeringIdentifier': 'identifier',
             'placementIdentifier': 'placement_id',
-            'targetingContext': {
-              'revision': 123,
-              'ruleId': 'ruleId',
-            },
+            'targetingContext': {'revision': 123, 'ruleId': 'ruleId'},
           },
           'displayCloseButton': true,
           'customVariables': null,
@@ -215,13 +206,16 @@ void main() {
       },
     );
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: {
-        'offeringIdentifier': null,
-        'presentedOfferingContext': null,
-        'displayCloseButton': false,
-        'customVariables': {'player_name': 'John', 'level': '5'},
-        'useFullScreenPresentation': false,
-      }),
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': {'player_name': 'John', 'level': '5'},
+          'useFullScreenPresentation': false,
+        },
+      ),
     ]);
   });
 
@@ -229,19 +223,20 @@ void main() {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywallIfNeeded(
       'entitlement',
-      customVariables: {
-        'player_name': CustomVariableValue.string('John'),
-      },
+      customVariables: {'player_name': CustomVariableValue.string('John')},
     );
     expect(log, <Matcher>[
-      isMethodCall('presentPaywallIfNeeded', arguments: {
-        'requiredEntitlementIdentifier': 'entitlement',
-        'offeringIdentifier': null,
-        'presentedOfferingContext': null,
-        'displayCloseButton': false,
-        'customVariables': {'player_name': 'John'},
-        'useFullScreenPresentation': false,
-      }),
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': {'player_name': 'John'},
+          'useFullScreenPresentation': false,
+        },
+      ),
     ]);
   });
 
@@ -253,13 +248,16 @@ void main() {
       ),
     );
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: {
-        'offeringIdentifier': null,
-        'presentedOfferingContext': null,
-        'displayCloseButton': false,
-        'customVariables': null,
-        'useFullScreenPresentation': true,
-      }),
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+          'useFullScreenPresentation': true,
+        },
+      ),
     ]);
   });
 
@@ -271,13 +269,16 @@ void main() {
       ),
     );
     expect(log, <Matcher>[
-      isMethodCall('presentPaywall', arguments: {
-        'offeringIdentifier': null,
-        'presentedOfferingContext': null,
-        'displayCloseButton': false,
-        'customVariables': null,
-        'useFullScreenPresentation': false,
-      }),
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+          'useFullScreenPresentation': false,
+        },
+      ),
     ]);
   });
 
@@ -290,14 +291,17 @@ void main() {
       ),
     );
     expect(log, <Matcher>[
-      isMethodCall('presentPaywallIfNeeded', arguments: {
-        'requiredEntitlementIdentifier': 'entitlement',
-        'offeringIdentifier': null,
-        'presentedOfferingContext': null,
-        'displayCloseButton': false,
-        'customVariables': null,
-        'useFullScreenPresentation': true,
-      }),
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+          'useFullScreenPresentation': true,
+        },
+      ),
     ]);
   });
 
@@ -332,7 +336,7 @@ void main() {
     response = null;
     bool onRestoreStartedCalled = false;
     bool onFeedbackSurveyCompletedCalled = false;
-    
+
     await RevenueCatUI.presentCustomerCenter(
       onRestoreStarted: () => onRestoreStartedCalled = true,
       onFeedbackSurveyCompleted: (_) => onFeedbackSurveyCompletedCalled = true,
@@ -343,7 +347,7 @@ void main() {
       isMethodCall('setCustomerCenterCallbacks', arguments: null),
       isMethodCall('presentCustomerCenter', arguments: null),
     ]);
-    
+
     // Verify callbacks are stored (they should be callable)
     expect(onRestoreStartedCalled, false); // Not called yet
     expect(onFeedbackSurveyCompletedCalled, false); // Not called yet
@@ -370,33 +374,41 @@ void main() {
     expect(restoreStartedCalled, true);
   });
 
-  test('callback key format regression test - iOS productId vs productIdentifier', () async {
-    // This test documents and prevents regression of the key mismatch bug
-    // iOS sends 'productId' but we were expecting 'productIdentifier' in some places
-    
-    // Test that the correct key format is expected by simulating callback parsing
-    const mockCallbackData = {
-      'productId': 'com.example.premium',  // This is what iOS actually sends
-      'status': 'success',
-    };
-    
-    // Test data extraction logic that should match what's in _handleCustomerCenterMethodCall
-    final data = mockCallbackData;
-    final productIdentifier = data['productId'] as String? ?? '';  // Should use 'productId' not 'productIdentifier'
-    final status = data['status'] as String? ?? '';
-    
-    expect(productIdentifier, 'com.example.premium');
-    expect(status, 'success');
-    
-    // Test that wrong key would fail (demonstrating the bug that was fixed)
-    final wrongProductId = data['productIdentifier'] as String? ?? 'MISSING';
-    expect(wrongProductId, 'MISSING'); // This proves 'productIdentifier' key doesn't exist
-  });
+  test(
+    'callback key format regression test - iOS productId vs productIdentifier',
+    () async {
+      // This test documents and prevents regression of the key mismatch bug
+      // iOS sends 'productId' but we were expecting 'productIdentifier' in some places
+
+      // Test that the correct key format is expected by simulating callback parsing
+      const mockCallbackData = {
+        'productId': 'com.example.premium', // This is what iOS actually sends
+        'status': 'success',
+      };
+
+      // Test data extraction logic that should match what's in _handleCustomerCenterMethodCall
+      final data = mockCallbackData;
+      final productIdentifier =
+          data['productId'] as String? ??
+          ''; // Should use 'productId' not 'productIdentifier'
+      final status = data['status'] as String? ?? '';
+
+      expect(productIdentifier, 'com.example.premium');
+      expect(status, 'success');
+
+      // Test that wrong key would fail (demonstrating the bug that was fixed)
+      final wrongProductId = data['productIdentifier'] as String? ?? 'MISSING';
+      expect(
+        wrongProductId,
+        'MISSING',
+      ); // This proves 'productIdentifier' key doesn't exist
+    },
+  );
 
   test('CustomerCenterView method handler uses correct key format', () async {
     String? capturedProductId;
     String? capturedStatus;
-    
+
     final handler = CustomerCenterViewMethodHandler(
       onRefundRequestCompleted: (productId, status) {
         capturedProductId = productId;
@@ -416,53 +428,69 @@ void main() {
     expect(capturedStatus, 'success');
   });
 
-  test('CustomerCenterView method handler handles invalid data gracefully', () async {
-    String? capturedProductId;
-    String? capturedStatus;
-    bool callbackWasCalled = false;
-    
-    final handler = CustomerCenterViewMethodHandler(
-      onRefundRequestCompleted: (productId, status) {
-        capturedProductId = productId;
-        capturedStatus = status;
-        callbackWasCalled = true;
-      },
-    );
+  test(
+    'CustomerCenterView method handler handles invalid data gracefully',
+    () async {
+      String? capturedProductId;
+      String? capturedStatus;
+      bool callbackWasCalled = false;
 
-    // Test with invalid data type
-    await handler.handleMethodCall(
-      const MethodCall('onRefundRequestCompleted', 'invalid_data'),
-    );
+      final handler = CustomerCenterViewMethodHandler(
+        onRefundRequestCompleted: (productId, status) {
+          capturedProductId = productId;
+          capturedStatus = status;
+          callbackWasCalled = true;
+        },
+      );
 
-    expect(callbackWasCalled, false); // Callback should not be called with invalid data
+      // Test with invalid data type
+      await handler.handleMethodCall(
+        const MethodCall('onRefundRequestCompleted', 'invalid_data'),
+      );
 
-    // Test with missing productId key
-    await handler.handleMethodCall(
-      const MethodCall('onRefundRequestCompleted', {
-        'status': 'success',
-        // Missing 'productId' key
-      }),
-    );
+      expect(
+        callbackWasCalled,
+        false,
+      ); // Callback should not be called with invalid data
 
-    expect(callbackWasCalled, false); // Callback should not be called when productId is null
-  });
+      // Test with missing productId key
+      await handler.handleMethodCall(
+        const MethodCall('onRefundRequestCompleted', {
+          'status': 'success',
+          // Missing 'productId' key
+        }),
+      );
 
-  test('CustomerCenterView shouldShowCloseButton parameter is documented for platform limitations', () {
-    // This test documents the platform limitation where Android doesn't support
-    // hiding the close button, while iOS does.
-    
-    // Test that the parameter is accepted on both platforms
-    const viewWithCloseButton = CustomerCenterView(shouldShowCloseButton: true);
-    const viewWithoutCloseButton = CustomerCenterView(shouldShowCloseButton: false);
-    
-    expect(viewWithCloseButton.shouldShowCloseButton, true);
-    expect(viewWithoutCloseButton.shouldShowCloseButton, false);
-    
-    // Note: Actual behavior differs by platform:
-    // - iOS: respects the shouldShowCloseButton parameter
-    // - Android: always shows close button regardless of parameter value
-    // This is documented in the shouldShowCloseButton property documentation
-  });
+      expect(
+        callbackWasCalled,
+        false,
+      ); // Callback should not be called when productId is null
+    },
+  );
+
+  test(
+    'CustomerCenterView shouldShowCloseButton parameter is documented for platform limitations',
+    () {
+      // This test documents the platform limitation where Android doesn't support
+      // hiding the close button, while iOS does.
+
+      // Test that the parameter is accepted on both platforms
+      const viewWithCloseButton = CustomerCenterView(
+        shouldShowCloseButton: true,
+      );
+      const viewWithoutCloseButton = CustomerCenterView(
+        shouldShowCloseButton: false,
+      );
+
+      expect(viewWithCloseButton.shouldShowCloseButton, true);
+      expect(viewWithoutCloseButton.shouldShowCloseButton, false);
+
+      // Note: Actual behavior differs by platform:
+      // - iOS: respects the shouldShowCloseButton parameter
+      // - Android: always shows close button regardless of parameter value
+      // This is documented in the shouldShowCloseButton property documentation
+    },
+  );
 
   group('RevenueCatUI customer center method handling', () {
     test('onDismiss clears native listener and callbacks', () async {
@@ -511,10 +539,13 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onCustomActionSelected', <dynamic, dynamic>{
-        'actionId': 'custom.action',
-        'purchaseIdentifier': null,
-      });
+      await invokeCustomerCenterMethod(
+        'onCustomActionSelected',
+        <dynamic, dynamic>{
+          'actionId': 'custom.action',
+          'purchaseIdentifier': null,
+        },
+      );
 
       expect(capturedActionId, 'custom.action');
       expect(capturedPurchaseIdentifier, isNull);
@@ -531,16 +562,20 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onCustomActionSelected', <dynamic, dynamic>{
-        'purchaseIdentifier': 'purchase.identifier',
-      });
+      await invokeCustomerCenterMethod(
+        'onCustomActionSelected',
+        <dynamic, dynamic>{'purchaseIdentifier': 'purchase.identifier'},
+      );
 
       expect(callbackCalled, false);
 
-      await invokeCustomerCenterMethod('onCustomActionSelected', <dynamic, dynamic>{
-        'actionId': '',
-        'purchaseIdentifier': 'purchase.identifier',
-      });
+      await invokeCustomerCenterMethod(
+        'onCustomActionSelected',
+        <dynamic, dynamic>{
+          'actionId': '',
+          'purchaseIdentifier': 'purchase.identifier',
+        },
+      );
 
       expect(callbackCalled, false);
     });
@@ -558,10 +593,10 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onManagementOptionSelected', <dynamic, dynamic>{
-        'optionId': 'manage',
-        'url': null,
-      });
+      await invokeCustomerCenterMethod(
+        'onManagementOptionSelected',
+        <dynamic, dynamic>{'optionId': 'manage', 'url': null},
+      );
 
       expect(capturedOptionId, 'manage');
       expect(capturedUrl, isNull);
@@ -578,10 +613,10 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onManagementOptionSelected', <dynamic, dynamic>{
-        'optionId': 'manage',
-        'url': 123,
-      });
+      await invokeCustomerCenterMethod(
+        'onManagementOptionSelected',
+        <dynamic, dynamic>{'optionId': 'manage', 'url': 123},
+      );
 
       expect(callbackCalled, false);
     });
@@ -599,10 +634,10 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onRefundRequestCompleted', <dynamic, dynamic>{
-        'productId': 'com.app.product',
-        'status': 'success',
-      });
+      await invokeCustomerCenterMethod(
+        'onRefundRequestCompleted',
+        <dynamic, dynamic>{'productId': 'com.app.product', 'status': 'success'},
+      );
 
       expect(capturedProductId, 'com.app.product');
       expect(capturedStatus, 'success');
@@ -610,16 +645,18 @@ void main() {
       capturedProductId = null;
       capturedStatus = null;
 
-      await invokeCustomerCenterMethod('onRefundRequestCompleted', <dynamic, dynamic>{
-        'productId': 'com.app.product',
-      });
+      await invokeCustomerCenterMethod(
+        'onRefundRequestCompleted',
+        <dynamic, dynamic>{'productId': 'com.app.product'},
+      );
 
       expect(capturedProductId, isNull);
       expect(capturedStatus, isNull);
 
-      await invokeCustomerCenterMethod('onRefundRequestCompleted', <dynamic, dynamic>{
-        'status': 'success',
-      });
+      await invokeCustomerCenterMethod(
+        'onRefundRequestCompleted',
+        <dynamic, dynamic>{'status': 'success'},
+      );
 
       expect(capturedProductId, isNull);
       expect(capturedStatus, isNull);
@@ -641,48 +678,58 @@ void main() {
       expect(callbackCalled, false);
     });
 
-    test('onRefundRequestStarted requires non-empty product identifier', () async {
-      var callbackCalled = false;
+    test(
+      'onRefundRequestStarted requires non-empty product identifier',
+      () async {
+        var callbackCalled = false;
 
-      await RevenueCatUI.presentCustomerCenter(
-        onRefundRequestStarted: (_) {
-          callbackCalled = true;
-        },
-      );
+        await RevenueCatUI.presentCustomerCenter(
+          onRefundRequestStarted: (_) {
+            callbackCalled = true;
+          },
+        );
 
-      log.clear();
+        log.clear();
 
-      await invokeCustomerCenterMethod('onRefundRequestStarted', <dynamic, dynamic>{
-        'productId': '',
-      });
-      expect(callbackCalled, false);
+        await invokeCustomerCenterMethod(
+          'onRefundRequestStarted',
+          <dynamic, dynamic>{'productId': ''},
+        );
+        expect(callbackCalled, false);
 
-      await invokeCustomerCenterMethod('onRefundRequestStarted', <dynamic, dynamic>{
-        'productId': 'product',
-      });
-      expect(callbackCalled, true);
-    });
+        await invokeCustomerCenterMethod(
+          'onRefundRequestStarted',
+          <dynamic, dynamic>{'productId': 'product'},
+        );
+        expect(callbackCalled, true);
+      },
+    );
 
-    test('onFeedbackSurveyCompleted requires non-empty optionIdentifier', () async {
-      var callbackCalled = false;
+    test(
+      'onFeedbackSurveyCompleted requires non-empty optionIdentifier',
+      () async {
+        var callbackCalled = false;
 
-      await RevenueCatUI.presentCustomerCenter(
-        onFeedbackSurveyCompleted: (_) {
-          callbackCalled = true;
-        },
-      );
+        await RevenueCatUI.presentCustomerCenter(
+          onFeedbackSurveyCompleted: (_) {
+            callbackCalled = true;
+          },
+        );
 
-      log.clear();
+        log.clear();
 
-      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', <dynamic, dynamic>{
-        'optionId': '',
-      });
-      expect(callbackCalled, false);
+        await invokeCustomerCenterMethod(
+          'onFeedbackSurveyCompleted',
+          <dynamic, dynamic>{'optionId': ''},
+        );
+        expect(callbackCalled, false);
 
-      await invokeCustomerCenterMethod('onFeedbackSurveyCompleted', <dynamic, dynamic>{
-        'optionId': 'option',
-      });
-      expect(callbackCalled, true);
-    });
+        await invokeCustomerCenterMethod(
+          'onFeedbackSurveyCompleted',
+          <dynamic, dynamic>{'optionId': 'option'},
+        );
+        expect(callbackCalled, true);
+      },
+    );
   });
 }

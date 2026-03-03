@@ -9,12 +9,13 @@ typedef CustomerCenterOnDismiss = void Function();
 typedef CustomerCenterRestoreStarted = void Function();
 
 /// Called when restore purchases completes successfully.
-/// 
+///
 /// [customerInfo] The updated customer information after restore.
-typedef CustomerCenterRestoreCompleted = void Function(CustomerInfo customerInfo);
+typedef CustomerCenterRestoreCompleted =
+    void Function(CustomerInfo customerInfo);
 
 /// Called when restore purchases fails.
-/// 
+///
 /// [error] The error that occurred during restore.
 typedef CustomerCenterRestoreFailed = void Function(PurchasesError error);
 
@@ -22,32 +23,37 @@ typedef CustomerCenterRestoreFailed = void Function(PurchasesError error);
 typedef CustomerCenterManageSubscriptions = void Function();
 
 /// Called when a refund request is initiated.
-/// 
+///
 /// [productIdentifier] The product identifier for which the refund was requested.
-typedef CustomerCenterRefundRequestStarted = void Function(String productIdentifier);
+typedef CustomerCenterRefundRequestStarted =
+    void Function(String productIdentifier);
 
 /// Called when a refund request completes.
-/// 
+///
 /// [productIdentifier] The product identifier for which the refund was requested.
 /// [status] The status of the refund request.
-typedef CustomerCenterRefundRequestCompleted = void Function(String productIdentifier, String status);
+typedef CustomerCenterRefundRequestCompleted =
+    void Function(String productIdentifier, String status);
 
 /// Called when a feedback survey is completed.
-/// 
+///
 /// [optionIdentifier] The identifier of the selected feedback option.
-typedef CustomerCenterFeedbackSurveyCompleted = void Function(String optionIdentifier);
+typedef CustomerCenterFeedbackSurveyCompleted =
+    void Function(String optionIdentifier);
 
 /// Called when a management option is selected.
-/// 
+///
 /// [optionIdentifier] The identifier of the selected management option.
 /// [url] Optional URL associated with the management option.
-typedef CustomerCenterManagementOptionSelected = void Function(String optionIdentifier, String? url);
+typedef CustomerCenterManagementOptionSelected =
+    void Function(String optionIdentifier, String? url);
 
 /// Called when a custom action is selected.
-/// 
+///
 /// [actionIdentifier] The identifier of the selected custom action.
 /// [purchaseIdentifier] Optional purchase identifier associated with the action.
-typedef CustomerCenterCustomActionSelected = void Function(String actionIdentifier, String? purchaseIdentifier);
+typedef CustomerCenterCustomActionSelected =
+    void Function(String actionIdentifier, String? purchaseIdentifier);
 
 class CustomerCenterViewMethodHandler {
   final CustomerCenterOnDismiss? onDismiss;
@@ -116,7 +122,9 @@ class CustomerCenterViewMethodHandler {
       return;
     }
     if (arguments is Map) {
-      final customerInfo = CustomerInfo.fromJson(Map<String, dynamic>.from(arguments));
+      final customerInfo = CustomerInfo.fromJson(
+        Map<String, dynamic>.from(arguments),
+      );
       onRestoreCompleted?.call(customerInfo);
     }
   }
@@ -126,7 +134,9 @@ class CustomerCenterViewMethodHandler {
       return;
     }
     if (arguments is Map) {
-      final error = PurchasesError.fromJson(Map<String, dynamic>.from(arguments));
+      final error = PurchasesError.fromJson(
+        Map<String, dynamic>.from(arguments),
+      );
       onRestoreFailed?.call(error);
     }
   }
