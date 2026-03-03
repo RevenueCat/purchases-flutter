@@ -103,7 +103,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
-                customVariables: args[Parameter.customVariables.rawValue] as? [String: String]
+                customVariables: args[Parameter.customVariables.rawValue] as? [String: String],
+                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool
             )
 
         case "presentPaywallIfNeeded":
@@ -126,7 +127,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
-                customVariables: args[Parameter.customVariables.rawValue] as? [String: String]
+                customVariables: args[Parameter.customVariables.rawValue] as? [String: String],
+                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool
             )
 
         case "presentCustomerCenter":
@@ -175,26 +177,20 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         offeringIdentifier: String?,
         presentedOfferingContext: [String: Any]?,
         displayCloseButton: Bool?,
-        customVariables: [String: String]?
+        customVariables: [String: String]?,
+        useFullScreenPresentation: Bool?
     ) {
 #if os(iOS)
         if #available(iOS 15.0, *) {
             let displayCloseButton = displayCloseButton ?? false
+            let useFullScreenPresentation = useFullScreenPresentation ?? false
 
             var options: [String:Any] = [
                 PaywallProxy.PaywallOptionsKeys.displayCloseButton: displayCloseButton,
                 // This is needed for: https://github.com/RevenueCat/purchases-flutter/issues/1023
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true,
-                // Use full screen presentation to avoid white areas in landscape orientation
-                // See: https://linear.app/revenuecat/issue/PW-148
-                PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation: true
+                PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation: useFullScreenPresentation
             ]
-
-            // Present paywalls full-screen on iPhone to avoid side white areas
-            // in landscape orientation (PW-148). Keep iPad behavior unchanged.
-            if UIDevice.current.userInterfaceIdiom == .phone {
-                options[PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation] = true
-            }
 
             if let offeringIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
@@ -269,6 +265,7 @@ private extension PurchasesUiFlutterPlugin {
         case presentedOfferingContext
         case displayCloseButton
         case customVariables
+        case useFullScreenPresentation
     }
 
 #if os(iOS)

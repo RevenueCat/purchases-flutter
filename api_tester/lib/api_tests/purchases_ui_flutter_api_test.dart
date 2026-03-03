@@ -18,14 +18,24 @@ class _PurchasesFlutterApiTest {
         RevenueCatUI.presentPaywall(displayCloseButton: true);
     Future<PaywallResult> f4 = RevenueCatUI.presentPaywall(
         offering: offering, displayCloseButton: true);
+    Future<PaywallResult> f5 = RevenueCatUI.presentPaywall(
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+      ),
+    );
 
-    Future<PaywallResult> f5 = RevenueCatUI.presentPaywallIfNeeded("test");
-    Future<PaywallResult> f6 =
-        RevenueCatUI.presentPaywallIfNeeded("test", displayCloseButton: true);
+    Future<PaywallResult> f6 = RevenueCatUI.presentPaywallIfNeeded("test");
     Future<PaywallResult> f7 =
+        RevenueCatUI.presentPaywallIfNeeded("test", displayCloseButton: true);
+    Future<PaywallResult> f8 =
         RevenueCatUI.presentPaywallIfNeeded("test", offering: offering);
-    Future<PaywallResult> f8 = RevenueCatUI.presentPaywallIfNeeded("test",
+    Future<PaywallResult> f9 = RevenueCatUI.presentPaywallIfNeeded("test",
         offering: offering, displayCloseButton: true);
+    Future<PaywallResult> f10 = RevenueCatUI.presentPaywallIfNeeded("test",
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+      ),
+    );
   }
 
   void _checkPresentPaywallWithCustomVariables(Offering? offering) async {
@@ -50,6 +60,30 @@ class _PurchasesFlutterApiTest {
       offering: offering,
       customVariables: {'player_name': const CustomVariableValue.string('John')},
     );
+  }
+
+  void _checkPaywallPresentationConfiguration() {
+    const config1 = PaywallPresentationConfiguration();
+    PaywallPresentationConfiguration? nullableConfig;
+    const config2 = PaywallPresentationConfiguration(
+      ios: IOSPaywallPresentationStyle.fullScreen,
+    );
+    const config3 = PaywallPresentationConfiguration(
+      ios: IOSPaywallPresentationStyle.sheet,
+    );
+    const config4 = PaywallPresentationConfiguration(
+      android: AndroidPaywallPresentationStyle.fullScreen,
+    );
+    const config5 = PaywallPresentationConfiguration(
+      ios: IOSPaywallPresentationStyle.fullScreen,
+      android: AndroidPaywallPresentationStyle.fullScreen,
+    );
+
+    IOSPaywallPresentationStyle? iosStyle = config2.ios;
+    AndroidPaywallPresentationStyle? androidStyle = config4.android;
+
+    bool isFullScreen = iosStyle == IOSPaywallPresentationStyle.fullScreen;
+    bool isSheet = iosStyle == IOSPaywallPresentationStyle.sheet;
   }
 
   void _checkCustomVariableValue() {

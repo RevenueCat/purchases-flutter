@@ -72,6 +72,7 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -94,6 +95,7 @@ void main() {
           },
           'displayCloseButton': false,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -121,6 +123,7 @@ void main() {
           },
           'displayCloseButton': true,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -138,6 +141,7 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -166,6 +170,7 @@ void main() {
           },
           'displayCloseButton': false,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -195,6 +200,7 @@ void main() {
           },
           'displayCloseButton': true,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -214,6 +220,7 @@ void main() {
         'presentedOfferingContext': null,
         'displayCloseButton': false,
         'customVariables': {'player_name': 'John', 'level': '5'},
+        'useFullScreenPresentation': false,
       }),
     ]);
   });
@@ -233,6 +240,63 @@ void main() {
         'presentedOfferingContext': null,
         'displayCloseButton': false,
         'customVariables': {'player_name': 'John'},
+        'useFullScreenPresentation': false,
+      }),
+    ]);
+  });
+
+  test('presentPaywall with full screen presentation configuration', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall('presentPaywall', arguments: {
+        'offeringIdentifier': null,
+        'presentedOfferingContext': null,
+        'displayCloseButton': false,
+        'customVariables': null,
+        'useFullScreenPresentation': true,
+      }),
+    ]);
+  });
+
+  test('presentPaywall with sheet presentation configuration', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.sheet,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall('presentPaywall', arguments: {
+        'offeringIdentifier': null,
+        'presentedOfferingContext': null,
+        'displayCloseButton': false,
+        'customVariables': null,
+        'useFullScreenPresentation': false,
+      }),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded with full screen presentation configuration', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall('presentPaywallIfNeeded', arguments: {
+        'requiredEntitlementIdentifier': 'entitlement',
+        'offeringIdentifier': null,
+        'presentedOfferingContext': null,
+        'displayCloseButton': false,
+        'customVariables': null,
+        'useFullScreenPresentation': true,
       }),
     ]);
   });
