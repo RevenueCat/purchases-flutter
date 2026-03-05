@@ -1,10 +1,8 @@
-## RevenueCat SDK
-### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.41.1 (#1652) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.22.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.22.1)
+## RevenueCatUI SDK
+### ✨ New Features
+* Add PurchaseLogic support to PaywallView (#1657) via Rick (@rickvdl)
 
 ### 🔄 Other Changes
-* Enable pod update retry for bump-phc branches (#1629) via Facundo Menzella (@facumenzella)
-* Bump fastlane-plugin-revenuecat_internal to ea6276c (#1649) via Facundo Menzella (@facumenzella)
-* Enable auto-merge for automatic PHC bump PRs (#1644) via Facundo Menzella (@facumenzella)
-* Add .claude/ to .gitignore and guardrails to AGENTS.md (#1645) via Facundo Menzella (@facumenzella)
+* Update sdks-common-config orb to 3.13.0 (#1660) via Cesar de la Vega (@vegaro)
+* Bump fastlane-plugin-revenuecat_internal from `ea6276c` to `8cd957f` (#1659) via dependabot[bot] (@dependabot[bot])
+* Bump fastlane from 2.232.1 to 2.232.2 (#1658) via dependabot[bot] (@dependabot[bot])
