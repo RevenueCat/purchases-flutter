@@ -233,7 +233,7 @@ commands:
           working_directory: << parameters.working_directory >>
           command: |
             enable_retry=false
-            if [[ "$CIRCLE_BRANCH" == bump-phc/* ]] || [[ "$CIRCLE_BRANCH" == release/* ]]; then
+            if [[ "$CIRCLE_BRANCH" == bump-phc/* ]]; then
               enable_retry=true
             fi
 
