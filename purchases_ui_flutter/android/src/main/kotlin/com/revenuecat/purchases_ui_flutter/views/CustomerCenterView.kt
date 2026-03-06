@@ -100,6 +100,10 @@ internal class CustomerCenterView(
                     )
                 )
             }
+
+            override fun onPromotionalOfferSuccessWrapper() {
+                methodChannel.invokeMethod("onPromotionalOfferSuccess", null)
+            }
         }
     }
 
