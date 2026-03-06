@@ -30,7 +30,9 @@ class _PurchasesFlutterApiTest {
 
   void _checkPresentPaywallWithCustomVariables(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall(
-      customVariables: {'player_name': const CustomVariableValue.string('John')},
+      customVariables: {
+        'player_name': const CustomVariableValue.string('John')
+      },
     );
     Future<PaywallResult> f2 = RevenueCatUI.presentPaywall(
       offering: offering,
@@ -41,14 +43,18 @@ class _PurchasesFlutterApiTest {
     );
     Future<PaywallResult> f3 = RevenueCatUI.presentPaywallIfNeeded(
       "test",
-      customVariables: {'player_name': const CustomVariableValue.string('John')},
+      customVariables: {
+        'player_name': const CustomVariableValue.string('John')
+      },
     );
   }
 
   Widget _checkPaywallViewWithCustomVariables(Offering offering) {
     return PaywallView(
       offering: offering,
-      customVariables: {'player_name': const CustomVariableValue.string('John')},
+      customVariables: {
+        'player_name': const CustomVariableValue.string('John')
+      },
     );
   }
 
@@ -60,7 +66,8 @@ class _PurchasesFlutterApiTest {
     String value = stringValue.stringValue;
 
     // CustomVariableValue is a sealed class with only String subtype available
-    StringCustomVariableValue stringVariable = const StringCustomVariableValue('test');
+    StringCustomVariableValue stringVariable =
+        const StringCustomVariableValue('test');
     String directValue = stringVariable.value;
     String stringValueFromSubtype = stringVariable.stringValue;
   }
@@ -95,29 +102,22 @@ class _PurchasesFlutterApiTest {
   }
 
   Widget _checkPaywallViewWithListeners(
-      Offering offering,
-      bool displayCloseButton,
+    Offering offering,
+    bool displayCloseButton,
   ) {
     return Scaffold(
       body: Center(
         child: PaywallView(
           offering: offering,
           displayCloseButton: displayCloseButton,
-          onPurchaseStarted: (Package rcPackage) {
-          },
+          onPurchaseStarted: (Package rcPackage) {},
           onPurchaseCompleted:
-              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
-          },
-          onPurchaseCancelled: () {
-          },
-          onPurchaseError: (PurchasesError error) {
-          },
-          onRestoreCompleted: (CustomerInfo customerInfo) {
-          },
-          onRestoreError: (PurchasesError error) {
-          },
-          onDismiss: () {
-          },
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+          onPurchaseCancelled: () {},
+          onPurchaseError: (PurchasesError error) {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreError: (PurchasesError error) {},
+          onDismiss: () {},
         ),
       ),
     );
@@ -148,7 +148,7 @@ class _PurchasesFlutterApiTest {
   }
 
   Widget _checkOriginalTemplatePaywallFooterViewWithOffering(
-      Offering offering,
+    Offering offering,
   ) {
     return Scaffold(
       body: Center(
@@ -176,26 +176,19 @@ class _PurchasesFlutterApiTest {
   }
 
   Widget _checkOriginalTemplatePaywallFooterViewWithListeners(
-      Offering offering,
+    Offering offering,
   ) {
     return Scaffold(
       body: Center(
         child: OriginalTemplatePaywallFooterView(
-          onPurchaseStarted: (Package rcPackage) {
-          },
+          onPurchaseStarted: (Package rcPackage) {},
           onPurchaseCompleted:
-              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
-          },
-          onPurchaseCancelled: () {
-          },
-          onPurchaseError: (PurchasesError error) {
-          },
-          onRestoreCompleted: (CustomerInfo customerInfo) {
-          },
-          onRestoreError: (PurchasesError error) {
-          },
-          onDismiss: () {
-          },
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+          onPurchaseCancelled: () {},
+          onPurchaseError: (PurchasesError error) {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreError: (PurchasesError error) {},
+          onDismiss: () {},
           contentCreator: (double bottomPadding) {
             return Container();
           },
@@ -208,21 +201,14 @@ class _PurchasesFlutterApiTest {
     return Scaffold(
       body: Center(
         child: PaywallFooterView(
-          onPurchaseStarted: (Package rcPackage) {
-          },
+          onPurchaseStarted: (Package rcPackage) {},
           onPurchaseCompleted:
-              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {
-          },
-          onPurchaseCancelled: () {
-          },
-          onPurchaseError: (PurchasesError error) {
-          },
-          onRestoreCompleted: (CustomerInfo customerInfo) {
-          },
-          onRestoreError: (PurchasesError error) {
-          },
-          onDismiss: () {
-          },
+              (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+          onPurchaseCancelled: () {},
+          onPurchaseError: (PurchasesError error) {},
+          onRestoreCompleted: (CustomerInfo customerInfo) {},
+          onRestoreError: (PurchasesError error) {},
+          onDismiss: () {},
           contentCreator: (double bottomPadding) {
             return Container();
           },
@@ -267,8 +253,10 @@ class _PurchasesFlutterApiTest {
       onRefundRequestCompleted: (String productIdentifier, String status) {},
       onFeedbackSurveyCompleted: (String optionIdentifier) {},
       onManagementOptionSelected: (String optionIdentifier, String? url) {},
-      onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
-      onPromotionalOfferSuccess: () {},
+      onCustomActionSelected:
+          (String actionIdentifier, String? purchaseIdentifier) {},
+      onPromotionalOfferSucceeded: (CustomerInfo customerInfo,
+          StoreTransaction transaction, String offerId) {},
     );
   }
 
@@ -290,14 +278,16 @@ class _PurchasesFlutterApiTest {
           onRestoreFailed: (PurchasesError error) {},
           onShowingManageSubscriptions: () {},
           onRefundRequestStarted: (String productIdentifier) {},
-          onRefundRequestCompleted: (String productIdentifier, String status) {},
+          onRefundRequestCompleted:
+              (String productIdentifier, String status) {},
           onFeedbackSurveyCompleted: (String optionIdentifier) {},
           onManagementOptionSelected: (String optionIdentifier, String? url) {},
-          onCustomActionSelected: (String actionIdentifier, String? purchaseIdentifier) {},
-          onPromotionalOfferSuccess: () {},
+          onCustomActionSelected:
+              (String actionIdentifier, String? purchaseIdentifier) {},
+          onPromotionalOfferSucceeded: (CustomerInfo customerInfo,
+              StoreTransaction transaction, String offerId) {},
         ),
       ),
     );
   }
-
 }
