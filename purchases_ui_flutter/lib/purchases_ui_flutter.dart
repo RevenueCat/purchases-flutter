@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
+import 'package:purchases_flutter/models/store_transaction.dart';
 
 import 'custom_variable_value.dart';
 import 'paywall_presentation_configuration.dart';
@@ -37,8 +38,8 @@ class RevenueCatUI {
       _customerCenterOnManagementOptionSelected;
   static CustomerCenterCustomActionSelected?
       _customerCenterOnCustomActionSelected;
-  static CustomerCenterPromotionalOfferSuccess?
-      _customerCenterOnPromotionalOfferSuccess;
+  static CustomerCenterPromotionalOfferSucceeded?
+      _customerCenterOnPromotionalOfferSucceeded;
   static bool _methodChannelHandlerSet = false;
 
   /// Presents the paywall as an activity on android or a modal in iOS.
@@ -120,7 +121,7 @@ class RevenueCatUI {
     CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
-    CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess,
+    CustomerCenterPromotionalOfferSucceeded? onPromotionalOfferSucceeded,
   }) async {
     _setMethodChannelHandlerIfNeeded();
     final hasCallbacks = onRestoreStarted != null ||
@@ -132,7 +133,7 @@ class RevenueCatUI {
         onFeedbackSurveyCompleted != null ||
         onManagementOptionSelected != null ||
         onCustomActionSelected != null ||
-        onPromotionalOfferSuccess != null;
+        onPromotionalOfferSucceeded != null;
 
     await _clearCustomerCenterCallbacks();
 
@@ -147,7 +148,7 @@ class RevenueCatUI {
         onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
         onManagementOptionSelected: onManagementOptionSelected,
         onCustomActionSelected: onCustomActionSelected,
-        onPromotionalOfferSuccess: onPromotionalOfferSuccess,
+        onPromotionalOfferSucceeded: onPromotionalOfferSucceeded,
       );
     }
     await _methodChannel.invokeMethod('presentCustomerCenter');
@@ -195,7 +196,7 @@ class RevenueCatUI {
     CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
-    CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess,
+    CustomerCenterPromotionalOfferSucceeded? onPromotionalOfferSucceeded,
   }) async {
     _setMethodChannelHandlerIfNeeded();
     _customerCenterOnRestoreStarted = onRestoreStarted;
@@ -207,7 +208,7 @@ class RevenueCatUI {
     _customerCenterOnFeedbackSurveyCompleted = onFeedbackSurveyCompleted;
     _customerCenterOnManagementOptionSelected = onManagementOptionSelected;
     _customerCenterOnCustomActionSelected = onCustomActionSelected;
-    _customerCenterOnPromotionalOfferSuccess = onPromotionalOfferSuccess;
+    _customerCenterOnPromotionalOfferSucceeded = onPromotionalOfferSucceeded;
     await _methodChannel.invokeMethod('setCustomerCenterCallbacks');
   }
 
@@ -222,7 +223,7 @@ class RevenueCatUI {
     _customerCenterOnFeedbackSurveyCompleted = null;
     _customerCenterOnManagementOptionSelected = null;
     _customerCenterOnCustomActionSelected = null;
-    _customerCenterOnPromotionalOfferSuccess = null;
+    _customerCenterOnPromotionalOfferSucceeded = null;
     await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
   }
 
@@ -397,8 +398,43 @@ class RevenueCatUI {
           purchaseIdentifier as String?,
         );
         break;
-      case 'onPromotionalOfferSuccess':
-        _customerCenterOnPromotionalOfferSuccess?.call();
+      case 'onPromotionalOfferSucceeded':
+        final rawArguments = call.arguments;
+        if (rawArguments is! Map) {
+          debugPrint(
+            'RevenueCatUI: Error - onPromotionalOfferSucceeded called with invalid arguments: $rawArguments',
+          );
+          return;
+        }
+        final arguments = Map<String, dynamic>.from(rawArguments);
+        final customerInfoMap = arguments['customerInfo'];
+        final transactionMap = arguments['transaction'];
+        final offerId = arguments['offerId'];
+        if (customerInfoMap is! Map ||
+            transactionMap is! Map ||
+            offerId is! String) {
+          debugPrint(
+            'RevenueCatUI: Error - onPromotionalOfferSucceeded called with missing or invalid data',
+          );
+          return;
+        }
+        try {
+          final customerInfo = CustomerInfo.fromJson(
+            Map<String, dynamic>.from(customerInfoMap),
+          );
+          final transaction = StoreTransaction.fromJson(
+            Map<String, dynamic>.from(transactionMap),
+          );
+          _customerCenterOnPromotionalOfferSucceeded?.call(
+            customerInfo,
+            transaction,
+            offerId,
+          );
+        } catch (e) {
+          debugPrint(
+            'RevenueCatUI: Error parsing onPromotionalOfferSucceeded data: $e',
+          );
+        }
         break;
     }
   }

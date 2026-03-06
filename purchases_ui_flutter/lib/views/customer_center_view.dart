@@ -26,7 +26,7 @@ class CustomerCenterView extends StatelessWidget {
     this.onFeedbackSurveyCompleted,
     this.onManagementOptionSelected,
     this.onCustomActionSelected,
-    this.onPromotionalOfferSuccess,
+    this.onPromotionalOfferSucceeded,
   });
 
   /// Whether to show a close button in the customer center.
@@ -49,8 +49,9 @@ class CustomerCenterView extends StatelessWidget {
   final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
   final CustomerCenterCustomActionSelected? onCustomActionSelected;
 
-  /// Called when a promotional offer is successfully redeemed.
-  final CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess;
+  /// Called when a promotional offer purchase completes successfully,
+  /// providing the resulting customer info, transaction, and the promotional offer identifier.
+  final CustomerCenterPromotionalOfferSucceeded? onPromotionalOfferSucceeded;
 
   static const String _viewType =
       'com.revenuecat.purchasesui/CustomerCenterView';
@@ -112,7 +113,7 @@ class CustomerCenterView extends StatelessWidget {
       onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
       onManagementOptionSelected: onManagementOptionSelected,
       onCustomActionSelected: onCustomActionSelected,
-      onPromotionalOfferSuccess: onPromotionalOfferSuccess,
+      onPromotionalOfferSucceeded: onPromotionalOfferSucceeded,
     );
     MethodChannel(
       'com.revenuecat.purchasesui/CustomerCenterView/$id',

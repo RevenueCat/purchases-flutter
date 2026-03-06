@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
+import 'package:purchases_flutter/models/store_transaction.dart';
 
 /// Called when the customer center is dismissed by the user.
 typedef CustomerCenterOnDismiss = void Function();
@@ -64,8 +65,13 @@ typedef CustomerCenterCustomActionSelected = void Function(
   String? purchaseIdentifier,
 );
 
-/// Called when a promotional offer is successfully redeemed in the Customer Center.
-typedef CustomerCenterPromotionalOfferSuccess = void Function();
+/// Called when a promotional offer purchase completes successfully in the Customer Center,
+/// providing the resulting customer info, transaction, and the promotional offer identifier.
+typedef CustomerCenterPromotionalOfferSucceeded = void Function(
+  CustomerInfo customerInfo,
+  StoreTransaction transaction,
+  String offerId,
+);
 
 class CustomerCenterViewMethodHandler {
   final CustomerCenterOnDismiss? onDismiss;
@@ -78,7 +84,7 @@ class CustomerCenterViewMethodHandler {
   final CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted;
   final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
   final CustomerCenterCustomActionSelected? onCustomActionSelected;
-  final CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess;
+  final CustomerCenterPromotionalOfferSucceeded? onPromotionalOfferSucceeded;
 
   const CustomerCenterViewMethodHandler({
     this.onDismiss,
@@ -91,7 +97,7 @@ class CustomerCenterViewMethodHandler {
     this.onFeedbackSurveyCompleted,
     this.onManagementOptionSelected,
     this.onCustomActionSelected,
-    this.onPromotionalOfferSuccess,
+    this.onPromotionalOfferSucceeded,
   });
 
   Future<void> handleMethodCall(MethodCall call) async {
@@ -126,8 +132,8 @@ class CustomerCenterViewMethodHandler {
       case 'onCustomActionSelected':
         _handleCustomActionSelected(call.arguments);
         break;
-      case 'onPromotionalOfferSuccess':
-        onPromotionalOfferSuccess?.call();
+      case 'onPromotionalOfferSucceeded':
+        _handlePromotionalOfferSucceeded(call.arguments);
         break;
       default:
         break;
@@ -222,6 +228,29 @@ class CustomerCenterViewMethodHandler {
       final purchaseIdentifier = data['purchaseIdentifier'] as String?;
       if (actionId != null) {
         onCustomActionSelected?.call(actionId, purchaseIdentifier);
+      }
+    }
+  }
+
+  void _handlePromotionalOfferSucceeded(dynamic arguments) {
+    if (onPromotionalOfferSucceeded == null) {
+      return;
+    }
+    if (arguments is Map) {
+      final data = Map<String, dynamic>.from(arguments);
+      final customerInfoMap = data['customerInfo'] as Map?;
+      final transactionMap = data['transaction'] as Map?;
+      final offerId = data['offerId'] as String?;
+      if (customerInfoMap != null &&
+          transactionMap != null &&
+          offerId != null) {
+        final customerInfo = CustomerInfo.fromJson(
+          Map<String, dynamic>.from(customerInfoMap),
+        );
+        final transaction = StoreTransaction.fromJson(
+          Map<String, dynamic>.from(transactionMap),
+        );
+        onPromotionalOfferSucceeded?.call(customerInfo, transaction, offerId);
       }
     }
   }

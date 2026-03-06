@@ -7,6 +7,8 @@ import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/presented_offering_context_wrapper.dart';
 import 'package:purchases_flutter/models/presented_offering_targeting_context_wrapper.dart';
 import 'package:purchases_flutter/models/store_product_wrapper.dart';
+import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/models/store_transaction.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:purchases_ui_flutter/views/customer_center_view_method_handler.dart';
 
@@ -778,19 +780,51 @@ void main() {
       },
     );
 
-    test('onPromotionalOfferSuccess fires callback', () async {
-      var callbackCalled = false;
+    test('onPromotionalOfferSucceeded fires callback with data', () async {
+      CustomerInfo? receivedCustomerInfo;
+      StoreTransaction? receivedTransaction;
+      String? receivedOfferId;
 
       await RevenueCatUI.presentCustomerCenter(
-        onPromotionalOfferSuccess: () {
-          callbackCalled = true;
+        onPromotionalOfferSucceeded: (customerInfo, transaction, offerId) {
+          receivedCustomerInfo = customerInfo;
+          receivedTransaction = transaction;
+          receivedOfferId = offerId;
         },
       );
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onPromotionalOfferSuccess', null);
-      expect(callbackCalled, true);
+      await invokeCustomerCenterMethod('onPromotionalOfferSucceeded', {
+        'customerInfo': {
+          'originalAppUserId': 'test_user',
+          'entitlements': {
+            'all': {},
+            'active': {},
+            'verification': 'NOT_REQUESTED',
+          },
+          'activeSubscriptions': [],
+          'latestExpirationDate': null,
+          'allExpirationDates': {},
+          'allPurchasedProductIdentifiers': [],
+          'firstSeen': '2024-01-01T00:00:00Z',
+          'requestDate': '2024-01-01T00:00:00Z',
+          'allPurchaseDates': {},
+          'originalApplicationVersion': null,
+          'nonSubscriptionTransactions': [],
+        },
+        'transaction': {
+          'transactionIdentifier': 'txn_123',
+          'productIdentifier': 'com.test.product',
+          'purchaseDate': '2024-01-01T00:00:00Z',
+        },
+        'offerId': 'promo_offer_1',
+      });
+      expect(receivedCustomerInfo, isNotNull);
+      expect(receivedTransaction, isNotNull);
+      expect(receivedTransaction!.transactionIdentifier, 'txn_123');
+      expect(receivedTransaction!.productIdentifier, 'com.test.product');
+      expect(receivedOfferId, 'promo_offer_1');
     });
   });
 
