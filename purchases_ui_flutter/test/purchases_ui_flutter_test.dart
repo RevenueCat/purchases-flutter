@@ -33,9 +33,9 @@ void main() {
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
-          log.add(call);
-          return response;
-        });
+      log.add(call);
+      return response;
+    });
   });
 
   tearDown(() {
@@ -54,10 +54,10 @@ void main() {
     final completer = Completer<void>();
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .handlePlatformMessage(
-          'purchases_ui_flutter',
-          data,
-          (_) => completer.complete(),
-        );
+      'purchases_ui_flutter',
+      data,
+      (_) => completer.complete(),
+    );
     await completer.future;
     await Future<void>.delayed(Duration.zero);
   }
@@ -315,8 +315,7 @@ void main() {
 
       // Test data extraction logic that should match what's in _handleCustomerCenterMethodCall
       final data = mockCallbackData;
-      final productIdentifier =
-          data['productId'] as String? ??
+      final productIdentifier = data['productId'] as String? ??
           ''; // Should use 'productId' not 'productIdentifier'
       final status = data['status'] as String? ?? '';
 
@@ -658,5 +657,20 @@ void main() {
         expect(callbackCalled, true);
       },
     );
+
+    test('onPromotionalOfferSuccess fires callback', () async {
+      var callbackCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onPromotionalOfferSuccess: () {
+          callbackCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onPromotionalOfferSuccess', null);
+      expect(callbackCalled, true);
+    });
   });
 }

@@ -24,17 +24,19 @@ class RevenueCatUI {
   static CustomerCenterRestoreCompleted? _customerCenterOnRestoreCompleted;
   static CustomerCenterRestoreFailed? _customerCenterOnRestoreFailed;
   static CustomerCenterManageSubscriptions?
-  _customerCenterOnShowingManageSubscriptions;
+      _customerCenterOnShowingManageSubscriptions;
   static CustomerCenterRefundRequestStarted?
-  _customerCenterOnRefundRequestStarted;
+      _customerCenterOnRefundRequestStarted;
   static CustomerCenterRefundRequestCompleted?
-  _customerCenterOnRefundRequestCompleted;
+      _customerCenterOnRefundRequestCompleted;
   static CustomerCenterFeedbackSurveyCompleted?
-  _customerCenterOnFeedbackSurveyCompleted;
+      _customerCenterOnFeedbackSurveyCompleted;
   static CustomerCenterManagementOptionSelected?
-  _customerCenterOnManagementOptionSelected;
+      _customerCenterOnManagementOptionSelected;
   static CustomerCenterCustomActionSelected?
-  _customerCenterOnCustomActionSelected;
+      _customerCenterOnCustomActionSelected;
+  static CustomerCenterPromotionalOfferSuccess?
+      _customerCenterOnPromotionalOfferSuccess;
   static bool _methodChannelHandlerSet = false;
 
   /// Presents the paywall as an activity on android or a modal in iOS.
@@ -100,10 +102,10 @@ class RevenueCatUI {
     CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
+    CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess,
   }) async {
     _setMethodChannelHandlerIfNeeded();
-    final hasCallbacks =
-        onRestoreStarted != null ||
+    final hasCallbacks = onRestoreStarted != null ||
         onRestoreCompleted != null ||
         onRestoreFailed != null ||
         onShowingManageSubscriptions != null ||
@@ -111,7 +113,8 @@ class RevenueCatUI {
         onRefundRequestCompleted != null ||
         onFeedbackSurveyCompleted != null ||
         onManagementOptionSelected != null ||
-        onCustomActionSelected != null;
+        onCustomActionSelected != null ||
+        onPromotionalOfferSuccess != null;
 
     await _clearCustomerCenterCallbacks();
 
@@ -126,6 +129,7 @@ class RevenueCatUI {
         onFeedbackSurveyCompleted: onFeedbackSurveyCompleted,
         onManagementOptionSelected: onManagementOptionSelected,
         onCustomActionSelected: onCustomActionSelected,
+        onPromotionalOfferSuccess: onPromotionalOfferSuccess,
       );
     }
     await _methodChannel.invokeMethod('presentCustomerCenter');
@@ -173,6 +177,7 @@ class RevenueCatUI {
     CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted,
     CustomerCenterManagementOptionSelected? onManagementOptionSelected,
     CustomerCenterCustomActionSelected? onCustomActionSelected,
+    CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess,
   }) async {
     _setMethodChannelHandlerIfNeeded();
     _customerCenterOnRestoreStarted = onRestoreStarted;
@@ -184,6 +189,7 @@ class RevenueCatUI {
     _customerCenterOnFeedbackSurveyCompleted = onFeedbackSurveyCompleted;
     _customerCenterOnManagementOptionSelected = onManagementOptionSelected;
     _customerCenterOnCustomActionSelected = onCustomActionSelected;
+    _customerCenterOnPromotionalOfferSuccess = onPromotionalOfferSuccess;
     await _methodChannel.invokeMethod('setCustomerCenterCallbacks');
   }
 
@@ -198,6 +204,7 @@ class RevenueCatUI {
     _customerCenterOnFeedbackSurveyCompleted = null;
     _customerCenterOnManagementOptionSelected = null;
     _customerCenterOnCustomActionSelected = null;
+    _customerCenterOnPromotionalOfferSuccess = null;
     await _methodChannel.invokeMethod('clearCustomerCenterCallbacks');
   }
 
@@ -371,6 +378,9 @@ class RevenueCatUI {
           actionIdentifier,
           purchaseIdentifier as String?,
         );
+        break;
+      case 'onPromotionalOfferSuccess':
+        _customerCenterOnPromotionalOfferSuccess?.call();
         break;
     }
   }
