@@ -777,6 +777,21 @@ void main() {
         expect(callbackCalled, true);
       },
     );
+
+    test('onPromotionalOfferSuccess fires callback', () async {
+      var callbackCalled = false;
+
+      await RevenueCatUI.presentCustomerCenter(
+        onPromotionalOfferSuccess: () {
+          callbackCalled = true;
+        },
+      );
+
+      log.clear();
+
+      await invokeCustomerCenterMethod('onPromotionalOfferSuccess', null);
+      expect(callbackCalled, true);
+    });
   });
 
   group('PaywallPresentationConfiguration', () {

@@ -309,6 +309,7 @@ class _PurchasesFlutterApiTest {
       onManagementOptionSelected: (String optionIdentifier, String? url) {},
       onCustomActionSelected:
           (String actionIdentifier, String? purchaseIdentifier) {},
+      onPromotionalOfferSuccess: () {},
     );
   }
 
@@ -336,6 +337,7 @@ class _PurchasesFlutterApiTest {
           onManagementOptionSelected: (String optionIdentifier, String? url) {},
           onCustomActionSelected:
               (String actionIdentifier, String? purchaseIdentifier) {},
+          onPromotionalOfferSuccess: () {},
         ),
       ),
     );

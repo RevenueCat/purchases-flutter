@@ -187,4 +187,8 @@ extension PurchasesUiCustomerCenterView: CustomerCenterViewControllerDelegateWra
             ]
         )
     }
+
+    func customerCenterViewControllerDidSucceedWithPromotionalOffer(_ controller: CustomerCenterUIViewController) {
+        methodChannel.invokeMethod("onPromotionalOfferSuccess", arguments: nil)
+    }
 }

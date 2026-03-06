@@ -64,6 +64,13 @@ typedef CustomerCenterCustomActionSelected = void Function(
   String? purchaseIdentifier,
 );
 
+/// Called when a promotional offer is successfully redeemed in the Customer Center.
+///
+/// **Platform Support:**
+/// - **iOS**: Fully supported.
+/// - **Android**: Not currently supported by the native SDK.
+typedef CustomerCenterPromotionalOfferSuccess = void Function();
+
 class CustomerCenterViewMethodHandler {
   final CustomerCenterOnDismiss? onDismiss;
   final CustomerCenterRestoreStarted? onRestoreStarted;
@@ -75,6 +82,7 @@ class CustomerCenterViewMethodHandler {
   final CustomerCenterFeedbackSurveyCompleted? onFeedbackSurveyCompleted;
   final CustomerCenterManagementOptionSelected? onManagementOptionSelected;
   final CustomerCenterCustomActionSelected? onCustomActionSelected;
+  final CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess;
 
   const CustomerCenterViewMethodHandler({
     this.onDismiss,
@@ -87,6 +95,7 @@ class CustomerCenterViewMethodHandler {
     this.onFeedbackSurveyCompleted,
     this.onManagementOptionSelected,
     this.onCustomActionSelected,
+    this.onPromotionalOfferSuccess,
   });
 
   Future<void> handleMethodCall(MethodCall call) async {
@@ -120,6 +129,9 @@ class CustomerCenterViewMethodHandler {
         break;
       case 'onCustomActionSelected':
         _handleCustomActionSelected(call.arguments);
+        break;
+      case 'onPromotionalOfferSuccess':
+        onPromotionalOfferSuccess?.call();
         break;
       default:
         break;
