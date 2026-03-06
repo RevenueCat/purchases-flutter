@@ -65,10 +65,6 @@ typedef CustomerCenterCustomActionSelected = void Function(
 );
 
 /// Called when a promotional offer is successfully redeemed in the Customer Center.
-///
-/// **Platform Support:**
-/// - **iOS**: Fully supported.
-/// - **Android**: Not currently supported by the native SDK.
 typedef CustomerCenterPromotionalOfferSuccess = void Function();
 
 class CustomerCenterViewMethodHandler {

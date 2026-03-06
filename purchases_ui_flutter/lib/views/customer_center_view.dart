@@ -50,10 +50,6 @@ class CustomerCenterView extends StatelessWidget {
   final CustomerCenterCustomActionSelected? onCustomActionSelected;
 
   /// Called when a promotional offer is successfully redeemed.
-  ///
-  /// **Platform Support:**
-  /// - **iOS**: Fully supported.
-  /// - **Android**: Not currently supported by the native SDK.
   final CustomerCenterPromotionalOfferSuccess? onPromotionalOfferSuccess;
 
   static const String _viewType =
