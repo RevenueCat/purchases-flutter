@@ -94,6 +94,8 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
                                        result:result];
     } else if ([@"syncAttributesAndOfferingsIfNeeded" isEqualToString:call.method]) {
         [self syncAttributesAndOfferingsIfNeededWithResult:result];
+    } else if ([@"setAppstackAttributionParams" isEqualToString:call.method]) {
+        [self setAppstackAttributionParams:arguments[@"data"] result:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
         [self getProductInfo:arguments[@"productIdentifiers"] result:result];
     } else if ([@"purchaseProduct" isEqualToString:call.method]) {
@@ -340,6 +342,10 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
 
 - (void)syncAttributesAndOfferingsIfNeededWithResult:(FlutterResult)result {
     [RCCommonFunctionality syncAttributesAndOfferingsIfNeededWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)setAppstackAttributionParams:(NSDictionary *)data result:(FlutterResult)result {
+    [RCCommonFunctionality setAppstackAttributionParams:data completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)getProductInfo:(NSArray *)products

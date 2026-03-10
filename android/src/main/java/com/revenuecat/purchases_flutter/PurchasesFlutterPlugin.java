@@ -144,6 +144,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "syncAttributesAndOfferingsIfNeeded":
                 syncAttributesAndOfferingsIfNeeded(result);
                 break;
+            case "setAppstackAttributionParams":
+                Map<String, String> appstackData = call.argument("data");
+                setAppstackAttributionParams(appstackData, result);
+                break;
             case "getProductInfo":
                 ArrayList<String> productIdentifiers = call.argument("productIdentifiers");
                 String type = call.argument("type");
@@ -459,6 +463,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void syncAttributesAndOfferingsIfNeeded(final Result result) {
         CommonKt.syncAttributesAndOfferingsIfNeeded(getOnResult(result));
+    }
+
+    private void setAppstackAttributionParams(Map<String, String> data, final Result result) {
+        CommonKt.setAppstackAttributionParams(data, getOnResult(result));
     }
 
     private void getProductInfo(ArrayList<String> productIDs, String type, final Result result) {
