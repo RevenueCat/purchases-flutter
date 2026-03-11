@@ -327,7 +327,7 @@ class Purchases {
   ///
   /// [data] The attribution params from the Appstack Attribution SDK.
   static Future<Offerings> setAppstackAttributionParams(
-      Map<String, String> data,) async {
+      Map<String, dynamic> data,) async {
     final res = await _channel.invokeMethod(
       'setAppstackAttributionParams',
       {'data': data},

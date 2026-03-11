@@ -80,7 +80,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkSetAppstackAttributionParams() async {
-    Map<String, String> data = {'appstack_id': 'test_id'};
+    Map<String, dynamic> data = {'appstack_id': 'test_id'};
     Offerings offerings = await Purchases.setAppstackAttributionParams(data);
   }
 
