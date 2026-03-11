@@ -189,6 +189,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ),
                   ShowPromptButton(
                     title: "Set Appstack Attribution Params",
+                    hintText: "appstack_id=test_id,appstack_campaign=test",
                     onTextSubmitted: (text) async {
                       try {
                         final data = <String, String>{};
@@ -602,9 +603,13 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
 class ShowPromptButton extends StatefulWidget {
   final String title;
   final Function(String) onTextSubmitted;
+  final String hintText;
 
   const ShowPromptButton(
-      {Key? key, required this.title, required this.onTextSubmitted})
+      {Key? key,
+      required this.title,
+      required this.onTextSubmitted,
+      this.hintText = 'Text here'})
       : super(key: key);
 
   @override
@@ -622,7 +627,7 @@ class _ShowPromptButtonState extends State<ShowPromptButton> {
           title: Text(widget.title),
           content: TextField(
             controller: _textFieldController,
-            decoration: const InputDecoration(hintText: "Text here"),
+            decoration: InputDecoration(hintText: widget.hintText),
           ),
           actions: <Widget>[
             ElevatedButton(
