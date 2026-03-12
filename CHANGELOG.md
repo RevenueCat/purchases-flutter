@@ -1,3 +1,8 @@
+## 9.14.0
+## RevenueCat SDK
+### ✨ New Features
+* Add setAppstackAttributionParams API (#1671) via Rick (@rickvdl)
+
 ## 9.13.2
 ## RevenueCat SDK
 ### 📦 Dependency Updates
