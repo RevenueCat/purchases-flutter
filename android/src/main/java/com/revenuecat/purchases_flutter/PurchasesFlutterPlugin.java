@@ -384,6 +384,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getCachedVirtualCurrencies":
                 getCachedVirtualCurrencies(result);
                 break;
+            case "trackCustomPaywallImpression":
+                String paywallId = call.argument("paywallId");
+                trackCustomPaywallImpression(paywallId, result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -850,6 +854,15 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void getCachedVirtualCurrencies(final Result result) {
         result.success(CommonKt.getCachedVirtualCurrencies());
+    }
+
+    private void trackCustomPaywallImpression(@Nullable String paywallId, final Result result) {
+        HashMap<String, Object> data = new HashMap<>();
+        if (paywallId != null) {
+            data.put("paywallId", paywallId);
+        }
+        CommonKt.trackCustomPaywallImpression(data);
+        result.success(null);
     }
 
     private void runOnUiThread(Runnable runnable) {

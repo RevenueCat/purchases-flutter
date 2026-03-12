@@ -2310,4 +2310,46 @@ void main() {
 
     expect(virtualCurrencies, isNull);
   });
+
+  test('trackCustomPaywallImpression works correctly with params', () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: CustomPaywallImpressionParams(paywallId: 'my-paywall'),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'paywallId': 'my-paywall',
+        },
+      ),
+    ]);
+  });
+
+  test('trackCustomPaywallImpression works correctly without params',
+      () async {
+    await Purchases.trackCustomPaywallImpression();
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'paywallId': null,
+        },
+      ),
+    ]);
+  });
+
+  test('trackCustomPaywallImpression works correctly with null paywallId',
+      () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: CustomPaywallImpressionParams(),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'paywallId': null,
+        },
+      ),
+    ]);
+  });
 }

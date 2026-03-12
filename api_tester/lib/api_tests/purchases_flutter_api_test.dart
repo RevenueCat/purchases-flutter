@@ -602,6 +602,23 @@ class _PurchasesFlutterApiTest {
   void _checkGetCachedVirtualCurrencies() async {
     VirtualCurrencies? virtualCurrencies = await Purchases.getCachedVirtualCurrencies();
   }
+
+  void _checkTrackCustomPaywallImpression() {
+    Future<void> future = Purchases.trackCustomPaywallImpression();
+  }
+
+  void _checkTrackCustomPaywallImpressionWithParams() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(
+      params: CustomPaywallImpressionParams(paywallId: 'my-paywall'),
+    );
+  }
+
+  void _checkCustomPaywallImpressionParams() {
+    CustomPaywallImpressionParams params = CustomPaywallImpressionParams();
+    String? paywallId = params.paywallId;
+
+    CustomPaywallImpressionParams paramsWithId = CustomPaywallImpressionParams(paywallId: 'test');
+  }
 }
 
 Future<PurchaseResult> _checkFetchAndPurchaseWinBackOffersForProduct(
