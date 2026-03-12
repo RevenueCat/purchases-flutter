@@ -1,26 +1,3 @@
 ## RevenueCat SDK
-### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.46.1 (#1673) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.23.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.1)
-  * [Android 9.23.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.0)
-  * [iOS 5.61.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.61.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.46.0 (#1672) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.23.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.1)
-  * [Android 9.23.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.0)
-  * [iOS 5.61.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.61.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.45.0 (#1669) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.23.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.1)
-  * [Android 9.23.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.0)
-  * [iOS 5.61.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.61.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.44.0 (#1668) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.23.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.1)
-  * [Android 9.23.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.0)
-  * [iOS 5.61.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.61.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 17.43.0 (#1666) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 9.23.1](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.1)
-  * [Android 9.23.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.23.0)
-  * [iOS 5.61.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.61.0)
-
-### 🔄 Other Changes
-* Bump fastlane-plugin-revenuecat_internal from `f5c099b` to `e146447` (#1670) via dependabot[bot] (@dependabot[bot])
-* Bump fastlane-plugin-revenuecat_internal from `8cd957f` to `f5c099b` (#1665) via dependabot[bot] (@dependabot[bot])
+### ✨ New Features
+* Add setAppstackAttributionParams API (#1671) via Rick (@rickvdl)
