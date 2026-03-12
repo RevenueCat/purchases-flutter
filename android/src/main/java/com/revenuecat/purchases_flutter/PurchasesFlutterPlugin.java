@@ -27,6 +27,7 @@ import com.revenuecat.purchases.models.InAppMessageType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -143,6 +144,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "syncAttributesAndOfferingsIfNeeded":
                 syncAttributesAndOfferingsIfNeeded(result);
+                break;
+            case "setAppstackAttributionParams":
+                Map<String, Object> appstackData = call.argument("data");
+                setAppstackAttributionParams(appstackData, result);
                 break;
             case "getProductInfo":
                 ArrayList<String> productIdentifiers = call.argument("productIdentifiers");
@@ -459,6 +464,18 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void syncAttributesAndOfferingsIfNeeded(final Result result) {
         CommonKt.syncAttributesAndOfferingsIfNeeded(getOnResult(result));
+    }
+
+    private void setAppstackAttributionParams(Map<String, Object> data, final Result result) {
+        HashMap<String, Object> filteredData = new HashMap<>();
+        if (data != null) {
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                if (entry.getValue() != null) {
+                    filteredData.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+        CommonKt.setAppstackAttributionParams(filteredData, getOnResult(result));
     }
 
     private void getProductInfo(ArrayList<String> productIDs, String type, final Result result) {

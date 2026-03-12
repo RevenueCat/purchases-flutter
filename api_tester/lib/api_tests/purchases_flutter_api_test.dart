@@ -79,6 +79,11 @@ class _PurchasesFlutterApiTest {
     Offerings offerings = await Purchases.syncAttributesAndOfferingsIfNeeded();
   }
 
+  void _checkSetAppstackAttributionParams() async {
+    Map<String, dynamic> data = {'appstack_id': 'test_id'};
+    Offerings offerings = await Purchases.setAppstackAttributionParams(data);
+  }
+
   void _checkGetProducts() async {
     List<String> productIdentifiers = List.empty();
     PurchaseType purchaseType = PurchaseType.subs;

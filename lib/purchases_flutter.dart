@@ -317,6 +317,27 @@ class Purchases {
     );
   }
 
+  /// Sets attribution data from Appstack's attribution params, then syncs
+  /// subscriber attributes and fetches fresh offerings so that Appstack-based
+  /// targeting is applied before this method returns.
+  ///
+  /// Pass the map received from the Appstack Attribution SDK's
+  /// `getAttributionParams()` directly. The SDK extracts relevant attribution
+  /// info and sets the appropriate subscriber attributes.
+  ///
+  /// [data] The attribution params from the Appstack Attribution SDK.
+  static Future<Offerings> setAppstackAttributionParams(
+    Map<String, dynamic> data,
+  ) async {
+    final res = await _channel.invokeMethod(
+      'setAppstackAttributionParams',
+      {'data': data},
+    );
+    return Offerings.fromJson(
+      Map<String, dynamic>.from(res),
+    );
+  }
+
   /// Fetch the product info. Returns a list of products or throws an error if
   /// the products are not properly configured in RevenueCat or if there is
   /// another error while retrieving them.
