@@ -77,7 +77,15 @@ internal class PaywallView(
         val customVariables = creationParams["customVariables"] as? Map<String, Any?>
         if (customVariables != null) {
             val convertedVariables = customVariables.mapNotNull { (key, value) ->
-                value?.let { key to CustomVariableValue.String(it.toString()) }
+                when (value) {
+                    is String -> key to CustomVariableValue.String(value)
+                    is Int -> key to CustomVariableValue.Number(value)
+                    is Long -> key to CustomVariableValue.Number(value)
+                    is Double -> key to CustomVariableValue.Number(value)
+                    is Float -> key to CustomVariableValue.Number(value)
+                    is Boolean -> key to CustomVariableValue.Boolean(value)
+                    else -> null
+                }
             }.toMap()
             nativePaywallView.setCustomVariables(convertedVariables)
         }
