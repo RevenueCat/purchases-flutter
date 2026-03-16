@@ -135,19 +135,8 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         if let presentedOfferingContextMap = argsDictionary?["presentedOfferingContext"] as? [String: Any] {
             params.presentedOfferingContext = presentedOfferingContextMap
         }
+        params.customVariables = argsDictionary?["customVariables"] as? [String: Any]
         let paywallViewController = paywallProxy.createPaywallView(params: params)
-        // Custom variables must be set before any other updates that might initialize the hosting controller
-        if let customVariables = argsDictionary?["customVariables"] as? [String: Any] {
-            for (key, value) in customVariables {
-                if let stringValue = value as? String {
-                    paywallViewController.setCustomVariable(stringValue, forKey: key)
-                } else if let boolValue = value as? Bool {
-                    paywallViewController.setCustomVariableBool(boolValue, forKey: key)
-                } else if let numberValue = (value as? NSNumber)?.doubleValue {
-                    paywallViewController.setCustomVariableNumber(numberValue, forKey: key)
-                }
-            }
-        }
         if let displayCloseButton = argsDictionary?["displayCloseButton"] as? Bool {
             paywallViewController.update(with: displayCloseButton)
         }
