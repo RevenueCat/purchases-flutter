@@ -141,14 +141,10 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
             for (key, value) in customVariables {
                 if let stringValue = value as? String {
                     paywallViewController.setCustomVariable(stringValue, forKey: key)
-                } else if let numberValue = value as? Double {
+                } else if let boolValue = value as? Bool {
+                    paywallViewController.setCustomVariableBool(boolValue, forKey: key)
+                } else if let numberValue = (value as? NSNumber)?.doubleValue {
                     paywallViewController.setCustomVariableNumber(numberValue, forKey: key)
-                } else if let numberValue = value as? NSNumber {
-                    if CFGetTypeID(numberValue) == CFBooleanGetTypeID() {
-                        paywallViewController.setCustomVariableBool(numberValue.boolValue, forKey: key)
-                    } else {
-                        paywallViewController.setCustomVariableNumber(numberValue.doubleValue, forKey: key)
-                    }
                 }
             }
         }
