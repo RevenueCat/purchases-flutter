@@ -90,16 +90,6 @@ class _PurchasesFlutterApiTest {
     bool boolDirectValue = booleanVariable.value;
     String boolStringValue = booleanVariable.stringValue;
 
-    // Exhaustive pattern matching — verifies sealed hierarchy is complete.
-    // Adding a new CustomVariableValue subtype will cause a compile error here.
-    switch (stringValue) {
-      case StringCustomVariableValue():
-        break;
-      case NumberCustomVariableValue():
-        break;
-      case BooleanCustomVariableValue():
-        break;
-    }
   }
 
   void _checkPaywallResult(PaywallResult result) {

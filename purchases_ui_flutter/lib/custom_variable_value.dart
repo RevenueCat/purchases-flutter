@@ -33,7 +33,7 @@ Map<String, dynamic>? convertCustomVariablesToNative(
 /// ```
 /// Hello {{ custom.player_name }}!
 /// ```
-sealed class CustomVariableValue {
+abstract final class CustomVariableValue {
   const CustomVariableValue._();
 
   /// Creates a string custom variable value.
@@ -57,7 +57,7 @@ sealed class CustomVariableValue {
 }
 
 /// A string custom variable value.
-class StringCustomVariableValue extends CustomVariableValue {
+final class StringCustomVariableValue extends CustomVariableValue {
   /// The string value.
   final String value;
 
@@ -85,7 +85,7 @@ class StringCustomVariableValue extends CustomVariableValue {
 }
 
 /// A numeric custom variable value.
-class NumberCustomVariableValue extends CustomVariableValue {
+final class NumberCustomVariableValue extends CustomVariableValue {
   /// The numeric value.
   final double value;
 
@@ -114,7 +114,7 @@ class NumberCustomVariableValue extends CustomVariableValue {
 }
 
 /// A boolean custom variable value.
-class BooleanCustomVariableValue extends CustomVariableValue {
+final class BooleanCustomVariableValue extends CustomVariableValue {
   /// The boolean value.
   final bool value;
 
