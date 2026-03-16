@@ -40,6 +40,8 @@ Store storeFromJson(dynamic value) {
       return Store.externalStore;
     case 'TEST_STORE':
       return Store.testStore;
+    case 'GALAXY':
+      return Store.galaxy;
     case null:
       return Store.unknownStore;
     default:

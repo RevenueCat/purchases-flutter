@@ -14,9 +14,14 @@ enum Store {
   unknownStore,
   /// For entitlements granted via Amazon Appstore.
   amazon,
+  /// For entitlements granted via RC Billing.
   rcBilling,
+  /// For entitlements granted via Paddle.
   paddle,
   /// For entitlements granted via RevenueCat's Test Store.
   testStore,
+  /// For entitlements granted via an external store.
   externalStore,
+  /// For entitlements granted via the Galaxy Store.
+  galaxy,
 }
