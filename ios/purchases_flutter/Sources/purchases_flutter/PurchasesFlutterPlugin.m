@@ -718,9 +718,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 - (void)trackCustomPaywallImpression:(NSDictionary *)arguments result:(FlutterResult)result {
     if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
         NSMutableDictionary *data = [NSMutableDictionary dictionary];
-        NSString *paywallId = arguments[@"paywallId"];
-        if (paywallId != nil && ![paywallId isKindOfClass:[NSNull class]]) {
-            data[@"paywallId"] = paywallId;
+        for (NSString *key in arguments) {
+            id value = arguments[key];
+            if (value != nil && ![value isKindOfClass:[NSNull class]]) {
+                data[key] = value;
+            }
         }
         [RCCommonFunctionality trackCustomPaywallImpression:data];
     } else {

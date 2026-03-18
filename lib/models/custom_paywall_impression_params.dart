@@ -6,6 +6,12 @@ class CustomPaywallImpressionParams {
   /// An optional identifier for the paywall being displayed.
   final String? paywallId;
 
-  /// Creates [CustomPaywallImpressionParams] with an optional [paywallId].
-  const CustomPaywallImpressionParams({this.paywallId});
+  /// An optional identifier for the offering associated with the custom paywall.
+  /// If not provided, the SDK will use the current offering identifier from the
+  /// cache.
+  final String? offeringId;
+
+  /// Creates [CustomPaywallImpressionParams] with an optional [paywallId]
+  /// and [offeringId].
+  const CustomPaywallImpressionParams({this.paywallId, this.offeringId});
 }

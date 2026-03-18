@@ -621,13 +621,38 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  void _checkTrackCustomPaywallImpressionWithOfferingId() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(offeringId: 'my-offering'),
+    );
+  }
+
+  void _checkTrackCustomPaywallImpressionWithBothParams() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(
+        paywallId: 'my-paywall',
+        offeringId: 'my-offering',
+      ),
+    );
+  }
+
   void _checkCustomPaywallImpressionParams() {
     CustomPaywallImpressionParams params =
         const CustomPaywallImpressionParams();
     String? paywallId = params.paywallId;
+    String? offeringId = params.offeringId;
 
     CustomPaywallImpressionParams paramsWithId =
         const CustomPaywallImpressionParams(paywallId: 'test');
+
+    CustomPaywallImpressionParams paramsWithOffering =
+        const CustomPaywallImpressionParams(offeringId: 'offering');
+
+    CustomPaywallImpressionParams paramsWithBoth =
+        const CustomPaywallImpressionParams(
+      paywallId: 'test',
+      offeringId: 'offering',
+    );
   }
 }
 

@@ -1396,7 +1396,9 @@ class Purchases {
   ///
   /// [params] Optional parameters for the impression. Include
   /// [CustomPaywallImpressionParams.paywallId] to identify which paywall was
-  /// shown.
+  /// shown, and [CustomPaywallImpressionParams.offeringId] to override the
+  /// offering. If [offeringId] is not provided, the SDK will use the current
+  /// offering identifier from the cache.
   static Future<void> trackCustomPaywallImpression({
     CustomPaywallImpressionParams? params,
   }) =>
@@ -1404,6 +1406,7 @@ class Purchases {
         'trackCustomPaywallImpression',
         {
           'paywallId': params?.paywallId,
+          'offeringId': params?.offeringId,
         },
       );
 

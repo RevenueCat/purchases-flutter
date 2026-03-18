@@ -13,6 +13,7 @@ import 'custom_variables_editor.dart';
 import 'customer_center_view_screen.dart';
 import 'initial.dart';
 import 'paywall.dart';
+import 'custom_paywall_impression_testing_screen.dart';
 import 'winback_testing_screen.dart';
 import 'virtual_currency_testing_screen.dart';
 
@@ -177,6 +178,19 @@ class _UpsellScreenState extends State<UpsellScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   const Text("Purchase Methods"),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CustomPaywallImpressionTestingScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("Custom Paywall Impression Testing"),
+                  ),
+                  const SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () async {
                       final offerings =

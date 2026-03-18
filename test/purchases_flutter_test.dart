@@ -2320,6 +2320,7 @@ void main() {
         'trackCustomPaywallImpression',
         arguments: {
           'paywallId': 'my-paywall',
+          'offeringId': null,
         },
       ),
     ]);
@@ -2333,6 +2334,7 @@ void main() {
         'trackCustomPaywallImpression',
         arguments: {
           'paywallId': null,
+          'offeringId': null,
         },
       ),
     ]);
@@ -2348,6 +2350,42 @@ void main() {
         'trackCustomPaywallImpression',
         arguments: {
           'paywallId': null,
+          'offeringId': null,
+        },
+      ),
+    ]);
+  });
+
+  test('trackCustomPaywallImpression works correctly with offeringId only',
+      () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: CustomPaywallImpressionParams(offeringId: 'my-offering'),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'paywallId': null,
+          'offeringId': 'my-offering',
+        },
+      ),
+    ]);
+  });
+
+  test('trackCustomPaywallImpression works correctly with both params',
+      () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: CustomPaywallImpressionParams(
+        paywallId: 'my-paywall',
+        offeringId: 'my-offering',
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'paywallId': 'my-paywall',
+          'offeringId': 'my-offering',
         },
       ),
     ]);
