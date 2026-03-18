@@ -1,4 +1,5 @@
 export 'errors.dart';
+export 'models/custom_paywall_impression_params.dart';
 export 'models/customer_info_wrapper.dart';
 export 'models/entitlement_info_wrapper.dart';
 export 'models/entitlement_infos_wrapper.dart';
