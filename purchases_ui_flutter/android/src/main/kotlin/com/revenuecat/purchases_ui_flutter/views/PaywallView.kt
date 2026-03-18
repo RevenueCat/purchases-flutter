@@ -79,10 +79,7 @@ internal class PaywallView(
             val convertedVariables = customVariables.mapNotNull { (key, value) ->
                 when (value) {
                     is String -> key to CustomVariableValue.String(value)
-                    is Int -> key to CustomVariableValue.Number(value)
-                    is Long -> key to CustomVariableValue.Number(value)
                     is Double -> key to CustomVariableValue.Number(value)
-                    is Float -> key to CustomVariableValue.Number(value)
                     is Boolean -> key to CustomVariableValue.Boolean(value)
                     else -> null
                 }

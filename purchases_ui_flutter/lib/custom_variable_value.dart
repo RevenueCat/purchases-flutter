@@ -10,7 +10,12 @@ Map<String, dynamic>? convertCustomVariablesToNative(
   Map<String, CustomVariableValue>? customVariables,
 ) {
   if (customVariables == null) return null;
-  return customVariables.map((key, value) => MapEntry(key, value.nativeValue));
+  return customVariables.map((key, value) {
+    if (value is StringCustomVariableValue) return MapEntry(key, value.value);
+    if (value is NumberCustomVariableValue) return MapEntry(key, value.value);
+    if (value is BooleanCustomVariableValue) return MapEntry(key, value.value);
+    return MapEntry(key, value.stringValue);
+  });
 }
 
 /// A value type for custom paywall variables that can be passed to paywalls at runtime.
@@ -50,10 +55,6 @@ abstract final class CustomVariableValue {
 
   /// Returns the string representation of this value.
   String get stringValue;
-
-  /// Returns the native value to pass to the platform channel.
-  /// @nodoc
-  Object get nativeValue;
 }
 
 /// A string custom variable value.
@@ -66,9 +67,6 @@ final class StringCustomVariableValue extends CustomVariableValue {
 
   @override
   String get stringValue => value;
-
-  @override
-  Object get nativeValue => value;
 
   @override
   bool operator ==(Object other) =>
@@ -97,9 +95,6 @@ final class NumberCustomVariableValue extends CustomVariableValue {
       value % 1.0 == 0 ? value.toInt().toString() : value.toString();
 
   @override
-  Object get nativeValue => value;
-
-  @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is NumberCustomVariableValue &&
@@ -123,9 +118,6 @@ final class BooleanCustomVariableValue extends CustomVariableValue {
 
   @override
   String get stringValue => value.toString();
-
-  @override
-  Object get nativeValue => value;
 
   @override
   bool operator ==(Object other) =>
