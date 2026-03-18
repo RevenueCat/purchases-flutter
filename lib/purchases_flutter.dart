@@ -1380,6 +1380,36 @@ class Purchases {
     return VirtualCurrencies.fromJson(Map<String, dynamic>.from(result));
   }
 
+  ///================================================================================
+  /// Custom Paywall Tracking
+  ///================================================================================
+
+  /// **Experimental**: This API is experimental and may be changed or removed
+  /// in a future update.
+  ///
+  /// Tracks an impression of a custom paywall. Use this to record when a user
+  /// views your custom paywall so that RevenueCat can track paywall analytics.
+  ///
+  /// Call this method once per paywall display, ideally when the paywall first
+  /// becomes visible to the user, not in callbacks that may fire multiple times
+  /// for the same display.
+  ///
+  /// [params] Optional parameters for the impression. Include
+  /// [CustomPaywallImpressionParams.paywallId] to identify which paywall was
+  /// shown, and [CustomPaywallImpressionParams.offeringId] to override the
+  /// offering. If [offeringId] is not provided, the SDK will use the current
+  /// offering identifier from the cache.
+  static Future<void> trackCustomPaywallImpression({
+    CustomPaywallImpressionParams? params,
+  }) =>
+      _channel.invokeMethod(
+        'trackCustomPaywallImpression',
+        {
+          'paywallId': params?.paywallId,
+          'offeringId': params?.offeringId,
+        },
+      );
+
   static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {

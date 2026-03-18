@@ -550,8 +550,12 @@ class _PurchasesFlutterApiTest {
         productID, receiptID, amazonUserID, isoCurrencyCode, price);
   }
 
-  void _checkSyncAmazonPurchase(String productID, String receiptID,
-      String amazonUserID, String? isoCurrencyCode, double? price,
+  void _checkSyncAmazonPurchase(
+      String productID,
+      String receiptID,
+      String amazonUserID,
+      String? isoCurrencyCode,
+      double? price,
       int? purchaseTime) async {
     Future<void> future = Purchases.syncAmazonPurchase(
         productID, receiptID, amazonUserID, isoCurrencyCode, price);
@@ -587,12 +591,15 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkWebPurchaseRedemption(String urlString) async {
-    WebPurchaseRedemption? webPurchaseRedemption = await Purchases.parseAsWebPurchaseRedemption(urlString);
-    WebPurchaseRedemptionResult? result = await Purchases.redeemWebPurchase(webPurchaseRedemption!);
+    WebPurchaseRedemption? webPurchaseRedemption =
+        await Purchases.parseAsWebPurchaseRedemption(urlString);
+    WebPurchaseRedemptionResult? result =
+        await Purchases.redeemWebPurchase(webPurchaseRedemption!);
   }
 
   void _checkGetVirtualCurrencies() async {
-    VirtualCurrencies virtualCurrencies = await Purchases.getVirtualCurrencies();
+    VirtualCurrencies virtualCurrencies =
+        await Purchases.getVirtualCurrencies();
   }
 
   void _checkInvalidateVirtualCurrenciesCache() {
@@ -600,7 +607,52 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkGetCachedVirtualCurrencies() async {
-    VirtualCurrencies? virtualCurrencies = await Purchases.getCachedVirtualCurrencies();
+    VirtualCurrencies? virtualCurrencies =
+        await Purchases.getCachedVirtualCurrencies();
+  }
+
+  void _checkTrackCustomPaywallImpression() {
+    Future<void> future = Purchases.trackCustomPaywallImpression();
+  }
+
+  void _checkTrackCustomPaywallImpressionWithParams() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(paywallId: 'my-paywall'),
+    );
+  }
+
+  void _checkTrackCustomPaywallImpressionWithOfferingId() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(offeringId: 'my-offering'),
+    );
+  }
+
+  void _checkTrackCustomPaywallImpressionWithBothParams() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(
+        paywallId: 'my-paywall',
+        offeringId: 'my-offering',
+      ),
+    );
+  }
+
+  void _checkCustomPaywallImpressionParams() {
+    CustomPaywallImpressionParams params =
+        const CustomPaywallImpressionParams();
+    String? paywallId = params.paywallId;
+    String? offeringId = params.offeringId;
+
+    CustomPaywallImpressionParams paramsWithId =
+        const CustomPaywallImpressionParams(paywallId: 'test');
+
+    CustomPaywallImpressionParams paramsWithOffering =
+        const CustomPaywallImpressionParams(offeringId: 'offering');
+
+    CustomPaywallImpressionParams paramsWithBoth =
+        const CustomPaywallImpressionParams(
+      paywallId: 'test',
+      offeringId: 'offering',
+    );
   }
 }
 
