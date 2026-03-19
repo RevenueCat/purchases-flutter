@@ -196,7 +196,8 @@ void main() {
     await RevenueCatUI.presentPaywall(
       customVariables: {
         'player_name': CustomVariableValue.string('John'),
-        'level': CustomVariableValue.string('5'),
+        'level': CustomVariableValue.number(5),
+        'is_premium': CustomVariableValue.boolean(true),
       },
     );
     expect(log, <Matcher>[
@@ -206,7 +207,11 @@ void main() {
           'offeringIdentifier': null,
           'presentedOfferingContext': null,
           'displayCloseButton': false,
-          'customVariables': {'player_name': 'John', 'level': '5'},
+          'customVariables': {
+            'player_name': 'John',
+            'level': 5.0,
+            'is_premium': true,
+          },
         },
       ),
     ]);
@@ -216,7 +221,10 @@ void main() {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywallIfNeeded(
       'entitlement',
-      customVariables: {'player_name': CustomVariableValue.string('John')},
+      customVariables: {
+        'player_name': CustomVariableValue.string('John'),
+        'level': CustomVariableValue.number(42),
+      },
     );
     expect(log, <Matcher>[
       isMethodCall(
@@ -226,7 +234,7 @@ void main() {
           'offeringIdentifier': null,
           'presentedOfferingContext': null,
           'displayCloseButton': false,
-          'customVariables': {'player_name': 'John'},
+          'customVariables': {'player_name': 'John', 'level': 42.0},
         },
       ),
     ]);

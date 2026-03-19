@@ -58,7 +58,7 @@ class RevenueCatUI {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
-      'customVariables': convertCustomVariablesToStrings(customVariables),
+      'customVariables': convertCustomVariablesToNative(customVariables),
       if (presentationConfiguration?.ios ==
           IOSPaywallPresentationStyle.fullScreen)
         'useFullScreenPresentation': true,
@@ -90,7 +90,7 @@ class RevenueCatUI {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
-      'customVariables': convertCustomVariablesToStrings(customVariables),
+      'customVariables': convertCustomVariablesToNative(customVariables),
       if (presentationConfiguration?.ios ==
           IOSPaywallPresentationStyle.fullScreen)
         'useFullScreenPresentation': true,

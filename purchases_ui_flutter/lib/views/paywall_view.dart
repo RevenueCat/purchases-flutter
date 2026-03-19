@@ -96,7 +96,7 @@ class PaywallView extends StatelessWidget {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
-      'customVariables': convertCustomVariablesToStrings(customVariables),
+      'customVariables': convertCustomVariablesToNative(customVariables),
       'hasPurchaseLogic': purchaseLogic != null,
     };
 

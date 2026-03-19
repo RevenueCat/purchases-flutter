@@ -94,6 +94,8 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
                                        result:result];
     } else if ([@"syncAttributesAndOfferingsIfNeeded" isEqualToString:call.method]) {
         [self syncAttributesAndOfferingsIfNeededWithResult:result];
+    } else if ([@"setAppstackAttributionParams" isEqualToString:call.method]) {
+        [self setAppstackAttributionParams:arguments[@"data"] result:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
         [self getProductInfo:arguments[@"productIdentifiers"] result:result];
     } else if ([@"purchaseProduct" isEqualToString:call.method]) {
@@ -277,6 +279,8 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         result(nil);
     } else if ([@"getCachedVirtualCurrencies" isEqualToString:call.method]) {
         result([RCCommonFunctionality getCachedVirtualCurrencies]);
+    } else if ([@"trackCustomPaywallImpression" isEqualToString:call.method]) {
+        [self trackCustomPaywallImpression:arguments result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -340,6 +344,10 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
 
 - (void)syncAttributesAndOfferingsIfNeededWithResult:(FlutterResult)result {
     [RCCommonFunctionality syncAttributesAndOfferingsIfNeededWithCompletionBlock:[self getResponseCompletionBlock:result]];
+}
+
+- (void)setAppstackAttributionParams:(NSDictionary *)data result:(FlutterResult)result {
+    [RCCommonFunctionality setAppstackAttributionParams:data completionBlock:[self getResponseCompletionBlock:result]];
 }
 
 - (void)getProductInfo:(NSArray *)products
@@ -707,6 +715,22 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 #endif
 
+- (void)trackCustomPaywallImpression:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        NSMutableDictionary *data = [NSMutableDictionary dictionary];
+        for (NSString *key in arguments) {
+            id value = arguments[key];
+            if (value != nil && ![value isKindOfClass:[NSNull class]]) {
+                data[key] = value;
+            }
+        }
+        [RCCommonFunctionality trackCustomPaywallImpression:data];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackCustomPaywallImpression, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
 - (void)startPromotedProductPurchase:(NSNumber *)callbackID
                               result:(FlutterResult)result {
     RCStartPurchaseBlock makePurchaseBlock = [self.startPurchaseBlocks objectAtIndex:[callbackID integerValue]];
@@ -815,7 +839,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"9.12.3";
+    return @"9.15.0";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {

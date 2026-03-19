@@ -13,6 +13,7 @@ import 'custom_variables_editor.dart';
 import 'customer_center_view_screen.dart';
 import 'initial.dart';
 import 'paywall.dart';
+import 'custom_paywall_impression_testing_screen.dart';
 import 'winback_testing_screen.dart';
 import 'virtual_currency_testing_screen.dart';
 
@@ -32,7 +33,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
   Map<String, CustomVariableValue>? _getCustomVariablesForPaywall() {
     if (_customVariables.isEmpty) return null;
     return _customVariables.map(
-      (key, value) => MapEntry(key, CustomVariableValue.string(value.toString())),
+      (key, value) =>
+          MapEntry(key, CustomVariableValue.string(value.toString())),
     );
   }
 
@@ -147,14 +149,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
         // Otherwise sort alphabetically
         return a.key.toLowerCase().compareTo(b.key.toLowerCase());
       });
-    
+
     return ListView(children: [
       if (_customerInfo != null)
         ListTile(
           title: const Text('Active Entitlements'),
-          trailing: Text(
-            '${_customerInfo!.entitlements.active.keys}'
-          ),
+          trailing: Text('${_customerInfo!.entitlements.active.keys}'),
         ),
       if (_appUserId != null)
         ListTile(
@@ -162,12 +162,14 @@ class _UpsellScreenState extends State<UpsellScreen> {
           trailing: Text(_appUserId!),
         ),
       const Divider(),
-      ...sortedOfferings.map((entry) => ExpansionTile(
-            title: Text("Offering ID: ${entry.key} "
-                    "${entry.key == currentOfferingId ? '(Current)' : ''}"
-                .trim()),
-            children: _buildOffering(context, entry.value),
-          )).toList(),
+      ...sortedOfferings
+          .map((entry) => ExpansionTile(
+                title: Text("Offering ID: ${entry.key} "
+                        "${entry.key == currentOfferingId ? '(Current)' : ''}"
+                    .trim()),
+                children: _buildOffering(context, entry.value),
+              ))
+          .toList(),
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Card(
@@ -176,6 +178,19 @@ class _UpsellScreenState extends State<UpsellScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(children: [
                   const Text("Purchase Methods"),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CustomPaywallImpressionTestingScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("Custom Paywall Impression Testing"),
+                  ),
+                  const SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () async {
                       final offerings =
@@ -185,6 +200,42 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       });
                     },
                     child: const Text('Sync Attributes and Offerings'),
+                  ),
+                  ShowPromptButton(
+                    title: "Set Appstack Attribution Params",
+                    hintText: "appstack_id=test_id,appstack_campaign=test",
+                    onTextSubmitted: (text) async {
+                      try {
+                        final data = <String, String>{};
+                        if (text.isNotEmpty) {
+                          for (final pair in text.split(',')) {
+                            final parts = pair.split('=');
+                            if (parts.length == 2) {
+                              data[parts[0].trim()] = parts[1].trim();
+                            }
+                          }
+                        }
+                        final offerings =
+                            await Purchases.setAppstackAttributionParams(data);
+                        setState(() {
+                          _offerings = offerings;
+                        });
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                  'Success! ${offerings.all.length} offerings'),
+                            ),
+                          );
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Error: $e')),
+                          );
+                        }
+                      }
+                    },
                   ),
                 ]))),
       ),
@@ -246,29 +297,32 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         ),
                       );
                     },
-                    child: const Text("CustomerCenterViewModalScreen (Close Button)"),
+                    child: const Text(
+                        "CustomerCenterViewModalScreen (Close Button)"),
                   ),
                   const SizedBox(height: 12),
                   ElevatedButton(
                     onPressed: () async {
                       await RevenueCatUI.presentCustomerCenter(
-                        onRestoreStarted: () => debugPrint('[CustomerCenter Modal] Restore started'),
-                        onRestoreCompleted: (customerInfo) =>
-                            debugPrint('[CustomerCenter Modal] Restore completed: ${customerInfo.originalAppUserId}'),
-                        onRestoreFailed: (error) =>
-                            debugPrint('[CustomerCenter Modal] Restore failed: ${error.message}'),
-                        onShowingManageSubscriptions: () =>
-                            debugPrint('[CustomerCenter Modal] Showing manage subscriptions'),
-                        onRefundRequestStarted: (productId) =>
-                            debugPrint('[CustomerCenter Modal] Refund request started for product: $productId'),
-                        onRefundRequestCompleted: (productId, status) =>
-                            debugPrint('[CustomerCenter Modal] Refund request completed for product $productId with status $status'),
-                        onFeedbackSurveyCompleted: (optionId) =>
-                            debugPrint('[CustomerCenter Modal] Feedback survey completed with option: $optionId'),
-                        onManagementOptionSelected: (optionId, url) =>
-                            debugPrint('[CustomerCenter Modal] Management option selected: $optionId (url: ${url ?? 'none'})'),
-                        onCustomActionSelected: (actionId, purchaseIdentifier) =>
-                            debugPrint('[CustomerCenter Modal] Custom action selected: $actionId (purchase: ${purchaseIdentifier ?? 'none'})'),
+                        onRestoreStarted: () => debugPrint(
+                            '[CustomerCenter Modal] Restore started'),
+                        onRestoreCompleted: (customerInfo) => debugPrint(
+                            '[CustomerCenter Modal] Restore completed: ${customerInfo.originalAppUserId}'),
+                        onRestoreFailed: (error) => debugPrint(
+                            '[CustomerCenter Modal] Restore failed: ${error.message}'),
+                        onShowingManageSubscriptions: () => debugPrint(
+                            '[CustomerCenter Modal] Showing manage subscriptions'),
+                        onRefundRequestStarted: (productId) => debugPrint(
+                            '[CustomerCenter Modal] Refund request started for product: $productId'),
+                        onRefundRequestCompleted: (productId, status) => debugPrint(
+                            '[CustomerCenter Modal] Refund request completed for product $productId with status $status'),
+                        onFeedbackSurveyCompleted: (optionId) => debugPrint(
+                            '[CustomerCenter Modal] Feedback survey completed with option: $optionId'),
+                        onManagementOptionSelected: (optionId, url) => debugPrint(
+                            '[CustomerCenter Modal] Management option selected: $optionId (url: ${url ?? 'none'})'),
+                        onCustomActionSelected:
+                            (actionId, purchaseIdentifier) => debugPrint(
+                                '[CustomerCenter Modal] Custom action selected: $actionId (purchase: ${purchaseIdentifier ?? 'none'})'),
                       );
                     },
                     child: const Text("Present Customer Center"),
@@ -320,11 +374,10 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   const Text("Paywalls"),
                   ElevatedButton(
                     onPressed: () async {
-                      final paywallResult =
-                          await RevenueCatUI.presentPaywall(
-                            offering: offering,
-                            customVariables: _getCustomVariablesForPaywall(),
-                          );
+                      final paywallResult = await RevenueCatUI.presentPaywall(
+                        offering: offering,
+                        customVariables: _getCustomVariablesForPaywall(),
+                      );
                       log('Paywall result: $paywallResult');
                     },
                     child: const Text('Present paywall'),
@@ -333,10 +386,10 @@ class _UpsellScreenState extends State<UpsellScreen> {
                     onPressed: () async {
                       final paywallResult =
                           await RevenueCatUI.presentPaywallIfNeeded(
-                              entitlementKey,
-                              offering: offering,
-                              customVariables: _getCustomVariablesForPaywall(),
-                          );
+                        entitlementKey,
+                        offering: offering,
+                        customVariables: _getCustomVariablesForPaywall(),
+                      );
                       log('Paywall result: $paywallResult');
                     },
                     child: const Text(
@@ -349,7 +402,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         MaterialPageRoute(
                             builder: (context) => PaywallScreen(
                                   offering: offering,
-                                  customVariables: _getCustomVariablesForPaywall(),
+                                  customVariables:
+                                      _getCustomVariablesForPaywall(),
                                 )),
                       );
                     },
@@ -363,18 +417,19 @@ class _UpsellScreenState extends State<UpsellScreen> {
                               MaterialPageRoute(
                                   builder: (context) => PaywallScreen(
                                         offering: offering,
-                                        customVariables: _getCustomVariablesForPaywall(),
+                                        customVariables:
+                                            _getCustomVariablesForPaywall(),
                                         purchaseLogic: SamplePurchaseLogic(),
                                       )),
                             );
                           }
                         : null,
                     child: Text(
-                        purchasesAreCompletedByMyApp
-                            ? 'Show paywall view with custom PurchaseLogic'
-                            : 'Show paywall view with custom PurchaseLogic\n'
+                      purchasesAreCompletedByMyApp
+                          ? 'Show paywall view with custom PurchaseLogic'
+                          : 'Show paywall view with custom PurchaseLogic\n'
                               '(Enable purchasesAreCompletedByMyApp)',
-                        textAlign: TextAlign.center,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   ElevatedButton(
@@ -397,8 +452,8 @@ class _UpsellScreenState extends State<UpsellScreen> {
                               placement);
                       if (offering != null) {
                         final paywallResult = await RevenueCatUI.presentPaywall(
-                            offering: offering,
-                            customVariables: _getCustomVariablesForPaywall(),
+                          offering: offering,
+                          customVariables: _getCustomVariablesForPaywall(),
                         );
                         log('Paywall result: $paywallResult');
                       } else {
@@ -436,8 +491,8 @@ class _PurchaseButton extends StatelessWidget {
     try {
       final purchaseParams = PurchaseParams.package(package);
       final purchaseResult = await Purchases.purchase(purchaseParams);
-      final isPro = purchaseResult.customerInfo.entitlements
-        .active.containsKey(entitlementKey);
+      final isPro = purchaseResult.customerInfo.entitlements.active
+          .containsKey(entitlementKey);
       print("StoreTransaction: ${purchaseResult.storeTransaction}");
       if (isPro) {
         Navigator.pushReplacement(
@@ -487,8 +542,8 @@ class _PurchaseStoreProductButton extends StatelessWidget {
       BuildContext context, StoreProduct storeProduct) async {
     try {
       final purchaseResult = await Purchases.purchaseStoreProduct(storeProduct);
-      final isPro = purchaseResult.customerInfo.entitlements
-        .active.containsKey(entitlementKey);
+      final isPro = purchaseResult.customerInfo.entitlements.active
+          .containsKey(entitlementKey);
       if (isPro) {
         Navigator.pushReplacement(
           context,
@@ -562,9 +617,13 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
 class ShowPromptButton extends StatefulWidget {
   final String title;
   final Function(String) onTextSubmitted;
+  final String hintText;
 
   const ShowPromptButton(
-      {Key? key, required this.title, required this.onTextSubmitted})
+      {Key? key,
+      required this.title,
+      required this.onTextSubmitted,
+      this.hintText = 'Text here'})
       : super(key: key);
 
   @override
@@ -582,7 +641,7 @@ class _ShowPromptButtonState extends State<ShowPromptButton> {
           title: Text(widget.title),
           content: TextField(
             controller: _textFieldController,
-            decoration: const InputDecoration(hintText: "Text here"),
+            decoration: InputDecoration(hintText: widget.hintText),
           ),
           actions: <Widget>[
             ElevatedButton(
