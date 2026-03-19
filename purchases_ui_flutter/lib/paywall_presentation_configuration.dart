@@ -8,13 +8,39 @@ class PaywallPresentationConfiguration {
   /// and future use.
   final AndroidPaywallPresentationStyle? android;
 
+  /// Full-screen presentation on all platforms.
+  static const fullScreen = PaywallPresentationConfiguration(
+    ios: IOSPaywallPresentationStyle.fullScreen,
+    android: AndroidPaywallPresentationStyle.fullScreen,
+  );
+
+  /// Default platform behavior (sheet on iOS, full screen on Android).
+  static const defaultConfiguration = PaywallPresentationConfiguration(
+    ios: IOSPaywallPresentationStyle.sheet,
+    android: AndroidPaywallPresentationStyle.fullScreen,
+  );
+
   const PaywallPresentationConfiguration({this.ios, this.android});
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PaywallPresentationConfiguration &&
+          ios == other.ios &&
+          android == other.android;
+
+  @override
+  int get hashCode => Object.hash(ios, android);
+
+  @override
+  String toString() =>
+      'PaywallPresentationConfiguration(ios: $ios, android: $android)';
 }
 
 /// Controls how the paywall is presented on iOS.
 ///
-/// Use private constructor + static const to allow adding new values
-/// without breaking exhaustive switch statements.
+/// Uses a private constructor with static constants so that new values can
+/// be added in the future without breaking existing code.
 class IOSPaywallPresentationStyle {
   final String _value;
   const IOSPaywallPresentationStyle._(this._value);
@@ -33,12 +59,15 @@ class IOSPaywallPresentationStyle {
 
   @override
   int get hashCode => _value.hashCode;
+
+  @override
+  String toString() => _value;
 }
 
 /// Controls how the paywall is presented on Android.
 ///
-/// Android currently always presents full screen. This type exists for
-/// API symmetry and potential future use.
+/// Uses a private constructor with static constants so that new values can
+/// be added in the future without breaking existing code.
 class AndroidPaywallPresentationStyle {
   final String _value;
   const AndroidPaywallPresentationStyle._(this._value);
@@ -53,4 +82,7 @@ class AndroidPaywallPresentationStyle {
 
   @override
   int get hashCode => _value.hashCode;
+
+  @override
+  String toString() => _value;
 }
