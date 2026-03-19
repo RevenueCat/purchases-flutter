@@ -1,5 +1,5 @@
 /// Configures how a paywall is presented on each platform.
-class PaywallPresentationConfiguration {
+final class PaywallPresentationConfiguration {
   /// Optional iOS-specific presentation style.
   final IOSPaywallPresentationStyle? ios;
 
