@@ -63,7 +63,7 @@ class PaywallView extends StatelessWidget {
   final PaywallPurchaseLogic? purchaseLogic;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
-  onPurchaseCompleted;
+      onPurchaseCompleted;
   final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
@@ -106,37 +106,38 @@ class PaywallView extends StatelessWidget {
   }
 
   UiKitView _buildUiKitView(Map<String, dynamic> creationParams) => UiKitView(
-    viewType: _viewType,
-    layoutDirection: TextDirection.ltr,
-    creationParams: creationParams,
-    creationParamsCodec: const StandardMessageCodec(),
-    onPlatformViewCreated: _buildListenerChannel,
-  );
+        viewType: _viewType,
+        layoutDirection: TextDirection.ltr,
+        creationParams: creationParams,
+        creationParamsCodec: const StandardMessageCodec(),
+        onPlatformViewCreated: _buildListenerChannel,
+      );
 
   PlatformViewLink _buildAndroidPlatformViewLink(
     Map<String, dynamic> creationParams,
-  ) => PlatformViewLink(
-    viewType: _viewType,
-    surfaceFactory: (context, controller) => AndroidViewSurface(
-      controller: controller as AndroidViewController,
-      gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
-      hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-    ),
-    onCreatePlatformView: (params) =>
-        PlatformViewsService.initSurfaceAndroidView(
-            id: params.id,
-            viewType: _viewType,
-            layoutDirection: TextDirection.ltr,
-            creationParams: creationParams,
-            creationParamsCodec: const StandardMessageCodec(),
-            onFocus: () {
-              params.onFocusChanged(true);
-            },
-          )
-          ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-          ..addOnPlatformViewCreatedListener(_buildListenerChannel)
-          ..create(),
-  );
+  ) =>
+      PlatformViewLink(
+        viewType: _viewType,
+        surfaceFactory: (context, controller) => AndroidViewSurface(
+          controller: controller as AndroidViewController,
+          gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+        ),
+        onCreatePlatformView: (params) =>
+            PlatformViewsService.initSurfaceAndroidView(
+          id: params.id,
+          viewType: _viewType,
+          layoutDirection: TextDirection.ltr,
+          creationParams: creationParams,
+          creationParamsCodec: const StandardMessageCodec(),
+          onFocus: () {
+            params.onFocusChanged(true);
+          },
+        )
+              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+              ..addOnPlatformViewCreatedListener(_buildListenerChannel)
+              ..create(),
+      );
 
   void _buildListenerChannel(int id) {
     final methodChannel = MethodChannel(

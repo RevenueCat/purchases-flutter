@@ -45,7 +45,7 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
     Offering? offering,
     Function(Package rcPackage)? onPurchaseStarted,
     Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
-    onPurchaseCompleted,
+        onPurchaseCompleted,
     Function()? onPurchaseCancelled,
     Function(PurchasesError)? onPurchaseError,
     Function(CustomerInfo customerInfo)? onRestoreCompleted,
@@ -53,17 +53,17 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
     Function()? onDismiss,
     required Widget Function(double bottomPadding) contentCreator,
   }) : super(
-         key: key,
-         offering: offering,
-         onPurchaseStarted: onPurchaseStarted,
-         onPurchaseCompleted: onPurchaseCompleted,
-         onPurchaseCancelled: onPurchaseCancelled,
-         onPurchaseError: onPurchaseError,
-         onRestoreCompleted: onRestoreCompleted,
-         onRestoreError: onRestoreError,
-         onDismiss: onDismiss,
-         contentCreator: contentCreator,
-       );
+          key: key,
+          offering: offering,
+          onPurchaseStarted: onPurchaseStarted,
+          onPurchaseCompleted: onPurchaseCompleted,
+          onPurchaseCancelled: onPurchaseCancelled,
+          onPurchaseError: onPurchaseError,
+          onRestoreCompleted: onRestoreCompleted,
+          onRestoreError: onRestoreError,
+          onDismiss: onDismiss,
+          contentCreator: contentCreator,
+        );
 }
 
 /// View that displays the paywall in footer mode.
@@ -98,7 +98,7 @@ class OriginalTemplatePaywallFooterView extends StatefulWidget {
   final Offering? offering;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
-  onPurchaseCompleted;
+      onPurchaseCompleted;
   final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
@@ -138,42 +138,41 @@ class _PaywallFooterViewState extends State<OriginalTemplatePaywallFooterView> {
 
   @override
   Widget build(BuildContext context) => Stack(
-    children: [
-      Positioned(
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: _height - _roundedCornerRadius,
-        child: widget.contentCreator(_roundedCornerRadius),
-      ),
-      Positioned(
-        bottom: 0,
-        left: 0,
-        right: 0,
-        child: SizedBox(
-          width: double.infinity,
-          height: _height,
-          child: InternalPaywallFooterView(
-            offering: widget.offering,
-            onPurchaseStarted: widget.onPurchaseStarted,
-            onPurchaseCompleted: widget.onPurchaseCompleted,
-            onPurchaseCancelled: widget.onPurchaseCancelled,
-            onPurchaseError: widget.onPurchaseError,
-            onRestoreCompleted: widget.onRestoreCompleted,
-            onRestoreError: widget.onRestoreError,
-            onDismiss: widget.onDismiss,
-            onHeightChanged: _updateHeight,
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: _height - _roundedCornerRadius,
+            child: widget.contentCreator(_roundedCornerRadius),
           ),
-        ),
-      ),
-    ],
-  );
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              width: double.infinity,
+              height: _height,
+              child: InternalPaywallFooterView(
+                offering: widget.offering,
+                onPurchaseStarted: widget.onPurchaseStarted,
+                onPurchaseCompleted: widget.onPurchaseCompleted,
+                onPurchaseCancelled: widget.onPurchaseCancelled,
+                onPurchaseError: widget.onPurchaseError,
+                onRestoreCompleted: widget.onRestoreCompleted,
+                onRestoreError: widget.onRestoreError,
+                onDismiss: widget.onDismiss,
+                onHeightChanged: _updateHeight,
+              ),
+            ),
+          ),
+        ],
+      );
 
   void _updateHeight(double newHeight) {
     // In android we get pixels but in iOS we get pixel independent units.
-    final pixelRatio = Platform.isAndroid
-        ? MediaQuery.of(context).devicePixelRatio
-        : 1.0;
+    final pixelRatio =
+        Platform.isAndroid ? MediaQuery.of(context).devicePixelRatio : 1.0;
     final finalNewHeight = newHeight / pixelRatio;
 
     if (_height != finalNewHeight) {
