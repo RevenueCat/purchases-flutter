@@ -68,7 +68,7 @@ class IOSPaywallPresentationStyle {
 ///
 /// Uses a private constructor with static constants so that new values can
 /// be added in the future without breaking existing code.
-class AndroidPaywallPresentationStyle {
+final class AndroidPaywallPresentationStyle {
   final String _value;
   const AndroidPaywallPresentationStyle._(this._value);
 
