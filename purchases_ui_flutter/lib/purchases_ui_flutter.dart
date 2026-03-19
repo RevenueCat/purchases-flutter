@@ -26,17 +26,17 @@ class RevenueCatUI {
   static CustomerCenterRestoreCompleted? _customerCenterOnRestoreCompleted;
   static CustomerCenterRestoreFailed? _customerCenterOnRestoreFailed;
   static CustomerCenterManageSubscriptions?
-  _customerCenterOnShowingManageSubscriptions;
+      _customerCenterOnShowingManageSubscriptions;
   static CustomerCenterRefundRequestStarted?
-  _customerCenterOnRefundRequestStarted;
+      _customerCenterOnRefundRequestStarted;
   static CustomerCenterRefundRequestCompleted?
-  _customerCenterOnRefundRequestCompleted;
+      _customerCenterOnRefundRequestCompleted;
   static CustomerCenterFeedbackSurveyCompleted?
-  _customerCenterOnFeedbackSurveyCompleted;
+      _customerCenterOnFeedbackSurveyCompleted;
   static CustomerCenterManagementOptionSelected?
-  _customerCenterOnManagementOptionSelected;
+      _customerCenterOnManagementOptionSelected;
   static CustomerCenterCustomActionSelected?
-  _customerCenterOnCustomActionSelected;
+      _customerCenterOnCustomActionSelected;
   static bool _methodChannelHandlerSet = false;
 
   /// Presents the paywall as an activity on android or a modal in iOS.
@@ -59,7 +59,9 @@ class RevenueCatUI {
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
       'customVariables': convertCustomVariablesToStrings(customVariables),
-      'useFullScreenPresentation': presentationConfiguration?.ios == IOSPaywallPresentationStyle.fullScreen,
+      if (presentationConfiguration?.ios ==
+          IOSPaywallPresentationStyle.fullScreen)
+        'useFullScreenPresentation': true,
     });
     return _parseStringToResult(result);
   }
@@ -89,7 +91,9 @@ class RevenueCatUI {
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
       'customVariables': convertCustomVariablesToStrings(customVariables),
-      'useFullScreenPresentation': presentationConfiguration?.ios == IOSPaywallPresentationStyle.fullScreen,
+      if (presentationConfiguration?.ios ==
+          IOSPaywallPresentationStyle.fullScreen)
+        'useFullScreenPresentation': true,
     });
     return _parseStringToResult(result);
   }
@@ -110,8 +114,7 @@ class RevenueCatUI {
     CustomerCenterCustomActionSelected? onCustomActionSelected,
   }) async {
     _setMethodChannelHandlerIfNeeded();
-    final hasCallbacks =
-        onRestoreStarted != null ||
+    final hasCallbacks = onRestoreStarted != null ||
         onRestoreCompleted != null ||
         onRestoreFailed != null ||
         onShowingManageSubscriptions != null ||

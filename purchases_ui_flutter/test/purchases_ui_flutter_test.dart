@@ -33,9 +33,9 @@ void main() {
   setUp(() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
-          log.add(call);
-          return response;
-        });
+      log.add(call);
+      return response;
+    });
   });
 
   tearDown(() {
@@ -54,10 +54,10 @@ void main() {
     final completer = Completer<void>();
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .handlePlatformMessage(
-          'purchases_ui_flutter',
-          data,
-          (_) => completer.complete(),
-        );
+      'purchases_ui_flutter',
+      data,
+      (_) => completer.complete(),
+    );
     await completer.future;
     await Future<void>.delayed(Duration.zero);
   }
@@ -73,7 +73,6 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -95,7 +94,6 @@ void main() {
           },
           'displayCloseButton': false,
           'customVariables': null,
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -120,7 +118,6 @@ void main() {
           },
           'displayCloseButton': true,
           'customVariables': null,
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -138,7 +135,6 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -164,7 +160,6 @@ void main() {
           },
           'displayCloseButton': false,
           'customVariables': null,
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -191,7 +186,6 @@ void main() {
           },
           'displayCloseButton': true,
           'customVariables': null,
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -213,7 +207,6 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': {'player_name': 'John', 'level': '5'},
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -234,7 +227,51 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': {'player_name': 'John'},
-          'useFullScreenPresentation': false,
+        },
+      ),
+    ]);
+  });
+
+  test(
+      'presentPaywall with android-only presentation configuration does not send useFullScreenPresentation',
+      () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded with sheet presentation configuration',
+      () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.sheet,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
         },
       ),
     ]);
@@ -276,13 +313,13 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
-          'useFullScreenPresentation': false,
         },
       ),
     ]);
   });
 
-  test('presentPaywallIfNeeded with full screen presentation configuration', () async {
+  test('presentPaywallIfNeeded with full screen presentation configuration',
+      () async {
     response = 'NOT_PRESENTED';
     await RevenueCatUI.presentPaywallIfNeeded(
       'entitlement',
@@ -388,8 +425,7 @@ void main() {
 
       // Test data extraction logic that should match what's in _handleCustomerCenterMethodCall
       final data = mockCallbackData;
-      final productIdentifier =
-          data['productId'] as String? ??
+      final productIdentifier = data['productId'] as String? ??
           ''; // Should use 'productId' not 'productIdentifier'
       final status = data['status'] as String? ?? '';
 
@@ -731,5 +767,92 @@ void main() {
         expect(callbackCalled, true);
       },
     );
+  });
+
+  group('PaywallPresentationConfiguration', () {
+    test('fullScreen static has correct values', () {
+      expect(
+        PaywallPresentationConfiguration.fullScreen.ios,
+        IOSPaywallPresentationStyle.fullScreen,
+      );
+      expect(
+        PaywallPresentationConfiguration.fullScreen.android,
+        AndroidPaywallPresentationStyle.fullScreen,
+      );
+    });
+
+    test('defaultConfiguration static has correct values', () {
+      expect(
+        PaywallPresentationConfiguration.defaultConfiguration.ios,
+        IOSPaywallPresentationStyle.sheet,
+      );
+      expect(
+        PaywallPresentationConfiguration.defaultConfiguration.android,
+        AndroidPaywallPresentationStyle.fullScreen,
+      );
+    });
+
+    test('equality', () {
+      const a = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      );
+      const b = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      );
+      const c = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.sheet,
+      );
+
+      expect(a, equals(b));
+      expect(a, isNot(equals(c)));
+      expect(a.hashCode, equals(b.hashCode));
+    });
+
+    test('toString', () {
+      const config = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      );
+      expect(
+        config.toString(),
+        'PaywallPresentationConfiguration(ios: fullScreen, android: fullScreen)',
+      );
+    });
+  });
+
+  group('IOSPaywallPresentationStyle', () {
+    test('equality', () {
+      expect(
+        IOSPaywallPresentationStyle.fullScreen,
+        equals(IOSPaywallPresentationStyle.fullScreen),
+      );
+      expect(
+        IOSPaywallPresentationStyle.fullScreen,
+        isNot(equals(IOSPaywallPresentationStyle.sheet)),
+      );
+    });
+
+    test('toString', () {
+      expect(IOSPaywallPresentationStyle.fullScreen.toString(), 'fullScreen');
+      expect(IOSPaywallPresentationStyle.sheet.toString(), 'sheet');
+    });
+  });
+
+  group('AndroidPaywallPresentationStyle', () {
+    test('equality', () {
+      expect(
+        AndroidPaywallPresentationStyle.fullScreen,
+        equals(AndroidPaywallPresentationStyle.fullScreen),
+      );
+    });
+
+    test('toString', () {
+      expect(
+        AndroidPaywallPresentationStyle.fullScreen.toString(),
+        'fullScreen',
+      );
+    });
   });
 }
