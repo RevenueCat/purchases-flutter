@@ -12,7 +12,8 @@ typedef CustomerCenterRestoreStarted = void Function();
 ///
 /// [customerInfo] The updated customer information after restore.
 typedef CustomerCenterRestoreCompleted = void Function(
-    CustomerInfo customerInfo);
+  CustomerInfo customerInfo,
+);
 
 /// Called when restore purchases fails.
 ///
@@ -26,34 +27,42 @@ typedef CustomerCenterManageSubscriptions = void Function();
 ///
 /// [productIdentifier] The product identifier for which the refund was requested.
 typedef CustomerCenterRefundRequestStarted = void Function(
-    String productIdentifier);
+  String productIdentifier,
+);
 
 /// Called when a refund request completes.
 ///
 /// [productIdentifier] The product identifier for which the refund was requested.
 /// [status] The status of the refund request.
 typedef CustomerCenterRefundRequestCompleted = void Function(
-    String productIdentifier, String status);
+  String productIdentifier,
+  String status,
+);
 
 /// Called when a feedback survey is completed.
 ///
 /// [optionIdentifier] The identifier of the selected feedback option.
 typedef CustomerCenterFeedbackSurveyCompleted = void Function(
-    String optionIdentifier);
+  String optionIdentifier,
+);
 
 /// Called when a management option is selected.
 ///
 /// [optionIdentifier] The identifier of the selected management option.
 /// [url] Optional URL associated with the management option.
 typedef CustomerCenterManagementOptionSelected = void Function(
-    String optionIdentifier, String? url);
+  String optionIdentifier,
+  String? url,
+);
 
 /// Called when a custom action is selected.
 ///
 /// [actionIdentifier] The identifier of the selected custom action.
 /// [purchaseIdentifier] Optional purchase identifier associated with the action.
 typedef CustomerCenterCustomActionSelected = void Function(
-    String actionIdentifier, String? purchaseIdentifier);
+  String actionIdentifier,
+  String? purchaseIdentifier,
+);
 
 class CustomerCenterViewMethodHandler {
   final CustomerCenterOnDismiss? onDismiss;
