@@ -280,7 +280,7 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
-          'useFullScreenPresentation': false,
+          // sheet is the native default; key is omitted rather than sent as false
         },
       ),
     ]);
@@ -322,7 +322,7 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
-          'useFullScreenPresentation': false,
+          // sheet is the native default; key is omitted rather than sent as false
         },
       ),
     ]);

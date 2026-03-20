@@ -59,11 +59,12 @@ class RevenueCatUI {
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
       'customVariables': convertCustomVariablesToNative(customVariables),
-      // Only send the key when the dev explicitly sets an iOS style.
-      // Omitting it lets the native SDK use its default (sheet).
-      if (presentationConfiguration?.ios != null)
-        'useFullScreenPresentation': presentationConfiguration!.ios ==
-            IOSPaywallPresentationStyle.fullScreen,
+      // Only send when fullScreen is explicitly requested; omitting the key
+      // lets the native SDK use its default (sheet). This avoids ambiguity
+      // between "key absent" and "key present with false".
+      if (presentationConfiguration?.ios ==
+          IOSPaywallPresentationStyle.fullScreen)
+        'useFullScreenPresentation': true,
     });
     return _parseStringToResult(result);
   }
@@ -93,11 +94,12 @@ class RevenueCatUI {
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
       'customVariables': convertCustomVariablesToNative(customVariables),
-      // Only send the key when the dev explicitly sets an iOS style.
-      // Omitting it lets the native SDK use its default (sheet).
-      if (presentationConfiguration?.ios != null)
-        'useFullScreenPresentation': presentationConfiguration!.ios ==
-            IOSPaywallPresentationStyle.fullScreen,
+      // Only send when fullScreen is explicitly requested; omitting the key
+      // lets the native SDK use its default (sheet). This avoids ambiguity
+      // between "key absent" and "key present with false".
+      if (presentationConfiguration?.ios ==
+          IOSPaywallPresentationStyle.fullScreen)
+        'useFullScreenPresentation': true,
     });
     return _parseStringToResult(result);
   }
