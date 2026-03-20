@@ -3,7 +3,7 @@ version '9.15.0'
 
 buildscript {
     ext.kotlin_version = '1.9.20'
-    ext.common_version = '17.52.0'
+    ext.common_version = '17.53.0'
     repositories {
         google()
         mavenCentral()
