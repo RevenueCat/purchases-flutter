@@ -71,6 +71,9 @@
 ### ✨ New Features
 * Add number and boolean custom variable types (#1683) via Facundo Menzella (@facumenzella)
 
+### 🐛 Bug Fixes
+* Fix PaywallView landscape layout on iOS (#1631) via Facundo Menzella (@facumenzella)
+
 ### 🔄 Other Changes
 * Bump fastlane-plugin-revenuecat_internal from `3e8c384` to `9a6911b` (#1688) via dependabot[bot] (@dependabot[bot])
 * Bump fastlane-plugin-revenuecat_internal from `e146447` to `3e8c384` (#1681) via dependabot[bot] (@dependabot[bot])
