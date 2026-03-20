@@ -36,7 +36,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@3.13.0
+  revenuecat: revenuecat/sdks-common-config@3.15.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -608,6 +608,11 @@ workflows:
           requires:
             - make-release
             - make-release-purchases-flutter-ui
+          <<: *release-tags
+      - revenuecat/merge-release-pr:
+          repo_name: purchases-flutter
+          requires:
+            - github_release
           <<: *release-tags
   weekly-run-workflow:
     when:
