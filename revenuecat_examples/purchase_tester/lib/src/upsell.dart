@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -77,6 +78,42 @@ class _UpsellScreenState extends State<UpsellScreen> {
     setState(() {
       _offerings = offerings;
     });
+  }
+
+  Future<PaywallPresentationConfiguration?> _choosePresentationConfiguration(
+      BuildContext context) {
+    return showCupertinoModalPopup<PaywallPresentationConfiguration>(
+      context: context,
+      builder: (context) => CupertinoActionSheet(
+        title: const Text('Presentation Style'),
+        message: const Text('How should the paywall be presented on iOS?'),
+        actions: [
+          CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(
+              context,
+              const PaywallPresentationConfiguration(
+                ios: IOSPaywallPresentationStyle.sheet,
+              ),
+            ),
+            child: const Text('Sheet (default)'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () => Navigator.pop(
+              context,
+              const PaywallPresentationConfiguration(
+                ios: IOSPaywallPresentationStyle.fullScreen,
+              ),
+            ),
+            child: const Text('Full Screen'),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () => Navigator.pop(context),
+          isDestructiveAction: false,
+          child: const Text('Cancel'),
+        ),
+      ),
+    );
   }
 
   void _openCustomVariablesEditor() {
@@ -374,9 +411,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   const Text("Paywalls"),
                   ElevatedButton(
                     onPressed: () async {
+                      final config = await _choosePresentationConfiguration(context);
+                      if (config == null) return;
                       final paywallResult = await RevenueCatUI.presentPaywall(
                         offering: offering,
                         customVariables: _getCustomVariablesForPaywall(),
+                        presentationConfiguration: config,
                       );
                       log('Paywall result: $paywallResult');
                     },
@@ -384,11 +424,14 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
+                      final config = await _choosePresentationConfiguration(context);
+                      if (config == null) return;
                       final paywallResult =
                           await RevenueCatUI.presentPaywallIfNeeded(
                         entitlementKey,
                         offering: offering,
                         customVariables: _getCustomVariablesForPaywall(),
+                        presentationConfiguration: config,
                       );
                       log('Paywall result: $paywallResult');
                     },

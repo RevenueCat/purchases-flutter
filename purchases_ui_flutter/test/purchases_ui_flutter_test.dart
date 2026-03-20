@@ -240,6 +240,118 @@ void main() {
     ]);
   });
 
+  test(
+      'presentPaywall with android-only presentation configuration does not send useFullScreenPresentation',
+      () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded with sheet presentation configuration',
+      () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.sheet,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+          // sheet is the native default; key is omitted rather than sent as false
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywall with full screen presentation configuration', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+          'useFullScreenPresentation': true,
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywall with sheet presentation configuration', () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywall(
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.sheet,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywall',
+        arguments: {
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+          // sheet is the native default; key is omitted rather than sent as false
+        },
+      ),
+    ]);
+  });
+
+  test('presentPaywallIfNeeded with full screen presentation configuration',
+      () async {
+    response = 'NOT_PRESENTED';
+    await RevenueCatUI.presentPaywallIfNeeded(
+      'entitlement',
+      presentationConfiguration: const PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'presentPaywallIfNeeded',
+        arguments: {
+          'requiredEntitlementIdentifier': 'entitlement',
+          'offeringIdentifier': null,
+          'presentedOfferingContext': null,
+          'displayCloseButton': false,
+          'customVariables': null,
+          'useFullScreenPresentation': true,
+        },
+      ),
+    ]);
+  });
+
   test('presentPaywall parses response correctly', () async {
     response = 'NOT_PRESENTED';
     var paywallResult = await RevenueCatUI.presentPaywall();
@@ -665,5 +777,92 @@ void main() {
         expect(callbackCalled, true);
       },
     );
+  });
+
+  group('PaywallPresentationConfiguration', () {
+    test('fullScreen static has correct values', () {
+      expect(
+        PaywallPresentationConfiguration.fullScreen.ios,
+        IOSPaywallPresentationStyle.fullScreen,
+      );
+      expect(
+        PaywallPresentationConfiguration.fullScreen.android,
+        AndroidPaywallPresentationStyle.fullScreen,
+      );
+    });
+
+    test('defaultConfiguration static has correct values', () {
+      expect(
+        PaywallPresentationConfiguration.defaultConfiguration.ios,
+        IOSPaywallPresentationStyle.sheet,
+      );
+      expect(
+        PaywallPresentationConfiguration.defaultConfiguration.android,
+        AndroidPaywallPresentationStyle.fullScreen,
+      );
+    });
+
+    test('equality', () {
+      const a = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      );
+      const b = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      );
+      const c = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.sheet,
+      );
+
+      expect(a, equals(b));
+      expect(a, isNot(equals(c)));
+      expect(a.hashCode, equals(b.hashCode));
+    });
+
+    test('toString', () {
+      const config = PaywallPresentationConfiguration(
+        ios: IOSPaywallPresentationStyle.fullScreen,
+        android: AndroidPaywallPresentationStyle.fullScreen,
+      );
+      expect(
+        config.toString(),
+        'PaywallPresentationConfiguration(ios: fullScreen, android: fullScreen)',
+      );
+    });
+  });
+
+  group('IOSPaywallPresentationStyle', () {
+    test('equality', () {
+      expect(
+        IOSPaywallPresentationStyle.fullScreen,
+        equals(IOSPaywallPresentationStyle.fullScreen),
+      );
+      expect(
+        IOSPaywallPresentationStyle.fullScreen,
+        isNot(equals(IOSPaywallPresentationStyle.sheet)),
+      );
+    });
+
+    test('toString', () {
+      expect(IOSPaywallPresentationStyle.fullScreen.toString(), 'fullScreen');
+      expect(IOSPaywallPresentationStyle.sheet.toString(), 'sheet');
+    });
+  });
+
+  group('AndroidPaywallPresentationStyle', () {
+    test('equality', () {
+      expect(
+        AndroidPaywallPresentationStyle.fullScreen,
+        equals(AndroidPaywallPresentationStyle.fullScreen),
+      );
+    });
+
+    test('toString', () {
+      expect(
+        AndroidPaywallPresentationStyle.fullScreen.toString(),
+        'fullScreen',
+      );
+    });
   });
 }
