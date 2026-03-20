@@ -73,14 +73,14 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 offeringIdentifier = call.argument("offeringIdentifier"),
                 presentedOfferingContext = call.argument("presentedOfferingContext"),
                 displayCloseButton = call.argument("displayCloseButton"),
-                customVariables = call.argument<Map<String, Any?>>("customVariables")?.mapNotNull { (k, v) -> v?.let { k to it.toString() } }?.toMap(),
+                customVariables = call.argument<Map<String, Any?>>("customVariables"),
             )
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
                 val offeringIdentifier: String? = call.argument("offeringIdentifier")
                 val presentedOfferingContext: Map<*, *>? = call.argument("presentedOfferingContext")
                 val displayCloseButton: Boolean? = call.argument("displayCloseButton")
-                val customVariables: Map<String, String>? = call.argument<Map<String, Any?>>("customVariables")?.mapNotNull { (k, v) -> v?.let { k to it.toString() } }?.toMap()
+                val customVariables: Map<String, Any?>? = call.argument<Map<String, Any?>>("customVariables")
                 presentPaywall(
                     result = result,
                     requiredEntitlementIdentifier = requiredEntitlementIdentifier,
@@ -128,7 +128,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         offeringIdentifier: String?,
         presentedOfferingContext: Map<*, *>?,
         displayCloseButton: Boolean?,
-        customVariables: Map<String, String>?
+        customVariables: Map<String, Any?>?
     ) {
         val activity = getActivityFragment()
         if (activity != null) {

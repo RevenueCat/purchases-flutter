@@ -103,7 +103,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
-                customVariables: args[Parameter.customVariables.rawValue] as? [String: String]
+                customVariables: args[Parameter.customVariables.rawValue] as? [String: Any]
             )
 
         case "presentPaywallIfNeeded":
@@ -126,7 +126,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 offeringIdentifier: args[Parameter.offeringIdentifier.rawValue] as? String,
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
-                customVariables: args[Parameter.customVariables.rawValue] as? [String: String]
+                customVariables: args[Parameter.customVariables.rawValue] as? [String: Any]
             )
 
         case "presentCustomerCenter":
@@ -175,7 +175,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         offeringIdentifier: String?,
         presentedOfferingContext: [String: Any]?,
         displayCloseButton: Bool?,
-        customVariables: [String: String]?
+        customVariables: [String: Any]?
     ) {
 #if os(iOS)
         if #available(iOS 15.0, *) {

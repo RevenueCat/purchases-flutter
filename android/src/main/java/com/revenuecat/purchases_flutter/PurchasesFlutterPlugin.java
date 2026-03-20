@@ -27,6 +27,7 @@ import com.revenuecat.purchases.models.InAppMessageType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "9.12.3";
+    private static final String PLUGIN_VERSION = "9.15.0";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -143,6 +144,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "syncAttributesAndOfferingsIfNeeded":
                 syncAttributesAndOfferingsIfNeeded(result);
+                break;
+            case "setAppstackAttributionParams":
+                Map<String, Object> appstackData = call.argument("data");
+                setAppstackAttributionParams(appstackData, result);
                 break;
             case "getProductInfo":
                 ArrayList<String> productIdentifiers = call.argument("productIdentifiers");
@@ -379,6 +384,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getCachedVirtualCurrencies":
                 getCachedVirtualCurrencies(result);
                 break;
+            case "trackCustomPaywallImpression":
+                trackCustomPaywallImpression(call.arguments(), result);
+                break;
             default:
                 result.notImplemented();
                 break;
@@ -459,6 +467,18 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void syncAttributesAndOfferingsIfNeeded(final Result result) {
         CommonKt.syncAttributesAndOfferingsIfNeeded(getOnResult(result));
+    }
+
+    private void setAppstackAttributionParams(Map<String, Object> data, final Result result) {
+        HashMap<String, Object> filteredData = new HashMap<>();
+        if (data != null) {
+            for (Map.Entry<String, Object> entry : data.entrySet()) {
+                if (entry.getValue() != null) {
+                    filteredData.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+        CommonKt.setAppstackAttributionParams(filteredData, getOnResult(result));
     }
 
     private void getProductInfo(ArrayList<String> productIDs, String type, final Result result) {
@@ -833,6 +853,17 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void getCachedVirtualCurrencies(final Result result) {
         result.success(CommonKt.getCachedVirtualCurrencies());
+    }
+
+    private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
+        HashMap<String, Object> data = new HashMap<>();
+        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
+            if (entry.getValue() != null) {
+                data.put(entry.getKey(), entry.getValue());
+            }
+        }
+        CommonKt.trackCustomPaywallImpression(data);
+        result.success(null);
     }
 
     private void runOnUiThread(Runnable runnable) {

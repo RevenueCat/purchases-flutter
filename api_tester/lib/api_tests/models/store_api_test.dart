@@ -16,6 +16,7 @@ class _StoreApiTest {
       case Store.externalStore:
       case Store.testStore:
       case Store.paddle:
+      case Store.galaxy:
         break;
     }
   }
