@@ -183,14 +183,16 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 #if os(iOS)
         if #available(iOS 15.0, *) {
             let displayCloseButton = displayCloseButton ?? false
-            let useFullScreenPresentation = useFullScreenPresentation ?? false
 
             var options: [String:Any] = [
                 PaywallProxy.PaywallOptionsKeys.displayCloseButton: displayCloseButton,
                 // This is needed for: https://github.com/RevenueCat/purchases-flutter/issues/1023
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true,
-                PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation: useFullScreenPresentation
             ]
+
+            if let useFullScreenPresentation {
+                options[PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation] = useFullScreenPresentation
+            }
 
             if let offeringIdentifier {
                 options[PaywallProxy.PaywallOptionsKeys.offeringIdentifier] = offeringIdentifier
