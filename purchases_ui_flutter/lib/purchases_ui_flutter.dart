@@ -59,9 +59,9 @@ class RevenueCatUI {
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
       'customVariables': convertCustomVariablesToNative(customVariables),
-      if (presentationConfiguration?.ios ==
-          IOSPaywallPresentationStyle.fullScreen)
-        'useFullScreenPresentation': true,
+      if (presentationConfiguration?.ios != null)
+        'useFullScreenPresentation':
+            presentationConfiguration!.ios == IOSPaywallPresentationStyle.fullScreen,
     });
     return _parseStringToResult(result);
   }
@@ -91,9 +91,9 @@ class RevenueCatUI {
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
       'customVariables': convertCustomVariablesToNative(customVariables),
-      if (presentationConfiguration?.ios ==
-          IOSPaywallPresentationStyle.fullScreen)
-        'useFullScreenPresentation': true,
+      if (presentationConfiguration?.ios != null)
+        'useFullScreenPresentation':
+            presentationConfiguration!.ios == IOSPaywallPresentationStyle.fullScreen,
     });
     return _parseStringToResult(result);
   }

@@ -192,6 +192,10 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
             if let useFullScreenPresentation {
                 options[PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation] = useFullScreenPresentation
+            } else if UIDevice.current.userInterfaceIdiom == .phone {
+                // Default: present paywalls full-screen on iPhone to avoid side white areas
+                // in landscape orientation. Keep iPad behavior unchanged.
+                options[PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation] = true
             }
 
             if let offeringIdentifier {

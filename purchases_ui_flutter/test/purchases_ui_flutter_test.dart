@@ -280,6 +280,7 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
@@ -321,6 +322,7 @@ void main() {
           'presentedOfferingContext': null,
           'displayCloseButton': false,
           'customVariables': null,
+          'useFullScreenPresentation': false,
         },
       ),
     ]);
