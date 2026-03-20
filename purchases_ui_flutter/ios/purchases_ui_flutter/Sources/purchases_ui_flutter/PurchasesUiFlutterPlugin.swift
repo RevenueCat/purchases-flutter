@@ -190,7 +190,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 PaywallProxy.PaywallOptionsKeys.shouldBlockTouchEvents: true,
             ]
 
-            if let useFullScreenPresentation {
+            // Only apply on iPhone; iPad always uses the default sheet presentation
+            if let useFullScreenPresentation, UIDevice.current.userInterfaceIdiom == .phone {
                 options[PaywallProxy.PaywallOptionsKeys.useFullScreenPresentation] = useFullScreenPresentation
             }
 
