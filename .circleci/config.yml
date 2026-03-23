@@ -589,6 +589,11 @@ workflows:
             - make-release
             - make-release-purchases-flutter-ui
           <<: *release-tags
+      - revenuecat/merge-release-pr:
+          repo_name: purchases-flutter
+          requires:
+            - github_release
+          <<: *release-tags
   weekly-run-workflow:
     when:
       and:
