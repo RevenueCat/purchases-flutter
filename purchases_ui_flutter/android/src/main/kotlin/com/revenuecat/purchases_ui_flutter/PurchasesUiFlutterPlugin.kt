@@ -268,6 +268,21 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                     )
                 )
             }
+
+            override fun onPromotionalOfferSucceededWrapper(
+                customerInfo: Map<String, Any?>,
+                transaction: Map<String, Any?>,
+                offerId: String,
+            ) {
+                channel.invokeMethod(
+                    "onPromotionalOfferSucceeded",
+                    mapOf(
+                        "customerInfo" to customerInfo,
+                        "transaction" to transaction,
+                        "offerId" to offerId,
+                    ),
+                )
+            }
         }
     }
 

@@ -100,6 +100,21 @@ internal class CustomerCenterView(
                     )
                 )
             }
+
+            override fun onPromotionalOfferSucceededWrapper(
+                customerInfo: Map<String, Any?>,
+                transaction: Map<String, Any?>,
+                offerId: String,
+            ) {
+                methodChannel.invokeMethod(
+                    "onPromotionalOfferSucceeded",
+                    mapOf(
+                        "customerInfo" to customerInfo,
+                        "transaction" to transaction,
+                        "offerId" to offerId,
+                    ),
+                )
+            }
         }
     }
 
