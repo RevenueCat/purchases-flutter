@@ -207,6 +207,7 @@ lane :run_maestro_e2e_tests_ios do
     sh("xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Debug -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 17' -derivedDataPath build")
     sh("xcrun simctl install booted build/Build/Products/Debug-iphonesimulator/Runner.app")
   end
+  sh("mkdir -p test_output")
   sh("maestro test --format junit --output test_output/report.xml ../e2e-tests/maestro/")
 end
 
@@ -220,6 +221,7 @@ lane :run_maestro_e2e_tests_android do
     sh("adb wait-for-device")
     sh("adb install build/app/outputs/flutter-apk/app-debug.apk")
   end
+  sh("mkdir -p test_output")
   sh("maestro test --format junit --output test_output/report.xml ../e2e-tests/maestro/")
 end
 
