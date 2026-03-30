@@ -13,6 +13,7 @@ class PurchaseThroughPaywallScreen extends StatefulWidget {
 class _PurchaseThroughPaywallScreenState
     extends State<PurchaseThroughPaywallScreen> {
   String _entitlements = 'none';
+  String? _error;
 
   @override
   void initState() {
@@ -44,15 +45,28 @@ class _PurchaseThroughPaywallScreenState
           children: [
             Text(
               'Entitlements: $_entitlements',
+              key: const Key('entitlements-label'),
               style: const TextStyle(fontSize: 18),
             ),
+            if (_error != null) ...[
+              const SizedBox(height: 10),
+              Text(
+                'Error: $_error',
+                key: const Key('error-message'),
+                style: const TextStyle(fontSize: 14, color: Colors.red),
+                textAlign: TextAlign.center,
+              ),
+            ],
             const SizedBox(height: 20),
             ElevatedButton(
+              key: const Key('present-paywall-button'),
               onPressed: () async {
+                setState(() => _error = null);
                 try {
                   await RevenueCatUI.presentPaywall();
                 } catch (e) {
                   debugPrint('Failed to present paywall: $e');
+                  setState(() => _error = e.toString());
                 }
               },
               child: const Text('Present Paywall'),
