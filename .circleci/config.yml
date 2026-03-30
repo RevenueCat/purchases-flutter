@@ -498,9 +498,7 @@ jobs:
           path: fastlane/test_output
 
   run-maestro-e2e-tests-android:
-    machine:
-      image: android:2024.11.1
-    resource_class: xlarge
+    <<: *android-machine-emulator
     steps:
       - checkout
       - run:
@@ -509,16 +507,18 @@ jobs:
             gem install bundler
             bundle install
       - setup-flutter
-      - revenuecat/install-maestro
       - run:
-          name: Create and start Android emulator
-          command: |
-            sdkmanager "system-images;android-34;google_apis;x86_64"
-            echo "no" | avdmanager create avd -n test-e2e -k "system-images;android-34;google_apis;x86_64" --force
-            nohup emulator -avd test-e2e -no-audio -no-boot-anim -no-window -gpu swiftshader_indirect &
-            adb wait-for-device
-            adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
-            adb shell input keyevent 82
+          name: Build Maestro app (Android)
+          command: bundle exec fastlane build_maestro_app_android
+          no_output_timeout: 15m
+      - android/create-avd:
+          avd-name: test-e2e
+          system-image: system-images;android-34;google_apis;x86_64
+          install: true
+      - android/start-emulator:
+          avd-name: test-e2e
+          post-emulator-launch-assemble-command: ""
+      - revenuecat/install-maestro
       - run:
           name: Run Maestro E2E Tests (Android)
           command: bundle exec fastlane run_maestro_e2e_tests_android
