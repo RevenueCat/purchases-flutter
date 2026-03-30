@@ -605,6 +605,14 @@ workflows:
       - android-integration-test-build
       - test_main_sdk_min_version_compatibility
       - test_ui_sdk_min_version_compatibility
+      - run-maestro-e2e-tests-ios:
+          context:
+            - maestro-e2e-tests
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          context:
+            - maestro-e2e-tests
+            - e2e-tests
 
   deploy:
     when:
