@@ -475,6 +475,7 @@ jobs:
   run-maestro-e2e-tests-ios:
     executor:
       name: macos-executor
+      xcode_version: "26.3"
     steps:
       - checkout
       - revenuecat/install-gem-mac-dependencies:
@@ -485,8 +486,8 @@ jobs:
       - run:
           name: Boot iOS Simulator
           command: |
-            xcrun simctl boot "iPhone 16 Pro" || true
-            xcrun simctl bootstatus "iPhone 16 Pro" -b
+            xcrun simctl boot "iPhone 17" || true
+            xcrun simctl bootstatus "iPhone 17" -b
       - run:
           name: Run Maestro E2E Tests (iOS)
           command: bundle exec fastlane run_maestro_e2e_tests_ios
