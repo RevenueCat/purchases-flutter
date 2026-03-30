@@ -19,7 +19,10 @@ class _PurchaseThroughPaywallScreenState
   void initState() {
     super.initState();
     Purchases.addCustomerInfoUpdateListener(_updateEntitlements);
-    Purchases.getCustomerInfo().then(_updateEntitlements);
+    Purchases.getCustomerInfo().then(_updateEntitlements).catchError((e) {
+      debugPrint('Failed to get customer info: $e');
+      setState(() => _error = e.toString());
+    });
   }
 
   @override
