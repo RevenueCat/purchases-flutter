@@ -1,4 +1,4 @@
-package com.revenuecat.maestro_test_app
+package com.revenuecat.automatedsdktests
 
 import io.flutter.embedding.android.FlutterActivity
 
