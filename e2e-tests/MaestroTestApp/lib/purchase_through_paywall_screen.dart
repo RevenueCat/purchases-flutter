@@ -49,7 +49,11 @@ class _PurchaseThroughPaywallScreenState
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                await RevenueCatUI.presentPaywall();
+                try {
+                  await RevenueCatUI.presentPaywall();
+                } catch (e) {
+                  debugPrint('Failed to present paywall: $e');
+                }
               },
               child: const Text('Present Paywall'),
             ),

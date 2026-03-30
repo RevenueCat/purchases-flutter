@@ -10,8 +10,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  purchases_flutter: any
-  purchases_ui_flutter: any
+  purchases_flutter:
+    path: ../../
+  purchases_ui_flutter:
+    path: ../../purchases_ui_flutter
+
+dependency_overrides:
+  purchases_flutter:
+    path: ../../
 
 flutter:
   uses-material-design: true
