@@ -4,7 +4,7 @@ This guide explains how to set up the development environment for the RevenueCat
 
 ## Prerequisites
 
-- Flutter SDK (>=3.27.0) - See [Flutter installation guide](https://docs.flutter.dev/get-started/install)
+- Flutter SDK (>=3.22.0) - See [Flutter installation guide](https://docs.flutter.dev/get-started/install)
 - Xcode (for iOS development)
 - Android Studio (for Android development)
 - **Swift Package Manager** (recommended for iOS dependencies) or CocoaPods (legacy)
