@@ -83,15 +83,6 @@ commands:
           command: |
             cd <<parameters.project>>
             flutter pub get
-  build-flutter-project:
-    description: "Install dependencies and build"
-    parameters:
-      project:
-        default: .
-        type: string
-    steps:
-      - flutter-get-dependencies:
-          project: <<parameters.project>>
 
   gradle-dependencies:
     description: "Get Gradle dependencies"
@@ -270,7 +261,7 @@ jobs:
       - image: ghcr.io/cirruslabs/flutter:<< parameters.flutter-version >>
     steps:
       - checkout
-      - build-flutter-project
+      - flutter-get-dependencies
       - run:
           name: Analyze code
           command: flutter analyze lib
@@ -288,7 +279,7 @@ jobs:
       - image: ghcr.io/cirruslabs/flutter:<< parameters.flutter-version >>
     steps:
       - checkout
-      - build-flutter-project
+      - flutter-get-dependencies
       - flutter-get-dependencies:
           project: purchases_ui_flutter
       - run:
@@ -304,7 +295,7 @@ jobs:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
-      - build-flutter-project
+      - flutter-get-dependencies
       - flutter-get-dependencies:
           project: revenuecat_examples/MagicWeather
       - flutter-get-dependencies:
@@ -362,7 +353,7 @@ jobs:
           avd-name: integration-tests
           post-emulator-launch-assemble-command: ''
       - setup-flutter
-      - build-flutter-project:
+      - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
       - run:
           command: |
@@ -382,7 +373,7 @@ jobs:
       - setup-flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
-      - build-flutter-project:
+      - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
       - pod-update-with-retry:
           working_directory: revenuecat_examples/purchase_tester/ios
@@ -404,7 +395,7 @@ jobs:
       - setup-flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
-      - build-flutter-project:
+      - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
       - pod-update-with-retry:
           working_directory: revenuecat_examples/purchase_tester/macos
@@ -429,7 +420,7 @@ jobs:
       - setup-flutter
       - prepare-for-spm-integration-test
       - replace-api-key
-      - build-flutter-project:
+      - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
       - run:
           name: Run Flutter integration tests
@@ -447,7 +438,7 @@ jobs:
       - setup-flutter
       - prepare-for-spm-integration-test
       - replace-api-key
-      - build-flutter-project:
+      - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
       - run:
           name: Run Flutter integration tests
