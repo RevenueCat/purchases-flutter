@@ -114,6 +114,9 @@
 ### ✨ New Features
 * Add setAppstackAttributionParams API (#1671) via Rick (@rickvdl)
 
+### 🐞 Bugfixes
+* Fix Wasm incompatibility: replace `is JSObject` runtime check with `isA<JSObject>()` in web error processing (#1651)
+
 ## 9.13.2
 ## RevenueCat SDK
 ### 📦 Dependency Updates
