@@ -13,17 +13,12 @@ A minimal Flutter app used by Maestro end-to-end tests to verify RevenueCat SDK 
 
 ```bash
 flutter pub get
-cd ios && pod install && cd ..
 ```
 
 ## Running Locally
 
 ```bash
-# iOS
-flutter run --debug -d <simulator-id>
-
-# Android
-flutter run --debug -d <emulator-id>
+flutter run --debug -d <simulator-or-emulator-id>
 ```
 
 ## API Key
