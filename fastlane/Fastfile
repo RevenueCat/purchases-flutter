@@ -199,6 +199,7 @@ end
 
 desc "Run maestro E2E tests on iOS"
 lane :run_maestro_e2e_tests_ios do
+  UI.user_error!("RC_E2E_TEST_API_KEY_PRODUCTION_TEST_STORE is not set") if ENV["RC_E2E_TEST_API_KEY_PRODUCTION_TEST_STORE"].to_s.empty?
   Dir.chdir("../e2e-tests/MaestroTestApp") do
     sh("sed -i '' 's/MAESTRO_TESTS_REVENUECAT_API_KEY/'\"$RC_E2E_TEST_API_KEY_PRODUCTION_TEST_STORE\"'/g' lib/main.dart")
     sh("flutter pub get")
@@ -211,6 +212,7 @@ end
 
 desc "Build maestro E2E test app for Android"
 lane :build_maestro_app_android do
+  UI.user_error!("RC_E2E_TEST_API_KEY_PRODUCTION_TEST_STORE is not set") if ENV["RC_E2E_TEST_API_KEY_PRODUCTION_TEST_STORE"].to_s.empty?
   Dir.chdir("../e2e-tests/MaestroTestApp") do
     sh("sed -i 's/MAESTRO_TESTS_REVENUECAT_API_KEY/'\"$RC_E2E_TEST_API_KEY_PRODUCTION_TEST_STORE\"'/g' lib/main.dart")
     sh("flutter pub get")
