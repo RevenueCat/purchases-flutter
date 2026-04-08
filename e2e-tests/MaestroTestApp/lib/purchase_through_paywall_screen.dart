@@ -20,6 +20,7 @@ class _PurchaseThroughPaywallScreenState
     super.initState();
     Purchases.addCustomerInfoUpdateListener(_updateEntitlements);
     Purchases.getCustomerInfo().then(_updateEntitlements).catchError((e) {
+      if (!mounted) return;
       debugPrint('Failed to get customer info: $e');
       setState(() => _error = e.toString());
     });
@@ -32,6 +33,7 @@ class _PurchaseThroughPaywallScreenState
   }
 
   void _updateEntitlements(CustomerInfo info) {
+    if (!mounted) return;
     setState(() {
       _entitlements =
           info.entitlements.active.containsKey('pro') ? 'pro' : 'none';
@@ -48,26 +50,24 @@ class _PurchaseThroughPaywallScreenState
           children: [
             Text(
               'Entitlements: $_entitlements',
-              key: const Key('entitlements-label'),
               style: const TextStyle(fontSize: 18),
             ),
             if (_error != null) ...[
               const SizedBox(height: 10),
               Text(
                 'Error: $_error',
-                key: const Key('error-message'),
                 style: const TextStyle(fontSize: 14, color: Colors.red),
                 textAlign: TextAlign.center,
               ),
             ],
             const SizedBox(height: 20),
             ElevatedButton(
-              key: const Key('present-paywall-button'),
               onPressed: () async {
                 setState(() => _error = null);
                 try {
                   await RevenueCatUI.presentPaywall();
                 } catch (e) {
+                  if (!mounted) return;
                   debugPrint('Failed to present paywall: $e');
                   setState(() => _error = e.toString());
                 }

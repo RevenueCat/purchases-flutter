@@ -7,7 +7,6 @@ A minimal Flutter app used by Maestro end-to-end tests to verify RevenueCat SDK 
 - Flutter SDK (>= 3.27.0)
 - Xcode (iOS) / Android Studio (Android)
 - [Maestro](https://maestro.mobile.dev/) CLI
-- CocoaPods (`gem install cocoapods`)
 
 ## Setup
 
