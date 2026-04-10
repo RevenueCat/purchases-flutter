@@ -7,10 +7,6 @@ import 'purchase_through_paywall_screen.dart';
 const apiKey = 'MAESTRO_TESTS_REVENUECAT_API_KEY';
 const _launchArgsChannel = MethodChannel('com.revenuecat.maestro/launch_args');
 
-const _testFlowScreenMap = {
-  'purchase_through_paywall': 'PurchaseThroughPaywall',
-};
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Purchases.setLogLevel(LogLevel.debug);
@@ -19,7 +15,9 @@ void main() async {
   String? testFlow;
   try {
     testFlow = await _launchArgsChannel.invokeMethod<String>('getTestFlow');
-  } catch (_) {}
+  } on MissingPluginException {
+    debugPrint('Launch args channel not available');
+  }
 
   runApp(MaestroTestApp(initialTestFlow: testFlow));
 }
@@ -31,14 +29,9 @@ class MaestroTestApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screen = initialTestFlow != null &&
-            _testFlowScreenMap.containsKey(initialTestFlow)
-        ? initialTestFlow
-        : null;
-
     return MaterialApp(
       title: 'Maestro Test App',
-      home: screen == 'purchase_through_paywall'
+      home: initialTestFlow == 'purchase_through_paywall'
           ? const PurchaseThroughPaywallScreen()
           : const TestCasesScreen(),
     );
