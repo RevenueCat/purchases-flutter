@@ -453,23 +453,26 @@ class PurchasesFlutterPlugin {
   ];
 
   PlatformException _processError(dynamic error) {
-    if (error is JSObject && error.has('code')) {
-      final errorMap = _convertJsRecordToMap(error);
-      final code = errorMap['code'];
-      final message = errorMap['message'];
-      final underlyingErrorMessage = errorMap['underlyingErrorMessage'];
-      final finalMessage = '$message. $underlyingErrorMessage';
-      return PlatformException(
-        code: '$code',
-        message: finalMessage,
-        details: errorMap,
-      );
-    } else {
-      return PlatformException(
-        code: _unknownErrorCode,
-        message: error.toString(),
-      );
+    final jsAny = error as JSAny?;
+    if (jsAny != null && jsAny.isA<JSObject>()) {
+      final jsObject = jsAny as JSObject;
+      if (jsObject.has('code')) {
+        final errorMap = _convertJsRecordToMap(jsObject);
+        final code = errorMap['code'];
+        final message = errorMap['message'];
+        final underlyingErrorMessage = errorMap['underlyingErrorMessage'];
+        final finalMessage = '$message. $underlyingErrorMessage';
+        return PlatformException(
+          code: '$code',
+          message: finalMessage,
+          details: errorMap,
+        );
+      }
     }
+    return PlatformException(
+      code: _unknownErrorCode,
+      message: error.toString(),
+    );
   }
 
   Map<String, dynamic> _convertJsRecordToMap(JSAny? jsRecord) {
