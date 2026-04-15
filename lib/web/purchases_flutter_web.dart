@@ -453,7 +453,15 @@ class PurchasesFlutterPlugin {
   ];
 
   PlatformException _processError(dynamic error) {
-    final jsAny = error as JSAny?;
+    // Under dart2wasm, `error` may be a Dart exception or an opaque
+    // _JavaScriptError—neither is a subtype of JSAny, so the cast throws
+    // a TypeError. Catching it lets us fall through to the generic branch.
+    JSAny? jsAny;
+    try {
+      jsAny = error as JSAny?;
+    } on TypeError catch (e) {
+      debugPrint('Warning: error in _processError is not a JS interop type: $e');
+    }
     if (jsAny != null && jsAny.isA<JSObject>()) {
       final jsObject = jsAny as JSObject;
       if (jsObject.has('code')) {
