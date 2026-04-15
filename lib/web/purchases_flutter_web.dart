@@ -453,23 +453,34 @@ class PurchasesFlutterPlugin {
   ];
 
   PlatformException _processError(dynamic error) {
-    if (error is JSObject && error.has('code')) {
-      final errorMap = _convertJsRecordToMap(error);
-      final code = errorMap['code'];
-      final message = errorMap['message'];
-      final underlyingErrorMessage = errorMap['underlyingErrorMessage'];
-      final finalMessage = '$message. $underlyingErrorMessage';
-      return PlatformException(
-        code: '$code',
-        message: finalMessage,
-        details: errorMap,
-      );
-    } else {
-      return PlatformException(
-        code: _unknownErrorCode,
-        message: error.toString(),
-      );
+    // Under dart2wasm, `error` may be a Dart exception or an opaque
+    // _JavaScriptError—neither is a subtype of JSAny, so the cast throws
+    // a TypeError. Catching it lets us fall through to the generic branch.
+    JSAny? jsAny;
+    try {
+      jsAny = error as JSAny?;
+    } on TypeError catch (e) {
+      debugPrint('Warning: error in _processError is not a JS interop type: $e');
     }
+    if (jsAny != null && jsAny.isA<JSObject>()) {
+      final jsObject = jsAny as JSObject;
+      if (jsObject.has('code')) {
+        final errorMap = _convertJsRecordToMap(jsObject);
+        final code = errorMap['code'];
+        final message = errorMap['message'];
+        final underlyingErrorMessage = errorMap['underlyingErrorMessage'];
+        final finalMessage = '$message. $underlyingErrorMessage';
+        return PlatformException(
+          code: '$code',
+          message: finalMessage,
+          details: errorMap,
+        );
+      }
+    }
+    return PlatformException(
+      code: _unknownErrorCode,
+      message: error.toString(),
+    );
   }
 
   Map<String, dynamic> _convertJsRecordToMap(JSAny? jsRecord) {
