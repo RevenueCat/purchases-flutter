@@ -727,6 +727,46 @@ workflows:
           name: maestro-stress-10
           context:
             - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-1
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-2
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-3
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-4
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-5
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-6
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-7
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-8
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-9
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-android:
+          name: maestro-stress-android-10
+          context:
+            - e2e-tests
 
   update-hybrid-common-versions:
     when:
