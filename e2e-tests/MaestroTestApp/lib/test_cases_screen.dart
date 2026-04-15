@@ -14,7 +14,7 @@ class TestCasesScreen extends StatelessWidget {
                   title: Text(tc.title),
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => tc.screen),
+                    MaterialPageRoute(builder: (_) => tc.builder()),
                   ),
                 ))
             .toList(),
