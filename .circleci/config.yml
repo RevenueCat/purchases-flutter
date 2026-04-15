@@ -604,11 +604,9 @@ workflows:
       - android-integration-test-build
       - run-maestro-e2e-tests-ios:
           context:
-            - maestro-e2e-tests
             - e2e-tests
       - run-maestro-e2e-tests-android:
           context:
-            - maestro-e2e-tests
             - e2e-tests
 
   deploy:
@@ -672,7 +670,6 @@ workflows:
     jobs:
       - run-maestro-e2e-tests-ios:
           context:
-            - maestro-e2e-tests
             - e2e-tests
 
   maestro-e2e-tests-android:
@@ -682,7 +679,6 @@ workflows:
     jobs:
       - run-maestro-e2e-tests-android:
           context:
-            - maestro-e2e-tests
             - e2e-tests
 
   update-hybrid-common-versions:
