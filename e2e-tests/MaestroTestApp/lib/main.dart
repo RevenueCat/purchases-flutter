@@ -35,7 +35,7 @@ class MaestroTestApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Maestro Test App',
-      home: match?.screen ?? const TestCasesScreen(),
+      home: match?.builder() ?? const TestCasesScreen(),
     );
   }
 }
