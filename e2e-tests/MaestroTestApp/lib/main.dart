@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'test_cases.dart';
 import 'test_cases_screen.dart';
-import 'purchase_through_paywall_screen.dart';
 
 const apiKey = 'MAESTRO_TESTS_REVENUECAT_API_KEY';
 const _launchArgsChannel = MethodChannel('com.revenuecat.maestro/launch_args');
@@ -29,11 +29,13 @@ class MaestroTestApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final match = testCases
+        .where((tc) => tc.flowKey == initialTestFlow)
+        .firstOrNull;
+
     return MaterialApp(
       title: 'Maestro Test App',
-      home: initialTestFlow == 'purchase_through_paywall'
-          ? const PurchaseThroughPaywallScreen()
-          : const TestCasesScreen(),
+      home: match?.screen ?? const TestCasesScreen(),
     );
   }
 }
