@@ -470,7 +470,6 @@ jobs:
       - revenuecat/install-gem-mac-dependencies:
           cache-version: v1
       - setup-flutter
-      - install-correct-cocoapods
       - revenuecat/install-maestro
       - run:
           name: Boot iOS Simulator
