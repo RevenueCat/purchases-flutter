@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'purchase_through_paywall_screen.dart';
+import 'test_cases.dart';
 
 class TestCasesScreen extends StatelessWidget {
   const TestCasesScreen({super.key});
@@ -9,17 +9,15 @@ class TestCasesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Test Cases')),
       body: ListView(
-        children: [
-          ListTile(
-            title: const Text('Purchase through paywall'),
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const PurchaseThroughPaywallScreen(),
-              ),
-            ),
-          ),
-        ],
+        children: testCases
+            .map((tc) => ListTile(
+                  title: Text(tc.title),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => tc.screen),
+                  ),
+                ))
+            .toList(),
       ),
     );
   }
