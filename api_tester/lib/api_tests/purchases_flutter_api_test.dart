@@ -182,6 +182,10 @@ class _PurchasesFlutterApiTest {
   void _checkOverridePreferredUILocale() async {
     String locale = "en-US";
     Future<void> future = Purchases.overridePreferredUILocale(locale);
+    Future<void> futureWithLayoutDirection = Purchases.overridePreferredUILocale(
+      locale,
+      honorLayoutDirection: true,
+    );
   }
 
   void _checkLogIn() async {

@@ -1,4 +1,7 @@
 ## RevenueCat SDK
+### ✨ New Features
+* `RevenueCatUI` Paywalls and Customer Center can now opt in to matching right-to-left layout when overriding the preferred UI locale by setting `preferredUILocaleOverrideHonorsLayoutDirection` at configure time or `honorLayoutDirection` at runtime. The default remains false to preserve existing layout behavior.
+
 ### 🐞 Bugfixes
 * [EXTERNAL] Fix Wasm incompatibility in web error processing (#1684) contributed by @brunovsiqueira (#1722) via Toni Rico (@tonidero)
 ### 📦 Dependency Updates

@@ -125,11 +125,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         .argument("automaticDeviceIdentifierCollectionEnabled");
                 Boolean diagnosticsEnabled = call.argument("diagnosticsEnabled");
                 String preferredUILocaleOverride = call.argument("preferredUILocaleOverride");
+                Boolean preferredUILocaleOverrideHonorsLayoutDirection =
+                        call.argument("preferredUILocaleOverrideHonorsLayoutDirection");
                 setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled,
                         automaticDeviceIdentifierCollectionEnabled, diagnosticsEnabled,
-                        preferredUILocaleOverride, result);
+                        preferredUILocaleOverride, preferredUILocaleOverrideHonorsLayoutDirection, result);
                 break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
@@ -213,7 +215,8 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "overridePreferredUILocale":
                 String locale = call.argument("locale");
-                overridePreferredUILocale(locale, result);
+                Boolean honorLayoutDirection = call.argument("honorLayoutDirection");
+                overridePreferredUILocale(locale, honorLayoutDirection, result);
                 break;
             case "getCustomerInfo":
                 getCustomerInfo(result);
@@ -400,6 +403,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable Boolean automaticDeviceIdentifierCollectionEnabled,
             @Nullable Boolean diagnosticsEnabled,
             @Nullable String preferredUILocaleOverride,
+            @Nullable Boolean preferredUILocaleOverrideHonorsLayoutDirection,
             final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
@@ -422,6 +426,10 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                     automaticDeviceIdentifierCollectionEnabled,
                     preferredUILocaleOverride);
 
+            if (preferredUILocaleOverrideHonorsLayoutDirection != null &&
+                    preferredUILocaleOverrideHonorsLayoutDirection) {
+                overridePreferredUILocaleIfNeeded(preferredUILocaleOverride, true);
+            }
             setUpdatedCustomerInfoListener();
             result.success(null);
         } else {
@@ -609,9 +617,29 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    private void overridePreferredUILocale(@Nullable String locale, final Result result) {
-        CommonKt.overridePreferredLocale(locale);
+    private void overridePreferredUILocale(
+            @Nullable String locale,
+            @Nullable Boolean honorLayoutDirection,
+            final Result result
+    ) {
+        overridePreferredUILocaleIfNeeded(locale, honorLayoutDirection != null && honorLayoutDirection);
         result.success(null);
+    }
+
+    private void overridePreferredUILocaleIfNeeded(@Nullable String locale, boolean honorLayoutDirection) {
+        if (!honorLayoutDirection) {
+            CommonKt.overridePreferredLocale(locale);
+            return;
+        }
+
+        try {
+            Purchases purchases = Purchases.getSharedInstance();
+            Purchases.class
+                    .getMethod("overridePreferredUILocale", String.class, boolean.class)
+                    .invoke(purchases, locale, true);
+        } catch (Exception ignored) {
+            CommonKt.overridePreferredLocale(locale);
+        }
     }
 
     private void getCustomerInfo(final Result result) {
