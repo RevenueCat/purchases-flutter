@@ -6,6 +6,7 @@ import 'premium_screen.dart';
 const _offeringIdentifiers = [
   'onboarding_affiliate_2wk_trial',
   'qr-code-preview-offering',
+  'Offering 2',
 ];
 
 class PurchaseThroughPaywallScreen extends StatefulWidget {
@@ -46,13 +47,23 @@ class _PurchaseThroughPaywallScreenState
     });
   }
 
-  void _presentPaywallViaWidget(String offeringIdentifier) {
+  void _presentPaywallViaWidgetModal(String offeringIdentifier) {
     setState(() => _error = null);
     Navigator.of(context, rootNavigator: true).push(
       MaterialPageRoute(
         builder: (_) =>
             PremiumScreen(offeringIdentifier: offeringIdentifier),
         fullscreenDialog: true,
+      ),
+    );
+  }
+
+  void _presentPaywallViaWidgetPush(String offeringIdentifier) {
+    setState(() => _error = null);
+    Navigator.of(context, rootNavigator: true).push(
+      MaterialPageRoute(
+        builder: (_) =>
+            PremiumScreen(offeringIdentifier: offeringIdentifier),
       ),
     );
   }
@@ -94,15 +105,30 @@ class _PurchaseThroughPaywallScreenState
             ],
             const SizedBox(height: 24),
             _SectionHeader(
-              title: 'Via PaywallView widget',
+              title: 'Via PaywallView widget (fullscreen modal)',
               subtitle:
                   'Navigator.push(MaterialPageRoute(fullscreenDialog: true)) '
-                  '→ PaywallView (customer pattern)',
+                  '→ PaywallView (customer pattern, slides up)',
             ),
             const SizedBox(height: 8),
             for (final identifier in _offeringIdentifiers) ...[
               ElevatedButton(
-                onPressed: () => _presentPaywallViaWidget(identifier),
+                onPressed: () => _presentPaywallViaWidgetModal(identifier),
+                child: Text('Present Paywall: $identifier'),
+              ),
+              const SizedBox(height: 10),
+            ],
+            const SizedBox(height: 16),
+            _SectionHeader(
+              title: 'Via PaywallView widget (horizontal push)',
+              subtitle:
+                  'Navigator.push(MaterialPageRoute()) '
+                  '→ PaywallView (iOS navigation push style)',
+            ),
+            const SizedBox(height: 8),
+            for (final identifier in _offeringIdentifiers) ...[
+              ElevatedButton(
+                onPressed: () => _presentPaywallViaWidgetPush(identifier),
                 child: Text('Present Paywall: $identifier'),
               ),
               const SizedBox(height: 10),
