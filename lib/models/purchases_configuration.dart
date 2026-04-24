@@ -13,6 +13,12 @@ class PurchasesConfiguration {
   /// Both "es-ES" and "es_ES" formats are supported.
   String? preferredUILocaleOverride;
 
+  /// Whether RevenueCat UI components should also derive layout direction
+  /// from [preferredUILocaleOverride].
+  ///
+  /// Defaults to false to preserve existing layout behavior.
+  bool preferredUILocaleOverrideHonorsLayoutDirection = false;
+
   /// An optional unique id for identifying the user.
   String? appUserID;
 

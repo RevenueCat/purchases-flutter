@@ -103,6 +103,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -135,6 +136,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -165,6 +167,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -198,6 +201,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -1657,6 +1661,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -1688,6 +1693,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -1720,6 +1726,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -1753,6 +1760,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -1783,6 +1791,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': false,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -1813,6 +1822,39 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': 'de_DE',
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
+          },
+        ),
+      ],
+    );
+  });
+
+  test('configure with preferredUILocaleOverrideHonorsLayoutDirection', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..preferredUILocaleOverride = 'ar_SA'
+        ..preferredUILocaleOverrideHonorsLayoutDirection = true,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'purchasesAreCompletedBy': 'REVENUECAT',
+            'userDefaultsSuiteName': null,
+            'storeKitVersion': 'DEFAULT',
+            'useAmazon': false,
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
+            'preferredUILocaleOverride': 'ar_SA',
+            'preferredUILocaleOverrideHonorsLayoutDirection': true,
           },
         ),
       ],
@@ -1843,6 +1885,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': true,
             'preferredUILocaleOverride': null,
+            'preferredUILocaleOverrideHonorsLayoutDirection': false,
           },
         ),
       ],
@@ -1858,6 +1901,26 @@ void main() {
           'overridePreferredUILocale',
           arguments: <String, dynamic>{
             'locale': 'es-ES',
+            'honorLayoutDirection': false,
+          },
+        ),
+      ],
+    );
+  });
+
+  test('overridePreferredUILocale with honorLayoutDirection', () async {
+    await Purchases.overridePreferredUILocale(
+      'he',
+      honorLayoutDirection: true,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'overridePreferredUILocale',
+          arguments: <String, dynamic>{
+            'locale': 'he',
+            'honorLayoutDirection': true,
           },
         ),
       ],
@@ -1873,6 +1936,7 @@ void main() {
           'overridePreferredUILocale',
           arguments: <String, dynamic>{
             'locale': null,
+            'honorLayoutDirection': false,
           },
         ),
       ],
