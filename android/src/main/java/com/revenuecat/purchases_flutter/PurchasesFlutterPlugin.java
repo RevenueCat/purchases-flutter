@@ -428,7 +428,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
             if (preferredUILocaleOverrideHonorsLayoutDirection != null &&
                     preferredUILocaleOverrideHonorsLayoutDirection) {
-                overridePreferredUILocaleIfNeeded(preferredUILocaleOverride, true);
+                overridePreferredUILocaleIfNeeded(
+                        preferredUILocaleOverride,
+                        preferredUILocaleOverrideHonorsLayoutDirection);
             }
             setUpdatedCustomerInfoListener();
             result.success(null);

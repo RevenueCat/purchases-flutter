@@ -331,7 +331,7 @@ preferredUILocaleOverrideHonorsLayoutDirection:(BOOL)preferredUILocaleOverrideHo
 
     if (preferredUILocaleOverrideHonorsLayoutDirection) {
         [self overridePreferredUILocale:preferredUILocaleOverride
-                   honorLayoutDirection:YES];
+                   honorLayoutDirection:preferredUILocaleOverrideHonorsLayoutDirection];
     }
 
     result(nil);
