@@ -636,7 +636,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             Purchases purchases = Purchases.getSharedInstance();
             Purchases.class
                     .getMethod("overridePreferredUILocale", String.class, boolean.class)
-                    .invoke(purchases, locale, true);
+                    .invoke(purchases, locale, honorLayoutDirection);
         } catch (Exception ignored) {
             CommonKt.overridePreferredLocale(locale);
         }

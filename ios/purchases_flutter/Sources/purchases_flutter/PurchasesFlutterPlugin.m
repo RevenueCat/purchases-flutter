@@ -482,7 +482,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     NSMethodSignature *signature = [purchases methodSignatureForSelector:selector];
     NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
     NSString *localeArgument = locale.mappingNSNullToNil;
-    BOOL honorLayoutDirectionArgument = YES;
+    BOOL honorLayoutDirectionArgument = honorLayoutDirection;
     invocation.target = purchases;
     invocation.selector = selector;
     [invocation setArgument:&localeArgument atIndex:2];
