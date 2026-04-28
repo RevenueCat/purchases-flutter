@@ -188,6 +188,8 @@ class Purchases {
         'diagnosticsEnabled': purchasesConfiguration.diagnosticsEnabled,
         'preferredUILocaleOverride':
             purchasesConfiguration.preferredUILocaleOverride,
+        'preferredUILocaleOverrideHonorsLayoutDirection':
+            purchasesConfiguration.preferredUILocaleOverrideHonorsLayoutDirection,
       },
     );
   }
@@ -200,11 +202,17 @@ class Purchases {
   /// Pass null to revert to the system default.
   ///
   /// [locale] The locale identifier (e.g., "de-DE", "es_ES") or null to use the system default.
-  static Future<void> overridePreferredUILocale(String? locale) =>
+  /// [honorLayoutDirection] Whether RevenueCat UI components should also derive layout direction
+  /// from [locale]. Defaults to false to preserve existing layout behavior.
+  static Future<void> overridePreferredUILocale(
+    String? locale, {
+    bool honorLayoutDirection = false,
+  }) =>
       _channel.invokeMethod(
         'overridePreferredUILocale',
         {
           'locale': locale,
+          'honorLayoutDirection': honorLayoutDirection,
         },
       );
 

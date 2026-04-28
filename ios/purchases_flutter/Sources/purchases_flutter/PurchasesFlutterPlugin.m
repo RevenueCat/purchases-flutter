@@ -64,6 +64,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         NSString * _Nullable userDefaultsSuiteName = arguments[@"userDefaultsSuiteName"];
         NSString *storeKitVersion = arguments[@"storeKitVersion"];
         NSString * _Nullable preferredUILocaleOverride = arguments[@"preferredUILocaleOverride"];
+        BOOL preferredUILocaleOverrideHonorsLayoutDirection = NO;
+        object = arguments[@"preferredUILocaleOverrideHonorsLayoutDirection"];
+        if (object != [NSNull null] && object != nil) {
+            preferredUILocaleOverrideHonorsLayoutDirection = [object boolValue];
+        }
         BOOL automaticDeviceIdentifierCollectionEnabled = YES;
         object = arguments[@"automaticDeviceIdentifierCollectionEnabled"];
         if (object != [NSNull null] && object != nil) {
@@ -84,6 +89,7 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
           diagnosticsEnabled:diagnosticsEnabled
    preferredUILocaleOverride:preferredUILocaleOverride
+preferredUILocaleOverrideHonorsLayoutDirection:preferredUILocaleOverrideHonorsLayoutDirection
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -126,7 +132,9 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
     } else if ([@"setProxyURLString" isEqualToString:call.method]) {
         [self setProxyURLString:arguments[@"proxyURLString"] result:result];
     } else if ([@"overridePreferredUILocale" isEqualToString:call.method]) {
-        [self overridePreferredUILocale:arguments[@"locale"] result:result];
+        [self overridePreferredUILocale:arguments[@"locale"]
+                   honorLayoutDirection:[arguments[@"honorLayoutDirection"] boolValue]
+                                 result:result];
     } else if ([@"getCustomerInfo" isEqualToString:call.method]) {
         [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
@@ -296,6 +304,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
     diagnosticsEnabled:(BOOL)diagnosticsEnabled
  preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
+preferredUILocaleOverrideHonorsLayoutDirection:(BOOL)preferredUILocaleOverrideHonorsLayoutDirection
                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -319,6 +328,11 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
                                               preferredLocale:preferredUILocaleOverride.mappingNSNullToNil];
 
     purchases.delegate = self;
+
+    if (preferredUILocaleOverrideHonorsLayoutDirection) {
+        [self overridePreferredUILocale:preferredUILocaleOverride
+                   honorLayoutDirection:preferredUILocaleOverrideHonorsLayoutDirection];
+    }
 
     result(nil);
 }
@@ -439,9 +453,41 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)overridePreferredUILocale:(nullable NSString *)locale
+             honorLayoutDirection:(BOOL)honorLayoutDirection
                            result:(FlutterResult)result {
-    [RCCommonFunctionality overridePreferredLocale:locale.mappingNSNullToNil];
+    [self overridePreferredUILocale:locale
+               honorLayoutDirection:honorLayoutDirection];
     result(nil);
+}
+
+- (void)overridePreferredUILocale:(nullable NSString *)locale
+             honorLayoutDirection:(BOOL)honorLayoutDirection {
+    if (!honorLayoutDirection) {
+        [RCCommonFunctionality overridePreferredLocale:locale.mappingNSNullToNil];
+        return;
+    }
+
+    if (!RCPurchases.isConfigured) {
+        [RCCommonFunctionality overridePreferredLocale:locale.mappingNSNullToNil];
+        return;
+    }
+
+    RCPurchases *purchases = RCPurchases.sharedPurchases;
+    SEL selector = NSSelectorFromString(@"overridePreferredUILocale:honorLayoutDirection:");
+    if (![purchases respondsToSelector:selector]) {
+        [RCCommonFunctionality overridePreferredLocale:locale.mappingNSNullToNil];
+        return;
+    }
+
+    NSMethodSignature *signature = [purchases methodSignatureForSelector:selector];
+    NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
+    NSString *localeArgument = locale.mappingNSNullToNil;
+    BOOL honorLayoutDirectionArgument = honorLayoutDirection;
+    invocation.target = purchases;
+    invocation.selector = selector;
+    [invocation setArgument:&localeArgument atIndex:2];
+    [invocation setArgument:&honorLayoutDirectionArgument atIndex:3];
+    [invocation invoke];
 }
 
 - (void)setSimulatesAskToBuyInSandbox:(BOOL)enabled
