@@ -1,16 +1,22 @@
+// ignore_for_file: deprecated_consistency, deprecated_member_use_from_same_package
+
+@Deprecated('Use StoreProductChangeInfo')
 class GoogleProductChangeInfo {
   /// The oldProductIdentifier to change from.
   String oldProductIdentifier;
 
   /// The [GoogleProrationMode] to use when changing from the given oldProductIdentifer.
   /// Defaults to [GoogleProrationMode.immediateWithoutProration]
+  @Deprecated('Use StoreProductChangeInfo.replacementMode')
   GoogleProrationMode? prorationMode;
 
   /// Constructs an GoogleProductChangeInfo
+  @Deprecated('Use StoreProductChangeInfo')
   GoogleProductChangeInfo(this.oldProductIdentifier, {this.prorationMode});
 }
 
 /// GoogleProductChangeInfo's ProrationMode.
+@Deprecated('Use StoreReplacementMode')
 enum GoogleProrationMode {
   /// Replacement takes effect immediately, and the remaining time will be
   /// prorated and credited to the user. This is the current default behavior.
