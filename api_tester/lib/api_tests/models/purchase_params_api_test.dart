@@ -2,10 +2,12 @@ import 'package:purchases_flutter/object_wrappers.dart';
 
 // ignore_for_file: unused_element
 // ignore_for_file: unused_local_variable
-class _PurchaseParamsApiTest {
+// ignore_for_file: deprecated_member_use
 
+class _PurchaseParamsApiTest {
   void _checkPackageConstructor(
     Package package,
+    StoreProductChangeInfo? productChangeInfo,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
@@ -14,6 +16,10 @@ class _PurchaseParamsApiTest {
   ) {
     PurchaseParams purchaseParams = PurchaseParams.package(
       package,
+    );
+    purchaseParams = PurchaseParams.package(
+      package,
+      productChangeInfo: productChangeInfo,
     );
     purchaseParams = PurchaseParams.package(
       package,
@@ -49,6 +55,7 @@ class _PurchaseParamsApiTest {
 
   void _checkStoreProductConstructor(
     StoreProduct storeProduct,
+    StoreProductChangeInfo? productChangeInfo,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
@@ -57,6 +64,10 @@ class _PurchaseParamsApiTest {
   ) {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
+    );
+    purchaseParams = PurchaseParams.storeProduct(
+      storeProduct,
+      productChangeInfo: productChangeInfo,
     );
     purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
@@ -92,12 +103,17 @@ class _PurchaseParamsApiTest {
 
   void _checkSubscriptionOptionConstructor(
     SubscriptionOption subscriptionOption,
+    StoreProductChangeInfo? productChangeInfo,
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
   ) {
     PurchaseParams purchaseParams = PurchaseParams.subscriptionOption(
       subscriptionOption,
+    );
+    purchaseParams = PurchaseParams.subscriptionOption(
+      subscriptionOption,
+      productChangeInfo: productChangeInfo,
     );
     purchaseParams = PurchaseParams.subscriptionOption(
       subscriptionOption,
@@ -120,6 +136,10 @@ class _PurchaseParamsApiTest {
     StoreProduct? product = purchaseParams.product;
     SubscriptionOption? subscriptionOption = purchaseParams.subscriptionOption;
     GoogleProductChangeInfo? googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
+    StoreProductChangeInfo? productChangeInfo =
+        purchaseParams.productChangeInfo;
+    GoogleProductChangeInfo? googleProductChangeInfo =
+        purchaseParams.googleProductChangeInfo;
     bool? googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     PromotionalOffer? promotionalOffer = purchaseParams.promotionalOffer;
     WinBackOffer? winBackOffer = purchaseParams.winBackOffer;
