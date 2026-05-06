@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -360,7 +362,6 @@ class Purchases {
     // Use deprecated PurchasesType if using something other than default
     // Otherwise use new ProductType
     String typeString;
-    // ignore: deprecated_member_use_from_same_package
     if (type != PurchaseType.subs) {
       typeString = type.name;
     } else {
@@ -606,9 +607,16 @@ class Purchases {
     final package = purchaseParams.package;
     final storeProduct = purchaseParams.product;
     final subscriptionOption = purchaseParams.subscriptionOption;
+    final productChangeInfo = purchaseParams.productChangeInfo;
     final googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
     final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final oldProductIdentifier = productChangeInfo?.oldProductIdentifier ??
+        googleProductChangeInfo?.oldProductIdentifier;
+    final storeReplacementMode = productChangeInfo?.replacementMode?.value ??
+        _storeReplacementModeFromGoogleProrationMode(
+          googleProductChangeInfo?.prorationMode,
+        )?.value;
     final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
     final winBackOffer = purchaseParams.winBackOffer;
     final customerEmail = purchaseParams.customerEmail;
@@ -617,8 +625,9 @@ class Purchases {
         purchaseParams.subscriptionOption?.presentedOfferingContext;
     final presentedOfferingContextJson = presentedOfferingContext?.toJson();
     final purchaseArgs = <String, dynamic>{
-      'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
+      'googleOldProductIdentifier': oldProductIdentifier,
       'googleProrationMode': prorationMode,
+      'storeReplacementMode': storeReplacementMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       'signedDiscountTimestamp': signedDiscountTimestamp,
       'presentedOfferingContext': presentedOfferingContextJson,
@@ -659,6 +668,25 @@ class Purchases {
       });
     } else {
       throw ArgumentError('One of package, product or subscriptionOption must be set in PurchaseParams.');
+    }
+  }
+
+  static StoreReplacementMode? _storeReplacementModeFromGoogleProrationMode(
+    GoogleProrationMode? prorationMode,
+  ) {
+    switch (prorationMode) {
+      case GoogleProrationMode.immediateWithTimeProration:
+        return StoreReplacementMode.withTimeProration;
+      case GoogleProrationMode.immediateAndChargeProratedPrice:
+        return StoreReplacementMode.chargeProratedPrice;
+      case GoogleProrationMode.immediateWithoutProration:
+        return StoreReplacementMode.withoutProration;
+      case GoogleProrationMode.immediateAndChargeFullPrice:
+        return StoreReplacementMode.chargeFullPrice;
+      case GoogleProrationMode.deferred:
+        return StoreReplacementMode.deferred;
+      case null:
+        return null;
     }
   }
 
