@@ -129,13 +129,13 @@ class _PurchaseParamsApiTest {
       googleProductChangeInfo: googleProductChangeInfo,
       googleIsPersonalizedPrice: googleIsPersonalizedPrice,
       customerEmail: customerEmail,
-    );}
+    );
+  }
 
   void _checkProperties(PurchaseParams purchaseParams) {
     Package? package = purchaseParams.package;
     StoreProduct? product = purchaseParams.product;
     SubscriptionOption? subscriptionOption = purchaseParams.subscriptionOption;
-    GoogleProductChangeInfo? googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
     StoreProductChangeInfo? productChangeInfo =
         purchaseParams.productChangeInfo;
     GoogleProductChangeInfo? googleProductChangeInfo =
