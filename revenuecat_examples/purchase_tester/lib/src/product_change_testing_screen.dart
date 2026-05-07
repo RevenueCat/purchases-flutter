@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-// ignore_for_file: deprecated_member_use
-
 enum _ProductChangePurchaseKind {
   package,
   storeProduct,
@@ -42,9 +40,8 @@ class _ProductChangeTestingScreenState
   String? _selectedOldProductIdentifier;
   Package? _selectedPackage;
   SubscriptionOption? _selectedSubscriptionOption;
-  GoogleProrationMode? _selectedProrationMode;
+  StoreReplacementMode? _selectedReplacementMode;
   _ProductChangePurchaseKind _purchaseKind = _ProductChangePurchaseKind.package;
-  bool _usePurchaseParams = true;
 
   @override
   void initState() {
@@ -56,11 +53,7 @@ class _ProductChangeTestingScreenState
     final customerInfo = _customerInfo;
     if (customerInfo == null) return [];
 
-    return {
-      ...customerInfo.activeSubscriptions,
-      ...customerInfo.allPurchasedProductIdentifiers,
-    }.toList()
-      ..sort();
+    return _oldProductIdentifiersFromCustomerInfo(customerInfo);
   }
 
   List<Package> get _availablePackages =>
@@ -108,12 +101,18 @@ class _ProductChangeTestingScreenState
     }
   }
 
-  String? _selectExistingOldProductIdentifier(CustomerInfo customerInfo) {
-    final identifiers = {
-      ...customerInfo.activeSubscriptions,
-      ...customerInfo.allPurchasedProductIdentifiers,
-    }.toList()
+  List<String> _oldProductIdentifiersFromCustomerInfo(
+    CustomerInfo customerInfo,
+  ) {
+    return customerInfo.activeSubscriptions
+        .map((productIdentifier) => productIdentifier.split(':').first)
+        .toSet()
+        .toList()
       ..sort();
+  }
+
+  String? _selectExistingOldProductIdentifier(CustomerInfo customerInfo) {
+    final identifiers = _oldProductIdentifiersFromCustomerInfo(customerInfo);
 
     if (identifiers.contains(_selectedOldProductIdentifier)) {
       return _selectedOldProductIdentifier;
@@ -166,23 +165,17 @@ class _ProductChangeTestingScreenState
       _status = null;
     });
 
-    final productChangeInfo = GoogleProductChangeInfo(
+    final productChangeInfo = StoreProductChangeInfo(
       oldProductIdentifier,
-      prorationMode: _selectedProrationMode,
+      replacementMode: _selectedReplacementMode,
     );
 
     try {
-      final purchaseResult = _usePurchaseParams
-          ? await _purchaseWithPurchaseParams(
-              package,
-              subscriptionOption,
-              productChangeInfo,
-            )
-          : await _purchaseWithDedicatedApi(
-              package,
-              subscriptionOption,
-              productChangeInfo,
-            );
+      final purchaseResult = await _purchaseWithPurchaseParams(
+        package,
+        subscriptionOption,
+        productChangeInfo,
+      );
 
       if (!mounted) return;
 
@@ -216,53 +209,29 @@ class _ProductChangeTestingScreenState
   Future<PurchaseResult> _purchaseWithPurchaseParams(
     Package package,
     SubscriptionOption? subscriptionOption,
-    GoogleProductChangeInfo productChangeInfo,
+    StoreProductChangeInfo productChangeInfo,
   ) {
     switch (_purchaseKind) {
       case _ProductChangePurchaseKind.package:
         return Purchases.purchase(
           PurchaseParams.package(
             package,
-            googleProductChangeInfo: productChangeInfo,
+            productChangeInfo: productChangeInfo,
           ),
         );
       case _ProductChangePurchaseKind.storeProduct:
         return Purchases.purchase(
           PurchaseParams.storeProduct(
             package.storeProduct,
-            googleProductChangeInfo: productChangeInfo,
+            productChangeInfo: productChangeInfo,
           ),
         );
       case _ProductChangePurchaseKind.subscriptionOption:
         return Purchases.purchase(
           PurchaseParams.subscriptionOption(
             subscriptionOption!,
-            googleProductChangeInfo: productChangeInfo,
+            productChangeInfo: productChangeInfo,
           ),
-        );
-    }
-  }
-
-  Future<PurchaseResult> _purchaseWithDedicatedApi(
-    Package package,
-    SubscriptionOption? subscriptionOption,
-    GoogleProductChangeInfo productChangeInfo,
-  ) {
-    switch (_purchaseKind) {
-      case _ProductChangePurchaseKind.package:
-        return Purchases.purchasePackage(
-          package,
-          googleProductChangeInfo: productChangeInfo,
-        );
-      case _ProductChangePurchaseKind.storeProduct:
-        return Purchases.purchaseStoreProduct(
-          package.storeProduct,
-          googleProductChangeInfo: productChangeInfo,
-        );
-      case _ProductChangePurchaseKind.subscriptionOption:
-        return Purchases.purchaseSubscriptionOption(
-          subscriptionOption!,
-          googleProductChangeInfo: productChangeInfo,
         );
     }
   }
@@ -276,13 +245,17 @@ class _ProductChangeTestingScreenState
 
   Widget _buildOldProductDropdown() {
     final identifiers = _oldProductIdentifiers;
+    final selectedOldProductIdentifier =
+        identifiers.contains(_selectedOldProductIdentifier)
+            ? _selectedOldProductIdentifier
+            : null;
 
     return DropdownButtonFormField<String>(
       isExpanded: true,
       decoration: const InputDecoration(
         labelText: 'Old product identifier',
       ),
-      value: _selectedOldProductIdentifier,
+      value: selectedOldProductIdentifier,
       items: identifiers
           .map(
             (identifier) => DropdownMenuItem(
@@ -347,28 +320,28 @@ class _ProductChangeTestingScreenState
     );
   }
 
-  Widget _buildProrationModeDropdown() {
-    return DropdownButtonFormField<GoogleProrationMode?>(
+  Widget _buildReplacementModeDropdown() {
+    return DropdownButtonFormField<StoreReplacementMode?>(
       isExpanded: true,
       decoration: const InputDecoration(
-        labelText: 'Google proration mode',
+        labelText: 'Store replacement mode',
       ),
-      value: _selectedProrationMode,
+      value: _selectedReplacementMode,
       items: [
-        const DropdownMenuItem<GoogleProrationMode?>(
+        const DropdownMenuItem<StoreReplacementMode?>(
           value: null,
           child: Text('null'),
         ),
-        ...GoogleProrationMode.values.map(
-          (mode) => DropdownMenuItem<GoogleProrationMode?>(
+        ...StoreReplacementMode.values.map(
+          (mode) => DropdownMenuItem<StoreReplacementMode?>(
             value: mode,
-            child: Text(mode.name),
+            child: Text(mode.value),
           ),
         ),
       ],
       onChanged: (value) {
         setState(() {
-          _selectedProrationMode = value;
+          _selectedReplacementMode = value;
         });
       },
     );
@@ -393,23 +366,6 @@ class _ProductChangeTestingScreenState
             ),
           )
           .toList(),
-    );
-  }
-
-  Widget _buildApiSelector() {
-    return SwitchListTile(
-      title: const Text('Use PurchaseParams'),
-      subtitle: Text(
-        _usePurchaseParams
-            ? 'Purchases.purchase(PurchaseParams...)'
-            : 'purchasePackage / purchaseStoreProduct / purchaseSubscriptionOption',
-      ),
-      value: _usePurchaseParams,
-      onChanged: (value) {
-        setState(() {
-          _usePurchaseParams = value;
-        });
-      },
     );
   }
 
@@ -470,12 +426,10 @@ class _ProductChangeTestingScreenState
               _buildSubscriptionOptionDropdown(),
             ],
             const SizedBox(height: 16),
-            _buildProrationModeDropdown(),
+            _buildReplacementModeDropdown(),
             const SizedBox(height: 16),
             const Text('Purchase target'),
             _buildPurchaseKindSelector(),
-            const Divider(),
-            _buildApiSelector(),
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: canPurchase ? _purchaseProductChange : null,
