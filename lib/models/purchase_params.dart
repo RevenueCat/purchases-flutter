@@ -1,6 +1,9 @@
+// ignore_for_file: deprecated_consistency, deprecated_member_use_from_same_package
+
 import 'google_product_change.dart';
 import 'package_wrapper.dart';
 import 'promotional_offer.dart';
+import 'store_product_change.dart';
 import 'store_product_wrapper.dart';
 import 'subscription_option_wrapper.dart';
 import 'win_back_offer.dart';
@@ -10,6 +13,8 @@ class PurchaseParams {
   final Package? package;
   final StoreProduct? product;
   final SubscriptionOption? subscriptionOption;
+  final StoreProductChangeInfo? productChangeInfo;
+  @Deprecated('Use productChangeInfo')
   final GoogleProductChangeInfo? googleProductChangeInfo;
   final bool? googleIsPersonalizedPrice;
   final PromotionalOffer? promotionalOffer;
@@ -20,6 +25,7 @@ class PurchaseParams {
     this.package,
     this.product,
     this.subscriptionOption,
+    this.productChangeInfo,
     this.googleProductChangeInfo,
     this.googleIsPersonalizedPrice,
     this.promotionalOffer,
@@ -31,8 +37,11 @@ class PurchaseParams {
   ///
   /// [package] The package to purchase.
   ///
+  /// [productChangeInfo] Android and store-specific only. Optional [StoreProductChangeInfo] you wish to
+  /// change from containing the oldProductIdentifier and the optional replacementMode.
+  ///
   /// [googleProductChangeInfo] Android and Google Play only. Optional [GoogleProductChangeInfo] you wish to
-  /// change from containing the googleOldProductIdentifer and the optional prorationMode.
+  /// change from containing the googleOldProductIdentifier and the optional prorationMode.
   ///
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional boolean indicates
   /// personalized pricing on products available for purchase in the EU.
@@ -54,28 +63,34 @@ class PurchaseParams {
   ///
   const PurchaseParams.package(
     Package package, {
+    StoreProductChangeInfo? productChangeInfo,
+    @Deprecated('Use productChangeInfo')
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
   }) : this._(
-        package,
-        null,
-        null,
-        googleProductChangeInfo,
-        googleIsPersonalizedPrice,
-        promotionalOffer,
-        winBackOffer,
-        customerEmail,
-      );
+          package,
+          null,
+          null,
+          productChangeInfo,
+          googleProductChangeInfo,
+          googleIsPersonalizedPrice,
+          promotionalOffer,
+          winBackOffer,
+          customerEmail,
+        );
 
   /// Creates purchase parameters for a store product.
   ///
   /// [storeProduct] The store product to purchase.
   ///
+  /// [productChangeInfo] Android and store-specific only. Optional [StoreProductChangeInfo] you wish to
+  /// change from containing the oldProductIdentifier and the optional replacementMode.
+  ///
   /// [googleProductChangeInfo] Android and Google Play only. Optional [GoogleProductChangeInfo] you wish to
-  /// change from containing the googleOldProductIdentifer and the optional prorationMode.
+  /// change from containing the googleOldProductIdentifier and the optional prorationMode.
   ///
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional boolean indicates
   /// personalized pricing on products available for purchase in the EU.
@@ -98,28 +113,34 @@ class PurchaseParams {
   ///
   const PurchaseParams.storeProduct(
     StoreProduct storeProduct, {
+    StoreProductChangeInfo? productChangeInfo,
+    @Deprecated('Use productChangeInfo')
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
   }) : this._(
-        null,
-        storeProduct,
-        null,
-        googleProductChangeInfo,
-        googleIsPersonalizedPrice,
-        promotionalOffer,
-        winBackOffer,
-        customerEmail,
-      );
+          null,
+          storeProduct,
+          null,
+          productChangeInfo,
+          googleProductChangeInfo,
+          googleIsPersonalizedPrice,
+          promotionalOffer,
+          winBackOffer,
+          customerEmail,
+        );
 
   /// Creates purchase parameters for a subscription option. Google Play-only.
   ///
   /// [subscriptionOption] The subscription option to purchase.
   ///
+  /// [productChangeInfo] Android and store-specific only. Optional [StoreProductChangeInfo] you wish to
+  /// change from containing the oldProductIdentifier and the optional replacementMode.
+  ///
   /// [googleProductChangeInfo] Android and Google Play only. Optional [GoogleProductChangeInfo] you wish to
-  /// change from containing the googleOldProductIdentifer and the optional prorationMode.
+  /// change from containing the googleOldProductIdentifier and the optional prorationMode.
   ///
   /// [googleIsPersonalizedPrice] Android and Google Play only. Optional boolean indicates
   /// personalized pricing on products available for purchase in the EU.
@@ -133,17 +154,20 @@ class PurchaseParams {
   ///
   const PurchaseParams.subscriptionOption(
     SubscriptionOption subscriptionOption, {
+    StoreProductChangeInfo? productChangeInfo,
+    @Deprecated('Use productChangeInfo')
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
     String? customerEmail,
   }) : this._(
-        null,
-        null,
-        subscriptionOption,
-        googleProductChangeInfo,
-        googleIsPersonalizedPrice,
-        null,
-        null,
-        customerEmail,
-      );
+          null,
+          null,
+          subscriptionOption,
+          productChangeInfo,
+          googleProductChangeInfo,
+          googleIsPersonalizedPrice,
+          null,
+          null,
+          customerEmail,
+        );
 }

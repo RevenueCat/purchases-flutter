@@ -21,6 +21,7 @@ import 'package:api_tester/api_tests/models/purchase_configuration_api_test.dart
 import 'package:api_tester/api_tests/models/purchase_result_api_test.dart';
 import 'package:api_tester/api_tests/models/purchases_error_api_test.dart';
 import 'package:api_tester/api_tests/models/store_api_test.dart';
+import 'package:api_tester/api_tests/models/store_product_change_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_discount_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/store_transaction_api_test.dart';

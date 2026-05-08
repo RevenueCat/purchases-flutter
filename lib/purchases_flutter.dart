@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use_from_same_package
+
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
@@ -360,7 +362,6 @@ class Purchases {
     // Use deprecated PurchasesType if using something other than default
     // Otherwise use new ProductType
     String typeString;
-    // ignore: deprecated_member_use_from_same_package
     if (type != PurchaseType.subs) {
       typeString = type.name;
     } else {
@@ -404,13 +405,17 @@ class Purchases {
     UpgradeInfo? upgradeInfo,
     PurchaseType type = PurchaseType.subs,
   }) async {
-    final prorationMode = upgradeInfo?.prorationMode;
+    final storeReplacementMode =
+        _storeReplacementModeFromGoogleReplacementModeInt(
+          upgradeInfo?.prorationMode?.value,
+        )?.value;
     final purchaseResult =
       await _invokeReturningPurchaseResult('purchaseProduct', {
         'productIdentifier': productIdentifier,
         'type': type.name,
         'googleOldProductIdentifier': upgradeInfo?.oldSKU,
-        'googleProrationMode': prorationMode?.value,
+        'googleProrationMode': null,
+        'storeReplacementMode': storeReplacementMode,
         'googleIsPersonalizedPrice': null,
         'presentedOfferingIdentifier': null,
       });
@@ -441,14 +446,18 @@ class Purchases {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
-    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final storeReplacementMode =
+        _storeReplacementModeFromGoogleProrationMode(
+          googleProductChangeInfo?.prorationMode,
+        )?.value;
     final purchaseResult =
       await _invokeReturningPurchaseResult('purchaseProduct', {
         'productIdentifier': storeProduct.identifier,
         'type': storeProduct.productCategory?.name,
         'googleOldProductIdentifier':
             googleProductChangeInfo?.oldProductIdentifier,
-        'googleProrationMode': prorationMode,
+        'googleProrationMode': null,
+        'storeReplacementMode': storeReplacementMode,
         'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
         'presentedOfferingIdentifier':
             storeProduct.presentedOfferingContext?.offeringIdentifier,
@@ -485,8 +494,13 @@ class Purchases {
     GoogleProductChangeInfo? googleProductChangeInfo,
     bool? googleIsPersonalizedPrice,
   }) async {
-    final prorationMode = googleProductChangeInfo?.prorationMode?.value ??
-        upgradeInfo?.prorationMode?.value;
+    final storeReplacementMode =
+        _storeReplacementModeFromGoogleProrationMode(
+          googleProductChangeInfo?.prorationMode,
+        )?.value ??
+        _storeReplacementModeFromGoogleReplacementModeInt(
+          upgradeInfo?.prorationMode?.value,
+        )?.value;
     final purchaseResult =
       await _invokeReturningPurchaseResult('purchasePackage', {
         'packageIdentifier': packageToPurchase.identifier,
@@ -494,7 +508,8 @@ class Purchases {
             packageToPurchase.presentedOfferingContext.toJson(),
         'googleOldProductIdentifier':
             googleProductChangeInfo?.oldProductIdentifier ?? upgradeInfo?.oldSKU,
-        'googleProrationMode': prorationMode,
+        'googleProrationMode': null,
+        'storeReplacementMode': storeReplacementMode,
         'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       });
     return purchaseResult;
@@ -530,7 +545,10 @@ class Purchases {
       throw UnsupportedPlatformException();
     }
 
-    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final storeReplacementMode =
+        _storeReplacementModeFromGoogleProrationMode(
+          googleProductChangeInfo?.prorationMode,
+        )?.value;
 
     final purchaseResult =
         await _invokeReturningPurchaseResult('purchaseSubscriptionOption', {
@@ -538,7 +556,8 @@ class Purchases {
       'optionIdentifier': subscriptionOption.id,
       'googleOldProductIdentifier':
           googleProductChangeInfo?.oldProductIdentifier,
-      'googleProrationMode': prorationMode,
+      'googleProrationMode': null,
+      'storeReplacementMode': storeReplacementMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       'presentedOfferingIdentifier':
           subscriptionOption.presentedOfferingContext?.offeringIdentifier,
@@ -606,9 +625,16 @@ class Purchases {
     final package = purchaseParams.package;
     final storeProduct = purchaseParams.product;
     final subscriptionOption = purchaseParams.subscriptionOption;
+    final productChangeInfo = purchaseParams.productChangeInfo;
     final googleProductChangeInfo = purchaseParams.googleProductChangeInfo;
     final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
-    final prorationMode = googleProductChangeInfo?.prorationMode?.value;
+    final oldProductIdentifier = productChangeInfo?.oldProductIdentifier ??
+        googleProductChangeInfo?.oldProductIdentifier;
+    final storeReplacementMode = productChangeInfo != null
+        ? productChangeInfo.replacementMode?.value
+        : _storeReplacementModeFromGoogleProrationMode(
+            googleProductChangeInfo?.prorationMode,
+          )?.value;
     final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
     final winBackOffer = purchaseParams.winBackOffer;
     final customerEmail = purchaseParams.customerEmail;
@@ -617,8 +643,8 @@ class Purchases {
         purchaseParams.subscriptionOption?.presentedOfferingContext;
     final presentedOfferingContextJson = presentedOfferingContext?.toJson();
     final purchaseArgs = <String, dynamic>{
-      'googleOldProductIdentifier': googleProductChangeInfo?.oldProductIdentifier,
-      'googleProrationMode': prorationMode,
+      'googleOldProductIdentifier': oldProductIdentifier,
+      'storeReplacementMode': storeReplacementMode,
       'googleIsPersonalizedPrice': googleIsPersonalizedPrice,
       'signedDiscountTimestamp': signedDiscountTimestamp,
       'presentedOfferingContext': presentedOfferingContextJson,
@@ -659,6 +685,30 @@ class Purchases {
       });
     } else {
       throw ArgumentError('One of package, product or subscriptionOption must be set in PurchaseParams.');
+    }
+  }
+
+  static StoreReplacementMode? _storeReplacementModeFromGoogleProrationMode(
+    GoogleProrationMode? prorationMode,
+  ) => _storeReplacementModeFromGoogleReplacementModeInt(prorationMode?.value);
+
+  static StoreReplacementMode? _storeReplacementModeFromGoogleReplacementModeInt(
+    int? googleReplacementMode,
+  ) {
+    switch (googleReplacementMode) {
+      case 1:
+        return StoreReplacementMode.withTimeProration;
+      case 2:
+        return StoreReplacementMode.chargeProratedPrice;
+      case 3:
+        return StoreReplacementMode.withoutProration;
+      case 5:
+        return StoreReplacementMode.chargeFullPrice;
+      case 6:
+        return StoreReplacementMode.deferred;
+      case null:
+      default:
+        return null;
     }
   }
 

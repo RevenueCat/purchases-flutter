@@ -669,7 +669,7 @@ void main() {
                 'targetingContext': null,
               },
               'googleOldProductIdentifier': 'old_product_id',
-              'googleProrationMode': 5,
+              'storeReplacementMode': 'CHARGE_FULL_PRICE',
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': '1234567890',
               'winBackOfferIdentifier': null,
@@ -738,7 +738,7 @@ void main() {
                 'targetingContext': null,
               },
               'googleOldProductIdentifier': null,
-              'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
               'winBackOfferIdentifier': 'win_back_identifier',
@@ -751,6 +751,75 @@ void main() {
       fail('there was an exception $e');
     } finally {
       debugDefaultTargetPlatformOverride = null;
+    }
+  });
+
+  test(
+      'purchase with StoreProductChangeInfo without replacementMode does not fallback to GoogleProductChangeInfo',
+      () async {
+    try {
+      response = {
+        'productIdentifier': 'product.identifier',
+        'customerInfo': mockCustomerInfoResponse,
+        'transaction': mockStoreTransaction,
+      };
+      const mockStoreProduct = StoreProduct(
+        'com.revenuecat.lifetime',
+        'description',
+        'lifetime (PurchasesSample)',
+        199.99,
+        '\$199.99',
+        'USD',
+      );
+      const mockPackage = Package(
+        '\$rc_lifetime',
+        PackageType.lifetime,
+        mockStoreProduct,
+        PresentedOfferingContext('main', null, null),
+      );
+      const storeProductChangeInfo = StoreProductChangeInfo(
+        'old_product_id',
+        replacementMode: null,
+      );
+      final googleProductChangeInfo = GoogleProductChangeInfo(
+        'google_old_product_id',
+        prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
+      );
+      final purchaseParams = PurchaseParams.package(
+        mockPackage,
+        productChangeInfo: storeProductChangeInfo,
+        googleProductChangeInfo: googleProductChangeInfo,
+      );
+      final purchasePackageResult = await Purchases.purchase(purchaseParams);
+      expect(
+        purchasePackageResult,
+        PurchaseResult.fromJson(response),
+      );
+
+      expect(
+        log,
+        <Matcher>[
+          isMethodCall(
+            'purchasePackage',
+            arguments: <String, dynamic>{
+              'packageIdentifier': '\$rc_lifetime',
+              'presentedOfferingContext': <String, dynamic>{
+                'offeringIdentifier': 'main',
+                'placementIdentifier': null,
+                'targetingContext': null,
+              },
+              'googleOldProductIdentifier': 'old_product_id',
+              'storeReplacementMode': null,
+              'googleIsPersonalizedPrice': null,
+              'signedDiscountTimestamp': null,
+              'winBackOfferIdentifier': null,
+              'customerEmail': null,
+            },
+          ),
+        ],
+      );
+    } on PlatformException catch (e) {
+      fail('there was an exception $e');
     }
   });
 
@@ -798,7 +867,7 @@ void main() {
                 'targetingContext': null,
               },
               'googleOldProductIdentifier': null,
-              'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
               'winBackOfferIdentifier': null,
@@ -868,7 +937,7 @@ void main() {
                 'targetingContext': null,
               },
               'googleOldProductIdentifier': 'old_product_id',
-              'googleProrationMode': 5,
+              'storeReplacementMode': 'CHARGE_FULL_PRICE',
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': '1234567890',
               'winBackOfferIdentifier': null,
@@ -935,7 +1004,7 @@ void main() {
                 'targetingContext': null,
               },
               'googleOldProductIdentifier': null,
-              'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
               'winBackOfferIdentifier': 'win_back_identifier',
@@ -987,7 +1056,7 @@ void main() {
               'type': 'nonSubscription',
               'presentedOfferingContext': null,
               'googleOldProductIdentifier': null,
-              'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
               'winBackOfferIdentifier': null,
@@ -1054,7 +1123,7 @@ void main() {
                 'targetingContext': null,
               },
               'googleOldProductIdentifier': 'old_product_id',
-              'googleProrationMode': 5,
+              'storeReplacementMode': 'CHARGE_FULL_PRICE',
               'googleIsPersonalizedPrice': true,
               'signedDiscountTimestamp': null,
               'winBackOfferIdentifier': null,
@@ -1110,7 +1179,7 @@ void main() {
               'optionIdentifier': 'subscription_option_id',
               'presentedOfferingContext': null,
               'googleOldProductIdentifier': null,
-              'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'signedDiscountTimestamp': null,
               'winBackOfferIdentifier': null,
@@ -1166,6 +1235,7 @@ void main() {
               },
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
             },
           ),
@@ -1226,7 +1296,8 @@ void main() {
                 'targetingContext': null,
               },
               'googleOldProductIdentifier': 'com.revenuecat.weekly',
-              'googleProrationMode': 1,
+              'googleProrationMode': null,
+              'storeReplacementMode': 'WITH_TIME_PRORATION',
               'googleIsPersonalizedPrice': true,
             },
           ),
@@ -1311,6 +1382,7 @@ void main() {
               'type': 'subs',
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': null,
             },
@@ -1358,6 +1430,7 @@ void main() {
               'type': 'inapp',
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': null,
             },
@@ -1404,6 +1477,7 @@ void main() {
               'type': 'subscription',
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': 'my-offer',
             },
@@ -1514,6 +1588,7 @@ void main() {
               'optionIdentifier': 'monthly',
               'googleOldProductIdentifier': null,
               'googleProrationMode': null,
+              'storeReplacementMode': null,
               'googleIsPersonalizedPrice': null,
               'presentedOfferingIdentifier': 'my-offer',
             },
@@ -1581,7 +1656,8 @@ void main() {
               'productIdentifier': 'gold',
               'optionIdentifier': 'monthly',
               'googleOldProductIdentifier': 'silver',
-              'googleProrationMode': 3,
+              'googleProrationMode': null,
+              'storeReplacementMode': 'WITHOUT_PRORATION',
               'googleIsPersonalizedPrice': true,
               'presentedOfferingIdentifier': 'my-offer',
             },

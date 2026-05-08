@@ -14,6 +14,7 @@ import 'custom_variables_editor.dart';
 import 'customer_center_view_screen.dart';
 import 'initial.dart';
 import 'paywall.dart';
+import 'product_change_testing_screen.dart';
 import 'custom_paywall_impression_testing_screen.dart';
 import 'winback_testing_screen.dart';
 import 'virtual_currency_testing_screen.dart';
@@ -273,6 +274,27 @@ class _UpsellScreenState extends State<UpsellScreen> {
                         }
                       }
                     },
+                  ),
+                ]))),
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        child: Card(
+            margin: const EdgeInsets.all(8.0),
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(children: [
+                  const Text("Product Change Testing"),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const ProductChangeTestingScreen(),
+                          ));
+                    },
+                    child: const Text("Go to Product Change Testing Screen"),
                   ),
                 ]))),
       ),

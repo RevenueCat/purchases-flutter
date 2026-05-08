@@ -24,6 +24,7 @@ export 'models/purchases_completed_by.dart';
 export 'models/purchases_configuration.dart';
 export 'models/purchases_error.dart';
 export 'models/store.dart';
+export 'models/store_product_change.dart';
 export 'models/store_product_discount.dart';
 export 'models/store_product_wrapper.dart';
 export 'models/store_transaction.dart';
