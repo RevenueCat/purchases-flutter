@@ -630,10 +630,11 @@ class Purchases {
     final googleIsPersonalizedPrice = purchaseParams.googleIsPersonalizedPrice;
     final oldProductIdentifier = productChangeInfo?.oldProductIdentifier ??
         googleProductChangeInfo?.oldProductIdentifier;
-    final storeReplacementMode = productChangeInfo?.replacementMode?.value ??
-        _storeReplacementModeFromGoogleProrationMode(
-          googleProductChangeInfo?.prorationMode,
-        )?.value;
+    final storeReplacementMode = productChangeInfo != null
+        ? productChangeInfo.replacementMode?.value
+        : _storeReplacementModeFromGoogleProrationMode(
+            googleProductChangeInfo?.prorationMode,
+          )?.value;
     final signedDiscountTimestamp = purchaseParams.promotionalOffer?.timestamp.toString();
     final winBackOffer = purchaseParams.winBackOffer;
     final customerEmail = purchaseParams.customerEmail;
