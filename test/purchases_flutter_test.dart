@@ -2476,8 +2476,10 @@ void main() {
     ));
     expect(log, <Matcher>[
       isMethodCall('trackAdDisplayed', arguments: {
+        'networkName': null,
         'mediatorName': 'AdMob',
         'adFormat': 'interstitial',
+        'placement': null,
         'adUnitId': 'unit-1',
         'impressionId': 'imp-1',
       }),
@@ -2514,8 +2516,10 @@ void main() {
     ));
     expect(log, <Matcher>[
       isMethodCall('trackAdOpened', arguments: {
+        'networkName': null,
         'mediatorName': 'AppLovin',
         'adFormat': 'rewarded',
+        'placement': null,
         'adUnitId': 'unit-3',
         'impressionId': 'imp-3',
       }),
@@ -2531,8 +2535,10 @@ void main() {
     ));
     expect(log, <Matcher>[
       isMethodCall('trackAdLoaded', arguments: {
+        'networkName': null,
         'mediatorName': 'AdMob',
         'adFormat': 'native',
+        'placement': null,
         'adUnitId': 'unit-4',
         'impressionId': 'imp-4',
       }),
@@ -2551,8 +2557,10 @@ void main() {
     ));
     expect(log, <Matcher>[
       isMethodCall('trackAdRevenue', arguments: {
+        'networkName': null,
         'mediatorName': 'AdMob',
         'adFormat': 'interstitial',
+        'placement': null,
         'adUnitId': 'unit-5',
         'impressionId': 'imp-5',
         'revenueMicros': 1000000,
@@ -2572,7 +2580,9 @@ void main() {
       isMethodCall('trackAdFailedToLoad', arguments: {
         'mediatorName': 'AdMob',
         'adFormat': 'banner',
+        'placement': null,
         'adUnitId': 'unit-6',
+        'mediatorErrorCode': null,
       }),
     ]);
   });

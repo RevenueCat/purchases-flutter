@@ -19,10 +19,10 @@ class AdOpenedData {
   });
 
   Map<String, dynamic> toMap() => {
-        if (networkName != null) 'networkName': networkName,
+        'networkName': networkName,
         'mediatorName': mediatorName.value,
         'adFormat': adFormat.value,
-        if (placement != null) 'placement': placement,
+        'placement': placement,
         'adUnitId': adUnitId,
         'impressionId': impressionId,
       };

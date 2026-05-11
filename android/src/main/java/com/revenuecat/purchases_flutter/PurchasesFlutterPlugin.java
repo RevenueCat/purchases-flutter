@@ -882,43 +882,39 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(CommonKt.getCachedVirtualCurrencies());
     }
 
-    private static HashMap<String, Object> filterNulls(Map<String, Object> arguments) {
+    private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
         HashMap<String, Object> data = new HashMap<>();
         for (Map.Entry<String, Object> entry : arguments.entrySet()) {
             if (entry.getValue() != null) {
                 data.put(entry.getKey(), entry.getValue());
             }
         }
-        return data;
-    }
-
-    private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
-        CommonKt.trackCustomPaywallImpression(filterNulls(arguments));
+        CommonKt.trackCustomPaywallImpression(data);
         result.success(null);
     }
 
     private void trackAdDisplayed(Map<String, Object> arguments, final Result result) {
-        CommonKt.trackAdDisplayed(filterNulls(arguments));
+        CommonKt.trackAdDisplayed(arguments);
         result.success(null);
     }
 
     private void trackAdOpened(Map<String, Object> arguments, final Result result) {
-        CommonKt.trackAdOpened(filterNulls(arguments));
+        CommonKt.trackAdOpened(arguments);
         result.success(null);
     }
 
     private void trackAdLoaded(Map<String, Object> arguments, final Result result) {
-        CommonKt.trackAdLoaded(filterNulls(arguments));
+        CommonKt.trackAdLoaded(arguments);
         result.success(null);
     }
 
     private void trackAdRevenue(Map<String, Object> arguments, final Result result) {
-        CommonKt.trackAdRevenue(filterNulls(arguments));
+        CommonKt.trackAdRevenue(arguments);
         result.success(null);
     }
 
     private void trackAdFailedToLoad(Map<String, Object> arguments, final Result result) {
-        CommonKt.trackAdFailedToLoad(filterNulls(arguments));
+        CommonKt.trackAdFailedToLoad(arguments);
         result.success(null);
     }
 

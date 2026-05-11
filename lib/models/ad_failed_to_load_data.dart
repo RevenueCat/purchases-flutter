@@ -19,8 +19,8 @@ class AdFailedToLoadData {
   Map<String, dynamic> toMap() => {
         'mediatorName': mediatorName.value,
         'adFormat': adFormat.value,
-        if (placement != null) 'placement': placement,
+        'placement': placement,
         'adUnitId': adUnitId,
-        if (mediatorErrorCode != null) 'mediatorErrorCode': mediatorErrorCode,
+        'mediatorErrorCode': mediatorErrorCode,
       };
 }
