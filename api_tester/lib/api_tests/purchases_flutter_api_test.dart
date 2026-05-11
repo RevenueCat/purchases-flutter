@@ -634,6 +634,53 @@ class _PurchasesFlutterApiTest {
         await Purchases.getCachedVirtualCurrencies();
   }
 
+  void _checkTrackAdDisplayed() {
+    Future<void> future = Purchases.trackAdDisplayed(const AdDisplayedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    ));
+  }
+
+  void _checkTrackAdOpened() {
+    Future<void> future = Purchases.trackAdOpened(const AdOpenedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.interstitial,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    ));
+  }
+
+  void _checkTrackAdLoaded() {
+    Future<void> future = Purchases.trackAdLoaded(const AdLoadedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.rewarded,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    ));
+  }
+
+  void _checkTrackAdRevenue() {
+    Future<void> future = Purchases.trackAdRevenue(const AdRevenueData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+      revenueMicros: 1000000,
+      currency: 'USD',
+      precision: AdRevenuePrecision.exact,
+    ));
+  }
+
+  void _checkTrackAdFailedToLoad() {
+    Future<void> future = Purchases.trackAdFailedToLoad(const AdFailedToLoadData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+    ));
+  }
+
   void _checkTrackCustomPaywallImpression() {
     Future<void> future = Purchases.trackCustomPaywallImpression();
   }
