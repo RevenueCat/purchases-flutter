@@ -882,69 +882,43 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(CommonKt.getCachedVirtualCurrencies());
     }
 
-    private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
+    private static HashMap<String, Object> filterNulls(Map<String, Object> arguments) {
         HashMap<String, Object> data = new HashMap<>();
         for (Map.Entry<String, Object> entry : arguments.entrySet()) {
             if (entry.getValue() != null) {
                 data.put(entry.getKey(), entry.getValue());
             }
         }
-        CommonKt.trackCustomPaywallImpression(data);
+        return data;
+    }
+
+    private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
+        CommonKt.trackCustomPaywallImpression(filterNulls(arguments));
         result.success(null);
     }
 
     private void trackAdDisplayed(Map<String, Object> arguments, final Result result) {
-        HashMap<String, Object> data = new HashMap<>();
-        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
-            if (entry.getValue() != null) {
-                data.put(entry.getKey(), entry.getValue());
-            }
-        }
-        CommonKt.trackAdDisplayed(data);
+        CommonKt.trackAdDisplayed(filterNulls(arguments));
         result.success(null);
     }
 
     private void trackAdOpened(Map<String, Object> arguments, final Result result) {
-        HashMap<String, Object> data = new HashMap<>();
-        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
-            if (entry.getValue() != null) {
-                data.put(entry.getKey(), entry.getValue());
-            }
-        }
-        CommonKt.trackAdOpened(data);
+        CommonKt.trackAdOpened(filterNulls(arguments));
         result.success(null);
     }
 
     private void trackAdLoaded(Map<String, Object> arguments, final Result result) {
-        HashMap<String, Object> data = new HashMap<>();
-        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
-            if (entry.getValue() != null) {
-                data.put(entry.getKey(), entry.getValue());
-            }
-        }
-        CommonKt.trackAdLoaded(data);
+        CommonKt.trackAdLoaded(filterNulls(arguments));
         result.success(null);
     }
 
     private void trackAdRevenue(Map<String, Object> arguments, final Result result) {
-        HashMap<String, Object> data = new HashMap<>();
-        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
-            if (entry.getValue() != null) {
-                data.put(entry.getKey(), entry.getValue());
-            }
-        }
-        CommonKt.trackAdRevenue(data);
+        CommonKt.trackAdRevenue(filterNulls(arguments));
         result.success(null);
     }
 
     private void trackAdFailedToLoad(Map<String, Object> arguments, final Result result) {
-        HashMap<String, Object> data = new HashMap<>();
-        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
-            if (entry.getValue() != null) {
-                data.put(entry.getKey(), entry.getValue());
-            }
-        }
-        CommonKt.trackAdFailedToLoad(data);
+        CommonKt.trackAdFailedToLoad(filterNulls(arguments));
         result.success(null);
     }
 
