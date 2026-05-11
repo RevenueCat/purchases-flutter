@@ -281,6 +281,16 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         result([RCCommonFunctionality getCachedVirtualCurrencies]);
     } else if ([@"trackCustomPaywallImpression" isEqualToString:call.method]) {
         [self trackCustomPaywallImpression:arguments result:result];
+    } else if ([@"trackAdDisplayed" isEqualToString:call.method]) {
+        [self trackAdDisplayed:arguments result:result];
+    } else if ([@"trackAdOpened" isEqualToString:call.method]) {
+        [self trackAdOpened:arguments result:result];
+    } else if ([@"trackAdRevenue" isEqualToString:call.method]) {
+        [self trackAdRevenue:arguments result:result];
+    } else if ([@"trackAdLoaded" isEqualToString:call.method]) {
+        [self trackAdLoaded:arguments result:result];
+    } else if ([@"trackAdFailedToLoad" isEqualToString:call.method]) {
+        [self trackAdFailedToLoad:arguments result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -714,6 +724,51 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     }
 }
 #endif
+
+- (void)trackAdDisplayed:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackAdDisplayed:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackAdDisplayed, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
+- (void)trackAdOpened:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackAdOpened:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackAdOpened, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
+- (void)trackAdRevenue:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackAdRevenue:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackAdRevenue, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
+- (void)trackAdLoaded:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackAdLoaded:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackAdLoaded, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
+- (void)trackAdFailedToLoad:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackAdFailedToLoad:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackAdFailedToLoad, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
 
 - (void)trackCustomPaywallImpression:(NSDictionary *)arguments result:(FlutterResult)result {
     if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
