@@ -1,5 +1,8 @@
+import 'package:meta/meta.dart';
+
 /// Use the predefined constants for common mediators, or create a custom
 /// value for other mediation networks.
+@experimental
 class AdMediatorName {
   final String value;
 

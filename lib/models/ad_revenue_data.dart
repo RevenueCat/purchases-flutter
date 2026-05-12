@@ -1,7 +1,10 @@
+import 'package:meta/meta.dart';
+
 import 'ad_format.dart';
 import 'ad_mediator_name.dart';
 import 'ad_revenue_precision.dart';
 
+@experimental
 class AdRevenueData {
   final String? networkName;
   final AdMediatorName mediatorName;

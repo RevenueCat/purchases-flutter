@@ -1,6 +1,9 @@
+import 'package:meta/meta.dart';
+
 import 'ad_format.dart';
 import 'ad_mediator_name.dart';
 
+@experimental
 class AdLoadedData {
   final String? networkName;
   final AdMediatorName mediatorName;

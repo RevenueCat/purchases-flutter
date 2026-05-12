@@ -1,5 +1,8 @@
+import 'package:meta/meta.dart';
+
 /// Use the predefined constants for common precision types, or create a custom
 /// value for other precision types.
+@experimental
 class AdRevenuePrecision {
   final String value;
 
