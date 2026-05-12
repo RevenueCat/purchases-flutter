@@ -1460,25 +1460,7 @@ class Purchases {
         },
       );
 
-  /// Tracks when an ad is displayed to the user.
-  static Future<void> trackAdDisplayed(AdDisplayedData data) =>
-      _channel.invokeMethod('trackAdDisplayed', data.toMap());
-
-  /// Tracks when a user opens or clicks on an ad.
-  static Future<void> trackAdOpened(AdOpenedData data) =>
-      _channel.invokeMethod('trackAdOpened', data.toMap());
-
-  /// Tracks when an ad has been loaded.
-  static Future<void> trackAdLoaded(AdLoadedData data) =>
-      _channel.invokeMethod('trackAdLoaded', data.toMap());
-
-  /// Tracks ad revenue from an ad impression.
-  static Future<void> trackAdRevenue(AdRevenueData data) =>
-      _channel.invokeMethod('trackAdRevenue', data.toMap());
-
-  /// Tracks when an ad has failed to load.
-  static Future<void> trackAdFailedToLoad(AdFailedToLoadData data) =>
-      _channel.invokeMethod('trackAdFailedToLoad', data.toMap());
+  static final adTracker = PurchasesAdTracker._();
 
   static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
@@ -1633,3 +1615,22 @@ class PromotedPurchaseResult {
 }
 
 class UnsupportedPlatformException implements Exception {}
+
+class PurchasesAdTracker {
+  PurchasesAdTracker._();
+
+  Future<void> trackAdDisplayed(AdDisplayedData data) =>
+      Purchases._channel.invokeMethod('trackAdDisplayed', data.toMap());
+
+  Future<void> trackAdOpened(AdOpenedData data) =>
+      Purchases._channel.invokeMethod('trackAdOpened', data.toMap());
+
+  Future<void> trackAdLoaded(AdLoadedData data) =>
+      Purchases._channel.invokeMethod('trackAdLoaded', data.toMap());
+
+  Future<void> trackAdRevenue(AdRevenueData data) =>
+      Purchases._channel.invokeMethod('trackAdRevenue', data.toMap());
+
+  Future<void> trackAdFailedToLoad(AdFailedToLoadData data) =>
+      Purchases._channel.invokeMethod('trackAdFailedToLoad', data.toMap());
+}

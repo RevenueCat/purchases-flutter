@@ -635,7 +635,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkTrackAdDisplayed() {
-    Future<void> future = Purchases.trackAdDisplayed(const AdDisplayedData(
+    Future<void> future = Purchases.adTracker.trackAdDisplayed(const AdDisplayedData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.banner,
       adUnitId: 'unit-1',
@@ -644,7 +644,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkTrackAdOpened() {
-    Future<void> future = Purchases.trackAdOpened(const AdOpenedData(
+    Future<void> future = Purchases.adTracker.trackAdOpened(const AdOpenedData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.interstitial,
       adUnitId: 'unit-1',
@@ -653,7 +653,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkTrackAdLoaded() {
-    Future<void> future = Purchases.trackAdLoaded(const AdLoadedData(
+    Future<void> future = Purchases.adTracker.trackAdLoaded(const AdLoadedData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.rewarded,
       adUnitId: 'unit-1',
@@ -662,7 +662,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkTrackAdRevenue() {
-    Future<void> future = Purchases.trackAdRevenue(const AdRevenueData(
+    Future<void> future = Purchases.adTracker.trackAdRevenue(const AdRevenueData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.banner,
       adUnitId: 'unit-1',
@@ -674,7 +674,7 @@ class _PurchasesFlutterApiTest {
   }
 
   void _checkTrackAdFailedToLoad() {
-    Future<void> future = Purchases.trackAdFailedToLoad(const AdFailedToLoadData(
+    Future<void> future = Purchases.adTracker.trackAdFailedToLoad(const AdFailedToLoadData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.banner,
       adUnitId: 'unit-1',

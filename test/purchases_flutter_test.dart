@@ -2468,7 +2468,7 @@ void main() {
   });
 
   test('trackAdDisplayed sends correct method and arguments', () async {
-    await Purchases.trackAdDisplayed(AdDisplayedData(
+    await Purchases.adTracker.trackAdDisplayed(AdDisplayedData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.interstitial,
       adUnitId: 'unit-1',
@@ -2487,7 +2487,7 @@ void main() {
   });
 
   test('trackAdDisplayed includes optional fields when set', () async {
-    await Purchases.trackAdDisplayed(AdDisplayedData(
+    await Purchases.adTracker.trackAdDisplayed(AdDisplayedData(
       networkName: 'SomeNetwork',
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.banner,
@@ -2508,7 +2508,7 @@ void main() {
   });
 
   test('trackAdOpened sends correct method and arguments', () async {
-    await Purchases.trackAdOpened(AdOpenedData(
+    await Purchases.adTracker.trackAdOpened(AdOpenedData(
       mediatorName: AdMediatorName.appLovin,
       adFormat: AdFormat.rewarded,
       adUnitId: 'unit-3',
@@ -2527,7 +2527,7 @@ void main() {
   });
 
   test('trackAdLoaded sends correct method and arguments', () async {
-    await Purchases.trackAdLoaded(AdLoadedData(
+    await Purchases.adTracker.trackAdLoaded(AdLoadedData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.nativeAd,
       adUnitId: 'unit-4',
@@ -2546,7 +2546,7 @@ void main() {
   });
 
   test('trackAdRevenue sends correct method and arguments', () async {
-    await Purchases.trackAdRevenue(AdRevenueData(
+    await Purchases.adTracker.trackAdRevenue(AdRevenueData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.interstitial,
       adUnitId: 'unit-5',
@@ -2571,7 +2571,7 @@ void main() {
   });
 
   test('trackAdFailedToLoad sends correct method and arguments', () async {
-    await Purchases.trackAdFailedToLoad(AdFailedToLoadData(
+    await Purchases.adTracker.trackAdFailedToLoad(AdFailedToLoadData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.banner,
       adUnitId: 'unit-6',
@@ -2588,7 +2588,7 @@ void main() {
   });
 
   test('trackAdFailedToLoad includes optional fields when set', () async {
-    await Purchases.trackAdFailedToLoad(AdFailedToLoadData(
+    await Purchases.adTracker.trackAdFailedToLoad(AdFailedToLoadData(
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.banner,
       placement: 'footer',
