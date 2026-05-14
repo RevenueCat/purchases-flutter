@@ -2466,4 +2466,143 @@ void main() {
       ),
     ]);
   });
+
+  test('trackAdDisplayed sends correct method and arguments', () async {
+    await Purchases.adTracker.trackAdDisplayed(AdDisplayedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.interstitial,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackAdDisplayed', arguments: {
+        'networkName': null,
+        'mediatorName': 'AdMob',
+        'adFormat': 'interstitial',
+        'placement': null,
+        'adUnitId': 'unit-1',
+        'impressionId': 'imp-1',
+      }),
+    ]);
+  });
+
+  test('trackAdDisplayed includes optional fields when set', () async {
+    await Purchases.adTracker.trackAdDisplayed(AdDisplayedData(
+      networkName: 'SomeNetwork',
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      placement: 'home',
+      adUnitId: 'unit-2',
+      impressionId: 'imp-2',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackAdDisplayed', arguments: {
+        'networkName': 'SomeNetwork',
+        'mediatorName': 'AdMob',
+        'adFormat': 'banner',
+        'placement': 'home',
+        'adUnitId': 'unit-2',
+        'impressionId': 'imp-2',
+      }),
+    ]);
+  });
+
+  test('trackAdOpened sends correct method and arguments', () async {
+    await Purchases.adTracker.trackAdOpened(AdOpenedData(
+      mediatorName: AdMediatorName.appLovin,
+      adFormat: AdFormat.rewarded,
+      adUnitId: 'unit-3',
+      impressionId: 'imp-3',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackAdOpened', arguments: {
+        'networkName': null,
+        'mediatorName': 'AppLovin',
+        'adFormat': 'rewarded',
+        'placement': null,
+        'adUnitId': 'unit-3',
+        'impressionId': 'imp-3',
+      }),
+    ]);
+  });
+
+  test('trackAdLoaded sends correct method and arguments', () async {
+    await Purchases.adTracker.trackAdLoaded(AdLoadedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.nativeAd,
+      adUnitId: 'unit-4',
+      impressionId: 'imp-4',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackAdLoaded', arguments: {
+        'networkName': null,
+        'mediatorName': 'AdMob',
+        'adFormat': 'native',
+        'placement': null,
+        'adUnitId': 'unit-4',
+        'impressionId': 'imp-4',
+      }),
+    ]);
+  });
+
+  test('trackAdRevenue sends correct method and arguments', () async {
+    await Purchases.adTracker.trackAdRevenue(AdRevenueData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.interstitial,
+      adUnitId: 'unit-5',
+      impressionId: 'imp-5',
+      revenueMicros: 1000000,
+      currency: 'USD',
+      precision: AdRevenuePrecision.exact,
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackAdRevenue', arguments: {
+        'networkName': null,
+        'mediatorName': 'AdMob',
+        'adFormat': 'interstitial',
+        'placement': null,
+        'adUnitId': 'unit-5',
+        'impressionId': 'imp-5',
+        'revenueMicros': 1000000,
+        'currency': 'USD',
+        'precision': 'exact',
+      }),
+    ]);
+  });
+
+  test('trackAdFailedToLoad sends correct method and arguments', () async {
+    await Purchases.adTracker.trackAdFailedToLoad(AdFailedToLoadData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-6',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackAdFailedToLoad', arguments: {
+        'mediatorName': 'AdMob',
+        'adFormat': 'banner',
+        'placement': null,
+        'adUnitId': 'unit-6',
+        'mediatorErrorCode': null,
+      }),
+    ]);
+  });
+
+  test('trackAdFailedToLoad includes optional fields when set', () async {
+    await Purchases.adTracker.trackAdFailedToLoad(AdFailedToLoadData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      placement: 'footer',
+      adUnitId: 'unit-6',
+      mediatorErrorCode: 42,
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackAdFailedToLoad', arguments: {
+        'mediatorName': 'AdMob',
+        'adFormat': 'banner',
+        'placement': 'footer',
+        'adUnitId': 'unit-6',
+        'mediatorErrorCode': 42,
+      }),
+    ]);
+  });
 }

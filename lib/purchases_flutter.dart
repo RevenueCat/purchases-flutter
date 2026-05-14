@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 
 import 'object_wrappers.dart';
 
@@ -1460,6 +1461,9 @@ class Purchases {
         },
       );
 
+  @experimental
+  static final adTracker = PurchasesAdTracker._();
+
   static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
@@ -1613,3 +1617,28 @@ class PromotedPurchaseResult {
 }
 
 class UnsupportedPlatformException implements Exception {}
+
+@experimental
+class PurchasesAdTracker {
+  PurchasesAdTracker._();
+
+  @experimental
+  Future<void> trackAdDisplayed(AdDisplayedData data) =>
+      Purchases._channel.invokeMethod('trackAdDisplayed', data.toMap());
+
+  @experimental
+  Future<void> trackAdOpened(AdOpenedData data) =>
+      Purchases._channel.invokeMethod('trackAdOpened', data.toMap());
+
+  @experimental
+  Future<void> trackAdLoaded(AdLoadedData data) =>
+      Purchases._channel.invokeMethod('trackAdLoaded', data.toMap());
+
+  @experimental
+  Future<void> trackAdRevenue(AdRevenueData data) =>
+      Purchases._channel.invokeMethod('trackAdRevenue', data.toMap());
+
+  @experimental
+  Future<void> trackAdFailedToLoad(AdFailedToLoadData data) =>
+      Purchases._channel.invokeMethod('trackAdFailedToLoad', data.toMap());
+}
