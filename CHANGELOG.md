@@ -1,3 +1,15 @@
+## 10.1.1
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 18.7.0 (#1755) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.6.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.6.0)
+  * [iOS 5.73.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.73.0)
+  * [Web 1.40.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.40.0)
+  * [Web 1.39.1](https://github.com/RevenueCat/purchases-js/releases/tag/1.39.1)
+
+### 🔄 Other Changes
+* Remove update_fastlane from before_all (#1753) via Antonio Pallares (@ajpallares)
+
 ## 10.1.0
 ## RevenueCat SDK
 ### ✨ New Features
