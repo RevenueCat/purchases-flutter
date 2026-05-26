@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'purchases_ui_flutter'
-  s.version          = '10.1.0'
+  s.version          = '10.1.1'
   s.summary          = 'Flutter plugin that integrates RevenueCat Paywalls'
   s.description      = <<-DESC
 Flutter plugin that integrates RevenueCat Paywalls
@@ -15,7 +15,7 @@ Flutter plugin that integrates RevenueCat Paywalls
   s.source           = { :path => '.' }
   s.source_files = 'purchases_ui_flutter/Sources/purchases_ui_flutter/**/*.swift'
   s.dependency 'Flutter'
-  s.dependency 'PurchasesHybridCommonUI', '18.6.0'
+  s.dependency 'PurchasesHybridCommonUI', '18.7.1'
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.
