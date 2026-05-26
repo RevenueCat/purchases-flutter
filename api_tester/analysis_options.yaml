@@ -14,6 +14,7 @@ analyzer:
     # make sure flutter analyze catches missing case in the api tests
     missing_enum_constant_in_switch: error
     depend_on_referenced_packages: ignore
+    experimental_member_use: ignore
 
 linter:
   # The lint rules applied to this project can be customized in the
