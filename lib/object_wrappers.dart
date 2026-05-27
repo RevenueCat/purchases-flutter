@@ -1,4 +1,12 @@
 export 'errors.dart';
+export 'models/ad_displayed_data.dart';
+export 'models/ad_failed_to_load_data.dart';
+export 'models/ad_format.dart';
+export 'models/ad_loaded_data.dart';
+export 'models/ad_mediator_name.dart';
+export 'models/ad_opened_data.dart';
+export 'models/ad_revenue_data.dart';
+export 'models/ad_revenue_precision.dart';
 export 'models/custom_paywall_impression_params.dart';
 export 'models/customer_info_wrapper.dart';
 export 'models/entitlement_info_wrapper.dart';

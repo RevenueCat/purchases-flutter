@@ -137,6 +137,11 @@ class PurchasesFlutterPlugin {
         case 'enableAdServicesAttributionTokenCollection':
         case 'setSimulatesAskToBuyInSandbox':
         case 'setAllowSharingStoreAccount':
+        case 'trackAdDisplayed':
+        case 'trackAdOpened':
+        case 'trackAdLoaded':
+        case 'trackAdRevenue':
+        case 'trackAdFailedToLoad':
           // No-op on web
           return Future.value();
 

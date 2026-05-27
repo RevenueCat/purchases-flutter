@@ -634,6 +634,110 @@ class _PurchasesFlutterApiTest {
         await Purchases.getCachedVirtualCurrencies();
   }
 
+  void _checkTrackAdDisplayed() {
+    Future<void> future = Purchases.adTracker.trackAdDisplayed(const AdDisplayedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    ));
+  }
+
+  void _checkTrackAdDisplayedWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackAdDisplayed(const AdDisplayedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+      networkName: 'network-1',
+      placement: 'placement-1',
+    ));
+  }
+
+  void _checkTrackAdOpened() {
+    Future<void> future = Purchases.adTracker.trackAdOpened(const AdOpenedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.interstitial,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    ));
+  }
+
+  void _checkTrackAdOpenedWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackAdOpened(const AdOpenedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.interstitial,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+      networkName: 'network-1',
+      placement: 'placement-1',
+    ));
+  }
+
+  void _checkTrackAdLoaded() {
+    Future<void> future = Purchases.adTracker.trackAdLoaded(const AdLoadedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.rewarded,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    ));
+  }
+
+  void _checkTrackAdLoadedWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackAdLoaded(const AdLoadedData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.rewarded,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+      networkName: 'network-1',
+      placement: 'placement-1',
+    ));
+  }
+
+  void _checkTrackAdRevenue() {
+    Future<void> future = Purchases.adTracker.trackAdRevenue(const AdRevenueData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+      revenueMicros: 1000000,
+      currency: 'USD',
+      precision: AdRevenuePrecision.exact,
+    ));
+  }
+
+  void _checkTrackAdRevenueWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackAdRevenue(const AdRevenueData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+      revenueMicros: 1000000,
+      currency: 'USD',
+      precision: AdRevenuePrecision.exact,
+      networkName: 'network-1',
+      placement: 'placement-1',
+    ));
+  }
+
+  void _checkTrackAdFailedToLoad() {
+    Future<void> future = Purchases.adTracker.trackAdFailedToLoad(const AdFailedToLoadData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+    ));
+  }
+
+  void _checkTrackAdFailedToLoadWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackAdFailedToLoad(const AdFailedToLoadData(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.banner,
+      adUnitId: 'unit-1',
+      placement: 'placement-1',
+      mediatorErrorCode: 42,
+    ));
+  }
+
   void _checkTrackCustomPaywallImpression() {
     Future<void> future = Purchases.trackCustomPaywallImpression();
   }
