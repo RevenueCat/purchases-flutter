@@ -18,9 +18,8 @@ The first branch is exercised by every regular CI build (the
 `purchase_tester` example pins AGP 8 / KGP 1.x).
 
 The AGP 9 branch only runs when a downstream user is on a recent enough
-Flutter (3.44+) and AGP 9, which our existing CI doesn't cover. This
-fixture lets CI catch regressions on that branch (typos, wrong DSL
-references, etc.) at configuration time.
+Flutter (3.44+) and AGP 9. This fixture lets CI catch regressions on
+that branch at configuration time.
 
 ## How it works
 
