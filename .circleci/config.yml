@@ -341,11 +341,13 @@ jobs:
           working_directory: .circleci/agp9-smoke
           command: |
             sdk env install
-            JAVA_HOME_21="$(sdk home java 21.0.7-librca)"
-            GRADLE_91_HOME="$(sdk home gradle 9.1.0)"
+            JAVA_VERSION="$(awk -F= '$1=="java"{print $2}' .sdkmanrc)"
+            GRADLE_VERSION="$(awk -F= '$1=="gradle"{print $2}' .sdkmanrc)"
+            JAVA_DIR="$(sdk home java "$JAVA_VERSION")"
+            GRADLE_DIR="$(sdk home gradle "$GRADLE_VERSION")"
             {
-              echo "export JAVA_HOME=$JAVA_HOME_21"
-              echo "export PATH=$JAVA_HOME_21/bin:$GRADLE_91_HOME/bin:\$PATH"
+              echo "export JAVA_HOME=$JAVA_DIR"
+              echo "export PATH=$JAVA_DIR/bin:$GRADLE_DIR/bin:\$PATH"
             } >> "$BASH_ENV"
       - run:
           name: Print versions
