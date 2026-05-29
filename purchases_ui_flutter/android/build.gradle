@@ -63,9 +63,10 @@ android {
     }
 }
 
-// AGP < 9: we apply kotlin-android ourselves (above), which exposes the
-// legacy android.kotlinOptions DSL. AGP 9+ provides built-in Kotlin
-// (KGP 2.2.10+) and the new top-level kotlin.compilerOptions DSL instead.
+// On AGP 9+ the built-in Kotlin plugin (KGP 2.0+) is the only one
+// available; configure jvmTarget via the new top-level DSL. On AGP < 9
+// the kotlin-android plugin is applied (above) and exposes the legacy
+// android.kotlinOptions DSL.
 if (agpMajor < 9) {
     android {
         kotlinOptions {
