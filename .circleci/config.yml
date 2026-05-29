@@ -331,24 +331,22 @@ jobs:
     resource_class: medium
     steps:
       - checkout
+      # Use the orb's installer directly (not the local `install-sdkman`
+      # command) because the local one auto-runs `sdk env install` against
+      # the root .sdkmanrc, which pins JDK 17. This job needs JDK 21
+      # and Gradle 9.1, both declared in .circleci/agp9-smoke/.sdkmanrc.
+      - revenuecat/install-sdkman
       - run:
-          name: Install JDK 21 (required by AGP 9)
+          name: Install JDK 21 and Gradle 9.1 (required by AGP 9)
+          working_directory: .circleci/agp9-smoke
           command: |
-            curl -fsSL https://get.sdkman.io | bash
-            set +u
-            source "$HOME/.sdkman/bin/sdkman-init.sh"
-            sdk install java 21.0.7-librca
+            sdk env install
             JAVA_HOME_21="$(sdk home java 21.0.7-librca)"
+            GRADLE_91_HOME="$(sdk home gradle 9.1.0)"
             {
               echo "export JAVA_HOME=$JAVA_HOME_21"
-              echo "export PATH=$JAVA_HOME_21/bin:\$PATH"
+              echo "export PATH=$JAVA_HOME_21/bin:$GRADLE_91_HOME/bin:\$PATH"
             } >> "$BASH_ENV"
-      - run:
-          name: Install Gradle 9.1.0 (required by AGP 9)
-          command: |
-            curl -fsLO https://services.gradle.org/distributions/gradle-9.1.0-bin.zip
-            unzip -q gradle-9.1.0-bin.zip -d /opt
-            echo "export PATH=/opt/gradle-9.1.0/bin:\$PATH" >> "$BASH_ENV"
       - run:
           name: Print versions
           command: |
