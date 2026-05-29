@@ -1,0 +1,5 @@
+# JDK 21 is required by AGP 9. Consumed by `sdk env install` in the
+# agp9-end-to-end-test CircleCI job. The project root pins JDK 17, used by
+# every other job; only this fixture needs JDK 21. Gradle 9.1 is pulled in
+# via the Gradle wrapper (see android/gradle/wrapper/gradle-wrapper.properties).
+java=21.0.7-librca
