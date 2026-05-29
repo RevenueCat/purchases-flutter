@@ -331,16 +331,7 @@ jobs:
     resource_class: medium
     steps:
       - checkout
-      # Use the orb's installer directly (not the local `install-sdkman`
-      # command) because the local one auto-runs `sdk env install` against
-      # the root .sdkmanrc, which pins JDK 17. This job needs JDK 21
-      # and Gradle 9.1, both declared in .circleci/agp9-smoke/.sdkmanrc.
       - revenuecat/install-sdkman
-      # In a fresh SDKMAN install (no prior candidates), the first install
-      # of each candidate is auto-set as its default. The orb's
-      # install-sdkman step already sources sdkman-init.sh in $BASH_ENV
-      # for every subsequent step, which picks JAVA_HOME and PATH from
-      # the candidate `current` symlinks. So no $BASH_ENV writes here.
       - run:
           name: Install JDK 21 and Gradle 9.1 (required by AGP 9)
           working_directory: .circleci/agp9-smoke
