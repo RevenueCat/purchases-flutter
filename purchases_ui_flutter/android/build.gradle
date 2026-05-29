@@ -23,7 +23,14 @@ allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+
+// AGP 9+ provides built-in Kotlin support, so we should only apply the
+// kotlin-android plugin on older AGP versions. See:
+// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
+def agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
+if (agpMajor < 9) {
+    apply plugin: 'kotlin-android'
+}
 
 android {
     if (project.android.hasProperty("namespace")) {
@@ -33,10 +40,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
     }
 
     sourceSets {
@@ -50,9 +53,29 @@ android {
         missingDimensionStrategy 'apis', 'defaults'
         missingDimensionStrategy 'billingclient', 'bc8'
     }
+
+    // On AGP < 9 we apply kotlin-android ourselves, which exposes the legacy
+    // android.kotlinOptions DSL. On AGP 9+ kotlin-android is not applied and
+    // the new top-level kotlin.compilerOptions DSL is used instead (below).
+    if (agpMajor < 9) {
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
+    }
     
     dependencies {
         implementation "com.revenuecat.purchases:purchases-hybrid-common-ui:$common_version"
         implementation 'androidx.compose.ui:ui-android:1.5.4'
+    }
+}
+
+// AGP 9+ ships with built-in Kotlin (KGP 2.2.10+), which exposes the new
+// top-level kotlin.compilerOptions DSL. The legacy android.kotlinOptions
+// block above does not exist in this configuration.
+if (agpMajor >= 9) {
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
+        }
     }
 }
