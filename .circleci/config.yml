@@ -336,19 +336,15 @@ jobs:
       # the root .sdkmanrc, which pins JDK 17. This job needs JDK 21
       # and Gradle 9.1, both declared in .circleci/agp9-smoke/.sdkmanrc.
       - revenuecat/install-sdkman
+      # In a fresh SDKMAN install (no prior candidates), the first install
+      # of each candidate is auto-set as its default. The orb's
+      # install-sdkman step already sources sdkman-init.sh in $BASH_ENV
+      # for every subsequent step, which picks JAVA_HOME and PATH from
+      # the candidate `current` symlinks. So no $BASH_ENV writes here.
       - run:
           name: Install JDK 21 and Gradle 9.1 (required by AGP 9)
           working_directory: .circleci/agp9-smoke
-          command: |
-            sdk env install
-            JAVA_VERSION="$(awk -F= '$1=="java"{print $2}' .sdkmanrc)"
-            GRADLE_VERSION="$(awk -F= '$1=="gradle"{print $2}' .sdkmanrc)"
-            JAVA_DIR="$(sdk home java "$JAVA_VERSION")"
-            GRADLE_DIR="$(sdk home gradle "$GRADLE_VERSION")"
-            {
-              echo "export JAVA_HOME=$JAVA_DIR"
-              echo "export PATH=$JAVA_DIR/bin:$GRADLE_DIR/bin:\$PATH"
-            } >> "$BASH_ENV"
+          command: sdk env install
       - run:
           name: Print versions
           command: |
