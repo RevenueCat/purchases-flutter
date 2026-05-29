@@ -1,9 +1,14 @@
 group 'com.revenuecat.purchases_ui_flutter'
 version '10.2.0'
 
+// AGP 9+ provides built-in Kotlin support, so we should only apply the
+// kotlin-android plugin (and its associated buildscript classpath) on
+// older AGP versions. See:
+// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
 buildscript {
     ext.kotlin_version = '1.9.20'
     ext.common_version = '18.9.1'
+    ext.agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
     repositories {
         google()
         mavenCentral()
@@ -11,7 +16,9 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:8.13.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        if (agpMajor < 9) {
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        }
     }
 }
 
@@ -24,10 +31,6 @@ allprojects {
 
 apply plugin: 'com.android.library'
 
-// AGP 9+ provides built-in Kotlin support, so we should only apply the
-// kotlin-android plugin on older AGP versions. See:
-// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
-def agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
 if (agpMajor < 9) {
     apply plugin: 'kotlin-android'
 }
