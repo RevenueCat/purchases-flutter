@@ -31,21 +31,3 @@ cd e2e-tests/agp9_test_app
 flutter pub get
 flutter build apk --debug
 ```
-
-## Current status: **failing**
-
-As of this PR, `flutter build apk --debug` does **not** succeed against the
-AGP 9 branch added in
-[#1765](https://github.com/RevenueCat/purchases-flutter/pull/1765). The
-top-level `kotlin { compilerOptions { … } }` DSL guarded by
-`agpMajor >= 9` is not reachable in this configuration: with
-`android.builtInKotlin=false` (the Flutter 3.44 default), the
-`org.jetbrains.kotlin.android` plugin is not actually applied to
-`purchases_ui_flutter` by the Flutter Gradle plugin, so the `kotlin {}`
-extension is never registered and Gradle fails configuration with
-`Could not find method kotlin()`.
-
-This fixture is being landed intentionally in a failing state so the
-regression is visible in CI while we work out the right fix with the Flutter
-Gradle plugin and the migration guide. It is not gated on the rest of the
-`test` workflow.

@@ -325,7 +325,7 @@ jobs:
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
 
   agp9-end-to-end-test:
-    description: "Build agp9_test_app under Flutter 3.44+ + AGP 9 (currently expected to fail; see fixture README)"
+    description: "Build agp9_test_app under Flutter 3.44+ + AGP 9"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     resource_class: large
