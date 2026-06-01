@@ -2,7 +2,6 @@ group 'com.revenuecat.purchases_flutter'
 version '10.2.0'
 
 buildscript {
-    ext.kotlin_version = '1.8.22'
     ext.common_version = '18.9.1'
     repositories {
         google()
@@ -11,7 +10,6 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:8.13.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -23,7 +21,6 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdk 34
@@ -36,10 +33,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
     }
 
     defaultConfig {
@@ -64,6 +57,5 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.revenuecat.purchases:purchases-hybrid-common:$common_version"
 }

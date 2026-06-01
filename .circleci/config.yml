@@ -324,6 +324,27 @@ jobs:
             ./gradlew app:assembleAndroidTest
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
 
+  agp9-smoke-test:
+    description: "Smoke-test purchases_ui_flutter under AGP 9 (configuration-time only)"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    resource_class: medium
+    steps:
+      - checkout
+      - revenuecat/install-sdkman
+      - run:
+          name: Install JDK 21 and Gradle 9.1 (required by AGP 9)
+          working_directory: .circleci/agp9-smoke
+          command: sdk env install
+      - run:
+          name: Print versions
+          command: |
+            java -version
+            gradle --version
+      - run:
+          name: Run AGP 9 smoke test
+          command: bash .circleci/agp9-smoke/run.sh
+
   android-integration-test:
     description: "Run Android integration tests for flutter"
     <<: *android-machine-emulator
@@ -589,6 +610,7 @@ workflows:
       - ios-integration-test-spm
       - macos-integration-test-spm
       - android-integration-test-build
+      - agp9-smoke-test
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests
