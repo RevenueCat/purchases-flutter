@@ -31,3 +31,14 @@ cd e2e-tests/agp9_test_app
 flutter pub get
 flutter build apk --debug
 ```
+
+To also exercise the AGP 9 default of `android.builtInKotlin=true` (without
+duplicating the fixture), flip the flag and rebuild:
+
+```bash
+sed -i '' 's/^android.builtInKotlin=false$/android.builtInKotlin=true/' android/gradle.properties
+flutter clean && rm -rf android/.gradle android/build
+flutter build apk --debug
+```
+
+(Drop the `''` after `-i` on Linux.)

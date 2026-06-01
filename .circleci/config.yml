@@ -325,7 +325,7 @@ jobs:
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
 
   agp9-end-to-end-test:
-    description: "Build agp9_test_app under Flutter 3.44+ + AGP 9"
+    description: "Build agp9_test_app under Flutter 3.44+ + AGP 9 for both android.builtInKotlin values"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     resource_class: large
@@ -344,9 +344,24 @@ jobs:
       - flutter-get-dependencies:
           project: e2e-tests/agp9_test_app
       - run:
-          name: Build APK under Flutter 3.44+ + AGP 9
+          name: Build APK with android.builtInKotlin=false (Flutter migrator default)
           working_directory: e2e-tests/agp9_test_app
           command: flutter build apk --debug
+      - run:
+          name: Flip fixture to android.builtInKotlin=true
+          working_directory: e2e-tests/agp9_test_app
+          when: always
+          command: |
+            sed -i 's/^android\.builtInKotlin=false$/android.builtInKotlin=true/' android/gradle.properties
+            grep '^android\.' android/gradle.properties
+      - run:
+          name: Build APK with android.builtInKotlin=true
+          working_directory: e2e-tests/agp9_test_app
+          when: always
+          command: |
+            flutter clean
+            rm -rf android/.gradle android/build
+            flutter build apk --debug
 
   android-integration-test:
     description: "Run Android integration tests for flutter"
