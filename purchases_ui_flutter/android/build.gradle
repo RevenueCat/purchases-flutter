@@ -1,14 +1,20 @@
 group 'com.revenuecat.purchases_ui_flutter'
 version '10.2.0'
 
-// AGP 9+ provides built-in Kotlin support, so we should only apply the
-// kotlin-android plugin (and its associated buildscript classpath) on
-// older AGP versions. See:
+// AGP 9+ ships built-in Kotlin support and forbids applying the legacy
+// kotlin-android plugin when it is enabled. AGP 9+ also lets consumers opt
+// out via `android.builtInKotlin=false` in gradle.properties — which is in
+// fact the default the Flutter migrator sets for Flutter 3.44+ apps. We
+// therefore apply kotlin-android (and pull its classpath) whenever AGP
+// won't provide Kotlin itself: AGP < 9, or AGP 9+ with built-in Kotlin
+// opted out. See:
 // https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
 buildscript {
     ext.kotlin_version = '1.9.20'
     ext.common_version = '18.9.1'
     ext.agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
+    ext.builtInKotlinEnabled = (findProperty('android.builtInKotlin') ?: 'true') == 'true'
+    ext.applyLegacyKgp = agpMajor < 9 || !builtInKotlinEnabled
     repositories {
         google()
         mavenCentral()
@@ -16,7 +22,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:8.13.2'
-        if (agpMajor < 9) {
+        if (applyLegacyKgp) {
             classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         }
     }
@@ -31,7 +37,7 @@ allprojects {
 
 apply plugin: 'com.android.library'
 
-if (agpMajor < 9) {
+if (applyLegacyKgp) {
     apply plugin: 'kotlin-android'
 }
 
@@ -63,11 +69,10 @@ android {
     }
 }
 
-// On AGP 9+ the built-in Kotlin plugin (KGP 2.0+) is the only one
-// available; configure jvmTarget via the new top-level DSL. On AGP < 9
-// the kotlin-android plugin is applied (above) and exposes the legacy
-// android.kotlinOptions DSL.
-if (agpMajor < 9) {
+// When we apply kotlin-android ourselves, configure jvmTarget through the
+// legacy android.kotlinOptions DSL it exposes. Otherwise AGP 9+'s built-in
+// Kotlin is in play and we configure it via the new top-level kotlin DSL.
+if (applyLegacyKgp) {
     android {
         kotlinOptions {
             jvmTarget = '1.8'
