@@ -1,6 +1,0 @@
-# JDK 21 and Gradle 9.1 are required by AGP 9.
-# This .sdkmanrc is consumed by `sdk env install` in the agp9-smoke-test
-# CircleCI job. The project root pins JDK 17 (used by every other job);
-# only this smoke test needs JDK 21 + a newer Gradle.
-java=21.0.7-librca
-gradle=9.1.0
