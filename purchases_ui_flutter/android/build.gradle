@@ -2,8 +2,7 @@ group 'com.revenuecat.purchases_ui_flutter'
 version '10.2.0'
 
 // Apply the legacy kotlin-android plugin only when AGP isn't providing
-// Kotlin itself — i.e. AGP < 9, or AGP 9+ with `android.builtInKotlin=false`
-// (the Flutter 3.44+ migrator default). See:
+// Kotlin itself — i.e. AGP < 9, or AGP 9+ with `android.builtInKotlin=false`. See:
 // https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
 buildscript {
     ext.kotlin_version = '1.9.20'
