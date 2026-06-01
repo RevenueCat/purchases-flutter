@@ -1,13 +1,9 @@
 group 'com.revenuecat.purchases_ui_flutter'
 version '10.2.0'
 
-// AGP 9+ ships built-in Kotlin support and forbids applying the legacy
-// kotlin-android plugin when it is enabled. AGP 9+ also lets consumers opt
-// out via `android.builtInKotlin=false` in gradle.properties — which is in
-// fact the default the Flutter migrator sets for Flutter 3.44+ apps. We
-// therefore apply kotlin-android (and pull its classpath) whenever AGP
-// won't provide Kotlin itself: AGP < 9, or AGP 9+ with built-in Kotlin
-// opted out. See:
+// Apply the legacy kotlin-android plugin only when AGP isn't providing
+// Kotlin itself — i.e. AGP < 9, or AGP 9+ with `android.builtInKotlin=false`
+// (the Flutter 3.44+ migrator default). See:
 // https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
 buildscript {
     ext.kotlin_version = '1.9.20'
@@ -69,9 +65,8 @@ android {
     }
 }
 
-// When we apply kotlin-android ourselves, configure jvmTarget through the
-// legacy android.kotlinOptions DSL it exposes. Otherwise AGP 9+'s built-in
-// Kotlin is in play and we configure it via the new top-level kotlin DSL.
+// jvmTarget DSL matches the Kotlin plugin in use: `android.kotlinOptions`
+// for kotlin-android, top-level `kotlin {}` for AGP's built-in Kotlin.
 if (applyLegacyKgp) {
     android {
         kotlinOptions {
