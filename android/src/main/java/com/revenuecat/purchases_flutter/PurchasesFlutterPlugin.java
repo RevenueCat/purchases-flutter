@@ -384,9 +384,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getCachedVirtualCurrencies":
                 getCachedVirtualCurrencies(result);
                 break;
-            case "trackCustomPaywallImpression":
-                trackCustomPaywallImpression(call.arguments(), result);
+            case "trackCustomPaywallImpression": {
+                Map<String, Object> arguments = call.arguments();
+                trackCustomPaywallImpression(
+                        arguments != null ? arguments : new HashMap<>(),
+                        result);
                 break;
+            }
             case "trackAdDisplayed":
                 trackAdDisplayed(call.arguments(), result);
                 break;
@@ -883,14 +887,46 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
-        HashMap<String, Object> data = new HashMap<>();
-        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
-            if (entry.getValue() != null) {
-                data.put(entry.getKey(), entry.getValue());
+        CommonKt.trackCustomPaywallImpression(mapWithoutNullValues(arguments));
+        result.success(null);
+    }
+
+    private static HashMap<String, Object> mapWithoutNullValues(@Nullable Map<String, Object> map) {
+        HashMap<String, Object> filteredMap = new HashMap<>();
+        if (map != null) {
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                Object value = valueWithoutNullValues(entry.getValue());
+                if (value != null) {
+                    filteredMap.put(entry.getKey(), value);
+                }
             }
         }
-        CommonKt.trackCustomPaywallImpression(data);
-        result.success(null);
+        return filteredMap;
+    }
+
+    private static Object valueWithoutNullValues(@Nullable Object value) {
+        if (value instanceof Map) {
+            HashMap<String, Object> filteredMap = new HashMap<>();
+            Map<?, ?> originalMap = (Map<?, ?>) value;
+            for (Map.Entry<?, ?> entry : originalMap.entrySet()) {
+                Object filteredValue = valueWithoutNullValues(entry.getValue());
+                if (entry.getKey() instanceof String && filteredValue != null) {
+                    filteredMap.put((String) entry.getKey(), filteredValue);
+                }
+            }
+            return filteredMap;
+        }
+        if (value instanceof List) {
+            ArrayList<Object> filteredList = new ArrayList<>();
+            for (Object item : (List<?>) value) {
+                Object filteredItem = valueWithoutNullValues(item);
+                if (filteredItem != null) {
+                    filteredList.add(filteredItem);
+                }
+            }
+            return filteredList;
+        }
+        return value;
     }
 
     private void trackAdDisplayed(Map<String, Object> arguments, final Result result) {

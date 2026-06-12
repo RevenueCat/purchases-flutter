@@ -1447,19 +1447,45 @@ class Purchases {
   ///
   /// [params] Optional parameters for the impression. Include
   /// [CustomPaywallImpressionParams.paywallId] to identify which paywall was
-  /// shown, and [CustomPaywallImpressionParams.offeringId] to override the
-  /// offering. If [offeringId] is not provided, the SDK will use the current
-  /// offering identifier from the cache.
+  /// shown, and [CustomPaywallImpressionParams.offering] to identify the
+  /// offering and associated placement or targeting context.
+  /// [CustomPaywallImpressionParams.offeringId] is deprecated and only kept for
+  /// backwards compatibility. Pass [CustomPaywallImpressionParams.offering]
+  /// instead. If neither is provided, no offering data is sent and the native
+  /// SDK chooses the current offering.
   static Future<void> trackCustomPaywallImpression({
-    CustomPaywallImpressionParams? params,
+    CustomPaywallImpressionParams params =
+        const CustomPaywallImpressionParams(),
   }) =>
       _channel.invokeMethod(
         'trackCustomPaywallImpression',
-        {
-          'paywallId': params?.paywallId,
-          'offeringId': params?.offeringId,
-        },
+        _customPaywallImpressionData(params),
       );
+
+  static Map<String, dynamic> _customPaywallImpressionData(
+    CustomPaywallImpressionParams params,
+  ) {
+    final offering = params.offering;
+    final presentedOfferingContext =
+        offering != null && offering.availablePackages.isNotEmpty
+            ? offering.availablePackages.first.presentedOfferingContext
+            : null;
+    final paywallId = params.paywallId;
+    final offeringId = offering?.identifier ?? params.offeringId;
+    final data = <String, dynamic>{};
+
+    if (paywallId != null) {
+      data['paywallId'] = paywallId;
+    }
+    if (offeringId != null) {
+      data['offeringId'] = offeringId;
+    }
+    if (presentedOfferingContext != null) {
+      data['presentedOfferingContext'] = presentedOfferingContext.toJson();
+    }
+
+    return data;
+  }
 
   @experimental
   static final adTracker = PurchasesAdTracker._();

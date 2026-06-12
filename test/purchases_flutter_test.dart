@@ -2387,16 +2387,55 @@ void main() {
     expect(virtualCurrencies, isNull);
   });
 
+  const customPaywallPresentedOfferingContext = PresentedOfferingContext(
+    'my-offering',
+    'onboarding',
+    PresentedOfferingTargetingContext(7, 'rule_1'),
+  );
+  const customPaywallStoreProduct = StoreProduct(
+    'com.revenuecat.monthly',
+    'description',
+    'monthly (PurchasesSample)',
+    9.99,
+    '\$9.99',
+    'USD',
+  );
+  const customPaywallPackage = Package(
+    '\$rc_monthly',
+    PackageType.monthly,
+    customPaywallStoreProduct,
+    customPaywallPresentedOfferingContext,
+  );
+  const customPaywallOffering = Offering(
+    'my-offering',
+    'Custom paywall offering',
+    <String, Object>{},
+    <Package>[customPaywallPackage],
+  );
+  const customPaywallOfferingWithoutPackages = Offering(
+    'empty-offering',
+    'Custom paywall offering without packages',
+    <String, Object>{},
+    <Package>[],
+  );
+  const customPaywallPresentedOfferingContextJson = <String, dynamic>{
+    'offeringIdentifier': 'my-offering',
+    'placementIdentifier': 'onboarding',
+    'targetingContext': <String, dynamic>{
+      'revision': 7,
+      'ruleId': 'rule_1',
+    },
+  };
+
   test('trackCustomPaywallImpression works correctly with params', () async {
     await Purchases.trackCustomPaywallImpression(
-      params: CustomPaywallImpressionParams(paywallId: 'my-paywall'),
+      params: const CustomPaywallImpressionParams(paywallId: 'my-paywall'),
     );
     expect(log, <Matcher>[
       isMethodCall(
         'trackCustomPaywallImpression',
         arguments: {
           'paywallId': 'my-paywall',
-          'offeringId': null,
         },
       ),
     ]);
@@ -2408,25 +2447,37 @@ void main() {
     expect(log, <Matcher>[
       isMethodCall(
         'trackCustomPaywallImpression',
-        arguments: {
-          'paywallId': null,
-          'offeringId': null,
-        },
+        arguments: {},
       ),
     ]);
   });
 
-  test('trackCustomPaywallImpression works correctly with null paywallId',
+  test('trackCustomPaywallImpression does not send null ids',
       () async {
     await Purchases.trackCustomPaywallImpression(
-      params: CustomPaywallImpressionParams(),
+      params: const CustomPaywallImpressionParams(),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {},
+      ),
+    ]);
+  });
+
+  test('trackCustomPaywallImpression sends empty string ids', () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: CustomPaywallImpressionParams(
+        paywallId: '',
+        offeringId: '',
+      ),
     );
     expect(log, <Matcher>[
       isMethodCall(
         'trackCustomPaywallImpression',
         arguments: {
-          'paywallId': null,
-          'offeringId': null,
+          'paywallId': '',
+          'offeringId': '',
         },
       ),
     ]);
@@ -2441,8 +2492,65 @@ void main() {
       isMethodCall(
         'trackCustomPaywallImpression',
         arguments: {
-          'paywallId': null,
           'offeringId': 'my-offering',
+        },
+      ),
+    ]);
+  });
+
+  test('trackCustomPaywallImpression derives context from offering', () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(
+        paywallId: 'my-paywall',
+        offering: customPaywallOffering,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'paywallId': 'my-paywall',
+          'offeringId': 'my-offering',
+          'presentedOfferingContext': customPaywallPresentedOfferingContextJson,
+        },
+      ),
+    ]);
+  });
+
+  test('trackCustomPaywallImpression prefers offering over offeringId',
+      () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(
+        paywallId: 'my-paywall',
+        offering: customPaywallOffering,
+        offeringId: 'legacy-offering',
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'paywallId': 'my-paywall',
+          'offeringId': 'my-offering',
+          'presentedOfferingContext': customPaywallPresentedOfferingContextJson,
+        },
+      ),
+    ]);
+  });
+
+  test(
+      'trackCustomPaywallImpression sends offeringId for offering without packages',
+      () async {
+    await Purchases.trackCustomPaywallImpression(
+      params: const CustomPaywallImpressionParams(
+        offering: customPaywallOfferingWithoutPackages,
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {
+          'offeringId': 'empty-offering',
         },
       ),
     ]);
@@ -2451,7 +2559,7 @@ void main() {
   test('trackCustomPaywallImpression works correctly with both params',
       () async {
     await Purchases.trackCustomPaywallImpression(
-      params: CustomPaywallImpressionParams(
+      params: const CustomPaywallImpressionParams(
         paywallId: 'my-paywall',
         offeringId: 'my-offering',
       ),
