@@ -274,9 +274,8 @@ def update_web_hybrid_mappings_bundle(version:, commit_and_push:)
     if status.strip.empty?
       UI.message("ℹ️  Vendored purchases-js-hybrid-mappings bundle already up to date; nothing to commit")
     else
-      Actions.sh("git", "add", relative_path)
-      Actions.sh("git", "commit", "-m", "Update vendored purchases-js-hybrid-mappings to #{version}")
-      Actions.sh("git", "push", "origin", "HEAD")
+      commit_current_changes(commit_message: "Update vendored purchases-js-hybrid-mappings to #{version}")
+      push_to_git_remote
     end
   end
 end
