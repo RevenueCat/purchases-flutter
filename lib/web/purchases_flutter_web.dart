@@ -48,7 +48,6 @@ class PurchasesFlutterPlugin {
     // The UMD bundle registers `window.PurchasesHybridMappings` when it runs.
     final script = HTMLScriptElement()
       ..type = 'text/javascript'
-      ..async = true
       ..src = _purchasesHybridMappingsAssetPath
       ..addEventListener(
         'load',
