@@ -312,7 +312,7 @@ end
 # When `expected_sha` is provided (the sha256 purchases-hybrid-common computed
 # for the bundle it built and published), the downloaded copy is verified
 # against it before being committed.
-def update_web_hybrid_mappings_bundle(version:, commit_and_push:, expected_sha: nil)
+def update_web_hybrid_mappings_bundle(version:, commit_and_push:, expected_sha:)
   require 'digest'
 
   relative_path = web_hybrid_mappings_relative_path
