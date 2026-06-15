@@ -45,6 +45,6 @@ flutter:
     # strict CSP environments such as Chrome Extension Manifest V3 pages that
     # disallow remotely-hosted code. Kept in sync with the bumped
     # purchases-hybrid-common version by the fastlane `update_hybrid_common` lane.
-    - path: assets/web/purchases_js_hybrid_mappings.js
+    - path: assets/web/
       platforms:
         - web
