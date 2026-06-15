@@ -12,7 +12,6 @@ import '../purchases_flutter.dart';
 class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
-  static const _purchasesHybridMappingsVersion = '18.15.1';
   static const _platformName = 'flutter';
   static const _pluginVersion = '10.2.3';
 
@@ -47,12 +46,10 @@ class PurchasesFlutterPlugin {
     // remotely-hosted code, which are disallowed by strict Content Security
     // Policies such as the one enforced on Chrome Extension Manifest V3 pages.
     // The UMD bundle registers `window.PurchasesHybridMappings` when it runs.
-    // The version query string busts caches when the vendored bundle changes.
     final script = HTMLScriptElement()
       ..type = 'text/javascript'
       ..async = true
-      ..src =
-          '$_purchasesHybridMappingsAssetPath?v=$_purchasesHybridMappingsVersion'
+      ..src = _purchasesHybridMappingsAssetPath
       ..addEventListener(
         'load',
         (Event _) {
