@@ -242,6 +242,41 @@ lane :trigger_bump do
   trigger_action_in_circle_ci(action: 'bump', repo_name: repo_name)
 end
 
+desc "Verifies the vendored web SDK bundle matches the published " \
+     "purchases-js-hybrid-mappings bundle for the current purchases-hybrid-common version"
+lane :verify_web_hybrid_mappings_bundle do
+  require 'digest'
+  require 'tmpdir'
+
+  version = get_phc_version
+  relative_path = web_hybrid_mappings_relative_path
+  asset_path = File.join(get_root_folder, relative_path)
+  download_url = web_hybrid_mappings_download_url(version)
+
+  UI.user_error!("Vendored web bundle not found at #{relative_path}") unless File.exist?(asset_path)
+
+  Dir.mktmpdir do |tmp_dir|
+    downloaded_path = File.join(tmp_dir, 'index.umd.js')
+    UI.message("ℹ️  Downloading purchases-js-hybrid-mappings #{version} bundle to verify the vendored copy")
+    Actions.sh("curl", "-fsSL", "--retry", "5", "--retry-delay", "5", "--retry-all-errors", download_url, "-o", downloaded_path)
+
+    local_sha = Digest::SHA256.hexdigest(File.binread(asset_path))
+    remote_sha = Digest::SHA256.hexdigest(File.binread(downloaded_path))
+
+    if local_sha == remote_sha
+      UI.success("✅ Vendored web bundle matches purchases-js-hybrid-mappings@#{version} (sha256 #{local_sha})")
+    else
+      UI.user_error!(
+        "Vendored web bundle (#{relative_path}) does not match purchases-js-hybrid-mappings@#{version}.\n" \
+        "  local  sha256: #{local_sha}\n" \
+        "  remote sha256: #{remote_sha}\n" \
+        "The vendored bundle must not be edited by hand. Re-download it from #{download_url} " \
+        "(or run `bundle exec fastlane update_hybrid_common`)."
+      )
+    end
+  end
+end
+
 ###############################################################################
 # Helper functions 🤜🤛                                                      #
 ###############################################################################
@@ -250,15 +285,28 @@ def get_root_folder
   return File.expand_path('../../', __FILE__)
 end
 
+# Path (relative to the repo root) of the vendored purchases-js-hybrid-mappings
+# web bundle.
+def web_hybrid_mappings_relative_path
+  'assets/web/purchases_js_hybrid_mappings.js'
+end
+
+# URL of the published purchases-js-hybrid-mappings UMD bundle for a given
+# purchases-hybrid-common version. The npm package is versioned in lockstep with
+# purchases-hybrid-common.
+def web_hybrid_mappings_download_url(version)
+  "https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@#{version}/dist/index.umd.js"
+end
+
 # Downloads the purchases-js-hybrid-mappings UMD bundle matching the given
 # purchases-hybrid-common version and stores it as the vendored Flutter web
 # asset. The npm package is versioned in lockstep with purchases-hybrid-common.
 # When `commit_and_push` is true, commits the updated asset to the current
 # branch (the bump branch created by bump_phc_version) and pushes it.
 def update_web_hybrid_mappings_bundle(version:, commit_and_push:)
-  relative_path = 'assets/web/purchases_js_hybrid_mappings.js'
+  relative_path = web_hybrid_mappings_relative_path
   asset_path = File.join(get_root_folder, relative_path)
-  download_url = "https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@#{version}/dist/index.umd.js"
+  download_url = web_hybrid_mappings_download_url(version)
 
   UI.message("ℹ️  Downloading purchases-js-hybrid-mappings #{version} bundle from #{download_url}")
   Actions.sh("curl", "-fsSL", download_url, "-o", asset_path)
