@@ -187,15 +187,25 @@ lane :update_hybrid_common do |options|
     next
   end
 
+  open_pr = options[:open_pr] || false
+
   bump_phc_version(
     repo_name: 'purchases-flutter',
     files_to_update: files_to_update,
     current_version: current_phc_version,
     next_version: new_version_number,
-    open_pr: options[:open_pr] || false,
+    open_pr: open_pr,
     automatic_release: options[:automatic_release] || false,
     enable_auto_merge: options[:automatic_release] || false
   )
+
+  # The web platform loads a vendored copy of the purchases-js-hybrid-mappings
+  # bundle (see lib/web/purchases_flutter_web.dart) so it can be served
+  # same-origin in strict CSP environments. Keep that vendored file in sync with
+  # the version bumped above. When a PR was opened, bump_phc_version already
+  # created/checked out the bump branch, so this is committed and pushed there to
+  # ship in the same PR.
+  update_web_hybrid_mappings_bundle(version: new_version_number, commit_and_push: open_pr)
 end
 
 desc "Run maestro E2E tests on iOS"
@@ -239,6 +249,37 @@ end
 
 def get_root_folder
   return File.expand_path('../../', __FILE__)
+end
+
+# Downloads the purchases-js-hybrid-mappings UMD bundle matching the given
+# purchases-hybrid-common version and stores it as the vendored Flutter web
+# asset. The npm package is versioned in lockstep with purchases-hybrid-common.
+# When `commit_and_push` is true, commits the updated asset to the current
+# branch (the bump branch created by bump_phc_version) and pushes it.
+def update_web_hybrid_mappings_bundle(version:, commit_and_push:)
+  relative_path = 'assets/web/purchases_js_hybrid_mappings.js'
+  asset_path = File.join(get_root_folder, relative_path)
+  download_url = "https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@#{version}/dist/index.umd.js"
+
+  UI.message("ℹ️  Downloading purchases-js-hybrid-mappings #{version} bundle from #{download_url}")
+  Actions.sh("curl", "-fsSL", download_url, "-o", asset_path)
+
+  unless File.exist?(asset_path) && File.size(asset_path) > 0
+    UI.user_error!("Downloaded purchases-js-hybrid-mappings bundle is empty or missing at #{asset_path}")
+  end
+
+  return unless commit_and_push
+
+  Dir.chdir(get_root_folder) do
+    status = Actions.sh("git", "status", "--porcelain", relative_path, log: false)
+    if status.strip.empty?
+      UI.message("ℹ️  Vendored purchases-js-hybrid-mappings bundle already up to date; nothing to commit")
+    else
+      Actions.sh("git", "add", relative_path)
+      Actions.sh("git", "commit", "-m", "Update vendored purchases-js-hybrid-mappings to #{version}")
+      Actions.sh("git", "push", "origin", "HEAD")
+    end
+  end
 end
 
 def setup_credentials_file

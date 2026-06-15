@@ -15,42 +15,63 @@ class PurchasesFlutterPlugin {
   static const _purchasesHybridMappingsVersion = '18.14.1';
   static const _platformName = 'flutter';
   static const _pluginVersion = '10.2.3';
-  static const _purchasesHybridMappingsUrl =
-      'https://cdn.jsdelivr.net/npm/@revenuecat/purchases-js-hybrid-mappings@$_purchasesHybridMappingsVersion/dist/index.umd.js';
+
+  // Path to the vendored RevenueCat web SDK (purchases-js-hybrid-mappings UMD
+  // bundle), served same-origin from the app's assets.
+  static const _purchasesHybridMappingsAssetPath =
+      'assets/packages/purchases_flutter/assets/web/purchases_js_hybrid_mappings.js';
 
   static Completer<void>? _initCompleter;
 
-  static void _injectScriptIfNeeded() {
+  static void _loadHybridMappingsIfNeeded() {
     if (_initCompleter != null) {
       return;
     }
-    _initCompleter = Completer<void>();
-
-    final script = HTMLScriptElement()
-      ..type = 'text/javascript'
-      ..text = '''
-        window.after_rc_load_callback = async (callback) => {
-          callback(await import("$_purchasesHybridMappingsUrl"));
-        };
-      ''';
+    final completer = Completer<void>();
+    _initCompleter = completer;
 
     final head = document.head;
     if (head == null) {
-      throw StateError(
-        "The current document doesn't have a head element which is required to insert a script.",
+      completer.completeError(
+        StateError(
+          "The current document doesn't have a head element which is "
+          'required to insert a script.',
+        ),
       );
+      return;
     }
-    
-    head.append(script);
 
-    globalContext.callMethod(
-      'after_rc_load_callback'.toJS,
-      ((JSAny? module) {
-        globalContext['revenuecat'] = module;
-        globalContext.delete('after_rc_load_callback'.toJS);
-        _initCompleter?.complete();
-      }).toJS,
-    );
+    // Load the bundle through an external <script src> pointing at a
+    // same-origin asset. Shipping the code inside the app and loading it as an
+    // external (non-inline) script avoids both inline-script execution and
+    // remotely-hosted code, which are disallowed by strict Content Security
+    // Policies such as the one enforced on Chrome Extension Manifest V3 pages.
+    // The UMD bundle registers `window.PurchasesHybridMappings` when it runs.
+    // The version query string busts caches when the vendored bundle changes.
+    final script = HTMLScriptElement()
+      ..type = 'text/javascript'
+      ..async = true
+      ..src =
+          '$_purchasesHybridMappingsAssetPath?v=$_purchasesHybridMappingsVersion'
+      ..addEventListener(
+        'load',
+        (Event _) {
+          completer.complete();
+        }.toJS,
+      )
+      ..addEventListener(
+        'error',
+        (Event _) {
+          completer.completeError(
+            StateError(
+              'Failed to load the RevenueCat web SDK from '
+              '$_purchasesHybridMappingsAssetPath',
+            ),
+          );
+        }.toJS,
+      );
+
+    head.append(script);
   }
 
   static void registerWith(Registrar registrar) {
@@ -65,7 +86,7 @@ class PurchasesFlutterPlugin {
     final instance = PurchasesFlutterPlugin();
     channel.setMethodCallHandler(instance.handleMethodCall);
 
-    _injectScriptIfNeeded();
+    _loadHybridMappingsIfNeeded();
   }
 
   Future<dynamic> handleMethodCall(MethodCall call) async {

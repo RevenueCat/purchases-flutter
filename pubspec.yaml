@@ -39,3 +39,12 @@ flutter:
       web:
         pluginClass: PurchasesFlutterPlugin
         fileName: web/purchases_flutter_web.dart
+  assets:
+    # Vendored RevenueCat web SDK (purchases-js-hybrid-mappings UMD bundle).
+    # Bundled locally so it can be loaded same-origin, which is required by
+    # strict CSP environments such as Chrome Extension Manifest V3 pages that
+    # disallow remotely-hosted code. Kept in sync with
+    # `_purchasesHybridMappingsVersion` by the fastlane `update_hybrid_common` lane.
+    - path: assets/web/purchases_js_hybrid_mappings.js
+      platforms:
+        - web
