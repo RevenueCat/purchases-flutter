@@ -742,6 +742,10 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.trackCustomPaywallImpression();
   }
 
+  void _checkTrackCustomPaywallImpressionWithNullParams() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(params: null);
+  }
+
   void _checkTrackCustomPaywallImpressionWithParams() {
     Future<void> future = Purchases.trackCustomPaywallImpression(
       params: const CustomPaywallImpressionParams(paywallId: 'my-paywall'),
@@ -781,6 +785,12 @@ class _PurchasesFlutterApiTest {
 
     CustomPaywallImpressionParams paramsWithId =
         const CustomPaywallImpressionParams(paywallId: 'test');
+
+    CustomPaywallImpressionParams paramsWithNullIds =
+        const CustomPaywallImpressionParams(
+      paywallId: null,
+      offeringId: null,
+    );
 
     CustomPaywallImpressionParams paramsWithOffering =
         CustomPaywallImpressionParams(offering: offering);

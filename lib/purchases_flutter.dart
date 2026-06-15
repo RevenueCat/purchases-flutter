@@ -1454,8 +1454,7 @@ class Purchases {
   /// instead. If neither is provided, no offering data is sent and the native
   /// SDK chooses the current offering.
   static Future<void> trackCustomPaywallImpression({
-    CustomPaywallImpressionParams params =
-        const CustomPaywallImpressionParams(),
+    CustomPaywallImpressionParams? params,
   }) =>
       _channel.invokeMethod(
         'trackCustomPaywallImpression',
@@ -1463,15 +1462,15 @@ class Purchases {
       );
 
   static Map<String, dynamic> _customPaywallImpressionData(
-    CustomPaywallImpressionParams params,
+    CustomPaywallImpressionParams? params,
   ) {
-    final offering = params.offering;
+    final offering = params?.offering;
     final presentedOfferingContext =
         offering != null && offering.availablePackages.isNotEmpty
             ? offering.availablePackages.first.presentedOfferingContext
             : null;
-    final paywallId = params.paywallId;
-    final offeringId = offering?.identifier ?? params.offeringId;
+    final paywallId = params?.paywallId;
+    final offeringId = offering?.identifier ?? params?.offeringId;
     final data = <String, dynamic>{};
 
     if (paywallId != null) {

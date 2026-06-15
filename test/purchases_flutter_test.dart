@@ -2452,10 +2452,24 @@ void main() {
     ]);
   });
 
+  test('trackCustomPaywallImpression works correctly with null params',
+      () async {
+    await Purchases.trackCustomPaywallImpression(params: null);
+    expect(log, <Matcher>[
+      isMethodCall(
+        'trackCustomPaywallImpression',
+        arguments: {},
+      ),
+    ]);
+  });
+
   test('trackCustomPaywallImpression does not send null ids',
       () async {
     await Purchases.trackCustomPaywallImpression(
-      params: const CustomPaywallImpressionParams(),
+      params: const CustomPaywallImpressionParams(
+        paywallId: null,
+        offeringId: null,
+      ),
     );
     expect(log, <Matcher>[
       isMethodCall(
