@@ -63,6 +63,9 @@ parameters:
   automatic:
     type: boolean
     default: false
+  js_mappings_sha:
+    type: string
+    default: ''
 
 commands:
 
@@ -532,6 +535,7 @@ jobs:
             bundle exec fastlane update_hybrid_common \
             version:<< pipeline.parameters.version >> \
             open_pr:true \
+            js_mappings_sha:<< pipeline.parameters.js_mappings_sha >> \
             automatic_release:<< pipeline.parameters.automatic >>
 
   make-release:
