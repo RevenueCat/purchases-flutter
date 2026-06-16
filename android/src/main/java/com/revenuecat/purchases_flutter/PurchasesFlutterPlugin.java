@@ -887,17 +887,17 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
-        CommonKt.trackCustomPaywallImpression(mapWithoutNullValues(arguments));
+        CommonKt.trackCustomPaywallImpression(stringKeyedMapWithoutNullValues(arguments));
         result.success(null);
     }
 
-    private static HashMap<String, Object> mapWithoutNullValues(@Nullable Map<String, Object> map) {
+    private static HashMap<String, Object> stringKeyedMapWithoutNullValues(@Nullable Map<?, ?> map) {
         HashMap<String, Object> filteredMap = new HashMap<>();
         if (map != null) {
-            for (Map.Entry<String, Object> entry : map.entrySet()) {
-                Object value = valueWithoutNullValues(entry.getValue());
-                if (value != null) {
-                    filteredMap.put(entry.getKey(), value);
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                Object filteredValue = valueWithoutNullValues(entry.getValue());
+                if (entry.getKey() instanceof String && filteredValue != null) {
+                    filteredMap.put((String) entry.getKey(), filteredValue);
                 }
             }
         }
@@ -906,15 +906,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private static Object valueWithoutNullValues(@Nullable Object value) {
         if (value instanceof Map) {
-            HashMap<String, Object> filteredMap = new HashMap<>();
-            Map<?, ?> originalMap = (Map<?, ?>) value;
-            for (Map.Entry<?, ?> entry : originalMap.entrySet()) {
-                Object filteredValue = valueWithoutNullValues(entry.getValue());
-                if (entry.getKey() instanceof String && filteredValue != null) {
-                    filteredMap.put((String) entry.getKey(), filteredValue);
-                }
-            }
-            return filteredMap;
+            return stringKeyedMapWithoutNullValues((Map<?, ?>) value);
         }
         if (value instanceof List) {
             ArrayList<Object> filteredList = new ArrayList<>();

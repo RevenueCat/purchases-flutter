@@ -795,6 +795,12 @@ class _PurchasesFlutterApiTest {
     CustomPaywallImpressionParams paramsWithOffering =
         CustomPaywallImpressionParams(offering: offering);
 
+    CustomPaywallImpressionParams paramsWithPaywallIdAndOffering =
+        CustomPaywallImpressionParams(
+      paywallId: 'test',
+      offering: offering,
+    );
+
     CustomPaywallImpressionParams paramsWithOfferingId =
         const CustomPaywallImpressionParams(offeringId: 'offering');
 
