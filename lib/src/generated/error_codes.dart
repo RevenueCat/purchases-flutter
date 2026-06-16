@@ -4,7 +4,7 @@
 
 /// Different error codes returned by the Purchases functions.
 enum PurchasesErrorCode {
-  /// Unknown error
+  /// Unknown error.
   unknownError,
   /// Purchase was cancelled.
   purchaseCancelledError,
