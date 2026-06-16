@@ -307,6 +307,18 @@ jobs:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
 
+  verify-web-bundle:
+    description: "Verify the vendored web SDK bundle matches the published purchases-hybrid-common version"
+    docker:
+      - image: cimg/ruby:3.2.0
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - run:
+          name: Verify vendored web bundle
+          command: bundle exec fastlane verify_web_hybrid_mappings_bundle
+
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
     docker:
@@ -583,6 +595,7 @@ workflows:
           flutter-version: "3.22.0"
       - lint-sample-apps
       - api_test
+      - verify-web-bundle
       - dry-run-release: *release-branches
       - ios-integration-test-cocoapods
       - macos-integration-test-cocoapods
