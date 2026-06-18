@@ -36,7 +36,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@3.21.1
+  revenuecat: revenuecat/sdks-common-config@3.21.2
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -63,6 +63,9 @@ parameters:
   automatic:
     type: boolean
     default: false
+  js_mappings_sha:
+    type: string
+    default: ''
 
 commands:
 
@@ -307,6 +310,18 @@ jobs:
           name: Run API tests
           command: bundle exec fastlane run_api_tests
 
+  verify-web-bundle:
+    description: "Verify the vendored web SDK bundle matches the published purchases-hybrid-common version"
+    docker:
+      - image: cimg/ruby:3.2.0
+    steps:
+      - checkout
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - run:
+          name: Verify vendored web bundle
+          command: bundle exec fastlane verify_web_hybrid_mappings_bundle
+
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
     docker:
@@ -520,6 +535,7 @@ jobs:
             bundle exec fastlane update_hybrid_common \
             version:<< pipeline.parameters.version >> \
             open_pr:true \
+            js_mappings_sha:<< pipeline.parameters.js_mappings_sha >> \
             automatic_release:<< pipeline.parameters.automatic >>
 
   make-release:
@@ -586,6 +602,7 @@ workflows:
           flutter-version: "3.22.0"
       - lint-sample-apps
       - api_test
+      - verify-web-bundle
       - dry-run-release: *release-branches
       - ios-integration-test-cocoapods
       - macos-integration-test-cocoapods

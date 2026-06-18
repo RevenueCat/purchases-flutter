@@ -1,6 +1,6 @@
 name: purchases_flutter
 description: Flutter in-app purchases and subscriptions made easy. The plugin supports iOS, macOS and Android.
-version: 10.2.3
+version: 10.3.0
 homepage: https://www.revenuecat.com/
 repository: https://github.com/RevenueCat/purchases-flutter
 issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
@@ -39,3 +39,12 @@ flutter:
       web:
         pluginClass: PurchasesFlutterPlugin
         fileName: web/purchases_flutter_web.dart
+  assets:
+    # Vendored RevenueCat web SDK (purchases-js-hybrid-mappings UMD bundle).
+    # Bundled locally so it can be loaded same-origin, which is required by
+    # strict CSP environments such as Chrome Extension Manifest V3 pages that
+    # disallow remotely-hosted code. Kept in sync with the bumped
+    # purchases-hybrid-common version by the fastlane `update_hybrid_common` lane.
+    - path: assets/web/
+      platforms:
+        - web

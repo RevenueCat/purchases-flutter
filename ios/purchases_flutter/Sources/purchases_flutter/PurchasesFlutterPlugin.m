@@ -280,7 +280,7 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
     } else if ([@"getCachedVirtualCurrencies" isEqualToString:call.method]) {
         result([RCCommonFunctionality getCachedVirtualCurrencies]);
     } else if ([@"trackCustomPaywallImpression" isEqualToString:call.method]) {
-        [self trackCustomPaywallImpression:arguments result:result];
+        [self trackCustomPaywallImpression:arguments ?: @{} result:result];
     } else if ([@"trackAdDisplayed" isEqualToString:call.method]) {
         [self trackAdDisplayed:arguments result:result];
     } else if ([@"trackAdOpened" isEqualToString:call.method]) {
@@ -772,14 +772,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)trackCustomPaywallImpression:(NSDictionary *)arguments result:(FlutterResult)result {
     if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
-        NSMutableDictionary *data = [NSMutableDictionary dictionary];
-        for (NSString *key in arguments) {
-            id value = arguments[key];
-            if (value != nil && ![value isKindOfClass:[NSNull class]]) {
-                data[key] = value;
-            }
-        }
-        [RCCommonFunctionality trackCustomPaywallImpression:data];
+        [RCCommonFunctionality trackCustomPaywallImpression:[arguments mappingNSNullToNil]];
     } else {
         NSLog(@"[Purchases] Warning: tried to call trackCustomPaywallImpression, but it's only available on iOS 15.0 or greater.");
     }
@@ -894,7 +887,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"10.2.3";
+    return @"10.3.0";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {
