@@ -681,8 +681,8 @@ workflows:
           platform: flutter
           outputs: |
             errors.dart:lib/src/generated/error_codes.dart
-            errors_api_test.dart:api_tester/lib/api_tests/errors_api_test.dart
-          commit_paths: "lib/src/generated/error_codes.dart,api_tester/lib/api_tests/errors_api_test.dart"
+            errors_api_test.dart:api_tester/lib/api_tests/generated/errors_api_test.dart
+          commit_paths: "lib/src/generated/error_codes.dart,api_tester/lib/api_tests/generated/errors_api_test.dart"
           update_api_steps:
             - revenuecat/install-gem-unix-dependencies:
                 cache-version: v1
