@@ -1,0 +1,6 @@
+[settings]
+lockfile = true
+
+[tools]
+java = "liberica-17.0.6"
+flutter = "latest"
