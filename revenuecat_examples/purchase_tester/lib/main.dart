@@ -36,11 +36,19 @@ void main() async {
 Future<void> _configureSDK() async {
   await Purchases.setLogLevel(LogLevel.debug);
 
+  if (proxyUrl.isNotEmpty) {
+    await Purchases.setProxyURL(proxyUrl);
+  }
+
   PurchasesConfiguration configuration;
   if (StoreConfig.isForAmazonAppstore()) {
     configuration = AmazonConfiguration(StoreConfig.instance.apiKey);
   } else {
     configuration = PurchasesConfiguration(StoreConfig.instance.apiKey);
+  }
+
+  if (testAppUserId.isNotEmpty) {
+    configuration.appUserID = testAppUserId;
   }
 
   configuration.entitlementVerificationMode =
