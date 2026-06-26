@@ -348,14 +348,12 @@ def update_web_hybrid_mappings_bundle(version:, commit_and_push:, expected_sha:)
 
   return unless commit_and_push
 
-  Dir.chdir(get_root_folder) do
-    status = Actions.sh("git", "status", "--porcelain", relative_path, log: false)
-    if status.strip.empty?
-      UI.message("ℹ️  Vendored purchases-js-hybrid-mappings bundle already up to date; nothing to commit")
-    else
-      commit_current_changes(commit_message: "Update vendored purchases-js-hybrid-mappings to #{version}")
-      push_to_git_remote
-    end
+  status = Actions.sh("git", "-C", get_root_folder, "status", "--porcelain", relative_path, log: false)
+  if status.strip.empty?
+    UI.message("ℹ️  Vendored purchases-js-hybrid-mappings bundle already up to date; nothing to commit")
+  else
+    commit_current_changes(commit_message: "Update vendored purchases-js-hybrid-mappings to #{version}")
+    push_to_git_remote
   end
 end
 
