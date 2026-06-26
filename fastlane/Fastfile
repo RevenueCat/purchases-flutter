@@ -319,6 +319,8 @@ def update_web_hybrid_mappings_bundle(version:, commit_and_push:, expected_sha:)
   asset_path = File.join(get_root_folder, relative_path)
   download_url = web_hybrid_mappings_download_url(version)
 
+  previous_sha = File.exist?(asset_path) ? Digest::SHA256.hexdigest(File.binread(asset_path)) : nil
+
   UI.message("ℹ️  Downloading purchases-js-hybrid-mappings #{version} bundle from #{download_url}")
   Actions.sh("curl", "-fsSL", download_url, "-o", asset_path)
 
@@ -348,14 +350,11 @@ def update_web_hybrid_mappings_bundle(version:, commit_and_push:, expected_sha:)
 
   return unless commit_and_push
 
-  Dir.chdir(get_root_folder) do
-    status = Actions.sh("git", "status", "--porcelain", relative_path, log: false)
-    if status.strip.empty?
-      UI.message("ℹ️  Vendored purchases-js-hybrid-mappings bundle already up to date; nothing to commit")
-    else
-      commit_current_changes(commit_message: "Update vendored purchases-js-hybrid-mappings to #{version}")
-      push_to_git_remote
-    end
+  if actual_sha == previous_sha
+    UI.message("ℹ️  Vendored purchases-js-hybrid-mappings bundle already up to date; nothing to commit")
+  else
+    commit_current_changes(commit_message: "Update vendored purchases-js-hybrid-mappings to #{version}")
+    push_to_git_remote
   end
 end
 
