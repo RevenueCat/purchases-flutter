@@ -291,6 +291,11 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         [self trackAdLoaded:arguments result:result];
     } else if ([@"trackAdFailedToLoad" isEqualToString:call.method]) {
         [self trackAdFailedToLoad:arguments result:result];
+    } else if ([@"generateRewardVerificationToken" isEqualToString:call.method]) {
+        result([RCCommonFunctionality generateRewardVerificationTokenWithImpressionId:arguments[@"impressionId"]]);
+    } else if ([@"pollRewardVerification" isEqualToString:call.method]) {
+        [RCCommonFunctionality pollRewardVerificationWithClientTransactionId:arguments[@"clientTransactionId"]
+                                                                  completion:[self getResponseCompletionBlock:result]];
     } else {
         result(FlutterMethodNotImplemented);
     }

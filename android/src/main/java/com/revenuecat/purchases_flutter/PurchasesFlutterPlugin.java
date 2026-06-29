@@ -406,6 +406,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "trackAdFailedToLoad":
                 trackAdFailedToLoad(call.arguments(), result);
                 break;
+            case "generateRewardVerificationToken":
+                result.success(CommonKt.generateRewardVerificationToken(call.argument("impressionId")));
+                break;
+            case "pollRewardVerification":
+                CommonKt.pollRewardVerification(call.argument("clientTransactionId"), getOnResult(result));
+                break;
             default:
                 result.notImplemented();
                 break;
