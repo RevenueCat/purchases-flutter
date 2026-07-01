@@ -151,31 +151,3 @@ class EntitlementInfo extends Equatable {
     verification,
   ];
 }
-
-OwnershipType ownershipTypeFromJson(dynamic value) {
-  switch (value) {
-    case 'PURCHASED':
-      return OwnershipType.purchased;
-    case 'FAMILY_SHARED':
-      return OwnershipType.familyShared;
-    case 'UNKNOWN':
-      return OwnershipType.unknown;
-    default:
-      return OwnershipType.unknown;
-  }
-}
-
-PeriodType periodTypeFromJson(dynamic value) {
-  switch (value) {
-    case 'INTRO':
-      return PeriodType.intro;
-    case 'NORMAL':
-      return PeriodType.normal;
-    case 'TRIAL':
-      return PeriodType.trial;
-    case 'PREPAID':
-      return PeriodType.prepaid;
-    default:
-      return PeriodType.unknown;
-  }
-}
