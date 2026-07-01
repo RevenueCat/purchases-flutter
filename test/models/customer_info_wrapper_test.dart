@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/entitlement_infos_wrapper.dart';
+import 'package:purchases_flutter/models/store.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 import 'package:purchases_flutter/models/verification_result.dart';
 
@@ -35,6 +36,7 @@ void main() {
         '2024-01-01T00:00:00Z',
       );
       expect(info, equals(expected));
+      expect(info.subscriptionsByProductIdentifier, isEmpty);
     });
 
     test('parses all fields with values', () {
@@ -82,5 +84,42 @@ void main() {
       );
       expect(info, equals(expected));
     });
+
+    test('parses subscriptionsByProductIdentifier', () {
+      final json = {
+        'entitlements': {
+          'all': {},
+          'active': {},
+          'verification': 'NOT_REQUESTED',
+        },
+        'allPurchaseDates': {},
+        'activeSubscriptions': ['sku1'],
+        'allPurchasedProductIdentifiers': ['sku1'],
+        'nonSubscriptionTransactions': [],
+        'firstSeen': '2024-01-01T00:00:00Z',
+        'originalAppUserId': 'user_123',
+        'allExpirationDates': {},
+        'requestDate': '2024-01-01T00:00:00Z',
+        'subscriptionsByProductIdentifier': {
+          'sku1': {
+            'productIdentifier': 'sku1',
+            'purchaseDate': '2024-01-01T00:00:00Z',
+            'isSandbox': false,
+            'isActive': true,
+            'willRenew': false,
+            'store': 'PLAY_STORE',
+            'autoResumeDate': '2024-03-01T00:00:00Z',
+            'productPlanIdentifier': 'monthly-plan',
+          }
+        },
+      };
+      final info = CustomerInfo.fromJson(json);
+      expect(info.subscriptionsByProductIdentifier.keys, ['sku1']);
+      final subscription = info.subscriptionsByProductIdentifier['sku1']!;
+      expect(subscription.productIdentifier, 'sku1');
+      expect(subscription.store, Store.playStore);
+      expect(subscription.autoResumeDate, '2024-03-01T00:00:00Z');
+      expect(subscription.productPlanIdentifier, 'monthly-plan');
+    });
   });
-} 
+}
