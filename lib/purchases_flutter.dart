@@ -1489,6 +1489,37 @@ class Purchases {
   @experimental
   static final adTracker = PurchasesAdTracker._();
 
+  /// Generates a reward verification token for a loaded rewarded ad.
+  ///
+  /// Call after the ad has loaded. Forward the returned `customData` and
+  /// `appUserID` to your ad network's server-side verification options, then
+  /// keep `clientTransactionId` for [pollRewardVerification] when the reward
+  /// callback fires.
+  @experimental
+  static Future<RewardVerificationToken> generateRewardVerificationToken(
+    String impressionId,
+  ) async {
+    final result = await _invokeReturningMap(
+      'generateRewardVerificationToken',
+      {'impressionId': impressionId},
+    );
+    return RewardVerificationToken.fromMap(result);
+  }
+
+  /// Polls the backend until reward verification completes, then returns the
+  /// result. Call when your ad network's reward callback fires, passing the
+  /// `clientTransactionId` from [generateRewardVerificationToken].
+  @experimental
+  static Future<RewardVerificationResult> pollRewardVerification(
+    String clientTransactionId,
+  ) async {
+    final result = await _invokeReturningMap(
+      'pollRewardVerification',
+      {'clientTransactionId': clientTransactionId},
+    );
+    return RewardVerificationResult.fromMap(result);
+  }
+
   static Future<PurchaseResult> _invokeReturningPurchaseResult(String method,
       // ignore: require_trailing_commas
       [dynamic arguments]) async {
