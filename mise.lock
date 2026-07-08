@@ -4,6 +4,54 @@
 version = "3.44.2"
 backend = "http:flutter"
 
+[tools.flutter."platforms.linux-x64"]
+checksum = "sha256:b0de1d19754688ec6769c9a067db3b0594479d3d767f971bfecfc132904c8d5e"
+url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.2-stable.tar.xz"
+
+[tools.flutter."platforms.linux-x64-musl"]
+checksum = "sha256:b0de1d19754688ec6769c9a067db3b0594479d3d767f971bfecfc132904c8d5e"
+url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.44.2-stable.tar.xz"
+
+[tools.flutter."platforms.macos-arm64"]
+checksum = "sha256:57fbfdc7032678ab30ad577872bbfc4114a25d3cba94fbfa14a050ec61381a23"
+url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.44.2-stable.zip"
+
+[tools.flutter."platforms.macos-x64"]
+checksum = "sha256:024d4e941ceb7c09fd9036e025c71bb8ce7e90eb2956fa8041a3260169aa2478"
+url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_3.44.2-stable.zip"
+
+[tools.flutter."platforms.windows-x64"]
+checksum = "sha256:d79ae99807ba744b843e54f048308c629061456fdc7b0753251fb96eb5346a0e"
+url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.44.2-stable.zip"
+
 [[tools.java]]
 version = "liberica-17.0.6+10"
 backend = "core:java"
+
+[tools.java."platforms.linux-arm64"]
+checksum = "sha1:3f35ee9fac9ab87b163333bc6c7802753730a680"
+url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsoft-jdk17.0.6%2B10-linux-aarch64.tar.gz"
+
+[tools.java."platforms.linux-arm64-musl"]
+checksum = "sha1:95edb1e0015eac796053923234c12b665cd6b287"
+url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsoft-jdk17.0.6%2B10-linux-aarch64-musl.tar.gz"
+
+[tools.java."platforms.linux-x64"]
+checksum = "sha1:3921ead0629aa003b3ec3afad7557bbea397fb1e"
+url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsoft-jdk17.0.6%2B10-linux-amd64.tar.gz"
+
+[tools.java."platforms.linux-x64-musl"]
+checksum = "sha1:9c4f64693f71ca3c88c1321173887b1facda75e2"
+url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsoft-jdk17.0.6%2B10-linux-x64-musl.tar.gz"
+
+[tools.java."platforms.macos-arm64"]
+checksum = "sha1:2af64f6f557c6cbf96cac7022eba2c9779a6be7a"
+url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsoft-jdk17.0.6%2B10-macos-aarch64.tar.gz"
+
+[tools.java."platforms.macos-x64"]
+checksum = "sha1:e78e899e7a6449751c5431d53a9cb9ed001da90d"
+url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsoft-jdk17.0.6%2B10-macos-amd64.tar.gz"
+
+[tools.java."platforms.windows-x64"]
+checksum = "sha1:04397d865b19e2d4b8102f4070b6c7a946846d6a"
+url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsoft-jdk17.0.6%2B10-windows-amd64.zip"

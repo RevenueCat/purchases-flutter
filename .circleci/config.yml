@@ -36,7 +36,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@4.1.0
+  revenuecat: revenuecat/sdks-common-config@4.3.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -147,17 +147,6 @@ commands:
           name: Create simulator
           command: xcrun simctl create '<< parameters.sim-name >>' com.apple.CoreSimulator.SimDeviceType.<< parameters.sim-device-type >> com.apple.CoreSimulator.SimRuntime.<< parameters.sim-device-runtime >>
 
-  install-sdkman:
-    description: Install SDKMAN and set up Java environment
-    steps:
-      - revenuecat/install-sdkman
-      - run:
-          name: Setup Java environment
-          command: |
-            if ! sdk env install; then
-              echo "Error installing Java SDK through SDKMAN, continuing with default Java" >&2
-            fi
-  
   install-correct-cocoapods:
     description: Install correct cocoapods version
     steps:
@@ -301,7 +290,7 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
-      - install-sdkman
+      - revenuecat/install-mise-tools
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - flutter-get-dependencies:
@@ -330,7 +319,7 @@ jobs:
     steps:
       - checkout
       - replace-api-key
-      - install-sdkman
+      - revenuecat/install-mise-tools
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
@@ -346,7 +335,7 @@ jobs:
     steps:
       - checkout
       - replace-api-key
-      - install-sdkman
+      - revenuecat/install-mise-tools
       - android/create-avd:
           avd-name: integration-tests
           system-image: system-images;android-33;google_apis;x86_64
