@@ -147,11 +147,6 @@ commands:
           name: Create simulator
           command: xcrun simctl create '<< parameters.sim-name >>' com.apple.CoreSimulator.SimDeviceType.<< parameters.sim-device-type >> com.apple.CoreSimulator.SimRuntime.<< parameters.sim-device-runtime >>
 
-  install-mise-tools:
-    description: Install mise tools from mise.toml (Java, etc.)
-    steps:
-      - revenuecat/install-mise-tools
-
   install-correct-cocoapods:
     description: Install correct cocoapods version
     steps:
@@ -295,7 +290,7 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
-      - install-mise-tools
+      - revenuecat/install-mise-tools
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - flutter-get-dependencies:
@@ -324,7 +319,7 @@ jobs:
     steps:
       - checkout
       - replace-api-key
-      - install-mise-tools
+      - revenuecat/install-mise-tools
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
@@ -340,7 +335,7 @@ jobs:
     steps:
       - checkout
       - replace-api-key
-      - install-mise-tools
+      - revenuecat/install-mise-tools
       - android/create-avd:
           avd-name: integration-tests
           system-image: system-images;android-33;google_apis;x86_64
