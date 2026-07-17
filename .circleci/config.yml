@@ -36,7 +36,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@4.4.0
+  revenuecat: revenuecat/sdks-common-config@4.5.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -510,7 +510,7 @@ jobs:
   update-hybrid-common-versions:
     description: "Creates a PR updating purchases-hybrid-common to latest release"
     docker:
-      - image: cimg/ruby:3.1.2
+      - image: cimg/ruby:3.2.0
     steps:
       - checkout
       - revenuecat/install-gem-unix-dependencies:
@@ -556,7 +556,7 @@ jobs:
   github_release:
     description: "Creates a github release with the current version"
     docker:
-      - image: cimg/ruby:3.1.2
+      - image: cimg/ruby:3.2.0
     steps:
       - checkout
       - revenuecat/install-gem-unix-dependencies:
