@@ -1,5 +1,11 @@
 #import "./include/purchases_flutter/PurchasesFlutterPlugin.h"
 
+#if __has_include("purchases_flutter-Swift.h")
+#import "purchases_flutter-Swift.h"
+#else
+#import <purchases_flutter/purchases_flutter-Swift.h>
+#endif
+
 @import StoreKit;
 
 @import PurchasesHybridCommon;
@@ -84,6 +90,7 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
           diagnosticsEnabled:diagnosticsEnabled
    preferredUILocaleOverride:preferredUILocaleOverride
+            useWorkflows:[arguments[@"useWorkflows"] boolValue]
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -306,7 +313,8 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
     diagnosticsEnabled:(BOOL)diagnosticsEnabled
  preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
-                result:(FlutterResult)result {
+           useWorkflows:(BOOL)useWorkflows
+                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
     }
@@ -314,14 +322,15 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
         userDefaultsSuiteName = nil;
     }
 
-    RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
+    RCDangerousSettings *dangerousSettings = [PurchasesFlutterDangerousSettingsFactory makeWithUseWorkflows:useWorkflows];
+    RCPurchases *purchases = [RCPurchases configureWithAPIKey:(apiKey)
                                                     appUserID:appUserID
                                       purchasesAreCompletedBy:purchasesAreCompletedBy
                                         userDefaultsSuiteName:userDefaultsSuiteName
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
                                               storeKitVersion:storeKitVersion
-                                            dangerousSettings:nil
+                                            dangerousSettings:dangerousSettings
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode
                                            diagnosticsEnabled:diagnosticsEnabled
