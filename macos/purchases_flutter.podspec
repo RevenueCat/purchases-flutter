@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'RevenueCat' => 'support@revenuecat.com' }
   s.source           = { :path => '.' }
-  s.source_files     = 'purchases_flutter/Sources/purchases_flutter/**/*.{h,m}'
+  s.source_files     = 'purchases_flutter/Sources/purchases_flutter/**/*.{h,m,swift}'
   s.public_header_files = 'purchases_flutter/Sources/purchases_flutter/include/**/*.h'
   s.dependency 'FlutterMacOS'
   s.dependency 'PurchasesHybridCommon', '18.23.0'
