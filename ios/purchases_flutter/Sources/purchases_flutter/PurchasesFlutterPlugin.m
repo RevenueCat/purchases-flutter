@@ -1,6 +1,8 @@
 #import "./include/purchases_flutter/PurchasesFlutterPlugin.h"
 
-#if __has_include("purchases_flutter-Swift.h")
+#if SWIFT_PACKAGE
+@import PurchasesFlutterSwiftSupport;
+#elif __has_include("purchases_flutter-Swift.h")
 #import "purchases_flutter-Swift.h"
 #else
 #import <purchases_flutter/purchases_flutter-Swift.h>

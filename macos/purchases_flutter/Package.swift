@@ -12,13 +12,32 @@ let package = Package(
         .library(name: "purchases-flutter", targets: ["purchases_flutter"])
     ],
     dependencies: [
-        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "18.23.0")
+        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "18.23.0"),
+        .package(url: "https://github.com/RevenueCat/purchases-ios-spm", exact: "5.81.2")
     ],
     targets: [
         .target(
+            name: "PurchasesFlutterSwiftSupport",
+            dependencies: [
+                .product(name: "RevenueCat", package: "purchases-ios-spm")
+            ],
+            path: "Sources/purchases_flutter",
+            exclude: [
+                "PurchasesFlutterPlugin.m",
+                "include"
+            ],
+            sources: [
+                "PurchasesFlutterDangerousSettingsFactory.swift"
+            ]
+        ),
+        .target(
             name: "purchases_flutter",
             dependencies: [
+                .target(name: "PurchasesFlutterSwiftSupport"),
                 .product(name: "PurchasesHybridCommon", package: "purchases-hybrid-common")
+            ],
+            exclude: [
+                "PurchasesFlutterDangerousSettingsFactory.swift"
             ],
             publicHeadersPath: "include/purchases_flutter"
         )
