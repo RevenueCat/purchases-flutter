@@ -1,13 +1,5 @@
 #import "./include/purchases_flutter/PurchasesFlutterPlugin.h"
 
-#if SWIFT_PACKAGE
-@import PurchasesFlutterSwiftSupport;
-#elif __has_include("purchases_flutter-Swift.h")
-#import "purchases_flutter-Swift.h"
-#else
-#import <purchases_flutter/purchases_flutter-Swift.h>
-#endif
-
 @import StoreKit;
 
 @import PurchasesHybridCommon;
@@ -324,7 +316,9 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
         userDefaultsSuiteName = nil;
     }
 
-    RCDangerousSettings *dangerousSettings = [PurchasesFlutterDangerousSettingsFactory makeWithUseWorkflows:useWorkflows];
+    RCDangerousSettings *dangerousSettings =
+        [RCDangerousSettings createDangerousSettingsWithAutoSyncPurchases:YES
+                                                             useWorkflows:useWorkflows];
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:(apiKey)
                                                     appUserID:appUserID
                                       purchasesAreCompletedBy:purchasesAreCompletedBy
