@@ -25,9 +25,23 @@ class _PurchaseConfigurationApiTest {
     configuration.storeKitVersion = storeKitVersion;
     configuration.automaticDeviceIdentifierCollectionEnabled = true;
     configuration.diagnosticsEnabled = true;
+    DangerousSettings? dangerousSettings = configuration.dangerousSettings;
+    configuration.dangerousSettings = null;
+    configuration.dangerousSettings = dangerousSettings;
 
     // deprecated, but we still need to check that the API hasn't been removed.
     configuration.pendingTransactionsForPrepaidPlansEnabled = true;
+  }
+
+  void _checkDangerousSettingsConstructor() {
+    DangerousSettings settings = DangerousSettings();
+    DangerousSettings settingsWithWorkflows =
+        DangerousSettings(useWorkflows: true);
+  }
+
+  void _checkDangerousSettingsProperties(DangerousSettings settings) {
+    bool useWorkflows = settings.useWorkflows;
+    settings.useWorkflows = true;
   }
 
   void _checkAmazonConfigurationConstructor() {
