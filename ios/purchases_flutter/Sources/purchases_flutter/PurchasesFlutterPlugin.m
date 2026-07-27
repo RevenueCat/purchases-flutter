@@ -316,9 +316,11 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
         userDefaultsSuiteName = nil;
     }
 
-    RCDangerousSettings *dangerousSettings =
-        [RCDangerousSettings createDangerousSettingsWithAutoSyncPurchases:YES
-                                                             useWorkflows:useWorkflows];
+    // Stay nil unless workflows are enabled, so the default path keeps relying on the native
+    // DangerousSettings defaults instead of pinning them here.
+    RCDangerousSettings *dangerousSettings = useWorkflows
+        ? [RCDangerousSettings createDangerousSettingsWithAutoSyncPurchases:YES useWorkflows:YES]
+        : nil;
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
                                       purchasesAreCompletedBy:purchasesAreCompletedBy
