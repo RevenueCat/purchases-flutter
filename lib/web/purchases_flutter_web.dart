@@ -177,6 +177,8 @@ class PurchasesFlutterPlugin {
         case 'purchaseProductWithWinBackOffer':
         case 'getEligibleWinBackOffersForProduct':
         case 'redeemWebPurchase':
+        case 'generateRewardVerificationToken':
+        case 'pollRewardVerification':
           throw UnsupportedPlatformException();
 
         default:

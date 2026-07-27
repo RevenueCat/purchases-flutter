@@ -32,6 +32,15 @@ void main() {
       expect(reward.amount, isNull);
     });
 
+    test('rounds a non-int amount from the platform channel', () {
+      final reward = VerifiedReward.fromMap({
+        'type': 'virtual_currency',
+        'code': 'GOLD',
+        'amount': 100.0,
+      });
+      expect(reward.amount, 100);
+    });
+
     test('parses a no-reward result', () {
       final reward = VerifiedReward.fromMap({'type': 'no_reward'});
       expect(reward.type, 'no_reward');

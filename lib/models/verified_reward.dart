@@ -34,7 +34,7 @@ class VerifiedReward {
     return VerifiedReward(
       type: map['type'] as String,
       code: map['code'] as String?,
-      amount: map['amount'] as int?,
+      amount: (map['amount'] as num?)?.round(),
       identifier: map['identifier'] as String?,
       expiresAt: millis is num
           ? DateTime.fromMillisecondsSinceEpoch(millis.toInt())
