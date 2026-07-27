@@ -429,7 +429,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 store = Store.AMAZON;
             }
 
-            DangerousSettings dangerousSettings = Boolean.TRUE.equals(useWorkflows)
+            DangerousSettings dangerousSettings = useWorkflows != null && useWorkflows
                     ? DangerousSettings.forWorkflows(true)
                     : new DangerousSettings();
             CommonKt.configure(this.applicationContext,
