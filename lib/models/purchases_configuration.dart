@@ -82,7 +82,7 @@ class PurchasesConfiguration {
   bool diagnosticsEnabled = false;
 
   /// Dangerous settings for the SDK. Internal RevenueCat use only.
-  DangerousSettings dangerousSettings = DangerousSettings();
+  DangerousSettings? dangerousSettings;
 }
 
 /// Internal RevenueCat-only settings that may change without warning.

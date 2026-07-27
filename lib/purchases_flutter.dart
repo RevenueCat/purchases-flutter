@@ -191,7 +191,7 @@ class Purchases {
         'diagnosticsEnabled': purchasesConfiguration.diagnosticsEnabled,
         'preferredUILocaleOverride':
             purchasesConfiguration.preferredUILocaleOverride,
-        'useWorkflows': purchasesConfiguration.dangerousSettings.useWorkflows,
+        'useWorkflows': purchasesConfiguration.dangerousSettings?.useWorkflows,
       },
     );
   }
