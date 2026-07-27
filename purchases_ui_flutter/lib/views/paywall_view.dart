@@ -48,6 +48,9 @@ import 'paywall_view_method_handler.dart';
 /// dismiss. Currently, after a purchase is completed or when the close button
 /// is tapped.
 ///
+/// [onWebCheckoutOpened] (Optional) Callback that gets called when the user
+/// taps a web checkout CTA and leaves the app to complete payment externally.
+///
 /// [customVariables] (Optional) A map of custom variable names to their values.
 /// These values can be used for text substitution in paywalls using the
 /// `{{ custom.variable_name }}` syntax.
@@ -69,6 +72,7 @@ class PaywallView extends StatelessWidget {
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
   final Function()? onDismiss;
+  final Function()? onWebCheckoutOpened;
 
   const PaywallView({
     Key? key,
@@ -83,6 +87,7 @@ class PaywallView extends StatelessWidget {
     this.onRestoreCompleted,
     this.onRestoreError,
     this.onDismiss,
+    this.onWebCheckoutOpened,
   }) : super(key: key);
 
   static const String _viewType = 'com.revenuecat.purchasesui/PaywallView';
@@ -151,6 +156,7 @@ class PaywallView extends StatelessWidget {
       onRestoreCompleted,
       onRestoreError,
       onDismiss,
+      onWebCheckoutOpened: onWebCheckoutOpened,
       purchaseLogic: purchaseLogic,
       methodChannel: methodChannel,
     );
