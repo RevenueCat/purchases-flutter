@@ -319,7 +319,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
     RCDangerousSettings *dangerousSettings =
         [RCDangerousSettings createDangerousSettingsWithAutoSyncPurchases:YES
                                                              useWorkflows:useWorkflows];
-    RCPurchases *purchases = [RCPurchases configureWithAPIKey:(apiKey)
+    RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
                                       purchasesAreCompletedBy:purchasesAreCompletedBy
                                         userDefaultsSuiteName:userDefaultsSuiteName
