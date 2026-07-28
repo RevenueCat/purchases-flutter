@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:purchases_flutter/models/reward_verification_result.dart';
+import 'package:purchases_flutter/models/verified_reward.dart';
 
 void main() {
   group('RewardVerificationResult.fromMap', () {
@@ -13,9 +14,10 @@ void main() {
         },
       });
       expect(result.failed, isFalse);
-      expect(result.reward?.type, 'virtual_currency');
-      expect(result.reward?.code, 'GOLD');
-      expect(result.reward?.amount, 100);
+      final reward = result.reward;
+      expect(reward, isA<VerifiedVirtualCurrencyReward>());
+      expect((reward as VerifiedVirtualCurrencyReward).code, 'GOLD');
+      expect(reward.amount, 100);
       expect(result.moreRewards, isEmpty);
     });
 
@@ -29,10 +31,16 @@ void main() {
         ],
       });
       expect(result.failed, isFalse);
-      expect(result.reward?.identifier, 'premium');
+      expect((result.reward as VerifiedEntitlementReward).identifier, 'premium');
       expect(result.moreRewards.length, 2);
-      expect(result.moreRewards[0].code, 'GOLD');
-      expect(result.moreRewards[1].code, 'GEMS');
+      expect(
+        (result.moreRewards[0] as VerifiedVirtualCurrencyReward).code,
+        'GOLD',
+      );
+      expect(
+        (result.moreRewards[1] as VerifiedVirtualCurrencyReward).code,
+        'GEMS',
+      );
     });
 
     test('parses a failed result', () {

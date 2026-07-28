@@ -9,11 +9,10 @@ void main() {
         'code': 'GOLD',
         'amount': 100,
       });
-      expect(reward.type, 'virtual_currency');
-      expect(reward.code, 'GOLD');
-      expect(reward.amount, 100);
-      expect(reward.identifier, isNull);
-      expect(reward.expiresAt, isNull);
+      expect(reward, isA<VerifiedVirtualCurrencyReward>());
+      final currency = reward as VerifiedVirtualCurrencyReward;
+      expect(currency.code, 'GOLD');
+      expect(currency.amount, 100);
     });
 
     test('parses an entitlement reward', () {
@@ -22,14 +21,21 @@ void main() {
         'identifier': 'premium',
         'expiresAtMillis': 1617979680000,
       });
-      expect(reward.type, 'entitlement');
-      expect(reward.identifier, 'premium');
+      expect(reward, isA<VerifiedEntitlementReward>());
+      final entitlement = reward as VerifiedEntitlementReward;
+      expect(entitlement.identifier, 'premium');
       expect(
-        reward.expiresAt,
+        entitlement.expiresAt,
         DateTime.fromMillisecondsSinceEpoch(1617979680000),
       );
-      expect(reward.code, isNull);
-      expect(reward.amount, isNull);
+    });
+
+    test('parses an entitlement reward without an expiration', () {
+      final reward = VerifiedReward.fromMap({
+        'type': 'entitlement',
+        'identifier': 'premium',
+      });
+      expect((reward as VerifiedEntitlementReward).expiresAt, isNull);
     });
 
     test('rounds a non-int amount from the platform channel', () {
@@ -38,21 +44,17 @@ void main() {
         'code': 'GOLD',
         'amount': 100.0,
       });
-      expect(reward.amount, 100);
+      expect((reward as VerifiedVirtualCurrencyReward).amount, 100);
     });
 
     test('parses a no-reward result', () {
       final reward = VerifiedReward.fromMap({'type': 'no_reward'});
-      expect(reward.type, 'no_reward');
-      expect(reward.code, isNull);
-      expect(reward.amount, isNull);
-      expect(reward.identifier, isNull);
-      expect(reward.expiresAt, isNull);
+      expect(reward, isA<VerifiedNoReward>());
     });
 
-    test('parses an unsupported reward without failing', () {
-      final reward = VerifiedReward.fromMap({'type': 'unsupported_reward'});
-      expect(reward.type, 'unsupported_reward');
+    test('parses an unknown type as an unsupported reward', () {
+      final reward = VerifiedReward.fromMap({'type': 'something_new'});
+      expect(reward, isA<VerifiedUnsupportedReward>());
     });
   });
 }

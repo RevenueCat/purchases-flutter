@@ -20,23 +20,28 @@ class _RewardVerificationTokenApiTest {
 }
 
 class _VerifiedRewardApiTest {
-  void _checkConstructor(Map<String, dynamic> map) {
-    VerifiedReward reward = const VerifiedReward(
-      type: 'virtual_currency',
+  void _checkConstructors(Map<String, dynamic> map) {
+    VerifiedReward currency = const VerifiedVirtualCurrencyReward(
       code: 'GOLD',
       amount: 100,
+    );
+    VerifiedReward entitlement = const VerifiedEntitlementReward(
       identifier: 'premium',
       expiresAt: null,
     );
-    VerifiedReward reward2 = VerifiedReward.fromMap(map);
+    VerifiedReward noReward = const VerifiedNoReward();
+    VerifiedReward unsupported = const VerifiedUnsupportedReward();
+    VerifiedReward fromMap = VerifiedReward.fromMap(map);
   }
 
   void _checkProperties(VerifiedReward reward) {
-    String type = reward.type;
-    String? code = reward.code;
-    int? amount = reward.amount;
-    String? identifier = reward.identifier;
-    DateTime? expiresAt = reward.expiresAt;
+    if (reward is VerifiedVirtualCurrencyReward) {
+      String code = reward.code;
+      int amount = reward.amount;
+    } else if (reward is VerifiedEntitlementReward) {
+      String identifier = reward.identifier;
+      DateTime? expiresAt = reward.expiresAt;
+    }
   }
 }
 

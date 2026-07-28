@@ -2,43 +2,79 @@ import 'package:meta/meta.dart';
 
 /// A single reward granted by a verified rewarded ad.
 ///
-/// [type] is one of `virtual_currency`, `entitlement`, `no_reward`, or
-/// `unsupported_reward`. The remaining fields are populated only for the
-/// matching type.
+/// This is an abstract base type; inspect the concrete subtype to read the
+/// reward's data: [VerifiedVirtualCurrencyReward], [VerifiedEntitlementReward],
+/// [VerifiedNoReward], or [VerifiedUnsupportedReward].
+///
+/// ```dart
+/// final reward = result.reward;
+/// if (reward is VerifiedVirtualCurrencyReward) {
+///   grantCurrency(reward.code, reward.amount);
+/// } else if (reward is VerifiedEntitlementReward) {
+///   unlock(reward.identifier);
+/// }
+/// ```
 @experimental
-class VerifiedReward {
-  final String type;
-
-  /// Virtual-currency code (`virtual_currency` only).
-  final String? code;
-
-  /// Virtual-currency amount (`virtual_currency` only).
-  final int? amount;
-
-  /// Entitlement identifier (`entitlement` only).
-  final String? identifier;
-
-  /// Entitlement expiration (`entitlement` only).
-  final DateTime? expiresAt;
-
-  const VerifiedReward({
-    required this.type,
-    this.code,
-    this.amount,
-    this.identifier,
-    this.expiresAt,
-  });
+abstract class VerifiedReward {
+  const VerifiedReward();
 
   factory VerifiedReward.fromMap(Map<String, dynamic> map) {
-    final millis = map['expiresAtMillis'];
-    return VerifiedReward(
-      type: map['type'] as String,
-      code: map['code'] as String?,
-      amount: (map['amount'] as num?)?.round(),
-      identifier: map['identifier'] as String?,
-      expiresAt: millis is num
-          ? DateTime.fromMillisecondsSinceEpoch(millis.toInt())
-          : null,
-    );
+    switch (map['type'] as String?) {
+      case 'virtual_currency':
+        return VerifiedVirtualCurrencyReward(
+          code: map['code'] as String,
+          amount: (map['amount'] as num).round(),
+        );
+      case 'entitlement':
+        final millis = map['expiresAtMillis'];
+        return VerifiedEntitlementReward(
+          identifier: map['identifier'] as String,
+          expiresAt: millis is num
+              ? DateTime.fromMillisecondsSinceEpoch(millis.toInt())
+              : null,
+        );
+      case 'no_reward':
+        return const VerifiedNoReward();
+      default:
+        return const VerifiedUnsupportedReward();
+    }
   }
+}
+
+/// A reward of [amount] units of the virtual currency [code].
+@experimental
+class VerifiedVirtualCurrencyReward extends VerifiedReward {
+  final String code;
+  final int amount;
+
+  const VerifiedVirtualCurrencyReward({
+    required this.code,
+    required this.amount,
+  });
+}
+
+/// A reward granting the entitlement [identifier].
+@experimental
+class VerifiedEntitlementReward extends VerifiedReward {
+  final String identifier;
+
+  /// When the entitlement expires, or null if it does not expire.
+  final DateTime? expiresAt;
+
+  const VerifiedEntitlementReward({
+    required this.identifier,
+    this.expiresAt,
+  });
+}
+
+/// Verification completed but no reward was granted.
+@experimental
+class VerifiedNoReward extends VerifiedReward {
+  const VerifiedNoReward();
+}
+
+/// Verification completed with a reward type not modeled by this SDK version.
+@experimental
+class VerifiedUnsupportedReward extends VerifiedReward {
+  const VerifiedUnsupportedReward();
 }
