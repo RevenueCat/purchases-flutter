@@ -17,6 +17,19 @@ const _androidAdUnitId = 'ca-app-pub-3940256099942544/5354046379';
 
 String get _adUnitId => Platform.isIOS ? _iosAdUnitId : _androidAdUnitId;
 
+/// Renders a granted reward. Each [VerifiedReward] subtype carries only the
+/// fields relevant to it, so we branch on the concrete type.
+String _describeReward(VerifiedReward reward) {
+  if (reward is VerifiedVirtualCurrencyReward) {
+    return '+${reward.amount} ${reward.code}';
+  } else if (reward is VerifiedEntitlementReward) {
+    return 'entitlement "${reward.identifier}"';
+  } else if (reward is VerifiedNoReward) {
+    return 'no reward';
+  }
+  return 'unsupported reward';
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
@@ -108,11 +121,11 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
       if (!mounted) return;
       setState(() {
         _status = 'Done';
-        _result = result.failed
+        final reward = result.reward;
+        _result = result.failed || reward == null
             ? '❌ verification failed'
-            : '✅ ${result.reward?.type} '
-                '${result.reward?.identifier ?? result.reward?.code ?? ''} '
-                '(+${result.moreRewards.length} more)';
+            : '✅ ${_describeReward(reward)}'
+                '${result.moreRewards.isEmpty ? '' : ' (+${result.moreRewards.length} more)'}';
       });
     });
   }
