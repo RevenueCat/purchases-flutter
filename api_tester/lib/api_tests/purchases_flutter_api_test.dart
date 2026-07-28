@@ -738,6 +738,16 @@ class _PurchasesFlutterApiTest {
     ));
   }
 
+  void _checkGenerateRewardVerificationToken() async {
+    RewardVerificationToken token =
+        await Purchases.generateRewardVerificationToken('imp-1');
+  }
+
+  void _checkPollRewardVerification() async {
+    RewardVerificationResult result =
+        await Purchases.pollRewardVerification('client-transaction-id');
+  }
+
   void _checkTrackCustomPaywallImpression() {
     Future<void> future = Purchases.trackCustomPaywallImpression();
   }

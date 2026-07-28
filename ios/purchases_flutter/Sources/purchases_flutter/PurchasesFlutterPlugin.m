@@ -292,6 +292,10 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         [self trackAdLoaded:arguments result:result];
     } else if ([@"trackAdFailedToLoad" isEqualToString:call.method]) {
         [self trackAdFailedToLoad:arguments result:result];
+    } else if ([@"generateRewardVerificationToken" isEqualToString:call.method]) {
+        [self generateRewardVerificationToken:arguments result:result];
+    } else if ([@"pollRewardVerification" isEqualToString:call.method]) {
+        [self pollRewardVerification:arguments result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -777,6 +781,15 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
         NSLog(@"[Purchases] Warning: tried to call trackAdFailedToLoad, but it's only available on iOS 15.0 or greater.");
     }
     result(nil);
+}
+
+- (void)generateRewardVerificationToken:(NSDictionary *)arguments result:(FlutterResult)result {
+    result([RCCommonFunctionality generateRewardVerificationTokenWithImpressionId:arguments[@"impressionId"]]);
+}
+
+- (void)pollRewardVerification:(NSDictionary *)arguments result:(FlutterResult)result {
+    [RCCommonFunctionality pollRewardVerificationWithClientTransactionId:arguments[@"clientTransactionId"]
+                                                             completion:[self getResponseCompletionBlock:result]];
 }
 
 - (void)trackCustomPaywallImpression:(NSDictionary *)arguments result:(FlutterResult)result {
