@@ -16,7 +16,7 @@ import 'package:meta/meta.dart';
 /// ```
 @experimental
 abstract class VerifiedReward {
-  const VerifiedReward();
+  const VerifiedReward._();
 
   factory VerifiedReward.fromMap(Map<String, dynamic> map) {
     switch (map['type'] as String?) {
@@ -50,7 +50,7 @@ class VerifiedVirtualCurrencyReward extends VerifiedReward {
   const VerifiedVirtualCurrencyReward({
     required this.code,
     required this.amount,
-  });
+  }) : super._();
 }
 
 /// A reward granting the entitlement [identifier].
@@ -64,17 +64,17 @@ class VerifiedEntitlementReward extends VerifiedReward {
   const VerifiedEntitlementReward({
     required this.identifier,
     this.expiresAt,
-  });
+  }) : super._();
 }
 
 /// Verification completed but no reward was granted.
 @experimental
 class VerifiedNoReward extends VerifiedReward {
-  const VerifiedNoReward();
+  const VerifiedNoReward() : super._();
 }
 
 /// Verification completed with a reward type not modeled by this SDK version.
 @experimental
 class VerifiedUnsupportedReward extends VerifiedReward {
-  const VerifiedUnsupportedReward();
+  const VerifiedUnsupportedReward() : super._();
 }
