@@ -259,7 +259,7 @@ jobs:
     description: "Build Android Flutter integration tests"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
-    resource_class: large
+    resource_class: xlarge
     steps:
       - checkout
       - replace-api-key
@@ -298,9 +298,9 @@ jobs:
 
   ios-integration-test:
     description: "Run integration tests for Flutter"
-    resource_class: macos.m1.medium.gen1
+    resource_class: m4pro.medium
     macos:
-      xcode: 15.2
+      xcode: 15.4
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
@@ -321,9 +321,9 @@ jobs:
 
   macos-integration-test:
     description: "Run integration tests for Flutter"
-    resource_class: macos.m1.medium.gen1
+    resource_class: m4pro.medium
     macos:
-      xcode: 15.2
+      xcode: 15.4
     shell: /bin/bash --login -o pipefail
     steps:
       - checkout
@@ -463,16 +463,10 @@ workflows:
           requires:
             - hold
           <<: *release-branches
-      - make-release: *release-tags
-      - make-release-purchases-flutter-ui:
-          requires:
-            - make-release
-          <<: *release-tags
-      - github_release:
-          requires:
-            - make-release
-            - make-release-purchases-flutter-ui
-          <<: *release-tags
+      # The make-release / make-release-purchases-flutter-ui / github_release jobs are
+      # deliberately absent on this branch. They fire on any tag not matching *-SNAPSHOT and
+      # publish to pub.dev, and this line must never reach pub.dev: it is a custom BL 8 build
+      # handed to one customer by git ref. Removing them makes tagging this branch safe.
   weekly-run-workflow:
     when:
       and:
