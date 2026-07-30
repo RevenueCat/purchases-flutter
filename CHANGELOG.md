@@ -1,3 +1,19 @@
+## 8.11.0-bl8
+
+Custom build for projects that cannot leave Flutter 3.7 / Dart 2.19. Not a supported release
+line: distributed by git ref only, frozen, and never published to pub.dev.
+
+Identical to 8.11.0 except that Android uses purchases-hybrid-common 15.0.0
+([purchases-android 9.1.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.1.0)),
+which ships **Google Play Billing Library 8.0.0**. iOS and macOS are unchanged from 8.11.0.
+
+Play Billing Library 8 removed the APIs to query expired subscriptions and consumed one-time
+products, so purchases predating a RevenueCat integration can no longer be recovered from the
+device; those require a backend historical import. Apps with their own IAP code must also move
+their Play Billing dependency to 8.0.0+.
+
+Not compatible with `purchases_ui_flutter`.
+
 ## 8.11.0
 ## RevenueCat SDK
 ### 📦 Dependency Updates
