@@ -463,16 +463,10 @@ workflows:
           requires:
             - hold
           <<: *release-branches
-      - make-release: *release-tags
-      - make-release-purchases-flutter-ui:
-          requires:
-            - make-release
-          <<: *release-tags
-      - github_release:
-          requires:
-            - make-release
-            - make-release-purchases-flutter-ui
-          <<: *release-tags
+      # The make-release / make-release-purchases-flutter-ui / github_release jobs are
+      # deliberately absent on this branch. They fire on any tag not matching *-SNAPSHOT and
+      # publish to pub.dev, and this line must never reach pub.dev: it is a custom BL 8 build
+      # handed to one customer by git ref. Removing them makes tagging this branch safe.
   weekly-run-workflow:
     when:
       and:
