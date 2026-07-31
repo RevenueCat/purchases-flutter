@@ -80,17 +80,6 @@ class PurchasesConfiguration {
   /// No personal identifiable information will be collected.
   /// The default value is false.
   bool diagnosticsEnabled = false;
-
-  /// Dangerous settings for the SDK. Internal RevenueCat use only.
-  DangerousSettings? dangerousSettings;
-}
-
-/// Internal RevenueCat-only settings that may change without warning.
-class DangerousSettings {
-  /// Enables RevenueCat Workflows (multipage paywalls).
-  bool useWorkflows;
-
-  DangerousSettings({this.useWorkflows = false});
 }
 
 /// A [PurchasesConfiguration] convenience object that
