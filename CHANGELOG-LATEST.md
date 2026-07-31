@@ -1,10 +1,13 @@
 ## RevenueCat SDK
 ### ✨ New Features
-* feat(ads): reward-verification primitives for Flutter (#1801) via Peter Porfy (@peterporfy)
+* Enables support for multipage paywalls
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 18.26.0 (#1838) via RevenueCat Git Bot (@RCGitBot)
-  * [iOS 5.81.3](https://github.com/RevenueCat/purchases-ios/releases/tag/5.81.3)
-  * [Web 1.49.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.49.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 18.28.0 (#1844) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.16.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.16.0)
+  * [iOS 5.83.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.83.0)
+  * [iOS 5.82.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.82.0)
+  * [Web 1.49.1](https://github.com/RevenueCat/purchases-js/releases/tag/1.49.1)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 18.27.0 (#1841) via RevenueCat Git Bot (@RCGitBot)
 
 ### 🔄 Other Changes
-* Bump fastlane-plugin-revenuecat_internal from `d392939` to `3421c88` (#1837) via dependabot[bot] (@dependabot[bot])
+* Remove workflows dangerous settings (#1843) via Facundo Menzella (@facumenzella)
