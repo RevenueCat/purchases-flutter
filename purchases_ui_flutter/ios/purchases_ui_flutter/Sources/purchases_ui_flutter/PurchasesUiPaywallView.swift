@@ -169,7 +169,7 @@ extension PurchasesUiPaywallView: PaywallViewControllerDelegateWrapper {
         _methodChannel.invokeMethod("onWebCheckoutOpened", arguments: nil)
     }
 
-    func paywallViewController(_ controller: PaywallViewController, didOpenURL url: URL) {
-        _methodChannel.invokeMethod("onUrlOpened", arguments: ["url": url.absoluteString])
+    func paywallViewController(_ controller: PaywallViewController, didOpenURL url: String) {
+        _methodChannel.invokeMethod("onUrlOpened", arguments: ["url": url])
     }
 }
