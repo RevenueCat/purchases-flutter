@@ -985,6 +985,16 @@ class Purchases {
   static Future<void> setOnesignalID(String onesignalID) =>
       _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
 
+  /// Subscriber attribute associated with the OneSignal User ID for the user
+  /// Required for the RevenueCat OneSignal integration with versions v11.0 and above.
+  ///
+  /// [onesignalUserID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setOnesignalUserID(String onesignalUserID) =>
+      _channel.invokeMethod(
+        'setOnesignalUserID',
+        {'onesignalUserID': onesignalUserID},
+      );
+
   /// Subscriber attribute associated with the Airship Channel Id for the user
   /// Required for the RevenueCat Airship integration
   ///
