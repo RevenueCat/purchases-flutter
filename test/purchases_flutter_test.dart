@@ -103,7 +103,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -136,7 +135,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -167,7 +165,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -201,67 +198,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
-          },
-        ),
-      ],
-    );
-  });
-
-  test('setupPurchases with workflows', () async {
-    await Purchases.configure(
-      PurchasesConfiguration('api_key')
-        ..dangerousSettings = DangerousSettings(useWorkflows: true),
-    );
-    expect(
-      log,
-      <Matcher>[
-        isMethodCall(
-          'setupPurchases',
-          arguments: <String, dynamic>{
-            'apiKey': 'api_key',
-            'appUserId': null,
-            'purchasesAreCompletedBy': 'REVENUECAT',
-            'userDefaultsSuiteName': null,
-            'useAmazon': false,
-            'storeKitVersion': 'DEFAULT',
-            'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
-            'pendingTransactionsForPrepaidPlansEnabled': false,
-            'automaticDeviceIdentifierCollectionEnabled': true,
-            'diagnosticsEnabled': false,
-            'preferredUILocaleOverride': null,
-            'useWorkflows': true,
-          },
-        ),
-      ],
-    );
-  });
-
-  test('setupPurchases with workflows explicitly disabled', () async {
-    await Purchases.configure(
-      PurchasesConfiguration('api_key')
-        ..dangerousSettings = DangerousSettings(useWorkflows: false),
-    );
-    expect(
-      log,
-      <Matcher>[
-        isMethodCall(
-          'setupPurchases',
-          arguments: <String, dynamic>{
-            'apiKey': 'api_key',
-            'appUserId': null,
-            'purchasesAreCompletedBy': 'REVENUECAT',
-            'userDefaultsSuiteName': null,
-            'useAmazon': false,
-            'storeKitVersion': 'DEFAULT',
-            'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
-            'pendingTransactionsForPrepaidPlansEnabled': false,
-            'automaticDeviceIdentifierCollectionEnabled': true,
-            'diagnosticsEnabled': false,
-            'preferredUILocaleOverride': null,
-            'useWorkflows': false,
           },
         ),
       ],
@@ -1797,7 +1733,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -1829,7 +1764,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -1862,7 +1796,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -1896,7 +1829,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -1927,7 +1859,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': false,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],
@@ -1958,7 +1889,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': 'de_DE',
-            'useWorkflows': null,
           },
         ),
       ],
@@ -1989,7 +1919,6 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': true,
             'preferredUILocaleOverride': null,
-            'useWorkflows': null,
           },
         ),
       ],

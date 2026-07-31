@@ -125,12 +125,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         .argument("automaticDeviceIdentifierCollectionEnabled");
                 Boolean diagnosticsEnabled = call.argument("diagnosticsEnabled");
                 String preferredUILocaleOverride = call.argument("preferredUILocaleOverride");
-                Boolean useWorkflows = call.argument("useWorkflows");
                 setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled,
                         automaticDeviceIdentifierCollectionEnabled, diagnosticsEnabled,
-                        preferredUILocaleOverride, useWorkflows, result);
+                        preferredUILocaleOverride, result);
                 break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
@@ -426,7 +425,6 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable Boolean automaticDeviceIdentifierCollectionEnabled,
             @Nullable Boolean diagnosticsEnabled,
             @Nullable String preferredUILocaleOverride,
-            @Nullable Boolean useWorkflows,
             final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
@@ -435,16 +433,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 store = Store.AMAZON;
             }
 
-            DangerousSettings dangerousSettings = useWorkflows != null && useWorkflows
-                    ? DangerousSettings.forWorkflows(true)
-                    : new DangerousSettings();
             CommonKt.configure(this.applicationContext,
                     apiKey,
                     appUserID,
                     purchasesAreCompletedBy,
                     platformInfo,
                     store,
-                    dangerousSettings,
+                    new DangerousSettings(),
                     shouldShowInAppMessagesAutomatically,
                     verificationMode,
                     pendingTransactionsForPrepaidPlansEnabled,
