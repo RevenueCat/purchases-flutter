@@ -753,6 +753,18 @@ class _PurchasesFlutterApiTest {
         await Purchases.pollRewardVerification('client-transaction-id');
   }
 
+  void _checkPollRewardVerificationWithTrackingMetadata() async {
+    RewardVerificationResult result = await Purchases.pollRewardVerification(
+      'client-transaction-id',
+      trackingMetadata: const RewardedAdTrackingMetadata(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-1',
+        impressionId: 'imp-1',
+      ),
+    );
+  }
+
   void _checkTrackCustomPaywallImpression() {
     Future<void> future = Purchases.trackCustomPaywallImpression();
   }
