@@ -1522,13 +1522,22 @@ class Purchases {
   /// Polls the backend until reward verification completes, then returns the
   /// result. Call when your ad network's reward callback fires, passing the
   /// `clientTransactionId` from [generateRewardVerificationToken].
+  ///
+  /// Pass [trackingMetadata] to have the SDK automatically track
+  /// reward-verification events for the ad it belongs to; omit it to poll
+  /// without tracking.
   @experimental
   static Future<RewardVerificationResult> pollRewardVerification(
-    String clientTransactionId,
-  ) async {
+    String clientTransactionId, {
+    RewardedAdTrackingMetadata? trackingMetadata,
+  }) async {
     final result = await _invokeReturningMap(
       'pollRewardVerification',
-      {'clientTransactionId': clientTransactionId},
+      {
+        'clientTransactionId': clientTransactionId,
+        if (trackingMetadata != null)
+          'trackingMetadata': trackingMetadata.toMap(),
+      },
     );
     return RewardVerificationResult.fromMap(result);
   }
