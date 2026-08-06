@@ -2727,4 +2727,13 @@ void main() {
       }),
     ]);
   });
+
+  test('setOnesignalUserID sends correct method and arguments', () async {
+    await Purchases.setOnesignalUserID('onesignal-user-id');
+    expect(log, <Matcher>[
+      isMethodCall('setOnesignalUserID', arguments: {
+        'onesignalUserID': 'onesignal-user-id',
+      }),
+    ]);
+  });
 }

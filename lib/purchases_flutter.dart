@@ -978,11 +978,24 @@ class Purchases {
       );
 
   /// Subscriber attribute associated with the OneSignal Player Id for the user
-  /// Required for the RevenueCat OneSignal integration
+  /// Required for the RevenueCat OneSignal integration with OneSignal Flutter
+  /// SDK versions below v5.0.0 (OneSignal API v9). For OneSignal Flutter SDK
+  /// v5.0.0 and above, use [setOnesignalUserID] instead.
   ///
   /// [onesignalID] Empty String or null will delete the subscriber attribute.
   static Future<void> setOnesignalID(String onesignalID) =>
       _channel.invokeMethod('setOnesignalID', {'onesignalID': onesignalID});
+
+  /// Subscriber attribute associated with the OneSignal User ID for the user
+  /// Required for the RevenueCat OneSignal integration with OneSignal Flutter
+  /// SDK v5.0.0 and above (OneSignal API v11+).
+  ///
+  /// [onesignalUserID] Empty String or null will delete the subscriber attribute.
+  static Future<void> setOnesignalUserID(String onesignalUserID) =>
+      _channel.invokeMethod(
+        'setOnesignalUserID',
+        {'onesignalUserID': onesignalUserID},
+      );
 
   /// Subscriber attribute associated with the Airship Channel Id for the user
   /// Required for the RevenueCat Airship integration
