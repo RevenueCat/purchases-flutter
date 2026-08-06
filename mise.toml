@@ -1,6 +1,10 @@
 [settings]
 lockfile = true
 
+[settings.ruby]
+compile = false
+
 [tools]
 java = "liberica-17.0.6"
-flutter = "latest"
+flutter = "3.44.2"
+ruby = "3.3.0"
