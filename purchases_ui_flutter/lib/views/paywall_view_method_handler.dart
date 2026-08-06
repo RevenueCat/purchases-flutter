@@ -15,6 +15,8 @@ class PaywallViewMethodHandler {
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
   final Function()? onDismiss;
+  final Function()? onWebCheckoutOpened;
+  final Function(String url)? onUrlOpened;
   final PaywallPurchaseLogic? purchaseLogic;
   final MethodChannel? methodChannel;
 
@@ -26,6 +28,8 @@ class PaywallViewMethodHandler {
     this.onRestoreCompleted,
     this.onRestoreError,
     this.onDismiss, {
+    this.onWebCheckoutOpened,
+    this.onUrlOpened,
     this.purchaseLogic,
     this.methodChannel,
   });
@@ -52,6 +56,14 @@ class PaywallViewMethodHandler {
         break;
       case 'onDismiss':
         onDismiss?.call();
+        break;
+      case 'onWebCheckoutOpened':
+        onWebCheckoutOpened?.call();
+        break;
+      case 'onUrlOpened':
+        onUrlOpened?.call(
+          Map<String, dynamic>.from(call.arguments)['url'] as String,
+        );
         break;
       case 'onPerformPurchase':
         _handleOnPerformPurchase(call);

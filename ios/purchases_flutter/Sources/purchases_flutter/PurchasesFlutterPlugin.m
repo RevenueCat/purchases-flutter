@@ -84,7 +84,6 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
           diagnosticsEnabled:diagnosticsEnabled
    preferredUILocaleOverride:preferredUILocaleOverride
-            useWorkflows:[arguments[@"useWorkflows"] mappingNSNullToNil]
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -314,7 +313,6 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
     diagnosticsEnabled:(BOOL)diagnosticsEnabled
  preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
-           useWorkflows:(nullable NSNumber *)useWorkflows
                  result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -323,13 +321,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
         userDefaultsSuiteName = nil;
     }
 
-    // Stay nil unless the Dart side actually set dangerousSettings, so the default path keeps
-    // relying on the native DangerousSettings defaults instead of pinning them here. An explicit
-    // NO is forwarded as such rather than collapsing into the unset case.
-    RCDangerousSettings *dangerousSettings = useWorkflows == nil
-        ? nil
-        : [RCDangerousSettings createDangerousSettingsWithAutoSyncPurchases:YES
-                                                               useWorkflows:useWorkflows.boolValue];
+    // nil so the native SDK applies its own DangerousSettings defaults.
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
                                       purchasesAreCompletedBy:purchasesAreCompletedBy
@@ -337,7 +329,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
                                                platformFlavor:self.platformFlavor
                                         platformFlavorVersion:self.platformFlavorVersion
                                               storeKitVersion:storeKitVersion
-                                            dangerousSettings:dangerousSettings
+                                            dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
                                              verificationMode:verificationMode
                                            diagnosticsEnabled:diagnosticsEnabled
@@ -917,7 +909,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"10.6.0";
+    return @"10.7.0";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {
