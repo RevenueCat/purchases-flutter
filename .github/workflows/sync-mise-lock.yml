@@ -28,9 +28,12 @@ jobs:
           install: false
 
       - name: Configure git identity
+        env:
+          GIT_BOT_USERNAME: ${{ secrets.GIT_BOT_USERNAME }}
+          GIT_BOT_EMAIL: ${{ secrets.GIT_BOT_EMAIL }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "$GIT_BOT_USERNAME"
+          git config user.email "$GIT_BOT_EMAIL"
 
       - name: Install gems
         run: mise exec -- bundle install
