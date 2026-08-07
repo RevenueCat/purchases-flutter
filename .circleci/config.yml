@@ -107,23 +107,6 @@ commands:
             - ~/.gradle
           key: v1-gradle-{{ checksum "./android/build.gradle" }}-{{ checksum  "./android/app/build.gradle" }}-{{ arch }}
 
-  setup-flutter:
-    description: "setup Flutter"
-    parameters:
-      version:
-        type: string
-        default: stable
-    steps:
-      - run:
-          name: Download flutter SDK
-          command: git clone --depth 1 --branch << parameters.version >> https://github.com/flutter/flutter.git flutter
-      - run:
-          name: Setup environment variables
-          command: echo 'export PATH="$PATH:`pwd`/flutter/bin"'  >> $BASH_ENV
-      - run:
-          name: Flutter doctor
-          command: flutter doctor
-
   install-and-create-sim:
     parameters:
       install-simulator-name:
@@ -290,7 +273,8 @@ jobs:
     resource_class: xlarge
     steps:
       - checkout
-      - revenuecat/install-mise-tools
+      - revenuecat/install-mise-tools:
+          tools: ruby
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - flutter-get-dependencies:
@@ -305,6 +289,8 @@ jobs:
       - image: cimg/ruby:3.2.0
     steps:
       - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - run:
@@ -319,7 +305,8 @@ jobs:
     steps:
       - checkout
       - replace-api-key
-      - revenuecat/install-mise-tools
+      - revenuecat/install-mise-tools:
+          tools: java
       - run:
           working_directory: revenuecat_examples/purchase_tester/android
           command: |
@@ -335,7 +322,8 @@ jobs:
     steps:
       - checkout
       - replace-api-key
-      - revenuecat/install-mise-tools
+      - revenuecat/install-mise-tools:
+          tools: java,flutter
       - android/create-avd:
           avd-name: integration-tests
           system-image: system-images;android-33;google_apis;x86_64
@@ -343,7 +331,6 @@ jobs:
       - android/start-emulator:
           avd-name: integration-tests
           post-emulator-launch-assemble-command: ''
-      - setup-flutter
       - flutter-get-dependencies:
           project: revenuecat_examples/purchase_tester
       - run:
@@ -361,7 +348,8 @@ jobs:
       - macos/preboot-simulator:
           device: iPhone 14
           version: '16.4'
-      - setup-flutter
+      - revenuecat/install-mise-tools:
+          tools: flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -383,7 +371,8 @@ jobs:
     steps:
       - checkout
       - install-correct-cocoapods
-      - setup-flutter
+      - revenuecat/install-mise-tools:
+          tools: flutter
       - prepare-for-cocoapods-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -408,7 +397,8 @@ jobs:
       - macos/preboot-simulator:
           device: iPhone 14
           version: '16.4'
-      - setup-flutter
+      - revenuecat/install-mise-tools:
+          tools: flutter
       - prepare-for-spm-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -426,7 +416,8 @@ jobs:
       name: macos-executor
     steps:
       - checkout
-      - setup-flutter
+      - revenuecat/install-mise-tools:
+          tools: flutter
       - prepare-for-spm-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -458,9 +449,10 @@ jobs:
       xcode_version: "26.3"
     steps:
       - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby,flutter
       - revenuecat/install-gem-mac-dependencies:
           cache-version: v1
-      - setup-flutter
       - revenuecat/install-maestro
       - run:
           name: Boot iOS Simulator
@@ -480,12 +472,10 @@ jobs:
     <<: *android-machine-emulator
     steps:
       - checkout
-      - run:
-          name: Install Ruby and Bundler
-          command: |
-            gem install bundler
-            bundle install
-      - setup-flutter
+      - revenuecat/install-mise-tools:
+          tools: java,ruby,flutter
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
       - run:
           name: Build Maestro app (Android)
           command: bundle exec fastlane build_maestro_app_android
@@ -513,11 +503,12 @@ jobs:
       - image: cimg/ruby:3.2.0
     steps:
       - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby,flutter
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - revenuecat/trust-github-key
       - revenuecat/setup-git-credentials
-      - setup-flutter
       - run:
           name: Updating to next version of phc
           command: |
@@ -533,6 +524,8 @@ jobs:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - revenuecat/trust-github-key
@@ -546,6 +539,8 @@ jobs:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
       - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - revenuecat/trust-github-key
@@ -559,6 +554,8 @@ jobs:
       - image: cimg/ruby:3.2.0
     steps:
       - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
       - revenuecat/trust-github-key
@@ -570,7 +567,7 @@ workflows:
   danger:
     jobs:
       - revenuecat/danger:
-          ruby_version: "3.2.0"
+          ruby_version: "3.3.0"
   test:
     when:
       and:
@@ -632,6 +629,7 @@ workflows:
             - android-integration-test
           <<: *release-branches
       - revenuecat/tag-current-branch:
+          ruby_version: "3.3.0"
           requires:
             - hold
           <<: *release-branches
@@ -647,6 +645,7 @@ workflows:
           <<: *release-tags
       - revenuecat/merge-release-pr:
           repo_name: purchases-flutter
+          ruby_version: "3.3.0"
           requires:
             - github_release
           <<: *release-tags
@@ -656,12 +655,14 @@ workflows:
         - equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
         - equal: [ "release-train", << pipeline.schedule.name >> ]
     jobs:
-      - revenuecat/automatic-bump
+      - revenuecat/automatic-bump:
+          ruby_version: "3.3.0"
   manual-trigger-bump:
     when:
       equal: [ bump, << pipeline.parameters.action >> ]
     jobs:
-      - revenuecat/automatic-bump
+      - revenuecat/automatic-bump:
+          ruby_version: "3.3.0"
   update-error-codes:
     when:
       equal: [ update_error_codes, << pipeline.parameters.action >> ]

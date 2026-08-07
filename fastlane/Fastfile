@@ -283,6 +283,27 @@ lane :verify_web_hybrid_mappings_bundle do
   end
 end
 
+desc "Regenerates mise.lock to match mise.toml and pushes the commit if anything changed " \
+     "(used by the sync-mise-lock GitHub Actions workflow, which reacts to Renovate bumping " \
+     "mise.toml's flutter pin)"
+lane :sync_mise_lock do
+  sh("mise", "install")
+  sh(
+    "mise", "lock",
+    "--platform", "linux-arm64",
+    "--platform", "linux-x64",
+    "--platform", "macos-arm64",
+    "--platform", "macos-x64",
+    "--platform", "windows-x64"
+  )
+
+  if Fastlane::Helper::RevenuecatInternalHelper.is_git_repo_dirty
+    Fastlane::Helper::RevenuecatInternalHelper.commit_changes_and_push_current_branch("Update mise.lock for mise.toml changes")
+  else
+    UI.message("mise.lock already up to date")
+  end
+end
+
 ###############################################################################
 # Helper functions 🤜🤛                                                      #
 ###############################################################################
