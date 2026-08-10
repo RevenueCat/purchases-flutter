@@ -4,18 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
-/// Your RevenueCat public API key (https://app.revenuecat.com → Project settings → API keys).
-/// One per platform; both can be a Test Store key while developing.
-const _appleApiKey = 'appl_REPLACE_ME';
-const _googleApiKey = 'goog_REPLACE_ME';
+import 'constant.dart';
 
-/// Google's official **test** rewarded-interstitial ad unit. Always fills with a
-/// test ad and is safe to commit. Swap for your own AdMob unit (with its
-/// server-side verification URL pointed at RevenueCat) to grant a real reward.
-const _iosAdUnitId = 'ca-app-pub-3940256099942544/6978759866';
-const _androidAdUnitId = 'ca-app-pub-3940256099942544/5354046379';
-
-String get _adUnitId => Platform.isIOS ? _iosAdUnitId : _androidAdUnitId;
+String get _rewardedAdUnitId =>
+    Platform.isIOS ? iosRewardedAdUnitId : androidRewardedAdUnitId;
 
 /// Renders a granted reward. Each [VerifiedReward] subtype carries only the
 /// fields relevant to it, so we branch on the concrete type.
@@ -30,25 +22,17 @@ String _describeReward(VerifiedReward reward) {
   return 'unsupported reward';
 }
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await MobileAds.instance.initialize();
-  await Purchases.configure(PurchasesConfiguration(
-    Platform.isIOS ? _appleApiKey : _googleApiKey,
-  ));
-  runApp(const MaterialApp(home: RewardedAdScreen()));
-}
-
-class RewardedAdScreen extends StatefulWidget {
-  const RewardedAdScreen({super.key});
+class AdRewardsTestingScreen extends StatefulWidget {
+  const AdRewardsTestingScreen({Key? key}) : super(key: key);
 
   @override
-  State<RewardedAdScreen> createState() => _RewardedAdScreenState();
+  State<AdRewardsTestingScreen> createState() => _AdRewardsTestingScreenState();
 }
 
-class _RewardedAdScreenState extends State<RewardedAdScreen> {
-  RewardedInterstitialAd? _ad;
+class _AdRewardsTestingScreenState extends State<AdRewardsTestingScreen> {
+  RewardedAd? _ad;
   RewardVerificationToken? _token;
+  String? _impressionId;
   String _status = 'Loading ad…';
   String? _result;
 
@@ -67,19 +51,20 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
   Future<void> _loadAd() async {
     setState(() => _status = 'Loading ad…');
 
-    // 1. Generate a verification token for this impression. Forward its
-    //    customData + appUserID to the ad network's SSV options; keep the
-    //    clientTransactionId to poll for the verified reward later.
-    final token = await Purchases.generateRewardVerificationToken(
-      DateTime.now().microsecondsSinceEpoch.toString(),
-    );
-    _token = token;
-
-    RewardedInterstitialAd.load(
-      adUnitId: _adUnitId,
+    RewardedAd.load(
+      adUnitId: _rewardedAdUnitId,
       request: const AdRequest(),
-      rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
         onAdLoaded: (ad) async {
+          // 1. Use the loaded ad's response ID as the impression ID, then
+          //    generate a verification token for it. Forward the token's
+          //    customData + appUserID to the ad network's SSV options; keep the
+          //    clientTransactionId to poll for the verified reward later.
+          final impressionId = ad.responseInfo?.responseId ?? '';
+          final token =
+              await Purchases.generateRewardVerificationToken(impressionId);
+          _token = token;
+
           // 2. Wire RevenueCat verification into AdMob's server-side verification.
           await ad.setServerSideOptions(ServerSideVerificationOptions(
             userId: token.appUserID,
@@ -95,6 +80,7 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
           if (!mounted) return;
           setState(() {
             _ad = ad;
+            _impressionId = impressionId;
             _status = 'Ad ready';
           });
         },
@@ -133,12 +119,23 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Rewarded Ad (SSV)')),
+      appBar: AppBar(title: const Text('Ad Rewards Testing')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(_status),
+            if (_impressionId != null) ...[
+              const SizedBox(height: 8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
+                  'impressionId: ${_impressionId!}',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ),
+            ],
             if (_result != null) ...[
               const SizedBox(height: 16),
               Text(_result!, style: Theme.of(context).textTheme.titleMedium),

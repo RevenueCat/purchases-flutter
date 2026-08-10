@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/constant.dart';
 
@@ -29,6 +30,10 @@ void main() async {
   }
   WidgetsFlutterBinding.ensureInitialized();
 
+  // google_mobile_ads only supports iOS and Android.
+  if (!kIsWeb && (Platform.isIOS || Platform.isAndroid)) {
+    await MobileAds.instance.initialize();
+  }
   await _configureSDK();
   runApp(const PurchaseTester());
 }

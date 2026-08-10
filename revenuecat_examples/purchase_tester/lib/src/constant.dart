@@ -25,3 +25,9 @@ const testAppUserId = '';
 // When enabled, PaywallView will use SamplePurchaseLogic (in paywall.dart)
 // to handle purchases and restores instead of the default RevenueCat flow.
 const purchasesAreCompletedByMyApp = false;
+
+// Google's official **test** rewarded ad unit. Always fills with a test ad and
+// is safe to commit. Swap for your own AdMob unit (with its server-side
+// verification URL pointed at RevenueCat) to grant a real reward.
+const iosRewardedAdUnitId = 'ca-app-pub-3940256099942544/1712485313';
+const androidRewardedAdUnitId = 'ca-app-pub-3940256099942544/5224354917';
