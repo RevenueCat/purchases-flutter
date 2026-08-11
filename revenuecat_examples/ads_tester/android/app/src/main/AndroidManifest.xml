@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="rewarded_ads_sample"
+        android:label="ads_tester"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

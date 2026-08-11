@@ -1,4 +1,4 @@
-package com.revenuecat.rewarded_ads_sample
+package com.revenuecat.ads_tester
 
 import io.flutter.embedding.android.FlutterActivity
 
