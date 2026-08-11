@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
-import 'ad_rewards_testing_screen.dart';
 import 'cats.dart';
 import 'constant.dart';
 import 'custom_variables_editor.dart';
@@ -225,8 +222,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              const CustomPaywallImpressionTestingScreen(),
+                          builder: (context) => const CustomPaywallImpressionTestingScreen(),
                         ),
                       );
                     },
@@ -343,29 +339,6 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ),
                 ]))),
       ),
-      // google_mobile_ads only supports iOS and Android.
-      if (!kIsWeb && (Platform.isIOS || Platform.isAndroid))
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Card(
-              margin: const EdgeInsets.all(8.0),
-              child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(children: [
-                    const Text("Ad Rewards Testing"),
-                    ElevatedButton(
-                      onPressed: () async {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const AdRewardsTestingScreen(),
-                            ));
-                      },
-                      child: const Text("Go to Ad Rewards Testing Screen"),
-                    ),
-                  ]))),
-        ),
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
         child: Card(
@@ -460,8 +433,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   const Text("Paywalls"),
                   ElevatedButton(
                     onPressed: () async {
-                      final config =
-                          await _choosePresentationConfiguration(context);
+                      final config = await _choosePresentationConfiguration(context);
                       if (config == null) return;
                       final paywallResult = await RevenueCatUI.presentPaywall(
                         offering: offering,
@@ -474,8 +446,7 @@ class _UpsellScreenState extends State<UpsellScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-                      final config =
-                          await _choosePresentationConfiguration(context);
+                      final config = await _choosePresentationConfiguration(context);
                       if (config == null) return;
                       final paywallResult =
                           await RevenueCatUI.presentPaywallIfNeeded(
