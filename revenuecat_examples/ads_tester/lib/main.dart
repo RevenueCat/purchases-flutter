@@ -53,7 +53,6 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
   String? _result;
 
   bool _verifying = false;
-  bool _reloadPending = false;
 
   @override
   void initState() {
@@ -98,11 +97,7 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
             onAdDismissedFullScreenContent: (ad) {
               ad.dispose();
               _ad = null;
-              if (_verifying) {
-                _reloadPending = true;
-              } else {
-                _loadAd();
-              }
+              _loadAd();
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
               ad.dispose();
@@ -150,10 +145,6 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
               : '✅ ${_describeReward(reward)}'
                     '${result.moreRewards.isEmpty ? '' : ' (+${result.moreRewards.length} more)'}';
         });
-        if (_reloadPending) {
-          _reloadPending = false;
-          _loadAd();
-        }
       },
     );
   }
@@ -173,7 +164,7 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
             ],
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: _ad != null ? _showAd : null,
+              onPressed: _ad != null && !_verifying ? _showAd : null,
               child: const Text('Watch ad to earn reward'),
             ),
           ],
