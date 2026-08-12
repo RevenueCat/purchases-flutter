@@ -8,7 +8,30 @@ server-side verification (SSV), via the two reward-verification primitives:
 3. show the ad with `google_mobile_ads`
 4. `Purchases.pollRewardVerification(token.clientTransactionId)` → the verified reward
 
-The whole flow lives in [`lib/main.dart`](lib/main.dart).
+The whole flow lives in [`lib/main.dart`](lib/main.dart):
+
+```dart
+// 1. Use the loaded ad's response ID as the impression ID, then generate a
+//    verification token for it.
+final token = await Purchases.generateRewardVerificationToken(
+  ad.responseInfo?.responseId ?? '',
+);
+
+// 2. Wire RevenueCat verification into AdMob's server-side verification.
+await ad.setServerSideOptions(ServerSideVerificationOptions(
+  userId: token.appUserID,
+  customData: token.customData,
+));
+
+// 3. Show the ad, then poll for the verified reward once it's watched.
+await ad.show(onUserEarnedReward: (ad, _) async {
+  final result = await Purchases.pollRewardVerification(
+    token.clientTransactionId,
+  );
+});
+```
+
+<img src="screenshots/ad_ready.png" alt="Rewarded Ad screen, ad loaded and ready to show" width="250" />
 
 ## Run (smoke test — no reward)
 

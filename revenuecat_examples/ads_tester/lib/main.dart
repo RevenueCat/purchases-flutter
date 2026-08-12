@@ -33,9 +33,9 @@ String _describeReward(VerifiedReward reward) {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MobileAds.instance.initialize();
-  await Purchases.configure(PurchasesConfiguration(
-    Platform.isIOS ? _appleApiKey : _googleApiKey,
-  ));
+  await Purchases.configure(
+    PurchasesConfiguration(Platform.isIOS ? _appleApiKey : _googleApiKey),
+  );
   runApp(const MaterialApp(home: RewardedAdScreen()));
 }
 
@@ -52,6 +52,14 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
   String _status = 'Loading ad…';
   String? _result;
 
+  // The ad can be dismissed while a verification poll is still in flight
+  // (dismissal fires as soon as the ad closes, well before polling
+  // resolves). These two flags keep the dismiss handler from reloading over
+  // that in-progress poll — the reload it would have triggered is deferred
+  // until the poll actually finishes.
+  bool _verifying = false;
+  bool _reloadPending = false;
+
   @override
   void initState() {
     super.initState();
@@ -65,30 +73,46 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
   }
 
   Future<void> _loadAd() async {
-    setState(() => _status = 'Loading ad…');
-
-    // 1. Generate a verification token for this impression. Forward its
-    //    customData + appUserID to the ad network's SSV options; keep the
-    //    clientTransactionId to poll for the verified reward later.
-    final token = await Purchases.generateRewardVerificationToken(
-      DateTime.now().microsecondsSinceEpoch.toString(),
-    );
-    _token = token;
+    setState(() {
+      _status = 'Loading ad…';
+      _result = null;
+    });
 
     RewardedInterstitialAd.load(
       adUnitId: _adUnitId,
       request: const AdRequest(),
       rewardedInterstitialAdLoadCallback: RewardedInterstitialAdLoadCallback(
         onAdLoaded: (ad) async {
+          // 1. Use the loaded ad's response ID as the impression ID, then
+          //    generate a verification token for it. Forward the token's
+          //    customData + appUserID to the ad network's SSV options; keep the
+          //    clientTransactionId to poll for the verified reward later.
+          final token = await Purchases.generateRewardVerificationToken(
+            ad.responseInfo?.responseId ?? '',
+          );
+          _token = token;
+
           // 2. Wire RevenueCat verification into AdMob's server-side verification.
-          await ad.setServerSideOptions(ServerSideVerificationOptions(
-            userId: token.appUserID,
-            customData: token.customData,
-          ));
+          await ad.setServerSideOptions(
+            ServerSideVerificationOptions(
+              userId: token.appUserID,
+              customData: token.customData,
+            ),
+          );
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
               ad.dispose();
               _ad = null;
+              if (_verifying) {
+                _reloadPending = true;
+              } else {
+                _loadAd();
+              }
+            },
+            onAdFailedToShowFullScreenContent: (ad, error) {
+              ad.dispose();
+              _ad = null;
+              setState(() => _status = 'Failed to show: $error');
               _loadAd();
             },
           );
@@ -112,22 +136,31 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
     if (ad == null || token == null) return;
     _ad = null;
 
-    await ad.show(onUserEarnedReward: (ad, _) async {
-      // 3. The ad was watched. AdMob fires its SSV callback to RevenueCat;
-      //    poll until verification reaches a terminal state.
-      setState(() => _status = 'Verifying reward…');
-      final result =
-          await Purchases.pollRewardVerification(token.clientTransactionId);
-      if (!mounted) return;
-      setState(() {
-        _status = 'Done';
-        final reward = result.reward;
-        _result = result.failed || reward == null
-            ? '❌ verification failed'
-            : '✅ ${_describeReward(reward)}'
-                '${result.moreRewards.isEmpty ? '' : ' (+${result.moreRewards.length} more)'}';
-      });
-    });
+    await ad.show(
+      onUserEarnedReward: (ad, _) async {
+        // 3. The ad was watched. AdMob fires its SSV callback to RevenueCat;
+        //    poll until verification reaches a terminal state.
+        _verifying = true;
+        setState(() => _status = 'Verifying reward…');
+        final result = await Purchases.pollRewardVerification(
+          token.clientTransactionId,
+        );
+        _verifying = false;
+        if (!mounted) return;
+        setState(() {
+          _status = 'Done';
+          final reward = result.reward;
+          _result = result.failed || reward == null
+              ? '❌ verification failed'
+              : '✅ ${_describeReward(reward)}'
+                    '${result.moreRewards.isEmpty ? '' : ' (+${result.moreRewards.length} more)'}';
+        });
+        if (_reloadPending) {
+          _reloadPending = false;
+          _loadAd();
+        }
+      },
+    );
   }
 
   @override
