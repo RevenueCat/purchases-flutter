@@ -31,7 +31,7 @@ await ad.show(onUserEarnedReward: (ad, _) async {
 });
 ```
 
-<img src="screenshots/ad_ready.png" alt="Rewarded Ad screen, ad loaded and ready to show" width="250" />
+![Rewarded Ad screen, ad loaded and ready to show](screenshots/ad_ready.png)
 
 ## Run (smoke test — no reward)
 
