@@ -8,7 +8,30 @@ server-side verification (SSV), via the two reward-verification primitives:
 3. show the ad with `google_mobile_ads`
 4. `Purchases.pollRewardVerification(token.clientTransactionId)` → the verified reward
 
-The whole flow lives in [`lib/main.dart`](lib/main.dart).
+The whole flow lives in [`lib/main.dart`](lib/main.dart):
+
+```dart
+// 1. Use the loaded ad's response ID as the impression ID, then generate a
+//    verification token for it.
+final token = await Purchases.generateRewardVerificationToken(
+  ad.responseInfo?.responseId ?? '',
+);
+
+// 2. Wire RevenueCat verification into AdMob's server-side verification.
+await ad.setServerSideOptions(ServerSideVerificationOptions(
+  userId: token.appUserID,
+  customData: token.customData,
+));
+
+// 3. Show the ad, then poll for the verified reward once it's watched.
+await ad.show(onUserEarnedReward: (ad, _) async {
+  final result = await Purchases.pollRewardVerification(
+    token.clientTransactionId,
+  );
+});
+```
+
+![Rewarded Ad screen, ad loaded and ready to show](screenshots/ad_ready.png)
 
 ## Run (smoke test — no reward)
 
@@ -18,7 +41,9 @@ flutter run
 ```
 
 Set your RevenueCat API keys (`_appleApiKey` / `_googleApiKey`) in `lib/main.dart`
-first — a Test Store key is fine.
+first — a Test Store key is fine. Tap **Load ad**, then **Watch ad to earn
+reward** once it's ready — nothing loads automatically, so there's no async
+load racing an in-flight verification poll.
 
 Out of the box it uses **Google's public test rewarded-interstitial ad unit**, so
 the ad always fills and the full bridge runs, but `pollRewardVerification` returns
