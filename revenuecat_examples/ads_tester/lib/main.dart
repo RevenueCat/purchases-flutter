@@ -52,10 +52,6 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
   String _status = 'No ad loaded';
   String? _result;
 
-  // Ads are only ever loaded in response to a button tap — never
-  // automatically — so there's no async load racing a still-in-flight
-  // verification poll. _busy just covers "a load or a poll is running,
-  // don't let the button do anything else right now".
   bool _busy = false;
 
   @override
@@ -95,12 +91,20 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
               ad.dispose();
-              _ad = null;
+              if (!mounted) return;
+              setState(() {
+                _ad = null;
+                _busy = false;
+              });
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
               ad.dispose();
-              _ad = null;
-              setState(() => _status = 'Failed to show: $error');
+              if (!mounted) return;
+              setState(() {
+                _ad = null;
+                _busy = false;
+                _status = 'Failed to show: $error';
+              });
             },
           );
           if (!mounted) return;
@@ -125,22 +129,18 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
     final ad = _ad;
     final token = _token;
     if (ad == null || token == null) return;
-    _ad = null;
+    setState(() => _busy = true);
 
     await ad.show(
       onUserEarnedReward: (ad, _) async {
         // 3. The ad was watched. AdMob fires its SSV callback to RevenueCat;
         //    poll until verification reaches a terminal state.
-        setState(() {
-          _busy = true;
-          _status = 'Verifying reward…';
-        });
+        setState(() => _status = 'Verifying reward…');
         final result = await Purchases.pollRewardVerification(
           token.clientTransactionId,
         );
         if (!mounted) return;
         setState(() {
-          _busy = false;
           _status = 'Done';
           final reward = result.reward;
           _result = result.failed || reward == null
