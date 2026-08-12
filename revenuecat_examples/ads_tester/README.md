@@ -41,7 +41,9 @@ flutter run
 ```
 
 Set your RevenueCat API keys (`_appleApiKey` / `_googleApiKey`) in `lib/main.dart`
-first — a Test Store key is fine.
+first — a Test Store key is fine. Tap **Load ad**, then **Watch ad to earn
+reward** once it's ready — nothing loads automatically, so there's no async
+load racing an in-flight verification poll.
 
 Out of the box it uses **Google's public test rewarded-interstitial ad unit**, so
 the ad always fills and the full bridge runs, but `pollRewardVerification` returns

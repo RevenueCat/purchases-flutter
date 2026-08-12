@@ -49,16 +49,14 @@ class RewardedAdScreen extends StatefulWidget {
 class _RewardedAdScreenState extends State<RewardedAdScreen> {
   RewardedInterstitialAd? _ad;
   RewardVerificationToken? _token;
-  String _status = 'Loading ad…';
+  String _status = 'No ad loaded';
   String? _result;
 
-  bool _verifying = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadAd();
-  }
+  // Ads are only ever loaded in response to a button tap — never
+  // automatically — so there's no async load racing a still-in-flight
+  // verification poll. _busy just covers "a load or a poll is running,
+  // don't let the button do anything else right now".
+  bool _busy = false;
 
   @override
   void dispose() {
@@ -68,6 +66,7 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
 
   Future<void> _loadAd() async {
     setState(() {
+      _busy = true;
       _status = 'Loading ad…';
       _result = null;
     });
@@ -97,24 +96,26 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
             onAdDismissedFullScreenContent: (ad) {
               ad.dispose();
               _ad = null;
-              _loadAd();
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
               ad.dispose();
               _ad = null;
               setState(() => _status = 'Failed to show: $error');
-              _loadAd();
             },
           );
           if (!mounted) return;
           setState(() {
             _ad = ad;
+            _busy = false;
             _status = 'Ad ready';
           });
         },
         onAdFailedToLoad: (error) {
           if (!mounted) return;
-          setState(() => _status = 'Failed to load: $error');
+          setState(() {
+            _busy = false;
+            _status = 'Failed to load: $error';
+          });
         },
       ),
     );
@@ -130,14 +131,16 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
       onUserEarnedReward: (ad, _) async {
         // 3. The ad was watched. AdMob fires its SSV callback to RevenueCat;
         //    poll until verification reaches a terminal state.
-        _verifying = true;
-        setState(() => _status = 'Verifying reward…');
+        setState(() {
+          _busy = true;
+          _status = 'Verifying reward…';
+        });
         final result = await Purchases.pollRewardVerification(
           token.clientTransactionId,
         );
-        _verifying = false;
         if (!mounted) return;
         setState(() {
+          _busy = false;
           _status = 'Done';
           final reward = result.reward;
           _result = result.failed || reward == null
@@ -151,6 +154,7 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ad = _ad;
     return Scaffold(
       appBar: AppBar(title: const Text('Rewarded Ad (SSV)')),
       body: Center(
@@ -164,8 +168,8 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
             ],
             const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: _ad != null && !_verifying ? _showAd : null,
-              child: const Text('Watch ad to earn reward'),
+              onPressed: _busy ? null : (ad != null ? _showAd : _loadAd),
+              child: Text(ad != null ? 'Watch ad to earn reward' : 'Load ad'),
             ),
           ],
         ),
