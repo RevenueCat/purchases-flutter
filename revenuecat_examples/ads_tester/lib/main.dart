@@ -52,11 +52,6 @@ class _RewardedAdScreenState extends State<RewardedAdScreen> {
   String _status = 'Loading ad…';
   String? _result;
 
-  // The ad can be dismissed while a verification poll is still in flight
-  // (dismissal fires as soon as the ad closes, well before polling
-  // resolves). These two flags keep the dismiss handler from reloading over
-  // that in-progress poll — the reload it would have triggered is deferred
-  // until the poll actually finishes.
   bool _verifying = false;
   bool _reloadPending = false;
 
