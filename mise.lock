@@ -48,6 +48,13 @@ url = "https://github.com/bell-sw/Liberica/releases/download/17.0.6%2B10/bellsof
 version = "3.3.0"
 backend = "core:ruby"
 
+[tools.ruby."platforms.windows-x64"]
+url = "https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-3.3.0-1/rubyinstaller-3.3.0-1-x64.7z"
+
+[[tools.ruby]]
+version = "3.3.0"
+backend = "core:ruby"
+
 [tools.ruby.options]
 compile = "false"
 precompiled_url = "jdx/ruby"
@@ -72,10 +79,3 @@ provenance = "github-attestations"
 [tools.ruby."platforms.macos-x64"]
 checksum = "sha256:96518814d9832bece92a85415a819d4893b307db5921ae1f0f751a9a89a56b7d"
 url = "https://cache.ruby-lang.org/pub/ruby/3.3/ruby-3.3.0.tar.gz"
-
-[[tools.ruby]]
-version = "3.3.0"
-backend = "core:ruby"
-
-[tools.ruby."platforms.windows-x64"]
-url = "https://github.com/oneclick/rubyinstaller2/releases/download/RubyInstaller-3.3.0-1/rubyinstaller-3.3.0-1-x64.7z"
