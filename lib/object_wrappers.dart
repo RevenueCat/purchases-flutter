@@ -33,6 +33,7 @@ export 'models/purchases_configuration.dart';
 export 'models/purchases_error.dart';
 export 'models/reward_verification_result.dart';
 export 'models/reward_verification_token.dart';
+export 'models/rewarded_ad_tracking_metadata.dart';
 export 'models/store.dart';
 export 'models/store_product_change.dart';
 export 'models/store_product_discount.dart';
