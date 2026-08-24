@@ -1,9 +1,6 @@
-import 'package:meta/meta.dart';
-
 import 'verified_reward.dart';
 
 /// Result delivered after reward verification polling for a rewarded ad.
-@experimental
 class RewardVerificationResult {
   /// True when verification did not complete successfully (rejected, timeout,
   /// network, etc.).
