@@ -61,3 +61,24 @@ class _RewardVerificationResultApiTest {
     List<VerifiedReward> moreRewards = result.moreRewards;
   }
 }
+
+class _RewardedAdTrackingMetadataApiTest {
+  void _checkConstructor() {
+    RewardedAdTrackingMetadata data = const RewardedAdTrackingMetadata(
+      mediatorName: AdMediatorName.adMob,
+      adFormat: AdFormat.rewarded,
+      adUnitId: 'unit-1',
+      impressionId: 'imp-1',
+    );
+  }
+
+  void _checkProperties(RewardedAdTrackingMetadata data) {
+    String? networkName = data.networkName;
+    AdMediatorName mediatorName = data.mediatorName;
+    AdFormat adFormat = data.adFormat;
+    String? placement = data.placement;
+    String adUnitId = data.adUnitId;
+    String impressionId = data.impressionId;
+    Map<String, dynamic> map = data.toMap();
+  }
+}

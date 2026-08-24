@@ -966,7 +966,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void pollRewardVerification(Map<String, Object> arguments, final Result result) {
-        CommonKt.pollRewardVerification((String) arguments.get("clientTransactionId"), getOnResult(result));
+        Object trackingMetadataArg = arguments.get("trackingMetadata");
+        Map<String, Object> trackingMetadata = trackingMetadataArg instanceof Map
+                ? stringKeyedMapWithoutNullValues((Map<?, ?>) trackingMetadataArg)
+                : null;
+        CommonKt.pollRewardVerification((String) arguments.get("clientTransactionId"), getOnResult(result), trackingMetadata);
     }
 
     private void runOnUiThread(Runnable runnable) {
