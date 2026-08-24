@@ -788,7 +788,7 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 }
 
 - (void)pollRewardVerification:(NSDictionary *)arguments result:(FlutterResult)result {
-    NSDictionary *trackingMetadata = arguments[@"trackingMetadata"].mappingNSNullToNil;
+    NSDictionary *trackingMetadata = [arguments[@"trackingMetadata"] mappingNSNullToNil];
     [RCCommonFunctionality pollRewardVerificationWithClientTransactionId:arguments[@"clientTransactionId"]
                                                         trackingMetadata:trackingMetadata
                                                               completion:[self getResponseCompletionBlock:result]];
