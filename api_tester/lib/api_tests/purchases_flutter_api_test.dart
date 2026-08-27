@@ -347,6 +347,11 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.setOnesignalUserID(id);
   }
 
+  void _checkSetSingularDeviceId() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setSingularDeviceID(id);
+  }
+
   void _checkSetAirshipChannelId() async {
     String id = "fakeId";
     await Purchases.setAirshipChannelID(id);
