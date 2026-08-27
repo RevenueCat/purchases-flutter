@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 /// A single reward granted by a verified rewarded ad.
 ///
 /// This is an abstract base type; inspect the concrete subtype to read the
@@ -14,7 +12,6 @@ import 'package:meta/meta.dart';
 ///   unlock(reward.identifier);
 /// }
 /// ```
-@experimental
 abstract class VerifiedReward {
   const VerifiedReward._();
 
@@ -42,7 +39,6 @@ abstract class VerifiedReward {
 }
 
 /// A reward of [amount] units of the virtual currency [code].
-@experimental
 class VerifiedVirtualCurrencyReward extends VerifiedReward {
   final String code;
   final int amount;
@@ -54,7 +50,6 @@ class VerifiedVirtualCurrencyReward extends VerifiedReward {
 }
 
 /// A reward granting the entitlement [identifier].
-@experimental
 class VerifiedEntitlementReward extends VerifiedReward {
   final String identifier;
 
@@ -68,13 +63,11 @@ class VerifiedEntitlementReward extends VerifiedReward {
 }
 
 /// Verification completed but no reward was granted.
-@experimental
 class VerifiedNoReward extends VerifiedReward {
   const VerifiedNoReward() : super._();
 }
 
 /// Verification completed with a reward type not modeled by this SDK version.
-@experimental
 class VerifiedUnsupportedReward extends VerifiedReward {
   const VerifiedUnsupportedReward() : super._();
 }

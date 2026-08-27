@@ -1,12 +1,9 @@
-import 'package:meta/meta.dart';
-
 /// Ties a loaded rewarded ad to its server-side reward verification.
 ///
 /// Produced by [Purchases.generateRewardVerificationToken]. Forward [customData]
 /// and [appUserID] to your ad network's server-side verification options, and
 /// keep [clientTransactionId] to correlate the reward callback with
 /// [Purchases.pollRewardVerification].
-@experimental
 class RewardVerificationToken {
   final String customData;
   final String clientTransactionId;

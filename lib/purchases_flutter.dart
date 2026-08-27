@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 
 import 'object_wrappers.dart';
 
@@ -1499,7 +1498,6 @@ class Purchases {
     return data;
   }
 
-  @experimental
   static final adTracker = PurchasesAdTracker._();
 
   /// Generates a reward verification token for a loaded rewarded ad.
@@ -1508,7 +1506,6 @@ class Purchases {
   /// `appUserID` to your ad network's server-side verification options, then
   /// keep `clientTransactionId` for [pollRewardVerification] when the reward
   /// callback fires.
-  @experimental
   static Future<RewardVerificationToken> generateRewardVerificationToken(
     String impressionId,
   ) async {
@@ -1526,7 +1523,6 @@ class Purchases {
   /// Pass [trackingMetadata] to have the SDK automatically track
   /// reward-verification events for the ad it belongs to; omit it to poll
   /// without tracking.
-  @experimental
   static Future<RewardVerificationResult> pollRewardVerification(
     String clientTransactionId, {
     RewardedAdTrackingMetadata? trackingMetadata,
@@ -1696,27 +1692,21 @@ class PromotedPurchaseResult {
 
 class UnsupportedPlatformException implements Exception {}
 
-@experimental
 class PurchasesAdTracker {
   PurchasesAdTracker._();
 
-  @experimental
   Future<void> trackAdDisplayed(AdDisplayedData data) =>
       Purchases._channel.invokeMethod('trackAdDisplayed', data.toMap());
 
-  @experimental
   Future<void> trackAdOpened(AdOpenedData data) =>
       Purchases._channel.invokeMethod('trackAdOpened', data.toMap());
 
-  @experimental
   Future<void> trackAdLoaded(AdLoadedData data) =>
       Purchases._channel.invokeMethod('trackAdLoaded', data.toMap());
 
-  @experimental
   Future<void> trackAdRevenue(AdRevenueData data) =>
       Purchases._channel.invokeMethod('trackAdRevenue', data.toMap());
 
-  @experimental
   Future<void> trackAdFailedToLoad(AdFailedToLoadData data) =>
       Purchases._channel.invokeMethod('trackAdFailedToLoad', data.toMap());
 }

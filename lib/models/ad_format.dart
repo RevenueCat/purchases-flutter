@@ -1,8 +1,5 @@
-import 'package:meta/meta.dart';
-
 /// Use the predefined constants for common ad formats, or create a custom
 /// value for other ad format types.
-@experimental
 class AdFormat {
   final String value;
 
