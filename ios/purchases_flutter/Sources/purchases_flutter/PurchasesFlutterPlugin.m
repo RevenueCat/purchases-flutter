@@ -190,6 +190,9 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
     } else if ([@"setOnesignalUserID" isEqualToString:call.method]) {
         NSString *onesignalUserID = arguments[@"onesignalUserID"];
         [self setOnesignalUserID:onesignalUserID result:result];
+    } else if ([@"setSingularDeviceID" isEqualToString:call.method]) {
+        NSString *singularDeviceID = arguments[@"singularDeviceID"];
+        [self setSingularDeviceID:singularDeviceID result:result];
     } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
         NSString *airshipChannelID = arguments[@"airshipChannelID"];
         [self setAirshipChannelID:airshipChannelID result:result];
@@ -590,6 +593,11 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 
 - (void)setOnesignalUserID:(nullable NSString *)onesignalUserID result:(FlutterResult)result {
     [RCCommonFunctionality setOnesignalUserID:onesignalUserID];
+    result(nil);
+}
+
+- (void)setSingularDeviceID:(nullable NSString *)singularDeviceID result:(FlutterResult)result {
+    [RCCommonFunctionality setSingularDeviceID:singularDeviceID];
     result(nil);
 }
 
