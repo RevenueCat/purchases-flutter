@@ -2,7 +2,7 @@ group 'com.revenuecat.purchases_ui_flutter'
 version '10.10.1'
 
 buildscript {
-    ext.kotlin_version = '1.9.20'
+    ext.kotlin_version = '2.2.21'
     ext.common_version = '18.33.1'
     repositories {
         google()
