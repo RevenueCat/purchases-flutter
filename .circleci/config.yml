@@ -315,6 +315,24 @@ jobs:
             ./gradlew app:assembleAndroidTest
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
 
+  agp9-smoke-test:
+    description: "Smoke-test purchases_ui_flutter under AGP 9, for both android.builtInKotlin values (configuration-time only)"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    resource_class: medium
+    steps:
+      - checkout
+      - revenuecat/install-mise-tools:
+          tools: java,gradle
+      - run:
+          name: Print versions
+          command: |
+            java -version
+            gradle --version
+      - run:
+          name: Run AGP 9 smoke test
+          command: bash e2e-tests/agp9_smoke/run.sh
+
   android-integration-test:
     description: "Run Android integration tests for flutter"
     <<: *android-machine-emulator
@@ -598,6 +616,7 @@ workflows:
       - ios-integration-test-spm
       - macos-integration-test-spm
       - android-integration-test-build
+      - agp9-smoke-test
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests

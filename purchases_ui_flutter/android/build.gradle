@@ -23,7 +23,14 @@ allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+
+// AGP 9 registers the `kotlin` extension itself when built-in Kotlin is enabled, and applying
+// `kotlin-android` on top of it fails with "Cannot add extension with name 'kotlin'". Must stay
+// below `com.android.library`, since that apply is what registers the extension.
+// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
+if (project.extensions.findByName('kotlin') == null) {
+    apply plugin: 'kotlin-android'
+}
 
 android {
     if (project.android.hasProperty("namespace")) {
@@ -33,10 +40,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = '1.8'
     }
 
     sourceSets {
@@ -54,5 +57,22 @@ android {
     dependencies {
         implementation "com.revenuecat.purchases:purchases-hybrid-common-ui:$common_version"
         implementation 'androidx.compose.ui:ui-android:1.5.4'
+    }
+}
+
+// KGP < 1.9 has no `compilerOptions` on the `kotlin` extension; AGP's built-in Kotlin has no
+// `kotlinOptions` on `android`.
+def kotlinExtension = project.extensions.getByName('kotlin')
+if (kotlinExtension.metaClass.respondsTo(kotlinExtension, 'compilerOptions')) {
+    kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
+        }
+    }
+} else {
+    android {
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
     }
 }

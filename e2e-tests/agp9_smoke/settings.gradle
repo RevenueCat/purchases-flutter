@@ -1,0 +1,36 @@
+// Settings file for the AGP 9 smoke test of purchases_ui_flutter.
+// See README.md in this directory for context.
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+// Declared here (never applied) purely to put AGP 9 and a Gradle 9-compatible
+// KGP on the settings-level plugin classpath. That classpath is a parent of
+// each subproject's buildscript classpath, so these win over the lower
+// versions the plugin pins in its own `buildscript { }` block, and the plugin
+// gets evaluated against AGP 9 here.
+//
+// The KGP entry is load-bearing, not decorative: the plugin pins KGP 1.9.20,
+// which fails on Gradle 9 because it reaches for the removed `HasConvention`
+// API. `run.sh` asserts on the resulting AGP major version so this stops the
+// test rather than silently degrading it if the override ever breaks.
+plugins {
+    id "com.android.application" version "9.0.1" apply false
+    id "org.jetbrains.kotlin.android" version "2.2.10" apply false
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "agp9_smoke"
+include ":purchases_ui_flutter"
+project(":purchases_ui_flutter").projectDir = file("../../purchases_ui_flutter/android")
