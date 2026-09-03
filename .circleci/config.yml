@@ -331,7 +331,7 @@ jobs:
             gradle --version
       - run:
           name: Run AGP 9 smoke test
-          command: bash .circleci/agp9-smoke/run.sh
+          command: bash e2e-tests/agp9_smoke/run.sh
 
   android-integration-test:
     description: "Run Android integration tests for flutter"
