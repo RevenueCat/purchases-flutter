@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import 'entitlement_infos_wrapper.dart';
 import 'store_transaction.dart';
+import 'subscription_info_wrapper.dart';
 
 /// Class containing all information regarding the customer
 class CustomerInfo extends Equatable {
@@ -55,6 +56,10 @@ class CustomerInfo extends Equatable {
   /// If there are multiple for different platforms, it will point to the device store.
   final String? managementURL;
 
+  /// Map of product identifiers to their subscription info, for both
+  /// subscriptions and non-subscriptions.
+  final Map<String, SubscriptionInfo> subscriptionsByProductIdentifier;
+
   const CustomerInfo(
     this.entitlements,
     this.allPurchaseDates,
@@ -69,6 +74,7 @@ class CustomerInfo extends Equatable {
     this.originalPurchaseDate,
     this.originalApplicationVersion,
     this.managementURL,
+    this.subscriptionsByProductIdentifier = const {},
   });
 
   factory CustomerInfo.fromJson(Map<String, dynamic> json) => CustomerInfo(
@@ -85,6 +91,9 @@ class CustomerInfo extends Equatable {
       originalPurchaseDate: json['originalPurchaseDate'] as String?,
       originalApplicationVersion: json['originalApplicationVersion'] as String?,
       managementURL: json['managementURL'] as String?,
+      subscriptionsByProductIdentifier: Map<String, dynamic>.from(json['subscriptionsByProductIdentifier'] ?? {}).map(
+        (key, value) => MapEntry(key, SubscriptionInfo.fromJson(Map<String, dynamic>.from(value))),
+      ),
     );
 
   @override
@@ -102,5 +111,6 @@ class CustomerInfo extends Equatable {
     originalPurchaseDate,
     originalApplicationVersion,
     managementURL,
+    subscriptionsByProductIdentifier,
   ];
 }

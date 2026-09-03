@@ -24,16 +24,26 @@ the out-of-the-box settings a Flutter 3.44 app would have.
 
 ## Running locally
 
-Requires Flutter 3.44+ and JDK 21 on `PATH`:
+Uses the `flutter` and `java` versions from the repo's `mise.toml`; Gradle comes
+from the wrapper.
 
 ```bash
+mise install flutter java
 cd e2e-tests/agp9_test_app
 flutter pub get
 flutter build apk --debug
 ```
 
-To also exercise the AGP 9 default of `android.builtInKotlin=true` (without
-duplicating the fixture), flip the flag and rebuild:
+## The `android.builtInKotlin=true` case
+
+Not covered here. Flutter's Gradle plugin scans each plugin's `build.gradle`
+for a KGP apply and, finding none, applies `kotlin-android` itself — including
+to Java-only plugins like `purchases_flutter`. AGP 9 then rejects it as
+redundant, so the build fails before reaching anything this fixture controls.
+That reproduces with first-party plugins such as `shared_preferences`, so it
+needs an upstream fix rather than a change here.
+
+To check whether that has been fixed, flip the flag and rebuild:
 
 ```bash
 sed -i '' 's/^android.builtInKotlin=false$/android.builtInKotlin=true/' android/gradle.properties

@@ -1,0 +1,30 @@
+// Root build for the AGP 9 smoke test. The assertions live here rather than in
+// the plugin's own build.gradle, so the fixture observes externally visible
+// wiring instead of the plugin's internal properties.
+// See README.md in this directory for context.
+
+evaluationDependsOn(':purchases_ui_flutter')
+
+def pluginProject = project(':purchases_ui_flutter')
+
+def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+def kotlinExtensionRegistered = pluginProject.extensions.findByName('kotlin') != null
+def kotlinAndroidPluginApplied = pluginProject.plugins.hasPlugin('kotlin-android') ||
+        pluginProject.plugins.hasPlugin('org.jetbrains.kotlin.android')
+
+// The plugin picks between two mutually exclusive jvmTarget DSLs depending on
+// which Kotlin is in play. Reading the value back off the compile task is what
+// catches it configuring the wrong one: that fails silently, leaving the
+// compiler on its default target.
+def compileTask = pluginProject.tasks.findByName('compileDebugKotlin')
+def jvmTarget = compileTask?.compilerOptions?.jvmTarget?.orNull?.target ?: 'unset'
+
+tasks.register('verifyKotlinWiring') {
+    description = 'Prints how the plugin wired up Kotlin, in key=value form for run.sh to assert on.'
+    doLast {
+        println "agpVersion=${agpVersion}"
+        println "kotlinExtensionRegistered=${kotlinExtensionRegistered}"
+        println "kotlinAndroidPluginApplied=${kotlinAndroidPluginApplied}"
+        println "jvmTarget=${jvmTarget}"
+    }
+}

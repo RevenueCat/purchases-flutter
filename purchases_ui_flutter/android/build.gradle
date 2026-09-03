@@ -1,15 +1,9 @@
 group 'com.revenuecat.purchases_ui_flutter'
-version '10.2.0'
+version '10.11.0'
 
-// Apply the legacy kotlin-android plugin only when AGP isn't providing
-// Kotlin itself — i.e. AGP < 9, or AGP 9+ with `android.builtInKotlin=false`. See:
-// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
 buildscript {
     ext.kotlin_version = '1.9.20'
-    ext.common_version = '18.9.1'
-    ext.agpMajor = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0] as int
-    ext.builtInKotlinEnabled = (findProperty('android.builtInKotlin') ?: 'true') == 'true'
-    ext.applyLegacyKgp = agpMajor < 9 || !builtInKotlinEnabled
+    ext.common_version = '18.34.0'
     repositories {
         google()
         mavenCentral()
@@ -17,9 +11,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:8.13.2'
-        if (applyLegacyKgp) {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        }
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -32,7 +24,11 @@ allprojects {
 
 apply plugin: 'com.android.library'
 
-if (applyLegacyKgp) {
+// AGP 9 registers the `kotlin` extension itself when built-in Kotlin is enabled, and applying
+// `kotlin-android` on top of it fails with "Cannot add extension with name 'kotlin'". Must stay
+// below `com.android.library`, since that apply is what registers the extension.
+// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
+if (project.extensions.findByName('kotlin') == null) {
     apply plugin: 'kotlin-android'
 }
 
@@ -64,18 +60,19 @@ android {
     }
 }
 
-// jvmTarget DSL matches the Kotlin plugin in use: `android.kotlinOptions`
-// for kotlin-android, top-level `kotlin {}` for AGP's built-in Kotlin.
-if (applyLegacyKgp) {
-    android {
-        kotlinOptions {
-            jvmTarget = '1.8'
-        }
-    }
-} else {
+// KGP < 1.9 has no `compilerOptions` on the `kotlin` extension; AGP's built-in Kotlin has no
+// `kotlinOptions` on `android`.
+def kotlinExtension = project.extensions.getByName('kotlin')
+if (kotlinExtension.metaClass.respondsTo(kotlinExtension, 'compilerOptions')) {
     kotlin {
         compilerOptions {
             jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
+        }
+    }
+} else {
+    android {
+        kotlinOptions {
+            jvmTarget = '1.8'
         }
     }
 }

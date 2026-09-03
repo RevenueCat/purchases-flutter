@@ -187,6 +187,12 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
     }else if ([@"setOnesignalID" isEqualToString:call.method]) {
         NSString *onesignalID = arguments[@"onesignalID"];
         [self setOnesignalID:onesignalID result:result];
+    } else if ([@"setOnesignalUserID" isEqualToString:call.method]) {
+        NSString *onesignalUserID = arguments[@"onesignalUserID"];
+        [self setOnesignalUserID:onesignalUserID result:result];
+    } else if ([@"setSingularDeviceID" isEqualToString:call.method]) {
+        NSString *singularDeviceID = arguments[@"singularDeviceID"];
+        [self setSingularDeviceID:singularDeviceID result:result];
     } else if ([@"setAirshipChannelID" isEqualToString:call.method]) {
         NSString *airshipChannelID = arguments[@"airshipChannelID"];
         [self setAirshipChannelID:airshipChannelID result:result];
@@ -280,7 +286,7 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
     } else if ([@"getCachedVirtualCurrencies" isEqualToString:call.method]) {
         result([RCCommonFunctionality getCachedVirtualCurrencies]);
     } else if ([@"trackCustomPaywallImpression" isEqualToString:call.method]) {
-        [self trackCustomPaywallImpression:arguments result:result];
+        [self trackCustomPaywallImpression:arguments ?: @{} result:result];
     } else if ([@"trackAdDisplayed" isEqualToString:call.method]) {
         [self trackAdDisplayed:arguments result:result];
     } else if ([@"trackAdOpened" isEqualToString:call.method]) {
@@ -291,6 +297,10 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
         [self trackAdLoaded:arguments result:result];
     } else if ([@"trackAdFailedToLoad" isEqualToString:call.method]) {
         [self trackAdFailedToLoad:arguments result:result];
+    } else if ([@"generateRewardVerificationToken" isEqualToString:call.method]) {
+        [self generateRewardVerificationToken:arguments result:result];
+    } else if ([@"pollRewardVerification" isEqualToString:call.method]) {
+        [self pollRewardVerification:arguments result:result];
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -306,7 +316,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
     diagnosticsEnabled:(BOOL)diagnosticsEnabled
  preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
-                result:(FlutterResult)result {
+                 result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
     }
@@ -314,6 +324,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
         userDefaultsSuiteName = nil;
     }
 
+    // nil so the native SDK applies its own DangerousSettings defaults.
     RCPurchases *purchases = [RCPurchases configureWithAPIKey:apiKey
                                                     appUserID:appUserID
                                       purchasesAreCompletedBy:purchasesAreCompletedBy
@@ -580,6 +591,16 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
+- (void)setOnesignalUserID:(nullable NSString *)onesignalUserID result:(FlutterResult)result {
+    [RCCommonFunctionality setOnesignalUserID:onesignalUserID];
+    result(nil);
+}
+
+- (void)setSingularDeviceID:(nullable NSString *)singularDeviceID result:(FlutterResult)result {
+    [RCCommonFunctionality setSingularDeviceID:singularDeviceID];
+    result(nil);
+}
+
 - (void)setAirshipChannelID:(nullable NSString *)airshipChannelID result:(FlutterResult)result {
     [RCCommonFunctionality setAirshipChannelID:airshipChannelID];
     result(nil);
@@ -770,16 +791,20 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
+- (void)generateRewardVerificationToken:(NSDictionary *)arguments result:(FlutterResult)result {
+    result([RCCommonFunctionality generateRewardVerificationTokenWithImpressionId:arguments[@"impressionId"]]);
+}
+
+- (void)pollRewardVerification:(NSDictionary *)arguments result:(FlutterResult)result {
+    NSDictionary *trackingMetadata = [arguments[@"trackingMetadata"] mappingNSNullToNil];
+    [RCCommonFunctionality pollRewardVerificationWithClientTransactionId:arguments[@"clientTransactionId"]
+                                                        trackingMetadata:trackingMetadata
+                                                              completion:[self getResponseCompletionBlock:result]];
+}
+
 - (void)trackCustomPaywallImpression:(NSDictionary *)arguments result:(FlutterResult)result {
     if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
-        NSMutableDictionary *data = [NSMutableDictionary dictionary];
-        for (NSString *key in arguments) {
-            id value = arguments[key];
-            if (value != nil && ![value isKindOfClass:[NSNull class]]) {
-                data[key] = value;
-            }
-        }
-        [RCCommonFunctionality trackCustomPaywallImpression:data];
+        [RCCommonFunctionality trackCustomPaywallImpression:[arguments mappingNSNullToNil]];
     } else {
         NSLog(@"[Purchases] Warning: tried to call trackCustomPaywallImpression, but it's only available on iOS 15.0 or greater.");
     }
@@ -894,7 +919,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"10.2.0";
+    return @"10.11.0";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {

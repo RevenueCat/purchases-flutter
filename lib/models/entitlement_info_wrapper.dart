@@ -122,9 +122,9 @@ class EntitlementInfo extends Equatable {
       json['originalPurchaseDate'] as String,
       json['productIdentifier'] as String,
       json['isSandbox'] as bool,
-      ownershipType: _ownershipTypeFromJson(json['ownershipType']),
+      ownershipType: ownershipTypeFromJson(json['ownershipType']),
       store: storeFromJson(json['store']),
-      periodType: _periodTypeFromJson(json['periodType']),
+      periodType: periodTypeFromJson(json['periodType']),
       expirationDate: json['expirationDate'] as String?,
       unsubscribeDetectedAt: json['unsubscribeDetectedAt'] as String?,
       billingIssueDetectedAt: json['billingIssueDetectedAt'] as String?,
@@ -150,32 +150,4 @@ class EntitlementInfo extends Equatable {
     productPlanIdentifier,
     verification,
   ];
-}
-
-OwnershipType _ownershipTypeFromJson(dynamic value) {
-  switch (value) {
-    case 'PURCHASED':
-      return OwnershipType.purchased;
-    case 'FAMILY_SHARED':
-      return OwnershipType.familyShared;
-    case 'UNKNOWN':
-      return OwnershipType.unknown;
-    default:
-      return OwnershipType.unknown;
-  }
-}
-
-PeriodType _periodTypeFromJson(dynamic value) {
-  switch (value) {
-    case 'INTRO':
-      return PeriodType.intro;
-    case 'NORMAL':
-      return PeriodType.normal;
-    case 'TRIAL':
-      return PeriodType.trial;
-    case 'PREPAID':
-      return PeriodType.prepaid;
-    default:
-      return PeriodType.unknown;
-  }
 }

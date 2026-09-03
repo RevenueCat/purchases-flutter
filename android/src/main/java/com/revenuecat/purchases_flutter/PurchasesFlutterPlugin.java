@@ -63,7 +63,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "10.2.0";
+    private static final String PLUGIN_VERSION = "10.11.0";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -304,6 +304,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String onesignalID = call.argument("onesignalID");
                 setOnesignalID(onesignalID, result);
                 break;
+            case "setOnesignalUserID":
+                String onesignalUserID = call.argument("onesignalUserID");
+                setOnesignalUserID(onesignalUserID, result);
+                break;
+            case "setSingularDeviceID":
+                String singularDeviceID = call.argument("singularDeviceID");
+                setSingularDeviceID(singularDeviceID, result);
+                break;
             case "setAirshipChannelID":
                 String airshipChannelID = call.argument("airshipChannelID");
                 setAirshipChannelID(airshipChannelID, result);
@@ -384,9 +392,13 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "getCachedVirtualCurrencies":
                 getCachedVirtualCurrencies(result);
                 break;
-            case "trackCustomPaywallImpression":
-                trackCustomPaywallImpression(call.arguments(), result);
+            case "trackCustomPaywallImpression": {
+                Map<String, Object> arguments = call.arguments();
+                trackCustomPaywallImpression(
+                        arguments != null ? arguments : new HashMap<>(),
+                        result);
                 break;
+            }
             case "trackAdDisplayed":
                 trackAdDisplayed(call.arguments(), result);
                 break;
@@ -401,6 +413,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "trackAdFailedToLoad":
                 trackAdFailedToLoad(call.arguments(), result);
+                break;
+            case "generateRewardVerificationToken":
+                generateRewardVerificationToken(call.arguments(), result);
+                break;
+            case "pollRewardVerification":
+                pollRewardVerification(call.arguments(), result);
                 break;
             default:
                 result.notImplemented();
@@ -744,6 +762,16 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
+    private void setOnesignalUserID(String onesignalUserID, final Result result) {
+        SubscriberAttributesKt.setOnesignalUserID(onesignalUserID);
+        result.success(null);
+    }
+
+    private void setSingularDeviceID(String singularDeviceID, final Result result) {
+        SubscriberAttributesKt.setSingularDeviceID(singularDeviceID);
+        result.success(null);
+    }
+
     private void setAirshipChannelID(String airshipChannelID, final Result result) {
         SubscriberAttributesKt.setAirshipChannelID(airshipChannelID);
         result.success(null);
@@ -883,14 +911,38 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void trackCustomPaywallImpression(Map<String, Object> arguments, final Result result) {
-        HashMap<String, Object> data = new HashMap<>();
-        for (Map.Entry<String, Object> entry : arguments.entrySet()) {
-            if (entry.getValue() != null) {
-                data.put(entry.getKey(), entry.getValue());
+        CommonKt.trackCustomPaywallImpression(stringKeyedMapWithoutNullValues(arguments));
+        result.success(null);
+    }
+
+    private static HashMap<String, Object> stringKeyedMapWithoutNullValues(@Nullable Map<?, ?> map) {
+        HashMap<String, Object> filteredMap = new HashMap<>();
+        if (map != null) {
+            for (Map.Entry<?, ?> entry : map.entrySet()) {
+                Object filteredValue = valueWithoutNullValues(entry.getValue());
+                if (entry.getKey() instanceof String && filteredValue != null) {
+                    filteredMap.put((String) entry.getKey(), filteredValue);
+                }
             }
         }
-        CommonKt.trackCustomPaywallImpression(data);
-        result.success(null);
+        return filteredMap;
+    }
+
+    private static Object valueWithoutNullValues(@Nullable Object value) {
+        if (value instanceof Map) {
+            return stringKeyedMapWithoutNullValues((Map<?, ?>) value);
+        }
+        if (value instanceof List) {
+            ArrayList<Object> filteredList = new ArrayList<>();
+            for (Object item : (List<?>) value) {
+                Object filteredItem = valueWithoutNullValues(item);
+                if (filteredItem != null) {
+                    filteredList.add(filteredItem);
+                }
+            }
+            return filteredList;
+        }
+        return value;
     }
 
     private void trackAdDisplayed(Map<String, Object> arguments, final Result result) {
@@ -916,6 +968,18 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private void trackAdFailedToLoad(Map<String, Object> arguments, final Result result) {
         CommonKt.trackAdFailedToLoad(arguments);
         result.success(null);
+    }
+
+    private void generateRewardVerificationToken(Map<String, Object> arguments, final Result result) {
+        result.success(CommonKt.generateRewardVerificationToken((String) arguments.get("impressionId")));
+    }
+
+    private void pollRewardVerification(Map<String, Object> arguments, final Result result) {
+        Object trackingMetadataArg = arguments.get("trackingMetadata");
+        Map<String, Object> trackingMetadata = trackingMetadataArg instanceof Map
+                ? stringKeyedMapWithoutNullValues((Map<?, ?>) trackingMetadataArg)
+                : null;
+        CommonKt.pollRewardVerification((String) arguments.get("clientTransactionId"), getOnResult(result), trackingMetadata);
     }
 
     private void runOnUiThread(Runnable runnable) {
