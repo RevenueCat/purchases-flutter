@@ -52,3 +52,9 @@ flutter build apk --debug
 ```
 
 (Drop the `''` after `-i` on Linux.)
+
+The build reports two failures. The real one is the `IllegalStateException` on
+`:purchases_flutter` about `kotlin-android` no longer being required since AGP
+9.0. The `'kotlin-android' plugin requires one of the Android Gradle plugins`
+error, and the `NullPointerException` alongside it, are a cascade from that
+aborted plugin apply rather than separate problems.
