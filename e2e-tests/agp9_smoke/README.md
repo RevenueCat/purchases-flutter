@@ -83,7 +83,7 @@ is the only reason `gradle` is pinned there at all.
 
 ```bash
 mise install java gradle
-bash .circleci/agp9-smoke/run.sh
+bash e2e-tests/agp9_smoke/run.sh
 ```
 
 `run.sh` calls `gradle` directly, so it picks up whichever version is on

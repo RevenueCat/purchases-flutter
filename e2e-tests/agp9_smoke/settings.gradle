@@ -31,6 +31,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "agp9-smoke"
+rootProject.name = "agp9_smoke"
 include ":purchases_ui_flutter"
 project(":purchases_ui_flutter").projectDir = file("../../purchases_ui_flutter/android")
