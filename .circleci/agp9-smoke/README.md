@@ -44,9 +44,10 @@ off for both runs means the two cases differ only by `android.builtInKotlin`.
 
 Assertions live in this directory's `build.gradle`, as a `verifyKotlinWiring`
 task that prints the externally observable wiring (`agpVersion`,
-`kotlinExtensionRegistered`, `kotlinAndroidPluginApplied`). `run.sh` asserts on
-that output. Deliberately nothing reads the plugin's internal Gradle
-properties, so the fixture keeps working when the conditional is refactored.
+`kotlinExtensionRegistered`, `kotlinAndroidPluginApplied`, `jvmTarget`).
+`run.sh` asserts on that output. Deliberately nothing reads the plugin's
+internal Gradle properties, so the fixture keeps working when the conditional
+is refactored.
 
 `run.sh` asserts, for each case:
 
@@ -55,14 +56,24 @@ properties, so the fixture keeps working when the conditional is refactored.
    silently stopped taking effect.
 2. A `kotlin` extension ends up registered either way.
 3. `kotlin-android` is applied only in the case where AGP isn't providing it.
-4. The `compileDebugKotlin` task graph resolves under `--dry-run` — proves AGP
+4. `jvmTarget` is `1.8` on the compile task. The plugin picks between two
+   mutually exclusive `jvmTarget` DSLs, and configuring the wrong one for the
+   Kotlin in play fails silently rather than erroring. This assertion is what
+   catches that: with the plugin's `jvmTarget` block deleted, the
+   `builtInKotlin=false` case reports `21` (KGP defaults to the JDK version)
+   and fails. On the `builtInKotlin=true` path AGP derives `1.8` from
+   `compileOptions`, so the assertion is redundant but harmless there.
+5. The `compileDebugKotlin` task graph resolves under `--dry-run` — proves AGP
    applied cleanly and that the `jvmTarget` DSL selected for this case is
    valid.
 
-This is a configuration-time smoke test, not a full build. It will not catch
-issues that only manifest during actual compilation (e.g. whether `jvmTarget`
-is genuinely honoured in the emitted bytecode, or Kotlin source
-incompatibilities with KGP 2.x).
+This is a configuration-time smoke test, not a full build. The plugin's sources
+import `io.flutter`, and those artifacts reach the classpath only via the
+Flutter Gradle plugin in a real app, so compiling here is not an option:
+attempting it fails with `Unresolved reference 'io'`. Consequently `jvmTarget`
+is verified as configured rather than as emitted bytecode, and anything that
+only surfaces during compilation — Kotlin source incompatibilities with
+KGP 2.x, for instance — is out of scope.
 
 ## Running locally
 

@@ -15,8 +15,16 @@
 #   builtInKotlin=false -> nothing registers it, so the plugin MUST apply
 #                          kotlin-android itself.
 #
-# This is a configuration-time smoke test, not a full build. It will not catch
-# issues that only manifest during actual compilation.
+# Each case also asserts the jvmTarget the plugin configured, read back off the
+# compile task. Picking the wrong DSL for the Kotlin in play fails silently and
+# leaves the default target, which on the builtInKotlin=false path is the JDK
+# version (21) rather than 1.8.
+#
+# This is a configuration-time smoke test, not a full build: the plugin's
+# sources import io.flutter, and the Flutter embedding artifacts are only on the
+# classpath when the Flutter Gradle plugin supplies them, which needs a real
+# Flutter app. So jvmTarget is verified as configured, not as emitted bytecode,
+# and anything that only surfaces during compilation is out of scope here.
 
 set -euo pipefail
 
@@ -63,6 +71,7 @@ run_case() {
         "$(value_of kotlinExtensionRegistered "$output")"
     assert_equals kotlinAndroidPluginApplied "$expect_kgp_applied" \
         "$(value_of kotlinAndroidPluginApplied "$output")"
+    assert_equals jvmTarget 1.8 "$(value_of jvmTarget "$output")"
 
     echo "==> Asserting compileDebugKotlin task graph resolves"
     gradle "${GRADLE_ARGS[@]}" "$property_arg" \
