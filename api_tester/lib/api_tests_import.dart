@@ -3,7 +3,7 @@
 // missing. This is because flutter won't compile files if they are not
 // included somewhere
 // ignore_for_file: unused_import
-import 'package:api_tester/api_tests/errors_api_test.dart';
+import 'package:api_tester/api_tests/generated/errors_api_test.dart';
 import 'package:api_tester/api_tests/models/ad_tracking_api_test.dart';
 import 'package:api_tester/api_tests/models/customer_info_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/entitlement_info_wrapper_api_test.dart';
@@ -21,12 +21,14 @@ import 'package:api_tester/api_tests/models/purchase_params_api_test.dart';
 import 'package:api_tester/api_tests/models/purchase_configuration_api_test.dart';
 import 'package:api_tester/api_tests/models/purchase_result_api_test.dart';
 import 'package:api_tester/api_tests/models/purchases_error_api_test.dart';
+import 'package:api_tester/api_tests/models/reward_verification_api_test.dart';
 import 'package:api_tester/api_tests/models/store_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_change_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_discount_api_test.dart';
 import 'package:api_tester/api_tests/models/store_product_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/store_transaction_api_test.dart';
 import 'package:api_tester/api_tests/models/storefront_api_test.dart';
+import 'package:api_tester/api_tests/models/subscription_info_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/subscription_option_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/virtual_currencies_api_test.dart';
 import 'package:api_tester/api_tests/models/virtual_currency_api_test.dart';

@@ -85,6 +85,30 @@ Tag current branch with current version number
 
 Update hybrid common pod and gradle
 
+### run_maestro_e2e_tests_ios
+
+```sh
+[bundle exec] fastlane run_maestro_e2e_tests_ios
+```
+
+Run maestro E2E tests on iOS
+
+### build_maestro_app_android
+
+```sh
+[bundle exec] fastlane build_maestro_app_android
+```
+
+Build maestro E2E test app for Android
+
+### run_maestro_e2e_tests_android
+
+```sh
+[bundle exec] fastlane run_maestro_e2e_tests_android
+```
+
+Run maestro E2E tests on Android (emulator must be running)
+
 ### trigger_bump
 
 ```sh
@@ -92,6 +116,14 @@ Update hybrid common pod and gradle
 ```
 
 Trigger bump
+
+### verify_web_hybrid_mappings_bundle
+
+```sh
+[bundle exec] fastlane verify_web_hybrid_mappings_bundle
+```
+
+Verifies the vendored web SDK bundle matches the published purchases-js-hybrid-mappings bundle for the current purchases-hybrid-common version
 
 ----
 

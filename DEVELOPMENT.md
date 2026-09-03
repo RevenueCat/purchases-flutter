@@ -4,7 +4,7 @@ This guide explains how to set up the development environment for the RevenueCat
 
 ## Prerequisites
 
-- Flutter SDK (>=3.22.0) - See [Flutter installation guide](https://docs.flutter.dev/get-started/install)
+- [mise](https://mise.jdx.dev/) - manages the Flutter SDK and JDK. Install mise, then run `mise install` in the project root to get the pinned versions (sdkman via `sdk env install` is also supported for the JDK).
 - Xcode (for iOS development)
 - Android Studio (for Android development)
 - **Swift Package Manager** (recommended for iOS dependencies) or CocoaPods (legacy)
@@ -16,7 +16,7 @@ This guide explains how to set up the development environment for the RevenueCat
 
 To run tests for the main plugin:
 ```bash
-fvm flutter test
+flutter test
 ```
 
 ## Sample Applications
@@ -361,7 +361,7 @@ includeBuild('/path/to/purchases-android') {
 
 1. **Make changes** to the Flutter plugin code in `lib/`
 2. **Test changes** using the sample apps (changes are reflected automatically)
-3. **Run tests** with `fvm flutter test`
+3. **Run tests** with `flutter test`
 4. **Test on native platforms** by running the sample apps on iOS/Android devices
 
 ## Troubleshooting

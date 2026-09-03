@@ -342,6 +342,16 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.setOnesignalID(id);
   }
 
+  void _checkSetOnesignalUserId() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setOnesignalUserID(id);
+  }
+
+  void _checkSetSingularDeviceId() {
+    String id = "fakeId";
+    Future<void> future = Purchases.setSingularDeviceID(id);
+  }
+
   void _checkSetAirshipChannelId() async {
     String id = "fakeId";
     await Purchases.setAirshipChannelID(id);
@@ -738,8 +748,34 @@ class _PurchasesFlutterApiTest {
     ));
   }
 
+  void _checkGenerateRewardVerificationToken() async {
+    RewardVerificationToken token =
+        await Purchases.generateRewardVerificationToken('imp-1');
+  }
+
+  void _checkPollRewardVerification() async {
+    RewardVerificationResult result =
+        await Purchases.pollRewardVerification('client-transaction-id');
+  }
+
+  void _checkPollRewardVerificationWithTrackingMetadata() async {
+    RewardVerificationResult result = await Purchases.pollRewardVerification(
+      'client-transaction-id',
+      trackingMetadata: const RewardedAdTrackingMetadata(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-1',
+        impressionId: 'imp-1',
+      ),
+    );
+  }
+
   void _checkTrackCustomPaywallImpression() {
     Future<void> future = Purchases.trackCustomPaywallImpression();
+  }
+
+  void _checkTrackCustomPaywallImpressionWithNullParams() {
+    Future<void> future = Purchases.trackCustomPaywallImpression(params: null);
   }
 
   void _checkTrackCustomPaywallImpressionWithParams() {
@@ -754,6 +790,15 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  void _checkTrackCustomPaywallImpressionWithOffering(Offering offering) {
+    Future<void> future = Purchases.trackCustomPaywallImpression(
+      params: CustomPaywallImpressionParams(
+        paywallId: 'my-paywall',
+        offering: offering,
+      ),
+    );
+  }
+
   void _checkTrackCustomPaywallImpressionWithBothParams() {
     Future<void> future = Purchases.trackCustomPaywallImpression(
       params: const CustomPaywallImpressionParams(
@@ -763,16 +808,32 @@ class _PurchasesFlutterApiTest {
     );
   }
 
-  void _checkCustomPaywallImpressionParams() {
+  void _checkCustomPaywallImpressionParams(Offering offering) {
     CustomPaywallImpressionParams params =
         const CustomPaywallImpressionParams();
     String? paywallId = params.paywallId;
+    Offering? optionalOffering = params.offering;
     String? offeringId = params.offeringId;
 
     CustomPaywallImpressionParams paramsWithId =
         const CustomPaywallImpressionParams(paywallId: 'test');
 
+    CustomPaywallImpressionParams paramsWithNullIds =
+        const CustomPaywallImpressionParams(
+      paywallId: null,
+      offeringId: null,
+    );
+
     CustomPaywallImpressionParams paramsWithOffering =
+        CustomPaywallImpressionParams(offering: offering);
+
+    CustomPaywallImpressionParams paramsWithPaywallIdAndOffering =
+        CustomPaywallImpressionParams(
+      paywallId: 'test',
+      offering: offering,
+    );
+
+    CustomPaywallImpressionParams paramsWithOfferingId =
         const CustomPaywallImpressionParams(offeringId: 'offering');
 
     CustomPaywallImpressionParams paramsWithBoth =

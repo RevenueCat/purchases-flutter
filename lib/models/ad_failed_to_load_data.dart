@@ -1,9 +1,6 @@
-import 'package:meta/meta.dart';
-
 import 'ad_format.dart';
 import 'ad_mediator_name.dart';
 
-@experimental
 class AdFailedToLoadData {
   final AdMediatorName mediatorName;
   final AdFormat adFormat;
