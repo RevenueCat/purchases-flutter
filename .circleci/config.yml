@@ -337,7 +337,9 @@ jobs:
     description: "Build agp9_test_app under Flutter 3.44+ and AGP 9"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
-    resource_class: large
+    # xlarge, like the other Android build jobs: the fixture keeps the Flutter
+    # template's -Xmx8G, which gets the daemon OOM-killed on large's 8 GB.
+    resource_class: xlarge
     steps:
       - checkout
       - revenuecat/install-mise-tools:
