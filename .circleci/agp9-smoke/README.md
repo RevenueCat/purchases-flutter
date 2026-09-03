@@ -1,45 +1,68 @@
 # AGP 9 smoke test for `purchases_ui_flutter`
 
-A minimal Gradle-only fixture that exercises the AGP-9 branch of
-`purchases_ui_flutter/android/build.gradle`, without needing Flutter
-or a full app build.
+A minimal Gradle-only fixture that exercises the Kotlin wiring in
+`purchases_ui_flutter/android/build.gradle` under AGP 9, without needing
+Flutter or a full app build.
 
 ## What it tests
 
-`purchases_ui_flutter/android/build.gradle` switches behaviour based on the
-detected Android Gradle Plugin major version:
+The plugin decides whether to apply `kotlin-android` by checking whether a
+`kotlin` extension is already registered, rather than by inspecting versions:
 
-- `agpMajor < 9` — applies the `kotlin-android` plugin and uses the
-  legacy `android.kotlinOptions { … }` DSL.
-- `agpMajor >= 9` — relies on AGP's built-in Kotlin and uses the
-  top-level `kotlin { compilerOptions { … } }` DSL.
+- **Extension absent** — nothing else provides Kotlin, so the plugin applies
+  `kotlin-android` itself.
+- **Extension present** — AGP's built-in Kotlin already registered it, so the
+  plugin must not apply `kotlin-android` on top (that fails with
+  `Cannot add extension with name 'kotlin'`).
 
-The first branch is exercised by every regular CI build (the
-`purchase_tester` example pins AGP 8 / KGP 1.x).
+Under AGP 9 which of those happens is controlled by `android.builtInKotlin`,
+so `run.sh` runs both:
 
-The AGP 9 branch only runs when a downstream user is on a recent enough
-Flutter (3.44+) and AGP 9. This fixture lets CI catch regressions on
-that branch at configuration time.
+| `android.builtInKotlin` | `kotlin` extension | Plugin applies `kotlin-android` |
+| ----------------------- | ------------------ | ------------------------------- |
+| `true`                  | registered by AGP  | no                              |
+| `false`                 | absent             | yes                             |
+
+The `builtInKotlin=false` column is the path real apps hit today, since that
+is what the Flutter 3.44+ migrator writes into `gradle.properties`.
+
+AGP 8 is not covered here — it has no built-in Kotlin, so it always takes the
+"extension absent" path, and every regular CI build already exercises it via
+the `purchase_tester` example.
 
 ## How it works
 
-`settings.gradle` pins AGP `9.0.1` and KGP `2.2.10` via
-`pluginManagement`, then includes the plugin's `android/` directory as
-a subproject. The plugin's own `buildscript { }` declares a lower AGP
-version; Gradle resolves the classpath to the highest declared version,
-so the plugin's `build.gradle` is evaluated under AGP 9 here.
+`settings.gradle` pins AGP `9.0.1` via `pluginManagement` and includes the
+plugin's `android/` directory as a subproject. The plugin's own
+`buildscript { }` declares a lower AGP version, but the settings-level plugin
+classpath is a parent of the subproject's, so the plugin's `build.gradle` is
+evaluated against AGP 9 here.
 
-`run.sh` asserts:
+`android.newDsl` is pinned off in `gradle.properties`: KGP cannot work with
+AGP's new DSL, so the legacy Kotlin path requires opting out of it. Keeping it
+off for both runs means the two cases differ only by `android.builtInKotlin`.
 
-1. `agpMajor == 9` after the plugin's `buildscript { }` runs — proves
-   the AGP-9 branches of the plugin's `build.gradle` are reached.
-2. The `compileDebugKotlin` task graph resolves under `--dry-run` —
-   proves AGP applied cleanly and the new top-level
-   `kotlin.compilerOptions` DSL is valid.
+Assertions live in this directory's `build.gradle`, as a `verifyKotlinWiring`
+task that prints the externally observable wiring (`agpVersion`,
+`kotlinExtensionRegistered`, `kotlinAndroidPluginApplied`). `run.sh` asserts on
+that output. Deliberately nothing reads the plugin's internal Gradle
+properties, so the fixture keeps working when the conditional is refactored.
 
-This is a configuration-time smoke test, not a full build. It will not
-catch issues that only manifest during actual compilation (e.g. Kotlin
-source incompatibilities with KGP 2.x).
+`run.sh` asserts, for each case:
+
+1. `agpVersion` starts with `9` — guards the fixture itself, since the Kotlin
+   assertions would otherwise pass for the wrong reason if the AGP 9 pin
+   silently stopped taking effect.
+2. A `kotlin` extension ends up registered either way.
+3. `kotlin-android` is applied only in the case where AGP isn't providing it.
+4. The `compileDebugKotlin` task graph resolves under `--dry-run` — proves AGP
+   applied cleanly and that the `jvmTarget` DSL selected for this case is
+   valid.
+
+This is a configuration-time smoke test, not a full build. It will not catch
+issues that only manifest during actual compilation (e.g. whether `jvmTarget`
+is genuinely honoured in the emitted bytecode, or Kotlin source
+incompatibilities with KGP 2.x).
 
 ## Running locally
 

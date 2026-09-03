@@ -2,16 +2,21 @@
 #
 # Smoke-test purchases_ui_flutter/android/build.gradle under AGP 9.
 #
-# Uses the sibling settings.gradle, which pins AGP 9.0.1 + KGP 2.2.10
-# via pluginManagement. The plugin's own buildscript declares a lower
-# AGP version, but Gradle resolves the classpath to the highest, so
-# the plugin's build.gradle is evaluated with AGP 9 here.
+# Uses the sibling settings.gradle, which pins AGP 9.0.1 via pluginManagement.
+# The plugin's own buildscript declares a lower AGP version, but the settings
+# plugin classpath is a parent of the subproject's, so the plugin's
+# build.gradle is evaluated against AGP 9 here.
 #
-# Assertions:
-#   1. agpMajor == 9 (so the AGP 9 else-branch in build.gradle ran).
-#   2. compileDebugKotlin task graph resolves (built-in Kotlin works).
+# Runs both sides of the plugin's Kotlin conditional, since AGP 9 supplies
+# Kotlin itself only when android.builtInKotlin is on:
 #
-# This is a configuration-time smoke test, not a full build.
+#   builtInKotlin=true  -> AGP registers the `kotlin` extension, so the plugin
+#                          must NOT apply kotlin-android.
+#   builtInKotlin=false -> nothing registers it, so the plugin MUST apply
+#                          kotlin-android itself.
+#
+# This is a configuration-time smoke test, not a full build. It will not catch
+# issues that only manifest during actual compilation.
 
 set -euo pipefail
 
@@ -20,17 +25,53 @@ cd "$SCRIPT_DIR"
 
 GRADLE_ARGS=(--no-daemon -q)
 
-echo "==> Asserting agpMajor == 9"
-agp_major="$(gradle "${GRADLE_ARGS[@]}" :purchases_ui_flutter:properties | awk '/^agpMajor: / {print $2}')"
-if [[ "$agp_major" != "9" ]]; then
-    echo "FAIL: expected agpMajor=9 but got '${agp_major}'." >&2
-    echo "      The AGP 9 branch of purchases_ui_flutter/android/build.gradle was not exercised." >&2
-    exit 1
-fi
-echo "OK: agpMajor=${agp_major}"
+# Reads a key=value line out of the verifyKotlinWiring output.
+value_of() {
+    awk -F= -v key="$1" '$1 == key {print $2}' <<<"$2"
+}
 
-echo "==> Asserting compileDebugKotlin task graph resolves under AGP 9"
-gradle "${GRADLE_ARGS[@]}" :purchases_ui_flutter:compileDebugKotlin --dry-run
-echo "OK: AGP 9 + built-in Kotlin wired up correctly"
+assert_equals() {
+    local key="$1" expected="$2" actual="$3"
+    if [[ "$actual" != "$expected" ]]; then
+        echo "FAIL: expected ${key}=${expected} but got '${actual}'." >&2
+        exit 1
+    fi
+    echo "OK: ${key}=${actual}"
+}
 
+run_case() {
+    local built_in_kotlin="$1"
+    local expect_kgp_applied="$2"
+
+    echo
+    echo "=============================================================="
+    echo "==> Case: android.builtInKotlin=${built_in_kotlin}"
+    echo "=============================================================="
+
+    local property_arg="-Pandroid.builtInKotlin=${built_in_kotlin}"
+    local output
+    output="$(gradle "${GRADLE_ARGS[@]}" "$property_arg" :verifyKotlinWiring)"
+    echo "$output"
+
+    # Guards the fixture itself: if the AGP 9 pin ever stops taking effect, the
+    # Kotlin assertions below would pass for the wrong reason.
+    local agp_major
+    agp_major="$(value_of agpVersion "$output" | cut -d. -f1)"
+    assert_equals agpMajor 9 "$agp_major"
+
+    assert_equals kotlinExtensionRegistered true \
+        "$(value_of kotlinExtensionRegistered "$output")"
+    assert_equals kotlinAndroidPluginApplied "$expect_kgp_applied" \
+        "$(value_of kotlinAndroidPluginApplied "$output")"
+
+    echo "==> Asserting compileDebugKotlin task graph resolves"
+    gradle "${GRADLE_ARGS[@]}" "$property_arg" \
+        :purchases_ui_flutter:compileDebugKotlin --dry-run
+    echo "OK: compileDebugKotlin resolves"
+}
+
+run_case true false
+run_case false true
+
+echo
 echo "==> AGP 9 smoke test passed"

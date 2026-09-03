@@ -325,7 +325,7 @@ jobs:
             ./gradlew app:assembleDebug -Ptarget=`pwd`/../integration_test/app_test.dart
 
   agp9-smoke-test:
-    description: "Smoke-test purchases_ui_flutter under AGP 9 (configuration-time only)"
+    description: "Smoke-test purchases_ui_flutter under AGP 9, for both android.builtInKotlin values (configuration-time only)"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     resource_class: medium

@@ -1,0 +1,22 @@
+// Root build for the AGP 9 smoke test. The assertions live here rather than in
+// the plugin's own build.gradle, so the fixture observes externally visible
+// wiring instead of the plugin's internal properties.
+// See README.md in this directory for context.
+
+evaluationDependsOn(':purchases_ui_flutter')
+
+def pluginProject = project(':purchases_ui_flutter')
+
+def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+def kotlinExtensionRegistered = pluginProject.extensions.findByName('kotlin') != null
+def kotlinAndroidPluginApplied = pluginProject.plugins.hasPlugin('kotlin-android') ||
+        pluginProject.plugins.hasPlugin('org.jetbrains.kotlin.android')
+
+tasks.register('verifyKotlinWiring') {
+    description = 'Prints how the plugin wired up Kotlin, in key=value form for run.sh to assert on.'
+    doLast {
+        println "agpVersion=${agpVersion}"
+        println "kotlinExtensionRegistered=${kotlinExtensionRegistered}"
+        println "kotlinAndroidPluginApplied=${kotlinAndroidPluginApplied}"
+    }
+}
