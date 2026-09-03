@@ -20,6 +20,35 @@ url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/maco
 checksum = "sha256:d79ae99807ba744b843e54f048308c629061456fdc7b0753251fb96eb5346a0e"
 url = "https://storage.googleapis.com/flutter_infra_release/releases/stable/windows/flutter_windows_3.44.2-stable.zip"
 
+[[tools.gradle]]
+version = "9.1.0"
+backend = "aqua:gradle/gradle"
+
+[tools.gradle."platforms.linux-arm64"]
+checksum = "sha256:a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806"
+url = "https://github.com/gradle/gradle-distributions/releases/download/v9.1.0/gradle-9.1.0-bin.zip"
+url_api = "https://api.github.com/repos/gradle/gradle-distributions/releases/assets/294652020"
+
+[tools.gradle."platforms.linux-x64"]
+checksum = "sha256:a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806"
+url = "https://github.com/gradle/gradle-distributions/releases/download/v9.1.0/gradle-9.1.0-bin.zip"
+url_api = "https://api.github.com/repos/gradle/gradle-distributions/releases/assets/294652020"
+
+[tools.gradle."platforms.macos-arm64"]
+checksum = "sha256:a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806"
+url = "https://github.com/gradle/gradle-distributions/releases/download/v9.1.0/gradle-9.1.0-bin.zip"
+url_api = "https://api.github.com/repos/gradle/gradle-distributions/releases/assets/294652020"
+
+[tools.gradle."platforms.macos-x64"]
+checksum = "sha256:a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806"
+url = "https://github.com/gradle/gradle-distributions/releases/download/v9.1.0/gradle-9.1.0-bin.zip"
+url_api = "https://api.github.com/repos/gradle/gradle-distributions/releases/assets/294652020"
+
+[tools.gradle."platforms.windows-x64"]
+checksum = "sha256:a17ddd85a26b6a7f5ddb71ff8b05fc5104c0202c6e64782429790c933686c806"
+url = "https://github.com/gradle/gradle-distributions/releases/download/v9.1.0/gradle-9.1.0-bin.zip"
+url_api = "https://api.github.com/repos/gradle/gradle-distributions/releases/assets/294652020"
+
 [[tools.java]]
 version = "liberica-17.0.6+10"
 backend = "core:java"

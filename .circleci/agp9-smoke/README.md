@@ -77,8 +77,16 @@ KGP 2.x, for instance — is out of scope.
 
 ## Running locally
 
-Requires JDK 21, Gradle 9.1+, and an Android SDK installed.
+Requires an Android SDK, plus the `java` and `gradle` versions from the repo's
+`mise.toml`. AGP 9 needs a newer Gradle than Flutter's wrapper supplies, which
+is the only reason `gradle` is pinned there at all.
 
 ```bash
+mise install java gradle
 bash .circleci/agp9-smoke/run.sh
 ```
+
+`run.sh` calls `gradle` directly, so it picks up whichever version is on
+`PATH` — mise's shims if mise is active. It asserts the AGP version it ends up
+with, so a wrong Gradle surfaces as a failed assertion rather than a false
+pass.

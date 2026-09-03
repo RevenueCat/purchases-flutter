@@ -322,11 +322,8 @@ jobs:
     resource_class: medium
     steps:
       - checkout
-      - revenuecat/install-sdkman
-      - run:
-          name: Install JDK 21 and Gradle 9.1 (required by AGP 9)
-          working_directory: .circleci/agp9-smoke
-          command: sdk env install
+      - revenuecat/install-mise-tools:
+          tools: java,gradle
       - run:
           name: Print versions
           command: |
