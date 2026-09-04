@@ -333,6 +333,29 @@ jobs:
           name: Run AGP 9 smoke test
           command: bash e2e-tests/agp9_smoke/run.sh
 
+  agp9-end-to-end-test:
+    description: "Build agp9_test_app under Flutter 3.44+ and AGP 9"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    # xlarge, like the other Android build jobs: the fixture keeps the Flutter
+    # template's -Xmx8G, which gets the daemon OOM-killed on large's 8 GB.
+    resource_class: xlarge
+    steps:
+      - checkout
+      - revenuecat/install-mise-tools:
+          tools: java,flutter
+      - run:
+          name: Print versions
+          command: |
+            flutter --version
+            java -version
+      - flutter-get-dependencies:
+          project: e2e-tests/agp9_test_app
+      - run:
+          name: Build APK
+          working_directory: e2e-tests/agp9_test_app
+          command: flutter build apk --debug
+
   android-integration-test:
     description: "Run Android integration tests for flutter"
     <<: *android-machine-emulator
@@ -617,6 +640,7 @@ workflows:
       - macos-integration-test-spm
       - android-integration-test-build
       - agp9-smoke-test
+      - agp9-end-to-end-test
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests
