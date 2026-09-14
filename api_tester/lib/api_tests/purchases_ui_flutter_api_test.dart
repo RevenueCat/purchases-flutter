@@ -172,6 +172,9 @@ class _PurchasesFlutterApiTest {
           onRestoreCompleted: (CustomerInfo customerInfo) {},
           onRestoreError: (PurchasesError error) {},
           onDismiss: () {},
+          onWebCheckoutOpened: () {},
+          onUrlOpened: (String url) {},
+          onInteraction: (Map<String, dynamic> event) {},
         ),
       ),
     );
