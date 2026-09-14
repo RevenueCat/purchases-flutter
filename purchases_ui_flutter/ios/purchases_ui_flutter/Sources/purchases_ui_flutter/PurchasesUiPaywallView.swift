@@ -172,4 +172,9 @@ extension PurchasesUiPaywallView: PaywallViewControllerDelegateWrapper {
     func paywallViewController(_ controller: PaywallViewController, didOpenURL url: String) {
         _methodChannel.invokeMethod("onUrlOpened", arguments: ["url": url])
     }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didTrackInteraction eventDictionary: [String: Any]) {
+        _methodChannel.invokeMethod("onInteraction", arguments: eventDictionary)
+    }
 }
