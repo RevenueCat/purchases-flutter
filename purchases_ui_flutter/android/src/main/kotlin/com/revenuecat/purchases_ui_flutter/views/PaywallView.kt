@@ -80,6 +80,10 @@ internal class PaywallView(
             override fun onUrlOpened(url: String) {
                 methodChannel.invokeMethod("onUrlOpened", mapOf("url" to url))
             }
+
+            override fun onInteraction(event: Map<String, Any>) {
+                methodChannel.invokeMethod("onInteraction", event)
+            }
         })
         // Custom variables must be set before setting the offering to ensure they're applied
         val customVariables = creationParams["customVariables"] as? Map<String, Any?>
