@@ -55,6 +55,11 @@ import 'paywall_view_method_handler.dart';
 /// URL from a button URL destination or a text link. Not called for web
 /// checkout URLs.
 ///
+/// [onInteraction] (Optional) Callback that gets called when the user
+/// interacts with a paywall control (tab, package, purchase button, ...).
+/// Receives the `paywall_component_interacted` event as a map of snake_case
+/// keys; keys that do not apply are absent.
+///
 /// [customVariables] (Optional) A map of custom variable names to their values.
 /// These values can be used for text substitution in paywalls using the
 /// `{{ custom.variable_name }}` syntax.
@@ -78,6 +83,7 @@ class PaywallView extends StatelessWidget {
   final Function()? onDismiss;
   final Function()? onWebCheckoutOpened;
   final Function(String url)? onUrlOpened;
+  final Function(Map<String, dynamic> event)? onInteraction;
 
   const PaywallView({
     Key? key,
@@ -94,6 +100,7 @@ class PaywallView extends StatelessWidget {
     this.onDismiss,
     this.onWebCheckoutOpened,
     this.onUrlOpened,
+    this.onInteraction,
   }) : super(key: key);
 
   static const String _viewType = 'com.revenuecat.purchasesui/PaywallView';
@@ -164,6 +171,7 @@ class PaywallView extends StatelessWidget {
       onDismiss,
       onWebCheckoutOpened: onWebCheckoutOpened,
       onUrlOpened: onUrlOpened,
+      onInteraction: onInteraction,
       purchaseLogic: purchaseLogic,
       methodChannel: methodChannel,
     );
