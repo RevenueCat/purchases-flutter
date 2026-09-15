@@ -33,6 +33,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     private var customerCenterListener: CustomerCenterListenerWrapper? = null
 
     private lateinit var channel : MethodChannel
+    private lateinit var presentedPaywallChannel: MethodChannel
 
     private var pendingResult: Result? = null
 
@@ -55,6 +56,10 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         )
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "purchases_ui_flutter")
         channel.setMethodCallHandler(this)
+        presentedPaywallChannel = MethodChannel(
+            flutterPluginBinding.binaryMessenger,
+            "com.revenuecat.purchasesui/PresentedPaywall"
+        )
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
@@ -74,6 +79,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 presentedOfferingContext = call.argument("presentedOfferingContext"),
                 displayCloseButton = call.argument("displayCloseButton"),
                 customVariables = call.argument<Map<String, Any?>>("customVariables"),
+                hasListener = call.argument<Boolean>("hasListener") ?: false,
             )
             "presentPaywallIfNeeded" -> {
                 val requiredEntitlementIdentifier: String? = call.argument("requiredEntitlementIdentifier")
@@ -88,6 +94,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                     offeringIdentifier = offeringIdentifier,
                     displayCloseButton = displayCloseButton,
                     customVariables = customVariables,
+                    hasListener = call.argument<Boolean>("hasListener") ?: false,
                 )
             }
             "presentCustomerCenter" -> presentCustomerCenter(
@@ -128,7 +135,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         offeringIdentifier: String?,
         presentedOfferingContext: Map<*, *>?,
         displayCloseButton: Boolean?,
-        customVariables: Map<String, Any?>?
+        customVariables: Map<String, Any?>?,
+        hasListener: Boolean,
     ) {
         val activity = getActivityFragment()
         if (activity != null) {
@@ -140,6 +148,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                    requiredEntitlementIdentifier = requiredEntitlementIdentifier,
                    shouldDisplayDismissButton = displayCloseButton,
                    customVariables = customVariables,
+                   paywallListener = if (hasListener) forwardingPaywallListener(presentedPaywallChannel) else null,
                    paywallResultListener = object : PaywallResultListener {
                        override fun onPaywallResult(paywallResult: String) {
                            result.success(paywallResult)
