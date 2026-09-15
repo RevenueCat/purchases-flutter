@@ -5,12 +5,16 @@ import Flutter
 #endif
 
 import PurchasesHybridCommonUI
+#if os(iOS)
+import RevenueCatUI
+#endif
 import Foundation
 
 public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
     private static let BAD_ARGS_ERROR_CODE = "BAD_ARGS"
     private var methodChannel: FlutterMethodChannel?
+    private var presentedPaywallChannel: FlutterMethodChannel?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
 
@@ -30,12 +34,17 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
         let instance = PurchasesUiFlutterPlugin()
         instance.methodChannel = channel
+        instance.presentedPaywallChannel = FlutterMethodChannel(
+            name: "com.revenuecat.purchasesui/PresentedPaywall",
+            binaryMessenger: messenger
+        )
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
     private var _paywallProxy: Any?
     private var _customerCenterProxy: Any?
     private var _customerCenterDelegateForwarder: Any?
+    private var _presentedPaywallDelegateForwarder: Any?
 
 #if os(iOS)
     @available(iOS 15.0, *)
@@ -104,7 +113,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
                 customVariables: args[Parameter.customVariables.rawValue] as? [String: Any],
-                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool
+                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool,
+                hasListener: args[Parameter.hasListener.rawValue] as? Bool ?? false
             )
 
         case "presentPaywallIfNeeded":
@@ -128,7 +138,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
                 customVariables: args[Parameter.customVariables.rawValue] as? [String: Any],
-                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool
+                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool,
+                hasListener: args[Parameter.hasListener.rawValue] as? Bool ?? false
             )
 
         case "presentCustomerCenter":
@@ -178,11 +189,25 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         presentedOfferingContext: [String: Any]?,
         displayCloseButton: Bool?,
         customVariables: [String: Any]?,
-        useFullScreenPresentation: Bool?
+        useFullScreenPresentation: Bool?,
+        hasListener: Bool
     ) {
 #if os(iOS)
         if #available(iOS 15.0, *) {
             let displayCloseButton = displayCloseButton ?? false
+
+            if hasListener {
+                let forwarder = PresentedPaywallDelegateForwarder(methodChannel: self.presentedPaywallChannel)
+                self._presentedPaywallDelegateForwarder = forwarder
+                self.paywallProxy.delegate = forwarder
+            }
+            let paywallResultHandler: (String) -> Void = { [weak self] paywallResult in
+                if let self, hasListener {
+                    self.paywallProxy.delegate = nil
+                    self._presentedPaywallDelegateForwarder = nil
+                }
+                result(paywallResult)
+            }
 
             var options: [String:Any] = [
                 PaywallProxy.PaywallOptionsKeys.displayCloseButton: displayCloseButton,
@@ -211,12 +236,12 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
                 self.paywallProxy.presentPaywallIfNeeded(
                     options: options,
-                    paywallResultHandler: result
+                    paywallResultHandler: paywallResultHandler
                 )
             } else {
                 self.paywallProxy.presentPaywall(
                     options: options,
-                    paywallResultHandler: result
+                    paywallResultHandler: paywallResultHandler
                 )
             }
         } else {
@@ -268,6 +293,7 @@ private extension PurchasesUiFlutterPlugin {
         case displayCloseButton
         case customVariables
         case useFullScreenPresentation
+        case hasListener
     }
 
 #if os(iOS)
@@ -366,6 +392,65 @@ final class CustomerCenterDelegateForwarder: NSObject, CustomerCenterViewControl
                 "offerId": offerId
             ]
         )
+    }
+}
+#endif
+
+
+#if os(iOS)
+@available(iOS 15.0, *)
+final class PresentedPaywallDelegateForwarder: NSObject, PaywallViewControllerDelegateWrapper {
+
+    private weak var methodChannel: FlutterMethodChannel?
+
+    init(methodChannel: FlutterMethodChannel?) {
+        self.methodChannel = methodChannel
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didStartPurchaseWith packageDictionary: [String: Any]) {
+        methodChannel?.invokeMethod("onPurchaseStarted", arguments: packageDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFinishPurchasingWith customerInfoDictionary: [String: Any],
+                               transaction transactionDictionary: [String: Any]?) {
+        methodChannel?.invokeMethod("onPurchaseCompleted", arguments: [
+            "customerInfo": customerInfoDictionary,
+            "storeTransaction": transactionDictionary
+        ])
+    }
+
+    func paywallViewControllerDidCancelPurchase(_ controller: PaywallViewController) {
+        methodChannel?.invokeMethod("onPurchaseCancelled", arguments: nil)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFailPurchasingWith errorDictionary: [String: Any]) {
+        methodChannel?.invokeMethod("onPurchaseError", arguments: errorDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFinishRestoringWith customerInfoDictionary: [String: Any]) {
+        methodChannel?.invokeMethod("onRestoreCompleted", arguments: customerInfoDictionary)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didFailRestoringWith errorDictionary: [String: Any]) {
+        methodChannel?.invokeMethod("onRestoreError", arguments: errorDictionary)
+    }
+
+    func paywallViewControllerDidOpenWebCheckout(_ controller: PaywallViewController) {
+        methodChannel?.invokeMethod("onWebCheckoutOpened", arguments: nil)
+    }
+
+    func paywallViewController(_ controller: PaywallViewController, didOpenURL url: String) {
+        methodChannel?.invokeMethod("onUrlOpened", arguments: ["url": url])
+    }
+
+    func paywallViewController(_ controller: PaywallViewController,
+                               didTrackInteraction eventDictionary: [String: Any]) {
+        methodChannel?.invokeMethod("onInteraction", arguments: eventDictionary)
     }
 }
 #endif
