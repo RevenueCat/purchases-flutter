@@ -58,7 +58,9 @@ import 'paywall_view_method_handler.dart';
 /// [onInteraction] (Optional) Callback that gets called when the user
 /// interacts with a paywall control (tab, package, purchase button, ...).
 /// Receives the `paywall_component_interacted` event as a map of snake_case
-/// keys; keys that do not apply are absent.
+/// keys; keys that do not apply are absent. See
+/// https://rev.cat/paywall-interaction-events for the keys each component
+/// type sends.
 ///
 /// [customVariables] (Optional) A map of custom variable names to their values.
 /// These values can be used for text substitution in paywalls using the
