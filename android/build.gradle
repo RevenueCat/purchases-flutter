@@ -1,5 +1,5 @@
 group 'com.revenuecat.purchases_flutter'
-version '10.13.0'
+version '10.13.1'
 
 buildscript {
     ext.common_version = '19.2.0'
