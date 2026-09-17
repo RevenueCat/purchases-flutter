@@ -665,19 +665,18 @@ workflows:
       - ios-integration-test-spm: *release-branches
       - macos-integration-test-spm: *release-branches
       - android-integration-test: *release-branches
-      - hold:
+      - wait-for-pr-approval:
           type: approval
+          <<: *release-branches
+      - revenuecat/tag-current-branch:
+          ruby_version: "3.3.0"
           requires:
+            - wait-for-pr-approval
             - ios-integration-test-cocoapods-release
             - macos-integration-test-cocoapods-release
             - ios-integration-test-spm
             - macos-integration-test-spm
             - android-integration-test
-          <<: *release-branches
-      - revenuecat/tag-current-branch:
-          ruby_version: "3.3.0"
-          requires:
-            - hold
           <<: *release-branches
       - make-release: *release-tags
       - make-release-purchases-flutter-ui:
