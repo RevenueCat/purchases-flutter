@@ -1,16 +1,16 @@
 ## RevenueCat SDK
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.0.0 (#1896) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 10.21.1](https://github.com/RevenueCat/purchases-android/releases/tag/10.21.1)
-  * [Android 10.21.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.21.0)
-  * [iOS 5.89.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.89.0)
-  * [Web 1.60.1](https://github.com/RevenueCat/purchases-js/releases/tag/1.60.1)
-  * [Web 1.60.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.60.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 18.38.0 (#1895) via RevenueCat Git Bot (@RCGitBot)
-
-## RevenueCatUI SDK
-### ✨ New Features
-* feat(paywalls): Add onInteraction callback to PaywallView (#1897) via Álvaro Brey (@AlvaroBrey)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.2.0 (#1904) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.22.1](https://github.com/RevenueCat/purchases-android/releases/tag/10.22.1)
+  * [Android 10.22.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.22.0)
+  * [iOS 5.90.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.90.1)
+  * [iOS 5.90.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.90.0)
+  * [Web 1.63.1](https://github.com/RevenueCat/purchases-js/releases/tag/1.63.1)
+  * [Web 1.63.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.63.0)
+  * [Web 1.62.1](https://github.com/RevenueCat/purchases-js/releases/tag/1.62.1)
+  * [Web 1.62.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.62.0)
+  * [Web 1.61.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.61.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.1.0 (#1903) via RevenueCat Git Bot (@RCGitBot)
 
 ### 🔄 Other Changes
-* docs: Link the paywall interaction event reference (#1899) via Álvaro Brey (@AlvaroBrey)
+* ci: approve the release hold automatically when the release PR is approved (#1901) via Álvaro Brey (@AlvaroBrey)
