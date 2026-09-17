@@ -10,6 +10,6 @@
 1. If purchases-hybrid-common was updated, run `pod update PurchasesHybridCommon` in both `MagicWeather` and `purchase_tester`
 1. Wait until PR is approved (don't merge yet) and pull branch from origin (to make sure you've got all the changes locally)
 1. Run `flutter pub publish --dry-run`. Fix any errors if any show
-1. When the PR is approved, approve the hold job created in CircleCI. CircleCI will create a tag for the version. Alternatively, you can tag the last commit in the release branch and push it to the repository.
+1. When the PR is approved, the `wait-for-pr-approval` job in CircleCI is approved automatically, and CircleCI tags the version once the release branch tests pass. If that does not happen, approve the job in CircleCI by hand, or tag the last commit in the release branch and push the tag.
 1. The rest will be performed automatically by CircleCI. If the automation fails, you can revert to manually calling `bundle exec fastlane release`.
-1. After that, you can merge the release PR to main and merge the bump to the next snapshot version PR right after.
+1. The release PR is merged automatically once the release is published. Merge the bump to the next snapshot version PR right after.
