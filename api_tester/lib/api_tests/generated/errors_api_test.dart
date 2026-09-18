@@ -35,7 +35,6 @@ class _ErrorsApiTest {
       case PurchasesErrorCode.unsupportedError:
       case PurchasesErrorCode.emptySubscriberAttributesError:
       case PurchasesErrorCode.productDiscountMissingIdentifierError:
-      case PurchasesErrorCode.unknownNonNativeError:
       case PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError:
       case PurchasesErrorCode.customerInfoError:
       case PurchasesErrorCode.systemInfoError:
@@ -51,8 +50,11 @@ class _ErrorsApiTest {
       case PurchasesErrorCode.purchaseBelongsToOtherUser:
       case PurchasesErrorCode.expiredWebPurchaseToken:
       case PurchasesErrorCode.testStoreSimulatedPurchaseError:
+      case PurchasesErrorCode.invalidEmailError:
         break;
     }
+    int numericCode = code.code;
+    PurchasesErrorCode fromCode = PurchasesErrorCode.fromCode(numericCode);
   }
 
   void _checkPurchasesErrorHelper(PlatformException e) {

@@ -10,8 +10,8 @@ import 'package:web/web.dart';
 import '../purchases_flutter.dart';
 
 class PurchasesFlutterPlugin {
-  static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
-  static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
+  static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.code}';
+  static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.code}';
   static const _platformName = 'flutter';
   static const _pluginVersion = '10.13.1';
 
@@ -315,7 +315,7 @@ class PurchasesFlutterPlugin {
     final proxyURL = arguments['proxyURLString'] as String?;
     if (proxyURL == null) {
       throw PlatformException(
-        code: '${PurchasesErrorCode.configurationError.index}',
+        code: '${PurchasesErrorCode.configurationError.code}',
         message: 'Proxy URL is required',
       );
     }
