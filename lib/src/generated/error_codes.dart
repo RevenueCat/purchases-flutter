@@ -5,89 +5,144 @@
 /// Different error codes returned by the Purchases functions.
 enum PurchasesErrorCode {
   /// Unknown error.
-  unknownError,
+  unknownError(0),
+
   /// Purchase was cancelled.
-  purchaseCancelledError,
+  purchaseCancelledError(1),
+
   /// There was a problem with the store.
-  storeProblemError,
+  storeProblemError(2),
+
   /// The device or user is not allowed to make the purchase.
-  purchaseNotAllowedError,
+  purchaseNotAllowedError(3),
+
   /// One or more of the arguments provided are invalid.
-  purchaseInvalidError,
+  purchaseInvalidError(4),
+
   /// The product is not available for purchase.
-  productNotAvailableForPurchaseError,
+  productNotAvailableForPurchaseError(5),
+
   /// This product is already active for the user.
-  productAlreadyPurchasedError,
+  productAlreadyPurchasedError(6),
+
   /// There is already another active subscriber using the same receipt.
-  receiptAlreadyInUseError,
+  receiptAlreadyInUseError(7),
+
   /// The receipt is not valid.
-  invalidReceiptError,
+  invalidReceiptError(8),
+
   /// The receipt is missing.
-  missingReceiptFileError,
+  missingReceiptFileError(9),
+
   /// Error performing request.
-  networkError,
+  networkError(10),
+
   /// There was a credentials issue. Check the message for more info.
-  invalidCredentialsError,
+  invalidCredentialsError(11),
+
   /// Received malformed response from the backend.
-  unexpectedBackendResponseError,
+  unexpectedBackendResponseError(12),
+
   /// The receipt is in use by another subscriber.
-  receiptInUseByOtherSubscriberError,
+  receiptInUseByOtherSubscriberError(13),
+
   /// The app user ID is not valid.
-  invalidAppUserIdError,
+  invalidAppUserIdError(14),
+
   /// The operation is already in progress.
-  operationAlreadyInProgressError,
+  operationAlreadyInProgressError(15),
+
   /// There was an unknown backend error.
-  unknownBackendError,
+  unknownBackendError(16),
+
   /// Apple Subscription Key is invalid or not present. In order to provide subscription offers, you must first generate a subscription key. Please see https://docs.revenuecat.com/docs/ios-subscription-offers for more info.
-  invalidAppleSubscriptionKeyError,
+  invalidAppleSubscriptionKeyError(17),
+
   /// The User is ineligible for that action.
-  ineligibleError,
+  ineligibleError(18),
+
   /// App does not have sufficient permissions to make purchases.
-  insufficientPermissionsError,
+  insufficientPermissionsError(19),
+
   /// The payment is pending.
-  paymentPendingError,
+  paymentPendingError(20),
+
   /// One or more of the attributes sent could not be saved.
-  invalidSubscriberAttributesError,
+  invalidSubscriberAttributesError(21),
+
   /// Called logOut but the current user is anonymous.
-  logOutWithAnonymousUserError,
+  logOutWithAnonymousUserError(22),
+
   /// There is an issue with your configuration. Check the underlying error for more details.
-  configurationError,
+  configurationError(23),
+
   /// There was a problem with the operation. Looks like we don't support that yet. Check the underlying error for more details.
-  unsupportedError,
+  unsupportedError(24),
+
   /// A request for subscriber attributes returned none.
-  emptySubscriberAttributesError,
+  emptySubscriberAttributesError(25),
+
   /// The SKProductDiscount or Product.SubscriptionOffer wrapped by StoreProductDiscount is missing an identifier. This is a required property and likely an AppStore quirk that it is missing.
-  productDiscountMissingIdentifierError,
-  /// Unknown error
-  unknownNonNativeError,
+  productDiscountMissingIdentifierError(26),
+
   /// Unable to create a discount offer, the product is missing a subscriptionGroupIdentifier.
-  productDiscountMissingSubscriptionGroupIdentifierError,
+  productDiscountMissingSubscriptionGroupIdentifierError(28),
+
   /// There was a problem related to the customer info.
-  customerInfoError,
+  customerInfoError(29),
+
   /// There was a problem related to the system info.
-  systemInfoError,
+  systemInfoError(30),
+
   /// Error when trying to begin refund request.
-  beginRefundRequestError,
+  beginRefundRequestError(31),
+
   /// SKProductsRequest took too long to complete.
-  productRequestTimeout,
+  productRequestTimeout(32),
+
   /// Requests to RevenueCat are being blocked. See: https://rev.cat/dnsBlocking for more info.
-  apiEndpointBlocked,
+  apiEndpointBlocked(33),
+
   /// The information associated with this PromotionalOffer is not valid. See https://rev.cat/ios-subscription-offers for more info.
-  invalidPromotionalOfferError,
+  invalidPromotionalOfferError(34),
+
   /// Error performing request because the internet connection appears to be offline.
-  offlineConnectionError,
+  offlineConnectionError(35),
+
   /// The feature is not available in custom entitlements computation mode.
-  featureNotAvailableInCustomEntitlementsComputationMode,
+  featureNotAvailableInCustomEntitlementsComputationMode(36),
+
   /// Request failed signature verification. Please see https://rev.cat/trusted-entitlements for more info.
-  signatureVerificationFailed,
+  signatureVerificationFailed(37),
+
   /// The feature is not supported with StoreKit 1.
-  featureNotSupportedWithStoreKit1,
+  featureNotSupportedWithStoreKit1(38),
+
   /// The web purchase token is invalid.
-  invalidWebPurchaseToken,
+  invalidWebPurchaseToken(39),
+
   /// Indicates that the web purchase belongs to a different user and can't be redeemed again.
-  purchaseBelongsToOtherUser,
+  purchaseBelongsToOtherUser(40),
+
   /// The link you provided has expired. A new one will be sent to the email used to make the purchase.
-  expiredWebPurchaseToken,
+  expiredWebPurchaseToken(41),
+
   /// Error thrown when simulating a purchase failure in Test Store.
-  testStoreSimulatedPurchaseError,
+  testStoreSimulatedPurchaseError(42),
+
+  /// Email is not valid. Please provide a valid email address.
+  invalidEmailError(43);
+
+  const PurchasesErrorCode(this.code);
+
+  /// Numeric code shared by every RevenueCat SDK.
+  final int code;
+
+  /// Returns the error for [code], or [unknownError] when no member has it.
+  static PurchasesErrorCode fromCode(int code) =>
+      _byCode[code] ?? PurchasesErrorCode.unknownError;
+
+  static final Map<int, PurchasesErrorCode> _byCode = {
+    for (final value in values) value.code: value,
+  };
 }

@@ -35,8 +35,8 @@ class _ErrorsApiTest {
       case PurchasesErrorCode.unsupportedError:
       case PurchasesErrorCode.emptySubscriberAttributesError:
       case PurchasesErrorCode.productDiscountMissingIdentifierError:
-      case PurchasesErrorCode.unknownNonNativeError:
-      case PurchasesErrorCode.productDiscountMissingSubscriptionGroupIdentifierError:
+      case PurchasesErrorCode
+            .productDiscountMissingSubscriptionGroupIdentifierError:
       case PurchasesErrorCode.customerInfoError:
       case PurchasesErrorCode.systemInfoError:
       case PurchasesErrorCode.beginRefundRequestError:
@@ -44,15 +44,19 @@ class _ErrorsApiTest {
       case PurchasesErrorCode.apiEndpointBlocked:
       case PurchasesErrorCode.invalidPromotionalOfferError:
       case PurchasesErrorCode.offlineConnectionError:
-      case PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode:
+      case PurchasesErrorCode
+            .featureNotAvailableInCustomEntitlementsComputationMode:
       case PurchasesErrorCode.signatureVerificationFailed:
       case PurchasesErrorCode.featureNotSupportedWithStoreKit1:
       case PurchasesErrorCode.invalidWebPurchaseToken:
       case PurchasesErrorCode.purchaseBelongsToOtherUser:
       case PurchasesErrorCode.expiredWebPurchaseToken:
       case PurchasesErrorCode.testStoreSimulatedPurchaseError:
+      case PurchasesErrorCode.invalidEmailError:
         break;
     }
+    int numericCode = code.code;
+    PurchasesErrorCode fromCode = PurchasesErrorCode.fromCode(numericCode);
   }
 
   void _checkPurchasesErrorHelper(PlatformException e) {

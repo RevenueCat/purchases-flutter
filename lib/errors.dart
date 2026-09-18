@@ -7,8 +7,8 @@ export 'src/generated/error_codes.dart';
 /// Helper to convert from PlatformExceptions to PurchasesErrorCodes
 class PurchasesErrorHelper {
   /// Use this to convert a PlatformException to a PurchasesErrorCode.
-  /// It will return [PurchasesErrorCode.unknownError] if the error code is not
-  /// in the range of [PurchasesErrorCode].
+  /// It will return [PurchasesErrorCode.unknownError] if no
+  /// [PurchasesErrorCode] has that code.
   ///
   /// ```
   /// try {
@@ -28,11 +28,6 @@ class PurchasesErrorHelper {
   ///   }
   /// }
   /// ```
-  static PurchasesErrorCode getErrorCode(PlatformException e) {
-    final errorCode = num.parse(e.code).round();
-    if (errorCode >= PurchasesErrorCode.values.length) {
-      return PurchasesErrorCode.unknownError;
-    }
-    return PurchasesErrorCode.values[errorCode];
-  }
+  static PurchasesErrorCode getErrorCode(PlatformException e) =>
+      PurchasesErrorCode.fromCode(num.parse(e.code).round());
 }

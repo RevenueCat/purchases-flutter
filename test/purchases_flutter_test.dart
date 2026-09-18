@@ -382,54 +382,54 @@ void main() {
     }
   });
 
-  test('errors are mapped correctly', () {
-    expect(PurchasesErrorCode.unknownError.index, 0);
-    expect(PurchasesErrorCode.purchaseCancelledError.index, 1);
-    expect(PurchasesErrorCode.storeProblemError.index, 2);
-    expect(PurchasesErrorCode.purchaseNotAllowedError.index, 3);
-    expect(PurchasesErrorCode.purchaseInvalidError.index, 4);
-    expect(PurchasesErrorCode.productNotAvailableForPurchaseError.index, 5);
-    expect(PurchasesErrorCode.productAlreadyPurchasedError.index, 6);
-    expect(PurchasesErrorCode.receiptAlreadyInUseError.index, 7);
-    expect(PurchasesErrorCode.invalidReceiptError.index, 8);
-    expect(PurchasesErrorCode.missingReceiptFileError.index, 9);
-    expect(PurchasesErrorCode.networkError.index, 10);
-    expect(PurchasesErrorCode.invalidCredentialsError.index, 11);
-    expect(PurchasesErrorCode.unexpectedBackendResponseError.index, 12);
-    expect(PurchasesErrorCode.receiptInUseByOtherSubscriberError.index, 13);
-    expect(PurchasesErrorCode.invalidAppUserIdError.index, 14);
-    expect(PurchasesErrorCode.operationAlreadyInProgressError.index, 15);
-    expect(PurchasesErrorCode.unknownBackendError.index, 16);
-    expect(PurchasesErrorCode.invalidAppleSubscriptionKeyError.index, 17);
-    expect(PurchasesErrorCode.ineligibleError.index, 18);
-    expect(PurchasesErrorCode.insufficientPermissionsError.index, 19);
-    expect(PurchasesErrorCode.paymentPendingError.index, 20);
-    expect(PurchasesErrorCode.invalidSubscriberAttributesError.index, 21);
-    expect(PurchasesErrorCode.logOutWithAnonymousUserError.index, 22);
-    expect(PurchasesErrorCode.configurationError.index, 23);
-    expect(PurchasesErrorCode.unsupportedError.index, 24);
-    expect(PurchasesErrorCode.emptySubscriberAttributesError.index, 25);
-    expect(PurchasesErrorCode.productDiscountMissingIdentifierError.index, 26);
-    expect(PurchasesErrorCode.unknownNonNativeError.index, 27);
+  test('error codes match the numbering shared with the native SDKs', () {
+    expect(PurchasesErrorCode.unknownError.code, 0);
+    expect(PurchasesErrorCode.purchaseCancelledError.code, 1);
+    expect(PurchasesErrorCode.storeProblemError.code, 2);
+    expect(PurchasesErrorCode.purchaseNotAllowedError.code, 3);
+    expect(PurchasesErrorCode.purchaseInvalidError.code, 4);
+    expect(PurchasesErrorCode.productNotAvailableForPurchaseError.code, 5);
+    expect(PurchasesErrorCode.productAlreadyPurchasedError.code, 6);
+    expect(PurchasesErrorCode.receiptAlreadyInUseError.code, 7);
+    expect(PurchasesErrorCode.invalidReceiptError.code, 8);
+    expect(PurchasesErrorCode.missingReceiptFileError.code, 9);
+    expect(PurchasesErrorCode.networkError.code, 10);
+    expect(PurchasesErrorCode.invalidCredentialsError.code, 11);
+    expect(PurchasesErrorCode.unexpectedBackendResponseError.code, 12);
+    expect(PurchasesErrorCode.receiptInUseByOtherSubscriberError.code, 13);
+    expect(PurchasesErrorCode.invalidAppUserIdError.code, 14);
+    expect(PurchasesErrorCode.operationAlreadyInProgressError.code, 15);
+    expect(PurchasesErrorCode.unknownBackendError.code, 16);
+    expect(PurchasesErrorCode.invalidAppleSubscriptionKeyError.code, 17);
+    expect(PurchasesErrorCode.ineligibleError.code, 18);
+    expect(PurchasesErrorCode.insufficientPermissionsError.code, 19);
+    expect(PurchasesErrorCode.paymentPendingError.code, 20);
+    expect(PurchasesErrorCode.invalidSubscriberAttributesError.code, 21);
+    expect(PurchasesErrorCode.logOutWithAnonymousUserError.code, 22);
+    expect(PurchasesErrorCode.configurationError.code, 23);
+    expect(PurchasesErrorCode.unsupportedError.code, 24);
+    expect(PurchasesErrorCode.emptySubscriberAttributesError.code, 25);
+    expect(PurchasesErrorCode.productDiscountMissingIdentifierError.code, 26);
     expect(
       PurchasesErrorCode
-          .productDiscountMissingSubscriptionGroupIdentifierError.index,
+          .productDiscountMissingSubscriptionGroupIdentifierError.code,
       28,
     );
-    expect(PurchasesErrorCode.customerInfoError.index, 29);
-    expect(PurchasesErrorCode.systemInfoError.index, 30);
-    expect(PurchasesErrorCode.beginRefundRequestError.index, 31);
-    expect(PurchasesErrorCode.productRequestTimeout.index, 32);
-    expect(PurchasesErrorCode.apiEndpointBlocked.index, 33);
-    expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 34);
-    expect(PurchasesErrorCode.offlineConnectionError.index, 35);
-    expect(PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode.index, 36);
-    expect(PurchasesErrorCode.signatureVerificationFailed.index, 37);
-    expect(PurchasesErrorCode.featureNotSupportedWithStoreKit1.index, 38);
-    expect(PurchasesErrorCode.invalidWebPurchaseToken.index, 39);
-    expect(PurchasesErrorCode.purchaseBelongsToOtherUser.index, 40);
-    expect(PurchasesErrorCode.expiredWebPurchaseToken.index, 41);
-    expect(PurchasesErrorCode.testStoreSimulatedPurchaseError.index, 42);
+    expect(PurchasesErrorCode.customerInfoError.code, 29);
+    expect(PurchasesErrorCode.systemInfoError.code, 30);
+    expect(PurchasesErrorCode.beginRefundRequestError.code, 31);
+    expect(PurchasesErrorCode.productRequestTimeout.code, 32);
+    expect(PurchasesErrorCode.apiEndpointBlocked.code, 33);
+    expect(PurchasesErrorCode.invalidPromotionalOfferError.code, 34);
+    expect(PurchasesErrorCode.offlineConnectionError.code, 35);
+    expect(PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode.code, 36);
+    expect(PurchasesErrorCode.signatureVerificationFailed.code, 37);
+    expect(PurchasesErrorCode.featureNotSupportedWithStoreKit1.code, 38);
+    expect(PurchasesErrorCode.invalidWebPurchaseToken.code, 39);
+    expect(PurchasesErrorCode.purchaseBelongsToOtherUser.code, 40);
+    expect(PurchasesErrorCode.expiredWebPurchaseToken.code, 41);
+    expect(PurchasesErrorCode.testStoreSimulatedPurchaseError.code, 42);
+    expect(PurchasesErrorCode.invalidEmailError.code, 43);
   });
 
   test('PurchasesErrorHelper maps errors correctly', () {
@@ -543,7 +543,7 @@ void main() {
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '27')),
-      PurchasesErrorCode.unknownNonNativeError,
+      PurchasesErrorCode.unknownError,
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '28')),
@@ -607,6 +607,14 @@ void main() {
     );
     expect(
       PurchasesErrorHelper.getErrorCode(PlatformException(code: '43')),
+      PurchasesErrorCode.invalidEmailError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '99')),
+      PurchasesErrorCode.unknownError,
+    );
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: '-1')),
       PurchasesErrorCode.unknownError,
     );
   });
