@@ -6,88 +6,130 @@
 enum PurchasesErrorCode {
   /// Unknown error.
   unknownError(0),
+
   /// Purchase was cancelled.
   purchaseCancelledError(1),
+
   /// There was a problem with the store.
   storeProblemError(2),
+
   /// The device or user is not allowed to make the purchase.
   purchaseNotAllowedError(3),
+
   /// One or more of the arguments provided are invalid.
   purchaseInvalidError(4),
+
   /// The product is not available for purchase.
   productNotAvailableForPurchaseError(5),
+
   /// This product is already active for the user.
   productAlreadyPurchasedError(6),
+
   /// There is already another active subscriber using the same receipt.
   receiptAlreadyInUseError(7),
+
   /// The receipt is not valid.
   invalidReceiptError(8),
+
   /// The receipt is missing.
   missingReceiptFileError(9),
+
   /// Error performing request.
   networkError(10),
+
   /// There was a credentials issue. Check the message for more info.
   invalidCredentialsError(11),
+
   /// Received malformed response from the backend.
   unexpectedBackendResponseError(12),
+
   /// The receipt is in use by another subscriber.
   receiptInUseByOtherSubscriberError(13),
+
   /// The app user ID is not valid.
   invalidAppUserIdError(14),
+
   /// The operation is already in progress.
   operationAlreadyInProgressError(15),
+
   /// There was an unknown backend error.
   unknownBackendError(16),
+
   /// Apple Subscription Key is invalid or not present. In order to provide subscription offers, you must first generate a subscription key. Please see https://docs.revenuecat.com/docs/ios-subscription-offers for more info.
   invalidAppleSubscriptionKeyError(17),
+
   /// The User is ineligible for that action.
   ineligibleError(18),
+
   /// App does not have sufficient permissions to make purchases.
   insufficientPermissionsError(19),
+
   /// The payment is pending.
   paymentPendingError(20),
+
   /// One or more of the attributes sent could not be saved.
   invalidSubscriberAttributesError(21),
+
   /// Called logOut but the current user is anonymous.
   logOutWithAnonymousUserError(22),
+
   /// There is an issue with your configuration. Check the underlying error for more details.
   configurationError(23),
+
   /// There was a problem with the operation. Looks like we don't support that yet. Check the underlying error for more details.
   unsupportedError(24),
+
   /// A request for subscriber attributes returned none.
   emptySubscriberAttributesError(25),
+
   /// The SKProductDiscount or Product.SubscriptionOffer wrapped by StoreProductDiscount is missing an identifier. This is a required property and likely an AppStore quirk that it is missing.
   productDiscountMissingIdentifierError(26),
+
   /// Unable to create a discount offer, the product is missing a subscriptionGroupIdentifier.
   productDiscountMissingSubscriptionGroupIdentifierError(28),
+
   /// There was a problem related to the customer info.
   customerInfoError(29),
+
   /// There was a problem related to the system info.
   systemInfoError(30),
+
   /// Error when trying to begin refund request.
   beginRefundRequestError(31),
+
   /// SKProductsRequest took too long to complete.
   productRequestTimeout(32),
+
   /// Requests to RevenueCat are being blocked. See: https://rev.cat/dnsBlocking for more info.
   apiEndpointBlocked(33),
+
   /// The information associated with this PromotionalOffer is not valid. See https://rev.cat/ios-subscription-offers for more info.
   invalidPromotionalOfferError(34),
+
   /// Error performing request because the internet connection appears to be offline.
   offlineConnectionError(35),
+
   /// The feature is not available in custom entitlements computation mode.
   featureNotAvailableInCustomEntitlementsComputationMode(36),
+
   /// Request failed signature verification. Please see https://rev.cat/trusted-entitlements for more info.
   signatureVerificationFailed(37),
+
   /// The feature is not supported with StoreKit 1.
   featureNotSupportedWithStoreKit1(38),
+
   /// The web purchase token is invalid.
   invalidWebPurchaseToken(39),
+
   /// Indicates that the web purchase belongs to a different user and can't be redeemed again.
   purchaseBelongsToOtherUser(40),
+
   /// The link you provided has expired. A new one will be sent to the email used to make the purchase.
   expiredWebPurchaseToken(41),
+
   /// Error thrown when simulating a purchase failure in Test Store.
   testStoreSimulatedPurchaseError(42),
+
   /// Email is not valid. Please provide a valid email address.
   invalidEmailError(43);
 
