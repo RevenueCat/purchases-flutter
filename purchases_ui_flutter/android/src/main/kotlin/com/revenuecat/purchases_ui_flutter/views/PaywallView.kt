@@ -3,9 +3,9 @@ package com.revenuecat.purchases_ui_flutter.views
 import android.content.Context
 import android.view.View
 import com.revenuecat.purchases.hybridcommon.ui.HybridPurchaseLogicBridge
-import com.revenuecat.purchases.hybridcommon.ui.PaywallListenerWrapper
 import com.revenuecat.purchases.ui.revenuecatui.CustomVariableValue
 import com.revenuecat.purchases_ui_flutter.MapHelper
+import com.revenuecat.purchases_ui_flutter.forwardingPaywallListener
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -45,46 +45,7 @@ internal class PaywallView(
             shouldDisplayDismissButton = displayCloseButton,
             dismissHandler = { methodChannel.invokeMethod("onDismiss", null) }
         )
-        nativePaywallView.setPaywallListener(object : PaywallListenerWrapper() {
-            override fun onPurchaseStarted(rcPackage: Map<String, Any?>) {
-                methodChannel.invokeMethod("onPurchaseStarted", rcPackage)
-            }
-
-            override fun onPurchaseCompleted(customerInfo: Map<String, Any?>, storeTransaction: Map<String, Any?>) {
-                methodChannel.invokeMethod(
-                    "onPurchaseCompleted",
-                    mapOf("customerInfo" to customerInfo, "storeTransaction" to storeTransaction)
-                )
-            }
-
-            override fun onPurchaseCancelled() {
-                methodChannel.invokeMethod("onPurchaseCancelled", null)
-            }
-
-            override fun onPurchaseError(error: Map<String, Any?>) {
-                methodChannel.invokeMethod("onPurchaseError", error)
-            }
-
-            override fun onRestoreCompleted(customerInfo: Map<String, Any?>) {
-                methodChannel.invokeMethod("onRestoreCompleted", customerInfo)
-            }
-
-            override fun onRestoreError(error: Map<String, Any?>) {
-                methodChannel.invokeMethod("onRestoreError", error)
-            }
-
-            override fun onWebCheckoutOpened() {
-                methodChannel.invokeMethod("onWebCheckoutOpened", null)
-            }
-
-            override fun onUrlOpened(url: String) {
-                methodChannel.invokeMethod("onUrlOpened", mapOf("url" to url))
-            }
-
-            override fun onInteraction(event: Map<String, Any>) {
-                methodChannel.invokeMethod("onInteraction", event)
-            }
-        })
+        nativePaywallView.setPaywallListener(forwardingPaywallListener(methodChannel))
         // Custom variables must be set before setting the offering to ensure they're applied
         val customVariables = creationParams["customVariables"] as? Map<String, Any?>
         if (customVariables != null) {

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
+import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
@@ -11,6 +12,7 @@ import 'custom_variable_value.dart';
 import 'paywall_presentation_configuration.dart';
 import 'paywall_result.dart';
 import 'views/customer_center_view_method_handler.dart';
+import 'views/paywall_view_method_handler.dart';
 
 export 'custom_variable_value.dart';
 export 'paywall_presentation_configuration.dart';
@@ -22,6 +24,8 @@ export 'views/paywall_view.dart';
 
 class RevenueCatUI {
   static const _methodChannel = MethodChannel('purchases_ui_flutter');
+  static const _presentedPaywallChannel =
+      MethodChannel('com.revenuecat.purchasesui/PresentedPaywall');
 
   static CustomerCenterRestoreStarted? _customerCenterOnRestoreStarted;
   static CustomerCenterRestoreCompleted? _customerCenterOnRestoreCompleted;
@@ -48,16 +52,49 @@ class RevenueCatUI {
   /// @param [displayCloseButton] Optionally present the paywall with a close button. Only available for original template paywalls. Ignored for V2 Paywalls.
   /// @param [customVariables] A map of custom variable names to their values. These values can be used for text substitution in paywalls using the `{{ custom.variable_name }}` syntax.
   /// @param [presentationConfiguration] Optional configuration for how the paywall is presented on each platform.
+  /// @param [onPurchaseStarted] Called when a purchase is started.
+  /// @param [onPurchaseCompleted] Called when a purchase is completed.
+  /// @param [onPurchaseCancelled] Called when a purchase is cancelled.
+  /// @param [onPurchaseError] Called when a purchase fails.
+  /// @param [onRestoreCompleted] Called when a restore completes, even if no entitlements were granted.
+  /// @param [onRestoreError] Called when a restore fails.
+  /// @param [onWebCheckoutOpened] Called when the user leaves the app for web checkout.
+  /// @param [onUrlOpened] Called when the paywall opens a URL. Not called for web checkout URLs.
+  /// @param [onInteraction] Called when the user interacts with a paywall control (tab, package,
+  /// purchase button, ...), with the `paywall_component_interacted` event as a map of snake_case
+  /// keys; keys that do not apply are absent.
   static Future<PaywallResult> presentPaywall({
     Offering? offering,
     bool displayCloseButton = false,
     Map<String, CustomVariableValue>? customVariables,
     PaywallPresentationConfiguration? presentationConfiguration,
+    Function(Package rcPackage)? onPurchaseStarted,
+    Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
+        onPurchaseCompleted,
+    Function()? onPurchaseCancelled,
+    Function(PurchasesError)? onPurchaseError,
+    Function(CustomerInfo customerInfo)? onRestoreCompleted,
+    Function(PurchasesError)? onRestoreError,
+    Function()? onWebCheckoutOpened,
+    Function(String url)? onUrlOpened,
+    Function(Map<String, dynamic> event)? onInteraction,
   }) async {
     final presentedOfferingContext = offering?.availablePackages
         .elementAtOrNull(0)
         ?.presentedOfferingContext;
-    final result = await _methodChannel.invokeMethod('presentPaywall', {
+    final handler = PaywallViewMethodHandler(
+      onPurchaseStarted,
+      onPurchaseCompleted,
+      onPurchaseCancelled,
+      onPurchaseError,
+      onRestoreCompleted,
+      onRestoreError,
+      null,
+      onWebCheckoutOpened: onWebCheckoutOpened,
+      onUrlOpened: onUrlOpened,
+      onInteraction: onInteraction,
+    );
+    return _presentPaywall('presentPaywall', {
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
       'displayCloseButton': displayCloseButton,
@@ -68,8 +105,9 @@ class RevenueCatUI {
       if (presentationConfiguration?.ios ==
           IOSPaywallPresentationStyle.fullScreen)
         'useFullScreenPresentation': true,
-    });
-    return _parseStringToResult(result);
+      },
+      handler,
+    );
   }
 
   /// Presents the paywall as an activity on android or a modal in iOS as long
@@ -81,17 +119,50 @@ class RevenueCatUI {
   /// @param [displayCloseButton] Optionally present the paywall with a close button. Only available for original template paywalls. Ignored for V2 Paywalls.
   /// @param [customVariables] A map of custom variable names to their values. These values can be used for text substitution in paywalls using the `{{ custom.variable_name }}` syntax.
   /// @param [presentationConfiguration] Optional configuration for how the paywall is presented on each platform.
+  /// @param [onPurchaseStarted] Called when a purchase is started.
+  /// @param [onPurchaseCompleted] Called when a purchase is completed.
+  /// @param [onPurchaseCancelled] Called when a purchase is cancelled.
+  /// @param [onPurchaseError] Called when a purchase fails.
+  /// @param [onRestoreCompleted] Called when a restore completes, even if no entitlements were granted.
+  /// @param [onRestoreError] Called when a restore fails.
+  /// @param [onWebCheckoutOpened] Called when the user leaves the app for web checkout.
+  /// @param [onUrlOpened] Called when the paywall opens a URL. Not called for web checkout URLs.
+  /// @param [onInteraction] Called when the user interacts with a paywall control (tab, package,
+  /// purchase button, ...), with the `paywall_component_interacted` event as a map of snake_case
+  /// keys; keys that do not apply are absent.
   static Future<PaywallResult> presentPaywallIfNeeded(
     String requiredEntitlementIdentifier, {
     Offering? offering,
     bool displayCloseButton = false,
     Map<String, CustomVariableValue>? customVariables,
     PaywallPresentationConfiguration? presentationConfiguration,
+    Function(Package rcPackage)? onPurchaseStarted,
+    Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
+        onPurchaseCompleted,
+    Function()? onPurchaseCancelled,
+    Function(PurchasesError)? onPurchaseError,
+    Function(CustomerInfo customerInfo)? onRestoreCompleted,
+    Function(PurchasesError)? onRestoreError,
+    Function()? onWebCheckoutOpened,
+    Function(String url)? onUrlOpened,
+    Function(Map<String, dynamic> event)? onInteraction,
   }) async {
     final presentedOfferingContext = offering?.availablePackages
         .elementAtOrNull(0)
         ?.presentedOfferingContext;
-    final result = await _methodChannel.invokeMethod('presentPaywallIfNeeded', {
+    final handler = PaywallViewMethodHandler(
+      onPurchaseStarted,
+      onPurchaseCompleted,
+      onPurchaseCancelled,
+      onPurchaseError,
+      onRestoreCompleted,
+      onRestoreError,
+      null,
+      onWebCheckoutOpened: onWebCheckoutOpened,
+      onUrlOpened: onUrlOpened,
+      onInteraction: onInteraction,
+    );
+    return _presentPaywall('presentPaywallIfNeeded', {
       'requiredEntitlementIdentifier': requiredEntitlementIdentifier,
       'offeringIdentifier': offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
@@ -103,8 +174,31 @@ class RevenueCatUI {
       if (presentationConfiguration?.ios ==
           IOSPaywallPresentationStyle.fullScreen)
         'useFullScreenPresentation': true,
-    });
-    return _parseStringToResult(result);
+      },
+      handler,
+    );
+  }
+
+  static Future<PaywallResult> _presentPaywall(
+    String method,
+    Map<String, dynamic> arguments,
+    PaywallViewMethodHandler handler,
+  ) async {
+    final hasCallbacks = handler.hasCallbacks;
+    if (hasCallbacks) {
+      _presentedPaywallChannel.setMethodCallHandler(handler.handleMethodCall);
+    }
+    try {
+      final result = await _methodChannel.invokeMethod(method, {
+        ...arguments,
+        if (hasCallbacks) 'hasListener': true,
+      });
+      return _parseStringToResult(result);
+    } finally {
+      if (hasCallbacks) {
+        _presentedPaywallChannel.setMethodCallHandler(null);
+      }
+    }
   }
 
   /// Presents the customer center modally using the native SDKs.

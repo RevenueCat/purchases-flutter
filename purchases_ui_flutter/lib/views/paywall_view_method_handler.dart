@@ -36,6 +36,19 @@ class PaywallViewMethodHandler {
     this.methodChannel,
   });
 
+  bool get hasCallbacks => [
+        onPurchaseStarted,
+        onPurchaseCompleted,
+        onPurchaseCancelled,
+        onPurchaseError,
+        onRestoreCompleted,
+        onRestoreError,
+        onDismiss,
+        onWebCheckoutOpened,
+        onUrlOpened,
+        onInteraction,
+      ].any((callback) => callback != null);
+
   Future<void> handleMethodCall(MethodCall call) async {
     switch (call.method) {
       case 'onPurchaseStarted':
@@ -93,9 +106,12 @@ class PaywallViewMethodHandler {
     final customerInfo = CustomerInfo.fromJson(
       Map<String, dynamic>.from(arguments['customerInfo']),
     );
-    final storeTransaction = StoreTransaction.fromJson(
-      Map<String, dynamic>.from(arguments['storeTransaction']),
-    );
+    // PaywallProxy forwards `transaction?.dictionary`, so purchases completed without a
+    // StoreKit transaction arrive without one.
+    final transactionJson = arguments['storeTransaction'];
+    final storeTransaction = transactionJson == null
+        ? const StoreTransaction('', '', '')
+        : StoreTransaction.fromJson(Map<String, dynamic>.from(transactionJson));
     onPurchaseCompleted?.call(customerInfo, storeTransaction);
   }
 
