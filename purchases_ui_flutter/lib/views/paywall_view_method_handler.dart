@@ -36,6 +36,19 @@ class PaywallViewMethodHandler {
     this.methodChannel,
   });
 
+  bool get hasCallbacks => [
+        onPurchaseStarted,
+        onPurchaseCompleted,
+        onPurchaseCancelled,
+        onPurchaseError,
+        onRestoreCompleted,
+        onRestoreError,
+        onDismiss,
+        onWebCheckoutOpened,
+        onUrlOpened,
+        onInteraction,
+      ].any((callback) => callback != null);
+
   Future<void> handleMethodCall(MethodCall call) async {
     switch (call.method) {
       case 'onPurchaseStarted':
