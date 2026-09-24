@@ -53,7 +53,7 @@ android {
 
     defaultConfig {
         minSdkVersion 24
-        compileSdk 34
+        compileSdk 35
         // Fix variant resolution for purchases-android local builds
         missingDimensionStrategy 'apis', 'defaults'
         missingDimensionStrategy 'billingclient', 'bc8'
