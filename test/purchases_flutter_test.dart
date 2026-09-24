@@ -103,6 +103,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -135,6 +136,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -165,6 +167,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -198,6 +201,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -1733,6 +1737,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -1764,6 +1769,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -1796,6 +1802,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -1829,6 +1836,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -1859,6 +1867,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': false,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -1889,6 +1898,7 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
             'preferredUILocaleOverride': 'de_DE',
+            'useExternalPurchaseCustomLinks': false,
           },
         ),
       ],
@@ -1919,6 +1929,38 @@ void main() {
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': true,
             'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': false,
+          },
+        ),
+      ],
+    );
+  });
+
+  test('configure with useExternalPurchaseCustomLinks', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..appUserID = 'cesar'
+        ..useExternalPurchaseCustomLinks = true,
+    );
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'setupPurchases',
+          arguments: <String, dynamic>{
+            'apiKey': 'api_key',
+            'appUserId': 'cesar',
+            'purchasesAreCompletedBy': 'REVENUECAT',
+            'userDefaultsSuiteName': null,
+            'storeKitVersion': 'DEFAULT',
+            'useAmazon': false,
+            'shouldShowInAppMessagesAutomatically': true,
+            'entitlementVerificationMode': 'DISABLED',
+            'pendingTransactionsForPrepaidPlansEnabled': false,
+            'automaticDeviceIdentifierCollectionEnabled': true,
+            'diagnosticsEnabled': false,
+            'preferredUILocaleOverride': null,
+            'useExternalPurchaseCustomLinks': true,
           },
         ),
       ],

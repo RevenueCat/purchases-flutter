@@ -25,6 +25,9 @@ class _PurchaseConfigurationApiTest {
     configuration.storeKitVersion = storeKitVersion;
     configuration.automaticDeviceIdentifierCollectionEnabled = true;
     configuration.diagnosticsEnabled = true;
+    bool useExternalPurchaseCustomLinks =
+        configuration.useExternalPurchaseCustomLinks;
+    configuration.useExternalPurchaseCustomLinks = true;
 
     // deprecated, but we still need to check that the API hasn't been removed.
     configuration.pendingTransactionsForPrepaidPlansEnabled = true;

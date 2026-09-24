@@ -74,6 +74,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         if (object != [NSNull null] && object != nil) {
             diagnosticsEnabled = [object boolValue];
         }
+        BOOL useExternalPurchaseCustomLinks = NO;
+        object = arguments[@"useExternalPurchaseCustomLinks"];
+        if (object != [NSNull null] && object != nil) {
+            useExternalPurchaseCustomLinks = [object boolValue];
+        }
         [self setupPurchases:apiKey
                    appUserID:appUserID
      purchasesAreCompletedBy:purchasesAreCompletedBy
@@ -84,6 +89,7 @@ shouldShowInAppMessagesAutomatically: shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
           diagnosticsEnabled:diagnosticsEnabled
    preferredUILocaleOverride:preferredUILocaleOverride
+useExternalPurchaseCustomLinks:useExternalPurchaseCustomLinks
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -316,6 +322,7 @@ shouldShowInAppMessagesAutomatically:(BOOL)shouldShowInAppMessagesAutomatically
 automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollectionEnabled
     diagnosticsEnabled:(BOOL)diagnosticsEnabled
  preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
+useExternalPurchaseCustomLinks:(BOOL)useExternalPurchaseCustomLinks
                  result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -337,7 +344,8 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
                                              verificationMode:verificationMode
                                            diagnosticsEnabled:diagnosticsEnabled
                    automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
-                                              preferredLocale:preferredUILocaleOverride.mappingNSNullToNil];
+                                              preferredLocale:preferredUILocaleOverride.mappingNSNullToNil
+                               useExternalPurchaseCustomLinks:useExternalPurchaseCustomLinks];
 
     purchases.delegate = self;
 
