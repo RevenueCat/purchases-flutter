@@ -589,12 +589,9 @@ class _PurchasesFlutterApiTest {
       String amazonUserID,
       String? isoCurrencyCode,
       double? price,
-      int? purchaseTime) async {
-    Future<void> future = Purchases.syncAmazonPurchase(
-        productID, receiptID, amazonUserID, isoCurrencyCode, price);
-    Future<void> future2 = Purchases.syncAmazonPurchase(
-        productID, receiptID, amazonUserID, isoCurrencyCode, price,
-        purchaseTime: purchaseTime);
+      int purchaseTime) async {
+    Future<void> future = Purchases.syncAmazonPurchase(productID, receiptID,
+        amazonUserID, isoCurrencyCode, price, purchaseTime);
   }
 
   void _showInAppMessages() async {
