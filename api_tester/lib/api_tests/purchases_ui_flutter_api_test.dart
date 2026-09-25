@@ -38,6 +38,34 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  void _checkPresentPaywallWithListeners() async {
+    Future<PaywallResult> f1 = RevenueCatUI.presentPaywall(
+      onPurchaseStarted: (Package rcPackage) {},
+      onPurchaseCompleted:
+          (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+      onPurchaseCancelled: () {},
+      onPurchaseError: (PurchasesError error) {},
+      onRestoreCompleted: (CustomerInfo customerInfo) {},
+      onRestoreError: (PurchasesError error) {},
+      onWebCheckoutOpened: () {},
+      onUrlOpened: (String url) {},
+      onInteraction: (Map<String, dynamic> event) {},
+    );
+    Future<PaywallResult> f2 = RevenueCatUI.presentPaywallIfNeeded(
+      "test",
+      onPurchaseStarted: (Package rcPackage) {},
+      onPurchaseCompleted:
+          (CustomerInfo customerInfo, StoreTransaction storeTransaction) {},
+      onPurchaseCancelled: () {},
+      onPurchaseError: (PurchasesError error) {},
+      onRestoreCompleted: (CustomerInfo customerInfo) {},
+      onRestoreError: (PurchasesError error) {},
+      onWebCheckoutOpened: () {},
+      onUrlOpened: (String url) {},
+      onInteraction: (Map<String, dynamic> event) {},
+    );
+  }
+
   void _checkPresentPaywallWithCustomVariables(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall(
       customVariables: {
