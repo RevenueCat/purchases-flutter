@@ -367,13 +367,19 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 String amazonUserID = call.argument("amazonUserID");
                 String isoCurrencyCode = call.argument("isoCurrencyCode");
                 Double price = call.argument("price");
-                Integer purchaseTime = call.argument("purchaseTime");
-                Long purchaseTimeLong = null;
-                if (purchaseTime != null) {
-                    purchaseTimeLong = purchaseTime.longValue();
-                }
+                // Dart ints arrive as Integer or Long depending on magnitude, so read as Number.
+                Number purchaseTime = call.argument("purchaseTime");
                 syncAmazonPurchase(productID, receiptID, amazonUserID, isoCurrencyCode,
-                        price, purchaseTimeLong, result);
+                        price, purchaseTime, result);
+                break;
+            case "syncObserverModeAmazonPurchase":
+                syncObserverModeAmazonPurchase(
+                        call.argument("productID"),
+                        call.argument("receiptID"),
+                        call.argument("amazonUserID"),
+                        call.argument("isoCurrencyCode"),
+                        call.argument("price"),
+                        result);
                 break;
             case "isWebPurchaseRedemptionURL":
                 String urlString = call.argument("urlString");
@@ -625,22 +631,34 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         result.success(null);
     }
 
-    @SuppressWarnings("deprecation")
     private void syncAmazonPurchase(String productID,
             String receiptID,
             String amazonUserID,
             String isoCurrencyCode,
             Double price,
-            Long purchaseTime,
+            Number purchaseTime,
             final Result result) {
         if (purchaseTime == null) {
-            Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
-                    amazonUserID, isoCurrencyCode, price);
-        } else {
-            Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
-                    amazonUserID, isoCurrencyCode, price, purchaseTime);
+            result.error(
+                    INVALID_ARGS_ERROR_CODE,
+                    "Missing purchaseTime argument",
+                    null);
+            return;
         }
+        Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
+                amazonUserID, isoCurrencyCode, price, purchaseTime.longValue());
+        result.success(null);
+    }
 
+    @SuppressWarnings("deprecation")
+    private void syncObserverModeAmazonPurchase(String productID,
+            String receiptID,
+            String amazonUserID,
+            String isoCurrencyCode,
+            Double price,
+            final Result result) {
+        Purchases.getSharedInstance().syncAmazonPurchase(productID, receiptID,
+                amazonUserID, isoCurrencyCode, price);
         result.success(null);
     }
 

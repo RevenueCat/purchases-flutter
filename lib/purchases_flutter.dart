@@ -1330,12 +1330,15 @@ class Purchases {
     String? isoCurrencyCode,
     double? price,
   ) =>
-      syncAmazonPurchase(
-        productID,
-        receiptID,
-        amazonUserID,
-        isoCurrencyCode,
-        price,
+      _channel.invokeMethod(
+        'syncObserverModeAmazonPurchase',
+        {
+          'productID': productID,
+          'receiptID': receiptID,
+          'amazonUserID': amazonUserID,
+          'isoCurrencyCode': isoCurrencyCode,
+          'price': price,
+        },
       );
 
   /// This method will send a purchase to the RevenueCat backend. This function should only be called if you are
@@ -1348,16 +1351,16 @@ class Purchases {
   /// @param [amazonUserID] Amazon's userID. This parameter will be ignored when syncing a Google purchase.
   /// @param [isoCurrencyCode] Product's currency code in ISO 4217 format.
   /// @param [price] Product's price.
-  /// @param [purchaseTime] Purchase time in milliseconds since epoch. Usage of this parameter is
-  /// highly recommended and usages without it are deprecated and will be removed in future versions.
+  /// @param [purchaseTime] Time the product was purchased, in milliseconds since the epoch.
+  /// Can be obtained from Amazon's PurchaseResponse > Receipt > purchaseTime.
   static Future<void> syncAmazonPurchase(
     String productID,
     String receiptID,
     String amazonUserID,
     String? isoCurrencyCode,
-    double? price, {
-    int? purchaseTime,
-  }) =>
+    double? price,
+    int purchaseTime,
+  ) =>
       _channel.invokeMethod(
         'syncAmazonPurchase',
         {
