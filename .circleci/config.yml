@@ -220,10 +220,25 @@ jobs:
       flutter-version:
         type: string
         default: "stable"
+      equatable-version:
+        type: string
+        default: ""
     docker:
       - image: ghcr.io/cirruslabs/flutter:<< parameters.flutter-version >>
     steps:
       - checkout
+      - when:
+          condition: << parameters.equatable-version >>
+          steps:
+            - run:
+                name: Override equatable version
+                command: |
+                  cat >> pubspec.yaml \<<'EOF'
+
+                  dependency_overrides:
+                    equatable: "<< parameters.equatable-version >>"
+                  EOF
+                  grep -A2 dependency_overrides pubspec.yaml
       - flutter-get-dependencies
       - run:
           name: Analyze code
@@ -625,6 +640,12 @@ workflows:
       - lint-test:
           name: lint-test-min-version
           flutter-version: "3.22.0"
+      - lint-test:
+          name: lint-test-equatable-2
+          equatable-version: "^2.0.0"
+      - lint-test:
+          name: lint-test-equatable-3
+          equatable-version: "^3.0.0"
       - lint-test-ui:
           name: lint-test-ui
       - lint-test-ui:
