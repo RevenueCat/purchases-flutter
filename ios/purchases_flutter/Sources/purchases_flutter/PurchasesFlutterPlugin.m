@@ -274,6 +274,9 @@ enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator
     } else if ([@"syncAmazonPurchase" isEqualToString:call.method]) {
         // NOOP
         result(nil);
+    } else if ([@"syncObserverModeAmazonPurchase" isEqualToString:call.method]) {
+        // NOOP
+        result(nil);
     } else if ([@"eligibleWinBackOffersForProduct" isEqualToString:call.method]) {
         [self eligibleWinBackOffersForProduct:arguments[@"productIdentifier"] result:result];
     } else if ([@"purchaseProductWithWinBackOffer" isEqualToString:call.method]) {
