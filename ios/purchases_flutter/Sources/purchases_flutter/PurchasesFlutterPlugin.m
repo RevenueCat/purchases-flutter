@@ -79,6 +79,11 @@ NSString *PurchasesLogHandlerEvent = @"Purchases-LogHandlerEvent";
         if (object != [NSNull null] && object != nil) {
             useExternalPurchaseCustomLinks = [object boolValue];
         }
+        BOOL enableExternalPurchasesInSimulator = YES;
+        object = arguments[@"enableExternalPurchasesInSimulator"];
+        if (object != [NSNull null] && object != nil) {
+            enableExternalPurchasesInSimulator = [object boolValue];
+        }
         [self setupPurchases:apiKey
                    appUserID:appUserID
      purchasesAreCompletedBy:purchasesAreCompletedBy
@@ -90,6 +95,7 @@ automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEn
           diagnosticsEnabled:diagnosticsEnabled
    preferredUILocaleOverride:preferredUILocaleOverride
 useExternalPurchaseCustomLinks:useExternalPurchaseCustomLinks
+enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator
                       result:result];
     } else if ([@"setAllowSharingStoreAccount" isEqualToString:call.method]) {
         [self setAllowSharingStoreAccount:[arguments[@"allowSharing"] boolValue] result:result];
@@ -323,6 +329,7 @@ automaticDeviceIdentifierCollectionEnabled:(BOOL)automaticDeviceIdentifierCollec
     diagnosticsEnabled:(BOOL)diagnosticsEnabled
  preferredUILocaleOverride:(nullable NSString *)preferredUILocaleOverride
 useExternalPurchaseCustomLinks:(BOOL)useExternalPurchaseCustomLinks
+enableExternalPurchasesInSimulator:(BOOL)enableExternalPurchasesInSimulator
                  result:(FlutterResult)result {
     if ([appUserID isKindOfClass:NSNull.class]) {
         appUserID = nil;
@@ -345,7 +352,8 @@ useExternalPurchaseCustomLinks:(BOOL)useExternalPurchaseCustomLinks
                                            diagnosticsEnabled:diagnosticsEnabled
                    automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
                                               preferredLocale:preferredUILocaleOverride.mappingNSNullToNil
-                               useExternalPurchaseCustomLinks:useExternalPurchaseCustomLinks];
+                               useExternalPurchaseCustomLinks:useExternalPurchaseCustomLinks
+                           enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator];
 
     purchases.delegate = self;
 

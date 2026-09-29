@@ -192,6 +192,8 @@ class Purchases {
             purchasesConfiguration.preferredUILocaleOverride,
         'useExternalPurchaseCustomLinks':
             purchasesConfiguration.useExternalPurchaseCustomLinks,
+        'enableExternalPurchasesInSimulator':
+            purchasesConfiguration.enableExternalPurchasesInSimulator,
       },
     );
   }

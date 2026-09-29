@@ -92,6 +92,17 @@ class PurchasesConfiguration {
   /// Disabled by default. Enabling it requires the app to be enrolled in the programme and to carry
   /// Apple's external purchase link entitlement, otherwise no purchase can be made outside the App Store.
   bool useExternalPurchaseCustomLinks = false;
+
+  /// **Experimental**: This API is experimental and may be changed or removed
+  /// in a future update.
+  ///
+  /// iOS-only, will be ignored for Android.
+  /// Whether the simulator offers external purchases in any storefront. When disabled, the simulator
+  /// behaves as a device does for a customer who is not eligible.
+  ///
+  /// Enabled by default. Has no effect on a physical device, nor while
+  /// [useExternalPurchaseCustomLinks] is disabled.
+  bool enableExternalPurchasesInSimulator = true;
 }
 
 /// A [PurchasesConfiguration] convenience object that
