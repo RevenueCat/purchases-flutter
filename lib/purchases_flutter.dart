@@ -190,6 +190,8 @@ class Purchases {
         'diagnosticsEnabled': purchasesConfiguration.diagnosticsEnabled,
         'preferredUILocaleOverride':
             purchasesConfiguration.preferredUILocaleOverride,
+        'forceAllowTestStoreInReleaseBuilds':
+            purchasesConfiguration.forceAllowTestStoreInReleaseBuilds,
       },
     );
   }

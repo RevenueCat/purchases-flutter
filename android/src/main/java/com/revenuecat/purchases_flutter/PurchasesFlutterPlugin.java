@@ -125,11 +125,14 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                         .argument("automaticDeviceIdentifierCollectionEnabled");
                 Boolean diagnosticsEnabled = call.argument("diagnosticsEnabled");
                 String preferredUILocaleOverride = call.argument("preferredUILocaleOverride");
+                Boolean forceAllowTestStoreInReleaseBuilds = call
+                        .argument("forceAllowTestStoreInReleaseBuilds");
                 setupPurchases(apiKey, appUserId, purchasesAreCompletedBy, useAmazon,
                         shouldShowInAppMessagesAutomatically, verificationMode,
                         pendingTransactionsForPrepaidPlansEnabled,
                         automaticDeviceIdentifierCollectionEnabled, diagnosticsEnabled,
-                        preferredUILocaleOverride, result);
+                        preferredUILocaleOverride, forceAllowTestStoreInReleaseBuilds,
+                        result);
                 break;
             case "setAllowSharingStoreAccount":
                 Boolean allowSharing = call.argument("allowSharing");
@@ -433,6 +436,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             @Nullable Boolean automaticDeviceIdentifierCollectionEnabled,
             @Nullable Boolean diagnosticsEnabled,
             @Nullable String preferredUILocaleOverride,
+            @Nullable Boolean forceAllowTestStoreInReleaseBuilds,
             final Result result) {
         if (this.applicationContext != null) {
             PlatformInfo platformInfo = new PlatformInfo(PLATFORM_NAME, PLUGIN_VERSION);
@@ -441,13 +445,18 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 store = Store.AMAZON;
             }
 
+            DangerousSettings dangerousSettings = new DangerousSettings();
+            if (Boolean.TRUE.equals(forceAllowTestStoreInReleaseBuilds)) {
+                dangerousSettings.forceAllowTestStoreInReleaseBuilds();
+            }
+
             CommonKt.configure(this.applicationContext,
                     apiKey,
                     appUserID,
                     purchasesAreCompletedBy,
                     platformInfo,
                     store,
-                    new DangerousSettings(),
+                    dangerousSettings,
                     shouldShowInAppMessagesAutomatically,
                     verificationMode,
                     pendingTransactionsForPrepaidPlansEnabled,

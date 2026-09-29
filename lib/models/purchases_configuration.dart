@@ -80,6 +80,17 @@ class PurchasesConfiguration {
   /// No personal identifiable information will be collected.
   /// The default value is false.
   bool diagnosticsEnabled = false;
+
+  /// Forces the SDK to allow a Test Store API key in a Release build.
+  ///
+  /// By default the native SDKs crash a Release build (iOS: compiled without
+  /// `DEBUG`; Android: not debuggable) that is configured with a Test Store
+  /// API key, so such a build can never reach the stores. Enable this only
+  /// for builds that cannot be promoted to production (for example an
+  /// internal staging flavor). Maps to the native SDKs'
+  /// `DangerousSettings.forceAllowTestStoreInReleaseBuilds`.
+  /// The default value is false.
+  bool forceAllowTestStoreInReleaseBuilds = false;
 }
 
 /// A [PurchasesConfiguration] convenience object that
