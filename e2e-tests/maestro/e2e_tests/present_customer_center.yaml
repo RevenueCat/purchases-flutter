@@ -1,0 +1,22 @@
+# This flow tests that Customer Center loads.
+# It opens Customer Center for a fresh user with no purchases
+# and verifies the empty state title and restore purchases row render.
+
+appId: com.revenuecat.automatedsdktests
+name: Present Customer Center
+
+---
+- clearState
+- pressKey: home
+- launchApp:
+    arguments:
+        e2e_test_flow: present_customer_center
+- extendedWaitUntil:
+    visible: "Open Customer Center"
+    timeout: 30000
+- tapOn:
+    text: "Open Customer Center"
+- extendedWaitUntil:
+    visible: "No subscriptions found"
+    timeout: 30000
+- assertVisible: ".*[Rr]estore.*[Pp]urchases.*"
