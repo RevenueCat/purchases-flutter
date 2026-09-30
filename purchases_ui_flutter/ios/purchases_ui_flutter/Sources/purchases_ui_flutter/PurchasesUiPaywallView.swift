@@ -42,6 +42,7 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
     private var _methodChannel: FlutterMethodChannel
     private var _paywallViewController: PaywallViewController
     private var _purchaseLogicBridge: HybridPurchaseLogicBridge?
+    private let _eventForwarder: PaywallChannelForwarder
 
     init(
         frame: CGRect,
@@ -51,6 +52,7 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
     ) {
         _methodChannel = FlutterMethodChannel(name: "com.revenuecat.purchasesui/PaywallView/\(viewId)",
                                               binaryMessenger: messenger)
+        _eventForwarder = PaywallChannelForwarder(methodChannel: _methodChannel)
         let paywallProxy = PaywallProxy()
         _paywallProxy = paywallProxy
 
@@ -90,7 +92,7 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         )
 
         super.init()
-        _paywallProxy?.delegate = self
+        _paywallProxy?.delegate = _eventForwarder
         setupMethodCallHandler()
     }
 
@@ -124,57 +126,4 @@ class PurchasesUiPaywallView: NSObject, FlutterPlatformView {
         }
     }
 
-}
-
-@available(iOS 15.0, *)
-extension PurchasesUiPaywallView: PaywallViewControllerDelegateWrapper {
-    func paywallViewController(_ controller: PaywallViewController, 
-                               didStartPurchaseWith packageDictionary: [String : Any]) {
-        _methodChannel.invokeMethod("onPurchaseStarted", arguments: packageDictionary)
-    }
-
-    func paywallViewController(_ controller: PaywallViewController, 
-                               didFinishPurchasingWith customerInfoDictionary: [String : Any],
-                               transaction transactionDictionary: [String : Any]?) {
-        _methodChannel.invokeMethod("onPurchaseCompleted", arguments: [
-            "customerInfo":customerInfoDictionary,
-            "storeTransaction":transactionDictionary
-        ])
-    }
-
-    func paywallViewControllerDidCancelPurchase(_ controller: PaywallViewController) {
-        _methodChannel.invokeMethod("onPurchaseCancelled", arguments: nil)
-    }
-
-    func paywallViewController(_ controller: PaywallViewController, 
-                               didFailPurchasingWith errorDictionary: [String : Any]) {
-        _methodChannel.invokeMethod("onPurchaseError", arguments: errorDictionary)
-    }
-
-    func paywallViewController(_ controller: PaywallViewController, 
-                               didFinishRestoringWith customerInfoDictionary: [String : Any]) {
-        _methodChannel.invokeMethod("onRestoreCompleted", arguments: customerInfoDictionary)
-    }
-
-    func paywallViewController(_ controller: PaywallViewController,
-                               didFailRestoringWith errorDictionary: [String : Any]) {
-        _methodChannel.invokeMethod("onRestoreError", arguments: errorDictionary)
-    }
-
-    func paywallViewControllerRequestedDismissal(_ controller: PaywallViewController) {
-        _methodChannel.invokeMethod("onDismiss", arguments: nil)
-    }
-
-    func paywallViewControllerDidOpenWebCheckout(_ controller: PaywallViewController) {
-        _methodChannel.invokeMethod("onWebCheckoutOpened", arguments: nil)
-    }
-
-    func paywallViewController(_ controller: PaywallViewController, didOpenURL url: String) {
-        _methodChannel.invokeMethod("onUrlOpened", arguments: ["url": url])
-    }
-
-    func paywallViewController(_ controller: PaywallViewController,
-                               didTrackInteraction eventDictionary: [String: Any]) {
-        _methodChannel.invokeMethod("onInteraction", arguments: eventDictionary)
-    }
 }

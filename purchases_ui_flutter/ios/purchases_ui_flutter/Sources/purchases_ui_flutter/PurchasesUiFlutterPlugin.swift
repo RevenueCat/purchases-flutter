@@ -11,6 +11,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
     private static let BAD_ARGS_ERROR_CODE = "BAD_ARGS"
     private var methodChannel: FlutterMethodChannel?
+    private var binaryMessenger: FlutterBinaryMessenger?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
 
@@ -30,6 +31,7 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         let channel = FlutterMethodChannel(name: "purchases_ui_flutter", binaryMessenger: messenger)
         let instance = PurchasesUiFlutterPlugin()
         instance.methodChannel = channel
+        instance.binaryMessenger = messenger
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -104,7 +106,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
                 customVariables: args[Parameter.customVariables.rawValue] as? [String: Any],
-                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool
+                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool,
+                presentationId: args[Parameter.presentationId.rawValue] as? Int
             )
 
         case "presentPaywallIfNeeded":
@@ -128,7 +131,8 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 presentedOfferingContext: args[Parameter.presentedOfferingContext.rawValue] as? [String: Any],
                 displayCloseButton: args[Parameter.displayCloseButton.rawValue] as? Bool,
                 customVariables: args[Parameter.customVariables.rawValue] as? [String: Any],
-                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool
+                useFullScreenPresentation: args[Parameter.useFullScreenPresentation.rawValue] as? Bool,
+                presentationId: args[Parameter.presentationId.rawValue] as? Int
             )
 
         case "presentCustomerCenter":
@@ -178,11 +182,21 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         presentedOfferingContext: [String: Any]?,
         displayCloseButton: Bool?,
         customVariables: [String: Any]?,
-        useFullScreenPresentation: Bool?
+        useFullScreenPresentation: Bool?,
+        presentationId: Int?
     ) {
 #if os(iOS)
         if #available(iOS 15.0, *) {
             let displayCloseButton = displayCloseButton ?? false
+
+            var presentationDelegate: PaywallChannelForwarder?
+            if let presentationId, let binaryMessenger = self.binaryMessenger {
+                let channel = FlutterMethodChannel(
+                    name: "com.revenuecat.purchasesui/PresentedPaywall/\(presentationId)",
+                    binaryMessenger: binaryMessenger
+                )
+                presentationDelegate = PaywallChannelForwarder(methodChannel: channel)
+            }
 
             var options: [String:Any] = [
                 PaywallProxy.PaywallOptionsKeys.displayCloseButton: displayCloseButton,
@@ -211,11 +225,15 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
                 self.paywallProxy.presentPaywallIfNeeded(
                     options: options,
+                    purchaseLogicBridge: nil,
+                    delegate: presentationDelegate,
                     paywallResultHandler: result
                 )
             } else {
                 self.paywallProxy.presentPaywall(
                     options: options,
+                    purchaseLogicBridge: nil,
+                    delegate: presentationDelegate,
                     paywallResultHandler: result
                 )
             }
@@ -268,6 +286,7 @@ private extension PurchasesUiFlutterPlugin {
         case displayCloseButton
         case customVariables
         case useFullScreenPresentation
+        case presentationId
     }
 
 #if os(iOS)

@@ -47,16 +47,17 @@ void main() {
     response = null;
   });
 
-  Future<void> invokeCustomerCenterMethod(
+  Future<void> invokeChannelMethod(
     String method,
-    dynamic arguments,
-  ) async {
+    dynamic arguments, {
+    String channelName = 'purchases_ui_flutter',
+  }) async {
     final codec = const StandardMethodCodec();
     final data = codec.encodeMethodCall(MethodCall(method, arguments));
     final completer = Completer<void>();
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .handlePlatformMessage(
-      'purchases_ui_flutter',
+      channelName,
       data,
       (_) => completer.complete(),
     );
@@ -354,6 +355,157 @@ void main() {
     ]);
   });
 
+  group('presentPaywall callbacks', () {
+    String presentedChannelOf(MethodCall call) =>
+        'com.revenuecat.purchasesui/PresentedPaywall/'
+        '${(call.arguments as Map)['presentationId']}';
+
+    test('sends presentationId only when a callback is given', () async {
+      response = 'NOT_PRESENTED';
+      await RevenueCatUI.presentPaywall(onPurchaseCancelled: () {});
+      await RevenueCatUI.presentPaywallIfNeeded(
+        'entitlement',
+        onInteraction: (_) {},
+      );
+      await RevenueCatUI.presentPaywall();
+
+      expect((log[0].arguments as Map)['presentationId'], isA<int>());
+      expect((log[1].arguments as Map)['presentationId'], isA<int>());
+      expect(
+        log[2],
+        isMethodCall(
+          'presentPaywall',
+          arguments: {
+            'offeringIdentifier': null,
+            'presentedOfferingContext': null,
+            'displayCloseButton': false,
+            'customVariables': null,
+          },
+        ),
+      );
+    });
+
+    test('delivers callbacks while presented and stops after the result',
+        () async {
+      final resultCompleter = Completer<String>();
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (call) {
+        log.add(call);
+        return resultCompleter.future;
+      });
+      final interactions = <Map<String, dynamic>>[];
+      var cancelled = 0;
+
+      final pending = RevenueCatUI.presentPaywall(
+        onPurchaseCancelled: () => cancelled++,
+        onInteraction: interactions.add,
+      );
+      await Future<void>.delayed(Duration.zero);
+      final presentedChannel = presentedChannelOf(log.single);
+
+      await invokeChannelMethod(
+        'onInteraction',
+        {'component_type': 'tab', 'component_value': 'yearly'},
+        channelName: presentedChannel,
+      );
+      await invokeChannelMethod(
+        'onPurchaseCancelled',
+        null,
+        channelName: presentedChannel,
+      );
+      expect(interactions, [
+        {'component_type': 'tab', 'component_value': 'yearly'},
+      ]);
+      expect(cancelled, 1);
+
+      resultCompleter.complete('CANCELLED');
+      expect(await pending, PaywallResult.cancelled);
+
+      await invokeChannelMethod(
+        'onPurchaseCancelled',
+        null,
+        channelName: presentedChannel,
+      );
+      expect(cancelled, 1);
+    });
+
+    test('routes each presentation only its own events', () async {
+      final firstResult = Completer<String>();
+      final secondResult = Completer<String>();
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (call) {
+        log.add(call);
+        return call.method == 'presentPaywall'
+            ? firstResult.future
+            : secondResult.future;
+      });
+      var firstCancelled = 0;
+      var secondCancelled = 0;
+
+      final first = RevenueCatUI.presentPaywall(
+        onPurchaseCancelled: () => firstCancelled++,
+      );
+      final second = RevenueCatUI.presentPaywallIfNeeded(
+        'entitlement',
+        onPurchaseCancelled: () => secondCancelled++,
+      );
+      await Future<void>.delayed(Duration.zero);
+      expect(log, hasLength(2));
+      final firstChannel = presentedChannelOf(log[0]);
+      final secondChannel = presentedChannelOf(log[1]);
+      expect(firstChannel, isNot(secondChannel));
+
+      await invokeChannelMethod(
+        'onPurchaseCancelled',
+        null,
+        channelName: firstChannel,
+      );
+      expect(firstCancelled, 1);
+      expect(secondCancelled, 0);
+
+      await invokeChannelMethod(
+        'onPurchaseCancelled',
+        null,
+        channelName: secondChannel,
+      );
+      expect(firstCancelled, 1);
+      expect(secondCancelled, 1);
+
+      secondResult.complete('NOT_PRESENTED');
+      await second;
+      await invokeChannelMethod(
+        'onPurchaseCancelled',
+        null,
+        channelName: firstChannel,
+      );
+      expect(firstCancelled, 2);
+
+      firstResult.complete('CANCELLED');
+      await first;
+    });
+
+    test('stops delivering callbacks when the presentation fails', () async {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(channel, (call) {
+        log.add(call);
+        return Future<dynamic>.error(PlatformException(code: 'error'));
+      });
+      var cancelled = 0;
+
+      await expectLater(
+        RevenueCatUI.presentPaywall(onPurchaseCancelled: () => cancelled++),
+        throwsA(isA<PlatformException>()),
+      );
+
+      await invokeChannelMethod(
+        'onPurchaseCancelled',
+        null,
+        channelName: presentedChannelOf(log.single),
+      );
+      expect(cancelled, 0);
+    });
+  });
+
   test('presentPaywall parses response correctly', () async {
     response = 'NOT_PRESENTED';
     var paywallResult = await RevenueCatUI.presentPaywall();
@@ -419,7 +571,7 @@ void main() {
     ]);
 
     log.clear();
-    await invokeCustomerCenterMethod('onRestoreStarted', null);
+    await invokeChannelMethod('onRestoreStarted', null);
     expect(restoreStartedCalled, true);
   });
 
@@ -552,10 +704,10 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onRestoreStarted', null);
+      await invokeChannelMethod('onRestoreStarted', null);
       expect(onRestoreStartedCallCount, 1);
 
-      await invokeCustomerCenterMethod('onDismiss', null);
+      await invokeChannelMethod('onDismiss', null);
 
       expect(log, <Matcher>[
         isMethodCall('clearCustomerCenterCallbacks', arguments: null),
@@ -563,13 +715,13 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onDismiss', null);
+      await invokeChannelMethod('onDismiss', null);
 
       expect(log, <Matcher>[
         isMethodCall('clearCustomerCenterCallbacks', arguments: null),
       ]);
 
-      await invokeCustomerCenterMethod('onRestoreStarted', null);
+      await invokeChannelMethod('onRestoreStarted', null);
 
       expect(onRestoreStartedCallCount, 1);
     });
@@ -587,7 +739,7 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onCustomActionSelected',
         <dynamic, dynamic>{
           'actionId': 'custom.action',
@@ -610,14 +762,14 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onCustomActionSelected',
         <dynamic, dynamic>{'purchaseIdentifier': 'purchase.identifier'},
       );
 
       expect(callbackCalled, false);
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onCustomActionSelected',
         <dynamic, dynamic>{
           'actionId': '',
@@ -641,7 +793,7 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onManagementOptionSelected',
         <dynamic, dynamic>{'optionId': 'manage', 'url': null},
       );
@@ -661,7 +813,7 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onManagementOptionSelected',
         <dynamic, dynamic>{'optionId': 'manage', 'url': 123},
       );
@@ -682,7 +834,7 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onRefundRequestCompleted',
         <dynamic, dynamic>{'productId': 'com.app.product', 'status': 'success'},
       );
@@ -693,7 +845,7 @@ void main() {
       capturedProductId = null;
       capturedStatus = null;
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onRefundRequestCompleted',
         <dynamic, dynamic>{'productId': 'com.app.product'},
       );
@@ -701,7 +853,7 @@ void main() {
       expect(capturedProductId, isNull);
       expect(capturedStatus, isNull);
 
-      await invokeCustomerCenterMethod(
+      await invokeChannelMethod(
         'onRefundRequestCompleted',
         <dynamic, dynamic>{'status': 'success'},
       );
@@ -721,7 +873,7 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onRefundRequestCompleted', 'invalid');
+      await invokeChannelMethod('onRefundRequestCompleted', 'invalid');
 
       expect(callbackCalled, false);
     });
@@ -739,13 +891,13 @@ void main() {
 
         log.clear();
 
-        await invokeCustomerCenterMethod(
+        await invokeChannelMethod(
           'onRefundRequestStarted',
           <dynamic, dynamic>{'productId': ''},
         );
         expect(callbackCalled, false);
 
-        await invokeCustomerCenterMethod(
+        await invokeChannelMethod(
           'onRefundRequestStarted',
           <dynamic, dynamic>{'productId': 'product'},
         );
@@ -766,13 +918,13 @@ void main() {
 
         log.clear();
 
-        await invokeCustomerCenterMethod(
+        await invokeChannelMethod(
           'onFeedbackSurveyCompleted',
           <dynamic, dynamic>{'optionId': ''},
         );
         expect(callbackCalled, false);
 
-        await invokeCustomerCenterMethod(
+        await invokeChannelMethod(
           'onFeedbackSurveyCompleted',
           <dynamic, dynamic>{'optionId': 'option'},
         );
@@ -795,7 +947,7 @@ void main() {
 
       log.clear();
 
-      await invokeCustomerCenterMethod('onPromotionalOfferSucceeded', {
+      await invokeChannelMethod('onPromotionalOfferSucceeded', {
         'customerInfo': {
           'originalAppUserId': 'test_user',
           'entitlements': {
