@@ -190,6 +190,10 @@ class Purchases {
         'diagnosticsEnabled': purchasesConfiguration.diagnosticsEnabled,
         'preferredUILocaleOverride':
             purchasesConfiguration.preferredUILocaleOverride,
+        'useExternalPurchaseCustomLinks':
+            purchasesConfiguration.useExternalPurchaseCustomLinks,
+        'enableExternalPurchasesInSimulator':
+            purchasesConfiguration.enableExternalPurchasesInSimulator,
       },
     );
   }

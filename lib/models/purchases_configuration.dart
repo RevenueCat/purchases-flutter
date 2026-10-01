@@ -80,6 +80,29 @@ class PurchasesConfiguration {
   /// No personal identifiable information will be collected.
   /// The default value is false.
   bool diagnosticsEnabled = false;
+
+  /// **Experimental**: This API is experimental and may be changed or removed
+  /// in a future update.
+  ///
+  /// iOS-only, will be ignored for Android.
+  /// Whether a web purchase button that opens its link in the external browser goes through Apple's
+  /// external purchase custom link flow: the customer is shown Apple's disclosure notice, and the
+  /// purchase is reported to Apple.
+  ///
+  /// Disabled by default. Enabling it requires the app to carry Apple's external purchase link
+  /// entitlement, otherwise no purchase can be made outside the App Store.
+  bool useExternalPurchaseCustomLinks = false;
+
+  /// **Experimental**: This API is experimental and may be changed or removed
+  /// in a future update.
+  ///
+  /// iOS-only, will be ignored for Android.
+  /// Whether the simulator offers external purchases in any storefront. When disabled, the simulator
+  /// behaves as a device does for a customer who is not eligible.
+  ///
+  /// Enabled by default. Has no effect on a physical device, nor while
+  /// [useExternalPurchaseCustomLinks] is disabled.
+  bool enableExternalPurchasesInSimulator = true;
 }
 
 /// A [PurchasesConfiguration] convenience object that
