@@ -524,8 +524,10 @@ jobs:
       - store_artifacts:
           path: fastlane/test_output
 
-  run-maestro-e2e-tests-ios-cocoapods-xcode-27:
-    description: "Run Maestro E2E tests with CocoaPods (use_frameworks!), Xcode 27 and an iOS 18 simulator"
+  # Xcode 27 can't download iOS 18 simulator runtimes, so the app is built here
+  # and the Maestro tests run on an Xcode 16.4 image that ships iOS 18.5.
+  build-maestro-app-ios-cocoapods-xcode-27:
+    description: "Build the Maestro app with CocoaPods (use_frameworks!) and Xcode 27"
     executor:
       name: macos-executor
       xcode_version: "27.0.0"
@@ -535,7 +537,6 @@ jobs:
           tools: ruby,flutter
       - revenuecat/install-gem-mac-dependencies:
           cache-version: v1
-      - revenuecat/install-maestro
       - prepare-for-cocoapods-integration-test
       - run:
           name: Switch Maestro app to CocoaPods
@@ -553,25 +554,45 @@ jobs:
           working_directory: e2e-tests/MaestroTestApp/ios
           platform: ios
       - run:
+          name: Build Maestro app (iOS)
+          command: bundle exec fastlane build_maestro_app_ios
+          no_output_timeout: 15m
+      - run:
+          name: Print RevenueCatUI SwiftUI imports
+          command: |
+            BINARY=e2e-tests/MaestroTestApp/build/ios/iphonesimulator/Runner.app/Frameworks/RevenueCatUI.framework/RevenueCatUI
+            xcrun vtool -show-build "$BINARY" | grep -E "minos|sdk" | sort -u
+            nm -m "$BINARY" | grep -E '7SwiftUI(6SpacerV|6HStackV|9TupleViewV|7AnyViewV|19_ConditionalContentV)Mn'
+            nm -m "$BINARY" | grep 'weak' | grep 'SwiftUI' || echo "No weak SwiftUI imports"
+      - persist_to_workspace:
+          root: e2e-tests/MaestroTestApp/build/ios/iphonesimulator
+          paths:
+            - Runner.app
+
+  run-maestro-e2e-tests-ios-18:
+    description: "Run Maestro E2E tests on an iOS 18.5 simulator against the app built with Xcode 27"
+    executor:
+      name: macos-executor
+      xcode_version: "16.4"
+    steps:
+      - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby
+      - revenuecat/install-gem-mac-dependencies:
+          cache-version: v1
+      - revenuecat/install-maestro
+      - attach_workspace:
+          at: e2e-tests/MaestroTestApp/build/ios/iphonesimulator
+      - run:
           name: Boot iOS 18 Simulator
           command: |
-            xcrun simctl list runtimes
-            find_runtime() {
-              xcrun simctl list runtimes | grep -E '^iOS 18\.' | grep -v unavailable | tail -1 | awk '{print $NF}'
-            }
-            RUNTIME=$(find_runtime)
-            if [ -z "$RUNTIME" ]; then
-              sw_vers
-              xcodebuild -downloadPlatform iOS -buildVersion 22G86 -architectureVariant universal
-              RUNTIME=$(find_runtime)
-            fi
-            [ -n "$RUNTIME" ] || { echo "No iOS 18 simulator runtime available"; exit 1; }
-            UDID=$(xcrun simctl create "Maestro iOS 18" "iPhone 16" "$RUNTIME")
-            xcrun simctl boot "$UDID"
-            xcrun simctl bootstatus "$UDID" -b
+            xcrun simctl boot "iPhone 16" || true
+            xcrun simctl bootstatus "iPhone 16" -b
+            xcrun simctl list devices booted | tee /tmp/booted.txt
+            grep -q -- "-- iOS 18" /tmp/booted.txt
       - run:
           name: Run Maestro E2E Tests (iOS)
-          command: bundle exec fastlane run_maestro_e2e_tests_ios
+          command: bundle exec fastlane run_maestro_e2e_tests_ios skip_build:true
           no_output_timeout: 15m
       - store_test_results:
           path: fastlane/test_output
@@ -719,9 +740,14 @@ workflows:
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests
-      - run-maestro-e2e-tests-ios-cocoapods-xcode-27:
+      - build-maestro-app-ios-cocoapods-xcode-27:
           context:
             - e2e-tests
+      - run-maestro-e2e-tests-ios-18:
+          context:
+            - e2e-tests
+          requires:
+            - build-maestro-app-ios-cocoapods-xcode-27
       - run-maestro-e2e-tests-android:
           context:
             - e2e-tests
@@ -807,9 +833,14 @@ workflows:
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests
-      - run-maestro-e2e-tests-ios-cocoapods-xcode-27:
+      - build-maestro-app-ios-cocoapods-xcode-27:
           context:
             - e2e-tests
+      - run-maestro-e2e-tests-ios-18:
+          context:
+            - e2e-tests
+          requires:
+            - build-maestro-app-ios-cocoapods-xcode-27
 
   maestro-e2e-tests-android:
     when:
