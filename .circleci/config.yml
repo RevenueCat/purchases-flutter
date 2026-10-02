@@ -524,6 +524,102 @@ jobs:
       - store_artifacts:
           path: fastlane/test_output
 
+  # Xcode 27 can't download iOS 18 simulator runtimes, so the app is built here
+  # and the Maestro tests run on an Xcode 16.4 image that ships iOS 18.5.
+  build-maestro-app-ios-cocoapods-xcode-27:
+    description: "Build the Maestro app with CocoaPods (use_frameworks!) and Xcode 27"
+    executor:
+      name: macos-executor
+      xcode_version: "27.0.0"
+    steps:
+      - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby,flutter
+      - revenuecat/install-gem-mac-dependencies:
+          cache-version: v1
+      - run:
+          # Flutter 3.44 can't build for the simulator with Xcode 27 (flutter/flutter#188461), fixed in 3.47.
+          name: Use Flutter 3.47.6
+          command: |
+            git clone --depth 1 --branch 3.47.6 https://github.com/flutter/flutter.git "$HOME/flutter-3.47.6"
+            echo 'export PATH="$HOME/flutter-3.47.6/bin:$PATH"' >> "$BASH_ENV"
+      - run:
+          name: Check Flutter version
+          command: |
+            which flutter
+            flutter --version > /tmp/flutter_version.txt
+            cat /tmp/flutter_version.txt
+            grep -q "Flutter 3.47.6" /tmp/flutter_version.txt
+      - prepare-for-cocoapods-integration-test
+      - run:
+          name: Switch Maestro app to CocoaPods
+          working_directory: e2e-tests/MaestroTestApp
+          command: |
+            sed -i '' 's/enable-swift-package-manager: true/enable-swift-package-manager: false/' pubspec.yaml
+            flutter pub get
+            sed -i '' "s/^# platform :ios, '13.0'/platform :ios, '15.0'/" ios/Podfile
+            perl -0pi -e 's/(flutter_additional_ios_build_settings\(target\)\n)/$1    target.build_configurations.each do |config|\n      config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = "15.0"\n      config.build_settings["SWIFT_OPTIMIZATION_LEVEL"] = "-O"\n    end\n/' ios/Podfile
+            grep -q "^platform :ios, '15.0'" ios/Podfile
+            grep -q 'SWIFT_OPTIMIZATION_LEVEL' ios/Podfile
+            cat ios/Podfile
+      - install-correct-cocoapods
+      - pod-update-with-retry:
+          working_directory: e2e-tests/MaestroTestApp/ios
+          platform: ios
+      - run:
+          name: Build Maestro app (iOS)
+          command: bundle exec fastlane build_maestro_app_ios
+          no_output_timeout: 15m
+      - run:
+          name: Show xcodebuild error
+          when: on_fail
+          working_directory: e2e-tests/MaestroTestApp/ios
+          command: |
+            xcodebuild -version
+            xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Debug \
+              -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build 2>&1 | tail -80
+      - run:
+          name: Print RevenueCatUI SwiftUI imports
+          command: |
+            BINARY=e2e-tests/MaestroTestApp/build/ios/iphonesimulator/Runner.app/Frameworks/RevenueCatUI.framework/RevenueCatUI
+            xcrun vtool -show-build "$BINARY" | grep -E "minos|sdk" | sort -u
+            nm -m "$BINARY" | grep -E '7SwiftUI(6SpacerV|6HStackV|9TupleViewV|7AnyViewV|19_ConditionalContentV)Mn'
+            nm -m "$BINARY" | grep 'weak' | grep 'SwiftUI' || echo "No weak SwiftUI imports"
+      - persist_to_workspace:
+          root: e2e-tests/MaestroTestApp/build/ios/iphonesimulator
+          paths:
+            - Runner.app
+
+  run-maestro-e2e-tests-ios-18:
+    description: "Run Maestro E2E tests on an iOS 18.5 simulator against the app built with Xcode 27"
+    executor:
+      name: macos-executor
+      xcode_version: "16.4"
+    steps:
+      - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby
+      - revenuecat/install-gem-mac-dependencies:
+          cache-version: v1
+      - revenuecat/install-maestro
+      - attach_workspace:
+          at: e2e-tests/MaestroTestApp/build/ios/iphonesimulator
+      - run:
+          name: Boot iOS 18 Simulator
+          command: |
+            xcrun simctl boot "iPhone 16" || true
+            xcrun simctl bootstatus "iPhone 16" -b
+            xcrun simctl list devices booted | tee /tmp/booted.txt
+            grep -q -- "-- iOS 18" /tmp/booted.txt
+      - run:
+          name: Run Maestro E2E Tests (iOS)
+          command: bundle exec fastlane run_maestro_e2e_tests_ios skip_build:true
+          no_output_timeout: 15m
+      - store_test_results:
+          path: fastlane/test_output
+      - store_artifacts:
+          path: fastlane/test_output
+
   run-maestro-e2e-tests-android:
     <<: *android-machine-emulator
     steps:
@@ -665,6 +761,14 @@ workflows:
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests
+      - build-maestro-app-ios-cocoapods-xcode-27:
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-ios-18:
+          context:
+            - e2e-tests
+          requires:
+            - build-maestro-app-ios-cocoapods-xcode-27
       - run-maestro-e2e-tests-android:
           context:
             - e2e-tests
@@ -750,6 +854,14 @@ workflows:
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests
+      - build-maestro-app-ios-cocoapods-xcode-27:
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-ios-18:
+          context:
+            - e2e-tests
+          requires:
+            - build-maestro-app-ios-cocoapods-xcode-27
 
   maestro-e2e-tests-android:
     when:
