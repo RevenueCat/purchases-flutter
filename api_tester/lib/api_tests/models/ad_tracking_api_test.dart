@@ -153,3 +153,35 @@ class _AdFailedToLoadDataApiTest {
     Map<String, dynamic> map = data.toMap();
   }
 }
+
+class _AdRewardPromptShownDataApiTest {
+  void _checkConstructor() {
+    AdRewardPromptShownData data = const AdRewardPromptShownData(
+      mediatorName: AdMediatorName.adMob,
+      adUnitId: 'unit-1',
+    );
+  }
+
+  void _checkProperties(AdRewardPromptShownData data) {
+    AdMediatorName mediatorName = data.mediatorName;
+    String? placement = data.placement;
+    String adUnitId = data.adUnitId;
+    Map<String, dynamic> map = data.toMap();
+  }
+}
+
+class _AdRewardPromptAcceptedDataApiTest {
+  void _checkConstructor() {
+    AdRewardPromptAcceptedData data = const AdRewardPromptAcceptedData(
+      mediatorName: AdMediatorName.adMob,
+      adUnitId: 'unit-1',
+    );
+  }
+
+  void _checkProperties(AdRewardPromptAcceptedData data) {
+    AdMediatorName mediatorName = data.mediatorName;
+    String? placement = data.placement;
+    String adUnitId = data.adUnitId;
+    Map<String, dynamic> map = data.toMap();
+  }
+}

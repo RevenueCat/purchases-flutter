@@ -2783,6 +2783,70 @@ void main() {
     ]);
   });
 
+  test('trackRewardedAdPromptShown sends correct method and arguments',
+      () async {
+    await Purchases.adTracker.trackRewardedAdPromptShown(AdRewardPromptShownData(
+      mediatorName: AdMediatorName.adMob,
+      adUnitId: 'unit-7',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackRewardedAdPromptShown', arguments: {
+        'mediatorName': 'AdMob',
+        'placement': null,
+        'adUnitId': 'unit-7',
+      }),
+    ]);
+  });
+
+  test('trackRewardedAdPromptShown includes optional fields when set',
+      () async {
+    await Purchases.adTracker.trackRewardedAdPromptShown(AdRewardPromptShownData(
+      mediatorName: AdMediatorName.adMob,
+      placement: 'footer',
+      adUnitId: 'unit-7',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackRewardedAdPromptShown', arguments: {
+        'mediatorName': 'AdMob',
+        'placement': 'footer',
+        'adUnitId': 'unit-7',
+      }),
+    ]);
+  });
+
+  test('trackRewardedAdPromptAccepted sends correct method and arguments',
+      () async {
+    await Purchases.adTracker
+        .trackRewardedAdPromptAccepted(AdRewardPromptAcceptedData(
+      mediatorName: AdMediatorName.adMob,
+      adUnitId: 'unit-8',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackRewardedAdPromptAccepted', arguments: {
+        'mediatorName': 'AdMob',
+        'placement': null,
+        'adUnitId': 'unit-8',
+      }),
+    ]);
+  });
+
+  test('trackRewardedAdPromptAccepted includes optional fields when set',
+      () async {
+    await Purchases.adTracker
+        .trackRewardedAdPromptAccepted(AdRewardPromptAcceptedData(
+      mediatorName: AdMediatorName.adMob,
+      placement: 'footer',
+      adUnitId: 'unit-8',
+    ));
+    expect(log, <Matcher>[
+      isMethodCall('trackRewardedAdPromptAccepted', arguments: {
+        'mediatorName': 'AdMob',
+        'placement': 'footer',
+        'adUnitId': 'unit-8',
+      }),
+    ]);
+  });
+
   test('setOnesignalUserID sends correct method and arguments', () async {
     await Purchases.setOnesignalUserID('onesignal-user-id');
     expect(log, <Matcher>[

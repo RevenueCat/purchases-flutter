@@ -1727,4 +1727,18 @@ class PurchasesAdTracker {
 
   Future<void> trackAdFailedToLoad(AdFailedToLoadData data) =>
       Purchases._channel.invokeMethod('trackAdFailedToLoad', data.toMap());
+
+  Future<void> trackRewardedAdPromptShown(AdRewardPromptShownData data) =>
+      Purchases._channel.invokeMethod(
+        'trackRewardedAdPromptShown',
+        data.toMap(),
+      );
+
+  Future<void> trackRewardedAdPromptAccepted(
+    AdRewardPromptAcceptedData data,
+  ) =>
+      Purchases._channel.invokeMethod(
+        'trackRewardedAdPromptAccepted',
+        data.toMap(),
+      );
 }
