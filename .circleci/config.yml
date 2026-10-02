@@ -561,7 +561,9 @@ jobs:
             }
             RUNTIME=$(find_runtime)
             if [ -z "$RUNTIME" ]; then
-              xcodebuild -downloadPlatform iOS -buildVersion 18.6
+              brew install xcodesorg/made/xcodes
+              xcodes runtimes
+              xcodes runtimes install "iOS 18.6"
               RUNTIME=$(find_runtime)
             fi
             [ -n "$RUNTIME" ] || { echo "No iOS 18 simulator runtime available"; exit 1; }
