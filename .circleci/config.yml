@@ -561,10 +561,8 @@ jobs:
             }
             RUNTIME=$(find_runtime)
             if [ -z "$RUNTIME" ]; then
-              curl -fsSL https://github.com/XcodesOrg/xcodes/releases/download/2.1.0/xcodes.zip -o /tmp/xcodes.zip
-              unzip -o /tmp/xcodes.zip -d /tmp/xcodes
-              /tmp/xcodes/xcodes runtimes
-              sudo /tmp/xcodes/xcodes runtimes install "iOS 18.6"
+              sw_vers
+              xcodebuild -downloadPlatform iOS -buildVersion 22G86 -architectureVariant universal
               RUNTIME=$(find_runtime)
             fi
             [ -n "$RUNTIME" ] || { echo "No iOS 18 simulator runtime available"; exit 1; }
