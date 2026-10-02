@@ -558,6 +558,14 @@ jobs:
           command: bundle exec fastlane build_maestro_app_ios
           no_output_timeout: 15m
       - run:
+          name: Show xcodebuild error
+          when: on_fail
+          working_directory: e2e-tests/MaestroTestApp/ios
+          command: |
+            xcodebuild -version
+            xcodebuild -workspace Runner.xcworkspace -scheme Runner -configuration Debug \
+              -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build 2>&1 | tail -80
+      - run:
           name: Print RevenueCatUI SwiftUI imports
           command: |
             BINARY=e2e-tests/MaestroTestApp/build/ios/iphonesimulator/Runner.app/Frameworks/RevenueCatUI.framework/RevenueCatUI
