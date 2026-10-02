@@ -547,7 +547,9 @@ jobs:
           name: Check Flutter version
           command: |
             which flutter
-            flutter --version | head -1 | grep -q "Flutter 3.47.6"
+            flutter --version > /tmp/flutter_version.txt
+            cat /tmp/flutter_version.txt
+            grep -q "Flutter 3.47.6" /tmp/flutter_version.txt
       - prepare-for-cocoapods-integration-test
       - run:
           name: Switch Maestro app to CocoaPods
