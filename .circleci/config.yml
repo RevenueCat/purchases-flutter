@@ -537,6 +537,17 @@ jobs:
           tools: ruby,flutter
       - revenuecat/install-gem-mac-dependencies:
           cache-version: v1
+      - run:
+          # Flutter 3.44 can't build for the simulator with Xcode 27 (flutter/flutter#188461), fixed in 3.47.
+          name: Use Flutter 3.47.6
+          command: |
+            git clone --depth 1 --branch 3.47.6 https://github.com/flutter/flutter.git "$HOME/flutter-3.47.6"
+            echo 'export PATH="$HOME/flutter-3.47.6/bin:$PATH"' >> "$BASH_ENV"
+      - run:
+          name: Check Flutter version
+          command: |
+            which flutter
+            flutter --version | head -1 | grep -q "Flutter 3.47.6"
       - prepare-for-cocoapods-integration-test
       - run:
           name: Switch Maestro app to CocoaPods
