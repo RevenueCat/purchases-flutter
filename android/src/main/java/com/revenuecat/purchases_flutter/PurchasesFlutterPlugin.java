@@ -414,6 +414,12 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "trackAdFailedToLoad":
                 trackAdFailedToLoad(call.arguments(), result);
                 break;
+            case "trackRewardedAdPromptShown":
+                trackRewardedAdPromptShown(call.arguments(), result);
+                break;
+            case "trackRewardedAdPromptAccepted":
+                trackRewardedAdPromptAccepted(call.arguments(), result);
+                break;
             case "generateRewardVerificationToken":
                 generateRewardVerificationToken(call.arguments(), result);
                 break;
@@ -967,6 +973,16 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void trackAdFailedToLoad(Map<String, Object> arguments, final Result result) {
         CommonKt.trackAdFailedToLoad(arguments);
+        result.success(null);
+    }
+
+    private void trackRewardedAdPromptShown(Map<String, Object> arguments, final Result result) {
+        CommonKt.trackRewardedAdPromptShown(arguments);
+        result.success(null);
+    }
+
+    private void trackRewardedAdPromptAccepted(Map<String, Object> arguments, final Result result) {
+        CommonKt.trackRewardedAdPromptAccepted(arguments);
         result.success(null);
     }
 

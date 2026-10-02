@@ -309,6 +309,10 @@ enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator
         [self trackAdLoaded:arguments result:result];
     } else if ([@"trackAdFailedToLoad" isEqualToString:call.method]) {
         [self trackAdFailedToLoad:arguments result:result];
+    } else if ([@"trackRewardedAdPromptShown" isEqualToString:call.method]) {
+        [self trackRewardedAdPromptShown:arguments result:result];
+    } else if ([@"trackRewardedAdPromptAccepted" isEqualToString:call.method]) {
+        [self trackRewardedAdPromptAccepted:arguments result:result];
     } else if ([@"generateRewardVerificationToken" isEqualToString:call.method]) {
         [self generateRewardVerificationToken:arguments result:result];
     } else if ([@"pollRewardVerification" isEqualToString:call.method]) {
@@ -803,6 +807,24 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
         [RCCommonFunctionality trackAdFailedToLoad:[arguments mappingNSNullToNil]];
     } else {
         NSLog(@"[Purchases] Warning: tried to call trackAdFailedToLoad, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
+- (void)trackRewardedAdPromptShown:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackRewardedAdPromptShown:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackRewardedAdPromptShown, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
+- (void)trackRewardedAdPromptAccepted:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackRewardedAdPromptAccepted:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackRewardedAdPromptAccepted, but it's only available on iOS 15.0 or greater.");
     }
     result(nil);
 }

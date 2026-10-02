@@ -748,6 +748,44 @@ class _PurchasesFlutterApiTest {
     ));
   }
 
+  void _checkTrackRewardedAdPromptShown() {
+    Future<void> future = Purchases.adTracker.trackRewardedAdPromptShown(
+      const AdRewardPromptShownData(
+        mediatorName: AdMediatorName.adMob,
+        adUnitId: 'unit-1',
+      ),
+    );
+  }
+
+  void _checkTrackRewardedAdPromptShownWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackRewardedAdPromptShown(
+      const AdRewardPromptShownData(
+        mediatorName: AdMediatorName.adMob,
+        adUnitId: 'unit-1',
+        placement: 'placement-1',
+      ),
+    );
+  }
+
+  void _checkTrackRewardedAdPromptAccepted() {
+    Future<void> future = Purchases.adTracker.trackRewardedAdPromptAccepted(
+      const AdRewardPromptAcceptedData(
+        mediatorName: AdMediatorName.adMob,
+        adUnitId: 'unit-1',
+      ),
+    );
+  }
+
+  void _checkTrackRewardedAdPromptAcceptedWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackRewardedAdPromptAccepted(
+      const AdRewardPromptAcceptedData(
+        mediatorName: AdMediatorName.adMob,
+        adUnitId: 'unit-1',
+        placement: 'placement-1',
+      ),
+    );
+  }
+
   void _checkGenerateRewardVerificationToken() async {
     RewardVerificationToken token =
         await Purchases.generateRewardVerificationToken('imp-1');

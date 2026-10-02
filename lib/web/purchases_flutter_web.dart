@@ -159,6 +159,8 @@ class PurchasesFlutterPlugin {
         case 'trackAdLoaded':
         case 'trackAdRevenue':
         case 'trackAdFailedToLoad':
+        case 'trackRewardedAdPromptShown':
+        case 'trackRewardedAdPromptAccepted':
           // No-op on web
           return Future.value();
 
