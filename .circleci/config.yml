@@ -524,6 +524,59 @@ jobs:
       - store_artifacts:
           path: fastlane/test_output
 
+  run-maestro-e2e-tests-ios-cocoapods-xcode-27:
+    description: "Run Maestro E2E tests with CocoaPods (use_frameworks!), Xcode 27 and an iOS 18 simulator"
+    executor:
+      name: macos-executor
+      xcode_version: "27.0.0"
+    steps:
+      - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby,flutter
+      - revenuecat/install-gem-mac-dependencies:
+          cache-version: v1
+      - revenuecat/install-maestro
+      - prepare-for-cocoapods-integration-test
+      - run:
+          name: Switch Maestro app to CocoaPods
+          working_directory: e2e-tests/MaestroTestApp
+          command: |
+            sed -i '' 's/enable-swift-package-manager: true/enable-swift-package-manager: false/' pubspec.yaml
+            flutter pub get
+            sed -i '' "s/^# platform :ios, '13.0'/platform :ios, '15.0'/" ios/Podfile
+            perl -0pi -e 's/(flutter_additional_ios_build_settings\(target\)\n)/$1    target.build_configurations.each do |config|\n      config.build_settings["IPHONEOS_DEPLOYMENT_TARGET"] = "15.0"\n      config.build_settings["SWIFT_OPTIMIZATION_LEVEL"] = "-O"\n    end\n/' ios/Podfile
+            grep -q "^platform :ios, '15.0'" ios/Podfile
+            grep -q 'SWIFT_OPTIMIZATION_LEVEL' ios/Podfile
+            cat ios/Podfile
+      - install-correct-cocoapods
+      - pod-update-with-retry:
+          working_directory: e2e-tests/MaestroTestApp/ios
+          platform: ios
+      - run:
+          name: Boot iOS 18 Simulator
+          command: |
+            xcrun simctl list runtimes
+            find_runtime() {
+              xcrun simctl list runtimes | grep -E '^iOS 18\.' | grep -v unavailable | tail -1 | awk '{print $NF}'
+            }
+            RUNTIME=$(find_runtime)
+            if [ -z "$RUNTIME" ]; then
+              xcodebuild -downloadPlatform iOS -buildVersion 18.6
+              RUNTIME=$(find_runtime)
+            fi
+            [ -n "$RUNTIME" ] || { echo "No iOS 18 simulator runtime available"; exit 1; }
+            UDID=$(xcrun simctl create "Maestro iOS 18" "iPhone 16" "$RUNTIME")
+            xcrun simctl boot "$UDID"
+            xcrun simctl bootstatus "$UDID" -b
+      - run:
+          name: Run Maestro E2E Tests (iOS)
+          command: bundle exec fastlane run_maestro_e2e_tests_ios
+          no_output_timeout: 15m
+      - store_test_results:
+          path: fastlane/test_output
+      - store_artifacts:
+          path: fastlane/test_output
+
   run-maestro-e2e-tests-android:
     <<: *android-machine-emulator
     steps:
@@ -665,6 +718,9 @@ workflows:
       - run-maestro-e2e-tests-ios:
           context:
             - e2e-tests
+      - run-maestro-e2e-tests-ios-cocoapods-xcode-27:
+          context:
+            - e2e-tests
       - run-maestro-e2e-tests-android:
           context:
             - e2e-tests
@@ -748,6 +804,9 @@ workflows:
         - equal: ["maestro_e2e_tests", << pipeline.schedule.name >>]
     jobs:
       - run-maestro-e2e-tests-ios:
+          context:
+            - e2e-tests
+      - run-maestro-e2e-tests-ios-cocoapods-xcode-27:
           context:
             - e2e-tests
 
