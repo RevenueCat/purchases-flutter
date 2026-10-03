@@ -248,6 +248,146 @@ lane :trigger_bump do
   trigger_action_in_circle_ci(action: 'bump', repo_name: repo_name)
 end
 
+desc "Build released and local Flutter SDK update test apps"
+lane :build_sdk_update_test_apps do |options|
+  require 'json'
+  require 'yaml'
+  platform = sdk_update_test_platform(options)
+  output = sdk_update_test_apps_dir(platform, options)
+  root = get_root_folder
+  template = "#{root}/e2e-tests/SDKUpdateTester"
+  key = ENV['MAESTRO_TEST_STORE_API_KEY']
+  UI.user_error!('MAESTRO_TEST_STORE_API_KEY must contain a Test Store key') unless key&.start_with?('test_')
+  release_version = options[:release_version] || get_latest_release_before_version(
+    repo_name: 'purchases-flutter', version: Gem::Version.new(current_version_number.split('-').first).bump.to_s
+  )
+  { 'release' => release_version, 'local' => current_version_number }.each_with_index do |(variant, version), index|
+    dir = "#{output}/#{variant}"
+    FileUtils.rm_rf(dir)
+    project = "#{dir}/project"
+    sh('flutter', 'create', '--platforms=ios,android', '--project-name', 'sdk_update_tester',
+      '--org', 'com.revenuecat', '--no-pub', project)
+    FileUtils.cp("#{template}/lib/main.dart", "#{project}/lib/main.dart")
+    FileUtils.rm_rf("#{project}/test")
+    manifest = YAML.load_file("#{template}/pubspec.yaml")
+    manifest['dependencies']['purchases_flutter'] = variant == 'release' ? version : { 'path' => root }
+    File.write("#{project}/pubspec.yaml", YAML.dump(manifest))
+    FileUtils.cp("#{template}/android/MainActivity.kt",
+      "#{project}/android/app/src/main/kotlin/com/revenuecat/sdk_update_tester/MainActivity.kt")
+    FileUtils.cp("#{template}/android/build.gradle.kts", "#{project}/android/app/build.gradle.kts")
+    FileUtils.cp("#{template}/ios/AppDelegate.swift", "#{project}/ios/Runner/AppDelegate.swift")
+    xcode = "#{project}/ios/Runner.xcodeproj/project.pbxproj"
+    File.write(xcode, File.read(xcode).gsub('com.revenuecat.sdkUpdateTester', 'com.revenuecat.SDKUpdateTester'))
+    Dir.chdir(project) { sh('flutter', 'pub', 'get') }
+    metadata = sdk_update_test_dependency(project, platform, variant, version)
+    File.write("#{dir}/version.txt", metadata[:version] + "\n")
+    File.write("#{dir}/source.txt", metadata[:source] + "\n")
+    File.write("#{dir}/resolved-sdk.json", JSON.pretty_generate(metadata))
+    FileUtils.cp("#{project}/pubspec.lock", "#{dir}/pubspec.lock")
+    defines = "#{dir}/build-defines.json"
+    File.write(defines, JSON.generate({
+      'REVENUECAT_API_KEY' => key, 'SDK_VERSION' => metadata[:version], 'SDK_SOURCE' => metadata[:source]
+    }))
+    args = platform == 'ios' ? ['ios', '--simulator', '--no-codesign'] : ['apk']
+    log = "#{dir}/flutter-build.log"
+    pid = Process.spawn({ 'SDK_UPDATE_OUTPUT' => dir, 'SDK_UPDATE_PHC_VERSION' => metadata[:hybrid_common] },
+      'flutter', 'build', *args, '--debug', "--build-number=#{index + 1}", "--dart-define-from-file=#{defines}",
+      chdir: project, out: log, err: [:child, :out])
+    _, status = Process.wait2(pid)
+    unless status.success?
+      UI.error(File.readlines(log).last(150).join.gsub(key, '[redacted]'))
+      UI.user_error!("#{variant} Flutter build failed. See #{log}")
+    end
+    if platform == 'ios'
+      resolved = ["#{project}/ios/Runner.xcworkspace", "#{project}/ios/Runner.xcodeproj/project.xcworkspace"]
+        .map { |workspace| "#{workspace}/xcshareddata/swiftpm/Package.resolved" }.find { |path| File.file?(path) }
+      UI.user_error!("No app Swift package resolution found for #{variant}") unless resolved
+      pins = JSON.parse(File.read(resolved))['pins']
+      File.write("#{dir}/resolved-native-dependencies.txt", JSON.pretty_generate(pins))
+      phc = pins.find { |pin| pin['identity'] == 'purchases-hybrid-common' }
+      UI.user_error!("#{variant} must resolve hybrid-common #{metadata[:hybrid_common]}") unless phc&.dig('state', 'version') == metadata[:hybrid_common]
+      FileUtils.cp_r("#{project}/build/ios/iphonesimulator/Runner.app", "#{dir}/SDKUpdateTester.app")
+    else
+      FileUtils.cp("#{project}/build/app/outputs/flutter-apk/app-debug.apk", "#{dir}/SDKUpdateTester.apk")
+    end
+    UI.success("Built #{variant} Flutter SDK #{metadata[:version]} #{metadata[:source]}")
+  end
+end
+
+desc "Run a Flutter SDK update Maestro test case"
+lane :run_sdk_update_test do |options|
+  platform = sdk_update_test_platform(options)
+  test_case = options[:test_case]
+  UI.user_error!('test_case must be anonymous_user or logged_in_user') unless %w[anonymous_user logged_in_user].include?(test_case)
+  apps = sdk_update_test_apps_dir(platform, options)
+  flows = "#{get_root_folder}/e2e-tests/maestro/sdk_update_tests/#{test_case}"
+  steps = %w[release local].each_with_index.map do |variant, index|
+    dir = "#{apps}/#{variant}"
+    UI.user_error!("#{dir}/version.txt not found. Build both apps first.") unless File.file?("#{dir}/version.txt")
+    {
+      app_path: "#{dir}/SDKUpdateTester.#{platform == 'ios' ? 'app' : 'apk'}",
+      sdk_version: "#{File.read("#{dir}/version.txt").strip} #{File.read("#{dir}/source.txt").strip}",
+      flow: "#{flows}/#{index.zero? ? 'before' : 'after'}_update.yaml"
+    }
+  end
+  run_sdk_update_maestro_test(
+    platform: platform, app_id: 'com.revenuecat.SDKUpdateTester', steps: steps,
+    output_dir: "#{get_root_folder}/fastlane/test_output/sdk_update_tests/#{platform}/#{test_case}",
+    max_attempts: Integer(options.fetch(:max_attempts, 3))
+  )
+end
+
+def sdk_update_test_platform(options)
+  platform = options[:platform]
+  UI.user_error!('platform must be ios or android') unless %w[ios android].include?(platform)
+  platform
+end
+
+def sdk_update_test_apps_dir(platform, options)
+  base = "#{get_root_folder}/build/sdk_update_tests"
+  output = File.expand_path(options[:apps_dir] || options[:output_dir] || platform, base)
+  UI.user_error!("SDK update app outputs must be inside #{base}") unless output.start_with?("#{base}/")
+  output
+end
+
+def sdk_update_test_dependency(project, platform, variant, expected_version)
+  require 'digest'
+  require 'uri'
+  require 'yaml'
+  lock = YAML.load_file("#{project}/pubspec.lock")['packages']['purchases_flutter']
+  source = variant == 'release' ? 'hosted' : 'path'
+  UI.user_error!('Unexpected purchases_flutter package source or version') unless lock['source'] == source && lock['version'] == expected_version
+  if source == 'hosted' && lock.dig('description', 'url') != 'https://pub.dev'
+    UI.user_error!('The released Flutter SDK must resolve from pub.dev')
+  end
+  config_path = "#{project}/.dart_tool/package_config.json"
+  package = JSON.parse(File.read(config_path))['packages'].find { |entry| entry['name'] == 'purchases_flutter' }
+  uri = URI.parse(package['rootUri'])
+  path = uri.absolute? ? uri.path : File.expand_path(uri.path, File.dirname(config_path))
+  sdk = File.realpath(URI::DEFAULT_PARSER.unescape(path))
+  local = File.realpath(get_root_folder)
+  UI.user_error!('The Flutter SDK package path does not match its selected source') unless (source == 'path') == (sdk == local)
+  plugins = JSON.parse(File.read("#{project}/.flutter-plugins-dependencies"))['plugins']
+  %w[ios android].each do |platform|
+    plugin = plugins[platform].find { |entry| entry['name'] == 'purchases_flutter' }
+    UI.user_error!("#{platform} must use the selected Flutter SDK's native plugin") unless plugin && File.realpath(plugin['path']) == sdk
+  end
+  version = YAML.load_file("#{sdk}/pubspec.yaml")['version']
+  ios_wrapper = File.read("#{sdk}/ios/purchases_flutter/Sources/purchases_flutter/PurchasesFlutterPlugin.m")
+  android_wrapper = File.read("#{sdk}/android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java")
+  ios_version = ios_wrapper.match(/platformFlavorVersion\s*\{\s*return @"([^"]+)"/)&.captures&.first
+  android_version = android_wrapper.match(/PLUGIN_VERSION = "([^"]+)"/)&.captures&.first
+  UI.user_error!('The Flutter package and its native wrappers must match the expected SDK version') unless [version, ios_version, android_version].all? { |value| value == expected_version }
+  android_phc = File.read("#{sdk}/android/build.gradle").match(/ext.common_version = '([^']+)'/)[1]
+  ios_phc = File.read("#{sdk}/ios/purchases_flutter/Package.swift").match(/exact: "([^"]+)"/)[1]
+  {
+    version: version, source: source.capitalize, path: sdk,
+    hybrid_common: platform == 'ios' ? ios_phc : android_phc,
+    dart_sha256: Digest::SHA256.file("#{sdk}/lib/purchases_flutter.dart").hexdigest,
+    published_sha256: lock.dig('description', 'sha256')
+  }
+end
+
 desc "Verifies the vendored web SDK bundle matches the published " \
      "purchases-js-hybrid-mappings bundle for the current purchases-hybrid-common version"
 lane :verify_web_hybrid_mappings_bundle do

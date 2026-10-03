@@ -1,0 +1,8 @@
+# Created by Antonio Pallares. Copyright (c) 2026 RevenueCat, Inc.
+
+.dart_tool/
+.flutter-plugins-dependencies
+pubspec.lock
+build/
+ios/Flutter/
+ios/Runner/GeneratedPluginRegistrant.*

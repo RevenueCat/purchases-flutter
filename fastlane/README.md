@@ -117,6 +117,22 @@ Run maestro E2E tests on Android (emulator must be running)
 
 Trigger bump
 
+### build_sdk_update_test_apps
+
+```sh
+[bundle exec] fastlane build_sdk_update_test_apps
+```
+
+Build released and local Flutter SDK update test apps
+
+### run_sdk_update_test
+
+```sh
+[bundle exec] fastlane run_sdk_update_test
+```
+
+Run a Flutter SDK update Maestro test case
+
 ### verify_web_hybrid_mappings_bundle
 
 ```sh
@@ -124,6 +140,14 @@ Trigger bump
 ```
 
 Verifies the vendored web SDK bundle matches the published purchases-js-hybrid-mappings bundle for the current purchases-hybrid-common version
+
+### sync_mise_lock
+
+```sh
+[bundle exec] fastlane sync_mise_lock
+```
+
+Regenerates mise.lock to match mise.toml and pushes the commit if anything changed (used by the sync-mise-lock GitHub Actions workflow, which reacts to Renovate bumping mise.toml's flutter pin)
 
 ----
 

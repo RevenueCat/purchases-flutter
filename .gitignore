@@ -56,3 +56,5 @@ flutter
 
 # Claude Code
 .claude/
+
+/fastlane/test_output/
