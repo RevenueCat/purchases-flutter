@@ -30,7 +30,6 @@ CI provides `WORKFLOWS_TEST_STORE_API_KEY` through the `maestro` context. Its `n
 the `$rc_monthly` package, with product `pro_monthly_subscription` granting `pro`. The key is injected
 through a generated Dart defines file under `build/sdk_update_tests`. Apps and build directories
 must never be uploaded as CI artifacts; only diagnostic reports, logs and screenshots are uploaded.
-The run lane removes inherited `MAESTRO_*` variables, which Maestro otherwise includes in JSON reports.
 
 With one Android emulator booted:
 
