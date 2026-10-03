@@ -169,15 +169,15 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       );
 }
 
-Widget _label(String id, String text) => Semantics(
-      identifier: id,
-      label: text,
-      excludeSemantics: true,
-      child: SizedBox(
-        height: 56,
-        width: double.infinity,
-        child: Align(
-          alignment: Alignment.topLeft,
+Widget _label(String id, String text) => SizedBox(
+      height: 56,
+      width: double.infinity,
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Semantics(
+          identifier: id,
+          label: text,
+          excludeSemantics: true,
           child: Text(text, style: const TextStyle(fontSize: 14)),
         ),
       ),
