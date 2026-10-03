@@ -58,3 +58,8 @@ These flows verify retained identity and visible entitlements, but do not prove 
 preservation. Screenshot comparisons also tolerate a small pixel difference and cannot prove exact
 user-ID equality. Stronger assertions should be coordinated under
 [SDK-4526](https://linear.app/revenuecat/issue/SDK-4526) and mirrored across the native implementations.
+
+In [CI validation](https://app.circleci.com/pipelines/github/RevenueCat/purchases-flutter/6534), the
+iOS logged-in case displayed an anonymous ID after the update in two attempts, then retained the
+logged-in ID on the third attempt. The cause is unresolved. The failed assertions and screenshots
+remain in the diagnostic artifacts; JUnit contains the final attempt, following the shared runner.

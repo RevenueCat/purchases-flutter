@@ -141,14 +141,6 @@ Run a Flutter SDK update Maestro test case
 
 Verifies the vendored web SDK bundle matches the published purchases-js-hybrid-mappings bundle for the current purchases-hybrid-common version
 
-### sync_mise_lock
-
-```sh
-[bundle exec] fastlane sync_mise_lock
-```
-
-Regenerates mise.lock to match mise.toml and pushes the commit if anything changed (used by the sync-mise-lock GitHub Actions workflow, which reacts to Renovate bumping mise.toml's flutter pin)
-
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
