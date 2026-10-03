@@ -330,11 +330,17 @@ lane :run_sdk_update_test do |options|
       flow: "#{flows}/#{index.zero? ? 'before' : 'after'}_update.yaml"
     }
   end
-  run_sdk_update_maestro_test(
-    platform: platform, app_id: 'com.revenuecat.SDKUpdateTester', steps: steps,
-    output_dir: "#{get_root_folder}/fastlane/test_output/sdk_update_tests/#{platform}/#{test_case}",
-    max_attempts: Integer(options.fetch(:max_attempts, 3))
-  )
+  maestro_environment = ENV.to_h.select { |name, _| name.start_with?('MAESTRO_') }
+  begin
+    maestro_environment.each_key { |name| ENV.delete(name) }
+    run_sdk_update_maestro_test(
+      platform: platform, app_id: 'com.revenuecat.SDKUpdateTester', steps: steps,
+      output_dir: "#{get_root_folder}/fastlane/test_output/sdk_update_tests/#{platform}/#{test_case}",
+      max_attempts: Integer(options.fetch(:max_attempts, 3))
+    )
+  ensure
+    ENV.update(maestro_environment)
+  end
 end
 
 def sdk_update_test_platform(options)
