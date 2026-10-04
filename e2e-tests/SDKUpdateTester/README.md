@@ -25,6 +25,9 @@ Remove the temporary plugin pin when that PR merges.
 
 ## Run locally
 
+Use Xcode 27.0 for iOS, matching the SDK update CI job. The generated Flutter host uses
+the scene lifecycle, and the launch-argument channel registers when its engine initializes.
+
 Install the versions in `mise.toml`. Set `MAESTRO_TEST_STORE_API_KEY` to the Workflows Test Store key.
 CI provides `WORKFLOWS_TEST_STORE_API_KEY` through the `maestro` context. Its `no_paywall` offering has
 the `$rc_monthly` package, with product `pro_monthly_subscription` granting `pro`. The key is injected
