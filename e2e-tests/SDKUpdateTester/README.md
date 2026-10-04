@@ -66,3 +66,12 @@ In [CI validation](https://app.circleci.com/pipelines/github/RevenueCat/purchase
 iOS logged-in case displayed an anonymous ID after the update in two attempts, then retained the
 logged-in ID on the third attempt. The cause is unresolved. The failed assertions and screenshots
 remain in the diagnostic artifacts; JUnit contains the final attempt, following the shared runner.
+
+With Xcode 27, both iOS cases passed locally. The logged-in case first showed an anonymous ID
+after the update and passed on a fresh attempt. The failed run was preserved. Upgrading the
+toolchain has not resolved this identity flakiness.
+
+The Xcode 27 [CI run](https://app.circleci.com/pipelines/github/RevenueCat/purchases-flutter/6536)
+passed all four cases. The iOS logged-in case showed an anonymous ID after the update on its first
+attempt and passed on the second. Other cases passed on their first attempt. Failed attempts
+remain in diagnostics, and JUnit contains the final attempt.
