@@ -277,7 +277,10 @@ lane :build_sdk_update_test_apps do |options|
     FileUtils.cp("#{template}/android/build.gradle.kts", "#{project}/android/app/build.gradle.kts")
     FileUtils.cp("#{template}/ios/AppDelegate.swift", "#{project}/ios/Runner/AppDelegate.swift")
     xcode = "#{project}/ios/Runner.xcodeproj/project.pbxproj"
-    File.write(xcode, File.read(xcode).gsub('com.revenuecat.sdkUpdateTester', 'com.revenuecat.SDKUpdateTester'))
+    project_settings = File.read(xcode)
+      .gsub('com.revenuecat.sdkUpdateTester', 'com.revenuecat.SDKUpdateTester')
+      .gsub(/IPHONEOS_DEPLOYMENT_TARGET = [\d.]+;/, 'IPHONEOS_DEPLOYMENT_TARGET = 15.0;')
+    File.write(xcode, project_settings)
     Dir.chdir(project) { sh('flutter', 'pub', 'get') }
     metadata = sdk_update_test_dependency(project, platform, variant, version)
     File.write("#{dir}/version.txt", metadata[:version] + "\n")
