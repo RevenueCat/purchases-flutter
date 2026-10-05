@@ -52,12 +52,16 @@ class PurchasesFlutterPlugin {
       ..addEventListener(
         'load',
         (Event _) {
-          completer.complete();
+          // Browsers have been seen to deliver a second `load` for this
+          // script, and completing twice throws a "Future already
+          // completed" StateError out of the event listener.
+          if (!completer.isCompleted) completer.complete();
         }.toJS,
       )
       ..addEventListener(
         'error',
         (Event _) {
+          if (completer.isCompleted) return;
           completer.completeError(
             StateError(
               'Failed to load the RevenueCat web SDK from '
