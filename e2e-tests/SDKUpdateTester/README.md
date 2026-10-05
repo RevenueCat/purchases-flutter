@@ -29,8 +29,8 @@ Use Xcode 27.0 and Flutter 3.44.9, matching CI. This Flutter patch includes the 
 framework verification fix. The generated test host targets iOS 15 and uses the scene lifecycle;
 the launch-argument channel registers when its engine initializes.
 
-Install the versions in `mise.toml`. Set `MAESTRO_TEST_STORE_API_KEY` to the Workflows Test Store key.
-CI provides `WORKFLOWS_TEST_STORE_API_KEY` through the `maestro` context. Its `no_paywall` offering has
+Install the versions in `mise.toml`. Set `MAESTRO_TEST_STORE_API_KEY` to the `automated_sdk_tests` Test Store key.
+CI provides it through the `maestro` context. Its `no_paywall` offering has
 the `$rc_monthly` package, with product `pro_monthly_subscription` granting `pro`. The key is injected
 through a generated Dart defines file under `build/sdk_update_tests`. Apps and build directories
 must never be uploaded as CI artifacts; only diagnostic reports, logs and screenshots are uploaded.

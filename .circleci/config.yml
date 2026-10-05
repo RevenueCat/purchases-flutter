@@ -597,9 +597,7 @@ jobs:
       - revenuecat/install-maestro
       - run:
           name: Build released and local SDK update apps
-          command: |
-            export MAESTRO_TEST_STORE_API_KEY="$WORKFLOWS_TEST_STORE_API_KEY"
-            bundle exec fastlane build_sdk_update_test_apps platform:ios
+          command: bundle exec fastlane build_sdk_update_test_apps platform:ios
           no_output_timeout: 30m
       - run:
           name: Boot iOS Simulator
@@ -632,9 +630,7 @@ jobs:
           cache-version: v1
       - run:
           name: Build released and local SDK update apps
-          command: |
-            export MAESTRO_TEST_STORE_API_KEY="$WORKFLOWS_TEST_STORE_API_KEY"
-            bundle exec fastlane build_sdk_update_test_apps platform:android
+          command: bundle exec fastlane build_sdk_update_test_apps platform:android
           no_output_timeout: 30m
       - android/create-avd:
           avd-name: sdk-update-tests
