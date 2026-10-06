@@ -15,14 +15,6 @@ published package have the same version. Each output contains `version.txt`, `so
 lockfile, package metadata and resolved native dependencies. Flutter generates the platform scaffolding
 inside the ignored build directory, keeping this template small and matching the repository's tool pin.
 
-The seven YAML files in `../maestro/sdk_update_tests` are byte-for-byte copies from
-[iOS #7900](https://github.com/RevenueCat/purchases-ios/pull/7900),
-[Android #4381](https://github.com/RevenueCat/purchases-android/pull/4381), and
-[KMP #1063](https://github.com/RevenueCat/purchases-kmp/pull/1063).
-Release discovery, clean attempts, update installation, retries and JUnit reports use
-[shared actions #161](https://github.com/RevenueCat/fastlane-plugin-revenuecat_internal/pull/161).
-Remove the temporary plugin pin when that PR merges.
-
 ## Run locally
 
 Use Xcode 27.0 and Flutter 3.44.9, matching CI. This Flutter patch includes the Xcode 27
