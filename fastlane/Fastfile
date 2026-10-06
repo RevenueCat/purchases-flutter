@@ -251,7 +251,6 @@ end
 desc "Build released and local Flutter SDK update test apps"
 lane :build_sdk_update_test_apps do |options|
   require 'json'
-  require 'yaml'
   platform = sdk_update_test_platform(options)
   output = sdk_update_test_apps_dir(platform, options)
   root = get_root_folder
@@ -264,23 +263,13 @@ lane :build_sdk_update_test_apps do |options|
   { 'release' => release_version, 'local' => current_version_number }.each_with_index do |(variant, version), index|
     dir = "#{output}/#{variant}"
     FileUtils.rm_rf(dir)
+    FileUtils.mkdir_p(dir)
     project = "#{dir}/project"
-    sh('flutter', 'create', '--platforms=ios,android', '--project-name', 'sdk_update_tester',
-      '--org', 'com.revenuecat', '--no-pub', project)
-    FileUtils.cp("#{template}/lib/main.dart", "#{project}/lib/main.dart")
-    FileUtils.rm_rf("#{project}/test")
+    sh('rsync', '-a', '--exclude-from', "#{template}/.gitignore",
+      '--exclude', platform == 'ios' ? 'android/' : 'ios/', "#{template}/", "#{project}/")
     manifest = YAML.load_file("#{template}/pubspec.yaml")
     manifest['dependencies']['purchases_flutter'] = variant == 'release' ? version : { 'path' => root }
     File.write("#{project}/pubspec.yaml", YAML.dump(manifest))
-    FileUtils.cp("#{template}/android/MainActivity.kt",
-      "#{project}/android/app/src/main/kotlin/com/revenuecat/sdk_update_tester/MainActivity.kt")
-    FileUtils.cp("#{template}/android/build.gradle.kts", "#{project}/android/app/build.gradle.kts")
-    FileUtils.cp("#{template}/ios/AppDelegate.swift", "#{project}/ios/Runner/AppDelegate.swift")
-    xcode = "#{project}/ios/Runner.xcodeproj/project.pbxproj"
-    project_settings = File.read(xcode)
-      .gsub('com.revenuecat.sdkUpdateTester', 'com.revenuecat.SDKUpdateTester')
-      .gsub(/IPHONEOS_DEPLOYMENT_TARGET = [\d.]+;/, 'IPHONEOS_DEPLOYMENT_TARGET = 15.0;')
-    File.write(xcode, project_settings)
     Dir.chdir(project) { sh('flutter', 'pub', 'get') }
     metadata = sdk_update_test_dependency(project, platform, variant, version)
     File.write("#{dir}/version.txt", metadata[:version] + "\n")
@@ -354,9 +343,7 @@ def sdk_update_test_apps_dir(platform, options)
 end
 
 def sdk_update_test_dependency(project, platform, variant, expected_version)
-  require 'digest'
   require 'uri'
-  require 'yaml'
   lock = YAML.load_file("#{project}/pubspec.lock")['packages']['purchases_flutter']
   source = variant == 'release' ? 'hosted' : 'path'
   UI.user_error!('Unexpected purchases_flutter package source or version') unless lock['source'] == source && lock['version'] == expected_version
@@ -371,24 +358,19 @@ def sdk_update_test_dependency(project, platform, variant, expected_version)
   local = File.realpath(get_root_folder)
   UI.user_error!('The Flutter SDK package path does not match its selected source') unless (source == 'path') == (sdk == local)
   plugins = JSON.parse(File.read("#{project}/.flutter-plugins-dependencies"))['plugins']
-  %w[ios android].each do |platform|
-    plugin = plugins[platform].find { |entry| entry['name'] == 'purchases_flutter' }
-    UI.user_error!("#{platform} must use the selected Flutter SDK's native plugin") unless plugin && File.realpath(plugin['path']) == sdk
+  plugin = plugins[platform].find { |entry| entry['name'] == 'purchases_flutter' }
+  UI.user_error!("#{platform} must use the selected Flutter SDK's native plugin") unless plugin && File.realpath(plugin['path']) == sdk
+  if platform == 'ios'
+    wrapper = File.read("#{sdk}/ios/purchases_flutter/Sources/purchases_flutter/PurchasesFlutterPlugin.m")
+    wrapper_version = wrapper.match(/platformFlavorVersion\s*\{\s*return @"([^"]+)"/)&.captures&.first
+    hybrid_common = File.read("#{sdk}/ios/purchases_flutter/Package.swift").match(/exact: "([^"]+)"/)[1]
+  else
+    wrapper = File.read("#{sdk}/android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java")
+    wrapper_version = wrapper.match(/PLUGIN_VERSION = "([^"]+)"/)&.captures&.first
+    hybrid_common = File.read("#{sdk}/android/build.gradle").match(/ext.common_version = '([^']+)'/)[1]
   end
-  version = YAML.load_file("#{sdk}/pubspec.yaml")['version']
-  ios_wrapper = File.read("#{sdk}/ios/purchases_flutter/Sources/purchases_flutter/PurchasesFlutterPlugin.m")
-  android_wrapper = File.read("#{sdk}/android/src/main/java/com/revenuecat/purchases_flutter/PurchasesFlutterPlugin.java")
-  ios_version = ios_wrapper.match(/platformFlavorVersion\s*\{\s*return @"([^"]+)"/)&.captures&.first
-  android_version = android_wrapper.match(/PLUGIN_VERSION = "([^"]+)"/)&.captures&.first
-  UI.user_error!('The Flutter package and its native wrappers must match the expected SDK version') unless [version, ios_version, android_version].all? { |value| value == expected_version }
-  android_phc = File.read("#{sdk}/android/build.gradle").match(/ext.common_version = '([^']+)'/)[1]
-  ios_phc = File.read("#{sdk}/ios/purchases_flutter/Package.swift").match(/exact: "([^"]+)"/)[1]
-  {
-    version: version, source: source.capitalize, path: sdk,
-    hybrid_common: platform == 'ios' ? ios_phc : android_phc,
-    dart_sha256: Digest::SHA256.file("#{sdk}/lib/purchases_flutter.dart").hexdigest,
-    published_sha256: lock.dig('description', 'sha256')
-  }
+  UI.user_error!('The native wrapper must match the resolved Flutter SDK version') unless wrapper_version == lock['version']
+  { version: lock['version'], source: source.capitalize, path: sdk, hybrid_common: hybrid_common }
 end
 
 desc "Verifies the vendored web SDK bundle matches the published " \

@@ -1,8 +1,28 @@
 # Created by Antonio Pallares. Copyright (c) 2026 RevenueCat, Inc.
 
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
+.metadata
+.idea/
+*.iml
 pubspec.lock
 build/
-ios/Flutter/
+android/.gradle/
+android/local.properties
+android/gradlew
+android/gradlew.bat
+android/gradle/wrapper/gradle-wrapper.jar
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+android/key.properties
+*.jks
+*.keystore
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Flutter/flutter_export_environment.sh
 ios/Runner/GeneratedPluginRegistrant.*
+**/xcuserdata/
+**/Package.resolved
+.DS_Store

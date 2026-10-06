@@ -58,3 +58,4 @@ flutter
 .claude/
 
 /fastlane/test_output/
+!/e2e-tests/SDKUpdateTester/ios/Flutter/
