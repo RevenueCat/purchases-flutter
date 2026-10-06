@@ -589,6 +589,10 @@ jobs:
       name: macos-executor
       xcode_version: "27.0"
     steps:
+      - macos/preboot-simulator:
+          version: "27.0"
+          platform: "iOS"
+          device: "iPhone 17"
       - checkout
       - revenuecat/install-mise-tools:
           tools: java,ruby,flutter
@@ -600,11 +604,8 @@ jobs:
           command: bundle exec fastlane build_sdk_update_test_apps platform:ios
           no_output_timeout: 30m
       - run:
-          name: Boot iOS Simulator
-          command: |
-            simulator=$(xcrun simctl create SDKUpdateTester com.apple.CoreSimulator.SimDeviceType.iPhone-17 com.apple.CoreSimulator.SimRuntime.iOS-27-0)
-            xcrun simctl boot "$simulator"
-            xcrun simctl bootstatus "$simulator" -b
+          name: Wait for iOS Simulator
+          command: xcrun simctl bootstatus "$MACOS_ORB_DEVICE_UDID" -b
       - run:
           name: SDK update — anonymous_user
           command: bundle exec fastlane run_sdk_update_test platform:ios test_case:anonymous_user
@@ -628,17 +629,13 @@ jobs:
           tools: java,ruby,flutter
       - revenuecat/install-gem-unix-dependencies:
           cache-version: v1
-      - run:
-          name: Build released and local SDK update apps
-          command: bundle exec fastlane build_sdk_update_test_apps platform:android
-          no_output_timeout: 30m
       - android/create-avd:
           avd-name: sdk-update-tests
           system-image: system-images;android-34;google_apis;x86_64
           install: true
       - android/start-emulator:
           avd-name: sdk-update-tests
-          post-emulator-launch-assemble-command: ""
+          post-emulator-launch-assemble-command: bundle exec fastlane build_sdk_update_test_apps platform:android
       - revenuecat/install-maestro
       - run:
           name: SDK update — anonymous_user
