@@ -769,10 +769,6 @@ workflows:
       - run-maestro-e2e-tests-android:
           context:
             - e2e-tests
-      - run-sdk-update-tests-ios:
-          context: maestro
-      - run-sdk-update-tests-android:
-          context: maestro
 
   deploy:
     when:
@@ -883,9 +879,7 @@ workflows:
 
   sdk-update-tests:
     when:
-      or:
-        - equal: [sdk-update-tests, << pipeline.parameters.action >>]
-        - equal: [maestro_e2e_tests, << pipeline.schedule.name >>]
+      equal: [sdk-update-tests, << pipeline.parameters.action >>]
     jobs:
       - run-sdk-update-tests-ios:
           context: maestro
