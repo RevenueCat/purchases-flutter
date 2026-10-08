@@ -748,6 +748,30 @@ class _PurchasesFlutterApiTest {
     ));
   }
 
+  void _checkTrackAdRewardEarnedUnverified() {
+    Future<void> future = Purchases.adTracker.trackAdRewardEarnedUnverified(
+      const AdRewardEarnedUnverifiedData(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-1',
+        impressionId: 'imp-1',
+      ),
+    );
+  }
+
+  void _checkTrackAdRewardEarnedUnverifiedWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackAdRewardEarnedUnverified(
+      const AdRewardEarnedUnverifiedData(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-1',
+        impressionId: 'imp-1',
+        networkName: 'network-1',
+        placement: 'placement-1',
+      ),
+    );
+  }
+
   void _checkTrackRewardedAdPromptShown() {
     Future<void> future = Purchases.adTracker.trackRewardedAdPromptShown(
       const AdRewardPromptShownData(

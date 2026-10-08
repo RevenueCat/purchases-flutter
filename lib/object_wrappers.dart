@@ -7,6 +7,7 @@ export 'models/ad_mediator_name.dart';
 export 'models/ad_opened_data.dart';
 export 'models/ad_revenue_data.dart';
 export 'models/ad_revenue_precision.dart';
+export 'models/ad_reward_earned_unverified_data.dart';
 export 'models/ad_reward_prompt_accepted_data.dart';
 export 'models/ad_reward_prompt_shown_data.dart';
 export 'models/custom_paywall_impression_params.dart';

@@ -1728,6 +1728,14 @@ class PurchasesAdTracker {
   Future<void> trackAdFailedToLoad(AdFailedToLoadData data) =>
       Purchases._channel.invokeMethod('trackAdFailedToLoad', data.toMap());
 
+  Future<void> trackAdRewardEarnedUnverified(
+    AdRewardEarnedUnverifiedData data,
+  ) =>
+      Purchases._channel.invokeMethod(
+        'trackAdRewardEarnedUnverified',
+        data.toMap(),
+      );
+
   Future<void> trackRewardedAdPromptShown(AdRewardPromptShownData data) =>
       Purchases._channel.invokeMethod(
         'trackRewardedAdPromptShown',
