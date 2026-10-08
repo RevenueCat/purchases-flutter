@@ -109,7 +109,7 @@ commands:
     parameters:
       version:
         type: string
-        default: stable
+        default: "3.44.2"
     steps:
       - run:
           name: Download flutter SDK
@@ -322,8 +322,8 @@ jobs:
   android-integration-test-build:
     description: "Build Android Flutter integration tests"
     docker:
-      - image: ghcr.io/cirruslabs/flutter:stable
-    resource_class: large
+      - image: ghcr.io/cirruslabs/flutter:3.44.2
+    resource_class: xlarge
     steps:
       - checkout
       - replace-api-key
