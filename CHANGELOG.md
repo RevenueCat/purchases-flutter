@@ -517,6 +517,15 @@ This release updates to Billing Library 8.3.0 with min SDK supported of Android 
 * Bump addressable from 2.8.9 to 2.9.0 (#1715) via dependabot[bot] (@dependabot[bot])
 * Bump fastlane-plugin-revenuecat_internal from `6289be1` to `ceecf91` (#1713) via dependabot[bot] (@dependabot[bot])
 
+## 9.16.2
+## RevenueCat SDK
+### 🐞 Bugfixes
+* Fix iOS ignoring `automaticDeviceIdentifierCollectionEnabled` in `configure` (RevenueCat/purchases-hybrid-common#1956) via Álvaro Brey (@AlvaroBrey)
+### 📦 Dependency Updates
+* Updates purchases-hybrid-common to 17.55.2 (#1940) via Álvaro Brey (@AlvaroBrey)
+  * [Android 9.29.0](https://github.com/RevenueCat/purchases-android/releases/tag/9.29.0)
+  * [iOS 5.67.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.67.1)
+
 ## 9.16.1
 ## RevenueCat SDK
 ### 📦 Dependency Updates
