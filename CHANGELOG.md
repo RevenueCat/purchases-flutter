@@ -1,3 +1,8 @@
+## Unreleased
+
+### Bugfixes
+* Defer PaywallView until the route transition finishes (#1735)
+
 ## 10.15.2
 ## RevenueCat SDK
 ### 📦 Dependency Updates

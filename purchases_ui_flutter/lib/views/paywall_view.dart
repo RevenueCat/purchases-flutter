@@ -70,14 +70,14 @@ import 'paywall_view_method_handler.dart';
 /// restores when `purchasesAreCompletedBy` is set to `myApp`. When provided,
 /// the paywall will delegate purchase and restore operations to this
 /// implementation instead of using RevenueCat's default flow.
-class PaywallView extends StatelessWidget {
+class PaywallView extends StatefulWidget {
   final Offering? offering;
   final bool? displayCloseButton;
   final Map<String, CustomVariableValue>? customVariables;
   final PaywallPurchaseLogic? purchaseLogic;
   final Function(Package rcPackage)? onPurchaseStarted;
   final Function(CustomerInfo customerInfo, StoreTransaction storeTransaction)?
-      onPurchaseCompleted;
+  onPurchaseCompleted;
   final Function()? onPurchaseCancelled;
   final Function(PurchasesError)? onPurchaseError;
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
@@ -105,19 +105,67 @@ class PaywallView extends StatelessWidget {
     this.onInteraction,
   }) : super(key: key);
 
+  @override
+  State<PaywallView> createState() => _PaywallViewState();
+}
+
+class _PaywallViewState extends State<PaywallView> {
   static const String _viewType = 'com.revenuecat.purchasesui/PaywallView';
+
+  // Native paywall views hitch the transition, so wait until it finishes.
+  bool _showPlatformView = false;
+  Animation<double>? _routeAnimation;
+  MethodChannel? _methodChannel;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final animation = ModalRoute.of(context)?.animation;
+    if (identical(animation, _routeAnimation)) {
+      return;
+    }
+    _routeAnimation?.removeStatusListener(_handleRouteStatus);
+    _routeAnimation = animation;
+    if (_showPlatformView) {
+      return;
+    }
+    if (animation == null || animation.status == AnimationStatus.completed) {
+      _showPlatformView = true;
+    } else {
+      animation.addStatusListener(_handleRouteStatus);
+    }
+  }
+
+  void _handleRouteStatus(AnimationStatus status) {
+    if (status != AnimationStatus.completed || !mounted) {
+      return;
+    }
+    _routeAnimation?.removeStatusListener(_handleRouteStatus);
+    setState(() => _showPlatformView = true);
+  }
+
+  @override
+  void dispose() {
+    _routeAnimation?.removeStatusListener(_handleRouteStatus);
+    _methodChannel?.setMethodCallHandler(null);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final presentedOfferingContext = offering?.availablePackages
-        .elementAtOrNull(0)
-        ?.presentedOfferingContext;
+    if (!_showPlatformView) {
+      return const SizedBox.expand();
+    }
+    final presentedOfferingContext =
+        widget.offering?.availablePackages
+            .elementAtOrNull(0)
+            ?.presentedOfferingContext;
     final creationParams = <String, dynamic>{
-      'offeringIdentifier': offering?.identifier,
+      'offeringIdentifier': widget.offering?.identifier,
       'presentedOfferingContext': presentedOfferingContext?.toJson(),
-      'displayCloseButton': displayCloseButton,
-      'customVariables': convertCustomVariablesToNative(customVariables),
-      'hasPurchaseLogic': purchaseLogic != null,
+      'displayCloseButton': widget.displayCloseButton,
+      'customVariables': convertCustomVariablesToNative(widget.customVariables),
+      'hasPurchaseLogic': widget.purchaseLogic != null,
     };
 
     return Platform.isAndroid
@@ -126,55 +174,57 @@ class PaywallView extends StatelessWidget {
   }
 
   UiKitView _buildUiKitView(Map<String, dynamic> creationParams) => UiKitView(
-        viewType: _viewType,
-        layoutDirection: TextDirection.ltr,
-        creationParams: creationParams,
-        creationParamsCodec: const StandardMessageCodec(),
-        onPlatformViewCreated: _buildListenerChannel,
-      );
+    viewType: _viewType,
+    layoutDirection: TextDirection.ltr,
+    creationParams: creationParams,
+    creationParamsCodec: const StandardMessageCodec(),
+    onPlatformViewCreated: _buildListenerChannel,
+  );
 
   PlatformViewLink _buildAndroidPlatformViewLink(
     Map<String, dynamic> creationParams,
-  ) =>
-      PlatformViewLink(
-        viewType: _viewType,
-        surfaceFactory: (context, controller) => AndroidViewSurface(
+  ) => PlatformViewLink(
+    viewType: _viewType,
+    surfaceFactory:
+        (context, controller) => AndroidViewSurface(
           controller: controller as AndroidViewController,
           gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
           hitTestBehavior: PlatformViewHitTestBehavior.opaque,
         ),
-        onCreatePlatformView: (params) =>
+    onCreatePlatformView:
+        (params) =>
             PlatformViewsService.initSurfaceAndroidView(
-          id: params.id,
-          viewType: _viewType,
-          layoutDirection: TextDirection.ltr,
-          creationParams: creationParams,
-          creationParamsCodec: const StandardMessageCodec(),
-          onFocus: () {
-            params.onFocusChanged(true);
-          },
-        )
+                id: params.id,
+                viewType: _viewType,
+                layoutDirection: TextDirection.ltr,
+                creationParams: creationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+                onFocus: () {
+                  params.onFocusChanged(true);
+                },
+              )
               ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
               ..addOnPlatformViewCreatedListener(_buildListenerChannel)
               ..create(),
-      );
+  );
 
   void _buildListenerChannel(int id) {
     final methodChannel = MethodChannel(
       'com.revenuecat.purchasesui/PaywallView/$id',
     );
+    _methodChannel = methodChannel;
     final handler = PaywallViewMethodHandler(
-      onPurchaseStarted,
-      onPurchaseCompleted,
-      onPurchaseCancelled,
-      onPurchaseError,
-      onRestoreCompleted,
-      onRestoreError,
-      onDismiss,
-      onWebCheckoutOpened: onWebCheckoutOpened,
-      onUrlOpened: onUrlOpened,
-      onInteraction: onInteraction,
-      purchaseLogic: purchaseLogic,
+      widget.onPurchaseStarted,
+      widget.onPurchaseCompleted,
+      widget.onPurchaseCancelled,
+      widget.onPurchaseError,
+      widget.onRestoreCompleted,
+      widget.onRestoreError,
+      widget.onDismiss,
+      onWebCheckoutOpened: widget.onWebCheckoutOpened,
+      onUrlOpened: widget.onUrlOpened,
+      onInteraction: widget.onInteraction,
+      purchaseLogic: widget.purchaseLogic,
       methodChannel: methodChannel,
     );
     methodChannel.setMethodCallHandler(handler.handleMethodCall);
