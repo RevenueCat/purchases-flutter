@@ -30,6 +30,7 @@ pubspec.lock
 **/.cxx
 revenuecat_examples/purchase_tester/ios/Flutter/flutter_export_environment.sh
 revenuecat_examples/purchase_tester/.flutter-plugins-dependencies
+purchases_admob_flutter/.flutter-plugins-dependencies
 revenuecat_examples/purchase_tester/ios/Flutter/Flutter.podspec
 revenuecat_examples/purchase_tester/ios/Flutter/.last_build_id
 revenuecat_examples/purchase_tester/android/.composite-enable

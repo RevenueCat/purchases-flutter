@@ -1,75 +1,65 @@
-# Rewarded Ads (SSV) Sample
+# AdMob adapter sample
 
-Minimal example of granting a RevenueCat reward from a rewarded ad using
-server-side verification (SSV), via the two reward-verification primitives:
+Exercises every path of `purchases_admob_flutter`, the RevenueCat adapter for
+`google_mobile_ads`: interstitial, rewarded, rewarded interstitial, app open
+and banner ads are loaded through the adapter, which reports loaded,
+failed-to-load, displayed, opened and revenue events to RevenueCat. The two
+rewarded tabs additionally verify the earned reward server-side.
 
-1. `Purchases.generateRewardVerificationToken(impressionId)` → a `RewardVerificationToken`
-2. forward `token.customData` + `token.appUserID` to the ad network's SSV options
-3. show the ad with `google_mobile_ads`
-4. `Purchases.pollRewardVerification(token.clientTransactionId)` → the verified reward
-
-The whole flow lives in [`lib/main.dart`](lib/main.dart):
+The whole app lives in [`lib/main.dart`](lib/main.dart). The interesting lines
+per format are:
 
 ```dart
-// 1. Use the loaded ad's response ID as the impression ID, then generate a
-//    verification token for it.
-final token = await Purchases.generateRewardVerificationToken(
-  ad.responseInfo?.responseId ?? '',
+// Full-screen formats: swap `InterstitialAd.load` for the adapter's loader.
+await RevenueCatAdMob.loadAndTrackInterstitialAd(
+  adUnitId: adUnitId,
+  request: const AdRequest(),
+  placement: 'interstitial_tab',
+  adLoadCallback: InterstitialAdLoadCallback(onAdLoaded: ..., onAdFailedToLoad: ...),
+);
+await ad.showAndTrack(placement: 'interstitial_shown');
+
+// Rewarded formats: enable verification after load, show with verification.
+await ad.enableRewardVerification();
+await ad.showWithRewardVerification(
+  onRewardVerificationCompleted: (result) => ...,
 );
 
-// 2. Wire RevenueCat verification into AdMob's server-side verification.
-await ad.setServerSideOptions(ServerSideVerificationOptions(
-  userId: token.appUserID,
-  customData: token.customData,
-));
-
-// 3. Show the ad, then poll for the verified reward once it's watched.
-await ad.show(onUserEarnedReward: (ad, _) async {
-  final result = await Purchases.pollRewardVerification(
-    token.clientTransactionId,
-  );
-});
+// Banner: create it through the adapter so its listener is wrapped.
+final banner = RevenueCatAdMob.createBannerAd(adUnitId: ..., size: AdSize.banner, request: ..., placement: 'banner_tab');
 ```
 
-![Rewarded Ad screen, ad loaded and ready to show](screenshots/ad_ready.png)
-
-## Run (smoke test — no reward)
+## Run (smoke test, no reward)
 
 ```sh
 flutter pub get
-flutter run
+flutter run --dart-define=RC_APPLE_API_KEY=appl_... --dart-define=RC_GOOGLE_API_KEY=goog_...
 ```
 
-Set your RevenueCat API keys (`_appleApiKey` / `_googleApiKey`) in `lib/main.dart`
-first — a Test Store key is fine. Tap **Load ad**, then **Watch ad to earn
-reward** once it's ready — nothing loads automatically, so there's no async
-load racing an in-flight verification poll.
-
-Out of the box it uses **Google's public test rewarded-interstitial ad unit**, so
-the ad always fills and the full bridge runs, but `pollRewardVerification` returns
-`failed` — there's no reward configured behind a test ad unit. This confirms the
-wiring (token → SSV options → show → poll) end to end.
+A Test Store key is fine. Out of the box the app uses Google's public test ad
+units, so every format fills and every tracking event fires, but reward
+verification returns `failed` because no reward is configured behind a test
+unit. With `Purchases.setLogLevel(LogLevel.debug)` (already on) the RevenueCat
+debug log shows each tracked event.
 
 ## Test a real grant
 
-For `pollRewardVerification` to return a verified reward, the ad network's SSV
-callback must reach RevenueCat and RevenueCat must have a reward configured. You
-need all of:
-
-1. **An AdMob ad unit with SSV pointed at RevenueCat.** Create a rewarded (or
-   rewarded-interstitial) unit in AdMob and set its **Server-side verification
-   URL** to RevenueCat's SSV endpoint. Put that unit in `_iosAdUnitId` /
-   `_androidAdUnitId`, and your AdMob **app id** in `ios/Runner/Info.plist`
-   (`GADApplicationIdentifier`) and `android/app/src/main/AndroidManifest.xml`
+1. Create rewarded / rewarded interstitial ad units in AdMob with their
+   **Server-side verification URL** pointed at RevenueCat, and put your AdMob
+   app id in `ios/Runner/Info.plist` (`GADApplicationIdentifier`) and
+   `android/app/src/main/AndroidManifest.xml`
    (`com.google.android.gms.ads.APPLICATION_ID`).
-2. **A reward rule in the RevenueCat dashboard** for that app + ad unit — a
-   virtual currency or an entitlement. Without it, verification returns
-   `no_reward` / `failed`.
-3. **A real RevenueCat API key** in `_appleApiKey` / `_googleApiKey` for the app
-   that owns the rule.
-4. **Run on a device/emulator and watch the ad.** AdMob serves a test ad on
-   simulators/emulators (they're registered test devices), fires the SSV callback
-   to RevenueCat with your `customData`, RevenueCat verifies + grants, and
-   `pollRewardVerification` returns the reward. An entitlement reward also shows
-   up in `CustomerInfo`.
+2. Configure a reward (virtual currency or entitlement) for those ad units in
+   the RevenueCat dashboard.
+3. Run with your real key and ad units:
 
+```sh
+flutter run \
+  --dart-define=RC_APPLE_API_KEY=appl_... \
+  --dart-define=ADMOB_IOS_REWARDED=ca-app-pub-.../... \
+  --dart-define=ADMOB_IOS_REWARDED_INTERSTITIAL=ca-app-pub-.../...
+```
+
+The Android equivalents are `RC_GOOGLE_API_KEY`, `ADMOB_ANDROID_REWARDED` and
+`ADMOB_ANDROID_REWARDED_INTERSTITIAL`; every format has an `ADMOB_<PLATFORM>_<FORMAT>`
+define, see the top of `lib/main.dart`.

@@ -1,0 +1,28 @@
+name: purchases_admob_flutter
+description: "RevenueCat adapter for the google_mobile_ads plugin: automatic ad tracking and rewarded-ad reward verification."
+version: 10.15.2
+homepage: https://www.revenuecat.com/
+issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
+documentation: https://www.revenuecat.com/docs/ad-monetization/admob
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+  flutter: '>=3.38.1'
+
+dependencies:
+  purchases_flutter: ^10.15.2
+  google_mobile_ads: '>=8.0.0 <10.0.0'
+  flutter:
+    sdk: flutter
+
+# It's safe to publish like this. According to the docs (https://dart.dev/tools/pub/dependencies):
+# As a result, if you publish a package to pub.dev, keep in mind that your package's dependency
+# overrides are ignored by all users of your package."
+dependency_overrides:
+  purchases_flutter:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
