@@ -1,3 +1,4 @@
+import 'ad_capture_method.dart';
 import 'ad_format.dart';
 import 'ad_mediator_name.dart';
 import 'ad_revenue_precision.dart';
@@ -15,6 +16,10 @@ class AdRevenueData {
   final String currency;
   final AdRevenuePrecision precision;
 
+  /// Reserved for the official RevenueCat ad-network adapters; leave unset
+  /// when tracking manually.
+  final AdCaptureMethod? captureMethod;
+
   const AdRevenueData({
     this.networkName,
     required this.mediatorName,
@@ -25,6 +30,7 @@ class AdRevenueData {
     required this.revenueMicros,
     required this.currency,
     required this.precision,
+    this.captureMethod,
   });
 
   Map<String, dynamic> toMap() => {
@@ -37,5 +43,6 @@ class AdRevenueData {
         'revenueMicros': revenueMicros,
         'currency': currency,
         'precision': precision.value,
+        if (captureMethod != null) 'captureMethod': captureMethod!.value,
       };
 }
