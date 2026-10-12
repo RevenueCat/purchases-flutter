@@ -41,8 +41,6 @@ dependencies:
     path: ../../purchases_admob_flutter
   google_mobile_ads: ^8.0.0
 
-# purchases_admob_flutter depends on the published purchases_flutter; point it
-# at this checkout so both resolve to the same package.
 dependency_overrides:
   purchases_flutter:
     path: ../../
