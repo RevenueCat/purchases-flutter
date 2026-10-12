@@ -267,6 +267,22 @@ jobs:
           name: Run tests for purchases_ui_flutter
           command: cd purchases_ui_flutter && flutter test
 
+  lint-test-admob:
+    description: "Run static analysis and tests for purchases_admob_flutter"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    steps:
+      - checkout
+      - flutter-get-dependencies
+      - flutter-get-dependencies:
+          project: purchases_admob_flutter
+      - run:
+          name: Analyze code for purchases_admob_flutter
+          command: cd purchases_admob_flutter && flutter analyze lib
+      - run:
+          name: Run tests for purchases_admob_flutter
+          command: cd purchases_admob_flutter && flutter test
+
   lint-sample-apps:
     description: "Resolve dependencies for sample apps and api_tester"
     docker:
@@ -487,7 +503,7 @@ jobs:
             --driver=test_driver/integration_test.dart        
 
   dry-run-release:
-    description: "Attempts to do a dry-run release of purchases-flutter and purchases_ui_flutter"
+    description: "Attempts to do a dry-run release of purchases-flutter, purchases_ui_flutter and purchases_admob_flutter"
     docker:
       - image: ghcr.io/cirruslabs/flutter:stable
     steps:
@@ -498,6 +514,9 @@ jobs:
       - run:
           name: Dry Run Release for purchases_ui_flutter
           command: cd purchases_ui_flutter && flutter pub publish --dry-run
+      - run:
+          name: Dry Run Release for purchases_admob_flutter
+          command: cd purchases_admob_flutter && flutter pub publish --dry-run
 
   run-maestro-e2e-tests-ios:
     executor:
@@ -604,6 +623,21 @@ jobs:
           name: release
           command: bundle exec fastlane release_purchases_ui_flutter
 
+  make-release-purchases-flutter-admob:
+    description: "Publishes a new version of purchases-flutter-admob to pub.dev"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    steps:
+      - checkout
+      - revenuecat/install-mise-tools:
+          tools: ruby
+      - revenuecat/install-gem-unix-dependencies:
+          cache-version: v1
+      - revenuecat/trust-github-key
+      - run:
+          name: release
+          command: bundle exec fastlane release_purchases_admob_flutter
+
   github_release:
     description: "Creates a github release with the current version"
     docker:
@@ -651,6 +685,7 @@ workflows:
       - lint-test-ui:
           name: lint-test-ui-min-version
           flutter-version: "3.22.0"
+      - lint-test-admob
       - lint-sample-apps
       - api_test
       - verify-web-bundle
@@ -704,10 +739,15 @@ workflows:
           requires:
             - make-release
           <<: *release-tags
+      - make-release-purchases-flutter-admob:
+          requires:
+            - make-release
+          <<: *release-tags
       - github_release:
           requires:
             - make-release
             - make-release-purchases-flutter-ui
+            - make-release-purchases-flutter-admob
           <<: *release-tags
       - revenuecat/merge-release-pr:
           repo_name: purchases-flutter
