@@ -91,5 +91,5 @@ The ad unit's server-side verification URL must point at RevenueCat and a reward
 ## Requirements
 
 * iOS 15.0+ (ad tracking is unavailable below that; calls are ignored with a warning)
-* `google_mobile_ads` 8.x or 9.x
+* `google_mobile_ads` 8.x
 * `purchases_flutter` 10.15.2+
