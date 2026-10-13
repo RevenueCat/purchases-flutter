@@ -17,7 +17,8 @@ void main() {
     });
 
     test('maps unrecognized values to unknown', () {
-      expect(billingPlanTypeFromJson('SOME_FUTURE_VALUE'), BillingPlanType.unknown);
+      expect(billingPlanTypeFromJson('SOME_FUTURE_VALUE'),
+          BillingPlanType.unknown);
     });
 
     test('maps null to null', () {
