@@ -79,7 +79,7 @@ class StoreProduct extends Equatable {
 
   /// Describes the billing plan that a user is committing to when they purchase a subscription.
   /// This will be present when a product uses a non-upFront billing plan.
-  /// Always null on Android, when using StoreKit 1, or when running on <iOS 26.4+. 
+  /// Always null on Android, when using StoreKit 1, or when running on <iOS 26.4. 
   /// For Play Store installment subscriptions, use the installmentsInfo of the defaultOption or 
   /// subscriptionOptions instead.
   final InstallmentsInfo? installmentsInfo;
