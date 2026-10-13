@@ -156,10 +156,19 @@ abstract class _AdScreenState<T extends StatefulWidget> extends State<T> {
   String? result;
   bool busy = false;
   bool get ready;
+  AdWithoutView? get loadedAd;
 
-  void setStatus(String value) {
+  void safeSetState(VoidCallback fn) {
     if (!mounted) return;
-    setState(() => status = value);
+    setState(fn);
+  }
+
+  void setStatus(String value) => safeSetState(() => status = value);
+
+  @override
+  void dispose() {
+    loadedAd?.dispose();
+    super.dispose();
   }
 
   Future<void> load();
@@ -218,6 +227,9 @@ class _InterstitialScreenState extends _AdScreenState<InterstitialScreen> {
   bool get ready => _ad != null;
 
   @override
+  AdWithoutView? get loadedAd => _ad;
+
+  @override
   Future<void> load() async {
     setState(() {
       busy = true;
@@ -231,15 +243,15 @@ class _InterstitialScreenState extends _AdScreenState<InterstitialScreen> {
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = _dismissCallback<InterstitialAd>(
             this,
-            () => setState(() => _ad = null),
+            () => safeSetState(() => _ad = null),
           );
-          setState(() {
+          safeSetState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
           });
         },
-        onAdFailedToLoad: (error) => setState(() {
+        onAdFailedToLoad: (error) => safeSetState(() {
           busy = false;
           status = 'Failed to load: $error';
         }),
@@ -268,6 +280,9 @@ class _AppOpenScreenState extends _AdScreenState<AppOpenScreen> {
   bool get ready => _ad != null;
 
   @override
+  AdWithoutView? get loadedAd => _ad;
+
+  @override
   Future<void> load() async {
     setState(() {
       busy = true;
@@ -281,15 +296,15 @@ class _AppOpenScreenState extends _AdScreenState<AppOpenScreen> {
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = _dismissCallback<AppOpenAd>(
             this,
-            () => setState(() => _ad = null),
+            () => safeSetState(() => _ad = null),
           );
-          setState(() {
+          safeSetState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
           });
         },
-        onAdFailedToLoad: (error) => setState(() {
+        onAdFailedToLoad: (error) => safeSetState(() {
           busy = false;
           status = 'Failed to load: $error';
         }),
@@ -318,6 +333,9 @@ class _RewardedScreenState extends _AdScreenState<RewardedScreen> {
   bool get ready => _ad != null;
 
   @override
+  AdWithoutView? get loadedAd => _ad;
+
+  @override
   Future<void> load() async {
     setState(() {
       busy = true;
@@ -332,16 +350,16 @@ class _RewardedScreenState extends _AdScreenState<RewardedScreen> {
         onAdLoaded: (ad) async {
           ad.fullScreenContentCallback = _dismissCallback<RewardedAd>(
             this,
-            () => setState(() => _ad = null),
+            () => safeSetState(() => _ad = null),
           );
           await ad.enableRewardVerification();
-          setState(() {
+          safeSetState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
           });
         },
-        onAdFailedToLoad: (error) => setState(() {
+        onAdFailedToLoad: (error) => safeSetState(() {
           busy = false;
           status = 'Failed to load: $error';
         }),
@@ -352,7 +370,7 @@ class _RewardedScreenState extends _AdScreenState<RewardedScreen> {
   @override
   Future<void> show() => _ad!.showWithRewardVerification(
         onRewardVerificationStarted: () => setStatus('Verifying reward…'),
-        onRewardVerificationCompleted: (verification) => setState(() {
+        onRewardVerificationCompleted: (verification) => safeSetState(() {
           status = 'Done';
           result = _describeResult(verification);
         }),
@@ -378,6 +396,9 @@ class _RewardedInterstitialScreenState
   bool get ready => _ad != null;
 
   @override
+  AdWithoutView? get loadedAd => _ad;
+
+  @override
   Future<void> load() async {
     setState(() {
       busy = true;
@@ -393,16 +414,16 @@ class _RewardedInterstitialScreenState
           ad.fullScreenContentCallback =
               _dismissCallback<RewardedInterstitialAd>(
             this,
-            () => setState(() => _ad = null),
+            () => safeSetState(() => _ad = null),
           );
           await ad.enableRewardVerification();
-          setState(() {
+          safeSetState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
           });
         },
-        onAdFailedToLoad: (error) => setState(() {
+        onAdFailedToLoad: (error) => safeSetState(() {
           busy = false;
           status = 'Failed to load: $error';
         }),
@@ -413,7 +434,7 @@ class _RewardedInterstitialScreenState
   @override
   Future<void> show() => _ad!.showWithRewardVerification(
         onRewardVerificationStarted: () => setStatus('Verifying reward…'),
-        onRewardVerificationCompleted: (verification) => setState(() {
+        onRewardVerificationCompleted: (verification) => safeSetState(() {
           status = 'Done';
           result = _describeResult(verification);
         }),
