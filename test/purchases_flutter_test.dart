@@ -417,7 +417,7 @@ void main() {
         .setMockMethodCallHandler(channel, (call) async {
       throw PlatformException(code: '10', message: 'network error');
     });
-    expect(
+    await expectLater(
       Purchases.syncPurchasesForResult(),
       throwsA(isA<PlatformException>()),
     );
