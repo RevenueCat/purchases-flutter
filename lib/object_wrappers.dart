@@ -9,6 +9,7 @@ export 'models/ad_revenue_data.dart';
 export 'models/ad_revenue_precision.dart';
 export 'models/ad_reward_prompt_accepted_data.dart';
 export 'models/ad_reward_prompt_shown_data.dart';
+export 'models/billing_plan_type.dart';
 export 'models/custom_paywall_impression_params.dart';
 export 'models/customer_info_wrapper.dart';
 export 'models/entitlement_info_wrapper.dart';

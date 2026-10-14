@@ -1,4 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:purchases_flutter/models/billing_plan_type.dart';
+import 'package:purchases_flutter/models/installments_info.dart';
 import 'package:purchases_flutter/models/period_unit.dart';
 import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'package:purchases_flutter/models/introductory_price.dart';
@@ -68,6 +70,17 @@ void main() {
         'pricePerWeekString': '\$0.69',
         'pricePerMonthString': '\$2.99',
         'pricePerYearString': '\$35.88',
+        'installmentsInfo': {
+          'commitmentPaymentsCount': 12,
+          'renewalCommitmentPaymentsCount': 12,
+          'commitmentInstallmentPeriod': 'P1M',
+          'installmentBillingPrice': 0.25,
+          'installmentBillingPriceString': '\$0.25',
+          'commitmentTotalPeriod': 'P1Y',
+          'commitmentTotalPrice': 2.99,
+          'commitmentTotalPriceString': '\$2.99',
+          'billingPlanType': 'MONTHLY',
+        },
       };
       final info = StoreProduct.fromJson(json);
       const expected = StoreProduct(
@@ -107,6 +120,60 @@ void main() {
         pricePerWeekString: '\$0.69',
         pricePerMonthString: '\$2.99',
         pricePerYearString: '\$35.88',
+        installmentsInfo: InstallmentsInfo(
+          12,
+          12,
+          commitmentInstallmentPeriod: 'P1M',
+          installmentBillingPrice: 0.25,
+          installmentBillingPriceString: '\$0.25',
+          commitmentTotalPeriod: 'P1Y',
+          commitmentTotalPrice: 2.99,
+          commitmentTotalPriceString: '\$2.99',
+          billingPlanType: BillingPlanType.monthly,
+        ),
+      );
+      expect(info, equals(expected));
+    });
+
+    test('parses null installmentsInfo', () {
+      final json = {
+        'identifier': 'prod1',
+        'description': 'desc',
+        'title': 'title',
+        'price': 1.99,
+        'priceString': '\$1.99',
+        'currencyCode': 'USD',
+        'installmentsInfo': null,
+      };
+      final info = StoreProduct.fromJson(json);
+      expect(info.installmentsInfo, isNull);
+    });
+
+    test('parses installmentsInfo with only required fields', () {
+      final json = {
+        'identifier': 'prod1',
+        'description': 'desc',
+        'title': 'title',
+        'price': 1.99,
+        'priceString': '\$1.99',
+        'currencyCode': 'USD',
+        'installmentsInfo': {
+          'commitmentPaymentsCount': 12,
+          'renewalCommitmentPaymentsCount': 12,
+        },
+      };
+      final info = StoreProduct.fromJson(json);
+      const expected = StoreProduct(
+        'prod1',
+        'desc',
+        'title',
+        1.99,
+        '\$1.99',
+        'USD',
+        installmentsInfo: InstallmentsInfo(
+          12,
+          12,
+        ),
       );
       expect(info, equals(expected));
     });
