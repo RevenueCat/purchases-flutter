@@ -37,7 +37,13 @@ dependencies:
 
   purchases_flutter:
     path: ../../
-  google_mobile_ads: ^5.3.1
+  purchases_admob_flutter:
+    path: ../../purchases_admob_flutter
+  google_mobile_ads: ^8.0.0
+
+dependency_overrides:
+  purchases_flutter:
+    path: ../../
 
 dev_dependencies:
   flutter_test:
