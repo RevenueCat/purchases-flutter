@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/package_wrapper.dart';
@@ -103,6 +104,13 @@ class PaywallViewMethodHandler {
 
   void _handleOnPurchaseCompleted(MethodCall call) {
     final arguments = Map<String, dynamic>.from(call.arguments);
+    if (arguments['storeTransaction'] == null) {
+      debugPrint(
+        'RevenueCatUI: Not calling onPurchaseCompleted: the purchase has no '
+        'store transaction.',
+      );
+      return;
+    }
     final customerInfo = CustomerInfo.fromJson(
       Map<String, dynamic>.from(arguments['customerInfo']),
     );
