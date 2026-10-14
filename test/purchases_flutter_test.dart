@@ -390,6 +390,39 @@ void main() {
     }
   });
 
+  test('syncPurchases calls successfully', () async {
+    // ignore: deprecated_member_use_from_same_package
+    await Purchases.syncPurchases();
+    expect(
+      log,
+      <Matcher>[isMethodCall('syncPurchases', arguments: null)],
+    );
+  });
+
+  test('syncPurchasesForResult returns updated customer info', () async {
+    response = mockCustomerInfoResponse;
+    final result = await Purchases.syncPurchasesForResult();
+    expect(
+      log,
+      <Matcher>[isMethodCall('syncPurchasesForResult', arguments: null)],
+    );
+    expect(
+      result,
+      SyncPurchasesResult(CustomerInfo.fromJson(mockCustomerInfoResponse)),
+    );
+  });
+
+  test('syncPurchasesForResult propagates errors', () async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) async {
+      throw PlatformException(code: '10', message: 'network error');
+    });
+    expect(
+      Purchases.syncPurchasesForResult(),
+      throwsA(isA<PlatformException>()),
+    );
+  });
+
   test('errors are mapped correctly', () {
     expect(PurchasesErrorCode.unknownError.index, 0);
     expect(PurchasesErrorCode.purchaseCancelledError.index, 1);

@@ -45,6 +45,7 @@ export 'models/storefront.dart';
 export 'models/storekit_version.dart';
 export 'models/subscription_info_wrapper.dart';
 export 'models/subscription_option_wrapper.dart';
+export 'models/sync_purchases_result.dart';
 export 'models/upgrade_info.dart';
 export 'models/verification_result.dart';
 export 'models/verified_reward.dart';

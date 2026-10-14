@@ -46,6 +46,18 @@ class CatsScreen extends StatelessWidget {
               },
               child: const Text('Show In-App Messages'),
             ),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  final result = await Purchases.syncPurchasesForResult();
+                  print(
+                      'Sync purchases successful. Active entitlements: ${result.customerInfo.entitlements.active.keys}');
+                } catch (e) {
+                  print('Sync purchases exception: $e');
+                }
+              },
+              child: const Text('Sync purchases for result'),
+            ),
           ],
         )),
       );
