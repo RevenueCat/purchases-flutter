@@ -1,9 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
@@ -11,6 +8,8 @@ import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
+import '../android_platform_view_mode.dart';
+import '../src/android_platform_view.dart';
 import 'paywall_view_method_handler.dart';
 
 class InternalPaywallFooterView extends StatelessWidget {
@@ -24,6 +23,7 @@ class InternalPaywallFooterView extends StatelessWidget {
   final Function(PurchasesError)? onRestoreError;
   final Function()? onDismiss;
   final Function(double) onHeightChanged;
+  final AndroidPlatformViewMode androidPlatformViewMode;
 
   const InternalPaywallFooterView({
     Key? key,
@@ -36,6 +36,7 @@ class InternalPaywallFooterView extends StatelessWidget {
     this.onRestoreError,
     this.onDismiss,
     required this.onHeightChanged,
+    required this.androidPlatformViewMode,
   }) : super(key: key);
 
   static const String _viewType =
@@ -63,27 +64,11 @@ class InternalPaywallFooterView extends StatelessWidget {
   PlatformViewLink _buildAndroidPlatformViewLink(
     Map<String, dynamic> creationParams,
   ) =>
-      PlatformViewLink(
+      buildAndroidPlatformViewLink(
         viewType: _viewType,
-        surfaceFactory: (context, controller) => AndroidViewSurface(
-          controller: controller as AndroidViewController,
-          gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
-          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-        ),
-        onCreatePlatformView: (params) =>
-            PlatformViewsService.initSurfaceAndroidView(
-          id: params.id,
-          viewType: _viewType,
-          layoutDirection: TextDirection.ltr,
-          creationParams: creationParams,
-          creationParamsCodec: const StandardMessageCodec(),
-          onFocus: () {
-            params.onFocusChanged(true);
-          },
-        )
-              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..addOnPlatformViewCreatedListener(_buildListenerChannel)
-              ..create(),
+        creationParams: creationParams,
+        mode: androidPlatformViewMode,
+        onPlatformViewCreated: _buildListenerChannel,
       );
 
   void _buildListenerChannel(int id) {
