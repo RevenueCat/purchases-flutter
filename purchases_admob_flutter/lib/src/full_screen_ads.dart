@@ -231,9 +231,10 @@ extension RevenueCatAdMobRewardedAd on RewardedAd {
 
   /// Shows the ad and verifies the earned reward with RevenueCat.
   ///
-  /// [onRewardVerificationCompleted] is called exactly once. When
-  /// [enableRewardVerification] was not called for this ad, it receives a
-  /// failed result.
+  /// [onRewardVerificationCompleted] is called at most once, after the user
+  /// earns the reward; it is not called when the ad is dismissed or fails
+  /// before a reward. When [enableRewardVerification] was not called for this
+  /// ad, it receives a failed result.
   Future<void> showWithRewardVerification({
     String? placement,
     OnUserEarnedRewardCallback? onUserEarnedReward,
@@ -280,9 +281,10 @@ extension RevenueCatAdMobRewardedInterstitialAd on RewardedInterstitialAd {
 
   /// Shows the ad and verifies the earned reward with RevenueCat.
   ///
-  /// [onRewardVerificationCompleted] is called exactly once. When
-  /// [enableRewardVerification] was not called for this ad, it receives a
-  /// failed result.
+  /// [onRewardVerificationCompleted] is called at most once, after the user
+  /// earns the reward; it is not called when the ad is dismissed or fails
+  /// before a reward. When [enableRewardVerification] was not called for this
+  /// ad, it receives a failed result.
   Future<void> showWithRewardVerification({
     String? placement,
     OnUserEarnedRewardCallback? onUserEarnedReward,
