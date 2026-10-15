@@ -402,6 +402,12 @@ class _UpsellScreenState extends State<UpsellScreen> {
         _PurchaseStoreProductButton(storeProduct: package.storeProduct),
       ];
 
+      final installmentsInfo = package.storeProduct.installmentsInfo;
+      if (installmentsInfo != null) {
+        buttons.add(
+            _ShowInstallmentsInfoButton(installmentsInfo: installmentsInfo));
+      }
+
       if (package.storeProduct.subscriptionOptions != null) {
         buttons.addAll(package.storeProduct.subscriptionOptions!.map((option) {
           return _PurchaseSubscriptionOptionButton(option: option);
@@ -677,6 +683,54 @@ class _PurchaseSubscriptionOptionButton extends StatelessWidget {
           ),
         ),
       );
+}
+
+class _ShowInstallmentsInfoButton extends StatelessWidget {
+  final InstallmentsInfo installmentsInfo;
+
+  // ignore: public_member_api_docs
+  const _ShowInstallmentsInfoButton({Key? key, required this.installmentsInfo})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => ElevatedButton(
+        onPressed: () => _showInstallmentsInfo(context),
+        child: const Text('Show InstallmentsInfo'),
+      );
+
+  void _showInstallmentsInfo(BuildContext context) {
+    final fields = <String, Object?>{
+      'commitmentPaymentsCount': installmentsInfo.commitmentPaymentsCount,
+      'renewalCommitmentPaymentsCount':
+          installmentsInfo.renewalCommitmentPaymentsCount,
+      'commitmentInstallmentPeriod':
+          installmentsInfo.commitmentInstallmentPeriod,
+      'installmentBillingPrice': installmentsInfo.installmentBillingPrice,
+      'installmentBillingPriceString':
+          installmentsInfo.installmentBillingPriceString,
+      'commitmentTotalPeriod': installmentsInfo.commitmentTotalPeriod,
+      'commitmentTotalPrice': installmentsInfo.commitmentTotalPrice,
+      'commitmentTotalPriceString': installmentsInfo.commitmentTotalPriceString,
+      'billingPlanType': installmentsInfo.billingPlanType?.name,
+    };
+
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            const ListTile(title: Text('InstallmentsInfo')),
+            const Divider(),
+            ...fields.entries.map((entry) => ListTile(
+                  title: Text(entry.key),
+                  trailing: Text('${entry.value}'),
+                )),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class ShowPromptButton extends StatefulWidget {

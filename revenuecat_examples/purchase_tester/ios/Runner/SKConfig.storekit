@@ -17,55 +17,51 @@
 
   ],
   "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
     "_compatibilityTimeRate" : {
       "3" : 6
     },
+    "_disableDialogs" : false,
     "_failTransactionsEnabled" : false,
     "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
     "_storefront" : "USA",
     "_storeKitErrors" : [
       {
-        "current" : null,
         "enabled" : false,
         "name" : "Load Products"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "Purchase"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "Verification"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "App Store Sync"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "Subscription Status"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "App Transaction"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "Manage Subscriptions Sheet"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "Refund Request Sheet"
       },
       {
-        "current" : null,
         "enabled" : false,
         "name" : "Offer Code Redeem Sheet"
       }
@@ -84,6 +80,15 @@
           "adHocOffers" : [
 
           ],
+          "billingPlans" : [
+            {
+              "billingPlanType" : "BILLED_UPFRONT",
+              "commitmentDisplayPrice" : "4.99",
+              "displayPrice" : "4.99",
+              "internalID" : "D124A493",
+              "isEnabled" : true
+            }
+          ],
           "codeOffers" : [
 
           ],
@@ -91,7 +96,9 @@
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "539C7F18",
-          "introductoryOffer" : null,
+          "introductoryOffers" : [
+
+          ],
           "localizations" : [
             {
               "description" : "Pro subscription",
@@ -106,8 +113,10 @@
           "type" : "RecurringSubscription",
           "winbackOffers" : [
             {
+              "billingPlanType" : "BILLED_UPFRONT",
               "internalID" : "A397E108",
               "isEligible" : true,
+              "numberOfPeriods" : 1,
               "offerID" : "winback.1w0",
               "paymentMode" : "free",
               "referenceName" : "1w0 Winback Offer",
@@ -119,6 +128,15 @@
           "adHocOffers" : [
 
           ],
+          "billingPlans" : [
+            {
+              "billingPlanType" : "BILLED_UPFRONT",
+              "commitmentDisplayPrice" : "10.00",
+              "displayPrice" : "10.00",
+              "internalID" : "8322947F",
+              "isEnabled" : true
+            }
+          ],
           "codeOffers" : [
 
           ],
@@ -126,7 +144,9 @@
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "029F3EB0",
-          "introductoryOffer" : null,
+          "introductoryOffers" : [
+
+          ],
           "localizations" : [
             {
               "description" : "",
@@ -142,12 +162,58 @@
           "winbackOffers" : [
 
           ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "billingPlans" : [
+            {
+              "billingPlanType" : "BILLED_UPFRONT",
+              "commitmentDisplayPrice" : "10",
+              "displayPrice" : "10",
+              "internalID" : "812F3E6A",
+              "isEnabled" : true
+            },
+            {
+              "billingPlanType" : "MONTHLY",
+              "commitmentDisplayPrice" : "11.88",
+              "displayPrice" : "0.99",
+              "internalID" : "1294A4D1",
+              "isEnabled" : true
+            }
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "10",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "67EBD6D2",
+          "introductoryOffers" : [
+
+          ],
+          "localizations" : [
+            {
+              "description" : "12mo commitment product",
+              "displayName" : "12mo Commitment",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.revenuecat.sampleapp.monthly.12mocommitment",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "12mo Commitment",
+          "subscriptionGroupID" : "7EA56C60",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
         }
       ]
     }
   ],
   "version" : {
-    "major" : 4,
+    "major" : 5,
     "minor" : 0
   }
 }
