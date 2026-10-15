@@ -18,7 +18,7 @@ final class PaywallChannelForwarder: NSObject, PaywallViewControllerDelegateWrap
 
     func paywallViewController(_ controller: PaywallViewController,
                                didFinishPurchasingWith customerInfoDictionary: [String: Any],
-                               transaction transactionDictionary: [String: Any]?) {
+                               transaction transactionDictionary: [String: Any]) {
         methodChannel.invokeMethod("onPurchaseCompleted", arguments: [
             "customerInfo": customerInfoDictionary,
             "storeTransaction": transactionDictionary
