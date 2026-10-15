@@ -6,7 +6,7 @@
 
 ## purchases_admob_flutter
 
-*purchases_admob_flutter* connects the [google_mobile_ads](https://pub.dev/packages/google_mobile_ads) plugin to [RevenueCat](https://www.revenuecat.com/)'s ad tracking and reward verification. Load your ads through the adapter and it reports loaded, failed-to-load, displayed, opened and revenue events for you; rewarded ads can additionally have their rewards verified server-side. See the [AdMob integration docs](https://www.revenuecat.com/docs/ad-monetization/admob) for the full picture.
+*purchases_admob_flutter* connects the [google_mobile_ads](https://pub.dev/packages/google_mobile_ads) plugin to [RevenueCat](https://www.revenuecat.com/)'s ad tracking and reward verification. Load your ads through the adapter and it reports loaded, failed-to-load, displayed, opened, revenue and earned-reward events for you; rewarded ads can additionally have their rewards verified server-side. See the [AdMob integration docs](https://www.revenuecat.com/docs/ad-monetization/admob) for the full picture.
 
 ## Installation
 
@@ -92,4 +92,4 @@ The ad unit's server-side verification URL must point at RevenueCat and a reward
 
 * iOS 15.0+ (ad tracking is unavailable below that; calls are ignored with a warning)
 * `google_mobile_ads` 8.x
-* `purchases_flutter` 10.15.2+
+* `purchases_flutter` 10.16.0+

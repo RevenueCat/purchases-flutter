@@ -106,6 +106,22 @@ class AdMobTracker {
         ),
       );
 
+  static Future<void> trackRewardEarnedUnverified(TrackedAdState state) =>
+      _ifConfigured(
+        'reward earned',
+        () => Purchases.adTracker.trackAdRewardEarnedUnverified(
+          AdRewardEarnedUnverifiedData(
+            networkName: state.networkName,
+            mediatorName: AdMediatorName.adMob,
+            adFormat: state.adFormat,
+            placement: state.placement,
+            adUnitId: state.adUnitId,
+            impressionId: state.impressionId,
+            captureMethod: captureMethod,
+          ),
+        ),
+      );
+
   static Future<void> trackRevenue(
     TrackedAdState state,
     double valueMicros,

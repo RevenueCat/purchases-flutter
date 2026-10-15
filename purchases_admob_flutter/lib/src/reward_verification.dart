@@ -59,6 +59,18 @@ Future<void> enableRewardVerificationFor(
   }
 }
 
+/// Wraps the developer's reward callback so the earned reward is reported to
+/// RevenueCat. With verification enabled the core SDK reports it from the
+/// poll instead.
+OnUserEarnedRewardCallback rewardTrackingHandler({
+  required TrackedAdState? state,
+  required OnUserEarnedRewardCallback onUserEarnedReward,
+}) =>
+    (ad, reward) {
+      if (state != null) AdMobTracker.trackRewardEarnedUnverified(state);
+      onUserEarnedReward(ad, reward);
+    };
+
 /// Wraps the developer's reward callback so the reward is verified with
 /// RevenueCat when AdMob reports it as earned.
 OnUserEarnedRewardCallback rewardVerifyingHandler({
@@ -77,6 +89,7 @@ OnUserEarnedRewardCallback rewardVerifyingHandler({
           'Reward earned but reward verification was not enabled for this ad. '
           'Call enableRewardVerification() after the ad loads.',
         );
+        if (state != null) AdMobTracker.trackRewardEarnedUnverified(state);
         onRewardVerificationCompleted(_failedResult);
         return;
       }
