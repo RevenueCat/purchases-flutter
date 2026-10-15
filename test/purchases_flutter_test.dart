@@ -2783,6 +2783,52 @@ void main() {
     ]);
   });
 
+  test('trackAdRewardEarnedUnverified sends correct method and arguments',
+      () async {
+    await Purchases.adTracker.trackAdRewardEarnedUnverified(
+      AdRewardEarnedUnverifiedData(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-7',
+        impressionId: 'imp-7',
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall('trackAdRewardEarnedUnverified', arguments: {
+        'networkName': null,
+        'mediatorName': 'AdMob',
+        'adFormat': 'rewarded',
+        'placement': null,
+        'adUnitId': 'unit-7',
+        'impressionId': 'imp-7',
+      }),
+    ]);
+  });
+
+  test('trackAdRewardEarnedUnverified includes optional fields when set',
+      () async {
+    await Purchases.adTracker.trackAdRewardEarnedUnverified(
+      AdRewardEarnedUnverifiedData(
+        networkName: 'SomeNetwork',
+        mediatorName: AdMediatorName.appLovin,
+        adFormat: AdFormat.rewardedInterstitial,
+        placement: 'footer',
+        adUnitId: 'unit-7',
+        impressionId: 'imp-7',
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall('trackAdRewardEarnedUnverified', arguments: {
+        'networkName': 'SomeNetwork',
+        'mediatorName': 'AppLovin',
+        'adFormat': 'rewarded_interstitial',
+        'placement': 'footer',
+        'adUnitId': 'unit-7',
+        'impressionId': 'imp-7',
+      }),
+    ]);
+  });
+
   test('trackRewardedAdPromptShown sends correct method and arguments',
       () async {
     await Purchases.adTracker.trackRewardedAdPromptShown(AdRewardPromptShownData(
