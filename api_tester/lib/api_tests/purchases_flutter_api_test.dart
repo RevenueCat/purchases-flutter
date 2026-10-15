@@ -239,6 +239,12 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.syncPurchases();
   }
 
+  void _checkSyncPurchasesForResult() async {
+    SyncPurchasesResult syncPurchasesResult =
+        await Purchases.syncPurchasesForResult();
+    CustomerInfo customerInfo = syncPurchasesResult.customerInfo;
+  }
+
   void _checkRecordPurchase() async {
     String productIdentifier = "product_id";
     Future<void> future = Purchases.recordPurchase(productIdentifier);

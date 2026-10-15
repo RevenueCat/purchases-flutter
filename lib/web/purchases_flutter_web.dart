@@ -182,6 +182,7 @@ class PurchasesFlutterPlugin {
         case 'redeemWebPurchase':
         case 'generateRewardVerificationToken':
         case 'pollRewardVerification':
+        case 'syncPurchasesForResult':
           throw UnsupportedPlatformException();
 
         default:
