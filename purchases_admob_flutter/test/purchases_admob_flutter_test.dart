@@ -388,6 +388,7 @@ void main() {
       expect(results.single.failed, isFalse);
       expect((results.single.reward! as VerifiedVirtualCurrencyReward).code, 'GEM');
 
+      expect(purchasesCalls('trackAdRewardEarnedUnverified'), isEmpty);
       final poll = purchasesCalls('pollRewardVerification').first;
       expect(poll['clientTransactionId'], 'ctx-1');
       expect(poll['trackingMetadata'], {
@@ -397,6 +398,40 @@ void main() {
         'placement': 'bonus_shown',
         'adUnitId': 'ri-1',
         'impressionId': 'ri-resp',
+        'captureMethod': 'flutter_admob_adapter',
+      });
+    });
+
+    test('tracks the earned reward itself when verification is not enabled',
+        () async {
+      RewardedAd? loaded;
+      await RevenueCatAdMob.loadAndTrackRewardedAd(
+        adUnitId: 'r-2',
+        request: const AdRequest(),
+        placement: 'bonus',
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (ad) => loaded = ad,
+          onAdFailedToLoad: (_) {},
+        ),
+      );
+      await sendAdEvent(0, 'onAdLoaded', {'responseInfo': responseInfo('r2-resp')});
+      final rewards = <RewardItem>[];
+      await loaded!.showAndTrack(
+        placement: 'bonus_shown',
+        onUserEarnedReward: (_, item) => rewards.add(item),
+      );
+      await sendAdEvent(0, 'onRewardedAdUserEarnedReward', {
+        'rewardItem': RewardItem(1, 'coin'),
+      });
+
+      expect(rewards, hasLength(1));
+      expect(purchasesCalls('trackAdRewardEarnedUnverified').single, {
+        'networkName': 'com.google.Adapter',
+        'mediatorName': 'AdMob',
+        'adFormat': 'rewarded',
+        'placement': 'bonus_shown',
+        'adUnitId': 'r-2',
+        'impressionId': 'r2-resp',
         'captureMethod': 'flutter_admob_adapter',
       });
     });

@@ -210,8 +210,13 @@ extension RevenueCatAdMobRewardedAd on RewardedAd {
     String? placement,
     required OnUserEarnedRewardCallback onUserEarnedReward,
   }) {
-    prepareShow(this, placement, rewardedAccess);
-    return show(onUserEarnedReward: onUserEarnedReward);
+    final state = prepareShow(this, placement, rewardedAccess);
+    return show(
+      onUserEarnedReward: rewardTrackingHandler(
+        state: state,
+        onUserEarnedReward: onUserEarnedReward,
+      ),
+    );
   }
 
   /// Sets your own [FullScreenContentCallback] without losing RevenueCat
@@ -260,8 +265,13 @@ extension RevenueCatAdMobRewardedInterstitialAd on RewardedInterstitialAd {
     String? placement,
     required OnUserEarnedRewardCallback onUserEarnedReward,
   }) {
-    prepareShow(this, placement, rewardedInterstitialAccess);
-    return show(onUserEarnedReward: onUserEarnedReward);
+    final state = prepareShow(this, placement, rewardedInterstitialAccess);
+    return show(
+      onUserEarnedReward: rewardTrackingHandler(
+        state: state,
+        onUserEarnedReward: onUserEarnedReward,
+      ),
+    );
   }
 
   /// Sets your own [FullScreenContentCallback] without losing RevenueCat
