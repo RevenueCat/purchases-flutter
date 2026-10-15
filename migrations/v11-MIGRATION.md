@@ -58,9 +58,9 @@ await Purchases.syncAmazonPurchase(productID, receiptID, amazonUserID, isoCurren
 
 The deprecated `syncObserverModeAmazonPurchase` keeps its previous signature.
 
-### Jetpack Compose and `material-icons-core` on Android
+### Jetpack Compose on Android
 
-If your app has native Android code that uses Jetpack Compose, `purchases_ui_flutter` raises your Compose libraries to BOM 2026.06.01. Those versions no longer bring in `material-icons-core`, so declare it if your native code uses `Icons`. See the [Android guide](https://github.com/RevenueCat/purchases-android/blob/main/migrations/v11-MIGRATION.md#jetpack-compose-revenuecatui).
+If your app has native Android code that uses Jetpack Compose, `purchases_ui_flutter` raises your Compose libraries to BOM 2026.06.01. See the [Android guide](https://github.com/RevenueCat/purchases-android/blob/main/migrations/v11-MIGRATION.md#jetpack-compose-revenuecatui).
 
 ### Blocked Play Store reports `purchaseNotAllowedError`
 
