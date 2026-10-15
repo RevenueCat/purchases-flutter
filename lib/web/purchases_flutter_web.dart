@@ -13,7 +13,7 @@ class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
   static const _platformName = 'flutter';
-  static const _pluginVersion = '10.15.2';
+  static const _pluginVersion = '10.16.0';
 
   // Path to the vendored RevenueCat web SDK (purchases-js-hybrid-mappings UMD
   // bundle), served same-origin from the app's assets.
@@ -159,6 +159,7 @@ class PurchasesFlutterPlugin {
         case 'trackAdLoaded':
         case 'trackAdRevenue':
         case 'trackAdFailedToLoad':
+        case 'trackAdRewardEarnedUnverified':
         case 'trackRewardedAdPromptShown':
         case 'trackRewardedAdPromptAccepted':
           // No-op on web
