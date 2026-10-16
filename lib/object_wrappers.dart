@@ -1,4 +1,5 @@
 export 'errors.dart';
+export 'models/ad_capture_method.dart';
 export 'models/ad_displayed_data.dart';
 export 'models/ad_failed_to_load_data.dart';
 export 'models/ad_format.dart';

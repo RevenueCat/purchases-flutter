@@ -1,3 +1,4 @@
+import 'ad_capture_method.dart';
 import 'ad_format.dart';
 import 'ad_mediator_name.dart';
 
@@ -9,6 +10,10 @@ class AdDisplayedData {
   final String adUnitId;
   final String impressionId;
 
+  /// Reserved for the official RevenueCat ad-network adapters; leave unset
+  /// when tracking manually.
+  final AdCaptureMethod? captureMethod;
+
   const AdDisplayedData({
     this.networkName,
     required this.mediatorName,
@@ -16,6 +21,7 @@ class AdDisplayedData {
     this.placement,
     required this.adUnitId,
     required this.impressionId,
+    this.captureMethod,
   });
 
   Map<String, dynamic> toMap() => {
@@ -25,5 +31,6 @@ class AdDisplayedData {
         'placement': placement,
         'adUnitId': adUnitId,
         'impressionId': impressionId,
+        if (captureMethod != null) 'captureMethod': captureMethod!.value,
       };
 }
