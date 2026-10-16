@@ -56,8 +56,6 @@ await Purchases.syncAmazonPurchase(productID, receiptID, amazonUserID, isoCurren
     receipt.purchaseTime.millisecondsSinceEpoch);
 ```
 
-The deprecated `syncObserverModeAmazonPurchase` keeps its previous signature.
-
 ### Jetpack Compose on Android
 
 If your app has native Android code that uses Jetpack Compose, `purchases_ui_flutter` raises your Compose libraries to BOM 2026.06.01. See the [Android guide](https://github.com/RevenueCat/purchases-android/blob/main/migrations/v11-MIGRATION.md#jetpack-compose-revenuecatui).
