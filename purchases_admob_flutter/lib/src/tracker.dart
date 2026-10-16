@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 
@@ -146,13 +145,7 @@ class AdMobTracker {
         ),
       );
 
-  /// `google_mobile_ads` names the paid-event value `valueMicros` on both
-  /// platforms, but its iOS bridge forwards `GADAdValue.value`, which is in
-  /// currency units, while Android forwards real micros.
-  static int revenueMicrosFrom(double valueMicros) =>
-      defaultTargetPlatform == TargetPlatform.iOS
-          ? (valueMicros * 1000000).round()
-          : valueMicros.round();
+  static int revenueMicrosFrom(double valueMicros) => valueMicros.round();
 
   static AdRevenuePrecision precisionFrom(PrecisionType precision) {
     switch (precision) {
