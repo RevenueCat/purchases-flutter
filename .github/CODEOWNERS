@@ -1,4 +1,43 @@
 # CODEOWNERS for purchases-flutter
+#
+# The last matching pattern takes precedence, so rules go from broadest to most specific.
+# Code owner review is not required to merge: these rules only decide who gets a review request.
 
-# Default owners
+# Fallback for anything not matched below (build config, samples, e2e apps, CI, release files)
 * @RevenueCat/sdk
+
+# Core SDK (purchases_flutter)
+/lib/ @RevenueCat/coresdk
+/test/ @RevenueCat/coresdk
+/android/ @RevenueCat/coresdk
+/ios/ @RevenueCat/coresdk
+/macos/ @RevenueCat/coresdk
+
+# Paywalls (purchases_ui_flutter)
+/purchases_ui_flutter/ @RevenueCat/paywalls
+
+# Customer Center
+/purchases_ui_flutter/**/*customer_center* @RevenueCat/customer-center
+/purchases_ui_flutter/**/*CustomerCenter* @RevenueCat/customer-center
+/e2e-tests/maestro/e2e_tests/present_customer_center.yaml @RevenueCat/customer-center
+
+# Ads
+/lib/models/ad_*.dart @RevenueCat/ads
+/lib/models/*reward*.dart @RevenueCat/ads
+/test/models/*reward*_test.dart @RevenueCat/ads
+/revenuecat_examples/ads_tester/ @RevenueCat/ads
+
+# Version and dependency manifests, bumped by release and purchases-hybrid-common update automation
+/android/build.gradle @RevenueCat/sdk
+/ios/purchases_flutter.podspec @RevenueCat/sdk
+/ios/purchases_flutter/Package.swift @RevenueCat/sdk
+/macos/purchases_flutter.podspec @RevenueCat/sdk
+/macos/purchases_flutter/Package.swift @RevenueCat/sdk
+/purchases_ui_flutter/pubspec.yaml @RevenueCat/sdk
+/purchases_ui_flutter/CHANGELOG.md @RevenueCat/sdk
+/purchases_ui_flutter/android/build.gradle @RevenueCat/sdk
+/purchases_ui_flutter/*/purchases_ui_flutter.podspec @RevenueCat/sdk
+/purchases_ui_flutter/*/purchases_ui_flutter/Package.swift @RevenueCat/sdk
+
+# Public API surface: changes here should stay visible to the whole SDK team
+/api_tester/ @RevenueCat/sdk
