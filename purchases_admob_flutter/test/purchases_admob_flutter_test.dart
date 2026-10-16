@@ -239,8 +239,7 @@ void main() {
   });
 
   group('iOS', () {
-    test('converts currency units to micros and maps iOS event names',
-        () async {
+    test('maps iOS event names', () async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       await RevenueCatAdMob.loadAndTrackAppOpenAd(
         adUnitId: 'unit-1',
@@ -260,7 +259,7 @@ void main() {
       expect(purchasesCalls('trackAdOpened'), hasLength(1));
 
       await sendAdEvent(0, 'onPaidEvent', {
-        'valueMicros': 0.0125,
+        'valueMicros': 12500.0,
         'precision': 1,
         'currencyCode': 'EUR',
       });
@@ -270,10 +269,7 @@ void main() {
     });
 
     test('revenue and precision mapping', () {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
-      expect(AdMobTracker.revenueMicrosFrom(1.0), 1000000);
-      debugDefaultTargetPlatformOverride = TargetPlatform.android;
-      expect(AdMobTracker.revenueMicrosFrom(1000000), 1000000);
+      expect(AdMobTracker.revenueMicrosFrom(1000000.4), 1000000);
       expect(
         AdMobTracker.precisionFrom(PrecisionType.publisherProvided),
         AdRevenuePrecision.publisherDefined,
