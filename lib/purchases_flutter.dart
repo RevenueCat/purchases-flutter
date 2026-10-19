@@ -61,12 +61,13 @@ class Purchases {
           final args = Map<String, dynamic>.from(call.arguments);
           final customerInfo = CustomerInfo.fromJson(args);
           _lastReceivedCustomerInfo = customerInfo;
-          for (final listener in _customerInfoUpdateListeners) {
+          for (final listener in _customerInfoUpdateListeners.toList()) {
             listener(customerInfo);
           }
           break;
         case 'Purchases-ReadyForPromotedProductPurchase':
-          for (final listener in _readyForPromotedProductPurchaseListeners) {
+          for (final listener
+              in _readyForPromotedProductPurchaseListeners.toList()) {
             final args = Map<String, dynamic>.from(call.arguments);
             final callbackID = args['callbackID'];
             final productIdentifier = args['productID'];
