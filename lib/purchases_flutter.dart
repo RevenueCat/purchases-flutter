@@ -1260,7 +1260,7 @@ class Purchases {
   ) async {
     final response = await _channel.invokeMethod(
       'recordPurchaseForProductID',
-      {'productID': productID},
+      {'productIdentifier': productID},
     );
     if (response == null) throw UnsupportedPlatformException();
     return StoreTransaction.fromJson(Map<String, dynamic>.from(response));

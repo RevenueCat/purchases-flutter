@@ -423,6 +423,22 @@ void main() {
     );
   });
 
+  test('recordPurchase sends productIdentifier and parses transaction',
+      () async {
+    response = mockStoreTransaction;
+    final result = await Purchases.recordPurchase('mock_product_id');
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'recordPurchaseForProductID',
+          arguments: {'productIdentifier': 'mock_product_id'},
+        ),
+      ],
+    );
+    expect(result, StoreTransaction.fromJson(mockStoreTransaction));
+  });
+
   test('errors are mapped correctly', () {
     expect(PurchasesErrorCode.unknownError.index, 0);
     expect(PurchasesErrorCode.purchaseCancelledError.index, 1);
