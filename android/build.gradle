@@ -28,7 +28,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     // Conditional for compatibility with AGP <4.2.
     if (project.android.hasProperty("namespace")) {
