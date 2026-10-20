@@ -43,13 +43,15 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
 # See https://dart.dev/tools/pub/dependencies#dependency-overrides
-# `purchases_ui_flutter` depends on `purchases_flutter`.
+# `purchases_ui_flutter` and `purchases_admob_flutter` depend on `purchases_flutter`.
 # This allows overriding both to use the local copy.
 dependency_overrides:
   purchases_flutter:
     path: ../
   purchases_ui_flutter:
     path: ../purchases_ui_flutter
+  purchases_admob_flutter:
+    path: ../purchases_admob_flutter
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

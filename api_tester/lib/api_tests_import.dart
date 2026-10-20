@@ -34,5 +34,6 @@ import 'package:api_tester/api_tests/models/virtual_currencies_api_test.dart';
 import 'package:api_tester/api_tests/models/virtual_currency_api_test.dart';
 import 'package:api_tester/api_tests/models/web_purchase_redemption_api_test.dart';
 import 'package:api_tester/api_tests/models/web_purchase_redemption_result_api_test.dart';
+import 'package:api_tester/api_tests/purchases_admob_flutter_api_test.dart';
 import 'package:api_tester/api_tests/purchases_flutter_api_test.dart';
 import 'package:api_tester/api_tests/purchases_ui_flutter_api_test.dart';
