@@ -247,6 +247,23 @@ jobs:
           name: Run tests
           command: flutter test
 
+  test-web:
+    description: "Run browser tests for purchases_flutter"
+    docker:
+      - image: ghcr.io/cirruslabs/flutter:stable
+    steps:
+      - checkout
+      - run:
+          name: Install Chrome
+          command: |
+            wget -q -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+            apt-get update -qq
+            apt-get install -y -qq /tmp/chrome.deb
+      - flutter-get-dependencies
+      - run:
+          name: Run browser tests
+          command: flutter test --platform chrome test/web
+
   lint-test-ui:
     description: "Run static analysis and tests for purchases_ui_flutter"
     parameters:
@@ -646,6 +663,7 @@ workflows:
       - lint-test:
           name: lint-test-equatable-3
           equatable-version: "^3.0.0"
+      - test-web
       - lint-test-ui:
           name: lint-test-ui
       - lint-test-ui:
