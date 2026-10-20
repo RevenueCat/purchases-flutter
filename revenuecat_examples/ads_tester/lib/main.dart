@@ -172,7 +172,12 @@ abstract class _AdScreenState<T extends StatefulWidget> extends State<T> {
   }
 
   Future<void> load();
-  Future<void> show();
+  Future<void> showAd();
+
+  Future<void> show() async {
+    setState(() => busy = true);
+    await showAd();
+  }
 
   Widget buildBody(BuildContext context, {List<Widget> extra = const []}) =>
       Center(
@@ -203,13 +208,19 @@ FullScreenContentCallback<T> _dismissCallback<T extends AdWithoutView>(
       onAdImpression: (_) => state.setStatus('Impression recorded'),
       onAdDismissedFullScreenContent: (ad) {
         ad.dispose();
-        clear();
-        state.setStatus('Dismissed');
+        state.safeSetState(() {
+          clear();
+          state.busy = false;
+          state.status = 'Dismissed';
+        });
       },
       onAdFailedToShowFullScreenContent: (ad, error) {
         ad.dispose();
-        clear();
-        state.setStatus('Failed to show: $error');
+        state.safeSetState(() {
+          clear();
+          state.busy = false;
+          state.status = 'Failed to show: $error';
+        });
       },
     );
 
@@ -243,9 +254,13 @@ class _InterstitialScreenState extends _AdScreenState<InterstitialScreen> {
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = _dismissCallback<InterstitialAd>(
             this,
-            () => safeSetState(() => _ad = null),
+            () => _ad = null,
           );
-          safeSetState(() {
+          if (!mounted) {
+            ad.dispose();
+            return;
+          }
+          setState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
@@ -260,7 +275,7 @@ class _InterstitialScreenState extends _AdScreenState<InterstitialScreen> {
   }
 
   @override
-  Future<void> show() => _ad!.showAndTrack(placement: 'interstitial_shown');
+  Future<void> showAd() => _ad!.showAndTrack(placement: 'interstitial_shown');
 
   @override
   Widget build(BuildContext context) => buildBody(context);
@@ -296,9 +311,13 @@ class _AppOpenScreenState extends _AdScreenState<AppOpenScreen> {
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = _dismissCallback<AppOpenAd>(
             this,
-            () => safeSetState(() => _ad = null),
+            () => _ad = null,
           );
-          safeSetState(() {
+          if (!mounted) {
+            ad.dispose();
+            return;
+          }
+          setState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
@@ -313,7 +332,7 @@ class _AppOpenScreenState extends _AdScreenState<AppOpenScreen> {
   }
 
   @override
-  Future<void> show() => _ad!.showAndTrack();
+  Future<void> showAd() => _ad!.showAndTrack();
 
   @override
   Widget build(BuildContext context) => buildBody(context);
@@ -350,10 +369,14 @@ class _RewardedScreenState extends _AdScreenState<RewardedScreen> {
         onAdLoaded: (ad) async {
           ad.fullScreenContentCallback = _dismissCallback<RewardedAd>(
             this,
-            () => safeSetState(() => _ad = null),
+            () => _ad = null,
           );
           await ad.enableRewardVerification();
-          safeSetState(() {
+          if (!mounted) {
+            ad.dispose();
+            return;
+          }
+          setState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
@@ -368,7 +391,7 @@ class _RewardedScreenState extends _AdScreenState<RewardedScreen> {
   }
 
   @override
-  Future<void> show() => _ad!.showWithRewardVerification(
+  Future<void> showAd() => _ad!.showWithRewardVerification(
         onRewardVerificationStarted: () => setStatus('Verifying reward…'),
         onRewardVerificationCompleted: (verification) => safeSetState(() {
           status = 'Done';
@@ -414,10 +437,14 @@ class _RewardedInterstitialScreenState
           ad.fullScreenContentCallback =
               _dismissCallback<RewardedInterstitialAd>(
             this,
-            () => safeSetState(() => _ad = null),
+            () => _ad = null,
           );
           await ad.enableRewardVerification();
-          safeSetState(() {
+          if (!mounted) {
+            ad.dispose();
+            return;
+          }
+          setState(() {
             _ad = ad;
             busy = false;
             status = 'Ad ready (${ad.responseInfo?.responseId})';
@@ -432,7 +459,7 @@ class _RewardedInterstitialScreenState
   }
 
   @override
-  Future<void> show() => _ad!.showWithRewardVerification(
+  Future<void> showAd() => _ad!.showWithRewardVerification(
         onRewardVerificationStarted: () => setStatus('Verifying reward…'),
         onRewardVerificationCompleted: (verification) => safeSetState(() {
           status = 'Done';
@@ -462,6 +489,11 @@ class _BannerScreenState extends State<BannerScreen> {
     super.dispose();
   }
 
+  void _safeSetState(VoidCallback fn) {
+    if (!mounted) return;
+    setState(fn);
+  }
+
   Future<void> _load() async {
     _banner?.dispose();
     setState(() {
@@ -474,17 +506,18 @@ class _BannerScreenState extends State<BannerScreen> {
       request: const AdRequest(),
       placement: 'banner_tab',
       listener: BannerAdListener(
-        onAdLoaded: (ad) => setState(() {
+        onAdLoaded: (ad) => _safeSetState(() {
           _loaded = true;
           _status = 'Loaded (${ad.responseInfo?.responseId})';
         }),
         onAdFailedToLoad: (ad, error) {
           ad.dispose();
-          setState(() => _status = 'Failed to load: $error');
+          _safeSetState(() => _status = 'Failed to load: $error');
         },
-        onAdImpression: (_) => setState(() => _status = 'Impression recorded'),
+        onAdImpression: (_) =>
+            _safeSetState(() => _status = 'Impression recorded'),
         onPaidEvent: (_, value, precision, currency) =>
-            setState(() => _status = 'Paid: $value $currency ($precision)'),
+            _safeSetState(() => _status = 'Paid: $value $currency ($precision)'),
       ),
     );
     _banner = banner;
