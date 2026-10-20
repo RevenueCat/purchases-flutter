@@ -63,7 +63,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "10.15.2";
+    private static final String PLUGIN_VERSION = "10.17.0";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
@@ -219,6 +219,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 getCustomerInfo(result);
                 break;
             case "syncPurchases":
+            case "syncPurchasesForResult":
                 syncPurchases(result);
                 break;
             case "isAnonymous":
@@ -413,6 +414,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 break;
             case "trackAdFailedToLoad":
                 trackAdFailedToLoad(call.arguments(), result);
+                break;
+            case "trackAdRewardEarnedUnverified":
+                trackAdRewardEarnedUnverified(call.arguments(), result);
                 break;
             case "trackRewardedAdPromptShown":
                 trackRewardedAdPromptShown(call.arguments(), result);
@@ -670,8 +674,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     }
 
     private void syncPurchases(final Result result) {
-        CommonKt.syncPurchases();
-        result.success(null);
+        CommonKt.syncPurchases(getOnResult(result));
     }
 
     private void isAnonymous(final Result result) {
@@ -973,6 +976,11 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
 
     private void trackAdFailedToLoad(Map<String, Object> arguments, final Result result) {
         CommonKt.trackAdFailedToLoad(arguments);
+        result.success(null);
+    }
+
+    private void trackAdRewardEarnedUnverified(Map<String, Object> arguments, final Result result) {
+        CommonKt.trackAdRewardEarnedUnverified(arguments);
         result.success(null);
     }
 

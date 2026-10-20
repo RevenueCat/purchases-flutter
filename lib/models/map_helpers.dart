@@ -1,3 +1,4 @@
+import 'billing_plan_type.dart';
 import 'entitlement_info_wrapper.dart';
 import 'period_unit.dart';
 import 'product_category.dart';
@@ -101,5 +102,20 @@ PeriodUnit periodUnitFromJson(dynamic value) {
       return PeriodUnit.year;
     default:
       return PeriodUnit.unknown;
+  }
+}
+
+BillingPlanType? billingPlanTypeFromJson(dynamic value) {
+  switch (value) {
+    case 'UP_FRONT':
+      return BillingPlanType.upFront;
+    case 'MONTHLY':
+      return BillingPlanType.monthly;
+    case 'UNKNOWN':
+      return BillingPlanType.unknown;
+    case null:
+      return null;
+    default:
+      return BillingPlanType.unknown;
   }
 }

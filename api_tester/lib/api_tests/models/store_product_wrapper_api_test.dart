@@ -25,7 +25,8 @@ class _StoreProductApiTest {
       double? pricePerYear,
       String? pricePerWeekString,
       String? pricePerMonthString,
-      String? pricePerYearString) {
+      String? pricePerYearString,
+      InstallmentsInfo? installmentsInfo) {
     StoreProduct product = StoreProduct(
         identifier, description, title, price, priceString, currencyCode);
     product = StoreProduct(
@@ -40,7 +41,8 @@ class _StoreProductApiTest {
         pricePerYear: pricePerYear,
         pricePerWeekString: pricePerWeekString,
         pricePerMonthString: pricePerMonthString,
-        pricePerYearString: pricePerYearString);
+        pricePerYearString: pricePerYearString,
+        installmentsInfo: installmentsInfo);
   }
 
   void _checkProperties(StoreProduct product) {
@@ -65,5 +67,6 @@ class _StoreProductApiTest {
     String? pricePerWeekString = product.pricePerWeekString;
     String? pricePerMonthString = product.pricePerMonthString;
     String? pricePerYearString = product.pricePerYearString;
+    InstallmentsInfo? installmentsInfo = product.installmentsInfo;
   }
 }
