@@ -3,7 +3,7 @@ version '10.16.0'
 
 buildscript {
     ext.kotlin_version = '2.2.21'
-    ext.common_version = '19.14.0'
+    ext.common_version = '20.0.0-SNAPSHOT'
     repositories {
         google()
         mavenCentral()
@@ -19,7 +19,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        // TODO: remove with the purchases 11.0.0-SNAPSHOT pin below, before merging.
+        // TODO: remove with the purchases-hybrid-common 20.0.0-SNAPSHOT pin, before merging.
         maven {
             url 'https://central.sonatype.com/repository/maven-snapshots/'
             content { includeGroup 'com.revenuecat.purchases' }
@@ -62,10 +62,6 @@ android {
     dependencies {
         implementation "com.revenuecat.purchases:purchases-hybrid-common-ui:$common_version"
         implementation 'androidx.compose.ui:ui-android:1.5.4'
-        // TODO: remove before merging. Forces the transitive purchases-android up to the v11
-        // snapshot so this module compiles against Kotlin metadata 2.2.0.
-        implementation 'com.revenuecat.purchases:purchases:11.0.0-SNAPSHOT'
-        implementation 'com.revenuecat.purchases:purchases-ui:11.0.0-SNAPSHOT'
     }
 }
 
