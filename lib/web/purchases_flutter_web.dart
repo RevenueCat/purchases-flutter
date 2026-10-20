@@ -125,7 +125,7 @@ class PurchasesFlutterPlugin {
           return _isConfigured();
         case 'checkTrialOrIntroductoryPriceEligibility':
           return _checkTrialOrIntroductoryPriceEligibility(call.arguments);
-        case 'setProxyURL':
+        case 'setProxyURLString':
           return _setProxyURL(call.arguments);
         case 'canMakePayments':
           return Future.value(true);
@@ -323,7 +323,7 @@ class PurchasesFlutterPlugin {
         message: 'Proxy URL is required',
       );
     }
-    return _callStaticMethodReturningPromise('setProxyUrl', [proxyURL]);
+    _callStaticMethod('setProxyUrl', [proxyURL]);
   }
 
   Future<void> _setAttributes(dynamic arguments) async {
@@ -413,15 +413,6 @@ class PurchasesFlutterPlugin {
       );
     }
     return purchasesCommon;
-  }
-
-  Future _callStaticMethodReturningPromise(
-      String methodName,
-      List<dynamic> args,
-      ) async {
-    final promise = _callStaticMethod(methodName, args) as JSPromise;
-    return promise.toDart
-        .catchError((error) => throw _processError(error));
   }
 
   Future<Map<String, dynamic>> _getMapFromInstanceMethod(
