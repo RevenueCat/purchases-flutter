@@ -459,8 +459,10 @@ def get_phc_version
   ios_phc_ui_version = ios_ui_podspec_contents.match("s.dependency 'PurchasesHybridCommonUI', '(.*)'").captures[0]
   UI.user_error!("iOS PHC UI version not found.") if ios_phc_ui_version.nil?
 
+  # TODO: remove before merging into main. Android pins the PHC 20 snapshot; iOS has no PHC 20 pod yet.
+  android_on_snapshot = android_phc_version.end_with?('-SNAPSHOT')
   versions_match =
-    android_phc_version == ios_phc_version &&
+    (android_on_snapshot || android_phc_version == ios_phc_version) &&
     android_phc_version == android_phc_ui_version &&
     ios_phc_version == ios_phc_ui_version
   UI.user_error!("Android and iOS PHC (UI) versions don't match. Please make sure they match.") unless versions_match
