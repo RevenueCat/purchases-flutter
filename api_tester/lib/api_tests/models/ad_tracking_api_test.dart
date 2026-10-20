@@ -45,6 +45,17 @@ class _AdRevenuePrecisionApiTest {
   }
 }
 
+class _AdCaptureMethodApiTest {
+  void _checkConstructor() {
+    AdCaptureMethod custom = const AdCaptureMethod('custom_method');
+    String value = custom.value;
+  }
+
+  void _checkPredefinedConstants() {
+    AdCaptureMethod flutterAdMobAdapter = AdCaptureMethod.flutterAdMobAdapter;
+  }
+}
+
 class _AdDisplayedDataApiTest {
   void _checkConstructor() {
     AdDisplayedData data = const AdDisplayedData(
@@ -52,6 +63,7 @@ class _AdDisplayedDataApiTest {
       adFormat: AdFormat.banner,
       adUnitId: 'unit-1',
       impressionId: 'imp-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -62,6 +74,7 @@ class _AdDisplayedDataApiTest {
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
     String impressionId = data.impressionId;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
@@ -73,6 +86,7 @@ class _AdOpenedDataApiTest {
       adFormat: AdFormat.interstitial,
       adUnitId: 'unit-1',
       impressionId: 'imp-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -83,6 +97,7 @@ class _AdOpenedDataApiTest {
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
     String impressionId = data.impressionId;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
@@ -94,6 +109,7 @@ class _AdLoadedDataApiTest {
       adFormat: AdFormat.rewarded,
       adUnitId: 'unit-1',
       impressionId: 'imp-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -104,6 +120,7 @@ class _AdLoadedDataApiTest {
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
     String impressionId = data.impressionId;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
@@ -118,6 +135,7 @@ class _AdRevenueDataApiTest {
       revenueMicros: 1000000,
       currency: 'USD',
       precision: AdRevenuePrecision.exact,
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -131,6 +149,7 @@ class _AdRevenueDataApiTest {
     int revenueMicros = data.revenueMicros;
     String currency = data.currency;
     AdRevenuePrecision precision = data.precision;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
@@ -141,6 +160,7 @@ class _AdFailedToLoadDataApiTest {
       mediatorName: AdMediatorName.adMob,
       adFormat: AdFormat.banner,
       adUnitId: 'unit-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -150,6 +170,7 @@ class _AdFailedToLoadDataApiTest {
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
     int? mediatorErrorCode = data.mediatorErrorCode;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
@@ -161,6 +182,7 @@ class _AdRewardEarnedUnverifiedDataApiTest {
       adFormat: AdFormat.rewarded,
       adUnitId: 'unit-1',
       impressionId: 'imp-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -171,6 +193,7 @@ class _AdRewardEarnedUnverifiedDataApiTest {
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
     String impressionId = data.impressionId;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
@@ -180,6 +203,7 @@ class _AdRewardPromptShownDataApiTest {
     AdRewardPromptShownData data = const AdRewardPromptShownData(
       mediatorName: AdMediatorName.adMob,
       adUnitId: 'unit-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -187,6 +211,7 @@ class _AdRewardPromptShownDataApiTest {
     AdMediatorName mediatorName = data.mediatorName;
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
@@ -196,6 +221,7 @@ class _AdRewardPromptAcceptedDataApiTest {
     AdRewardPromptAcceptedData data = const AdRewardPromptAcceptedData(
       mediatorName: AdMediatorName.adMob,
       adUnitId: 'unit-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -203,6 +229,7 @@ class _AdRewardPromptAcceptedDataApiTest {
     AdMediatorName mediatorName = data.mediatorName;
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }
