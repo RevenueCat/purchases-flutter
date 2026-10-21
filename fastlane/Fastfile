@@ -29,6 +29,7 @@ files_with_version_number = {
     './purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
     './purchases_ui_flutter/macos/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
     './purchases_ui_flutter/android/build.gradle' => ['version \'{x}\''],
+    './purchases_admob_flutter/pubspec.yaml' => ['version: {x}', 'purchases_flutter: ^{x}'],
     './lib/web/purchases_flutter_web.dart' => ['_pluginVersion = \'{x}\''],
 }
 
@@ -91,10 +92,11 @@ end
 
 desc "Create release"
 lane :release do |options|
-  # Remove purchases_ui_flutter so it's not included in the release of the main SDK
+  # Remove purchases_ui_flutter and purchases_admob_flutter so they're not included in the release of the main SDK
   # Can't use .pubignore because it causes files to not be found when trying to
-  # deploy purchases_ui_flutter
+  # deploy purchases_ui_flutter / purchases_admob_flutter
   sh('rm', '-rf', 'purchases_ui_flutter')
+  sh('rm', '-rf', 'purchases_admob_flutter')
   Dir.chdir('..') do
     sh('flutter', 'pub', 'publish', '--dry-run')
   end
@@ -111,6 +113,17 @@ lane :release_purchases_ui_flutter do |options|
   end
   setup_credentials_file
   Dir.chdir('../purchases_ui_flutter') do
+    sh('flutter', 'pub', 'publish', '--force')
+  end
+end
+
+desc "Create purchases_admob_flutter release"
+lane :release_purchases_admob_flutter do |options|
+  Dir.chdir('../purchases_admob_flutter') do
+    sh('flutter', 'pub', 'publish', '--dry-run')
+  end
+  setup_credentials_file
+  Dir.chdir('../purchases_admob_flutter') do
     sh('flutter', 'pub', 'publish', '--force')
   end
 end

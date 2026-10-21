@@ -45,6 +45,14 @@ Create release
 
 Create purchases_ui_flutter release
 
+### release_purchases_admob_flutter
+
+```sh
+[bundle exec] fastlane release_purchases_admob_flutter
+```
+
+Create purchases_admob_flutter release
+
 ### github_release_current_version
 
 ```sh
