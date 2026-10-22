@@ -23,6 +23,27 @@ or conditionally based on entitlements:
 await RevenueCatUI.presentPaywallIfNeeded("requiredEntitlementId");
 ```
 
+Embed a full paywall with `PaywallView`, or place an original-template paywall
+below your own content with `OriginalTemplatePaywallFooterView` (formerly
+`PaywallFooterView`).
+
+On Android, Flutter attempts to use Texture Layer Hybrid Composition by
+default, falling back to Hybrid Composition when necessary. If an embedded
+view stops rendering on affected Android 10 devices, explicitly select the
+more expensive Hybrid Composition mode:
+```dart
+PaywallView(
+  androidPlatformViewMode: AndroidPlatformViewMode.hybridComposition,
+);
+```
+
+The `androidPlatformViewMode` parameter is also available on
+`OriginalTemplatePaywallFooterView`, `PaywallFooterView`, and
+`CustomerCenterView`. It is ignored on iOS and macOS. See
+[RevenueCat/purchases-flutter#1954](https://github.com/RevenueCat/purchases-flutter/issues/1954)
+and [flutter/flutter#160854](https://github.com/flutter/flutter/issues/160854)
+for details.
+
 ## Customer Center
 
  Present as a modal (callbacks optional):

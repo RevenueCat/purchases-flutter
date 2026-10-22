@@ -1,11 +1,17 @@
 ## RevenueCat SDK
 ### ✨ New Features
-* feat: support 12month commitment subscriptions on iOS (#1949) via Will Taylor (@fire-at-will)
+* feat(ads): admob adapter (#1946) via Peter Porfy (@peterporfy)
+### 🐞 Bugfixes
+* [EXTERNAL] Fix setProxyURL throwing on web (#1971) via @RaphaelFakhri (#1972) via Álvaro Brey (@AlvaroBrey)
 ### 📦 Dependency Updates
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.12.0 (#1948) via RevenueCat Git Bot (@RCGitBot)
-  * [Android 10.27.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.27.0)
-  * [iOS 5.95.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.95.0)
-* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.11.0 (#1947) via RevenueCat Git Bot (@RCGitBot)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.14.1 (#1975) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.96.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.96.1)
+
+## RevenueCatUI SDK
+### ✨ New Features
+* Add hybrid composition mode for Android (#1956) via Jacob Rakidzich (@JZDesign)
 
 ### 🔄 Other Changes
-* chore(deps): bump fastlane from 2.240.1 to 2.241.0 (#1950) via dependabot[bot] (@dependabot[bot])
+* ci: ship a changelog with purchases_admob_flutter (#1977) via Álvaro Brey (@AlvaroBrey)
+* Run iOS Maestro e2e tests on Xcode 26.6 (#1974) via Antonio Pallares (@ajpallares)
+* feat(ads): use the AdMob adapter in ads_tester (#1955) via Peter Porfy (@peterporfy)

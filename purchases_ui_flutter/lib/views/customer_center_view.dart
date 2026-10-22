@@ -1,21 +1,27 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 
+import '../android_platform_view_mode.dart';
+import '../src/android_platform_view.dart';
 import 'customer_center_view_method_handler.dart';
 
 /// A widget that displays the customer center inline within your app.
 ///
 /// This allows users to manage their subscriptions, request refunds, and access
 /// customer support without leaving your app's context.
+///
+/// [androidPlatformViewMode] controls how this view is hosted on Android.
+/// By default, Flutter attempts to use Texture Layer Hybrid Composition.
+/// Hybrid Composition is more expensive, but can work around platform-view
+/// rendering issues on some Android 10 devices. Ignored on iOS and macOS.
 class CustomerCenterView extends StatelessWidget {
   const CustomerCenterView({
     super.key,
     this.shouldShowCloseButton = true,
+    this.androidPlatformViewMode =
+        AndroidPlatformViewMode.textureLayerHybridComposition,
     this.onDismiss,
     this.onRestoreStarted,
     this.onRestoreCompleted,
@@ -37,6 +43,11 @@ class CustomerCenterView extends StatelessWidget {
   ///
   /// Defaults to `true`.
   final bool shouldShowCloseButton;
+
+  /// The mode used to host this view on Android.
+  ///
+  /// Ignored on iOS and macOS.
+  final AndroidPlatformViewMode androidPlatformViewMode;
 
   final CustomerCenterOnDismiss? onDismiss;
   final CustomerCenterRestoreStarted? onRestoreStarted;
@@ -78,27 +89,11 @@ class CustomerCenterView extends StatelessWidget {
   PlatformViewLink _buildAndroidPlatformViewLink(
     Map<String, dynamic> creationParams,
   ) =>
-      PlatformViewLink(
+      buildAndroidPlatformViewLink(
         viewType: _viewType,
-        surfaceFactory: (context, controller) => AndroidViewSurface(
-          controller: controller as AndroidViewController,
-          gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
-          hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-        ),
-        onCreatePlatformView: (params) =>
-            PlatformViewsService.initSurfaceAndroidView(
-          id: params.id,
-          viewType: _viewType,
-          layoutDirection: TextDirection.ltr,
-          creationParams: creationParams,
-          creationParamsCodec: const StandardMessageCodec(),
-          onFocus: () {
-            params.onFocusChanged(true);
-          },
-        )
-              ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
-              ..addOnPlatformViewCreatedListener(_buildListenerChannel)
-              ..create(),
+        creationParams: creationParams,
+        mode: androidPlatformViewMode,
+        onPlatformViewCreated: _buildListenerChannel,
       );
 
   void _buildListenerChannel(int id) {
