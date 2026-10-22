@@ -30,11 +30,11 @@ enum OwnershipType {
   /// The purchase has been shared to this user by a family member.
   familyShared,
 
+  /// The purchase has no or an unknown ownership type.
+  unknown,
+
   /// The purchase has been assigned to this user through an organization.
   assigned,
-
-  /// The purchase has no or an unknown ownership type.
-  unknown
 }
 
 /// The EntitlementInfo object gives you access to all of the information about
