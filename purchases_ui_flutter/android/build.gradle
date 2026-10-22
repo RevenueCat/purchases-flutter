@@ -2,8 +2,8 @@ group 'com.revenuecat.purchases_ui_flutter'
 version '10.18.0'
 
 buildscript {
-    ext.kotlin_version = '1.9.20'
-    ext.common_version = '19.14.1'
+    ext.kotlin_version = '2.2.21'
+    ext.common_version = '20.0.0-SNAPSHOT'
     repositories {
         google()
         mavenCentral()
@@ -19,6 +19,11 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // TODO: remove with the purchases-hybrid-common 20.0.0-SNAPSHOT pin, before merging.
+        maven {
+            url 'https://central.sonatype.com/repository/maven-snapshots/'
+            content { includeGroup 'com.revenuecat.purchases' }
+        }
     }
 }
 
@@ -48,7 +53,7 @@ android {
 
     defaultConfig {
         minSdkVersion 24
-        compileSdk 34
+        compileSdk 35
         // Fix variant resolution for purchases-android local builds
         missingDimensionStrategy 'apis', 'defaults'
         missingDimensionStrategy 'billingclient', 'bc8'

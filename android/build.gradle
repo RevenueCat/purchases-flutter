@@ -2,7 +2,7 @@ group 'com.revenuecat.purchases_flutter'
 version '10.18.0'
 
 buildscript {
-    ext.common_version = '19.14.1'
+    ext.common_version = '20.0.0-SNAPSHOT'
     repositories {
         google()
         mavenCentral()
@@ -17,13 +17,18 @@ rootProject.allprojects {
     repositories {
         google()
         mavenCentral()
+        // TODO: remove with the purchases-hybrid-common 20.0.0-SNAPSHOT pin, before merging.
+        maven {
+            url 'https://central.sonatype.com/repository/maven-snapshots/'
+            content { includeGroup 'com.revenuecat.purchases' }
+        }
     }
 }
 
 apply plugin: 'com.android.library'
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     // Conditional for compatibility with AGP <4.2.
     if (project.android.hasProperty("namespace")) {
