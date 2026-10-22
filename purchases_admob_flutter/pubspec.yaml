@@ -1,6 +1,6 @@
 name: purchases_admob_flutter
 description: "RevenueCat adapter for the google_mobile_ads plugin: automatic ad tracking and rewarded-ad reward verification."
-version: 10.18.0
+version: 10.18.1
 homepage: https://www.revenuecat.com/
 issue_tracker: https://github.com/RevenueCat/purchases-flutter/issues
 documentation: https://www.revenuecat.com/docs/ad-monetization/admob
@@ -10,7 +10,7 @@ environment:
   flutter: '>=3.38.1'
 
 dependencies:
-  purchases_flutter: ^10.18.0
+  purchases_flutter: ^10.18.1
   google_mobile_ads: ^8.0.0
   flutter:
     sdk: flutter
