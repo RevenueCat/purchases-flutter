@@ -64,6 +64,10 @@ If your app has native Android code that uses Jetpack Compose, `purchases_ui_flu
 
 When the Play Store is blocked on the device (for example in OEM kids modes), purchases now fail with `PurchasesErrorCode.purchaseNotAllowedError` instead of `PurchasesErrorCode.storeProblemError`. `storeProblemError` is still reported for other store failures, so handle the new code alongside it rather than replacing it.
 
+### iOS: offerings errors during a package purchase are reported as they are
+
+When offerings fail to load while purchasing a package on iOS (`purchasePackage`, `purchaseDiscountedPackage`, `purchasePackageWithWinBackOffer` and `purchase` with a package), the call now throws the offerings error, for example `PurchasesErrorCode.networkError`, instead of `PurchasesErrorCode.productNotAvailableForPurchaseError` with the message "Couldn't find package". Android already behaved this way. A package missing from loaded offerings still reports `productNotAvailableForPurchaseError`.
+
 ### Other Play Billing libraries in your app
 
 The Android SDK puts Play Billing Library 9.1.0 on your app's classpath. Any other in-app purchase plugin in the same app, for example one you use to complete purchases with your own code, must support Play Billing Library 9. Versions that use APIs it removed, such as `SkuDetails`, fail at build time or at runtime.
