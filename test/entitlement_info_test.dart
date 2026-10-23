@@ -216,6 +216,11 @@ void main() {
 
     expect(entitlementInfo.ownershipType, OwnershipType.familyShared);
 
+    entitlementInfoJson['ownershipType'] = 'ASSIGNED';
+    entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
+
+    expect(entitlementInfo.ownershipType, OwnershipType.assigned);
+
     entitlementInfoJson['ownershipType'] = 'UNKNOWN';
     entitlementInfo = EntitlementInfo.fromJson(entitlementInfoJson);
 

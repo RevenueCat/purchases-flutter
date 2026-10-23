@@ -11,6 +11,8 @@ OwnershipType ownershipTypeFromJson(dynamic value) {
       return OwnershipType.purchased;
     case 'FAMILY_SHARED':
       return OwnershipType.familyShared;
+    case 'ASSIGNED':
+      return OwnershipType.assigned;
     case 'UNKNOWN':
       return OwnershipType.unknown;
     default:
