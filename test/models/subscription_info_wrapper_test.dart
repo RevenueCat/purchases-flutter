@@ -66,5 +66,26 @@ void main() {
           'https://play.google.com/store/account/subscriptions');
       expect(info.productPlanIdentifier, 'monthly-plan');
     });
+
+    test('parses every ownership type', () {
+      final expectedByValue = {
+        'PURCHASED': OwnershipType.purchased,
+        'FAMILY_SHARED': OwnershipType.familyShared,
+        'ASSIGNED': OwnershipType.assigned,
+        'UNKNOWN': OwnershipType.unknown,
+        'AN_UNKNOWN_OWNERSHIP_TYPE': OwnershipType.unknown,
+      };
+      expectedByValue.forEach((value, expected) {
+        final info = SubscriptionInfo.fromJson({
+          'productIdentifier': 'sku1',
+          'purchaseDate': '2024-01-01T00:00:00Z',
+          'isSandbox': false,
+          'isActive': true,
+          'willRenew': true,
+          'ownershipType': value,
+        });
+        expect(info.ownershipType, expected, reason: value);
+      });
+    });
   });
 }

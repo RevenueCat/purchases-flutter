@@ -15,6 +15,7 @@ import 'paywall_result.dart';
 import 'views/customer_center_view_method_handler.dart';
 import 'views/paywall_view_method_handler.dart';
 
+export 'android_platform_view_mode.dart';
 export 'custom_variable_value.dart';
 export 'paywall_presentation_configuration.dart';
 export 'paywall_result.dart';

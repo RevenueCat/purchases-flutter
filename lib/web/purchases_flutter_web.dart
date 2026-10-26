@@ -13,7 +13,7 @@ class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
   static const _platformName = 'flutter';
-  static const _pluginVersion = '10.14.0';
+  static const _pluginVersion = '10.18.1';
 
   // Path to the vendored RevenueCat web SDK (purchases-js-hybrid-mappings UMD
   // bundle), served same-origin from the app's assets.
@@ -125,7 +125,7 @@ class PurchasesFlutterPlugin {
           return _isConfigured();
         case 'checkTrialOrIntroductoryPriceEligibility':
           return _checkTrialOrIntroductoryPriceEligibility(call.arguments);
-        case 'setProxyURL':
+        case 'setProxyURLString':
           return _setProxyURL(call.arguments);
         case 'canMakePayments':
           return Future.value(true);
@@ -159,6 +159,7 @@ class PurchasesFlutterPlugin {
         case 'trackAdLoaded':
         case 'trackAdRevenue':
         case 'trackAdFailedToLoad':
+        case 'trackAdRewardEarnedUnverified':
         case 'trackRewardedAdPromptShown':
         case 'trackRewardedAdPromptAccepted':
           // No-op on web
@@ -181,6 +182,7 @@ class PurchasesFlutterPlugin {
         case 'redeemWebPurchase':
         case 'generateRewardVerificationToken':
         case 'pollRewardVerification':
+        case 'syncPurchasesForResult':
           throw UnsupportedPlatformException();
 
         default:
@@ -321,7 +323,7 @@ class PurchasesFlutterPlugin {
         message: 'Proxy URL is required',
       );
     }
-    return _callStaticMethodReturningPromise('setProxyUrl', [proxyURL]);
+    _callStaticMethod('setProxyUrl', [proxyURL]);
   }
 
   Future<void> _setAttributes(dynamic arguments) async {
@@ -411,15 +413,6 @@ class PurchasesFlutterPlugin {
       );
     }
     return purchasesCommon;
-  }
-
-  Future _callStaticMethodReturningPromise(
-      String methodName,
-      List<dynamic> args,
-      ) async {
-    final promise = _callStaticMethod(methodName, args) as JSPromise;
-    return promise.toDart
-        .catchError((error) => throw _processError(error));
   }
 
   Future<Map<String, dynamic>> _getMapFromInstanceMethod(

@@ -1,3 +1,98 @@
+## 10.18.1
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.15.0 (#1979) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.29.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.29.0)
+
+### 🔄 Other Changes
+* chore(deps): bump fastlane from 2.241.0 to 2.241.1 (#1966) via dependabot[bot] (@dependabot[bot])
+
+## 10.18.0
+## RevenueCat SDK
+### ✨ New Features
+* feat(ads): admob adapter (#1946) via Peter Porfy (@peterporfy)
+### 🐞 Bugfixes
+* [EXTERNAL] Fix setProxyURL throwing on web (#1971) via @RaphaelFakhri (#1972) via Álvaro Brey (@AlvaroBrey)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.14.1 (#1975) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.96.1](https://github.com/RevenueCat/purchases-ios/releases/tag/5.96.1)
+
+## RevenueCatUI SDK
+### ✨ New Features
+* Add hybrid composition mode for Android (#1956) via Jacob Rakidzich (@JZDesign)
+
+### 🔄 Other Changes
+* ci: ship a changelog with purchases_admob_flutter (#1977) via Álvaro Brey (@AlvaroBrey)
+* Run iOS Maestro e2e tests on Xcode 26.6 (#1974) via Antonio Pallares (@ajpallares)
+* feat(ads): use the AdMob adapter in ads_tester (#1955) via Peter Porfy (@peterporfy)
+
+## 10.17.0
+## RevenueCat SDK
+### ✨ New Features
+* [SDK-4558] Add `syncPurchasesForResult` and fix `syncPurchases` not waiting for sync completion on Android (This means that this call may now fail in Android, as it did in iOS) (#1953) via Toni Rico (@tonidero)
+* Add unverified rewarded ad tracking (#1937) via Pol Miro (@polmiro)
+### 🐞 Bugfixes
+* fix: pass productIdentifier correctly for recordPurchase (#1967) via Will Taylor (@fire-at-will)
+* [EXTERNAL] Fix listeners being skipped when a listener removes itself during a callback (#1963) by @RaphaelFakhri (#1964) via Toni Rico (@tonidero)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.14.0 (#1965) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.28.1](https://github.com/RevenueCat/purchases-android/releases/tag/10.28.1)
+  * [Android 10.28.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.28.0)
+  * [Android 10.27.1](https://github.com/RevenueCat/purchases-android/releases/tag/10.27.1)
+  * [iOS 5.96.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.96.0)
+  * [Web 1.71.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.71.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.13.0 (#1960) via RevenueCat Git Bot (@RCGitBot)
+
+### 🔄 Other Changes
+* chore: route CODEOWNERS review requests to owning teams (#1961) via Cesar de la Vega (@vegaro)
+
+## 10.16.0
+## RevenueCat SDK
+### ✨ New Features
+* feat: support 12month commitment subscriptions on iOS (#1949) via Will Taylor (@fire-at-will)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.12.0 (#1948) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.27.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.27.0)
+  * [iOS 5.95.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.95.0)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.11.0 (#1947) via RevenueCat Git Bot (@RCGitBot)
+
+### 🔄 Other Changes
+* chore(deps): bump fastlane from 2.240.1 to 2.241.0 (#1950) via dependabot[bot] (@dependabot[bot])
+
+## 10.15.2
+## RevenueCat SDK
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.10.0 (#1942) via RevenueCat Git Bot (@RCGitBot)
+  * [iOS 5.94.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.94.0)
+
+### 🔄 Other Changes
+* Bump CI to Ruby 3.3 (#1939) via Josh Holtz (@joshdholtz)
+
+## 10.15.1
+## RevenueCat SDK
+### 🐞 Bugfixes
+* Fix iOS ignoring `automaticDeviceIdentifierCollectionEnabled` in `configure` (RevenueCat/purchases-hybrid-common#1956) via Álvaro Brey (@AlvaroBrey)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.8.0 (#1935) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.26.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.26.0)
+  * [Android 10.25.0](https://github.com/RevenueCat/purchases-android/releases/tag/10.25.0)
+  * [Android 10.24.2](https://github.com/RevenueCat/purchases-android/releases/tag/10.24.2)
+  * [iOS 5.93.0](https://github.com/RevenueCat/purchases-ios/releases/tag/5.93.0)
+  * [Web 1.70.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.70.0)
+  * [Web 1.69.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.69.0)
+  * [Web 1.68.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.68.0)
+
+## 10.15.0
+## RevenueCat SDK
+### ✨ New Features
+* Track rewarded ad prompt shown and accepted (#1930) via Drago Crnjac (@popcorn)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 19.6.0 (#1929) via RevenueCat Git Bot (@RCGitBot)
+  * [Android 10.24.1](https://github.com/RevenueCat/purchases-android/releases/tag/10.24.1)
+
+### 🔄 Other Changes
+* chore(deps): bump fastlane-plugin-revenuecat_internal from `9f7a03e` to `4c49d48` (#1933) via dependabot[bot] (@dependabot[bot])
+
 ## 10.14.0
 ## RevenueCat SDK
 ### ✨ New Features

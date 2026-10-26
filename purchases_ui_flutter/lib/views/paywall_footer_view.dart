@@ -7,6 +7,7 @@ import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
+import '../android_platform_view_mode.dart';
 import 'internal_paywall_footer_view.dart';
 
 /// View that displays the paywall in footer mode.
@@ -37,6 +38,12 @@ import 'internal_paywall_footer_view.dart';
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
+///
+/// [androidPlatformViewMode] (Optional) The mode used to host this view on
+/// Android. By default, Flutter attempts to use Texture Layer Hybrid
+/// Composition. Hybrid Composition is more expensive, but can work around
+/// platform-view rendering issues on some Android 10 devices. Ignored on iOS
+/// and macOS.
 @Deprecated('use OriginalTemplatePaywallFooterView instead')
 class PaywallFooterView extends OriginalTemplatePaywallFooterView {
   @Deprecated('use OriginalTemplatePaywallFooterView instead')
@@ -51,6 +58,8 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
     Function(CustomerInfo customerInfo)? onRestoreCompleted,
     Function(PurchasesError)? onRestoreError,
     Function()? onDismiss,
+    AndroidPlatformViewMode androidPlatformViewMode =
+        AndroidPlatformViewMode.textureLayerHybridComposition,
     required Widget Function(double bottomPadding) contentCreator,
   }) : super(
           key: key,
@@ -62,6 +71,7 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
           onRestoreCompleted: onRestoreCompleted,
           onRestoreError: onRestoreError,
           onDismiss: onDismiss,
+          androidPlatformViewMode: androidPlatformViewMode,
           contentCreator: contentCreator,
         );
 }
@@ -94,6 +104,12 @@ class PaywallFooterView extends OriginalTemplatePaywallFooterView {
 /// [contentCreator] A function that creates the content to be displayed above
 /// the paywall. Make sure you apply the given padding to the bottom of your
 /// content to avoid overlap.
+///
+/// [androidPlatformViewMode] (Optional) The mode used to host this view on
+/// Android. By default, Flutter attempts to use Texture Layer Hybrid
+/// Composition. Hybrid Composition is more expensive, but can work around
+/// platform-view rendering issues on some Android 10 devices. Ignored on iOS
+/// and macOS.
 class OriginalTemplatePaywallFooterView extends StatefulWidget {
   final Offering? offering;
   final Function(Package rcPackage)? onPurchaseStarted;
@@ -104,6 +120,7 @@ class OriginalTemplatePaywallFooterView extends StatefulWidget {
   final Function(CustomerInfo customerInfo)? onRestoreCompleted;
   final Function(PurchasesError)? onRestoreError;
   final Function()? onDismiss;
+  final AndroidPlatformViewMode androidPlatformViewMode;
   final Widget Function(double bottomPadding) contentCreator;
 
   const OriginalTemplatePaywallFooterView({
@@ -116,6 +133,8 @@ class OriginalTemplatePaywallFooterView extends StatefulWidget {
     this.onRestoreCompleted,
     this.onRestoreError,
     this.onDismiss,
+    this.androidPlatformViewMode =
+        AndroidPlatformViewMode.textureLayerHybridComposition,
     required this.contentCreator,
   }) : super(key: key);
 
@@ -162,6 +181,7 @@ class _PaywallFooterViewState extends State<OriginalTemplatePaywallFooterView> {
                 onRestoreCompleted: widget.onRestoreCompleted,
                 onRestoreError: widget.onRestoreError,
                 onDismiss: widget.onDismiss,
+                androidPlatformViewMode: widget.androidPlatformViewMode,
                 onHeightChanged: _updateHeight,
               ),
             ),

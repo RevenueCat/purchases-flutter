@@ -239,6 +239,12 @@ class _PurchasesFlutterApiTest {
     Future<void> future = Purchases.syncPurchases();
   }
 
+  void _checkSyncPurchasesForResult() async {
+    SyncPurchasesResult syncPurchasesResult =
+        await Purchases.syncPurchasesForResult();
+    CustomerInfo customerInfo = syncPurchasesResult.customerInfo;
+  }
+
   void _checkRecordPurchase() async {
     String productIdentifier = "product_id";
     Future<void> future = Purchases.recordPurchase(productIdentifier);
@@ -746,6 +752,30 @@ class _PurchasesFlutterApiTest {
       placement: 'placement-1',
       mediatorErrorCode: 42,
     ));
+  }
+
+  void _checkTrackAdRewardEarnedUnverified() {
+    Future<void> future = Purchases.adTracker.trackAdRewardEarnedUnverified(
+      const AdRewardEarnedUnverifiedData(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-1',
+        impressionId: 'imp-1',
+      ),
+    );
+  }
+
+  void _checkTrackAdRewardEarnedUnverifiedWithOptionals() {
+    Future<void> future = Purchases.adTracker.trackAdRewardEarnedUnverified(
+      const AdRewardEarnedUnverifiedData(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-1',
+        impressionId: 'imp-1',
+        networkName: 'network-1',
+        placement: 'placement-1',
+      ),
+    );
   }
 
   void _checkTrackRewardedAdPromptShown() {

@@ -390,6 +390,55 @@ void main() {
     }
   });
 
+  test('syncPurchases calls successfully', () async {
+    // ignore: deprecated_member_use_from_same_package
+    await Purchases.syncPurchases();
+    expect(
+      log,
+      <Matcher>[isMethodCall('syncPurchases', arguments: null)],
+    );
+  });
+
+  test('syncPurchasesForResult returns updated customer info', () async {
+    response = mockCustomerInfoResponse;
+    final result = await Purchases.syncPurchasesForResult();
+    expect(
+      log,
+      <Matcher>[isMethodCall('syncPurchasesForResult', arguments: null)],
+    );
+    expect(
+      result,
+      SyncPurchasesResult(CustomerInfo.fromJson(mockCustomerInfoResponse)),
+    );
+  });
+
+  test('syncPurchasesForResult propagates errors', () async {
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (call) async {
+      throw PlatformException(code: '10', message: 'network error');
+    });
+    await expectLater(
+      Purchases.syncPurchasesForResult(),
+      throwsA(isA<PlatformException>()),
+    );
+  });
+
+  test('recordPurchase sends productIdentifier and parses transaction',
+      () async {
+    response = mockStoreTransaction;
+    final result = await Purchases.recordPurchase('mock_product_id');
+    expect(
+      log,
+      <Matcher>[
+        isMethodCall(
+          'recordPurchaseForProductID',
+          arguments: {'productIdentifier': 'mock_product_id'},
+        ),
+      ],
+    );
+    expect(result, StoreTransaction.fromJson(mockStoreTransaction));
+  });
+
   test('errors are mapped correctly', () {
     expect(PurchasesErrorCode.unknownError.index, 0);
     expect(PurchasesErrorCode.purchaseCancelledError.index, 1);
@@ -2779,6 +2828,52 @@ void main() {
         'placement': 'footer',
         'adUnitId': 'unit-6',
         'mediatorErrorCode': 42,
+      }),
+    ]);
+  });
+
+  test('trackAdRewardEarnedUnverified sends correct method and arguments',
+      () async {
+    await Purchases.adTracker.trackAdRewardEarnedUnverified(
+      AdRewardEarnedUnverifiedData(
+        mediatorName: AdMediatorName.adMob,
+        adFormat: AdFormat.rewarded,
+        adUnitId: 'unit-7',
+        impressionId: 'imp-7',
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall('trackAdRewardEarnedUnverified', arguments: {
+        'networkName': null,
+        'mediatorName': 'AdMob',
+        'adFormat': 'rewarded',
+        'placement': null,
+        'adUnitId': 'unit-7',
+        'impressionId': 'imp-7',
+      }),
+    ]);
+  });
+
+  test('trackAdRewardEarnedUnverified includes optional fields when set',
+      () async {
+    await Purchases.adTracker.trackAdRewardEarnedUnverified(
+      AdRewardEarnedUnverifiedData(
+        networkName: 'SomeNetwork',
+        mediatorName: AdMediatorName.appLovin,
+        adFormat: AdFormat.rewardedInterstitial,
+        placement: 'footer',
+        adUnitId: 'unit-7',
+        impressionId: 'imp-7',
+      ),
+    );
+    expect(log, <Matcher>[
+      isMethodCall('trackAdRewardEarnedUnverified', arguments: {
+        'networkName': 'SomeNetwork',
+        'mediatorName': 'AppLovin',
+        'adFormat': 'rewarded_interstitial',
+        'placement': 'footer',
+        'adUnitId': 'unit-7',
+        'impressionId': 'imp-7',
       }),
     ]);
   });

@@ -168,7 +168,10 @@ class _PurchasesFlutterApiTest {
   Widget _checkPaywallView() {
     return const Scaffold(
       body: Center(
-        child: PaywallView(),
+        child: PaywallView(
+          androidPlatformViewMode:
+              AndroidPlatformViewMode.textureLayerHybridComposition,
+        ),
       ),
     );
   }
@@ -212,6 +215,7 @@ class _PurchasesFlutterApiTest {
     return Scaffold(
       body: Center(
         child: OriginalTemplatePaywallFooterView(
+          androidPlatformViewMode: AndroidPlatformViewMode.hybridComposition,
           contentCreator: (double bottomPadding) {
             return Container();
           },
@@ -224,6 +228,7 @@ class _PurchasesFlutterApiTest {
     return Scaffold(
       body: Center(
         child: PaywallFooterView(
+          androidPlatformViewMode: AndroidPlatformViewMode.hybridComposition,
           contentCreator: (double bottomPadding) {
             return Container();
           },
@@ -311,6 +316,14 @@ class _PurchasesFlutterApiTest {
     }
   }
 
+  void _checkAndroidPlatformViewMode(AndroidPlatformViewMode mode) {
+    switch (mode) {
+      case AndroidPlatformViewMode.textureLayerHybridComposition:
+      case AndroidPlatformViewMode.hybridComposition:
+        break;
+    }
+  }
+
   Widget _checkPaywallViewWithPurchaseLogic(PaywallPurchaseLogic logic) {
     return Scaffold(
       body: Center(
@@ -348,7 +361,9 @@ class _PurchasesFlutterApiTest {
   Widget _checkCustomerCenterView() {
     return const Scaffold(
       body: Center(
-        child: CustomerCenterView(),
+        child: CustomerCenterView(
+          androidPlatformViewMode: AndroidPlatformViewMode.hybridComposition,
+        ),
       ),
     );
   }

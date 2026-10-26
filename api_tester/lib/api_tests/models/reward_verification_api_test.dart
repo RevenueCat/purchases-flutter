@@ -69,6 +69,7 @@ class _RewardedAdTrackingMetadataApiTest {
       adFormat: AdFormat.rewarded,
       adUnitId: 'unit-1',
       impressionId: 'imp-1',
+      captureMethod: AdCaptureMethod.flutterAdMobAdapter,
     );
   }
 
@@ -79,6 +80,7 @@ class _RewardedAdTrackingMetadataApiTest {
     String? placement = data.placement;
     String adUnitId = data.adUnitId;
     String impressionId = data.impressionId;
+    AdCaptureMethod? captureMethod = data.captureMethod;
     Map<String, dynamic> map = data.toMap();
   }
 }

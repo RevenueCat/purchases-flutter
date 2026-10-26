@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import 'installments_info.dart';
 import 'introductory_price.dart';
 import 'map_helpers.dart';
 import 'presented_offering_context_wrapper.dart';
@@ -76,6 +77,13 @@ class StoreProduct extends Equatable {
   /// Null for non-subscription products.
   final String? pricePerYearString;
 
+  /// Describes the billing plan that a user is committing to when they purchase a subscription.
+  /// This will be present when a product uses a non-upFront billing plan.
+  /// Always null on Android, when using StoreKit 1, or when running on <iOS 26.4.
+  /// For Play Store installment subscriptions, use the installmentsInfo of the defaultOption or
+  /// subscriptionOptions instead.
+  final InstallmentsInfo? installmentsInfo;
+
   const StoreProduct(
     this.identifier,
     this.description,
@@ -96,6 +104,7 @@ class StoreProduct extends Equatable {
     this.pricePerWeekString,
     this.pricePerMonthString,
     this.pricePerYearString,
+    this.installmentsInfo,
   });
 
   factory StoreProduct.fromJson(Map<String, dynamic> json) => StoreProduct(
@@ -118,6 +127,7 @@ class StoreProduct extends Equatable {
       pricePerWeekString: json['pricePerWeekString'] as String?,
       pricePerMonthString: json['pricePerMonthString'] as String?,
       pricePerYearString: json['pricePerYearString'] as String?,
+      installmentsInfo: json['installmentsInfo'] != null ? InstallmentsInfo.fromJson(Map<String, dynamic>.from(json['installmentsInfo'])) : null,
     );
 
   @override
@@ -141,6 +151,7 @@ class StoreProduct extends Equatable {
     pricePerWeekString,
     pricePerMonthString,
     pricePerYearString,
+    installmentsInfo,
   ];
 }
 

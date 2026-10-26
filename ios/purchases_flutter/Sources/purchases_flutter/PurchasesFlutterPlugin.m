@@ -143,6 +143,8 @@ enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator
         [self getCustomerInfoWithResult:result];
     } else if ([@"syncPurchases" isEqualToString:call.method]) {
         [self syncPurchasesWithResult:result];
+    } else if ([@"syncPurchasesForResult" isEqualToString:call.method]) {
+        [self syncPurchasesWithResult:result];
     } else if ([@"enableAdServicesAttributionTokenCollection" isEqualToString:call.method]) {
         [self enableAdServicesAttributionTokenCollection:result];
     } else if ([@"recordPurchaseForProductID" isEqualToString:call.method]) {
@@ -309,6 +311,8 @@ enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator
         [self trackAdLoaded:arguments result:result];
     } else if ([@"trackAdFailedToLoad" isEqualToString:call.method]) {
         [self trackAdFailedToLoad:arguments result:result];
+    } else if ([@"trackAdRewardEarnedUnverified" isEqualToString:call.method]) {
+        [self trackAdRewardEarnedUnverified:arguments result:result];
     } else if ([@"trackRewardedAdPromptShown" isEqualToString:call.method]) {
         [self trackRewardedAdPromptShown:arguments result:result];
     } else if ([@"trackRewardedAdPromptAccepted" isEqualToString:call.method]) {
@@ -811,6 +815,15 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
     result(nil);
 }
 
+- (void)trackAdRewardEarnedUnverified:(NSDictionary *)arguments result:(FlutterResult)result {
+    if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
+        [RCCommonFunctionality trackAdRewardEarnedUnverified:[arguments mappingNSNullToNil]];
+    } else {
+        NSLog(@"[Purchases] Warning: tried to call trackAdRewardEarnedUnverified, but it's only available on iOS 15.0 or greater.");
+    }
+    result(nil);
+}
+
 - (void)trackRewardedAdPromptShown:(NSDictionary *)arguments result:(FlutterResult)result {
     if (@available(iOS 15.0, tvOS 15.0, macOS 12.0, watchOS 8.0, *)) {
         [RCCommonFunctionality trackRewardedAdPromptShown:[arguments mappingNSNullToNil]];
@@ -957,7 +970,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"10.14.0";
+    return @"10.18.1";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {

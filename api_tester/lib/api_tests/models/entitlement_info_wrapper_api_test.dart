@@ -18,6 +18,7 @@ class _EntitlementInfoApiTest {
     switch (type) {
       case OwnershipType.purchased:
       case OwnershipType.familyShared:
+      case OwnershipType.assigned:
       case OwnershipType.unknown:
         break;
     }
