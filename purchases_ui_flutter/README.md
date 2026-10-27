@@ -86,7 +86,47 @@ final removeCallback = RevenueCatUI.checkpoint(
 // removeCallback();
 ```
 
-The callback is called at most once, only when the checkpoint passes. `result.flow` is `null` when there was nothing to present, such as an unconfigured identifier or no matching rule. Backing out, a blocking failure, or another checkpoint owning presentation does not invoke the callback. Treat a checkpoint as a callback rather than a pending operation to await. The SDK handles error presentation.
+The callback is called at most once, only when the checkpoint passes. `result.flow` is `null` when there was nothing to present, such as an unconfigured identifier or no matching rule. Backing out, a blocking failure, or another checkpoint owning presentation does not invoke the callback. Treat a checkpoint as a callback rather than a pending operation to await. By default, the SDK presents the flow and its error dialogs.
+
+### App-presented checkpoint errors (experimental)
+
+Supply an error presenter to handle errors with Flutter UI on Android and iOS:
+
+```dart
+final removeCallback = RevenueCatUI.checkpoint(
+  'upgrade',
+  (result) { /* Continue to the next screen. */ },
+  params: CheckpointParams(
+    errorPresenter: CheckpointErrorPresenter(
+      context: context,
+      present: (request) async {
+        await showDialog<void>(
+          context: request.context,
+          useRootNavigator: false,
+          builder: (dialogContext) => AlertDialog(
+            title: const Text('Something went wrong'),
+            content: Text(request.error.message),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      },
+    ),
+  ),
+);
+```
+
+The configuration context must be mounted and have a root navigator. The library owns the host; no public host widget is required. Present error UI using `request.context` and `useRootNavigator: false`, so it is disposed with the checkpoint. On Android, the error host occludes earlier pages in that root navigator; app shells that paint backgrounds outside the navigator can cover the underlying native flow. Error UI presented through a captured context's nested navigator or outside the host subtree is not managed by the library.
+
+Completing the presenter's future acknowledges the error; the native SDK then decides how the flow proceeds. `await request.complete()` can acknowledge explicitly once app UI has dismissed; repeated acknowledgements are harmless. The presenter's future must still settle. A thrown or failed presenter is reported through Flutter's error handler and acknowledged so it cannot leave the native flow waiting. Error requests include `requestId`, `kind`, and `PurchasesError`; they are serialized and never invoke a second presenter concurrently for the same call.
+
+`presentationMode` still controls the flow: iOS uses a library-owned Flutter sheet/full-screen route containing the native flow; Android retains SDK presentation and hosts Flutter UI above it for errors. Removing the callback also disposes its error UI. On iOS it cancels the embedded flow; Android has no native cancellation/end-of-flow handle, so its flow remains open and future errors are acknowledged without calling the removed presenter. Keep and call the remover when the owning screen is disposed, including when a user backs out on Android. Checkpoints without an error presenter retain their existing detach-only remover behavior.
+
+**iOS development dependency:** This path requires the unreleased embedded checkpoint SPI from [purchases-ios #8129](https://github.com/RevenueCat/purchases-ios/pull/8129) and [hybrid-common #2036](https://github.com/RevenueCat/purchases-hybrid-common/pull/2036). Until those dependencies ship, build against their local branches as described in [DEVELOPMENT.md](../DEVELOPMENT.md) and define `RC_CHECKPOINT_EMBEDDED` for the `purchases_ui_flutter` Swift target. For CocoaPods, set `SWIFT_ACTIVE_COMPILATION_CONDITIONS` to `$(inherited) RC_CHECKPOINT_EMBEDDED` on that pod target in the Podfile's `post_install`; for local SwiftPM development, add `.define("RC_CHECKPOINT_EMBEDDED")` to that target's `swiftSettings`. Released dependencies compile normally with the path disabled; attempting app-presented errors then reports an unsupported-build error through Flutter's error handler. Remove this temporary condition and pin released dependencies before shipping. Android uses the existing native error-presenter API and does not require these iOS branches.
 
 ### Requirements
 *purchases_ui_flutter* requires XCode 14.0+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.

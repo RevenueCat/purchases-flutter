@@ -53,6 +53,31 @@ class _PurchasesFlutterApiTest {
     passed(result);
   }
 
+  void _checkCheckpointErrorPresenter(BuildContext context) {
+    Future<void> present(CheckpointErrorRequest request) async {
+      String id = request.requestId;
+      CheckpointErrorKind kind = request.kind;
+      PurchasesError error = request.error;
+      BuildContext hostContext = request.context;
+      Future<void> completion = request.complete();
+      await completion;
+    }
+    final presenter =
+        CheckpointErrorPresenter(context: context, present: present);
+    CheckpointErrorPresenter? configured =
+        CheckpointParams(errorPresenter: presenter).errorPresenter;
+    CheckpointErrorKind startup = CheckpointErrorKind.flowCouldNotBeShown;
+    CheckpointErrorKind action = CheckpointErrorKind.flowActionFailed;
+    CheckpointErrorKind sync = CheckpointErrorKind.flowResultSyncFailed;
+    CheckpointErrorKind unknown = CheckpointErrorKind.unknown;
+    void Function() remove = RevenueCatUI.checkpoint(
+      'upgrade',
+      (_) {},
+      params: CheckpointParams(errorPresenter: presenter),
+    );
+    remove();
+  }
+
   void _checkPresentPaywall(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall();
     Future<PaywallResult> f2 = RevenueCatUI.presentPaywall(offering: offering);

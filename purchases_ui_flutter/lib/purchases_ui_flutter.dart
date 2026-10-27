@@ -13,11 +13,13 @@ import 'checkpoint.dart';
 import 'custom_variable_value.dart';
 import 'paywall_presentation_configuration.dart';
 import 'paywall_result.dart';
+import 'src/checkpoint_host.dart';
 import 'views/customer_center_view_method_handler.dart';
 import 'views/paywall_view_method_handler.dart';
 
 export 'android_platform_view_mode.dart';
 export 'checkpoint.dart';
+export 'checkpoint_error_presenter.dart';
 export 'custom_variable_value.dart';
 export 'paywall_presentation_configuration.dart';
 export 'paywall_result.dart';
@@ -222,11 +224,13 @@ class RevenueCatUI {
   /// checkpoint. It is not called when the user backs out, when a blocking
   /// error occurs, or when another checkpoint already owns presentation. Treat
   /// a checkpoint as a callback rather than a pending operation to await. The
-  /// SDK handles error presentation.
+  /// SDK handles error presentation unless [params] supplies an error presenter.
   ///
   /// Returns a function that removes the callback. Call it when the owning
   /// screen is disposed; removing the callback does not dismiss a flow that is
   /// already on screen.
+  /// With an error presenter, removal also closes its Flutter error UI and, on
+  /// iOS, cancels the embedded flow. Android's SDK-presented flow remains open.
   ///
   /// Requires iOS 15+ or Android, and Purchases to be configured. Throws an
   /// [UnsupportedError] on other platforms.
@@ -246,6 +250,10 @@ class RevenueCatUI {
         (defaultTargetPlatform != TargetPlatform.iOS &&
             defaultTargetPlatform != TargetPlatform.android)) {
       throw UnsupportedError('Checkpoints require iOS 15+ or Android.');
+    }
+
+    if (params.errorPresenter != null) {
+      return presentCheckpointWithAppErrors(identifier, onPassed, params);
     }
 
     var removed = false;

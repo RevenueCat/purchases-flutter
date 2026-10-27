@@ -12,6 +12,7 @@ class _CheckpointsScreenState extends State<CheckpointsScreen> {
   final _identifierController = TextEditingController();
   final _removeCallbacks = <void Function()>{};
   bool _fullScreen = false;
+  bool _appPresentedErrors = false;
   String _status = 'Enter a dashboard checkpoint identifier.';
 
   @override
@@ -44,6 +45,27 @@ class _CheckpointsScreenState extends State<CheckpointsScreen> {
           });
         },
         params: CheckpointParams(
+          errorPresenter: _appPresentedErrors
+              ? CheckpointErrorPresenter(
+                  context: context,
+                  present: (request) async {
+                    await showDialog<void>(
+                      context: request.context,
+                      useRootNavigator: false,
+                      builder: (dialogContext) => AlertDialog(
+                        title: const Text('Checkpoint error'),
+                        content: Text(request.error.message),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(dialogContext).pop(),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                )
+              : null,
           presentationMode: _fullScreen
               ? FlowPresentationMode.modalFullScreen
               : FlowPresentationMode.modalSheet,
@@ -76,6 +98,11 @@ class _CheckpointsScreenState extends State<CheckpointsScreen> {
               ),
             ),
             SwitchListTile(
+              title: const Text('App-presented errors'),
+              value: _appPresentedErrors,
+              onChanged: (value) => setState(() => _appPresentedErrors = value),
+            ),
+            SwitchListTile(
               title: const Text('Full screen'),
               value: _fullScreen,
               onChanged: (value) => setState(() => _fullScreen = value),
@@ -83,6 +110,16 @@ class _CheckpointsScreenState extends State<CheckpointsScreen> {
             ElevatedButton(
               onPressed: _run,
               child: const Text('Run checkpoint'),
+            ),
+            TextButton(
+              onPressed: () {
+                for (final remove in _removeCallbacks) {
+                  remove();
+                }
+                _removeCallbacks.clear();
+                setState(() => _status = 'Callbacks removed.');
+              },
+              child: const Text('Remove callbacks'),
             ),
             const SizedBox(height: 16),
             Text(_status),

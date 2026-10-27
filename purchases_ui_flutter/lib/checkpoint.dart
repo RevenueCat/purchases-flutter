@@ -2,6 +2,7 @@ import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/models/store_product_wrapper.dart';
 
+import 'checkpoint_error_presenter.dart';
 import 'custom_variable_value.dart';
 
 /// Callback invoked when the user passes a checkpoint.
@@ -20,21 +21,28 @@ final class CheckpointParams {
   /// How the SDK presents the flow selected by the checkpoint.
   final FlowPresentationMode presentationMode;
 
+  /// Presents checkpoint errors with app-owned Flutter UI.
+  /// When omitted, the SDK presents its own error dialogs.
+  final CheckpointErrorPresenter? errorPresenter;
+
   const CheckpointParams({
     this.customVariables,
     this.presentationMode = FlowPresentationMode.defaultMode,
+    this.errorPresenter,
   });
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is CheckpointParams &&
+          identical(errorPresenter, other.errorPresenter) &&
           presentationMode == other.presentationMode &&
           _mapEquals(customVariables, other.customVariables);
 
   @override
   int get hashCode => Object.hash(
         presentationMode,
+        errorPresenter,
         customVariables == null
             ? null
             : Object.hashAllUnordered(

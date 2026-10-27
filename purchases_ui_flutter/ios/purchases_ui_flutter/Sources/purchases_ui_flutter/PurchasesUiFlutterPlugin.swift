@@ -17,6 +17,9 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     private static let BAD_ARGS_ERROR_CODE = "BAD_ARGS"
     private var methodChannel: FlutterMethodChannel?
     private var binaryMessenger: FlutterBinaryMessenger?
+#if os(iOS) && !targetEnvironment(macCatalyst)
+    private var checkpointViewFactory: PurchasesUiCheckpointViewFactory?
+#endif
 
     public static func register(with registrar: FlutterPluginRegistrar) {
 
@@ -37,7 +40,19 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         let instance = PurchasesUiFlutterPlugin()
         instance.methodChannel = channel
         instance.binaryMessenger = messenger
+#if os(iOS) && !targetEnvironment(macCatalyst)
+        let checkpointFactory = PurchasesUiCheckpointViewFactory(messenger: messenger)
+        registrar.register(checkpointFactory, withId: "com.revenuecat.purchasesui/CheckpointView")
+        instance.checkpointViewFactory = checkpointFactory
+#endif
         registrar.addMethodCallDelegate(instance, channel: channel)
+    }
+
+    public func detachFromEngine(for registrar: FlutterPluginRegistrar) {
+#if os(iOS) && !targetEnvironment(macCatalyst)
+        self.checkpointViewFactory?.cancelAll()
+        self.checkpointViewFactory = nil
+#endif
     }
 
     private var _paywallProxy: Any?
@@ -145,6 +160,12 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                 result
             )
 
+        case "isCheckpointErrorPresenterAvailable":
+#if os(iOS) && !targetEnvironment(macCatalyst)
+            result(PurchasesUiCheckpointViewFactory.isAvailable)
+#else
+            result(false)
+#endif
         case "checkpoint":
             guard let args = call.arguments as? Dictionary<String, Any>,
                   let identifier = args[Parameter.identifier.rawValue] as? String else {

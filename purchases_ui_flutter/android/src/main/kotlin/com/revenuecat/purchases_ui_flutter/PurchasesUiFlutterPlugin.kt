@@ -39,6 +39,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
 
     private var activity: Activity? = null
     private var customerCenterListener: CustomerCenterListenerWrapper? = null
+    private var checkpointErrorBridge: CheckpointErrorPresenterBridge? = null
 
     private lateinit var channel : MethodChannel
     private lateinit var binaryMessenger: BinaryMessenger
@@ -70,6 +71,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "purchases_ui_flutter")
         channel.setMethodCallHandler(this)
         binaryMessenger = flutterPluginBinding.binaryMessenger
+        checkpointErrorBridge = CheckpointErrorPresenterBridge(binaryMessenger) { activity }
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
@@ -116,6 +118,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 customVariables = call.argument<Map<String, Any?>>("customVariables"),
                 presentationMode = call.argument("presentationMode"),
             )
+            "startCheckpointWithErrorPresenter" -> checkpointErrorBridge!!.start(call, result)
             else -> {
                 result.notImplemented()
             }
@@ -123,6 +126,8 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        checkpointErrorBridge?.dispose()
+        checkpointErrorBridge = null
         channel.setMethodCallHandler(null)
         clearCustomerCenterListener()
     }
@@ -141,6 +146,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onDetachedFromActivity() {
+        checkpointErrorBridge?.cancelAll()
         activity = null
         clearCustomerCenterListener()
     }
