@@ -3,6 +3,8 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
+import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
+import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
@@ -11,6 +13,46 @@ import 'package:purchases_flutter/models/store_transaction.dart';
 // ignore_for_file: deprecated_member_use
 // ignore_for_file: prefer_const_literals_to_create_immutables
 class _PurchasesFlutterApiTest {
+  void _checkCheckpoint() {
+    void Function() remove1 = RevenueCatUI.checkpoint(
+      "upgrade",
+      (CheckpointResult result) {},
+    );
+    void Function() remove2 = RevenueCatUI.checkpoint(
+      "upgrade",
+      (CheckpointResult result) {},
+      params: const CheckpointParams(
+        presentationMode: FlowPresentationMode.modalSheet,
+      ),
+    );
+    void Function() remove3 = RevenueCatUI.checkpoint(
+      "upgrade",
+      (CheckpointResult result) {},
+      params: const CheckpointParams(
+        customVariables: {"level": CustomVariableValue.number(12)},
+        presentationMode: FlowPresentationMode.modalFullScreen,
+      ),
+    );
+    remove1();
+    remove2();
+    remove3();
+  }
+
+  void _checkCheckpointTypes(CheckpointResult result, CheckpointPassed passed) {
+    FlowResult? flow = result.flow;
+    CustomerInfo customer = result.customer;
+    List<ObtainedEntitlement>? entitlements = flow?.obtainedEntitlements;
+    List<ObtainedProduct>? products = flow?.obtainedProducts;
+    EntitlementInfo? entitlementInfo = entitlements?.first.entitlementInfo;
+    StoreProduct? product = products?.first.product;
+    Map<String, CustomVariableValue>? variables =
+        const CheckpointParams().customVariables;
+    FlowPresentationMode mode = const CheckpointParams().presentationMode;
+    FlowPresentationMode defaultMode = FlowPresentationMode.defaultMode;
+    FlowPresentationMode fullScreen = FlowPresentationMode.modalFullScreen;
+    passed(result);
+  }
+
   void _checkPresentPaywall(Offering? offering) async {
     Future<PaywallResult> f1 = RevenueCatUI.presentPaywall();
     Future<PaywallResult> f2 = RevenueCatUI.presentPaywall(offering: offering);

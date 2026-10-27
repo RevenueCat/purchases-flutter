@@ -9,6 +9,7 @@ import 'package:purchases_flutter/models/package_wrapper.dart';
 import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
+import 'checkpoint.dart';
 import 'custom_variable_value.dart';
 import 'paywall_presentation_configuration.dart';
 import 'paywall_result.dart';
@@ -16,6 +17,7 @@ import 'views/customer_center_view_method_handler.dart';
 import 'views/paywall_view_method_handler.dart';
 
 export 'android_platform_view_mode.dart';
+export 'checkpoint.dart';
 export 'custom_variable_value.dart';
 export 'paywall_presentation_configuration.dart';
 export 'paywall_result.dart';
@@ -210,6 +212,77 @@ class RevenueCatUI {
     } finally {
       channel.setMethodCallHandler(null);
     }
+  }
+
+  /// Registers that [identifier] was hit. Depending on the checkpoint's
+  /// targeting rules, this may present a flow built in the RevenueCat dashboard
+  /// (often a paywall) with the native SDK's UI.
+  ///
+  /// [onPassed] is called at most once, only when the app can continue past the
+  /// checkpoint. It is not called when the user backs out, when a blocking
+  /// error occurs, or when another checkpoint already owns presentation. Treat
+  /// a checkpoint as a callback rather than a pending operation to await. The
+  /// SDK handles error presentation.
+  ///
+  /// Returns a function that removes the callback. Call it when the owning
+  /// screen is disposed; removing the callback does not dismiss a flow that is
+  /// already on screen.
+  ///
+  /// Requires iOS 15+ or Android, and Purchases to be configured. Throws an
+  /// [UnsupportedError] on other platforms.
+  ///
+  /// **Experimental:** Checkpoints are an invite-only API and may change or be
+  /// removed in a future release without a major version bump.
+  ///
+  /// @param [identifier] The checkpoint identifier, as configured in the RevenueCat dashboard.
+  /// @param [onPassed] Called with the [CheckpointResult] when the checkpoint passes.
+  /// @param [params] Optional per-call parameters, such as custom variables and the presentation mode.
+  static void Function() checkpoint(
+    String identifier,
+    CheckpointPassed onPassed, {
+    CheckpointParams params = const CheckpointParams(),
+  }) {
+    if (kIsWeb ||
+        (defaultTargetPlatform != TargetPlatform.iOS &&
+            defaultTargetPlatform != TargetPlatform.android)) {
+      throw UnsupportedError('Checkpoints require iOS 15+ or Android.');
+    }
+
+    var removed = false;
+    _methodChannel.invokeMethod<Object?>('checkpoint', {
+      'identifier': identifier,
+      'customVariables': convertCustomVariablesToNative(
+        params.customVariables,
+      ),
+      'presentationMode': params.presentationMode.toString(),
+    }).then<void>((response) {
+      if (removed) return;
+      removed = true;
+      final CheckpointResult result;
+      try {
+        result = CheckpointResult.fromJson(
+          Map<String, dynamic>.from(response as Map),
+        );
+      } catch (e) {
+        debugPrint('RevenueCatUI: Error parsing the checkpoint result: $e');
+        return;
+      }
+      try {
+        onPassed(result);
+      } catch (error, stack) {
+        FlutterError.reportError(
+          FlutterErrorDetails(
+            exception: error,
+            stack: stack,
+            library: 'purchases_ui_flutter',
+            context: ErrorDescription('while calling a checkpoint callback'),
+          ),
+        );
+      }
+    }).catchError((Object e) {
+      debugPrint('RevenueCatUI: Error presenting checkpoint $identifier: $e');
+    });
+    return () => removed = true;
   }
 
   /// Presents the customer center modally using the native SDKs.
