@@ -24,3 +24,7 @@ flutter
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
 *.jks
+
+e2e-tests/SDKUpdateTester
+e2e-tests/maestro/sdk_update_tests
+build/sdk_update_tests
