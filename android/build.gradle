@@ -2,7 +2,7 @@ group 'com.revenuecat.purchases_flutter'
 version '10.18.1'
 
 buildscript {
-    ext.common_version = '19.16.1'
+    ext.common_version = '19.17.0'
     repositories {
         google()
         mavenCentral()
