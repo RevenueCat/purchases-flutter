@@ -3,7 +3,7 @@ version '10.19.0'
 
 buildscript {
     ext.kotlin_version = '2.2.21'
-    ext.common_version = '20.0.0-SNAPSHOT'
+    ext.common_version = '20.0.0'
     repositories {
         google()
         mavenCentral()
@@ -19,11 +19,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        // TODO: remove with the purchases-hybrid-common 20.0.0-SNAPSHOT pin, before merging.
-        maven {
-            url 'https://central.sonatype.com/repository/maven-snapshots/'
-            content { includeGroup 'com.revenuecat.purchases' }
-        }
     }
 }
 

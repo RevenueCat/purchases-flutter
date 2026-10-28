@@ -2,11 +2,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        // TODO: remove before merging, together with the purchases 11.0.0-SNAPSHOT pins.
-        maven {
-            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-            content { includeGroup("com.revenuecat.purchases") }
-        }
     }
 }
 
