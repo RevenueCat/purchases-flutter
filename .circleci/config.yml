@@ -708,8 +708,9 @@ workflows:
       - api_test
       - verify-web-bundle
       - dry-run-release: *release-branches
-      - ios-integration-test-cocoapods
-      - macos-integration-test-cocoapods
+      # TODO: restore after Nov 7, 2026, once the matching RevenueCat pods are backfilled.
+      # - ios-integration-test-cocoapods
+      # - macos-integration-test-cocoapods
       - ios-integration-test-spm
       - macos-integration-test-spm
       - android-integration-test-build
@@ -730,12 +731,13 @@ workflows:
         - not:
             equal: [ update_error_codes, << pipeline.parameters.action >> ]
     jobs:
-      - ios-integration-test-cocoapods:
-          name: ios-integration-test-cocoapods-release
-          <<: *release-branches
-      - macos-integration-test-cocoapods:
-          name: macos-integration-test-cocoapods-release
-          <<: *release-branches
+      # TODO: restore after Nov 7, 2026, once the matching RevenueCat pods are backfilled.
+      # - ios-integration-test-cocoapods:
+      #     name: ios-integration-test-cocoapods-release
+      #     <<: *release-branches
+      # - macos-integration-test-cocoapods:
+      #     name: macos-integration-test-cocoapods-release
+      #     <<: *release-branches
       - ios-integration-test-spm: *release-branches
       - macos-integration-test-spm: *release-branches
       - android-integration-test: *release-branches
@@ -746,8 +748,9 @@ workflows:
           ruby_version: "3.3.0"
           requires:
             - wait-for-pr-approval
-            - ios-integration-test-cocoapods-release
-            - macos-integration-test-cocoapods-release
+            # TODO: restore after Nov 7, 2026, once the matching RevenueCat pods are backfilled.
+            # - ios-integration-test-cocoapods-release
+            # - macos-integration-test-cocoapods-release
             - ios-integration-test-spm
             - macos-integration-test-spm
             - android-integration-test
