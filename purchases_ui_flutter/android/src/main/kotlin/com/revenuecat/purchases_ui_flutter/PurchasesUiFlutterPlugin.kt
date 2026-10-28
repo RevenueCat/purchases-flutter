@@ -188,18 +188,19 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             result.error("BAD_ARGS", "Missing identifier in checkpoint", null)
             return
         }
+        val flutterResult = result
         // Replies at most once, and only when the checkpoint passes: backing out never invokes the callback.
         presentCheckpoint(
             identifier,
             customVariables,
             presentationMode,
             object : CheckpointListener {
-                override fun onCheckpointPassed(checkpointResult: Map<String, Any?>) {
-                    result.success(checkpointResult)
+                override fun onCheckpointPassed(result: Map<String, Any?>) {
+                    flutterResult.success(result)
                 }
 
                 override fun onCheckpointError(code: String, message: String) {
-                    result.error(code, message, null)
+                    flutterResult.error(code, message, null)
                 }
             },
         )
