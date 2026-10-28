@@ -248,7 +248,10 @@ class RevenueCatUI {
       throw UnsupportedError('Checkpoints require iOS 15+ or Android.');
     }
 
-    var removed = false;
+    // Native never replies when the user backs out, so the future below can stay
+    // pending for the lifetime of the engine. Dropping the callback on removal
+    // keeps that closure from retaining `onPassed` and whatever it captures.
+    CheckpointPassed? callback = onPassed;
     _methodChannel.invokeMethod<Object?>('checkpoint', {
       'identifier': identifier,
       'customVariables': convertCustomVariablesToNative(
@@ -256,8 +259,9 @@ class RevenueCatUI {
       ),
       'presentationMode': params.presentationMode.toString(),
     }).then<void>((response) {
-      if (removed) return;
-      removed = true;
+      final passed = callback;
+      if (passed == null) return;
+      callback = null;
       final CheckpointResult result;
       try {
         result = CheckpointResult.fromJson(
@@ -268,7 +272,7 @@ class RevenueCatUI {
         return;
       }
       try {
-        onPassed(result);
+        passed(result);
       } catch (error, stack) {
         FlutterError.reportError(
           FlutterErrorDetails(
@@ -282,7 +286,7 @@ class RevenueCatUI {
     }).catchError((Object e) {
       debugPrint('RevenueCatUI: Error presenting checkpoint $identifier: $e');
     });
-    return () => removed = true;
+    return () => callback = null;
   }
 
   /// Presents the customer center modally using the native SDKs.
