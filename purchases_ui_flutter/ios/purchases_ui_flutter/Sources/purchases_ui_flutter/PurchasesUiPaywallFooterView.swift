@@ -96,7 +96,7 @@ extension PurchasesUiPaywallFooterView: PaywallViewControllerDelegateWrapper {
 
     func paywallViewController(_ controller: PaywallViewController,
                                didFinishPurchasingWith customerInfoDictionary: [String : Any],
-                               transaction transactionDictionary: [String : Any]?) {
+                               transaction transactionDictionary: [String : Any]) {
         channel.invokeMethod("onPurchaseCompleted", arguments: [
             "customerInfo":customerInfoDictionary,
             "storeTransaction":transactionDictionary
