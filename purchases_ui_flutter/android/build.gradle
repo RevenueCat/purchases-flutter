@@ -1,5 +1,5 @@
 group 'com.revenuecat.purchases_ui_flutter'
-version '10.19.0'
+version '11.0.0'
 
 buildscript {
     ext.kotlin_version = '2.2.21'
