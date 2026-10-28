@@ -3,20 +3,15 @@ package com.revenuecat.purchases_ui_flutter
 import android.app.Activity
 import android.content.Intent
 import android.util.Log
-import com.revenuecat.purchases.InternalRevenueCatAPI
 import com.revenuecat.purchases.PurchasesErrorCode
 import com.revenuecat.purchases.PresentedOfferingContext;
-import com.revenuecat.purchases.hybridcommon.mappers.map
+import com.revenuecat.purchases.hybridcommon.ui.CheckpointListener
 import com.revenuecat.purchases.hybridcommon.ui.PaywallResultListener
 import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
 import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
+import com.revenuecat.purchases.hybridcommon.ui.presentCheckpoint
 import com.revenuecat.purchases.hybridcommon.ui.presentPaywallFromFragment
-import com.revenuecat.purchases.ui.revenuecatui.InviteOnlyCheckpointsAPI
-import com.revenuecat.purchases.ui.revenuecatui.checkpoints.CheckpointParams
-import com.revenuecat.purchases.ui.revenuecatui.checkpoints.FlowPresentationMode
-import com.revenuecat.purchases.ui.revenuecatui.checkpoints.checkpoint
 import com.revenuecat.purchases.ui.revenuecatui.customercenter.ShowCustomerCenter
-import com.revenuecat.purchases.ui.revenuecatui.CustomVariableValue
 import com.revenuecat.purchases.hybridcommon.ui.CustomerCenterListenerWrapper
 import com.revenuecat.purchases.Purchases
 import com.revenuecat.purchases_ui_flutter.views.CustomerCenterViewFactory
@@ -183,7 +178,6 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         }
     }
 
-    @OptIn(InviteOnlyCheckpointsAPI::class, InternalRevenueCatAPI::class)
     private fun checkpoint(
         result: Result,
         identifier: String?,
@@ -194,47 +188,21 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             result.error("BAD_ARGS", "Missing identifier in checkpoint", null)
             return
         }
-        if (!Purchases.isConfigured) {
-            result.error("NOT_CONFIGURED", "Configure Purchases before calling a checkpoint.", null)
-            return
-        }
-        val variables = customVariables.orEmpty().mapNotNull { (key, value) ->
-            val variable = when (value) {
-                is String -> CustomVariableValue.String(value)
-                is Boolean -> CustomVariableValue.Boolean(value)
-                is Number -> CustomVariableValue.Number(value.toDouble())
-                else -> null
-            }
-            variable?.let { key to it }
-        }.toMap()
-        val mode = when (presentationMode) {
-            "MODAL_FULL_SCREEN" -> FlowPresentationMode.MODAL_FULL_SCREEN
-            "MODAL_SHEET" -> FlowPresentationMode.MODAL_SHEET
-            else -> FlowPresentationMode.DEFAULT
-        }
-        val params = CheckpointParams.Builder()
-            .setCustomVariables(variables)
-            .setPresentationMode(mode)
-            .build()
-
         // Replies at most once, and only when the checkpoint passes: backing out never invokes the callback.
-        Purchases.sharedInstance.checkpoint(identifier, params) { checkpointResult ->
-            result.success(
-                mapOf(
-                    "customer" to checkpointResult.customer.map(),
-                    "flow" to checkpointResult.flow?.let { flow ->
-                        mapOf(
-                            "obtainedEntitlements" to flow.obtainedEntitlements
-                                .sortedBy { it.entitlementInfo.identifier }
-                                .map { mapOf("entitlementInfo" to it.entitlementInfo.map()) },
-                            "obtainedProducts" to flow.obtainedProducts
-                                .sortedBy { it.product.id }
-                                .map { mapOf("product" to it.product.map()) },
-                        )
-                    },
-                )
-            )
-        }
+        presentCheckpoint(
+            identifier,
+            customVariables,
+            presentationMode,
+            object : CheckpointListener {
+                override fun onCheckpointPassed(checkpointResult: Map<String, Any?>) {
+                    result.success(checkpointResult)
+                }
+
+                override fun onCheckpointError(code: String, message: String) {
+                    result.error(code, message, null)
+                }
+            },
+        )
     }
 
     private fun presentCustomerCenter(

@@ -4,13 +4,8 @@ import FlutterMacOS
 import Flutter
 #endif
 
-import PurchasesHybridCommon
 import PurchasesHybridCommonUI
 import Foundation
-#if os(iOS)
-@_spi(Internal) import RevenueCat
-@_spi(InviteOnlyCheckpointsApi) import RevenueCatUI
-#endif
 
 public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 
@@ -273,54 +268,16 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         presentationMode: String?
     ) {
 #if os(iOS)
-        guard #available(iOS 15.0, *) else {
-            result(FlutterError(code: "UNSUPPORTED_OS_VERSION",
-                                message: "Checkpoints require iOS 15+",
-                                details: nil))
-            return
-        }
-        guard Purchases.isConfigured else {
-            result(FlutterError(code: "NOT_CONFIGURED",
-                                message: "Configure Purchases before calling a checkpoint.",
-                                details: nil))
-            return
-        }
-
-        let variables = (customVariables ?? [:]).compactMapValues { value -> CustomVariableValue? in
-            if let number = value as? NSNumber {
-                return CFGetTypeID(number) == CFBooleanGetTypeID()
-                    ? .bool(number.boolValue) : .number(number.doubleValue)
-            }
-            if let string = value as? String { return .string(string) }
-            return nil
-        }
-        let mode: FlowPresentationMode
-        switch presentationMode {
-        case "MODAL_FULL_SCREEN": mode = .modalFullScreen
-        case "MODAL_SHEET": mode = .modalSheet
-        default: mode = .default
-        }
-
         // Replies at most once, and only when the checkpoint passes: backing out never invokes the callback.
-        Purchases.shared.checkpoint(identifier, customVariables: variables, presentationMode: mode) { checkpointResult in
-            let customer = checkpointResult.customer.dictionary
-            let entitlements = (customer["entitlements"] as? [String: Any])?["all"] as? [String: Any] ?? [:]
-            let flow: Any = checkpointResult.flow.map { flow -> [String: Any] in
-                [
-                    "obtainedEntitlements": flow.obtainedEntitlements.sorted {
-                        $0.entitlementInfo.identifier < $1.entitlementInfo.identifier
-                    }.map { ["entitlementInfo": entitlements[$0.entitlementInfo.identifier] ?? NSNull()] },
-                    "obtainedProducts": flow.obtainedProducts.sorted { $0.product.id < $1.product.id }.map {
-                        // PHC exposes the product serializer through Package.dictionary. Use that
-                        // serializer on the original product to preserve its billing plan and context.
-                        let package = Package(identifier: $0.product.id, packageType: .custom,
-                                              storeProduct: $0.product, offeringIdentifier: "", webCheckoutUrl: nil)
-                        return ["product": package.dictionary["product"] ?? NSNull()]
-                    }
-                ]
-            } ?? NSNull()
-            result(["flow": flow, "customer": customer])
-        }
+        CheckpointProxy.present(
+            identifier: identifier,
+            customVariables: customVariables,
+            presentationMode: presentationMode,
+            onPassed: { result($0) },
+            onError: { code, message in
+                result(FlutterError(code: code, message: message, details: nil))
+            }
+        )
 #else
         result(FlutterError(code: "UNSUPPORTED_PLATFORM",
                             message: "Checkpoints require iOS",

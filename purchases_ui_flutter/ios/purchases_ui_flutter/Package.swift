@@ -18,7 +18,6 @@ let package = Package(
         .target(
             name: "purchases_ui_flutter",
             dependencies: [
-                .product(name: "PurchasesHybridCommon", package: "purchases-hybrid-common"),
                 .product(name: "PurchasesHybridCommonUI", package: "purchases-hybrid-common")
             ]
         )
