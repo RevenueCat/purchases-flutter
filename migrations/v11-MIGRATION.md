@@ -68,6 +68,10 @@ When the Play Store is blocked on the device (for example in OEM kids modes), pu
 
 When offerings fail to load while purchasing a package on iOS (`purchasePackage`, `purchaseDiscountedPackage`, `purchasePackageWithWinBackOffer` and `purchase` with a package), the call now throws the offerings error, for example `PurchasesErrorCode.networkError`, instead of `PurchasesErrorCode.productNotAvailableForPurchaseError` with the message "Couldn't find package". Android already behaved this way. A package missing from loaded offerings still reports `productNotAvailableForPurchaseError`.
 
+### iOS: paywalls don't call `onPurchaseCompleted` for your own purchases
+
+When a paywall uses your `PaywallPurchaseLogic` (`purchasesAreCompletedBy` set to `myApp`), iOS no longer calls `onPurchaseCompleted` after `performPurchase` succeeds, since those purchases have no store transaction. Android already behaved this way. Handle the purchase result in `performPurchase` instead.
+
 ### Other Play Billing libraries in your app
 
 The Android SDK puts Play Billing Library 9.1.0 on your app's classpath. Any other in-app purchase plugin in the same app, for example one you use to complete purchases with your own code, must support Play Billing Library 9. Versions that use APIs it removed, such as `SkuDetails`, fail at build time or at runtime.
