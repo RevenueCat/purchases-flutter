@@ -26,7 +26,7 @@ name: Checkpoint purchase
 - runFlow:
     file: ../utils/confirm_purchase.yaml
 - extendedWaitUntil:
-    visible: "Callback: passed, entitlements: pro (call #1)"
+    visible: 'Callback: passed, entitlements: pro \(call #1\)'
     timeout: 20000
 - assertVisible: "Obtained products: pro_monthly_subscription"
 - assertVisible: "Entitlement pro obtained: true"

@@ -18,7 +18,7 @@ name: Checkpoint unknown identifier passes without a flow
 - tapOn:
     text: "Hit checkpoint"
 - extendedWaitUntil:
-    visible: "Callback: passed, no flow (call #1)"
+    visible: 'Callback: passed, no flow \(call #1\)'
     timeout: 20000
 - assertVisible: "Obtained products: none"
 - assertVisible: "Entitlement pro obtained: false"
