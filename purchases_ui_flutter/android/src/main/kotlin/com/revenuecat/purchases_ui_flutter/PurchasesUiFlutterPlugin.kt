@@ -5,9 +5,11 @@ import android.content.Intent
 import android.util.Log
 import com.revenuecat.purchases.PurchasesErrorCode
 import com.revenuecat.purchases.PresentedOfferingContext;
+import com.revenuecat.purchases.hybridcommon.ui.CheckpointListener
 import com.revenuecat.purchases.hybridcommon.ui.PaywallResultListener
 import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
 import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
+import com.revenuecat.purchases.hybridcommon.ui.presentCheckpoint
 import com.revenuecat.purchases.hybridcommon.ui.presentPaywallFromFragment
 import com.revenuecat.purchases.ui.revenuecatui.customercenter.ShowCustomerCenter
 import com.revenuecat.purchases.hybridcommon.ui.CustomerCenterListenerWrapper
@@ -103,6 +105,12 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             "presentCustomerCenter" -> presentCustomerCenter(
                 result = result,
             )
+            "checkpoint" -> checkpoint(
+                result = result,
+                identifier = call.argument("identifier"),
+                customVariables = call.argument<Map<String, Any?>>("customVariables"),
+                presentationMode = call.argument("presentationMode"),
+            )
             else -> {
                 result.notImplemented()
             }
@@ -168,6 +176,34 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
                 null
             )
         }
+    }
+
+    private fun checkpoint(
+        result: Result,
+        identifier: String?,
+        customVariables: Map<String, Any?>?,
+        presentationMode: String?,
+    ) {
+        if (identifier == null) {
+            result.error("BAD_ARGS", "Missing identifier in checkpoint", null)
+            return
+        }
+        val flutterResult = result
+        // Replies at most once, and only when the checkpoint passes: backing out never invokes the callback.
+        presentCheckpoint(
+            identifier,
+            customVariables,
+            presentationMode,
+            object : CheckpointListener {
+                override fun onCheckpointPassed(result: Map<String, Any?>) {
+                    flutterResult.success(result)
+                }
+
+                override fun onCheckpointError(code: String, message: String) {
+                    flutterResult.error(code, message, null)
+                }
+            },
+        )
     }
 
     private fun presentCustomerCenter(

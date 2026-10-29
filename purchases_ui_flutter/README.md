@@ -63,6 +63,31 @@ await RevenueCatUI.presentCustomerCenter();
 
 Or display inline using the `CustomerCenterView` widget. See the [CustomerCenterView implementation](./lib/views/customer_center_view.dart) for full API details and callback options.
 
+## Checkpoints (experimental, invite-only)
+
+> **Experimental:** The checkpoints API is experimental and may change or be removed in a future release without a major version bump.
+
+Checkpoints let you gate navigation with flows (often paywalls) defined in the RevenueCat dashboard. They require access to the native SDKs' invite-only checkpoints API, iOS 15+ or Android, and Purchases to be configured.
+
+```dart
+final removeCallback = RevenueCatUI.checkpoint(
+  'upgrade',
+  (result) {
+    // Continue to the next screen here. The native SDK decides when the checkpoint passes.
+    print('${result.customer} ${result.flow?.obtainedEntitlements} ${result.flow?.obtainedProducts}');
+  },
+  params: CheckpointParams(
+    customVariables: {'level': CustomVariableValue.number(12)},
+    presentationMode: FlowPresentationMode.modalSheet,
+  ),
+);
+
+// Remove the callback when the owning screen is disposed. This does not dismiss native UI.
+// removeCallback();
+```
+
+The callback is called at most once, only when the checkpoint passes. `result.flow` is `null` when there was nothing to present, such as an unconfigured identifier or no matching rule. Backing out, a blocking failure, or another checkpoint owning presentation does not invoke the callback. Treat a checkpoint as a callback rather than a pending operation to await. The SDK handles error presentation.
+
 ### Requirements
 *purchases_ui_flutter* requires XCode 14.0+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.
 

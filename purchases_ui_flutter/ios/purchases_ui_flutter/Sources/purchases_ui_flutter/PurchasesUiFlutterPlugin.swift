@@ -139,6 +139,22 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
             self.presentCustomerCenter(
                 result
             )
+
+        case "checkpoint":
+            guard let args = call.arguments as? Dictionary<String, Any>,
+                  let identifier = args[Parameter.identifier.rawValue] as? String else {
+                result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
+                                    message: "Missing identifier in checkpoint",
+                                    details: nil))
+                return
+            }
+            self.checkpoint(
+                result,
+                identifier: identifier,
+                customVariables: args[Parameter.customVariables.rawValue] as? [String: Any],
+                presentationMode: args[Parameter.presentationMode.rawValue] as? String
+            )
+
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -245,6 +261,30 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
 #endif
     }
 
+    private func checkpoint(
+        _ result: @escaping FlutterResult,
+        identifier: String,
+        customVariables: [String: Any]?,
+        presentationMode: String?
+    ) {
+#if os(iOS)
+        // Replies at most once, and only when the checkpoint passes: backing out never invokes the callback.
+        CheckpointProxy.present(
+            identifier: identifier,
+            customVariables: customVariables,
+            presentationMode: presentationMode,
+            onPassed: { result($0) },
+            onError: { code, message in
+                result(FlutterError(code: code, message: message, details: nil))
+            }
+        )
+#else
+        result(FlutterError(code: "UNSUPPORTED_PLATFORM",
+                            message: "Checkpoints require iOS",
+                            details: nil))
+#endif
+    }
+
     private func presentCustomerCenter(
         _ result: @escaping FlutterResult
     ) {
@@ -287,6 +327,8 @@ private extension PurchasesUiFlutterPlugin {
         case customVariables
         case useFullScreenPresentation
         case presentationId
+        case identifier
+        case presentationMode
     }
 
 #if os(iOS)

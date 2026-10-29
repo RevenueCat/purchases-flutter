@@ -9,6 +9,7 @@ import 'package:purchases_flutter_example/src/paywall_footer_screen.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 
 import 'cats.dart';
+import 'checkpoints_screen.dart';
 import 'constant.dart';
 import 'custom_variables_editor.dart';
 import 'customer_center_view_screen.dart';
@@ -227,6 +228,18 @@ class _UpsellScreenState extends State<UpsellScreen> {
                       );
                     },
                     child: const Text("Custom Paywall Impression Testing"),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CheckpointsScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text("Checkpoints"),
                   ),
                   const SizedBox(height: 12),
                   ElevatedButton(
