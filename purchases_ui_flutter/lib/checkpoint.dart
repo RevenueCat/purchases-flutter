@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
 import 'package:purchases_flutter/models/store_product_wrapper.dart';
@@ -5,12 +6,19 @@ import 'package:purchases_flutter/models/store_product_wrapper.dart';
 import 'custom_variable_value.dart';
 
 /// Callback invoked when the user passes a checkpoint.
+///
+/// **Experimental, invite-only:** Checkpoints are not generally available. They
+/// require access granted by RevenueCat and may change or be removed in a future
+/// release without a major version bump.
+@experimental
 typedef CheckpointPassed = void Function(CheckpointResult result);
 
 /// Per-call parameters for [RevenueCatUI.checkpoint].
 ///
-/// Checkpoints are an experimental, invite-only API and may change or be
-/// removed in a future release without a major version bump.
+/// **Experimental, invite-only:** Checkpoints are not generally available. They
+/// require access granted by RevenueCat and may change or be removed in a future
+/// release without a major version bump.
+@experimental
 final class CheckpointParams {
   /// Custom variables a checkpoint's targeting rules are evaluated against,
   /// readable as `custom.<key>`. They are also rendered by the presented
@@ -52,6 +60,11 @@ final class CheckpointParams {
 ///
 /// Uses a private constructor with static constants so that new values can
 /// be added in the future without breaking existing code.
+///
+/// **Experimental, invite-only:** Checkpoints are not generally available. They
+/// require access granted by RevenueCat and may change or be removed in a future
+/// release without a major version bump.
+@experimental
 final class FlowPresentationMode {
   final String _value;
   const FlowPresentationMode._(this._value);
@@ -78,6 +91,11 @@ final class FlowPresentationMode {
 }
 
 /// What a checkpoint reports once the user is allowed to continue.
+///
+/// **Experimental, invite-only:** Checkpoints are not generally available. They
+/// require access granted by RevenueCat and may change or be removed in a future
+/// release without a major version bump.
+@experimental
 final class CheckpointResult {
   /// What the user obtained in the flow the checkpoint presented. Null when
   /// there was nothing to present, such as an unconfigured identifier or no
@@ -105,6 +123,11 @@ final class CheckpointResult {
 }
 
 /// What the user obtained while going through the flow a checkpoint presented.
+///
+/// **Experimental, invite-only:** Checkpoints are not generally available. They
+/// require access granted by RevenueCat and may change or be removed in a future
+/// release without a major version bump.
+@experimental
 final class FlowResult {
   /// The entitlements the user obtained. Empty when they obtained none.
   final List<ObtainedEntitlement> obtainedEntitlements;
@@ -134,6 +157,11 @@ final class FlowResult {
 }
 
 /// An entitlement the user obtained during a checkpoint.
+///
+/// **Experimental, invite-only:** Checkpoints are not generally available. They
+/// require access granted by RevenueCat and may change or be removed in a future
+/// release without a major version bump.
+@experimental
 final class ObtainedEntitlement {
   /// The entitlement as it stands after the checkpoint.
   final EntitlementInfo entitlementInfo;
@@ -153,6 +181,11 @@ final class ObtainedEntitlement {
 }
 
 /// A product the user obtained during a checkpoint.
+///
+/// **Experimental, invite-only:** Checkpoints are not generally available. They
+/// require access granted by RevenueCat and may change or be removed in a future
+/// release without a major version bump.
+@experimental
 final class ObtainedProduct {
   /// The product the user obtained.
   final StoreProduct product;

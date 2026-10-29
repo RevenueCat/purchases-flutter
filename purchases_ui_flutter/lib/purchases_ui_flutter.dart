@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:meta/meta.dart';
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/package_wrapper.dart';
@@ -231,12 +232,14 @@ class RevenueCatUI {
   /// Requires iOS 15+ or Android, and Purchases to be configured. Throws an
   /// [UnsupportedError] on other platforms.
   ///
-  /// **Experimental:** Checkpoints are an invite-only API and may change or be
-  /// removed in a future release without a major version bump.
+  /// **Experimental, invite-only:** Checkpoints are not generally available.
+  /// They require access granted by RevenueCat and may change or be removed in
+  /// a future release without a major version bump.
   ///
   /// @param [identifier] The checkpoint identifier, as configured in the RevenueCat dashboard.
   /// @param [onPassed] Called with the [CheckpointResult] when the checkpoint passes.
   /// @param [params] Optional per-call parameters, such as custom variables and the presentation mode.
+  @experimental
   static void Function() checkpoint(
     String identifier,
     CheckpointPassed onPassed, {

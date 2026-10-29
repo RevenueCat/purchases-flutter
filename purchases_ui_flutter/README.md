@@ -65,7 +65,7 @@ Or display inline using the `CustomerCenterView` widget. See the [CustomerCenter
 
 ## Checkpoints (experimental, invite-only)
 
-> **Experimental:** The checkpoints API is experimental and may change or be removed in a future release without a major version bump.
+> **Experimental, invite-only:** Checkpoints are not generally available. They require access granted by RevenueCat, are marked `@experimental` in Dart, and may change or be removed in a future release without a major version bump. Contact RevenueCat if you want to try them.
 
 Checkpoints let you gate navigation with flows (often paywalls) defined in the RevenueCat dashboard. They require access to the native SDKs' invite-only checkpoints API, iOS 15+ or Android, and Purchases to be configured.
 

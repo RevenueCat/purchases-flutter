@@ -14,6 +14,7 @@ dependencies:
   purchases_flutter: ^11.0.0
   flutter:
     sdk: flutter
+  meta: ^1.12.0
   plugin_platform_interface: ^2.0.2
 
 # It's safe to publish like this. According to the docs (https://dart.dev/tools/pub/dependencies):

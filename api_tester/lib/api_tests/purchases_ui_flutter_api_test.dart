@@ -1,3 +1,5 @@
+// ignore_for_file: experimental_member_use
+
 import 'package:flutter/material.dart';
 import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:purchases_flutter/models/offering_wrapper.dart';
