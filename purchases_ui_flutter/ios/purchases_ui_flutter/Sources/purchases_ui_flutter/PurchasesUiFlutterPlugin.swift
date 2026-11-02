@@ -295,6 +295,12 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         
         self.customerCenterProxy.present(resultHandler: {
             result(nil)
+        }, errorHandler: { error in
+            result(FlutterError(
+                code: "CUSTOMER_CENTER_ERROR",
+                message: error.localizedDescription,
+                details: nil
+            ))
         })
     } else {
         let errorMessage = "Presenting customer center requires iOS 15+"
