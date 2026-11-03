@@ -1,0 +1,23 @@
+# Created by Antonio Pallares. Copyright (c) 2026 RevenueCat, Inc.
+name: sdk_update_tester
+description: RevenueCat Flutter SDK update test app
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: '>=3.44.2'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  purchases_flutter:
+    path: ../..
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  config:
+    enable-swift-package-manager: true
