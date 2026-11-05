@@ -37,6 +37,7 @@ repo_name = 'purchases-flutter'
 changelog_latest_path = './CHANGELOG-LATEST.md'
 changelog_path = './CHANGELOG.md'
 versions_path = './VERSIONS.md'
+dart_apitool_version = '0.23.2'
 
 before_all do
   setup_circle_ci
@@ -149,6 +150,28 @@ lane :run_api_tests do |options|
   check_api_tester_imports_up_to_date
   build_api_tester_apk
   analyze_api_tester
+  run_api_diff
+end
+
+desc "Diffs the public API of purchases_flutter against the latest pub.dev release. " \
+     "On release branches the version bump must match the changes (semver); elsewhere it only reports"
+lane :run_api_diff do |options|
+  on_release_branch = (ENV["CIRCLE_BRANCH"] || "").start_with?("release/")
+  version_check_mode = on_release_branch ? "fully" : "none"
+  old_version = latest_published_version("purchases_flutter")
+  install_dart_apitool(dart_apitool_version)
+  # dart_apitool copies the whole --new tree following symlinks; the example apps'
+  # ios/.symlinks point back at the repo root, so diff a clean export of HEAD instead
+  require 'tmpdir'
+  Dir.mktmpdir("api_diff") do |export_dir|
+    sh("sh", "-c", "git -C .. archive HEAD | tar -x -C #{export_dir}")
+    diff_public_api(
+      package: "purchases_flutter",
+      old_version: old_version,
+      path: export_dir,
+      version_check_mode: version_check_mode
+    )
+  end
 end
 
 desc "Tag current branch with current version number"
@@ -449,6 +472,24 @@ def analyze_api_tester
   Dir.chdir("../api_tester") do
     sh("flutter", "analyze")
   end
+end
+
+def install_dart_apitool(version)
+  sh("dart", "pub", "global", "activate", "dart_apitool", version)
+end
+
+def latest_published_version(package)
+  require 'json'
+  require 'net/http'
+  response = Net::HTTP.get(URI("https://pub.dev/api/packages/#{package}"))
+  JSON.parse(response)["latest"]["version"]
+end
+
+def diff_public_api(package:, old_version:, path:, version_check_mode:)
+  sh("dart", "pub", "global", "run", "dart_apitool:main", "diff",
+     "--old", "pub://#{package}/#{old_version}",
+     "--new", path,
+     "--version-check-mode", version_check_mode)
 end
 
 def get_phc_version
