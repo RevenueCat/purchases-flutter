@@ -11,6 +11,7 @@ import com.revenuecat.purchases.hybridcommon.ui.PaywallSource
 import com.revenuecat.purchases.hybridcommon.ui.PresentPaywallOptions
 import com.revenuecat.purchases.hybridcommon.ui.presentCheckpoint
 import com.revenuecat.purchases.hybridcommon.ui.presentPaywallFromFragment
+import com.revenuecat.purchases.ui.revenuecatui.InviteOnlyCheckpointsAPI
 import com.revenuecat.purchases.ui.revenuecatui.customercenter.ShowCustomerCenter
 import com.revenuecat.purchases.hybridcommon.ui.CustomerCenterListenerWrapper
 import com.revenuecat.purchases.Purchases
@@ -27,6 +28,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
+import java.util.UUID
 
 class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     PluginRegistry.ActivityResultListener {
@@ -178,6 +180,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         }
     }
 
+    @OptIn(InviteOnlyCheckpointsAPI::class)
     private fun checkpoint(
         result: Result,
         identifier: String?,
@@ -191,10 +194,13 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         val flutterResult = result
         // Replies at most once, and only when the checkpoint passes: backing out never invokes the callback.
         presentCheckpoint(
-            identifier,
-            customVariables,
-            presentationMode,
-            object : CheckpointListener {
+            identifier = identifier,
+            callId = UUID.randomUUID().toString(),
+            customVariables = customVariables,
+            presentationMode = presentationMode,
+            useCustomPaywallPresenter = false,
+            hasErrorDialogFactory = false,
+            listener = object : CheckpointListener {
                 override fun onCheckpointPassed(result: Map<String, Any?>) {
                     flutterResult.success(result)
                 }
