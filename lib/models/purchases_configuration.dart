@@ -55,9 +55,9 @@ class PurchasesConfiguration {
   Store? store;
 
   /// Verification strictness levels for [EntitlementInfo].
+  /// When null, the native SDK default applies ([EntitlementVerificationMode.informational]).
   /// See https://rev.cat/trusted-entitlements for more info.
-  EntitlementVerificationMode entitlementVerificationMode =
-      EntitlementVerificationMode.disabled;
+  EntitlementVerificationMode? entitlementVerificationMode;
 
   /// Enable this setting if you want to allow pending purchases for prepaid subscriptions (only supported
   /// in Google Play). Note that entitlements are not granted until payment is done.
