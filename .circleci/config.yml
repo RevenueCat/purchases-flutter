@@ -36,7 +36,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@4.7.1
+  revenuecat: revenuecat/sdks-common-config@4.8.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -674,6 +674,7 @@ workflows:
   danger:
     jobs:
       - revenuecat/danger:
+          context: danger-bot
           ruby_version: "3.3.0"
           filters:
             branches:
@@ -745,6 +746,7 @@ workflows:
           type: approval
           <<: *release-branches
       - revenuecat/tag-current-branch:
+          context: github-bot-public
           ruby_version: "3.3.0"
           requires:
             - wait-for-pr-approval
@@ -765,12 +767,14 @@ workflows:
             - make-release
           <<: *release-tags
       - github_release:
+          context: github-bot-public
           requires:
             - make-release
             - make-release-purchases-flutter-ui
             - make-release-purchases-flutter-admob
           <<: *release-tags
       - revenuecat/merge-release-pr:
+          context: github-bot-public
           repo_name: purchases-flutter
           ruby_version: "3.3.0"
           requires:
@@ -783,18 +787,21 @@ workflows:
         - equal: [ "release-train", << pipeline.schedule.name >> ]
     jobs:
       - revenuecat/automatic-bump:
+          context: github-bot-public
           ruby_version: "3.3.0"
   manual-trigger-bump:
     when:
       equal: [ bump, << pipeline.parameters.action >> ]
     jobs:
       - revenuecat/automatic-bump:
+          context: github-bot-public
           ruby_version: "3.3.0"
   update-error-codes:
     when:
       equal: [ update_error_codes, << pipeline.parameters.action >> ]
     jobs:
       - revenuecat/update-error-codes:
+          context: github-bot-public
           platform: flutter
           outputs: |
             errors.dart:lib/src/generated/error_codes.dart
@@ -825,4 +832,5 @@ workflows:
     when:
       equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
     jobs:
-      - update-hybrid-common-versions
+      - update-hybrid-common-versions:
+          context: github-bot-public
