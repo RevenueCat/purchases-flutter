@@ -51,16 +51,35 @@ class _PurchasesFlutterApiTest {
     PaywallPresenter typedPresenter = presenter;
     RevenueCatUI.setPaywallPresenter(typedPresenter);
     RevenueCatUI.setPaywallPresenter(null);
+    Future<CheckpointErrorDialogOutcome> factory(CheckpointError error) async {
+      CheckpointErrorKind kind = error.kind;
+      int code = error.code;
+      String message = error.message;
+      return const CheckpointErrorDialogOutcome.show(
+        CheckpointErrorDialog(message: 'Try again', primaryButtonTitle: 'OK'),
+      );
+    }
+
+    CheckpointErrorDialogFactory typedFactory = factory;
     final params = CheckpointParams(
       paywallPresenter: presenter,
+      errorDialogFactory: typedFactory,
     );
     PaywallPresenter? perCall = params.paywallPresenter;
+    CheckpointErrorDialogFactory? perCallFactory = params.errorDialogFactory;
     bool native = const CheckpointParams(useNativePaywallPresenter: true)
         .useNativePaywallPresenter;
     RevenueCatUI.checkpoint('upgrade', (_) {}, params: params)();
+    const CheckpointErrorDialogOutcome defaultDialog =
+        CheckpointErrorDialogOutcome.useDefault();
+    const CheckpointErrorDialogOutcome suppress =
+        CheckpointErrorDialogOutcome.suppress();
     PaywallPresentationResult closed = PaywallPresentationResult.closed;
     PaywallPresentationResult navigatedBack =
         PaywallPresentationResult.navigatedBack;
+    CheckpointErrorKind shown = CheckpointErrorKind.flowCouldNotBeShown;
+    CheckpointErrorKind action = CheckpointErrorKind.flowActionFailed;
+    CheckpointErrorKind sync = CheckpointErrorKind.flowResultSyncFailed;
   }
 
   void _checkCheckpointTypes(CheckpointResult result, CheckpointPassed passed) {
