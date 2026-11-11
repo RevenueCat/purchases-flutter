@@ -38,6 +38,31 @@ class _PurchasesFlutterApiTest {
     remove3();
   }
 
+  void _checkCheckpointPresenters() {
+    Future<void> presenter(PaywallPresentationParams params,
+        void Function(PaywallPresentationResult) complete) async {
+      String identifier = params.checkpointIdentifier;
+      Offering offering = params.offering;
+      Map<String, CustomVariableValue> variables = params.customVariables;
+      FlowPresentationMode mode = params.presentationMode;
+      complete(PaywallPresentationResult.continued);
+    }
+
+    PaywallPresenter typedPresenter = presenter;
+    RevenueCatUI.setPaywallPresenter(typedPresenter);
+    RevenueCatUI.setPaywallPresenter(null);
+    final params = CheckpointParams(
+      paywallPresenter: presenter,
+    );
+    PaywallPresenter? perCall = params.paywallPresenter;
+    bool native = const CheckpointParams(useNativePaywallPresenter: true)
+        .useNativePaywallPresenter;
+    RevenueCatUI.checkpoint('upgrade', (_) {}, params: params)();
+    PaywallPresentationResult closed = PaywallPresentationResult.closed;
+    PaywallPresentationResult navigatedBack =
+        PaywallPresentationResult.navigatedBack;
+  }
+
   void _checkCheckpointTypes(CheckpointResult result, CheckpointPassed passed) {
     FlowResult? flow = result.flow;
     CustomerInfo customer = result.customer;
@@ -73,7 +98,8 @@ class _PurchasesFlutterApiTest {
         RevenueCatUI.presentPaywallIfNeeded("test", offering: offering);
     Future<PaywallResult> f9 = RevenueCatUI.presentPaywallIfNeeded("test",
         offering: offering, displayCloseButton: true);
-    Future<PaywallResult> f10 = RevenueCatUI.presentPaywallIfNeeded("test",
+    Future<PaywallResult> f10 = RevenueCatUI.presentPaywallIfNeeded(
+      "test",
       presentationConfiguration: const PaywallPresentationConfiguration(
         ios: IOSPaywallPresentationStyle.fullScreen,
       ),
@@ -193,7 +219,6 @@ class _PurchasesFlutterApiTest {
         const BooleanCustomVariableValue(true);
     bool boolDirectValue = booleanVariable.value;
     String boolStringValue = booleanVariable.stringValue;
-
   }
 
   void _checkPaywallResult(PaywallResult result) {
