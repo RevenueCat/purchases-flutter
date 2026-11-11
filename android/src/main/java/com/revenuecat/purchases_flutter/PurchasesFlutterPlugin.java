@@ -48,7 +48,8 @@ import kotlin.jvm.functions.Function1;
  */
 public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler, ActivityAware {
     private static final String TAG = "PurchasesFlutter";
-    private static final String INVALID_ARGS_ERROR_CODE = "invalidArgs";
+    private static final String INVALID_ARGS_ERROR_CODE =
+            String.valueOf(PurchasesErrorCode.PurchaseInvalidError.getCode());
 
     private static final String CUSTOMER_INFO_UPDATED = "Purchases-CustomerInfoUpdated";
     protected static final String LOG_HANDLER_EVENT = "Purchases-LogHandlerEvent";
