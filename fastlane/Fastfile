@@ -28,7 +28,7 @@ files_with_version_number = {
     './purchases_ui_flutter/pubspec.yaml' => ['version: {x}', 'purchases_flutter: ^{x}'],
     './purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
     './purchases_ui_flutter/macos/purchases_ui_flutter.podspec' => ['s.version          = \'{x}\''],
-    './purchases_ui_flutter/android/build.gradle' => ['version \'{x}\''],
+    './purchases_ui_flutter/android/build.gradle' => ['version = \'{x}\''],
     './purchases_admob_flutter/pubspec.yaml' => ['version: {x}', 'purchases_flutter: ^{x}'],
     './lib/web/purchases_flutter_web.dart' => ['_pluginVersion = \'{x}\''],
 }
