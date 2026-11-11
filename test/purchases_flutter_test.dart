@@ -668,6 +668,13 @@ void main() {
     );
   });
 
+  test('PurchasesErrorHelper maps non-numeric codes to unknownError', () {
+    expect(
+      PurchasesErrorHelper.getErrorCode(PlatformException(code: 'invalidArgs')),
+      PurchasesErrorCode.unknownError,
+    );
+  });
+
   test('purchase calls successfully with package and all params', () async {
     try {
       response = {
