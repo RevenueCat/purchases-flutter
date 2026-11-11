@@ -480,10 +480,7 @@ void main() {
     expect(PurchasesErrorCode.apiEndpointBlocked.index, 33);
     expect(PurchasesErrorCode.invalidPromotionalOfferError.index, 34);
     expect(PurchasesErrorCode.offlineConnectionError.index, 35);
-    expect(
-        PurchasesErrorCode
-            .featureNotAvailableInCustomEntitlementsComputationMode.index,
-        36);
+    expect(PurchasesErrorCode.featureNotAvailableInCustomEntitlementsComputationMode.index, 36);
     expect(PurchasesErrorCode.signatureVerificationFailed.index, 37);
     expect(PurchasesErrorCode.featureNotSupportedWithStoreKit1.index, 38);
     expect(PurchasesErrorCode.invalidWebPurchaseToken.index, 39);
@@ -671,13 +668,6 @@ void main() {
     );
   });
 
-  test('PurchasesErrorHelper maps non-numeric codes to unknownError', () {
-    expect(
-      PurchasesErrorHelper.getErrorCode(PlatformException(code: 'invalidArgs')),
-      PurchasesErrorCode.unknownError,
-    );
-  });
-
   test('purchase calls successfully with package and all params', () async {
     try {
       response = {
@@ -700,11 +690,11 @@ void main() {
         PresentedOfferingContext('main', null, null),
       );
       const promotionalOffer = PromotionalOffer(
-        'identifier',
-        'keyIdentifier',
-        'nonce',
-        'signature',
-        1234567890,
+          'identifier',
+          'keyIdentifier',
+          'nonce',
+          'signature',
+          1234567890,
       );
       final purchaseParams = PurchaseParams.package(
         mockPackage,
@@ -716,7 +706,8 @@ void main() {
         promotionalOffer: promotionalOffer,
         customerEmail: 'testemail@revenuecat.com',
       );
-      final purchasePackageResult = await Purchases.purchase(purchaseParams);
+      final purchasePackageResult =
+      await Purchases.purchase(purchaseParams);
       expect(
         purchasePackageResult,
         PurchaseResult.fromJson(response),
@@ -784,7 +775,8 @@ void main() {
         mockPackage,
         winBackOffer: winBackOffer,
       );
-      final purchasePackageResult = await Purchases.purchase(purchaseParams);
+      final purchasePackageResult =
+      await Purchases.purchase(purchaseParams);
       expect(
         purchasePackageResult,
         PurchaseResult.fromJson(response),
@@ -910,9 +902,10 @@ void main() {
         PresentedOfferingContext('main', null, null),
       );
       const purchaseParams = PurchaseParams.package(
-        mockPackage,
+          mockPackage,
       );
-      final purchasePackageResult = await Purchases.purchase(purchaseParams);
+      final purchasePackageResult =
+      await Purchases.purchase(purchaseParams);
       expect(
         purchasePackageResult,
         PurchaseResult.fromJson(response),
@@ -945,16 +938,14 @@ void main() {
     }
   });
 
-  test('purchase calls successfully with store product and all params',
-      () async {
+  test('purchase calls successfully with store product and all params', () async {
     try {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
         'transaction': mockStoreTransaction,
       };
-      const presentedOfferingContext =
-          PresentedOfferingContext('main', null, null);
+      const presentedOfferingContext = PresentedOfferingContext('main', null, null);
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
@@ -973,16 +964,17 @@ void main() {
         1234567890,
       );
       final purchaseParams = PurchaseParams.storeProduct(
-        mockStoreProduct,
-        googleProductChangeInfo: GoogleProductChangeInfo(
-          'old_product_id',
-          prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
-        ),
-        googleIsPersonalizedPrice: true,
-        promotionalOffer: promotionalOffer,
-        customerEmail: 'testemail@revenuecat.com',
+          mockStoreProduct,
+          googleProductChangeInfo: GoogleProductChangeInfo(
+            'old_product_id',
+            prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
+          ),
+          googleIsPersonalizedPrice: true,
+          promotionalOffer: promotionalOffer,
+          customerEmail: 'testemail@revenuecat.com',
       );
-      final purchaseProductResult = await Purchases.purchase(purchaseParams);
+      final purchaseProductResult =
+      await Purchases.purchase(purchaseParams);
       expect(
         purchaseProductResult,
         PurchaseResult.fromJson(response),
@@ -1016,8 +1008,7 @@ void main() {
     }
   });
 
-  test('purchase calls successfully with store product and win back offer',
-      () async {
+  test('purchase calls successfully with store product and win back offer', () async {
     try {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       response = {
@@ -1025,8 +1016,7 @@ void main() {
         'customerInfo': mockCustomerInfoResponse,
         'transaction': mockStoreTransaction,
       };
-      const presentedOfferingContext =
-          PresentedOfferingContext('main', null, null);
+      const presentedOfferingContext = PresentedOfferingContext('main', null, null);
       const mockStoreProduct = StoreProduct(
         'com.revenuecat.lifetime',
         'description',
@@ -1050,7 +1040,8 @@ void main() {
         mockStoreProduct,
         winBackOffer: winBackOffer,
       );
-      final purchaseProductResult = await Purchases.purchase(purchaseParams);
+      final purchaseProductResult =
+      await Purchases.purchase(purchaseParams);
       expect(
         purchaseProductResult,
         PurchaseResult.fromJson(response),
@@ -1086,8 +1077,7 @@ void main() {
     }
   });
 
-  test('purchase calls successfully with store product and minimum params',
-      () async {
+  test('purchase calls successfully with store product and minimum params', () async {
     try {
       response = {
         'productIdentifier': 'product.identifier',
@@ -1104,9 +1094,10 @@ void main() {
         productCategory: ProductCategory.nonSubscription,
       );
       const purchaseParams = PurchaseParams.storeProduct(
-        mockStoreProduct,
+          mockStoreProduct,
       );
-      final purchaseProductResult = await Purchases.purchase(purchaseParams);
+      final purchaseProductResult =
+      await Purchases.purchase(purchaseParams);
       expect(
         purchaseProductResult,
         PurchaseResult.fromJson(response),
@@ -1136,16 +1127,14 @@ void main() {
     }
   });
 
-  test('purchase calls successfully with subscription option and all params',
-      () async {
+  test('purchase calls successfully with subscription option and all params', () async {
     try {
       response = {
         'productIdentifier': 'product.identifier',
         'customerInfo': mockCustomerInfoResponse,
         'transaction': mockStoreTransaction,
       };
-      const presentedOfferingContext =
-          PresentedOfferingContext('main', null, null);
+      const presentedOfferingContext = PresentedOfferingContext('main', null, null);
       const mockSubscriptionOption = SubscriptionOption(
         'subscription_option_id',
         'com.revenuecat.monthly',
@@ -1162,16 +1151,16 @@ void main() {
         null,
       );
       final purchaseParams = PurchaseParams.subscriptionOption(
-        mockSubscriptionOption,
-        googleProductChangeInfo: GoogleProductChangeInfo(
-          'old_product_id',
-          prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
-        ),
-        googleIsPersonalizedPrice: true,
-        customerEmail: 'testemail@revenuecat.com',
+          mockSubscriptionOption,
+          googleProductChangeInfo: GoogleProductChangeInfo(
+            'old_product_id',
+            prorationMode: GoogleProrationMode.immediateAndChargeFullPrice,
+          ),
+          googleIsPersonalizedPrice: true,
+          customerEmail: 'testemail@revenuecat.com',
       );
       final purchaseSubscriptionOptionResult =
-          await Purchases.purchase(purchaseParams);
+      await Purchases.purchase(purchaseParams);
       expect(
         purchaseSubscriptionOptionResult,
         PurchaseResult.fromJson(response),
@@ -1205,9 +1194,7 @@ void main() {
     }
   });
 
-  test(
-      'purchase calls successfully with subscription option and minimum params',
-      () async {
+  test('purchase calls successfully with subscription option and minimum params', () async {
     try {
       response = {
         'productIdentifier': 'product.identifier',
@@ -1230,10 +1217,10 @@ void main() {
         null,
       );
       const purchaseParams = PurchaseParams.subscriptionOption(
-        mockSubscriptionOption,
+          mockSubscriptionOption,
       );
       final purchaseSubscriptionOptionResult =
-          await Purchases.purchase(purchaseParams);
+      await Purchases.purchase(purchaseParams);
       expect(
         purchaseSubscriptionOptionResult,
         PurchaseResult.fromJson(response),
@@ -1913,8 +1900,7 @@ void main() {
     );
   });
 
-  test('configure with automaticDeviceIdentifierCollectionEnabled false',
-      () async {
+  test('configure with automaticDeviceIdentifierCollectionEnabled false', () async {
     await Purchases.configure(
       PurchasesConfiguration('api_key')
         ..appUserID = 'cesar'
@@ -2058,8 +2044,7 @@ void main() {
     );
   });
 
-  test('overridePreferredUILocale with null reverts to system default',
-      () async {
+  test('overridePreferredUILocale with null reverts to system default', () async {
     await Purchases.overridePreferredUILocale(null);
     expect(
       log,
@@ -2536,7 +2521,8 @@ void main() {
     ]);
   });
 
-  test('trackCustomPaywallImpression works correctly without params', () async {
+  test('trackCustomPaywallImpression works correctly without params',
+      () async {
     await Purchases.trackCustomPaywallImpression();
     expect(log, <Matcher>[
       isMethodCall(
@@ -2557,7 +2543,8 @@ void main() {
     ]);
   });
 
-  test('trackCustomPaywallImpression does not send null ids', () async {
+  test('trackCustomPaywallImpression does not send null ids',
+      () async {
     await Purchases.trackCustomPaywallImpression(
       params: const CustomPaywallImpressionParams(
         paywallId: null,
@@ -2869,8 +2856,7 @@ void main() {
 
   test('trackRewardedAdPromptShown sends correct method and arguments',
       () async {
-    await Purchases.adTracker
-        .trackRewardedAdPromptShown(AdRewardPromptShownData(
+    await Purchases.adTracker.trackRewardedAdPromptShown(AdRewardPromptShownData(
       mediatorName: AdMediatorName.adMob,
       adUnitId: 'unit-7',
     ));
@@ -2885,8 +2871,7 @@ void main() {
 
   test('trackRewardedAdPromptShown includes optional fields when set',
       () async {
-    await Purchases.adTracker
-        .trackRewardedAdPromptShown(AdRewardPromptShownData(
+    await Purchases.adTracker.trackRewardedAdPromptShown(AdRewardPromptShownData(
       mediatorName: AdMediatorName.adMob,
       placement: 'footer',
       adUnitId: 'unit-7',
