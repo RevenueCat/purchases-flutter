@@ -29,8 +29,8 @@ class PurchasesErrorHelper {
   /// }
   /// ```
   static PurchasesErrorCode getErrorCode(PlatformException e) {
-    final errorCode = num.parse(e.code).round();
-    if (errorCode >= PurchasesErrorCode.values.length) {
+    final errorCode = num.tryParse(e.code)?.round();
+    if (errorCode == null || errorCode >= PurchasesErrorCode.values.length) {
       return PurchasesErrorCode.unknownError;
     }
     return PurchasesErrorCode.values[errorCode];
