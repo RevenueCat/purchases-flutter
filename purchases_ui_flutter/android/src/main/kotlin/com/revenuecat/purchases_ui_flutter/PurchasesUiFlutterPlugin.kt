@@ -64,7 +64,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "purchases_ui_flutter")
         channel.setMethodCallHandler(this)
         binaryMessenger = flutterPluginBinding.binaryMessenger
-        checkpointHandler = CheckpointHandler()
+        checkpointHandler = CheckpointHandler(binaryMessenger)
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
@@ -105,12 +105,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
             "presentCustomerCenter" -> presentCustomerCenter(
                 result = result,
             )
-            "checkpoint" -> checkpointHandler.present(
-                result = result,
-                identifier = call.argument("identifier"),
-                customVariables = call.argument<Map<String, Any?>>("customVariables"),
-                presentationMode = call.argument("presentationMode"),
-            )
+            "checkpoint" -> checkpointHandler.present(call, result)
             else -> {
                 result.notImplemented()
             }
@@ -118,6 +113,7 @@ class PurchasesUiFlutterPlugin: FlutterPlugin, MethodCallHandler, ActivityAware,
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        checkpointHandler.dispose()
         channel.setMethodCallHandler(null)
         clearCustomerCenterListener()
     }
