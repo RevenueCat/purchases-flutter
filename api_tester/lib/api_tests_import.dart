@@ -5,6 +5,7 @@
 // ignore_for_file: unused_import
 import 'package:api_tester/api_tests/generated/errors_api_test.dart';
 import 'package:api_tester/api_tests/models/ad_tracking_api_test.dart';
+import 'package:api_tester/api_tests/models/configured_ad_rewards_api_test.dart';
 import 'package:api_tester/api_tests/models/customer_info_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/entitlement_info_wrapper_api_test.dart';
 import 'package:api_tester/api_tests/models/entitlement_infos_wrapper_api_test.dart';

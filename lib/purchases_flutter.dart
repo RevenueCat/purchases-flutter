@@ -1541,6 +1541,35 @@ class Purchases {
 
   static final adTracker = PurchasesAdTracker._();
 
+  /// Returns the rewards configured for the exact, case-sensitive [adUnitId].
+  ///
+  /// Uses cached configuration when available and loads it on demand otherwise.
+  /// Returns null when configuration or the requested entry is unavailable or
+  /// malformed, including an empty ad unit ID. Returns
+  /// [ConfiguredAdRewards.noConfiguredReward] when configuration resolved
+  /// successfully but the ad unit has no configured reward.
+  ///
+  /// Use these rewards to customize a prompt before showing an ad. The result of
+  /// [pollRewardVerification] determines the rewards actually granted.
+  /// Supported on Android, iOS 15.0+, and macOS 12.0+.
+  ///
+  /// ```dart
+  /// final rewards = await Purchases.getAdRewards('rewarded-ad-unit');
+  /// final reward = rewards?.reward;
+  /// if (reward is VirtualCurrencyRewardConfiguration) {
+  ///   print('Watch an ad for ${reward.amount} ${reward.code}');
+  /// } else if (reward is EntitlementRewardConfiguration) {
+  ///   print('Watch an ad for ${reward.duration.inMinutes} minutes of access');
+  /// }
+  /// ```
+  static Future<ConfiguredAdRewards?> getAdRewards(String adUnitId) async {
+    final result = await _channel.invokeMapMethod<String, dynamic>(
+      'getAdRewards',
+      {'adUnitId': adUnitId},
+    );
+    return result == null ? null : ConfiguredAdRewards.fromMap(result);
+  }
+
   /// Generates a reward verification token for a loaded rewarded ad.
   ///
   /// Call after the ad has loaded. Forward the returned `customData` and
