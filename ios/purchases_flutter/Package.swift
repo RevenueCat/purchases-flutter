@@ -12,7 +12,8 @@ let package = Package(
         .library(name: "purchases-flutter", targets: ["purchases_flutter"])
     ],
     dependencies: [
-        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "20.8.0")
+        // TODO: before merging 12.0-dev into main, replace this development reference with the published PHC 21 version. (SDK-4601)
+        .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", branch: "21.0-dev")
     ],
     targets: [
         .target(
