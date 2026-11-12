@@ -21,6 +21,12 @@ class PurchaseParams {
   final WinBackOffer? winBackOffer;
   final String? customerEmail;
 
+  /// Apple StoreKit 2 only. Developer-signed introductory offer eligibility JWS.
+  /// Requires iOS 15+ or macOS 15.4+ and a supporting PHC release. Unsupported
+  /// purchase paths reject instead of ignoring the token. Sign on your server.
+  /// Null preserves default store eligibility. Cannot be combined with other offers.
+  final String? introductoryOfferEligibilityJWS;
+
   const PurchaseParams._(
     this.package,
     this.product,
@@ -31,6 +37,7 @@ class PurchaseParams {
     this.promotionalOffer,
     this.winBackOffer,
     this.customerEmail,
+    this.introductoryOfferEligibilityJWS,
   );
 
   /// Creates purchase parameters for a package.
@@ -70,6 +77,7 @@ class PurchaseParams {
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
+    String? introductoryOfferEligibilityJWS,
   }) : this._(
           package,
           null,
@@ -80,6 +88,7 @@ class PurchaseParams {
           promotionalOffer,
           winBackOffer,
           customerEmail,
+          introductoryOfferEligibilityJWS,
         );
 
   /// Creates purchase parameters for a store product.
@@ -120,6 +129,7 @@ class PurchaseParams {
     PromotionalOffer? promotionalOffer,
     WinBackOffer? winBackOffer,
     String? customerEmail,
+    String? introductoryOfferEligibilityJWS,
   }) : this._(
           null,
           storeProduct,
@@ -130,6 +140,7 @@ class PurchaseParams {
           promotionalOffer,
           winBackOffer,
           customerEmail,
+          introductoryOfferEligibilityJWS,
         );
 
   /// Creates purchase parameters for a subscription option. Google Play-only.
@@ -169,5 +180,6 @@ class PurchaseParams {
           null,
           null,
           customerEmail,
+          null,
         );
 }
