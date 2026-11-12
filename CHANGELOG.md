@@ -4,6 +4,7 @@
 
 ### 💥 Breaking Changes
 
+- **Minimum versions:** Both `purchases_flutter` and `purchases_ui_flutter` now require Flutter 3.27.0+ and Dart 3.6.0+ on all platforms.
 - **Apple installation:** PHC 21 stops publishing its core/UI podspecs to CocoaPods trunk. Standard CocoaPods installation of RevenueCat is no longer supported. Migrate to Swift Package Manager before upgrading; see the [Flutter migration guide](https://rev.cat/flutter-spm-migration).
 
 ## 11.0.1
