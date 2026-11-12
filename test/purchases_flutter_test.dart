@@ -98,7 +98,7 @@ void main() {
             'useAmazon': false,
             'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -132,7 +132,7 @@ void main() {
             'useAmazon': false,
             'storeKitVersion': 'STOREKIT_2',
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -164,7 +164,7 @@ void main() {
             'useAmazon': false,
             'storeKitVersion': 'STOREKIT_1',
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -199,7 +199,7 @@ void main() {
             'useAmazon': false,
             'storeKitVersion': 'STOREKIT_2',
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -1792,7 +1792,7 @@ void main() {
             'storeKitVersion': 'STOREKIT_2',
             'useAmazon': true,
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -1825,7 +1825,7 @@ void main() {
             'useAmazon': true,
             'storeKitVersion': 'DEFAULT',
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': true,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -1859,7 +1859,7 @@ void main() {
             'storeKitVersion': 'DEFAULT',
             'useAmazon': false,
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -1869,6 +1869,24 @@ void main() {
           },
         ),
       ],
+    );
+  });
+
+  test('configure sends an explicit entitlementVerificationMode', () async {
+    await Purchases.configure(
+      PurchasesConfiguration('api_key')
+        ..entitlementVerificationMode = EntitlementVerificationMode.disabled,
+    );
+    expect(
+      log.single.arguments['entitlementVerificationMode'],
+      'DISABLED',
+    );
+  });
+
+  test('entitlementVerificationMode is unset by default', () {
+    expect(
+      PurchasesConfiguration('api_key').entitlementVerificationMode,
+      isNull,
     );
   });
 
@@ -1894,7 +1912,7 @@ void main() {
             'storeKitVersion': 'DEFAULT',
             'useAmazon': true,
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -1926,7 +1944,7 @@ void main() {
             'storeKitVersion': 'DEFAULT',
             'useAmazon': false,
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': false,
             'diagnosticsEnabled': false,
@@ -1958,7 +1976,7 @@ void main() {
             'storeKitVersion': 'DEFAULT',
             'useAmazon': false,
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,
@@ -1990,7 +2008,7 @@ void main() {
             'storeKitVersion': 'DEFAULT',
             'useAmazon': false,
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': true,
@@ -2023,7 +2041,7 @@ void main() {
             'storeKitVersion': 'DEFAULT',
             'useAmazon': false,
             'shouldShowInAppMessagesAutomatically': true,
-            'entitlementVerificationMode': 'DISABLED',
+            'entitlementVerificationMode': null,
             'pendingTransactionsForPrepaidPlansEnabled': false,
             'automaticDeviceIdentifierCollectionEnabled': true,
             'diagnosticsEnabled': false,

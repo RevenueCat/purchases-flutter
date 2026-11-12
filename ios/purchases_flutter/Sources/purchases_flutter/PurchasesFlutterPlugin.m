@@ -359,7 +359,7 @@ enableExternalPurchasesInSimulator:(BOOL)enableExternalPurchasesInSimulator
                                               storeKitVersion:storeKitVersion
                                             dangerousSettings:nil
                          shouldShowInAppMessagesAutomatically:shouldShowInAppMessagesAutomatically
-                                             verificationMode:verificationMode
+                                             verificationMode:verificationMode.mappingNSNullToNil
                                            diagnosticsEnabled:diagnosticsEnabled
                    automaticDeviceIdentifierCollectionEnabled:automaticDeviceIdentifierCollectionEnabled
                                               preferredLocale:preferredUILocaleOverride.mappingNSNullToNil
