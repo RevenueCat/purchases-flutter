@@ -691,7 +691,7 @@ workflows:
           name: lint-test
       - lint-test:
           name: lint-test-min-version
-          flutter-version: "3.22.0"
+          flutter-version: "3.27.0"
       - lint-test:
           name: lint-test-equatable-2
           equatable-version: "^2.0.0"
@@ -703,7 +703,7 @@ workflows:
           name: lint-test-ui
       - lint-test-ui:
           name: lint-test-ui-min-version
-          flutter-version: "3.22.0"
+          flutter-version: "3.27.0"
       - lint-test-admob
       - lint-sample-apps
       - api_test
