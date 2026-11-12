@@ -154,6 +154,27 @@ commands:
           name: Remove all local .podspec files recursively
           command: find . -name "*.podspec" -type f -delete
 
+  install-flutter-for-spm-tests:
+    parameters:
+      minimum-version:
+        type: boolean
+        default: false
+    steps:
+      - unless:
+          condition: << parameters.minimum-version >>
+          steps:
+            - revenuecat/install-mise-tools:
+                tools: flutter
+      - when:
+          condition: << parameters.minimum-version >>
+          steps:
+            - revenuecat/install-mise
+            - run:
+                name: Install minimum supported Flutter
+                command: |
+                  mise install flutter@3.41.0
+                  mise env --shell bash flutter@3.41.0 >> "$BASH_ENV"
+
   prepare-for-cocoapods-integration-test:
     description: Disable Swift Package Manager support in Flutter (to use Cocoapods) + remove local Swift.package files
     steps:
@@ -479,6 +500,10 @@ jobs:
 
   ios-integration-test-spm:
     description: "Run integration tests for Flutter"
+    parameters:
+      minimum-version:
+        type: boolean
+        default: false
     executor:
       name: macos-executor
     steps:
@@ -486,8 +511,8 @@ jobs:
       - macos/preboot-simulator:
           device: iPhone 14
           version: '16.4'
-      - revenuecat/install-mise-tools:
-          tools: flutter
+      - install-flutter-for-spm-tests:
+          minimum-version: << parameters.minimum-version >>
       - prepare-for-spm-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -501,12 +526,16 @@ jobs:
 
   macos-integration-test-spm:
     description: "Run integration tests for Flutter"
+    parameters:
+      minimum-version:
+        type: boolean
+        default: false
     executor:
       name: macos-executor
     steps:
       - checkout
-      - revenuecat/install-mise-tools:
-          tools: flutter
+      - install-flutter-for-spm-tests:
+          minimum-version: << parameters.minimum-version >>
       - prepare-for-spm-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -691,7 +720,7 @@ workflows:
           name: lint-test
       - lint-test:
           name: lint-test-min-version
-          flutter-version: "3.22.0"
+          flutter-version: "3.41.0"
       - lint-test:
           name: lint-test-equatable-2
           equatable-version: "^2.0.0"
@@ -703,7 +732,7 @@ workflows:
           name: lint-test-ui
       - lint-test-ui:
           name: lint-test-ui-min-version
-          flutter-version: "3.22.0"
+          flutter-version: "3.41.0"
       - lint-test-admob
       - lint-sample-apps
       - api_test
@@ -712,7 +741,13 @@ workflows:
       - ios-integration-test-cocoapods
       - macos-integration-test-cocoapods
       - ios-integration-test-spm
+      - ios-integration-test-spm:
+          name: ios-integration-test-spm-min-version
+          minimum-version: true
       - macos-integration-test-spm
+      - macos-integration-test-spm:
+          name: macos-integration-test-spm-min-version
+          minimum-version: true
       - android-integration-test-build
       - agp9-smoke-test
       - agp9-end-to-end-test
@@ -738,7 +773,15 @@ workflows:
           name: macos-integration-test-cocoapods-release
           <<: *release-branches
       - ios-integration-test-spm: *release-branches
+      - ios-integration-test-spm:
+          name: ios-integration-test-spm-min-version
+          minimum-version: true
+          <<: *release-branches
       - macos-integration-test-spm: *release-branches
+      - macos-integration-test-spm:
+          name: macos-integration-test-spm-min-version
+          minimum-version: true
+          <<: *release-branches
       - android-integration-test: *release-branches
       - wait-for-pr-approval:
           type: approval
@@ -752,6 +795,8 @@ workflows:
             - macos-integration-test-cocoapods-release
             - ios-integration-test-spm
             - macos-integration-test-spm
+            - ios-integration-test-spm-min-version
+            - macos-integration-test-spm-min-version
             - android-integration-test
           <<: *release-branches
       - make-release: *release-tags

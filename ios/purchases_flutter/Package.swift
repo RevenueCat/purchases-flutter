@@ -12,12 +12,14 @@ let package = Package(
         .library(name: "purchases-flutter", targets: ["purchases_flutter"])
     ],
     dependencies: [
+        .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "20.8.0")
     ],
     targets: [
         .target(
             name: "purchases_flutter",
             dependencies: [
+                .product(name: "FlutterFramework", package: "FlutterFramework"),
                 .product(name: "PurchasesHybridCommon", package: "purchases-hybrid-common")
             ],
             publicHeadersPath: "include/purchases_flutter"
