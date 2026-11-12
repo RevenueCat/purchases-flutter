@@ -16,7 +16,8 @@ Pod::Spec.new do |s|
   s.source_files     = 'purchases_flutter/Sources/purchases_flutter/**/*.{h,m}'
   s.public_header_files = 'purchases_flutter/Sources/purchases_flutter/include/**/*.h'
   s.dependency 'FlutterMacOS'
-  s.dependency 'PurchasesHybridCommon', '20.8.0'
+  # TODO: before merging 12.0-dev into main, replace this development reference with the published PHC 21 version. (SDK-4601)
+  s.dependency 'PurchasesHybridCommon', '21.0.0-SNAPSHOT'
   s.platform = :osx, '10.12'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
