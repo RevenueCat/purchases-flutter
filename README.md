@@ -25,7 +25,7 @@ To use this plugin, add `purchases_flutter` as a [dependency in your pubspec.yam
 
 ### Requirements
 
-Flutter 3.27.0+ and Dart 3.6.0+ are required for both `purchases_flutter` and `purchases_ui_flutter`. For Apple dependencies, follow the [Swift Package Manager migration guide](https://rev.cat/flutter-spm-migration).
+Flutter 3.41.0+ and Dart 3.11.0+ are required for both `purchases_flutter` and `purchases_ui_flutter`. For Apple dependencies, follow the [Swift Package Manager migration guide](https://rev.cat/flutter-spm-migration).
 
 *purchases_flutter* requires Xcode 14.0+, Kotlin 2.1.0+, and minimum targets iOS 13.0+/Android SDK 21+ (Android 5.0+).
 
