@@ -557,8 +557,6 @@ jobs:
           no_output_timeout: 15m
       - store_test_results:
           path: fastlane/test_output
-      - store_artifacts:
-          path: fastlane/test_output
 
   run-maestro-e2e-tests-android:
     <<: *android-machine-emulator
@@ -585,8 +583,6 @@ jobs:
           command: bundle exec fastlane run_maestro_e2e_tests_android
           no_output_timeout: 15m
       - store_test_results:
-          path: fastlane/test_output
-      - store_artifacts:
           path: fastlane/test_output
 
   update-hybrid-common-versions:
