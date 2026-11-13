@@ -36,9 +36,10 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         instance.methodChannel = channel
         instance.binaryMessenger = messenger
 #if os(iOS)
-        instance.checkpointHandler = CheckpointHandler()
+        instance.checkpointHandler = CheckpointHandler(messenger: messenger)
 #endif
         registrar.addMethodCallDelegate(instance, channel: channel)
+        registrar.publish(instance)
     }
 
     private var _paywallProxy: Any?
@@ -147,30 +148,22 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
             )
 
         case "checkpoint":
-            guard let args = call.arguments as? Dictionary<String, Any>,
-                  let identifier = args[Parameter.identifier.rawValue] as? String else {
-                result(FlutterError(code: PurchasesUiFlutterPlugin.BAD_ARGS_ERROR_CODE,
-                                    message: "Missing identifier in checkpoint",
-                                    details: nil))
-                return
-            }
 #if os(iOS)
-            self.checkpointHandler?.present(
-                result,
-                identifier: identifier,
-                customVariables: args[Parameter.customVariables.rawValue] as? [String: Any],
-                presentationMode: args[Parameter.presentationMode.rawValue] as? String
-            )
-
+            self.checkpointHandler?.present(call.arguments as? [String: Any] ?? [:], result: result)
 #else
-            result(FlutterError(code: "UNSUPPORTED_PLATFORM",
-                                message: "Checkpoints require iOS",
-                                details: nil))
+            result(FlutterError(code: "UNSUPPORTED_PLATFORM", message: "Checkpoints require iOS", details: nil))
 #endif
 
         default:
             result(FlutterMethodNotImplemented)
         }
+    }
+
+    public func detachFromEngine(for registrar: FlutterPluginRegistrar) {
+#if os(iOS)
+        self.checkpointHandler?.dispose()
+        self.checkpointHandler = nil
+#endif
     }
 
     private func setCustomerCenterCallbacks(
