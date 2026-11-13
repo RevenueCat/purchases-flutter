@@ -10,6 +10,7 @@ import 'package:purchases_flutter/models/purchases_error.dart';
 import 'package:purchases_flutter/models/store_transaction.dart';
 
 import 'checkpoint.dart';
+import 'checkpoint_method_handler.dart';
 import 'custom_variable_value.dart';
 import 'paywall_presentation_configuration.dart';
 import 'paywall_result.dart';
@@ -248,46 +249,10 @@ class RevenueCatUI {
       throw UnsupportedError('Checkpoints require iOS 15+ or Android.');
     }
 
-    // Native never replies when the user backs out, so the future below can stay
-    // pending for the lifetime of the engine. Dropping the callback on removal
-    // keeps that closure from retaining `onPassed` and whatever it captures.
-    CheckpointPassed? callback = onPassed;
-    _methodChannel.invokeMethod<Object?>('checkpoint', {
-      'identifier': identifier,
-      'customVariables': convertCustomVariablesToNative(
-        params.customVariables,
-      ),
-      'presentationMode': params.presentationMode.toString(),
-    }).then<void>((response) {
-      final passed = callback;
-      if (passed == null) return;
-      callback = null;
-      final CheckpointResult result;
-      try {
-        result = CheckpointResult.fromJson(
-          Map<String, dynamic>.from(response as Map),
-        );
-      } catch (e) {
-        debugPrint('RevenueCatUI: Error parsing the checkpoint result: $e');
-        return;
-      }
-      try {
-        passed(result);
-      } catch (error, stack) {
-        FlutterError.reportError(
-          FlutterErrorDetails(
-            exception: error,
-            stack: stack,
-            library: 'purchases_ui_flutter',
-            context: ErrorDescription('while calling a checkpoint callback'),
-          ),
-        );
-      }
-    }).catchError((Object e) {
-      debugPrint('RevenueCatUI: Error presenting checkpoint $identifier: $e');
-    });
-    return () => callback = null;
+    return _checkpointHandler.checkpoint(identifier, onPassed, params);
   }
+
+  static final _checkpointHandler = CheckpointMethodHandler(_methodChannel);
 
   /// Presents the customer center modally using the native SDKs.
   ///
