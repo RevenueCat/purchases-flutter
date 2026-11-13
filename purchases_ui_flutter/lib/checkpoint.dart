@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:purchases_flutter/models/customer_info_wrapper.dart';
 import 'package:purchases_flutter/models/entitlement_info_wrapper.dart';
+import 'package:purchases_flutter/models/offering_wrapper.dart';
 import 'package:purchases_flutter/models/store_product_wrapper.dart';
 
 import 'custom_variable_value.dart';
@@ -20,9 +23,19 @@ final class CheckpointParams {
   /// How the SDK presents the flow selected by the checkpoint.
   final FlowPresentationMode presentationMode;
 
+  /// Presents the selected offering with app-owned UI. Null inherits the
+  /// presenter captured from [RevenueCatUI.setPaywallPresenter] at call time.
+  final PaywallPresenter? paywallPresenter;
+
+  /// Uses the native presenter even when a global presenter is registered.
+  /// Takes precedence over [paywallPresenter].
+  final bool useNativePaywallPresenter;
+
   const CheckpointParams({
     this.customVariables,
     this.presentationMode = FlowPresentationMode.defaultMode,
+    this.paywallPresenter,
+    this.useNativePaywallPresenter = false,
   });
 
   @override
@@ -30,11 +43,15 @@ final class CheckpointParams {
       identical(this, other) ||
       other is CheckpointParams &&
           presentationMode == other.presentationMode &&
+          paywallPresenter == other.paywallPresenter &&
+          useNativePaywallPresenter == other.useNativePaywallPresenter &&
           _mapEquals(customVariables, other.customVariables);
 
   @override
   int get hashCode => Object.hash(
         presentationMode,
+        paywallPresenter,
+        useNativePaywallPresenter,
         customVariables == null
             ? null
             : Object.hashAllUnordered(
@@ -45,7 +62,7 @@ final class CheckpointParams {
 
   @override
   String toString() =>
-      'CheckpointParams(customVariables: $customVariables, presentationMode: $presentationMode)';
+      'CheckpointParams(customVariables: $customVariables, presentationMode: $presentationMode, paywallPresenter: $paywallPresenter, useNativePaywallPresenter: $useNativePaywallPresenter)';
 }
 
 /// Controls how the SDK presents the flow selected by a checkpoint.
@@ -176,4 +193,69 @@ bool _mapEquals<K, V>(Map<K, V>? a, Map<K, V>? b) {
     if (!b.containsKey(entry.key) || b[entry.key] != entry.value) return false;
   }
   return true;
+}
+
+/// Presents a checkpoint-selected offering. Dismiss the app-owned UI before
+/// calling completion. Completion is honored at most once. A returned future
+/// does not complete presentation; throwing or failing the future backs out.
+typedef PaywallPresenter = FutureOr<void> Function(
+  PaywallPresentationParams params,
+  void Function(PaywallPresentationResult result) completion,
+);
+
+/// Parameters for an app-owned checkpoint paywall.
+final class PaywallPresentationParams {
+  final String checkpointIdentifier;
+  final Map<String, CustomVariableValue> customVariables;
+  final FlowPresentationMode presentationMode;
+  final Offering offering;
+
+  const PaywallPresentationParams({
+    required this.checkpointIdentifier,
+    required this.customVariables,
+    required this.presentationMode,
+    required this.offering,
+  });
+
+  /// @nodoc
+  factory PaywallPresentationParams.fromJson(Map<String, dynamic> json) {
+    final variables = <String, CustomVariableValue>{};
+    (json['customVariables'] as Map? ?? const {}).forEach((key, value) {
+      if (value is String) {
+        variables[key as String] = CustomVariableValue.string(value);
+      } else if (value is num) {
+        variables[key as String] = CustomVariableValue.number(value.toDouble());
+      } else if (value is bool) {
+        variables[key as String] = CustomVariableValue.boolean(value);
+      }
+    });
+    return PaywallPresentationParams(
+      checkpointIdentifier: json['checkpointIdentifier'] as String,
+      customVariables: variables,
+      presentationMode: switch (json['presentationMode']) {
+        'MODAL_FULL_SCREEN' => FlowPresentationMode.modalFullScreen,
+        'MODAL_SHEET' => FlowPresentationMode.modalSheet,
+        _ => FlowPresentationMode.defaultMode,
+      },
+      offering: Offering.fromJson(Map<String, dynamic>.from(json['offering'])),
+    );
+  }
+}
+
+/// How an app-owned checkpoint paywall ended. New values may be added.
+final class PaywallPresentationResult {
+  final String _value;
+  const PaywallPresentationResult._(this._value);
+
+  /// Continue after the native SDK synchronizes purchases.
+  static const continued = PaywallPresentationResult._('CONTINUED');
+
+  /// The user closed the paywall. Continue after purchase synchronization.
+  static const closed = PaywallPresentationResult._('CLOSED');
+
+  /// The user navigated back. Stop without invoking the checkpoint callback.
+  static const navigatedBack = PaywallPresentationResult._('NAVIGATED_BACK');
+
+  @override
+  String toString() => _value;
 }

@@ -17,6 +17,7 @@ class CheckpointMethodHandler {
   final _prefix =
       '${DateTime.now().microsecondsSinceEpoch}-${Random().nextInt(1 << 32)}';
   int _nextCallId = 0;
+  PaywallPresenter? paywallPresenter;
 
   CheckpointMethodHandler(this._mainChannel) {
     _channel.setMethodCallHandler(_handleMethodCall);
@@ -29,7 +30,12 @@ class CheckpointMethodHandler {
     CheckpointParams params,
   ) {
     final callId = '$_prefix-${++_nextCallId}';
-    final call = _CheckpointCall(onPassed);
+    final call = _CheckpointCall(
+      onPassed,
+      params.useNativePaywallPresenter
+          ? null
+          : params.paywallPresenter ?? paywallPresenter,
+    );
     _calls[callId] = call;
     // Native only replies when the checkpoint passes or cannot start. Retain
     // just the call state here, whose app closures are cleared on removal.
@@ -38,7 +44,7 @@ class CheckpointMethodHandler {
       'customVariables': convertCustomVariablesToNative(params.customVariables),
       'presentationMode': params.presentationMode.toString(),
       'callId': callId,
-      'useCustomPaywallPresenter': false,
+      'useCustomPaywallPresenter': call.presenter != null,
       'hasErrorDialogFactory': false,
     }).then<void>((response) {
       final passed = call.onPassed;
@@ -79,18 +85,54 @@ class CheckpointMethodHandler {
       call.clear();
       _send(
         'detachCheckpoint',
-        {'callId': callId, 'activePaywallRequestId': null},
+        {'callId': callId, 'activePaywallRequestId': call.activeRequestId},
       );
     };
   }
 
   Future<void> _handleMethodCall(MethodCall method) async {
+    final args = Map<String, dynamic>.from(method.arguments as Map);
+    final requestId = args['requestId'] as String;
+    final call = _calls[args['callId']];
     switch (method.method) {
       case 'onPaywallPresentation':
-        // Custom paywall presenter support follows in the next PR.
+        final presenter = call?.presenter;
+        if (call == null || presenter == null) {
+          _complete(requestId, PaywallPresentationResult.navigatedBack);
+          return;
+        }
+        call.activeRequestId = requestId;
+        var completed = false;
+        void complete(PaywallPresentationResult result) {
+          if (completed) return;
+          completed = true;
+          call.activeRequestId = null;
+          _complete(requestId, result);
+          if (result == PaywallPresentationResult.navigatedBack) {
+            _calls.remove(args['callId']);
+            call.clear();
+          }
+        }
+        // Do not await app-owned UI: the completion callback controls when
+        // native purchase synchronization can begin.
+        unawaited(
+          Future<void>.sync(
+            () => presenter(
+              PaywallPresentationParams.fromJson(
+                Map<String, dynamic>.from(args['params'] as Map),
+              ),
+              complete,
+            ),
+          ).catchError((Object error) {
+            debugPrint(
+              'RevenueCatUI: Checkpoint paywall presenter failed: $error',
+            );
+            complete(PaywallPresentationResult.navigatedBack);
+          }),
+        );
         return;
       case 'onErrorDialogRequested':
-        // Error-dialog factory support follows later in the stack.
+        // Error-dialog factory support follows in the next PR.
         return;
       default:
         throw MissingPluginException(
@@ -98,6 +140,11 @@ class CheckpointMethodHandler {
         );
     }
   }
+
+  void _complete(String requestId, PaywallPresentationResult result) => _send(
+        'completePaywallPresentation',
+        {'requestId': requestId, 'result': result.toString()},
+      );
 
   void _send(String method, Map<String, dynamic> arguments) {
     unawaited(
@@ -110,12 +157,15 @@ class CheckpointMethodHandler {
 
 class _CheckpointCall {
   CheckpointPassed? onPassed;
+  PaywallPresenter? presenter;
+  String? activeRequestId;
   bool detached = false;
 
-  _CheckpointCall(this.onPassed);
+  _CheckpointCall(this.onPassed, this.presenter);
 
   void clear() {
     detached = true;
     onPassed = null;
+    presenter = null;
   }
 }
