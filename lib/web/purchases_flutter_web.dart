@@ -180,6 +180,7 @@ class PurchasesFlutterPlugin {
         case 'purchaseProductWithWinBackOffer':
         case 'getEligibleWinBackOffersForProduct':
         case 'redeemWebPurchase':
+        case 'getAdRewards':
         case 'generateRewardVerificationToken':
         case 'pollRewardVerification':
         case 'syncPurchasesForResult':

@@ -431,6 +431,9 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             case "trackRewardedAdPromptAccepted":
                 trackRewardedAdPromptAccepted(call.arguments(), result);
                 break;
+            case "getAdRewards":
+                CommonKt.getAdRewards(call.argument("adUnitId"), getOnNullableResult(result));
+                break;
             case "generateRewardVerificationToken":
                 generateRewardVerificationToken(call.arguments(), result);
                 break;

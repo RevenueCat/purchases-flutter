@@ -813,6 +813,11 @@ class _PurchasesFlutterApiTest {
     );
   }
 
+  void _checkGetAdRewards() async {
+    Future<ConfiguredAdRewards?> future = Purchases.getAdRewards('unit-1');
+    ConfiguredAdRewards? rewards = await future;
+  }
+
   void _checkGenerateRewardVerificationToken() async {
     RewardVerificationToken token =
         await Purchases.generateRewardVerificationToken('imp-1');

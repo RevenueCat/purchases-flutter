@@ -1,4 +1,7 @@
 ## RevenueCat SDK
+### ✨ New Features
+* Add `Purchases.getAdRewards` to read configured rewarded-ad rewards, including virtual currency and entitlement durations, before showing an ad.
+
 ### 📦 Dependency Updates
 * [AUTOMATIC BUMP] Updates purchases-hybrid-common to 20.3.0 (#1998) via RevenueCat Git Bot (@RCGitBot)
   * [Android 11.0.1](https://github.com/RevenueCat/purchases-android/releases/tag/11.0.1)

@@ -320,6 +320,9 @@ enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator
         [self trackRewardedAdPromptShown:arguments result:result];
     } else if ([@"trackRewardedAdPromptAccepted" isEqualToString:call.method]) {
         [self trackRewardedAdPromptAccepted:arguments result:result];
+    } else if ([@"getAdRewards" isEqualToString:call.method]) {
+        [RCCommonFunctionality getAdRewardsWithAdUnitId:arguments[@"adUnitId"]
+                                           completion:[self getResponseCompletionBlock:result]];
     } else if ([@"generateRewardVerificationToken" isEqualToString:call.method]) {
         [self generateRewardVerificationToken:arguments result:result];
     } else if ([@"pollRewardVerification" isEqualToString:call.method]) {
