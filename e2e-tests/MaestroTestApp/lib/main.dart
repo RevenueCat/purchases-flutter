@@ -10,14 +10,19 @@ const _launchArgsChannel = MethodChannel('com.revenuecat.maestro/launch_args');
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Purchases.setLogLevel(LogLevel.debug);
-  await Purchases.configure(PurchasesConfiguration(apiKey));
 
   String? testFlow;
+  String? testApiKey;
   try {
     testFlow = await _launchArgsChannel.invokeMethod<String>('getTestFlow');
+    testApiKey = await _launchArgsChannel.invokeMethod<String>('getTestApiKey');
   } on MissingPluginException {
     debugPrint('Launch args channel not available');
   }
+
+  final configurationKey =
+      testApiKey != null && testApiKey.isNotEmpty ? testApiKey : apiKey;
+  await Purchases.configure(PurchasesConfiguration(configurationKey));
 
   runApp(MaestroTestApp(initialTestFlow: testFlow));
 }
@@ -29,9 +34,8 @@ class MaestroTestApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final match = testCases
-        .where((tc) => tc.flowKey == initialTestFlow)
-        .firstOrNull;
+    final match =
+        testCases.where((tc) => tc.flowKey == initialTestFlow).firstOrNull;
 
     return MaterialApp(
       title: 'Maestro Test App',
