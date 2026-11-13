@@ -77,6 +77,14 @@ Make github release
 
 Builds and analyzes the api_tester project to make sure APIs are expected
 
+### run_api_diff
+
+```sh
+[bundle exec] fastlane run_api_diff
+```
+
+Diffs the public API of purchases_flutter against the latest pub.dev release. On release branches the version bump must match the changes (semver); elsewhere it only reports
+
 ### tag_current_branch
 
 ```sh
