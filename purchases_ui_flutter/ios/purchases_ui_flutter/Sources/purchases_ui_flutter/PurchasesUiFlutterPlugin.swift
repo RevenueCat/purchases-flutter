@@ -12,6 +12,9 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
     private static let BAD_ARGS_ERROR_CODE = "BAD_ARGS"
     private var methodChannel: FlutterMethodChannel?
     private var binaryMessenger: FlutterBinaryMessenger?
+#if os(iOS)
+    private var checkpointHandler: CheckpointHandler?
+#endif
 
     public static func register(with registrar: FlutterPluginRegistrar) {
 
@@ -32,6 +35,9 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         let instance = PurchasesUiFlutterPlugin()
         instance.methodChannel = channel
         instance.binaryMessenger = messenger
+#if os(iOS)
+        instance.checkpointHandler = CheckpointHandler()
+#endif
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 
@@ -148,12 +154,19 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
                                     details: nil))
                 return
             }
-            self.checkpoint(
+#if os(iOS)
+            self.checkpointHandler?.present(
                 result,
                 identifier: identifier,
                 customVariables: args[Parameter.customVariables.rawValue] as? [String: Any],
                 presentationMode: args[Parameter.presentationMode.rawValue] as? String
             )
+
+#else
+            result(FlutterError(code: "UNSUPPORTED_PLATFORM",
+                                message: "Checkpoints require iOS",
+                                details: nil))
+#endif
 
         default:
             result(FlutterMethodNotImplemented)
@@ -258,33 +271,6 @@ public class PurchasesUiFlutterPlugin: NSObject, FlutterPlugin {
         }
 #else
         NSLog("Presenting paywall requires iOS")
-#endif
-    }
-
-    private func checkpoint(
-        _ result: @escaping FlutterResult,
-        identifier: String,
-        customVariables: [String: Any]?,
-        presentationMode: String?
-    ) {
-#if os(iOS)
-        // Replies at most once, and only when the checkpoint passes: backing out never invokes the callback.
-        CheckpointProxy.present(
-            identifier: identifier,
-            callId: UUID().uuidString,
-            customVariables: customVariables,
-            presentationMode: presentationMode,
-            onPassed: { result($0) },
-            onError: { code, message in
-                result(FlutterError(code: code, message: message, details: nil))
-            },
-            onPaywallPresentationRequested: nil,
-            onErrorDialogRequested: nil
-        )
-#else
-        result(FlutterError(code: "UNSUPPORTED_PLATFORM",
-                            message: "Checkpoints require iOS",
-                            details: nil))
 #endif
     }
 
