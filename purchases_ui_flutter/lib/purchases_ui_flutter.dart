@@ -223,12 +223,13 @@ class RevenueCatUI {
   /// checkpoint. It is not called when the user backs out, when a blocking
   /// error occurs, or when another checkpoint already owns presentation. Treat
   /// a checkpoint as a callback rather than a pending operation to await. The
-  /// SDK handles error presentation.
+  /// SDK handles error presentation; [CheckpointParams.errorDialogFactory] can
+  /// customize the content, select the default dialog, or suppress it.
   ///
   /// Returns a function that removes the callback. Call it when the owning
   /// screen is disposed; removing the callback does not dismiss a flow that is
   /// already on screen. An app-owned paywall must still call its completion
-  /// after dismissal.
+  /// after dismissal. Pending error requests revert to default dialogs.
   ///
   /// Requires iOS 15+ or Android, and Purchases to be configured. Throws an
   /// [UnsupportedError] on other platforms.

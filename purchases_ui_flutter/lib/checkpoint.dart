@@ -31,11 +31,17 @@ final class CheckpointParams {
   /// Takes precedence over [paywallPresenter].
   final bool useNativePaywallPresenter;
 
+  /// Chooses custom error dialog content, the default dialog, or no dialog.
+  /// The SDK owns dialog presentation and acknowledgement. May be asynchronous;
+  /// throwing or returning invalid content uses the SDK's default dialog.
+  final CheckpointErrorDialogFactory? errorDialogFactory;
+
   const CheckpointParams({
     this.customVariables,
     this.presentationMode = FlowPresentationMode.defaultMode,
     this.paywallPresenter,
     this.useNativePaywallPresenter = false,
+    this.errorDialogFactory,
   });
 
   @override
@@ -45,6 +51,7 @@ final class CheckpointParams {
           presentationMode == other.presentationMode &&
           paywallPresenter == other.paywallPresenter &&
           useNativePaywallPresenter == other.useNativePaywallPresenter &&
+          errorDialogFactory == other.errorDialogFactory &&
           _mapEquals(customVariables, other.customVariables);
 
   @override
@@ -52,6 +59,7 @@ final class CheckpointParams {
         presentationMode,
         paywallPresenter,
         useNativePaywallPresenter,
+        errorDialogFactory,
         customVariables == null
             ? null
             : Object.hashAllUnordered(
@@ -62,7 +70,7 @@ final class CheckpointParams {
 
   @override
   String toString() =>
-      'CheckpointParams(customVariables: $customVariables, presentationMode: $presentationMode, paywallPresenter: $paywallPresenter, useNativePaywallPresenter: $useNativePaywallPresenter)';
+      'CheckpointParams(customVariables: $customVariables, presentationMode: $presentationMode, paywallPresenter: $paywallPresenter, useNativePaywallPresenter: $useNativePaywallPresenter, errorDialogFactory: $errorDialogFactory)';
 }
 
 /// Controls how the SDK presents the flow selected by a checkpoint.
@@ -203,6 +211,11 @@ typedef PaywallPresenter = FutureOr<void> Function(
   void Function(PaywallPresentationResult result) completion,
 );
 
+/// Chooses how the SDK handles an error, including purchase synchronization
+/// errors after a custom presenter completes. A pending future delays handling.
+typedef CheckpointErrorDialogFactory = FutureOr<CheckpointErrorDialogOutcome>
+    Function(CheckpointError error);
+
 /// Parameters for an app-owned checkpoint paywall.
 final class PaywallPresentationParams {
   final String checkpointIdentifier;
@@ -258,4 +271,96 @@ final class PaywallPresentationResult {
 
   @override
   String toString() => _value;
+}
+
+/// The kind of checkpoint failure. New values may be added.
+final class CheckpointErrorKind {
+  final String _value;
+  const CheckpointErrorKind._(this._value);
+
+  static const flowCouldNotBeShown =
+      CheckpointErrorKind._('flowCouldNotBeShown');
+  static const flowActionFailed = CheckpointErrorKind._('flowActionFailed');
+  static const flowResultSyncFailed =
+      CheckpointErrorKind._('flowResultSyncFailed');
+
+  @override
+  bool operator ==(Object other) =>
+      other is CheckpointErrorKind && other._value == _value;
+
+  @override
+  int get hashCode => _value.hashCode;
+
+  @override
+  String toString() => _value;
+}
+
+/// An error for which the SDK requests a dialog decision.
+final class CheckpointError {
+  final CheckpointErrorKind kind;
+  final int code;
+  final String message;
+
+  const CheckpointError({
+    required this.kind,
+    required this.code,
+    required this.message,
+  });
+
+  /// @nodoc
+  factory CheckpointError.fromJson(Map<String, dynamic> json) =>
+      CheckpointError(
+        kind: CheckpointErrorKind._(json['kind'] as String),
+        code: json['code'] as int,
+        message: json['message'] as String,
+      );
+}
+
+/// Content shown by the native error dialog. Both strings must be non-empty.
+final class CheckpointErrorDialog {
+  final String message;
+  final String primaryButtonTitle;
+
+  const CheckpointErrorDialog({
+    required this.message,
+    required this.primaryButtonTitle,
+  });
+}
+
+/// What the SDK should do with a checkpoint error.
+final class CheckpointErrorDialogOutcome {
+  final String _type;
+  final CheckpointErrorDialog? _dialog;
+
+  /// Displays custom content using the native SDK's dialog.
+  const CheckpointErrorDialogOutcome.show(CheckpointErrorDialog dialog)
+      : _type = 'show',
+        _dialog = dialog;
+
+  /// Displays the SDK's default error dialog.
+  const CheckpointErrorDialogOutcome.useDefault()
+      : _type = 'useDefault',
+        _dialog = null;
+
+  /// Suppresses the error dialog.
+  const CheckpointErrorDialogOutcome.suppress()
+      : _type = 'suppress',
+        _dialog = null;
+
+  /// @nodoc
+  Map<String, dynamic> toJson() {
+    final dialog = _dialog;
+    if (dialog != null &&
+        (dialog.message.isEmpty || dialog.primaryButtonTitle.isEmpty)) {
+      return {'type': 'useDefault'};
+    }
+    return {
+      'type': _type,
+      if (dialog != null)
+        'dialog': {
+          'message': dialog.message,
+          'buttonTitle': dialog.primaryButtonTitle,
+        },
+    };
+  }
 }

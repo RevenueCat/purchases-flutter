@@ -103,7 +103,59 @@ RevenueCatUI.setPaywallPresenter((params, completion) async {
 
 Call completion exactly once, after dismissing the app-owned UI. Both `continued` and `closed` allow the native SDK to synchronize purchases before deciding whether the checkpoint passes. `navigatedBack` stops the checkpoint without calling `onPassed`. A returned future alone does not complete presentation. If a presenter throws or its future fails before completion, the checkpoint backs out. Repeated completion calls are ignored.
 
-Call the removal function when the owning screen is disposed. It cancels queued custom presentations. It does not dismiss an already shown app-owned paywall: dismiss that UI and call its completion as usual, even after removal. The checkpoint's `onPassed` callback will no longer run.
+Set `paywallPresenter` and `errorDialogFactory` together to customize both for one checkpoint, including synchronization errors after the paywall completes. This example hosts `PaywallView` in an app-owned Flutter route; you can replace it with your own purchase UI.
+
+```dart
+VoidCallback showUpgradeCheckpoint(BuildContext context) {
+  final navigator = Navigator.of(context);
+
+  return RevenueCatUI.checkpoint(
+    'upgrade',
+    (result) {
+      // Continue navigation after the native SDK passes the checkpoint.
+    },
+    params: CheckpointParams(
+      paywallPresenter: (params, completion) async {
+        var outcome = PaywallPresentationResult.closed;
+        final route = MaterialPageRoute<PaywallPresentationResult>(
+          fullscreenDialog: true,
+          builder: (_) => Scaffold(
+            body: PaywallView(
+              offering: params.offering,
+              customVariables: params.customVariables,
+              displayCloseButton: true,
+              onPurchaseCompleted: (customerInfo, transaction) {
+                outcome = PaywallPresentationResult.continued;
+              },
+              onRestoreCompleted: (customerInfo) {
+                outcome = PaywallPresentationResult.continued;
+              },
+              onDismiss: () => navigator.pop(outcome),
+            ),
+          ),
+        );
+
+        final result = await navigator.push(route);
+        // Wait until the route's dismissal animation and UI removal finish.
+        await route.completed;
+        completion(result ?? PaywallPresentationResult.navigatedBack);
+      },
+      errorDialogFactory: (error) async {
+        return const CheckpointErrorDialogOutcome.show(
+          CheckpointErrorDialog(
+            message: 'Please try again.',
+            primaryButtonTitle: 'OK',
+          ),
+        );
+      },
+    ),
+  );
+}
+```
+
+Return `CheckpointErrorDialogOutcome.useDefault()` for the SDK's dialog or `CheckpointErrorDialogOutcome.suppress()` to show no dialog. The SDK owns dialog presentation and acknowledgement. A pending factory future delays error handling; throwing, a failed future, or empty dialog content uses the SDK's default dialog.
+
+Call the removal function when the owning screen is disposed. It cancels queued custom presentations and uses default dialogs for pending or future errors. It does not dismiss an already shown app-owned paywall: dismiss that UI and call its completion as usual, even after removal. The checkpoint's `onPassed` callback will no longer run. Each checkpoint has independent callbacks, so overlapping calls do not overwrite another call's presenter or error factory.
 
 ### Requirements
 *purchases_ui_flutter* requires XCode 14.0+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.
