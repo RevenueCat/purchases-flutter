@@ -64,7 +64,7 @@ public class PurchasesFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private static final String PLATFORM_NAME = "flutter";
-    private static final String PLUGIN_VERSION = "11.0.1";
+    private static final String PLUGIN_VERSION = "11.0.2";
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
