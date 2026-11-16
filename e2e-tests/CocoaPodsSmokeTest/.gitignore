@@ -5,14 +5,9 @@
 *.iml
 pubspec.lock
 build/
-ios/
-macos/
-android/
-linux/
-windows/
-web/
-lib/
-test/
-analysis_options.yaml
 .flutter-plugins
 .flutter-plugins-dependencies
+
+# Keep platform source files despite the repository-wide Flutter tool ignore rule.
+!ios/Flutter/
+!macos/Flutter/
