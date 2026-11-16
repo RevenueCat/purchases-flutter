@@ -10,7 +10,7 @@ flutter config --enable-swift-package-manager
 
 Alternatively, enable SPM in your app's `pubspec.yaml` under `flutter.config.enable-swift-package-manager`. Flutter 3.44+ enables SPM by default; remove any app setting that explicitly disables it. Leaving SPM disabled makes Flutter attempt an unsupported CocoaPods installation.
 
-This major adopts Purchases Hybrid Common 21, which is no longer published to CocoaPods trunk. Swift Package Manager (SPM) is the supported way to integrate RevenueCat's Apple dependencies.
+Starting with this major, RevenueCat's Apple dependencies are no longer published to CocoaPods. Swift Package Manager (SPM) is the supported way to integrate RevenueCat on Apple platforms.
 
 Before upgrading, follow the [Flutter CocoaPods-to-SPM migration guide](https://rev.cat/flutter-spm-migration). Migrate both the core and UI packages if your app uses RevenueCat UI.
 
