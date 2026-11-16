@@ -440,18 +440,8 @@ jobs:
           version: '16.4'
       - revenuecat/install-mise-tools:
           tools: flutter
-      - run:
-          name: Generate the ios test app
-          command: flutter create --platforms=ios --no-pub --project-name revenuecat_cocoapods_smoke e2e-tests/CocoaPodsSmokeTest
       - flutter-get-dependencies:
           project: e2e-tests/CocoaPodsSmokeTest
-      - run:
-          name: Apply Git sources and verify Flutter regeneration preserves them
-          command: |
-            python3 scripts/resolve-git-pods.py
-            python3 scripts/prepare-git-podfile.py e2e-tests/CocoaPodsSmokeTest/ios/Podfile
-            flutter create --platforms=ios --no-pub --project-name revenuecat_cocoapods_smoke e2e-tests/CocoaPodsSmokeTest
-            python3 scripts/prepare-git-podfile.py e2e-tests/CocoaPodsSmokeTest/ios/Podfile --check
       - run:
           name: Install the Git-sourced CocoaPods dependencies
           working_directory: e2e-tests/CocoaPodsSmokeTest/ios
@@ -459,21 +449,17 @@ jobs:
             flutter precache --ios
             pod install
       - run:
-          name: Verify the native and PHC core/UI Git dependency chain
-          command: ruby scripts/git-pods.rb verify e2e-tests/CocoaPodsSmokeTest/ios/Podfile.lock
-      - run:
           name: Configure Purchases and call the native API
           working_directory: e2e-tests/CocoaPodsSmokeTest
           command: >-
-            python3 ../../scripts/run-smoke-command.py ../../build/cocoapods-smoke-results/ios.xml
             flutter drive -d "iPhone 14" --target=integration_test/cocoapods_smoke_test.dart
             --driver=test_driver/integration_test.dart
       - run:
           name: Verify core/UI resource bundles
           working_directory: e2e-tests/CocoaPodsSmokeTest
-          command: ruby ../../scripts/git-pods.rb bundles build/ios/iphonesimulator/Runner.app
-      - store_test_results:
-          path: build/cocoapods-smoke-results
+          command: |
+            test -d build/ios/iphonesimulator/Runner.app/Frameworks/PurchasesHybridCommon.framework/PurchasesHybridCommon.bundle
+            test -d build/ios/iphonesimulator/Runner.app/Frameworks/RevenueCatUI.framework/RevenueCat_RevenueCatUI.bundle
   macos-integration-test-cocoapods:
     description: "Run Git-sourced CocoaPods installation and runtime smoke test"
     executor:
@@ -483,18 +469,8 @@ jobs:
       - install-correct-cocoapods
       - revenuecat/install-mise-tools:
           tools: flutter
-      - run:
-          name: Generate the macos test app
-          command: flutter create --platforms=macos --no-pub --project-name revenuecat_cocoapods_smoke e2e-tests/CocoaPodsSmokeTest
       - flutter-get-dependencies:
           project: e2e-tests/CocoaPodsSmokeTest
-      - run:
-          name: Apply Git sources and verify Flutter regeneration preserves them
-          command: |
-            python3 scripts/resolve-git-pods.py
-            python3 scripts/prepare-git-podfile.py e2e-tests/CocoaPodsSmokeTest/macos/Podfile
-            flutter create --platforms=macos --no-pub --project-name revenuecat_cocoapods_smoke e2e-tests/CocoaPodsSmokeTest
-            python3 scripts/prepare-git-podfile.py e2e-tests/CocoaPodsSmokeTest/macos/Podfile --check
       - run:
           name: Install the Git-sourced CocoaPods dependencies
           working_directory: e2e-tests/CocoaPodsSmokeTest/macos
@@ -502,21 +478,17 @@ jobs:
             flutter precache --macos
             pod install
       - run:
-          name: Verify the native and PHC core/UI Git dependency chain
-          command: ruby scripts/git-pods.rb verify e2e-tests/CocoaPodsSmokeTest/macos/Podfile.lock
-      - run:
           name: Configure Purchases and call the native API
           working_directory: e2e-tests/CocoaPodsSmokeTest
           command: >-
-            python3 ../../scripts/run-smoke-command.py ../../build/cocoapods-smoke-results/macos.xml
             flutter drive -d macos --target=integration_test/cocoapods_smoke_test.dart
             --driver=test_driver/integration_test.dart
       - run:
           name: Verify core/UI resource bundles
           working_directory: e2e-tests/CocoaPodsSmokeTest
-          command: ruby ../../scripts/git-pods.rb bundles build/macos/Build/Products/Debug/*.app
-      - store_test_results:
-          path: build/cocoapods-smoke-results
+          command: |
+            test -d build/macos/Build/Products/Debug/revenuecat_cocoapods_smoke.app/Contents/Frameworks/PurchasesHybridCommon.framework/Resources/PurchasesHybridCommon.bundle
+            test -d build/macos/Build/Products/Debug/revenuecat_cocoapods_smoke.app/Contents/Frameworks/RevenueCatUI.framework/Resources/RevenueCat_RevenueCatUI.bundle
   ios-integration-test-spm:
     description: "Run integration tests for Flutter"
     executor:

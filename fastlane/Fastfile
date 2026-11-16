@@ -181,6 +181,8 @@ lane :update_hybrid_common do |options|
       'ios/purchases_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
       'macos/purchases_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
       'android/build.gradle' => ['ext.common_version = \'{x}\''],
+      'e2e-tests/CocoaPodsSmokeTest/ios/Podfile' => ["phc_version = '{x}'"],
+      'e2e-tests/CocoaPodsSmokeTest/macos/Podfile' => ["phc_version = '{x}'"],
       'purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => [
         's.dependency \'PurchasesHybridCommon\', \'{x}\'',
         's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
@@ -210,6 +212,26 @@ lane :update_hybrid_common do |options|
     automatic_release: options[:automatic_release] || false,
     enable_auto_merge: options[:automatic_release] || false
   )
+
+  # CocoaPods Git sources need native tags matching the new PHC podspec.
+  require 'fastlane/plugin/revenuecat_internal/helper/update_hybrids_versions_file_helper'
+  native_ios_version = Fastlane::Helper::UpdateHybridsVersionsFileHelper.get_ios_version_for_hybrid_common_version(
+    new_version_number, ENV["GITHUB_TOKEN"]
+  )
+  native_pins_changed = false
+  %w[ios macos].each do |platform|
+    podfile = File.join(get_root_folder, "e2e-tests/CocoaPodsSmokeTest", platform, "Podfile")
+    contents = File.read(podfile)
+    updated = contents.sub(/native_ios_version = '[^']+'/, "native_ios_version = '#{native_ios_version}'")
+    next if updated == contents
+
+    File.write(podfile, updated)
+    native_pins_changed = true
+  end
+  if open_pr && native_pins_changed
+    commit_current_changes(commit_message: "Update CocoaPods test native iOS pins")
+    push_to_git_remote
+  end
 
   # The web platform loads a vendored copy of the purchases-js-hybrid-mappings
   # bundle (see lib/web/purchases_flutter_web.dart) so it can be served
