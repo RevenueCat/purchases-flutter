@@ -343,7 +343,8 @@ jobs:
           cache-version: v1
       - run:
           name: Verify vendored web bundle
-          command: bundle exec fastlane verify_web_hybrid_mappings_bundle
+          # TODO: before merging 12.0-dev into main, regenerate the web bundle from PHC 21 and remove this development pin. (SDK-4601)
+          command: bundle exec fastlane verify_web_hybrid_mappings_bundle version:20.8.0
 
   android-integration-test-build:
     description: "Build Android Flutter integration tests"

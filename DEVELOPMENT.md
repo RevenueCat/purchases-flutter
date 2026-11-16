@@ -431,4 +431,4 @@ Development integration checklist (SDK-4601):
 - [ ] Replace Apple PHC snapshot requirements and align Android, TypeScript, and web PHC dependencies with the released PHC 21 artifacts.
 - [ ] Switch the Git-sourced CocoaPods CI default from `21.0-dev` to the same released PHC tag; keep the four-pod Git overrides and smoke coverage.
 - [ ] Refresh dependency lockfiles and validate the final release version chain through core and UI integrations.
-- [ ] Regenerate and verify the vendored web SDK bundle from the released PHC 21 mappings.
+- [ ] Regenerate and verify the vendored web SDK bundle from the released PHC 21 mappings, then remove the temporary `version:20.8.0` pin from the `verify-web-bundle` CI job.
