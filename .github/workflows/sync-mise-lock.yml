@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   sync-mise-lock:
-    if: startsWith(github.head_ref, 'renovate/')
+    if: github.repository_visibility != 'public' && startsWith(github.head_ref, 'renovate/')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout PR branch

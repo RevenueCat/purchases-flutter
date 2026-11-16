@@ -8,6 +8,7 @@ jobs:
   auto-merge:
     # Only run for PRs created by RCGitBot with the phc_dependencies label
     if: |
+      github.repository_visibility != 'public' &&
       contains(github.event.pull_request.labels.*.name, 'pr:phc_dependencies') &&
       github.event.pull_request.user.login == 'RCGitBot'
     runs-on: ubuntu-latest

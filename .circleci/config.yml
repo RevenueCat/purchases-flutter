@@ -36,7 +36,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@4.8.0
+  revenuecat: revenuecat/sdks-common-config@4.9.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -719,6 +719,20 @@ workflows:
           context:
             - e2e-tests
 
+  mirror:
+    when:
+      and:
+        - not:
+            equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+        - equal: [ build, << pipeline.parameters.action >> ]
+    jobs:
+      - revenuecat/mirror-to-public:
+          public_repo_name: purchases-flutter
+          context: sdk-public-mirror
+          filters:
+            branches:
+              only: main
+
   deploy:
     when:
       and:
@@ -740,7 +754,7 @@ workflows:
           type: approval
           <<: *release-branches
       - revenuecat/tag-current-branch:
-          context: github-bot-public
+          context: github-bot-internal
           ruby_version: "3.3.0"
           requires:
             - wait-for-pr-approval
@@ -750,7 +764,14 @@ workflows:
             - macos-integration-test-spm
             - android-integration-test
           <<: *release-branches
-      - make-release: *release-tags
+      - revenuecat/mirror-to-public:
+          public_repo_name: purchases-flutter
+          context: sdk-public-mirror
+          <<: *release-tags
+      - make-release:
+          requires:
+            - revenuecat/mirror-to-public
+          <<: *release-tags
       - make-release-purchases-flutter-ui:
           requires:
             - make-release
@@ -760,15 +781,15 @@ workflows:
             - make-release
           <<: *release-tags
       - github_release:
-          context: github-bot-public
+          context: github-bot-public-release
           requires:
             - make-release
             - make-release-purchases-flutter-ui
             - make-release-purchases-flutter-admob
           <<: *release-tags
       - revenuecat/merge-release-pr:
-          context: github-bot-public
-          repo_name: purchases-flutter
+          context: github-bot-internal
+          repo_name: purchases-flutter_internal
           ruby_version: "3.3.0"
           requires:
             - github_release
@@ -780,21 +801,21 @@ workflows:
         - equal: [ "release-train", << pipeline.schedule.name >> ]
     jobs:
       - revenuecat/automatic-bump:
-          context: github-bot-public
+          context: github-bot-internal
           ruby_version: "3.3.0"
   manual-trigger-bump:
     when:
       equal: [ bump, << pipeline.parameters.action >> ]
     jobs:
       - revenuecat/automatic-bump:
-          context: github-bot-public
+          context: github-bot-internal
           ruby_version: "3.3.0"
   update-error-codes:
     when:
       equal: [ update_error_codes, << pipeline.parameters.action >> ]
     jobs:
       - revenuecat/update-error-codes:
-          context: github-bot-public
+          context: github-bot-internal
           platform: flutter
           outputs: |
             errors.dart:lib/src/generated/error_codes.dart
@@ -826,4 +847,4 @@ workflows:
       equal: [ upgrade-hybrid-common, << pipeline.parameters.action >> ]
     jobs:
       - update-hybrid-common-versions:
-          context: github-bot-public
+          context: github-bot-internal
