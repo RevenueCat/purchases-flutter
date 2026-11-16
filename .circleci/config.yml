@@ -36,7 +36,8 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@4.8.0
+  # TODO: use the released orb version before merging. (SDK-4601; sdks-circleci-orb#116)
+  revenuecat: revenuecat/sdks-common-config@dev:e1219fc88385d98e1f25040efc0b177175baeff2
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -153,27 +154,6 @@ commands:
       - run:
           name: Remove all local .podspec files recursively
           command: find . -name "*.podspec" -type f -delete
-
-  install-flutter-for-spm-tests:
-    parameters:
-      minimum-version:
-        type: boolean
-        default: false
-    steps:
-      - unless:
-          condition: << parameters.minimum-version >>
-          steps:
-            - revenuecat/install-mise-tools:
-                tools: flutter
-      - when:
-          condition: << parameters.minimum-version >>
-          steps:
-            - revenuecat/install-mise
-            - run:
-                name: Install minimum supported Flutter
-                command: |
-                  mise install flutter@3.41.0
-                  mise env --shell bash flutter@3.41.0 >> "$BASH_ENV"
 
   prepare-for-cocoapods-integration-test:
     description: Disable Swift Package Manager support in Flutter (to use Cocoapods) + remove local Swift.package files
@@ -501,9 +481,14 @@ jobs:
   ios-integration-test-spm:
     description: "Run integration tests for Flutter"
     parameters:
-      minimum-version:
+      flutter-tool:
+        type: string
+        default: "flutter"
+        description: Mise Flutter selector, optionally flutter@VERSION for an override.
+      mise-locked:
         type: boolean
-        default: false
+        default: true
+        description: Use mise.lock; disable for versions absent from the lockfile.
     executor:
       name: macos-executor
     steps:
@@ -511,8 +496,9 @@ jobs:
       - macos/preboot-simulator:
           device: iPhone 14
           version: '16.4'
-      - install-flutter-for-spm-tests:
-          minimum-version: << parameters.minimum-version >>
+      - revenuecat/install-mise-tools:
+          tools: << parameters.flutter-tool >>
+          locked: << parameters.mise-locked >>
       - prepare-for-spm-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -527,15 +513,21 @@ jobs:
   macos-integration-test-spm:
     description: "Run integration tests for Flutter"
     parameters:
-      minimum-version:
+      flutter-tool:
+        type: string
+        default: "flutter"
+        description: Mise Flutter selector, optionally flutter@VERSION for an override.
+      mise-locked:
         type: boolean
-        default: false
+        default: true
+        description: Use mise.lock; disable for versions absent from the lockfile.
     executor:
       name: macos-executor
     steps:
       - checkout
-      - install-flutter-for-spm-tests:
-          minimum-version: << parameters.minimum-version >>
+      - revenuecat/install-mise-tools:
+          tools: << parameters.flutter-tool >>
+          locked: << parameters.mise-locked >>
       - prepare-for-spm-integration-test
       - replace-api-key
       - flutter-get-dependencies:
@@ -743,11 +735,13 @@ workflows:
       - ios-integration-test-spm
       - ios-integration-test-spm:
           name: ios-integration-test-spm-min-version
-          minimum-version: true
+          flutter-tool: flutter@3.41.0
+          mise-locked: false
       - macos-integration-test-spm
       - macos-integration-test-spm:
           name: macos-integration-test-spm-min-version
-          minimum-version: true
+          flutter-tool: flutter@3.41.0
+          mise-locked: false
       - android-integration-test-build
       - agp9-smoke-test
       - agp9-end-to-end-test
@@ -775,12 +769,14 @@ workflows:
       - ios-integration-test-spm: *release-branches
       - ios-integration-test-spm:
           name: ios-integration-test-spm-min-version
-          minimum-version: true
+          flutter-tool: flutter@3.41.0
+          mise-locked: false
           <<: *release-branches
       - macos-integration-test-spm: *release-branches
       - macos-integration-test-spm:
           name: macos-integration-test-spm-min-version
-          minimum-version: true
+          flutter-tool: flutter@3.41.0
+          mise-locked: false
           <<: *release-branches
       - android-integration-test: *release-branches
       - wait-for-pr-approval:
