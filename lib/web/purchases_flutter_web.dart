@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
+import 'dart:ui_web' as ui_web;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -14,11 +15,11 @@ class PurchasesFlutterPlugin {
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
   static const _platformName = 'flutter';
   static const _pluginVersion = '11.0.3';
+  static const _purchasesHybridMappingsAssetKey =
+      'packages/purchases_flutter/assets/web/purchases_js_hybrid_mappings.js';
 
-  // Path to the vendored RevenueCat web SDK (purchases-js-hybrid-mappings UMD
-  // bundle), served same-origin from the app's assets.
-  static const _purchasesHybridMappingsAssetPath =
-      'assets/packages/purchases_flutter/assets/web/purchases_js_hybrid_mappings.js';
+  @visibleForTesting
+  static ui_web.AssetManager assetManager = ui_web.assetManager;
 
   static Completer<void>? _initCompleter;
 
@@ -40,15 +41,15 @@ class PurchasesFlutterPlugin {
       return;
     }
 
-    // Load the bundle through an external <script src> pointing at a
-    // same-origin asset. Shipping the code inside the app and loading it as an
-    // external (non-inline) script avoids both inline-script execution and
-    // remotely-hosted code, which are disallowed by strict Content Security
-    // Policies such as the one enforced on Chrome Extension Manifest V3 pages.
-    // The UMD bundle registers `window.PurchasesHybridMappings` when it runs.
+    // Load the vendored bundle through an external <script src> resolved by
+    // Flutter's asset manager. The default same-origin asset remains compatible
+    // with strict Content Security Policies such as Chrome Extension Manifest
+    // V3. The UMD bundle registers `window.PurchasesHybridMappings` when it runs.
+    final purchasesHybridMappingsAssetUrl =
+        assetManager.getAssetUrl(_purchasesHybridMappingsAssetKey);
     final script = HTMLScriptElement()
       ..type = 'text/javascript'
-      ..src = _purchasesHybridMappingsAssetPath
+      ..src = purchasesHybridMappingsAssetUrl
       ..addEventListener(
         'load',
         (Event _) {
@@ -61,7 +62,7 @@ class PurchasesFlutterPlugin {
           completer.completeError(
             StateError(
               'Failed to load the RevenueCat web SDK from '
-              '$_purchasesHybridMappingsAssetPath',
+              '$purchasesHybridMappingsAssetUrl',
             ),
           );
         }.toJS,

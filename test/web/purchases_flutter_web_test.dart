@@ -15,6 +15,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   final calls = <String>[];
+  String? requestedScriptUrl;
 
   setUpAll(() {
     // The vendored web SDK isn't served in tests. Loads an empty script in its
@@ -22,6 +23,7 @@ void main() {
     final head = document.head!;
     final append = head['append'] as JSFunction;
     head['append'] = ((HTMLScriptElement script) {
+      requestedScriptUrl = script.getAttribute('src');
       script.src = 'data:text/javascript,';
       append.callAsFunction(head, script);
     }).toJS;
@@ -41,6 +43,14 @@ void main() {
   });
 
   setUp(calls.clear);
+
+  test('loads the web SDK script from the default asset base', () {
+    expect(
+      requestedScriptUrl,
+      'assets/packages/purchases_flutter/assets/web/'
+      'purchases_js_hybrid_mappings.js',
+    );
+  });
 
   test('setProxyURL forwards the URL to the web SDK', () async {
     await Purchases.setProxyURL('https://proxy.example.com');
