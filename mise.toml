@@ -7,7 +7,7 @@ compile = false
 [tools]
 java = "liberica-17.0.6"
 flutter = "3.44.2"
-ruby = "3.3.0"
+ruby = "3.3.14"
 # Only the agp9-smoke-test job uses this. Every other Android job builds through
 # Flutter's Gradle wrapper, which ignores it.
 gradle = "9.1.0"
