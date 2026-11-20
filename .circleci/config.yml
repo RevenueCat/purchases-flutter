@@ -36,7 +36,7 @@ aliases:
 orbs:
   android: circleci/android@2.5.0
   swissknife: roopakv/swissknife@0.65.0
-  revenuecat: revenuecat/sdks-common-config@4.9.0
+  revenuecat: revenuecat/sdks-common-config@4.12.0
   macos: circleci/macos@2.3.2
   flutter: circleci/flutter@2.1.0
   ruby: circleci/ruby@2.5.3
@@ -55,8 +55,14 @@ executors:
 parameters:
   action:
     type: enum
-    enum: [build, upgrade-hybrid-common, bump, update_error_codes]
+    enum: [build, upgrade-hybrid-common, bump, hotfix, update_error_codes]
     default: build
+  hotfix_pr:
+    type: integer
+    default: 0
+  hotfix_version:
+    type: string
+    default: ''
   version:
     type: string
     default: ''
@@ -682,6 +688,8 @@ workflows:
             equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
         - not:
             equal: [ update_error_codes, << pipeline.parameters.action >> ]
+        - not:
+            equal: [ hotfix, << pipeline.parameters.action >> ]
     jobs:
       - lint-test:
           name: lint-test
@@ -810,6 +818,15 @@ workflows:
       - revenuecat/automatic-bump:
           context: github-bot-internal
           ruby_version: "3.3.0"
+  manual-trigger-hotfix:
+    when:
+      equal: [ hotfix, << pipeline.parameters.action >> ]
+    jobs:
+      - revenuecat/hotfix:
+          context: github-bot-internal
+          ruby_version: "3.3.0"
+          pr_number: << pipeline.parameters.hotfix_pr >>
+          version: << pipeline.parameters.hotfix_version >>
   update-error-codes:
     when:
       equal: [ update_error_codes, << pipeline.parameters.action >> ]
