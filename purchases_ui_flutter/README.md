@@ -88,6 +88,23 @@ final removeCallback = RevenueCatUI.checkpoint(
 
 The callback is called at most once, only when the checkpoint passes. `result.flow` is `null` when there was nothing to present, such as an unconfigured identifier or no matching rule. Backing out, a blocking failure, or another checkpoint owning presentation does not invoke the callback. Treat a checkpoint as a callback rather than a pending operation to await. The SDK handles error presentation.
 
+### Custom checkpoint presenters
+
+Use `RevenueCatUI.setPaywallPresenter` to register a default app-owned paywall presenter. Each checkpoint captures that default when called. A `CheckpointParams.paywallPresenter` overrides it for one call; `useNativePaywallPresenter: true` uses the SDK's UI regardless of either presenter. Pass `null` to `setPaywallPresenter` to reset the global default.
+
+```dart
+RevenueCatUI.setPaywallPresenter((params, completion) async {
+  // Present your own UI using params.offering, params.customVariables,
+  // params.checkpointIdentifier, and params.presentationMode.
+  // After dismissing it, report how it ended:
+  completion(PaywallPresentationResult.continued);
+});
+```
+
+Call completion exactly once, after dismissing the app-owned UI. Both `continued` and `closed` allow the native SDK to synchronize purchases before deciding whether the checkpoint passes. `navigatedBack` stops the checkpoint without calling `onPassed`. A returned future alone does not complete presentation. If a presenter throws or its future fails before completion, the checkpoint backs out. Repeated completion calls are ignored.
+
+Call the removal function when the owning screen is disposed. It cancels queued custom presentations. It does not dismiss an already shown app-owned paywall: dismiss that UI and call its completion as usual, even after removal. The checkpoint's `onPassed` callback will no longer run.
+
 ### Requirements
 *purchases_ui_flutter* requires XCode 14.0+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.
 
