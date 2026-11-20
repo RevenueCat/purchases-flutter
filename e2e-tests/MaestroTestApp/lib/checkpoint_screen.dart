@@ -9,8 +9,10 @@ String _listOrNone(Iterable<String> values) =>
 
 class CheckpointScreen extends StatefulWidget {
   final String identifier;
+  final bool customErrorDialog;
 
-  const CheckpointScreen({super.key, required this.identifier});
+  const CheckpointScreen(
+      {super.key, required this.identifier, this.customErrorDialog = false});
 
   @override
   State<CheckpointScreen> createState() => _CheckpointScreenState();
@@ -56,7 +58,16 @@ class _CheckpointScreenState extends State<CheckpointScreen> {
                 '${_listOrNone(result.customer.entitlements.active.keys)}',
           ];
         });
-      });
+      },
+          params: CheckpointParams(
+            errorDialogFactory: widget.customErrorDialog
+                ? (_) => const CheckpointErrorDialogOutcome.show(
+                      CheckpointErrorDialog(
+                          message: 'Custom checkpoint error dialog',
+                          primaryButtonTitle: 'Got it'),
+                    )
+                : null,
+          ));
     } catch (e) {
       debugPrint('Failed to hit checkpoint: $e');
       setState(() => _error = e.toString());

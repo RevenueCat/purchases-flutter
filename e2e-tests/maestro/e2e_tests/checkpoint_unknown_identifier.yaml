@@ -12,6 +12,7 @@ name: Checkpoint unknown identifier passes without a flow
 - launchApp:
     arguments:
         e2e_test_flow: checkpoint_unknown_identifier
+        rc_test_api_key: "${typeof MAESTRO_RC_TEST_API_KEY === 'undefined' ? '' : MAESTRO_RC_TEST_API_KEY}"
 - extendedWaitUntil:
     visible: "Hit checkpoint"
     timeout: 30000

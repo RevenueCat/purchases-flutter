@@ -17,6 +17,8 @@ import UIKit
     channel.setMethodCallHandler { (call, result) in
       if call.method == "getTestFlow" {
         result(UserDefaults.standard.string(forKey: "e2e_test_flow"))
+      } else if call.method == "getTestApiKey" {
+        result(UserDefaults.standard.string(forKey: "rc_test_api_key"))
       } else {
         result(FlutterMethodNotImplemented)
       }

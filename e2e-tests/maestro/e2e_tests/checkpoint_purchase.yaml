@@ -13,6 +13,7 @@ name: Checkpoint purchase
 - launchApp:
     arguments:
         e2e_test_flow: checkpoint_purchase
+        rc_test_api_key: "${typeof MAESTRO_RC_TEST_API_KEY === 'undefined' ? '' : MAESTRO_RC_TEST_API_KEY}"
 - extendedWaitUntil:
     visible: "Hit checkpoint"
     timeout: 30000

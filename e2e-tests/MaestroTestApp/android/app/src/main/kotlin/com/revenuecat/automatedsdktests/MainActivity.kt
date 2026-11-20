@@ -11,6 +11,8 @@ class MainActivity : FlutterFragmentActivity() {
             .setMethodCallHandler { call, result ->
                 if (call.method == "getTestFlow") {
                     result.success(intent.getStringExtra("e2e_test_flow"))
+                } else if (call.method == "getTestApiKey") {
+                    result.success(intent.getStringExtra("rc_test_api_key"))
                 } else {
                     result.notImplemented()
                 }
