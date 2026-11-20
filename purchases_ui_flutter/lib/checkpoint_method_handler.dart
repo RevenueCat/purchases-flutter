@@ -35,6 +35,7 @@ class CheckpointMethodHandler {
       params.useNativePaywallPresenter
           ? null
           : params.paywallPresenter ?? paywallPresenter,
+      params.errorDialogFactory,
     );
     _calls[callId] = call;
     // Native only replies when the checkpoint passes or cannot start. Retain
@@ -45,7 +46,7 @@ class CheckpointMethodHandler {
       'presentationMode': params.presentationMode.toString(),
       'callId': callId,
       'useCustomPaywallPresenter': call.presenter != null,
-      'hasErrorDialogFactory': false,
+      'hasErrorDialogFactory': call.factory != null,
     }).then<void>((response) {
       final passed = call.onPassed;
       _calls.remove(callId);
@@ -132,7 +133,27 @@ class CheckpointMethodHandler {
         );
         return;
       case 'onErrorDialogRequested':
-        // Error-dialog factory support follows in the next PR.
+        final factory = call?.factory;
+        var outcome = const CheckpointErrorDialogOutcome.useDefault();
+        try {
+          if (factory != null) {
+            outcome = await factory(
+              CheckpointError.fromJson(
+                Map<String, dynamic>.from(args['error'] as Map),
+              ),
+            );
+          }
+        } catch (error) {
+          debugPrint(
+            'RevenueCatUI: Using the default checkpoint error dialog: $error',
+          );
+        }
+        if (call == null || !call.detached) {
+          _send(
+            'resolveErrorDialog',
+            {'requestId': requestId, 'outcome': outcome.toJson()},
+          );
+        }
         return;
       default:
         throw MissingPluginException(
@@ -158,14 +179,16 @@ class CheckpointMethodHandler {
 class _CheckpointCall {
   CheckpointPassed? onPassed;
   PaywallPresenter? presenter;
+  CheckpointErrorDialogFactory? factory;
   String? activeRequestId;
   bool detached = false;
 
-  _CheckpointCall(this.onPassed, this.presenter);
+  _CheckpointCall(this.onPassed, this.presenter, this.factory);
 
   void clear() {
     detached = true;
     onPassed = null;
     presenter = null;
+    factory = null;
   }
 }

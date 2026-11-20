@@ -16,10 +16,14 @@ void main() {
   final replies = <Completer<Object?>>[];
   Future<void> settle() => Future<void>.delayed(Duration.zero);
 
-  String start({PaywallPresenter? presenter, bool native = false}) {
+  String start(
+      {PaywallPresenter? presenter,
+      CheckpointErrorDialogFactory? factory,
+      bool native = false}) {
     removers.add(RevenueCatUI.checkpoint('upgrade', (_) {},
         params: CheckpointParams(
           paywallPresenter: presenter,
+          errorDialogFactory: factory,
           useNativePaywallPresenter: native,
         )));
     return starts.last.arguments['callId'] as String;
@@ -53,6 +57,11 @@ void main() {
       'metadata': <String, Object>{},
       'availablePackages': <Object>[]
     },
+  };
+  const error = {
+    'kind': 'flowResultSyncFailed',
+    'code': 10,
+    'message': 'Offline'
   };
 
   setUp(() {
@@ -165,14 +174,18 @@ void main() {
     expect(commands.first.arguments['result'], 'NAVIGATED_BACK');
   });
 
-  test('removal cancels queued presentations', () async {
+  test('removal cancels queued presentations and defaults late errors',
+      () async {
     var called = false;
-    final id = start(presenter: (_, __) {
-      called = true;
-    });
+    final id = start(
+        presenter: (_, __) {
+          called = true;
+        },
+        factory: (_) => const CheckpointErrorDialogOutcome.suppress());
     removers.single();
     removers.single();
     await event('onPaywallPresentation', id, params: paywallParams);
+    await event('onErrorDialogRequested', id, error: error);
     expect(called, false);
     expect(
         commands.where((c) => c.method == 'detachCheckpoint').single.arguments,
@@ -183,6 +196,12 @@ void main() {
             .single
             .arguments['result'],
         'NAVIGATED_BACK');
+    expect(
+        commands
+            .where((c) => c.method == 'resolveErrorDialog')
+            .single
+            .arguments['outcome'],
+        {'type': 'useDefault'});
   });
 
   test('already presented paywall can complete after callback removal',
@@ -199,5 +218,99 @@ void main() {
     await settle();
     expect(commands.last.arguments,
         {'requestId': 'request', 'result': 'CONTINUED'});
+  });
+
+  test('uses typed async error factory and maps primary button title',
+      () async {
+    CheckpointError? received;
+    final id = start(factory: (error) async {
+      received = error;
+      return const CheckpointErrorDialogOutcome.show(CheckpointErrorDialog(
+          message: 'Try again', primaryButtonTitle: 'OK'));
+    });
+    expect(starts.single.arguments['hasErrorDialogFactory'], true);
+    await event('onErrorDialogRequested', id, error: error);
+    expect(received!.kind, CheckpointErrorKind.flowResultSyncFailed);
+    expect(received!.code, 10);
+    expect(received!.message, 'Offline');
+    expect(commands.single.arguments, {
+      'requestId': 'request',
+      'outcome': {
+        'type': 'show',
+        'dialog': {'message': 'Try again', 'buttonTitle': 'OK'}
+      }
+    });
+  });
+
+  for (final entry in {
+    'useDefault': const CheckpointErrorDialogOutcome.useDefault(),
+    'suppress': const CheckpointErrorDialogOutcome.suppress(),
+  }.entries) {
+    test('resolves ${entry.key} factory outcome', () async {
+      final id = start(factory: (_) => entry.value);
+      await event('onErrorDialogRequested', id, error: error);
+      expect(commands.single.arguments['outcome'], {'type': entry.key});
+    });
+  }
+
+  for (final invalid in [false, true]) {
+    test(
+        'falls back to default when factory ${invalid ? 'returns empty content' : 'throws'}',
+        () async {
+      final id = start(factory: (_) async {
+        if (!invalid) throw StateError('boom');
+        return const CheckpointErrorDialogOutcome.show(
+            CheckpointErrorDialog(message: '', primaryButtonTitle: 'OK'));
+      });
+      await event('onErrorDialogRequested', id, error: error);
+      expect(commands.single.arguments['outcome'], {'type': 'useDefault'});
+    });
+  }
+
+  test('removal while factory is pending prevents a late resolution', () async {
+    final response = Completer<CheckpointErrorDialogOutcome>();
+    final invoked = Completer<void>();
+    final id = start(factory: (_) {
+      invoked.complete();
+      return response.future;
+    });
+    final pendingEvent = event('onErrorDialogRequested', id, error: error);
+    await invoked.future;
+    removers.single();
+    response.complete(const CheckpointErrorDialogOutcome.suppress());
+    await pendingEvent;
+    expect(commands.map((c) => c.method), ['detachCheckpoint']);
+  });
+
+  test('concurrent calls keep their error factories separate', () async {
+    final first =
+        start(factory: (_) => const CheckpointErrorDialogOutcome.suppress());
+    final second =
+        start(factory: (_) => const CheckpointErrorDialogOutcome.useDefault());
+    expect(first, isNot(second));
+    await event('onErrorDialogRequested', second,
+        requestId: 'two', error: error);
+    await event('onErrorDialogRequested', first,
+        requestId: 'one', error: error);
+    expect(commands.map((c) => c.arguments), [
+      {
+        'requestId': 'two',
+        'outcome': {'type': 'useDefault'}
+      },
+      {
+        'requestId': 'one',
+        'outcome': {'type': 'suppress'}
+      },
+    ]);
+  });
+
+  test('native startup error releases callbacks and defaults late requests',
+      () async {
+    final id =
+        start(factory: (_) => const CheckpointErrorDialogOutcome.suppress());
+    replies.single.completeError(PlatformException(code: 'NOT_CONFIGURED'));
+    await settle();
+    await event('onErrorDialogRequested', id, error: error);
+    expect(commands.last.arguments['outcome'], {'type': 'useDefault'});
   });
 }
