@@ -1,35 +1,50 @@
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 import 'checkpoint.dart';
 import 'custom_variable_value.dart';
 
-/// Handles checkpoint platform calls and callbacks.
+/// Routes checkpoint callbacks independently of customer center callbacks.
 /// @nodoc
 class CheckpointMethodHandler {
   final MethodChannel _mainChannel;
+  static const _channel =
+      MethodChannel('com.revenuecat.purchasesui/Checkpoints');
+  final _calls = <String, _CheckpointCall>{};
+  final _prefix =
+      '${DateTime.now().microsecondsSinceEpoch}-${Random().nextInt(1 << 32)}';
+  int _nextCallId = 0;
 
-  CheckpointMethodHandler(this._mainChannel);
+  CheckpointMethodHandler(this._mainChannel) {
+    _channel.setMethodCallHandler(_handleMethodCall);
+    _send('initialize', {});
+  }
 
   void Function() checkpoint(
     String identifier,
     CheckpointPassed onPassed,
     CheckpointParams params,
   ) {
-    // Native never replies when the user backs out, so the future below can stay
-    // pending for the lifetime of the engine. Dropping the callback on removal
-    // keeps that closure from retaining `onPassed` and whatever it captures.
-    CheckpointPassed? callback = onPassed;
+    final callId = '$_prefix-${++_nextCallId}';
+    final call = _CheckpointCall(onPassed);
+    _calls[callId] = call;
+    // Native only replies when the checkpoint passes or cannot start. Retain
+    // just the call state here, whose app closures are cleared on removal.
     _mainChannel.invokeMethod<Object?>('checkpoint', {
       'identifier': identifier,
-      'customVariables': convertCustomVariablesToNative(
-        params.customVariables,
-      ),
+      'customVariables': convertCustomVariablesToNative(params.customVariables),
       'presentationMode': params.presentationMode.toString(),
+      'callId': callId,
+      'useCustomPaywallPresenter': false,
+      'hasErrorDialogFactory': false,
     }).then<void>((response) {
-      final passed = callback;
+      final passed = call.onPassed;
+      _calls.remove(callId);
+      call.clear();
       if (passed == null) return;
-      callback = null;
       final CheckpointResult result;
       try {
         result = CheckpointResult.fromJson(
@@ -51,9 +66,56 @@ class CheckpointMethodHandler {
           ),
         );
       }
-    }).catchError((Object e) {
-      debugPrint('RevenueCatUI: Error presenting checkpoint $identifier: $e');
+    }).catchError((Object error) {
+      _calls.remove(callId);
+      call.clear();
+      debugPrint(
+        'RevenueCatUI: Error presenting checkpoint $identifier: $error',
+      );
     });
-    return () => callback = null;
+    return () {
+      if (call.detached) return;
+      _calls.remove(callId);
+      call.clear();
+      _send(
+        'detachCheckpoint',
+        {'callId': callId, 'activePaywallRequestId': null},
+      );
+    };
+  }
+
+  Future<void> _handleMethodCall(MethodCall method) async {
+    switch (method.method) {
+      case 'onPaywallPresentation':
+        // Custom paywall presenter support follows in the next PR.
+        return;
+      case 'onErrorDialogRequested':
+        // Error-dialog factory support follows later in the stack.
+        return;
+      default:
+        throw MissingPluginException(
+          'Unknown checkpoint callback ${method.method}',
+        );
+    }
+  }
+
+  void _send(String method, Map<String, dynamic> arguments) {
+    unawaited(
+      _channel.invokeMethod<void>(method, arguments).catchError((Object error) {
+        debugPrint('RevenueCatUI: Checkpoint $method failed: $error');
+      }),
+    );
+  }
+}
+
+class _CheckpointCall {
+  CheckpointPassed? onPassed;
+  bool detached = false;
+
+  _CheckpointCall(this.onPassed);
+
+  void clear() {
+    detached = true;
+    onPassed = null;
   }
 }

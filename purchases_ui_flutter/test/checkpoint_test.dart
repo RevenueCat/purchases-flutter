@@ -71,6 +71,9 @@ void main() {
         'checkpoint',
         arguments: {
           'identifier': 'upgrade',
+          'callId': log.single.arguments['callId'],
+          'useCustomPaywallPresenter': false,
+          'hasErrorDialogFactory': false,
           'customVariables': null,
           'presentationMode': 'DEFAULT',
         },
@@ -97,6 +100,9 @@ void main() {
         'checkpoint',
         arguments: {
           'identifier': 'upgrade',
+          'callId': log.single.arguments['callId'],
+          'useCustomPaywallPresenter': false,
+          'hasErrorDialogFactory': false,
           'customVariables': {
             'name': 'Taylor',
             'level': 12.0,
