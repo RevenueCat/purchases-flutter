@@ -4,6 +4,7 @@ migrations
 fastlane
 api_tester
 codegen.sh
+copybara
 Dangerfile
 Gemfile
 Gemfile.lock
