@@ -110,6 +110,22 @@ enableExternalPurchasesInSimulator:enableExternalPurchasesInSimulator
         [self setAppstackAttributionParams:arguments[@"data"] result:result];
     } else if ([@"getProductInfo" isEqualToString:call.method]) {
         [self getProductInfo:arguments[@"productIdentifiers"] result:result];
+    } else if ([@"purchaseWithIntroductoryOfferEligibilityJWS" isEqualToString:call.method]) {
+        id token = arguments[@"introductoryOfferEligibilityJWS"];
+        if (![token isKindOfClass:NSString.class] || [(NSString *)token length] == 0) {
+            NSError *error = [NSError errorWithDomain:RCPurchasesErrorCodeDomain code:RCPurchaseInvalidError
+                                             userInfo:@{NSLocalizedDescriptionKey: @"introductoryOfferEligibilityJWS must be a non-empty string."}];
+            [self rejectWithResult:result error:[[RCErrorContainer alloc] initWithError:error extraPayload:@{}]];
+            return;
+        }
+        if (![RCCommonFunctionality respondsToSelector:NSSelectorFromString(@"purchase:introductoryOfferEligibilityJWS:completionBlock:")]) {
+            NSError *error = [NSError errorWithDomain:RCPurchasesErrorCodeDomain
+                                                 code:RCUnsupportedError
+                                             userInfo:@{NSLocalizedDescriptionKey: @"This PurchasesHybridCommon version does not support introductory offer eligibility JWS."}];
+            [self rejectWithResult:result error:[[RCErrorContainer alloc] initWithError:error extraPayload:@{}]];
+            return;
+        }
+        [RCCommonFunctionality purchase:arguments completionBlock:[self getResponseCompletionBlock:result]];
     } else if ([@"purchaseProduct" isEqualToString:call.method]) {
         [self purchaseProduct:arguments[@"productIdentifier"]
       signedDiscountTimestamp:arguments[@"signedDiscountTimestamp"]

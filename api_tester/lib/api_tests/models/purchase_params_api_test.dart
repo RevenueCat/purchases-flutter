@@ -17,6 +17,9 @@ class _PurchaseParamsApiTest {
     PurchaseParams purchaseParams = PurchaseParams.package(
       package,
     );
+    purchaseParams = PurchaseParams.package(package,
+        introductoryOfferEligibilityJWS: 'header.payload.signature');
+    String? token = purchaseParams.introductoryOfferEligibilityJWS;
     purchaseParams = PurchaseParams.package(
       package,
       productChangeInfo: productChangeInfo,
@@ -65,6 +68,8 @@ class _PurchaseParamsApiTest {
     PurchaseParams purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
     );
+    purchaseParams = PurchaseParams.storeProduct(storeProduct,
+        introductoryOfferEligibilityJWS: 'header.payload.signature');
     purchaseParams = PurchaseParams.storeProduct(
       storeProduct,
       productChangeInfo: productChangeInfo,
