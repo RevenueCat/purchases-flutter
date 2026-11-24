@@ -3,6 +3,7 @@
 [[tools.flutter]]
 version = "3.44.2"
 backend = "http:flutter"
+unsupported_platforms = ["linux-arm64"]
 
 [tools.flutter."platforms.linux-x64"]
 checksum = "sha256:b0de1d19754688ec6769c9a067db3b0594479d3d767f971bfecfc132904c8d5e"
