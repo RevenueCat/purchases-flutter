@@ -103,7 +103,26 @@ RevenueCatUI.setPaywallPresenter((params, completion) async {
 
 Call completion exactly once, after dismissing the app-owned UI. Both `continued` and `closed` allow the native SDK to synchronize purchases before deciding whether the checkpoint passes. `navigatedBack` stops the checkpoint without calling `onPassed`. A returned future alone does not complete presentation. If a presenter throws or its future fails before completion, the checkpoint backs out. Repeated completion calls are ignored.
 
-Call the removal function when the owning screen is disposed. It cancels queued custom presentations. It does not dismiss an already shown app-owned paywall: dismiss that UI and call its completion as usual, even after removal. The checkpoint's `onPassed` callback will no longer run.
+### Custom error dialogs
+
+Set `CheckpointParams.errorDialogFactory` to customize error dialogs for one checkpoint. It works with both native and custom paywall presenters, including when purchase synchronization fails after a paywall closes.
+
+```dart
+params: CheckpointParams(
+  errorDialogFactory: (_) => const CheckpointErrorDialogOutcome.show(
+    CheckpointErrorDialog(
+      message: 'Please try again.',
+      primaryButtonTitle: 'OK',
+    ),
+  ),
+),
+```
+
+The SDK presents the dialog. Return `CheckpointErrorDialogOutcome.useDefault()` for the SDK's dialog or `CheckpointErrorDialogOutcome.suppress()` to skip it. Factories can return a future. If the factory throws, its future fails, or the dialog content is empty, the SDK shows its default dialog.
+
+See the [sample app’s full navigation example](../revenuecat_examples/purchase_tester/README.md#present-a-checkpoint-paywall-in-a-flutter-route).
+
+Call the removal function when the owning screen is disposed. It cancels queued custom presentations and uses default dialogs for pending or future errors. It does not dismiss an already shown app-owned paywall: dismiss that UI and call its completion as usual, even after removal. The checkpoint's `onPassed` callback will no longer run. Each checkpoint has independent callbacks, so overlapping calls do not overwrite another call's presenter or error factory.
 
 ### Requirements
 *purchases_ui_flutter* requires XCode 14.0+ and minimum targets iOS 11.0+ and Android 24+. Paywalls will only work on iOS 15.0+ and Android 24+.
