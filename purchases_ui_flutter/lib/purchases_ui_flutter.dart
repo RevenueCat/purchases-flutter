@@ -231,8 +231,10 @@ class RevenueCatUI {
   /// already on screen. An app-owned paywall must still call its completion
   /// after dismissal. Pending error requests revert to default dialogs.
   ///
-  /// Requires iOS 15+ or Android, and Purchases to be configured. Throws an
-  /// [UnsupportedError] on other platforms.
+  /// Requires iOS 15+ or Android, and Purchases to be configured. On earlier
+  /// iOS versions the native SDK reports a startup error asynchronously. Flutter
+  /// logs that error and skips [onPassed]. On platforms other than iOS and
+  /// Android, this method throws [UnsupportedError] synchronously.
   ///
   /// **Experimental:** Checkpoints are an invite-only API and may change or be
   /// removed in a future release without a major version bump.

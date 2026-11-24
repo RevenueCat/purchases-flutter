@@ -157,6 +157,20 @@ void main() {
     });
   }
 
+  test('keeps explicit completion when the presenter subsequently fails',
+      () async {
+    final id = start(presenter: (_, complete) async {
+      complete(PaywallPresentationResult.continued);
+      throw StateError('navigation failed after completion');
+    });
+    await event('onPaywallPresentation', id, params: paywallParams);
+    expect(commands.single.method, 'completePaywallPresentation');
+    expect(commands.single.arguments, {
+      'requestId': 'request',
+      'result': 'CONTINUED',
+    });
+  });
+
   test('a returned future does not complete the paywall', () async {
     final id = start(presenter: (_, __) async {});
     await event('onPaywallPresentation', id, params: paywallParams);
@@ -297,6 +311,35 @@ void main() {
     response.complete(const CheckpointErrorDialogOutcome.suppress());
     await pendingEvent;
     expect(commands.map((c) => c.method), ['detachCheckpoint']);
+  });
+
+  test('matches out-of-order error replies to requests in the same checkpoint',
+      () async {
+    final first = Completer<CheckpointErrorDialogOutcome>();
+    final second = Completer<CheckpointErrorDialogOutcome>();
+    final id = start(
+        factory: (error) => error.code == 1 ? first.future : second.future);
+    final firstEvent = event('onErrorDialogRequested', id,
+        requestId: 'one', error: {...error, 'code': 1});
+    final secondEvent = event('onErrorDialogRequested', id,
+        requestId: 'two', error: {...error, 'code': 2});
+
+    second.complete(const CheckpointErrorDialogOutcome.suppress());
+    await secondEvent;
+    expect(commands.single.method, 'resolveErrorDialog');
+    expect(commands.single.arguments, {
+      'requestId': 'two',
+      'outcome': {'type': 'suppress'},
+    });
+
+    first.complete(const CheckpointErrorDialogOutcome.useDefault());
+    await firstEvent;
+    expect(commands, hasLength(2));
+    expect(commands.last.method, 'resolveErrorDialog');
+    expect(commands.last.arguments, {
+      'requestId': 'one',
+      'outcome': {'type': 'useDefault'},
+    });
   });
 
   test('concurrent calls keep their error factories separate', () async {

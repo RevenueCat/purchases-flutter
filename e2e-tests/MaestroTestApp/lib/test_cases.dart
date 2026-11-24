@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'checkpoint_screen.dart';
+import 'custom_checkpoint_presenter_screen.dart';
 import 'present_customer_center_screen.dart';
 import 'purchase_through_paywall_screen.dart';
 
@@ -29,5 +30,17 @@ final List<TestCase> testCases = [
     // A well-formed identifier that is not configured in the dashboard.
     builder: () =>
         const CheckpointScreen(identifier: 'maestro_unknown_checkpoint'),
+  ),
+  for (final flow in ['purchase', 'back', 'unmount'])
+    (
+      title: 'Custom checkpoint presenter $flow',
+      flowKey: 'checkpoint_custom_presenter_$flow',
+      builder: () => const CustomCheckpointPresenterScreen(),
+    ),
+  (
+    title: 'Checkpoint custom error dialog',
+    flowKey: 'checkpoint_custom_error_dialog',
+    builder: () =>
+        const CheckpointScreen(identifier: '!', customErrorDialog: true),
   ),
 ];
