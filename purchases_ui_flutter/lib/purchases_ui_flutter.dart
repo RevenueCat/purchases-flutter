@@ -227,7 +227,8 @@ class RevenueCatUI {
   ///
   /// Returns a function that removes the callback. Call it when the owning
   /// screen is disposed; removing the callback does not dismiss a flow that is
-  /// already on screen.
+  /// already on screen. An app-owned paywall must still call its completion
+  /// after dismissal.
   ///
   /// Requires iOS 15+ or Android, and Purchases to be configured. Throws an
   /// [UnsupportedError] on other platforms.
@@ -253,6 +254,14 @@ class RevenueCatUI {
   }
 
   static final _checkpointHandler = CheckpointMethodHandler(_methodChannel);
+
+  /// Sets the default app-owned presenter for future checkpoints. Each call
+  /// captures its presenter. Pass null to restore native presentation.
+  /// A per-call presenter overrides this default; useNativePaywallPresenter
+  /// bypasses both. Requires iOS 15+ or Android when a checkpoint is called.
+  static void setPaywallPresenter(PaywallPresenter? presenter) {
+    _checkpointHandler.paywallPresenter = presenter;
+  }
 
   /// Presents the customer center modally using the native SDKs.
   ///
