@@ -50,9 +50,9 @@ See minimum Flutter version requirements for RevenueCat's *Purchases* SDK [here]
     >dependencies:
     >purchases_flutter: ^4.0.0
 
-5. When running your app for the first time, you may get an error about CocoaPods. Navigate into the `ios` folder and run:
+5. The iOS app uses Swift Package Manager. Flutter 3.44 and later enable it by default; on earlier versions, run:
     ```
-    pod repo update
+    flutter config --enable-swift-package-manager
     ```
     
 6. Your bundle id/ Google Play package should be something unique, typically com.companyname.appname. Make sure what is in RevenueCat matches what is in XCode or build.gradle exactly, and what is in App Store Connect or Google Play Console exactly.
