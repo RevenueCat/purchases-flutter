@@ -970,7 +970,7 @@ readyForPromotedProduct:(RCStoreProduct *)product
 }
 
 - (NSString *)platformFlavorVersion {
-    return @"10.19.2";
+    return @"10.19.3";
 }
 
 - (NSError *)createUnsupportedErrorWithDescription:(NSString *)description {

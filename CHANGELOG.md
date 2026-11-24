@@ -1,3 +1,8 @@
+## 10.19.3
+## RevenueCat SDK
+### 🐞 Bugfixes
+* fix: Default entitlementVerificationMode to informational via Álvaro Brey (@AlvaroBrey)
+
 ## 10.19.2
 ## RevenueCat SDK
 ### 📦 Dependency Updates
