@@ -16,15 +16,14 @@ void main() {
   final replies = <Completer<Object?>>[];
   Future<void> settle() => Future<void>.delayed(Duration.zero);
 
-  String start(
-      {PaywallPresenter? presenter,
-      CheckpointErrorDialogFactory? factory,
-      bool native = false}) {
+  String start({
+    PaywallPresenter? presenter,
+    CheckpointErrorDialogFactory? factory,
+  }) {
     removers.add(RevenueCatUI.checkpoint('upgrade', (_) {},
         params: CheckpointParams(
           paywallPresenter: presenter,
           errorDialogFactory: factory,
-          useNativePaywallPresenter: native,
         )));
     return starts.last.arguments['callId'] as String;
   }
@@ -115,7 +114,7 @@ void main() {
         {'requestId': 'request', 'result': 'CONTINUED'});
   });
 
-  test('captures global presenter and supports per-call and native overrides',
+  test('captures the global presenter and falls back to native UI when cleared',
       () async {
     final called = <String>[];
     RevenueCatUI.setPaywallPresenter((_, complete) {
@@ -131,7 +130,8 @@ void main() {
       called.add('override');
       complete(PaywallPresentationResult.closed);
     });
-    start(native: true);
+    RevenueCatUI.setPaywallPresenter(null);
+    start();
     expect(starts.last.arguments['useCustomPaywallPresenter'], false);
     await event('onPaywallPresentation', first, params: paywallParams);
     await event('onPaywallPresentation', second,

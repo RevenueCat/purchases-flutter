@@ -1,3 +1,7 @@
+## 11.0.6
+### 🔄 Other Changes
+* refactor(checkpoints): remove the native paywall presenter flag via Cesar de la Vega (@vegaro)
+
 ## 11.0.5
 ## RevenueCat SDK
 ### 🐞 Bugfixes

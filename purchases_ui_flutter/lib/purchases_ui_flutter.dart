@@ -260,8 +260,8 @@ class RevenueCatUI {
 
   /// Sets the default app-owned presenter for future checkpoints. Each call
   /// captures its presenter. Pass null to restore native presentation.
-  /// A per-call presenter overrides this default; useNativePaywallPresenter
-  /// bypasses both. Requires iOS 15+ or Android when a checkpoint is called.
+  /// A per-call presenter overrides this default for the selected offering.
+  /// Requires iOS 15+ or Android when a checkpoint is called.
   static void setPaywallPresenter(PaywallPresenter? presenter) {
     _checkpointHandler.paywallPresenter = presenter;
   }

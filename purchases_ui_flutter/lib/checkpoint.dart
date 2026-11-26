@@ -27,10 +27,6 @@ final class CheckpointParams {
   /// presenter captured from [RevenueCatUI.setPaywallPresenter] at call time.
   final PaywallPresenter? paywallPresenter;
 
-  /// Uses the native presenter even when a global presenter is registered.
-  /// Takes precedence over [paywallPresenter].
-  final bool useNativePaywallPresenter;
-
   /// Chooses custom error dialog content, the default dialog, or no dialog.
   /// The SDK owns dialog presentation and acknowledgement. May be asynchronous;
   /// throwing or returning invalid content uses the SDK's default dialog.
@@ -40,7 +36,6 @@ final class CheckpointParams {
     this.customVariables,
     this.presentationMode = FlowPresentationMode.defaultMode,
     this.paywallPresenter,
-    this.useNativePaywallPresenter = false,
     this.errorDialogFactory,
   });
 
@@ -50,7 +45,6 @@ final class CheckpointParams {
       other is CheckpointParams &&
           presentationMode == other.presentationMode &&
           paywallPresenter == other.paywallPresenter &&
-          useNativePaywallPresenter == other.useNativePaywallPresenter &&
           errorDialogFactory == other.errorDialogFactory &&
           _mapEquals(customVariables, other.customVariables);
 
@@ -58,7 +52,6 @@ final class CheckpointParams {
   int get hashCode => Object.hash(
         presentationMode,
         paywallPresenter,
-        useNativePaywallPresenter,
         errorDialogFactory,
         customVariables == null
             ? null
@@ -70,7 +63,7 @@ final class CheckpointParams {
 
   @override
   String toString() =>
-      'CheckpointParams(customVariables: $customVariables, presentationMode: $presentationMode, paywallPresenter: $paywallPresenter, useNativePaywallPresenter: $useNativePaywallPresenter, errorDialogFactory: $errorDialogFactory)';
+      'CheckpointParams(customVariables: $customVariables, presentationMode: $presentationMode, paywallPresenter: $paywallPresenter, errorDialogFactory: $errorDialogFactory)';
 }
 
 /// Controls how the SDK presents the flow selected by a checkpoint.
