@@ -58,10 +58,10 @@ purchases-flutter/
 
 | Platform | Minimum Version |
 |----------|-----------------|
-| Flutter  | 3.22.0          |
-| Dart     | 3.4.0           |
+| Flutter  | 3.41.0          |
+| Dart     | 3.11.0           |
 | iOS      | 13+             |
-| Android  | SDK 21+         |
+| Android  | SDK 24+         |
 | Xcode    | 14+             |
 
 Don't raise minimum versions unless explicitly required and justified.

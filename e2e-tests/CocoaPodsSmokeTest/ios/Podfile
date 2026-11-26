@@ -1,0 +1,31 @@
+platform :ios, '13.0'
+
+# CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+ENV['COCOAPODS_DISABLE_STATS'] = 'true'
+
+project 'Runner', 'Debug' => :debug
+
+flutter_root = File.read(File.join(__dir__, 'Flutter/Generated.xcconfig'))[/^FLUTTER_ROOT=(.*)$/, 1]
+require File.join(flutter_root, 'packages/flutter_tools/bin/podhelper')
+
+flutter_ios_podfile_setup
+
+# Keep these pins in sync with the plugin's PHC requirement.
+phc_version = '21.0.0'
+native_ios_version = '5.103.2'
+
+target 'Runner' do
+  pod 'RevenueCat', :git => 'https://github.com/RevenueCat/purchases-ios.git', :tag => native_ios_version
+  pod 'RevenueCatUI', :git => 'https://github.com/RevenueCat/purchases-ios.git', :tag => native_ios_version
+  pod 'PurchasesHybridCommon', :git => 'https://github.com/RevenueCat/purchases-hybrid-common.git', :tag => phc_version
+  pod 'PurchasesHybridCommonUI', :git => 'https://github.com/RevenueCat/purchases-hybrid-common.git', :tag => phc_version
+  use_frameworks!
+
+  flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+  end
+end

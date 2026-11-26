@@ -183,7 +183,7 @@ class Purchases {
         'shouldShowInAppMessagesAutomatically':
             purchasesConfiguration.shouldShowInAppMessagesAutomatically,
         'entitlementVerificationMode':
-            purchasesConfiguration.entitlementVerificationMode.name,
+            purchasesConfiguration.entitlementVerificationMode?.name,
         'pendingTransactionsForPrepaidPlansEnabled':
             purchasesConfiguration.pendingTransactionsForPrepaidPlansEnabled,
         'automaticDeviceIdentifierCollectionEnabled':

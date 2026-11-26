@@ -1,0 +1,31 @@
+name: revenuecat_cocoapods_smoke
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  purchases_flutter:
+    path: ../../
+  purchases_ui_flutter:
+    path: ../../purchases_ui_flutter
+
+dependency_overrides:
+  purchases_flutter:
+    path: ../../
+
+dev_dependencies:
+  flutter_lints: ^2.0.1
+  flutter_test:
+    sdk: flutter
+  flutter_driver:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  config:
+    enable-swift-package-manager: false

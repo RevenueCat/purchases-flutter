@@ -197,6 +197,8 @@ lane :update_hybrid_common do |options|
       'ios/purchases_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
       'macos/purchases_flutter/Package.swift' => ['.package(url: "https://github.com/RevenueCat/purchases-hybrid-common.git", exact: "{x}")'],
       'android/build.gradle' => ['ext.common_version = \'{x}\''],
+      'e2e-tests/CocoaPodsSmokeTest/ios/Podfile' => ["phc_version = '{x}'"],
+      'e2e-tests/CocoaPodsSmokeTest/macos/Podfile' => ["phc_version = '{x}'"],
       'purchases_ui_flutter/ios/purchases_ui_flutter.podspec' => [
         's.dependency \'PurchasesHybridCommon\', \'{x}\'',
         's.dependency \'PurchasesHybridCommonUI\', \'{x}\''
@@ -217,6 +219,12 @@ lane :update_hybrid_common do |options|
 
   open_pr = options[:open_pr] || false
 
+  # CocoaPods Git sources need native tags matching the new PHC podspec.
+  require 'fastlane/plugin/revenuecat_internal/helper/update_hybrids_versions_file_helper'
+  native_ios_version = Fastlane::Helper::UpdateHybridsVersionsFileHelper.get_ios_version_for_hybrid_common_version(
+    new_version_number, ENV["GITHUB_TOKEN"]
+  )
+
   bump_phc_version(
     repo_name: internal_repo_name,
     files_to_update: files_to_update,
@@ -224,7 +232,17 @@ lane :update_hybrid_common do |options|
     next_version: new_version_number,
     open_pr: open_pr,
     automatic_release: options[:automatic_release] || false,
-    enable_auto_merge: options[:automatic_release] || false
+    enable_auto_merge: false,
+    before_commit: lambda do
+      %w[ios macos].each do |platform|
+        podfile = File.join(get_root_folder, "e2e-tests/CocoaPodsSmokeTest", platform, "Podfile")
+        contents = File.read(podfile)
+        updated = contents.sub(/native_ios_version = '[^']+'/, "native_ios_version = '#{native_ios_version}'")
+        next if updated == contents
+
+        File.write(podfile, updated)
+      end
+    end
   )
 
   # The web platform loads a vendored copy of the purchases-js-hybrid-mappings
@@ -240,6 +258,14 @@ lane :update_hybrid_common do |options|
     commit_and_push: open_pr,
     expected_sha: options[:js_mappings_sha]
   )
+
+  # Enable auto-merge only after the native pins and web bundle have been pushed.
+  if open_pr && options[:automatic_release]
+    enable_auto_merge_for_pr(
+      github_token: ENV["GITHUB_TOKEN"], repo_name: internal_repo_name,
+      base_branch: 'main', merge_method: 'SQUASH'
+    )
+  end
 end
 
 desc "Run maestro E2E tests on iOS"
@@ -279,11 +305,11 @@ end
 
 desc "Verifies the vendored web SDK bundle matches the published " \
      "purchases-js-hybrid-mappings bundle for the current purchases-hybrid-common version"
-lane :verify_web_hybrid_mappings_bundle do
+lane :verify_web_hybrid_mappings_bundle do |options|
   require 'digest'
   require 'tmpdir'
 
-  version = get_phc_version
+  version = options[:version] || get_phc_version
   relative_path = web_hybrid_mappings_relative_path
   asset_path = File.join(get_root_folder, relative_path)
   download_url = web_hybrid_mappings_download_url(version)

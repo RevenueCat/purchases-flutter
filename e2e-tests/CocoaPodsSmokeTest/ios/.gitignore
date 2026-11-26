@@ -1,0 +1,10 @@
+Pods/
+.symlinks/
+Podfile.lock
+Runner.xcworkspace/
+Runner.xcodeproj/project.xcworkspace/
+Runner.xcodeproj/xcuserdata/
+Flutter/ephemeral/
+Flutter/Generated*
+Flutter/flutter_export_environment.sh
+Runner/GeneratedPluginRegistrant.*

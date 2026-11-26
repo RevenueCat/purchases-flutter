@@ -1,0 +1,13 @@
+.dart_tool/
+.packages
+.metadata
+.idea/
+*.iml
+pubspec.lock
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Keep platform source files despite the repository-wide Flutter tool ignore rule.
+!ios/Flutter/
+!macos/Flutter/

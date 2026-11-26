@@ -422,4 +422,3 @@ If you encounter a security dialog on macOS when running Flutter:
   flutter pub get
   ```
 - Ensure you're using the correct Flutter version
-

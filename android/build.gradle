@@ -2,7 +2,7 @@ group 'com.revenuecat.purchases_flutter'
 version '11.0.5'
 
 buildscript {
-    ext.common_version = '20.15.0'
+    ext.common_version = '21.0.0'
     repositories {
         google()
         mavenCentral()
@@ -36,7 +36,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 24
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // purchases-android has two variants, but this library doesn't have any
         // Gradle doesn't know which variant of purchases-android to use when using
