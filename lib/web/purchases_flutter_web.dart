@@ -14,7 +14,7 @@ class PurchasesFlutterPlugin {
   static final _unknownErrorCode = '${PurchasesErrorCode.unknownError.index}';
   static final _configurationErrorCode = '${PurchasesErrorCode.configurationError.index}';
   static const _platformName = 'flutter';
-  static const _pluginVersion = '11.0.5';
+  static const _pluginVersion = '12.0.0';
   static const _purchasesHybridMappingsAssetKey =
       'packages/purchases_flutter/assets/web/purchases_js_hybrid_mappings.js';
 
