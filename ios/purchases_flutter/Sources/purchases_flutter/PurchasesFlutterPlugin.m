@@ -11,6 +11,13 @@ typedef void (^RCPurchaseCompletedBlock)(RCStoreTransaction * _Nullable,
                                          BOOL userCancelled);
 typedef void (^RCStartPurchaseBlock)(RCPurchaseCompletedBlock);
 
+#if TARGET_OS_IOS
+// FlutterPluginRegistrar exposes viewController starting in Flutter 3.38.
+@protocol RCPurchaseSceneRegistrar <NSObject>
+@property (nonatomic, readonly, nullable) UIViewController *viewController;
+@end
+#endif
+
 @interface PurchasesFlutterPlugin () <RCPurchasesDelegate>
 
 @property (nonatomic, retain) FlutterMethodChannel *channel;
@@ -405,9 +412,52 @@ enableExternalPurchasesInSimulator:(BOOL)enableExternalPurchasesInSimulator
     }];
 }
 
+#if TARGET_OS_IOS
+// Finds the presenting scene so we can pass it explicitly to StoreKit for purchase confirmation.
+// On iPad, StoreKit can log a warning when it has to choose the scene itself.
+// https://github.com/RevenueCat/purchases-flutter_internal/pull/53
+- (nullable UIWindowScene *)purchaseWindowScene API_AVAILABLE(ios(13.0)) {
+    // Prefer the window scene hosting the Flutter view that initiated the purchase.
+    id<RCPurchaseSceneRegistrar> registrar = (id<RCPurchaseSceneRegistrar>)self.registrar;
+    if ([registrar respondsToSelector:@selector(viewController)]) {
+        UIWindowScene *scene = registrar.viewController.viewIfLoaded.window.windowScene;
+        if (scene) {
+            return scene;
+        }
+    }
+
+    // If we couldn't find a scene through Flutter, prefer a foreground-active connected window scene, then a foreground-inactive one.
+    UIWindowScene *fallbackScene = nil;
+    for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+        if (![scene isKindOfClass:UIWindowScene.class]) {
+            continue;
+        }
+        if (scene.activationState == UISceneActivationStateForegroundActive) {
+            return (UIWindowScene *)scene;
+        }
+        if (!fallbackScene && scene.activationState == UISceneActivationStateForegroundInactive) {
+            fallbackScene = (UIWindowScene *)scene;
+        }
+    }
+    return fallbackScene;
+}
+#endif
+
 - (void)purchaseProduct:(NSString *)productIdentifier
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
+#if TARGET_OS_IOS
+    if (@available(iOS 17.0, *)) {
+        UIWindowScene *scene = [self purchaseWindowScene];
+        if (scene) {
+            [RCCommonFunctionality purchaseProduct:productIdentifier
+                           signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
+                                    confirmInScene:scene
+                                   completionBlock:[self getResponseCompletionBlock:result]];
+            return;
+        }
+    }
+#endif
     [RCCommonFunctionality purchaseProduct:productIdentifier
                    signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
                            completionBlock:[self getResponseCompletionBlock:result]];
@@ -417,6 +467,19 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
 presentedOfferingContext:(NSDictionary *)presentedOfferingContext
 signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  result:(FlutterResult)result {
+#if TARGET_OS_IOS
+    if (@available(iOS 17.0, *)) {
+        UIWindowScene *scene = [self purchaseWindowScene];
+        if (scene) {
+            [RCCommonFunctionality purchasePackage:packageIdentifier
+                          presentedOfferingContext:presentedOfferingContext
+                           signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
+                                    confirmInScene:scene
+                                   completionBlock:[self getResponseCompletionBlock:result]];
+            return;
+        }
+    }
+#endif
     [RCCommonFunctionality purchasePackage:packageIdentifier
                   presentedOfferingContext:presentedOfferingContext
                    signedDiscountTimestamp:discountTimestamp.mappingNSNullToNil
@@ -715,6 +778,16 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  winBackOfferIdentifier:(NSString *)winBackOfferIdentifier
                                  result:(FlutterResult)result {
     if (@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)) {
+#if TARGET_OS_IOS
+        UIWindowScene *scene = [self purchaseWindowScene];
+        if (scene) {
+            [RCCommonFunctionality purchaseProduct:productIdentifier
+                                    winBackOfferID:winBackOfferIdentifier
+                                    confirmInScene:scene
+                                   completionBlock:[self getResponseCompletionBlock:result]];
+            return;
+        }
+#endif
         [RCCommonFunctionality purchaseProduct:productIdentifier
                                 winBackOfferID:winBackOfferIdentifier
                                completionBlock:[self getResponseCompletionBlock:result]];
@@ -732,6 +805,17 @@ signedDiscountTimestamp:(nullable NSString *)discountTimestamp
                  winBackOfferIdentifier:(NSString *)winBackOfferIdentifier
                                  result:(FlutterResult)result {
     if (@available(iOS 18.0, macOS 15.0, tvOS 18.0, watchOS 11.0, visionOS 2.0, *)) {
+#if TARGET_OS_IOS
+        UIWindowScene *scene = [self purchaseWindowScene];
+        if (scene) {
+            [RCCommonFunctionality purchasePackage:packageIdentifier
+                          presentedOfferingContext:presentedOfferingContext
+                                    winBackOfferID:winBackOfferIdentifier
+                                    confirmInScene:scene
+                                   completionBlock:[self getResponseCompletionBlock:result]];
+            return;
+        }
+#endif
         [RCCommonFunctionality purchasePackage:packageIdentifier
                       presentedOfferingContext:presentedOfferingContext
                                 winBackOfferID:winBackOfferIdentifier
