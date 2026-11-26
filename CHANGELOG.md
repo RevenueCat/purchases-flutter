@@ -1,3 +1,40 @@
+## 11.0.5
+## RevenueCat SDK
+### 🐞 Bugfixes
+* fix(ios): anchor product and package purchases to the Flutter window scene via Rick (@rickvdl)
+* fix: Default entitlementVerificationMode to informational via Álvaro Brey (@AlvaroBrey)
+### 📦 Dependency Updates
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 20.15.0 via RevenueCat Git Bot (@RCGitBot)
+  * [Android 11.4.3](https://github.com/RevenueCat/purchases-android/releases/tag/11.4.3)
+  * [Android 11.4.2](https://github.com/RevenueCat/purchases-android/releases/tag/11.4.2)
+  * [Android 11.4.1](https://github.com/RevenueCat/purchases-android/releases/tag/11.4.1)
+  * [iOS 5.103.2](https://github.com/RevenueCat/purchases-ios/releases/tag/5.103.2)
+  * [Web 1.78.1](https://github.com/RevenueCat/purchases-js/releases/tag/1.78.1)
+  * [Web 1.78.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.78.0)
+  * [Web 1.77.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.77.0)
+  * [Web 1.76.0](https://github.com/RevenueCat/purchases-js/releases/tag/1.76.0)
+* [RENOVATE] Update dependency revenuecat to v4.13.1 via RevenueCat Git Bot (@RCGitBot)
+* [RENOVATE] Update dependency fastlane to v2.242.0 via RevenueCat Git Bot (@RCGitBot)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 20.13.0 via RevenueCat Git Bot (@RCGitBot)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 20.12.0 via RevenueCat Git Bot (@RCGitBot)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 20.11.0 via RevenueCat Git Bot (@RCGitBot)
+* [AUTOMATIC BUMP] Updates purchases-hybrid-common to 20.10.1 via RevenueCat Git Bot (@RCGitBot)
+
+### 🔄 Other Changes
+* Allow passing a version to the CircleCI bump action via Toni Rico (@tonidero)
+* test(checkpoints): add custom presenter Maestro coverage via Cesar de la Vega (@vegaro)
+* Migrate MagicWeather iOS from CocoaPods to SPM via Antonio Pallares (@ajpallares)
+* Migrate ads_tester iOS from CocoaPods to SPM via Antonio Pallares (@ajpallares)
+* feat(checkpoints): add error-dialog factories via Cesar de la Vega (@vegaro)
+* feat(checkpoints): add custom paywall presenters via Cesar de la Vega (@vegaro)
+* refactor(checkpoints): prepare native presenter bridge via Cesar de la Vega (@vegaro)
+* refactor(checkpoints): extract checkpoint handlers via Cesar de la Vega (@vegaro)
+* ci: move Ruby gem updates to Renovate via Álvaro Brey (@AlvaroBrey)
+* chore(deps): bump fastlane-plugin-revenuecat_internal to v0.3.1 via Antonio Pallares (@ajpallares)
+* chore: bump Ruby to 3.3.14 for the Regexp/String security advisory via Tony Cosentini (@tonycosentini)
+* ci: export main and release tags to the public repo with the orb's Copybara job via Antonio Pallares (@ajpallares)
+* ci: add the hotfix PR comment command via Álvaro Brey (@AlvaroBrey)
+
 ## 11.0.4
 ## RevenueCat SDK
 ### 🐞 Bugfixes
