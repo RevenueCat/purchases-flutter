@@ -67,8 +67,6 @@ class _PurchasesFlutterApiTest {
     );
     PaywallPresenter? perCall = params.paywallPresenter;
     CheckpointErrorDialogFactory? perCallFactory = params.errorDialogFactory;
-    bool native = const CheckpointParams(useNativePaywallPresenter: true)
-        .useNativePaywallPresenter;
     RevenueCatUI.checkpoint('upgrade', (_) {}, params: params)();
     const CheckpointErrorDialogOutcome defaultDialog =
         CheckpointErrorDialogOutcome.useDefault();

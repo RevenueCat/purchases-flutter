@@ -32,9 +32,7 @@ class CheckpointMethodHandler {
     final callId = '$_prefix-${++_nextCallId}';
     final call = _CheckpointCall(
       onPassed,
-      params.useNativePaywallPresenter
-          ? null
-          : params.paywallPresenter ?? paywallPresenter,
+      params.paywallPresenter ?? paywallPresenter,
       params.errorDialogFactory,
     );
     _calls[callId] = call;

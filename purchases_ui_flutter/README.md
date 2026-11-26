@@ -90,7 +90,9 @@ The callback is called at most once, only when the checkpoint passes. `result.fl
 
 ### Custom checkpoint presenters
 
-Use `RevenueCatUI.setPaywallPresenter` to register a default app-owned paywall presenter. Each checkpoint captures that default when called. A `CheckpointParams.paywallPresenter` overrides it for one call; `useNativePaywallPresenter: true` uses the SDK's UI regardless of either presenter. Pass `null` to `setPaywallPresenter` to reset the global default.
+When a checkpoint rule serves an Offering directly, the SDK uses the presenter from `CheckpointParams.paywallPresenter`, then the default registered with `RevenueCatUI.setPaywallPresenter`. Each checkpoint captures the default when called. If neither presenter is set, the SDK presents the paywall. Pass `null` to `setPaywallPresenter` to clear the default for future calls.
+
+To show a specific RevenueCat Paywall while keeping a custom default presenter, configure the checkpoint rule to serve the Flow containing that Paywall. The SDK presents the Flow itself.
 
 ```dart
 RevenueCatUI.setPaywallPresenter((params, completion) async {
