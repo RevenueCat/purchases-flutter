@@ -656,6 +656,37 @@ class Purchases {
       'customerEmail': customerEmail,
       'winBackOfferIdentifier': winBackOffer?.identifier,
     };
+    final introductoryOfferEligibilityJWS =
+        purchaseParams.introductoryOfferEligibilityJWS;
+    if (introductoryOfferEligibilityJWS != null) {
+      if (introductoryOfferEligibilityJWS.isEmpty) {
+        throw ArgumentError.value(
+          introductoryOfferEligibilityJWS,
+          'introductoryOfferEligibilityJWS',
+          'Must be a non-empty string',
+        );
+      }
+      if (kIsWeb ||
+          (defaultTargetPlatform != TargetPlatform.iOS &&
+              defaultTargetPlatform != TargetPlatform.macOS)) {
+        throw UnsupportedPlatformException();
+      }
+      if (signedDiscountTimestamp != null || winBackOffer != null) {
+        throw ArgumentError(
+          'introductoryOfferEligibilityJWS cannot be combined with other offers.',
+        );
+      }
+      return await _invokeReturningPurchaseResult(
+        'purchaseWithIntroductoryOfferEligibilityJWS',
+        {
+          ...purchaseArgs,
+          if (package != null) 'packageIdentifier': package.identifier,
+          if (storeProduct != null)
+            'productIdentifier': storeProduct.identifier,
+          'introductoryOfferEligibilityJWS': introductoryOfferEligibilityJWS,
+        },
+      );
+    }
     final isWinBackOfferPurchase = (defaultTargetPlatform == TargetPlatform.iOS
         || defaultTargetPlatform == TargetPlatform.macOS)
         && winBackOffer != null;
